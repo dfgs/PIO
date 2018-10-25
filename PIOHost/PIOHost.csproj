@@ -114,6 +114,10 @@
       <Project>{C94B7BF1-BF85-4483-B032-1582F9EC6423}</Project>
       <Name>NetORMLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PIOClientLib\PIOClientLib.csproj">
+      <Project>{c2b2ef76-3c03-4c08-bdea-ce880e6193cd}</Project>
+      <Name>PIOClientLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PIOServerLib\PIOServerLib.csproj">
       <Project>{a1ee8881-47f8-4168-ab91-c43faf81a2ce}</Project>
       <Name>PIOServerLib</Name>

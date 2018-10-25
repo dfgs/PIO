@@ -41,22 +41,8 @@ namespace PIOHost
 
 			logger = new ConsoleLogger(new DefaultLogFormatter());
 
-			IDatabaseCreator databaseCreator;
-			databaseCreator = new SqlLocalDatabaseCreator("PIO", Directory.GetCurrentDirectory());
-
-			IConnectionFactory connectionFactory;
-			connectionFactory = new SqlLocalConnectionFactory(System.IO.Path.Combine( Directory.GetCurrentDirectory(),"PIO.mdf" ));
-
-			ICommandBuilder commandBuilder;
-			commandBuilder = new SqlCommandBuilder();
-
-			IDatabase database;
-			database = new Database(connectionFactory, commandBuilder);
-
-			IVersionControl versionControl;
-			versionControl = new PIOVersionControl(database);
-
-			server = new PIOServer(logger,databaseCreator,versionControl);
+			// run server as if it was an external app
+			server = new PIOServer(logger);
 			server.Start();
 		}
 		

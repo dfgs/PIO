@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A1EE8881-47F8-4168-AB91-C43FAF81A2CE}</ProjectGuid>
+    <ProjectGuid>{C2B2EF76-3C03-4C08-BDEA-CE880E6193CD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PIOServerLib</RootNamespace>
-    <AssemblyName>PIOServerLib</AssemblyName>
+    <RootNamespace>PIOClientLib</RootNamespace>
+    <AssemblyName>PIOClientLib</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -40,36 +40,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Modules\IPlanetModule.cs" />
-    <Compile Include="Modules\PlanetModule.cs" />
-    <Compile Include="PIOServer.cs" />
-    <Compile Include="PIOVersionControl.cs" />
+    <Compile Include="HostedPIOClient.cs" />
+    <Compile Include="IPIOClient.cs" />
+    <Compile Include="PIOClient.cs" />
+    <Compile Include="PIOClientException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tables\Factory.cs" />
-    <Compile Include="Tables\Status.cs" />
-    <Compile Include="Tables\Task.cs" />
-    <Compile Include="Tables\Planet.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\LogLib\LogLib\LogLib.csproj">
-      <Project>{ef4b0001-2859-4a09-8f95-3e5bef4a5272}</Project>
+      <Project>{EF4B0001-2859-4A09-8F95-3E5BEF4A5272}</Project>
       <Name>LogLib</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\ModuleLib\ModuleLib\ModuleLib.csproj">
-      <Project>{f89b06c7-43cc-4589-9859-3a4656aaa4a6}</Project>
+      <Project>{F89B06C7-43CC-4589-9859-3A4656AAA4A6}</Project>
       <Name>ModuleLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\NetORMLib\NetORMLib.Sql\NetORMLib.Sql.csproj">
-      <Project>{d0d3e5a2-440c-4b0a-9b01-4633f2a74bdf}</Project>
-      <Name>NetORMLib.Sql</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\NetORMLib\NetORMLib.VersionControl\NetORMLib.VersionControl.csproj">
-      <Project>{54987791-5d6c-4f07-8355-c3c909c0632a}</Project>
-      <Name>NetORMLib.VersionControl</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\NetORMLib\NetORMLib\NetORMLib.csproj">
-      <Project>{c94b7bf1-bf85-4483-b032-1582f9ec6423}</Project>
+      <Project>{C94B7BF1-BF85-4483-B032-1582F9EC6423}</Project>
       <Name>NetORMLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PIOServerLib\PIOServerLib.csproj">
+      <Project>{A1EE8881-47F8-4168-AB91-C43FAF81A2CE}</Project>
+      <Name>PIOServerLib</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
