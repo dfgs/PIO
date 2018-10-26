@@ -11,7 +11,7 @@ using PIOClientLib;
 
 namespace PIOViewModelLib
 {
-	public abstract class RowsViewModel<T> : ViewModel<IEnumerable<T>>,IEnumerable<T>,INotifyCollectionChanged
+	public abstract class RowsViewModel<T> : ViewModel<IEnumerable<Row>>,IEnumerable<T>,INotifyCollectionChanged
 		where T: RowViewModel
 	{
 		private List<T> items;
@@ -20,33 +20,37 @@ namespace PIOViewModelLib
 
 		private Func<ILogger, IPIOClient, T> createItem;
 
+		public int Count
+		{
+			get => items.Count;
+		}
+
+		public T this[int Index]
+		{
+			get => items[Index]; 
+		}
+
 		public RowsViewModel(ILogger Logger, IPIOClient Client, Func<ILogger, IPIOClient, T> CreateItem) : base( Logger, Client)
 		{
-			items = new List<T>();
+			this.items = new List<T>();
 			this.createItem = CreateItem;
 		}
 
-		protected abstract IEnumerable<Row> GetRows();
-
-		protected override sealed IEnumerable<T> OnLoad()
+		protected override sealed void OnLoaded(IEnumerable<Row> Model)
 		{
-			List<T> rows;
 			T vm;
 
-			rows = new List<T>();
-			foreach(Row row in GetRows())
+			items.Clear();
+			foreach(Row row in Model)
 			{
-				vm = createItem(Logger,Client);
+				vm = createItem(Logger, Client);
 				vm.Load(row);
-				rows.Add(vm);
+				items.Add(vm);
 			}
-			return rows;
-		}
-
-		protected override sealed void OnLoaded(IEnumerable<T> Model)
-		{
 			OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
 		}
+
+					
 
 		protected void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
 		{

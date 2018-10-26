@@ -11,8 +11,20 @@ namespace PIOViewModelLib
 {
 	public abstract class RowViewModel : ViewModel<Row>
 	{
+		protected dynamic Model
+		{
+			get;
+			private set;
+		}
+
 		public RowViewModel(ILogger Logger, IPIOClient Client) : base( Logger, Client)
 		{
 		}
+
+		protected override sealed void OnLoaded(Row Model)
+		{
+			this.Model = Model;
+		}
+
 	}
 }

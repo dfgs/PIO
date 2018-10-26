@@ -12,11 +12,11 @@ namespace PIOViewModelLib
 	public abstract class ViewModel<T> : Module
 	{
 
-		public dynamic Model
+		/*public dynamic Model
 		{
 			get;
 			private set;
-		}
+		}*/
 
 		public bool HasError
 		{
@@ -35,11 +35,12 @@ namespace PIOViewModelLib
 			this.Client = Client;
 		}
 
-		protected virtual T OnLoad()
+		protected virtual void OnLoaded(T Model)
 		{
-			return Model;
+
 		}
 
+		protected abstract T OnLoad();
 		public void Load()
 		{
 			T model;
@@ -48,27 +49,19 @@ namespace PIOViewModelLib
 			{
 				model=OnLoad();
 				HasError = false;
+				OnLoaded(model);
 			}
 			catch (Exception ex)
 			{
 				Log(ex);
 				HasError = true;
-				return;
 			}
-			Load(model);
 		}
-
-		protected virtual void OnLoaded(T Model)
-		{
-
-		}
-
 
 		public void Load(T Model)
 		{
 			try
 			{
-				this.Model = Model;
 				HasError = false;
 				OnLoaded(Model);
 			}
@@ -78,6 +71,7 @@ namespace PIOViewModelLib
 				HasError = true;
 			}
 		}
+
 
 	}
 }

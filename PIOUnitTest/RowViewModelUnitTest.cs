@@ -35,7 +35,6 @@ namespace PIOUnitTest
 			vm = new PlanetViewModel(NullLogger.Instance, client);
 			vm.Load( );
 			Assert.AreEqual(false, vm.HasError);
-			Assert.AreNotEqual(null, vm.Model);
 			Assert.AreEqual(0, vm.PlanetID);
 			Assert.AreEqual("New planet", vm.Name);
 		}
@@ -50,7 +49,6 @@ namespace PIOUnitTest
 			vm = new PlanetViewModel(NullLogger.Instance, client);
 			vm.Load(new Row(Table<Planet>.Columns));
 			Assert.AreEqual(false, vm.HasError);
-			Assert.AreNotEqual(null, vm.Model);
 			Assert.AreEqual(0, vm.PlanetID);
 			Assert.AreEqual("New planet", vm.Name);
 		}
