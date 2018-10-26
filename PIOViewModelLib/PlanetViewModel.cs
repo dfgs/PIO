@@ -2,13 +2,14 @@
 using NetORMLib;
 using PIOClientLib;
 using PIOViewModelLib;
+using PIOViewModelLib.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PIOUnitTest.ViewModels
+namespace PIOViewModelLib
 {
 	public class PlanetViewModel : RowViewModel
 	{

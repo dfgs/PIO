@@ -40,10 +40,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseViewModel.cs" />
+    <Compile Include="PlanetsViewModel.cs" />
+    <Compile Include="PlanetViewModel.cs" />
+    <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RowViewModel.cs" />
-    <Compile Include="RowsViewModel.cs" />
+    <Compile Include="ViewModels\RowViewModel.cs" />
+    <Compile Include="ViewModels\RowsViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\LogLib\LogLib\LogLib.csproj">

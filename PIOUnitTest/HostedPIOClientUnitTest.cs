@@ -13,11 +13,54 @@ namespace PIOUnitTest
 	public class HostedPIOClientUnitTest
 	{
 		[TestMethod]
-		public void MayNotGetPlanets()
+		public void MayFailToConnect()
 		{
 			IPIOClient client;
 
-			client = new HostedPIOClient(NullLogger.Instance, new MockedPlanetModule(true));
+			client = new HostedPIOClient(NullLogger.Instance, new MockedPIOServer(false, false));
+			Assert.ThrowsException<PIOClientException>(() => client.Connect());
+			Assert.AreEqual(false, client.IsConnected);
+		}
+
+		[TestMethod]
+		public void ShouldConnect()
+		{
+			IPIOClient client;
+
+			client = new HostedPIOClient(NullLogger.Instance, new MockedPIOServer(true, false));
+			client.Connect();
+			Assert.AreEqual(true, client.IsConnected);
+		}
+
+		[TestMethod]
+		public void ShouldDisconnect()
+		{
+			IPIOClient client;
+
+			client = new HostedPIOClient(NullLogger.Instance, new MockedPIOServer(true, false));
+			client.Connect();
+			Assert.AreEqual(true, client.IsConnected);
+			client.Disconnect();
+			Assert.AreEqual(false, client.IsConnected);
+		}
+
+
+		[TestMethod]
+		public void MayNotGetPlanetsWhenNotConnected()
+		{
+			IPIOClient client;
+
+			client = new HostedPIOClient(NullLogger.Instance, new MockedPIOServer(true, false));
+			Assert.ThrowsException<PIOClientException>(client.GetPlanets);
+		}
+
+		[TestMethod]
+		public void MayNotGetPlanetsInCaseOfError()
+		{
+			IPIOClient client;
+
+			client = new HostedPIOClient(NullLogger.Instance, new MockedPIOServer(true,true));
+			client.Connect();
 			Assert.ThrowsException<PIOClientException>(client.GetPlanets);
 		}
 
@@ -27,7 +70,9 @@ namespace PIOUnitTest
 			IPIOClient client;
 			Row[] items;
 
-			client = new HostedPIOClient(NullLogger.Instance, new MockedPlanetModule(false));
+			client = new HostedPIOClient(NullLogger.Instance, new MockedPIOServer(true, false));
+			client.Connect();
+
 			items = client.GetPlanets().ToArray();
 			Assert.AreEqual(1, items.Length);
 			foreach (dynamic item in items)
@@ -36,5 +81,8 @@ namespace PIOUnitTest
 				Assert.AreEqual("New planet", item.Name);
 			}
 		}
+
+
+
 	}
 }

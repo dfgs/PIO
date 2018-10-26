@@ -12,11 +12,21 @@ namespace PIOClientLib
 {
 	public class HostedPIOClient : PIOClient
 	{
-		private IPlanetModule planetModule;
+		private IPIOServer server;
 
-		public HostedPIOClient(ILogger Logger, IPlanetModule PlanetModule):base(Logger)
+		public HostedPIOClient(ILogger Logger, IPIOServer Server):base(Logger)
 		{
-			this.planetModule = PlanetModule;
+			this.server = Server;
+		}
+
+		protected override void OnConnect()
+		{
+			if (!server.IsInitialized) throw (new Exception("Cannot connect to server"));
+		}
+
+		protected override void OnDisconnect()
+		{
+			
 		}
 
 		protected override IEnumerable<Row> OnGetFactories(int PlanetID)
@@ -25,11 +35,11 @@ namespace PIOClientLib
 		}
 		protected override Row OnGetPlanet(int PlanetID)
 		{
-			return planetModule.GetPlanet(PlanetID);
+			return server.PlanetModule.GetPlanet(PlanetID);
 		}
 		protected override IEnumerable<Row> OnGetPlanets()
 		{
-			return planetModule.GetPlanets();
+			return server.PlanetModule.GetPlanets();
 		}
 
 

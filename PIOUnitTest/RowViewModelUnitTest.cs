@@ -6,7 +6,7 @@ using NetORMLib;
 using PIOClientLib;
 using PIOServerLib.Tables;
 using PIOUnitTest.Mocks;
-using PIOUnitTest.ViewModels;
+using PIOViewModelLib;
 
 namespace PIOUnitTest
 {
@@ -19,7 +19,8 @@ namespace PIOUnitTest
 			IPIOClient client;
 			PlanetViewModel vm;
 
-			client = new HostedPIOClient(NullLogger.Instance, new MockedPlanetModule(true));
+			client = new HostedPIOClient(NullLogger.Instance, new MockedPIOServer(true,true));
+			client.Connect();
 			vm = new PlanetViewModel(NullLogger.Instance, client);
 			vm.Load();
 			Assert.AreEqual(true, vm.HasError);
@@ -31,7 +32,8 @@ namespace PIOUnitTest
 			IPIOClient client;
 			PlanetViewModel vm;
 
-			client = new HostedPIOClient(NullLogger.Instance, new MockedPlanetModule(false));
+			client = new HostedPIOClient(NullLogger.Instance, new MockedPIOServer(true,false));
+			client.Connect();
 			vm = new PlanetViewModel(NullLogger.Instance, client);
 			vm.Load( );
 			Assert.AreEqual(false, vm.HasError);
@@ -45,7 +47,8 @@ namespace PIOUnitTest
 			IPIOClient client;
 			PlanetViewModel vm;
 
-			client = new HostedPIOClient(NullLogger.Instance, new MockedPlanetModule(false));
+			client = new HostedPIOClient(NullLogger.Instance, new MockedPIOServer(true,false));
+			client.Connect();
 			vm = new PlanetViewModel(NullLogger.Instance, client);
 			vm.Load(new Row(Table<Planet>.Columns));
 			Assert.AreEqual(false, vm.HasError);

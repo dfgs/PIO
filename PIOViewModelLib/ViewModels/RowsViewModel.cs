@@ -9,7 +9,7 @@ using LogLib;
 using NetORMLib;
 using PIOClientLib;
 
-namespace PIOViewModelLib
+namespace PIOViewModelLib.ViewModels
 {
 	public abstract class RowsViewModel<T> : ViewModel<IEnumerable<Row>>,IEnumerable<T>,INotifyCollectionChanged
 		where T: RowViewModel

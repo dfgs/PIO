@@ -4,9 +4,29 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PIOHost"
-        mc:Ignorable="d"
+        mc:Ignorable="d" ResizeMode="CanResizeWithGrip"
         Title="PIOHost" Height="450" Width="800" WindowStartupLocation="CenterScreen" >
-    <Grid>
+	<Window.Resources>
+		<RoutedCommand x:Key="connectCommand"/>
+	</Window.Resources>
+
+	<Window.CommandBindings>
+		<CommandBinding Command="{StaticResource connectCommand}" CanExecute="ConnectCommandBinding_CanExecute" Executed="ConnectCommandBinding_Executed"/>
+	</Window.CommandBindings>
+	
+	<DockPanel>
+		<ToolBarTray DockPanel.Dock="Top">
+			<ToolBar >
+				<Button Command="{StaticResource connectCommand}">
+					<Image Stretch="None" Source="Images/connect.png"/>
+				</Button>
+			</ToolBar>
+		</ToolBarTray>
+		<StatusBar DockPanel.Dock="Bottom">
+			<TextBlock/>
+		</StatusBar>
+		<Grid>
         
-    </Grid>
+		</Grid>
+	</DockPanel>
 </Window>

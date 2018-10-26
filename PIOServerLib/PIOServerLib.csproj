@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="Modules\IPlanetModule.cs" />
     <Compile Include="Modules\PlanetModule.cs" />
+    <Compile Include="IPIOServer.cs" />
     <Compile Include="PIOServer.cs" />
     <Compile Include="PIOVersionControl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

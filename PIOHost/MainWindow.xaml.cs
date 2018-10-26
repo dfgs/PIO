@@ -6,7 +6,9 @@ using NetORMLib.Sql.CommandBuilders;
 using NetORMLib.Sql.ConnectionFactories;
 using NetORMLib.Sql.Databases;
 using NetORMLib.VersionControl;
+using PIOClientLib;
 using PIOServerLib;
+using PIOViewModelLib;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -33,7 +35,10 @@ namespace PIOHost
 	{
 		private ILogger logger;
 	
+		private IPIOClient client;
 		private PIOServer server;
+
+		private PlanetsViewModel planets;
 
 		public MainWindow()
 		{
@@ -44,6 +49,9 @@ namespace PIOHost
 			// run server as if it was an external app
 			server = new PIOServer(logger);
 			server.Start();
+
+			client = new HostedPIOClient(logger, server);
+			planets = new PlanetsViewModel(logger, client);
 		}
 		
 		protected override void OnClosing(CancelEventArgs e)
@@ -51,6 +59,17 @@ namespace PIOHost
 			server.Stop();
 			base.OnClosing(e);
 		}
+
+		private void ConnectCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+		{
+			e.Handled = true;e.CanExecute = false;
+		}
+
+		private void ConnectCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
+			e.Handled = true;
+		}
+
 
 
 	}

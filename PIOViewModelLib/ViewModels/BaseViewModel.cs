@@ -7,17 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PIOViewModelLib
+namespace PIOViewModelLib.ViewModels
 {
 	public abstract class ViewModel<T> : Module
 	{
 
-		/*public dynamic Model
-		{
-			get;
-			private set;
-		}*/
-
+		
 		public bool HasError
 		{
 			get;

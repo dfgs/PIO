@@ -122,6 +122,13 @@
       <Project>{a1ee8881-47f8-4168-ab91-c43faf81a2ce}</Project>
       <Name>PIOServerLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PIOViewModelLib\PIOViewModelLib.csproj">
+      <Project>{355ff4e2-b4d4-4e5d-a179-9763b211e3ed}</Project>
+      <Name>PIOViewModelLib</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\connect.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

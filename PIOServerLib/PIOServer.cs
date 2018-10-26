@@ -18,7 +18,7 @@ using System.Threading.Tasks;
 
 namespace PIOServerLib
 {
-	public class PIOServer : ThreadModule
+	public class PIOServer : ThreadModule,IPIOServer
 	{
 		public IPlanetModule PlanetModule
 		{
@@ -27,6 +27,12 @@ namespace PIOServerLib
 		}
 
 		private IDatabase database;
+
+		public bool IsInitialized
+		{
+			get;
+			private set;
+		}
 
 		public PIOServer(ILogger Logger) : base( Logger)
 		{
@@ -82,6 +88,8 @@ namespace PIOServerLib
 			if (!InitializeDatabase()) return;
 
 			PlanetModule = new PlanetModule(Logger, database);
+
+			IsInitialized = true;
 
 			while (State==ModuleStates.Started)
 			{

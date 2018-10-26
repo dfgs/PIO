@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PIOViewModelLib
+namespace PIOViewModelLib.ViewModels
 {
 	public abstract class RowViewModel : ViewModel<Row>
 	{
