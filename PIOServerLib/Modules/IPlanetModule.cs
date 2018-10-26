@@ -10,6 +10,7 @@ namespace PIOServerLib.Modules
 {
 	public interface IPlanetModule:IModule
 	{
+		Row GetPlanet(int PlanetID);
 		IEnumerable<Row> GetPlanets();
 	}
 }

@@ -16,9 +16,14 @@ namespace PIOServerLib.Modules
 	{
 		private IDatabase database;
 
-		public PlanetModule(ILogger Logger,IDatabase Database) : base("PlanetModule", Logger)
+		public PlanetModule(ILogger Logger,IDatabase Database) : base(Logger)
 		{
 			this.database = Database;
+		}
+
+		public Row GetPlanet(int PlanetID)
+		{
+			return this.database.Execute(new Select<Planet>(Planet.PlanetID, Planet.Name).Where(Planet.PlanetID.IsEqualTo(PlanetID))).FirstOrDefault();
 		}
 
 		public IEnumerable<Row> GetPlanets()

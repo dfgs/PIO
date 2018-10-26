@@ -9,6 +9,7 @@ namespace PIOClientLib
 {
     public interface IPIOClient
     {
+		Row GetPlanet(int PlanetID);
 		IEnumerable<Row> GetPlanets();
 		IEnumerable<Row> GetFactories(int PlanetID);
 

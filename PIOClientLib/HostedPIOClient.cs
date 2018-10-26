@@ -14,7 +14,7 @@ namespace PIOClientLib
 	{
 		private IPlanetModule planetModule;
 
-		public HostedPIOClient(ILogger Logger, IPlanetModule PlanetModule):base("HostedPIOClient",Logger)
+		public HostedPIOClient(ILogger Logger, IPlanetModule PlanetModule):base(Logger)
 		{
 			this.planetModule = PlanetModule;
 		}
@@ -22,6 +22,10 @@ namespace PIOClientLib
 		protected override IEnumerable<Row> OnGetFactories(int PlanetID)
 		{
 			throw new NotImplementedException();
+		}
+		protected override Row OnGetPlanet(int PlanetID)
+		{
+			return planetModule.GetPlanet(PlanetID);
 		}
 		protected override IEnumerable<Row> OnGetPlanets()
 		{

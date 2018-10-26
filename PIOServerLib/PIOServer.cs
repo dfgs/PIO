@@ -28,7 +28,7 @@ namespace PIOServerLib
 
 		private IDatabase database;
 
-		public PIOServer(ILogger Logger) : base("PIOServer", Logger)
+		public PIOServer(ILogger Logger) : base( Logger)
 		{
 		}
 

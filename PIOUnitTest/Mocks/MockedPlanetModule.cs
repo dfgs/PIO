@@ -15,7 +15,12 @@ namespace PIOUnitTest.Mocks
 		public MockedPlanetModule(bool ThrowException):base(ThrowException)
 		{
 		}
-		
+
+		public Row GetPlanet(int PlanetID)
+		{
+			return GenerateRows(1).FirstOrDefault();
+		}
+
 		public IEnumerable<Row> GetPlanets()
 		{
 			return GenerateRows(1);

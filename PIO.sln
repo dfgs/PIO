@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PIOClientLib", "PIOClientLi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PIOUnitTest", "PIOUnitTest\PIOUnitTest.csproj", "{78FDE156-7487-4ECD-B6BF-227E6168038C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PIOViewModelLib", "PIOViewModelLib\PIOViewModelLib.csproj", "{355FF4E2-B4D4-4E5D-A179-9763B211E3ED}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{78FDE156-7487-4ECD-B6BF-227E6168038C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{78FDE156-7487-4ECD-B6BF-227E6168038C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{78FDE156-7487-4ECD-B6BF-227E6168038C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{355FF4E2-B4D4-4E5D-A179-9763B211E3ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{355FF4E2-B4D4-4E5D-A179-9763B211E3ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{355FF4E2-B4D4-4E5D-A179-9763B211E3ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{355FF4E2-B4D4-4E5D-A179-9763B211E3ED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

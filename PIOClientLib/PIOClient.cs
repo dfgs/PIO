@@ -11,7 +11,7 @@ namespace PIOClientLib
 {
 	public abstract class PIOClient : Module, IPIOClient
 	{
-		public PIOClient(string Name,ILogger Logger) : base(Name, Logger)
+		public PIOClient(ILogger Logger) : base( Logger)
 		{
 		}
 
@@ -20,6 +20,12 @@ namespace PIOClientLib
 		public IEnumerable<Row> GetFactories(int PlanetID)
 		{
 			return TryGetOrThrow(()=>OnGetFactories(PlanetID), (ex) => new PIOClientException("Failed to get factories",ex));
+		}
+
+		protected abstract Row OnGetPlanet(int PlanetID);
+		public Row GetPlanet(int PlanetID)
+		{
+			return TryGetOrThrow(() => OnGetPlanet(PlanetID), (ex) => new PIOClientException("Failed to get planet", ex));
 		}
 
 		protected abstract IEnumerable<Row> OnGetPlanets();

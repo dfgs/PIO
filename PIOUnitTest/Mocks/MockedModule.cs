@@ -14,7 +14,7 @@ namespace PIOUnitTest.Mocks
 
 		public int ID => 0;
 
-		public string Name => GetType().Name;
+		public string ModuleName => GetType().Name;
 
 		public MockedModule(bool ThrowException)
 		{
