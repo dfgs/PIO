@@ -49,7 +49,9 @@
     <Compile Include="PIOVersionControl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tables\Factory.cs" />
+    <Compile Include="Tables\Resource.cs" />
     <Compile Include="Tables\Status.cs" />
+    <Compile Include="Tables\Stack.cs" />
     <Compile Include="Tables\Task.cs" />
     <Compile Include="Tables\Planet.cs" />
   </ItemGroup>

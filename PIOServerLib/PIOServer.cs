@@ -61,7 +61,7 @@ namespace PIOServerLib
 			IVersionControl versionControl;
 			versionControl = new PIOVersionControl(database);
 
-			//Try(databaseCreator.DropDatabase, "Failed to drop database");
+			Try(databaseCreator.DropDatabase, "Failed to drop database");
 
 			#region database initialisation
 			Log(LogLevels.Information, "Checking if database exists");
@@ -71,6 +71,7 @@ namespace PIOServerLib
 			{
 				Log(LogLevels.Information, "Creating database");
 				if (!Try(databaseCreator.CreateDatabase, "Failed to create database")) return false;
+				Thread.Sleep(5000);
 			}
 
 			Log(LogLevels.Information, "Checking database revision");
@@ -82,6 +83,8 @@ namespace PIOServerLib
 				if (!Try(versionControl.Upgrade, "Failed to upgrade database")) return false;
 			}
 			#endregion
+
+
 
 			return true;
 		}
