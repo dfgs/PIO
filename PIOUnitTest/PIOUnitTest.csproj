@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Mocks\MockedPIOServer.cs" />
+    <Compile Include="Mocks\MockedFactoryModule.cs" />
     <Compile Include="RowsViewModelUnitTest.cs" />
     <Compile Include="RowViewModelUnitTest.cs" />
     <Compile Include="HostedPIOClientUnitTest.cs" />

@@ -40,7 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FactoriesViewModel.cs" />
     <Compile Include="PlanetsViewModel.cs" />
+    <Compile Include="FactoryViewModel.cs" />
     <Compile Include="PlanetViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

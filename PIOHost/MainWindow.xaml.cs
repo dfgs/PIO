@@ -42,8 +42,6 @@ namespace PIOHost
 
 		public MainWindow()
 		{
-			InitializeComponent();
-
 			logger = new ConsoleLogger(new DefaultLogFormatter());
 
 			// run server as if it was an external app
@@ -51,24 +49,62 @@ namespace PIOHost
 			server.Start();
 
 			client = new HostedPIOClient(logger, server);
-			planets = new PlanetsViewModel(logger, client);
+
+
+			InitializeComponent();
 		}
-		
+
 		protected override void OnClosing(CancelEventArgs e)
 		{
 			server.Stop();
 			base.OnClosing(e);
 		}
 
+		private void ShowError(Exception ex)
+		{
+			MessageBox.Show(this, ex.Message);
+		}
+
 		private void ConnectCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
-			e.Handled = true;e.CanExecute = false;
+			e.Handled = true;e.CanExecute = !client.IsConnected;
 		}
 
 		private void ConnectCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
 			e.Handled = true;
+			try
+			{
+				client.Connect();
+				planets = new PlanetsViewModel(logger, client);
+				planets.Load((Client)=>Client.GetPlanets());
+				DataContext = planets;
+			}
+			catch (Exception ex)
+			{
+				ShowError(ex);
+			}
 		}
+
+		private void DisconnectCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+		{
+			e.Handled = true; e.CanExecute = client.IsConnected;
+		}
+
+		private void DisconnectCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
+			e.Handled = true;
+			try
+			{
+				client.Disconnect();
+				DataContext = null;
+			}
+			catch (Exception ex)
+			{
+				ShowError(ex);
+			}
+		}
+
 
 
 

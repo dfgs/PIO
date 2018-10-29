@@ -8,10 +8,20 @@
         Title="PIOHost" Height="450" Width="800" WindowStartupLocation="CenterScreen" >
 	<Window.Resources>
 		<RoutedCommand x:Key="connectCommand"/>
+		<RoutedCommand x:Key="disconnectCommand"/>
+
+		<Style TargetType="{x:Type Image}">
+			<Style.Triggers>
+				<Trigger Property="IsEnabled" Value="false">
+					<Setter Property="Opacity" Value="0.5"/>
+				</Trigger>
+			</Style.Triggers>
+		</Style>
 	</Window.Resources>
 
 	<Window.CommandBindings>
 		<CommandBinding Command="{StaticResource connectCommand}" CanExecute="ConnectCommandBinding_CanExecute" Executed="ConnectCommandBinding_Executed"/>
+		<CommandBinding Command="{StaticResource disconnectCommand}" CanExecute="DisconnectCommandBinding_CanExecute" Executed="DisconnectCommandBinding_Executed"/>
 	</Window.CommandBindings>
 	
 	<DockPanel>
@@ -20,13 +30,22 @@
 				<Button Command="{StaticResource connectCommand}">
 					<Image Stretch="None" Source="Images/connect.png"/>
 				</Button>
+				<Button Command="{StaticResource disconnectCommand}">
+					<Image Stretch="None" Source="Images/disconnect.png"/>
+				</Button>
 			</ToolBar>
 		</ToolBarTray>
 		<StatusBar DockPanel.Dock="Bottom">
 			<TextBlock/>
 		</StatusBar>
 		<Grid>
-        
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="1*"/>
+				<ColumnDefinition Width="5"/>
+				<ColumnDefinition Width="2*"/>
+			</Grid.ColumnDefinitions>
+			<TreeView Grid.Column="0" ItemsSource="{Binding}"/>
+			<GridSplitter Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
 		</Grid>
 	</DockPanel>
 </Window>

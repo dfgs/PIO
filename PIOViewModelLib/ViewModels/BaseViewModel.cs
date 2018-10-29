@@ -30,21 +30,41 @@ namespace PIOViewModelLib.ViewModels
 			this.Client = Client;
 		}
 
-		protected virtual void OnLoaded(T Model)
+		protected abstract void OnSetModel(T Model);
+
+		protected virtual void OnLoaded()
 		{
 
 		}
 
-		protected abstract T OnLoad();
+		/*protected abstract T OnLoadModel();
 		public void Load()
 		{
 			T model;
 
 			try
 			{
-				model=OnLoad();
+				model=OnLoadModel();
+				OnSetModel(model);
+				OnLoaded();
 				HasError = false;
-				OnLoaded(model);
+			}
+			catch (Exception ex)
+			{
+				Log(ex);
+				HasError = true;
+			}
+		}*/
+
+		public void Load(Func<IPIOClient, T> Func)
+		{
+			T Model;
+			try
+			{
+				Model = Func(this.Client);
+				OnSetModel(Model);
+				OnLoaded();
+				HasError = false;
 			}
 			catch (Exception ex)
 			{
@@ -57,8 +77,9 @@ namespace PIOViewModelLib.ViewModels
 		{
 			try
 			{
+				OnSetModel(Model);
+				OnLoaded();
 				HasError = false;
-				OnLoaded(Model);
 			}
 			catch (Exception ex)
 			{

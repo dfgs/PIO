@@ -21,7 +21,7 @@ namespace PIOViewModelLib.ViewModels
 		{
 		}
 
-		protected override sealed void OnLoaded(Row Model)
+		protected override sealed void OnSetModel(Row Model)
 		{
 			this.Model = Model;
 		}

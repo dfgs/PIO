@@ -22,13 +22,20 @@ namespace PIOViewModelLib
 			get { return Model.Name; }
 		}
 
-		public PlanetViewModel(ILogger Logger, IPIOClient Client) : base(Logger, Client)
+		public FactoriesViewModel Factories
 		{
+			get;
+			private set;
 		}
 
-		protected override Row OnLoad()
+		public PlanetViewModel(ILogger Logger, IPIOClient Client) : base(Logger, Client)
 		{
-			return Client.GetPlanet(0);
+			Factories = new FactoriesViewModel(Logger, Client);
+		}
+
+		protected override void OnLoaded()
+		{
+			Factories.Load((Client) => Client.GetFactories(PlanetID));
 		}
 
 

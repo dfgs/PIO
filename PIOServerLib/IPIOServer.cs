@@ -24,6 +24,10 @@ namespace PIOServerLib
 		{
 			get;
 		}
+		IFactoryModule FactoryModule
+		{
+			get;
+		}
 
 		bool IsInitialized
 		{

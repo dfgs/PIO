@@ -40,7 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Modules\IFactoryModule.cs" />
     <Compile Include="Modules\IPlanetModule.cs" />
+    <Compile Include="Modules\FactoryModule.cs" />
     <Compile Include="Modules\PlanetModule.cs" />
     <Compile Include="IPIOServer.cs" />
     <Compile Include="PIOServer.cs" />

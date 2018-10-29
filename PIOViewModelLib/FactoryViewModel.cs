@@ -11,12 +11,23 @@ using System.Threading.Tasks;
 
 namespace PIOViewModelLib
 {
-	public class PlanetsViewModel : RowsViewModel<PlanetViewModel>
+	public class FactoryViewModel : RowViewModel
 	{
-		public PlanetsViewModel(ILogger Logger, IPIOClient Client) : base(Logger, Client, (logger,client)=>new PlanetViewModel(logger,client))
+		public int FactoryID
+		{
+			get { return Model.FactoryID; }
+		}
+		public string Name
+		{
+			get { return Model.Name; }
+		}
+
+		public FactoryViewModel(ILogger Logger, IPIOClient Client) : base(Logger, Client)
 		{
 		}
-	
+
+		
+
 
 	}
 }

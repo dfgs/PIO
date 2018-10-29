@@ -82,6 +82,43 @@ namespace PIOUnitTest
 			}
 		}
 
+		[TestMethod]
+		public void MayNotGetFactorysWhenNotConnected()
+		{
+			IPIOClient client;
+
+			client = new HostedPIOClient(NullLogger.Instance, new MockedPIOServer(true, false));
+			Assert.ThrowsException<PIOClientException>(()=>client.GetFactories(0));
+		}
+
+		[TestMethod]
+		public void MayNotGetFactorysInCaseOfError()
+		{
+			IPIOClient client;
+
+			client = new HostedPIOClient(NullLogger.Instance, new MockedPIOServer(true, true));
+			client.Connect();
+			Assert.ThrowsException<PIOClientException>(() => client.GetFactories(0));
+		}
+
+		[TestMethod]
+		public void ShouldGetFactories()
+		{
+			IPIOClient client;
+			Row[] items;
+
+			client = new HostedPIOClient(NullLogger.Instance, new MockedPIOServer(true, false));
+			client.Connect();
+
+			items = client.GetFactories(1).ToArray();
+			Assert.AreEqual(3, items.Length);
+			foreach (dynamic item in items)
+			{
+				Assert.AreEqual(0, item.FactoryID);
+				Assert.AreEqual("New factory", item.Name);
+			}
+		}
+
 
 
 	}

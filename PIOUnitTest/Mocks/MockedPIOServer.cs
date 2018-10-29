@@ -15,6 +15,11 @@ namespace PIOUnitTest.Mocks
 			get;
 			private set;
 		}
+		public IFactoryModule FactoryModule
+		{
+			get;
+			private set;
+		}
 
 		public bool IsInitialized
 		{
@@ -26,9 +31,10 @@ namespace PIOUnitTest.Mocks
 		{
 			this.IsInitialized = IsInitialized;
 			this.PlanetModule = new MockedPlanetModule(ThrowException);
+			this.FactoryModule = new MockedFactoryModule(ThrowException);
 		}
 
-		
+
 
 
 	}

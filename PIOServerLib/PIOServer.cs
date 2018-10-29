@@ -25,6 +25,11 @@ namespace PIOServerLib
 			get;
 			private set;
 		}
+		public IFactoryModule FactoryModule
+		{
+			get;
+			private set;
+		}
 
 		private IDatabase database;
 
@@ -88,6 +93,7 @@ namespace PIOServerLib
 			if (!InitializeDatabase()) return;
 
 			PlanetModule = new PlanetModule(Logger, database);
+			FactoryModule = new FactoryModule(Logger, database);
 
 			IsInitialized = true;
 

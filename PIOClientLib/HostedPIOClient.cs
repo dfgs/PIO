@@ -31,7 +31,7 @@ namespace PIOClientLib
 
 		protected override IEnumerable<Row> OnGetFactories(int PlanetID)
 		{
-			throw new NotImplementedException();
+			return server.FactoryModule.GetFactories(PlanetID);
 		}
 		protected override Row OnGetPlanet(int PlanetID)
 		{

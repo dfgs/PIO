@@ -36,7 +36,7 @@ namespace PIOViewModelLib.ViewModels
 			this.createItem = CreateItem;
 		}
 
-		protected override sealed void OnLoaded(IEnumerable<Row> Model)
+		protected override sealed void OnSetModel(IEnumerable<Row> Model)
 		{
 			T vm;
 
