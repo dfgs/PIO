@@ -21,8 +21,8 @@ namespace PIOUnitTest
 
 			client = new HostedPIOClient(NullLogger.Instance, new MockedPIOServer(true,true));
 			client.Connect();
-			vm = new PlanetViewModel(NullLogger.Instance);
-			vm.Load(client, client.GetPlanet(0));
+			vm = new PlanetViewModel(NullLogger.Instance,client);
+			vm.Load(() => client.GetPlanet(0));
 			Assert.AreEqual(true, vm.HasError);
 		}
 
@@ -34,8 +34,8 @@ namespace PIOUnitTest
 
 			client = new HostedPIOClient(NullLogger.Instance, new MockedPIOServer(true,false));
 			client.Connect();
-			vm = new PlanetViewModel(NullLogger.Instance);
-			vm.Load(client, client.GetPlanet(0));
+			vm = new PlanetViewModel(NullLogger.Instance,client);
+			vm.Load(() => client.GetPlanet(0));
 			Assert.AreEqual(false, vm.HasError);
 			Assert.AreEqual(0, vm.PlanetID);
 			Assert.AreEqual("New planet", vm.Name);
@@ -49,8 +49,8 @@ namespace PIOUnitTest
 
 			client = new HostedPIOClient(NullLogger.Instance, new MockedPIOServer(true,false));
 			client.Connect();
-			vm = new PlanetViewModel(NullLogger.Instance);
-			vm.Load(client,new Row(Table<Planet>.Columns));
+			vm = new PlanetViewModel(NullLogger.Instance,client);
+			vm.Load(() => new Row(Table<Planet>.Columns));
 			Assert.AreEqual(false, vm.HasError);
 			Assert.AreEqual(0, vm.PlanetID);
 			Assert.AreEqual("New planet", vm.Name);

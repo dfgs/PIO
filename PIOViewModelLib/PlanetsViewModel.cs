@@ -13,7 +13,7 @@ namespace PIOViewModelLib
 {
 	public class PlanetsViewModel : RowsViewModel<PlanetViewModel>
 	{
-		public PlanetsViewModel(ILogger Logger) : base(Logger, (logger)=>new PlanetViewModel(logger))
+		public PlanetsViewModel(ILogger Logger, IPIOClient Client) : base(Logger,Client, ()=>new PlanetViewModel(Logger,Client))
 		{
 		}
 	

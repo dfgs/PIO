@@ -13,7 +13,7 @@ namespace PIOViewModelLib
 {
 	public class StacksViewModel : RowsViewModel<StackViewModel>
 	{
-		public StacksViewModel(ILogger Logger) : base(Logger, (logger)=>new StackViewModel(logger))
+		public StacksViewModel(ILogger Logger, IPIOClient Client) : base(Logger,Client, ()=>new StackViewModel(Logger,Client))
 		{
 		}
 		

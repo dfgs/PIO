@@ -76,8 +76,8 @@ namespace PIOHost
 			try
 			{
 				client.Connect();
-				appViewModel = new AppViewModel(logger);
-				appViewModel.Load(client);
+				appViewModel = new AppViewModel(logger,client);
+				appViewModel.Load();
 				DataContext = appViewModel;
 			}
 			catch (Exception ex)
@@ -119,7 +119,7 @@ namespace PIOHost
 			try
 			{
 				planet = (PlanetViewModel)appViewModel.SelectedItem;
-				client.BuildFactory(planet.PlanetID,1);
+				planet.BuildFactory();
 			}
 			catch (Exception ex)
 			{

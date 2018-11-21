@@ -27,13 +27,13 @@ namespace PIOViewModelLib
 			private set;
 		}
 
-		public FactoryViewModel(ILogger Logger) : base(Logger)
+		public FactoryViewModel(ILogger Logger, IPIOClient Client) : base(Logger,Client)
 		{
-			Stacks = new StacksViewModel(Logger);
+			Stacks = new StacksViewModel(Logger,Client);
 		}
-		protected override void OnLoaded(IPIOClient Client)
+		protected override void OnLoaded()
 		{
-			Stacks.Load(Client, Client.GetStacks(this.FactoryID));
+			Stacks.Load(()=>Client.GetStacks(this.FactoryID));
 		}
 
 

@@ -18,7 +18,7 @@ namespace PIOViewModelLib.ViewModels
 
 		public event NotifyCollectionChangedEventHandler CollectionChanged;
 
-		private Func<ILogger,  T> createItem;
+		private Func<T> createItem;
 
 		public int Count
 		{
@@ -30,21 +30,36 @@ namespace PIOViewModelLib.ViewModels
 			get => items[Index]; 
 		}
 
-		public RowsViewModel(ILogger Logger, Func<ILogger,  T> CreateItem) : base( Logger)
+		public RowsViewModel(ILogger Logger, IPIOClient Client, Func<T> CreateItem) : base( Logger,Client)
 		{
 			this.items = new List<T>();
 			this.createItem = CreateItem;
 		}
 
-		protected override sealed void OnSetModel(IPIOClient Client, IEnumerable<Row> Model)
+
+		public void Add(T Item)
+		{
+			items.Add(Item);
+			OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, Item, Count - 1));
+		}
+
+		public void Add(Row Row)
+		{
+			T vm;
+			vm = createItem();
+			vm.Load(() => Row);
+			Add(vm);
+		}
+
+		protected override sealed void OnSetModel(IEnumerable<Row> Model)
 		{
 			T vm;
 
 			items.Clear();
 			foreach(Row row in Model)
 			{
-				vm = createItem(Logger);
-				vm.Load(Client, row);
+				vm = createItem();
+				vm.Load(() => row);
 				items.Add(vm);
 			}
 			OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));

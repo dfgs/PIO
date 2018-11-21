@@ -13,9 +13,10 @@ namespace PIOViewModelLib
 {
 	public class FactoriesViewModel : RowsViewModel<FactoryViewModel>
 	{
-		public FactoriesViewModel(ILogger Logger) : base(Logger,(logger)=>new FactoryViewModel(logger))
+		public FactoriesViewModel(ILogger Logger, IPIOClient Client) : base(Logger,Client,()=>new FactoryViewModel(Logger,Client))
 		{
 		}
+
 		
 	}
 }

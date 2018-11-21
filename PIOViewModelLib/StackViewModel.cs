@@ -27,7 +27,7 @@ namespace PIOViewModelLib
 		}
 		
 
-		public StackViewModel(ILogger Logger) : base(Logger)
+		public StackViewModel(ILogger Logger, IPIOClient Client) : base(Logger,Client)
 		{
 		}
 

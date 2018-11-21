@@ -19,6 +19,7 @@ namespace PIOHost
 			private set;
 		}
 
+		private IPIOClient client;
 
 		public static readonly DependencyProperty SelectedItemProperty = DependencyProperty.Register("SelectedItem", typeof(object), typeof(AppViewModel));
 		public object SelectedItem
@@ -28,15 +29,16 @@ namespace PIOHost
 		}
 
 
-		public AppViewModel(ILogger Logger)
+		public AppViewModel(ILogger Logger, IPIOClient Client)
 		{
-			Planets = new PlanetsViewModel(Logger);
+			this.client = Client;
+			Planets = new PlanetsViewModel(Logger,Client);
 		}
 
 
-		public void Load(IPIOClient Client)
+		public void Load()
 		{
-			Planets.Load(Client, Client.GetPlanets());
+			Planets.Load(() => client.GetPlanets());
 		}
 
 

@@ -38,9 +38,10 @@ namespace PIOServerLib.Modules
 			item = new Row(Table<Factory>.Columns);
 			item.PlanetID = PlanetID;
 			item.Name = "New";
+			item.FactoryStateID = 0;
 
-			this.database.Execute(new Insert<Factory>().Set(Factory.PlanetID,PlanetID).Set(Factory.Name,"New"), new SelectIdentity<Factory>((key) => item.FactoryID = key));
-
+			this.database.Execute(new Insert<Factory>().Set(Factory.PlanetID,PlanetID).Set(Factory.Name,"New").Set(Factory.FactoryStateID,0), new SelectIdentity<Factory>((key) => item.FactoryID = Convert.ToInt32(key)));
+			
 			return item;
 		}
 
