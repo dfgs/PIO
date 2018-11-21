@@ -19,7 +19,10 @@ namespace PIOClientLib
 
 		Row GetPlanet(int PlanetID);
 		IEnumerable<Row> GetPlanets();
-		IEnumerable<Row> GetFactories(int PlanetID);
 
+		IEnumerable<Row> GetFactories(int PlanetID);
+		Row BuildFactory(int PlanetID, int FactoryTypeID);
+
+		IEnumerable<Row> GetStacks(int FactoryID);
 	}
 }

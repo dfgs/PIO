@@ -19,20 +19,20 @@ namespace PIOViewModelLib.ViewModels
 			private set;
 		}
 
-		protected IPIOClient Client
+		/*protected IPIOClient Client
 		{
 			get;
 			private set;
-		}
+		}*/
 
-		public ViewModel( ILogger Logger,IPIOClient Client) : base( Logger)
+		public ViewModel( ILogger Logger) : base( Logger)
 		{
-			this.Client = Client;
+			//this.Client = Client;
 		}
 
-		protected abstract void OnSetModel(T Model);
+		protected abstract void OnSetModel(IPIOClient Client, T Model);
 
-		protected virtual void OnLoaded()
+		protected virtual void OnLoaded(IPIOClient Client)
 		{
 
 		}
@@ -56,14 +56,14 @@ namespace PIOViewModelLib.ViewModels
 			}
 		}*/
 
-		public void Load(Func<IPIOClient, T> Func)
+		public void Load(IPIOClient Client, Func<T> Func)
 		{
 			T Model;
 			try
 			{
-				Model = Func(this.Client);
-				OnSetModel(Model);
-				OnLoaded();
+				Model = Func();
+				OnSetModel(Client,Model);
+				OnLoaded(Client);
 				HasError = false;
 			}
 			catch (Exception ex)
@@ -73,12 +73,12 @@ namespace PIOViewModelLib.ViewModels
 			}
 		}
 
-		public void Load(T Model)
+		public void Load(IPIOClient Client, T Model)
 		{
 			try
 			{
-				OnSetModel(Model);
-				OnLoaded();
+				OnSetModel(Client,Model);
+				OnLoaded(Client);
 				HasError = false;
 			}
 			catch (Exception ex)

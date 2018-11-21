@@ -4,12 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PIOHost"
-        xmlns:viewModels="PIOViewModelLib"
+        xmlns:viewModels="clr-namespace:PIOViewModelLib;assembly=PIOViewModelLib"
 		mc:Ignorable="d" ResizeMode="CanResizeWithGrip"
         Title="PIOHost" Height="450" Width="800" WindowStartupLocation="CenterScreen" >
 	<Window.Resources>
 		<RoutedCommand x:Key="connectCommand"/>
 		<RoutedCommand x:Key="disconnectCommand"/>
+		<RoutedCommand x:Key="buildCommand"/>
 
 		<Style TargetType="{x:Type Image}">
 			<Style.Triggers>
@@ -18,15 +19,16 @@
 				</Trigger>
 			</Style.Triggers>
 		</Style>
-		
-		
+
+
 	</Window.Resources>
 
 	<Window.CommandBindings>
 		<CommandBinding Command="{StaticResource connectCommand}" CanExecute="ConnectCommandBinding_CanExecute" Executed="ConnectCommandBinding_Executed"/>
 		<CommandBinding Command="{StaticResource disconnectCommand}" CanExecute="DisconnectCommandBinding_CanExecute" Executed="DisconnectCommandBinding_Executed"/>
+		<CommandBinding Command="{StaticResource buildCommand}" CanExecute="BuildCommandBinding_CanExecute" Executed="BuildCommandBinding_Executed"/>
 	</Window.CommandBindings>
-	
+
 	<DockPanel>
 		<ToolBarTray DockPanel.Dock="Top">
 			<ToolBar >
@@ -37,24 +39,40 @@
 					<Image Stretch="None" Source="Images/disconnect.png"/>
 				</Button>
 			</ToolBar>
+			<ToolBar >
+				<Button Command="{StaticResource buildCommand}">
+					<Image Stretch="None" Source="Images/building_add.png"/>
+				</Button>
+			</ToolBar>
 		</ToolBarTray>
 		<StatusBar DockPanel.Dock="Bottom">
 			<TextBlock/>
 		</StatusBar>
 		<Grid>
 			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="1*"/>
+				<ColumnDefinition Width="39*"/>
+				<ColumnDefinition Width="223*"/>
 				<ColumnDefinition Width="5"/>
-				<ColumnDefinition Width="2*"/>
+				<ColumnDefinition Width="525*"/>
 			</Grid.ColumnDefinitions>
-			<TreeView Grid.Column="0" ItemsSource="{Binding}">
-				<TreeView.ItemTemplate>
-					<HierarchicalDataTemplate ItemsSource="{Binding Factories}">
+			<TreeView Grid.Column="0" ItemsSource="{Binding Planets}" SelectedItemChanged="TreeView_SelectedItemChanged" Grid.ColumnSpan="2">
+				<TreeView.Resources>
+					<HierarchicalDataTemplate DataType="{x:Type viewModels:PlanetViewModel}" ItemsSource="{Binding Factories}">
 						<TextBlock Text="{Binding Name}"/>
 					</HierarchicalDataTemplate>
-				</TreeView.ItemTemplate>
+					<HierarchicalDataTemplate DataType="{x:Type viewModels:FactoryViewModel}" ItemsSource="{Binding Stacks}">
+						<TextBlock Text="{Binding Name}"/>
+					</HierarchicalDataTemplate>
+					<HierarchicalDataTemplate DataType="{x:Type viewModels:StackViewModel}" >
+						<StackPanel Orientation="Horizontal">
+							<TextBlock Text="{Binding ResourceID}"/>
+							<TextBlock Text=": "/>
+							<TextBlock Text="{Binding Quantity}"/>
+						</StackPanel>
+					</HierarchicalDataTemplate>
+				</TreeView.Resources>
 			</TreeView>
-			<GridSplitter Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+			<GridSplitter Grid.Column="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
 		</Grid>
 	</DockPanel>
 </Window>

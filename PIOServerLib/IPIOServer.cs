@@ -1,5 +1,6 @@
 ﻿using LogLib;
 using ModuleLib;
+using NetORMLib;
 using NetORMLib.CommandBuilders;
 using NetORMLib.ConnectionFactories;
 using NetORMLib.Databases;
@@ -28,6 +29,10 @@ namespace PIOServerLib
 		{
 			get;
 		}
+		IStackModule StackModule
+		{
+			get;
+		}
 
 		bool IsInitialized
 		{
@@ -35,7 +40,5 @@ namespace PIOServerLib
 		}
 
 		
-
-
 	}
 }

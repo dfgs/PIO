@@ -115,7 +115,45 @@ namespace PIOUnitTest
 			foreach (dynamic item in items)
 			{
 				Assert.AreEqual(0, item.FactoryID);
+				Assert.AreEqual(1, item.PlanetID);
 				Assert.AreEqual("New factory", item.Name);
+			}
+		}
+
+		[TestMethod]
+		public void MayNotGetStacksWhenNotConnected()
+		{
+			IPIOClient client;
+
+			client = new HostedPIOClient(NullLogger.Instance, new MockedPIOServer(true, false));
+			Assert.ThrowsException<PIOClientException>(() => client.GetStacks(0));
+		}
+
+		[TestMethod]
+		public void MayNotGetStacksInCaseOfError()
+		{
+			IPIOClient client;
+
+			client = new HostedPIOClient(NullLogger.Instance, new MockedPIOServer(true, true));
+			client.Connect();
+			Assert.ThrowsException<PIOClientException>(() => client.GetStacks(0));
+		}
+
+		[TestMethod]
+		public void ShouldGetStacks()
+		{
+			IPIOClient client;
+			Row[] items;
+
+			client = new HostedPIOClient(NullLogger.Instance, new MockedPIOServer(true, false));
+			client.Connect();
+
+			items = client.GetStacks(1).ToArray();
+			Assert.AreEqual(3, items.Length);
+			foreach (dynamic item in items)
+			{
+				Assert.AreEqual(0, item.StackID);
+				Assert.AreEqual(1, item.FactoryID);
 			}
 		}
 

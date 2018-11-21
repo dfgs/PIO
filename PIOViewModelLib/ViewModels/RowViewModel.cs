@@ -17,11 +17,11 @@ namespace PIOViewModelLib.ViewModels
 			private set;
 		}
 
-		public RowViewModel(ILogger Logger, IPIOClient Client) : base( Logger, Client)
+		public RowViewModel(ILogger Logger) : base( Logger)
 		{
 		}
 
-		protected override sealed void OnSetModel(Row Model)
+		protected override sealed void OnSetModel(IPIOClient Client, Row Model)
 		{
 			this.Model = Model;
 		}

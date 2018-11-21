@@ -37,12 +37,6 @@ namespace PIOClientLib
 			IsConnected = false;
 		}
 
-		protected abstract IEnumerable<Row> OnGetFactories(int PlanetID);
-		public IEnumerable<Row> GetFactories(int PlanetID)
-		{
-			if (!IsConnected) throw new PIOClientException("Client is not connected",null);
-			return TryGetOrThrow(()=>OnGetFactories(PlanetID), (ex) => new PIOClientException("Failed to get factories",ex));
-		}
 
 		protected abstract Row OnGetPlanet(int PlanetID);
 		public Row GetPlanet(int PlanetID)
@@ -58,6 +52,27 @@ namespace PIOClientLib
 			return TryGetOrThrow(() => OnGetPlanets(), (ex) => new PIOClientException("Failed to get planets", ex));
 		}
 
-		
+		protected abstract IEnumerable<Row> OnGetFactories(int PlanetID);
+		public IEnumerable<Row> GetFactories(int PlanetID)
+		{
+			if (!IsConnected) throw new PIOClientException("Client is not connected", null);
+			return TryGetOrThrow(() => OnGetFactories(PlanetID), (ex) => new PIOClientException("Failed to get factories", ex));
+		}
+
+		protected abstract Row OnBuildFactory(int PlanetID, int FactoryTypeID);
+		public Row BuildFactory(int PlanetID,int FactoryTypeID)
+		{
+			if (!IsConnected) throw new PIOClientException("Client is not connected", null);
+			return TryGetOrThrow(() => OnBuildFactory(PlanetID,FactoryTypeID), (ex) => new PIOClientException("Failed to build factory", ex));
+		}
+
+		protected abstract IEnumerable<Row> OnGetStacks(int FactoryID);
+		public IEnumerable<Row> GetStacks(int FactoryID)
+		{
+			if (!IsConnected) throw new PIOClientException("Client is not connected", null);
+			return TryGetOrThrow(() => OnGetStacks(FactoryID), (ex) => new PIOClientException("Failed to get stacks", ex));
+		}
+
+
 	}
 }

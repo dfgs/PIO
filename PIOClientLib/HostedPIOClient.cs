@@ -29,10 +29,6 @@ namespace PIOClientLib
 			
 		}
 
-		protected override IEnumerable<Row> OnGetFactories(int PlanetID)
-		{
-			return server.FactoryModule.GetFactories(PlanetID);
-		}
 		protected override Row OnGetPlanet(int PlanetID)
 		{
 			return server.PlanetModule.GetPlanet(PlanetID);
@@ -40,6 +36,18 @@ namespace PIOClientLib
 		protected override IEnumerable<Row> OnGetPlanets()
 		{
 			return server.PlanetModule.GetPlanets();
+		}
+		protected override IEnumerable<Row> OnGetFactories(int PlanetID)
+		{
+			return server.FactoryModule.GetFactories(PlanetID);
+		}
+		protected override Row OnBuildFactory(int PlanetID, int FactoryTypeID)
+		{
+			return server.FactoryModule.BuildFactory(PlanetID, FactoryTypeID);
+		}
+		protected override IEnumerable<Row> OnGetStacks(int FactoryID)
+		{
+			return server.StackModule.GetStacks(FactoryID);
 		}
 
 

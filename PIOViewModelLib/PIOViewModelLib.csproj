@@ -40,6 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="StackViewModel.cs" />
+    <Compile Include="StacksViewModel.cs" />
     <Compile Include="FactoriesViewModel.cs" />
     <Compile Include="PlanetsViewModel.cs" />
     <Compile Include="FactoryViewModel.cs" />

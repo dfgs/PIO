@@ -40,6 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Modules\StackModule.cs" />
+    <Compile Include="Modules\IStackModule.cs" />
     <Compile Include="Modules\IFactoryModule.cs" />
     <Compile Include="Modules\IPlanetModule.cs" />
     <Compile Include="Modules\FactoryModule.cs" />

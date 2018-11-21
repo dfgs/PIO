@@ -38,7 +38,7 @@ namespace PIOHost
 		private IPIOClient client;
 		private PIOServer server;
 
-		private PlanetsViewModel planets;
+		private AppViewModel appViewModel;
 
 		public MainWindow()
 		{
@@ -76,9 +76,9 @@ namespace PIOHost
 			try
 			{
 				client.Connect();
-				planets = new PlanetsViewModel(logger, client);
-				planets.Load((Client)=>Client.GetPlanets());
-				DataContext = planets;
+				appViewModel = new AppViewModel(logger);
+				appViewModel.Load(client);
+				DataContext = appViewModel;
 			}
 			catch (Exception ex)
 			{
@@ -106,6 +106,34 @@ namespace PIOHost
 		}
 
 
+		private void BuildCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+		{
+			e.Handled = true; e.CanExecute = client.IsConnected && (appViewModel?.SelectedItem is PlanetViewModel);
+		}
+
+		private void BuildCommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
+		{
+			PlanetViewModel planet;
+			e.Handled = true;
+
+			try
+			{
+				planet = (PlanetViewModel)appViewModel.SelectedItem;
+				client.BuildFactory(planet.PlanetID,1);
+			}
+			catch (Exception ex)
+			{
+				ShowError(ex);
+			}
+		}
+
+
+
+		private void TreeView_SelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+		{
+			if (appViewModel == null) return;
+			appViewModel.SelectedItem = e.NewValue;
+		}
 
 
 	}

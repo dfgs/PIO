@@ -30,7 +30,11 @@ namespace PIOServerLib
 			get;
 			private set;
 		}
-
+		public IStackModule StackModule
+		{
+			get;
+			private set;
+		}
 		private IDatabase database;
 
 		public bool IsInitialized
@@ -97,6 +101,7 @@ namespace PIOServerLib
 
 			PlanetModule = new PlanetModule(Logger, database);
 			FactoryModule = new FactoryModule(Logger, database);
+			StackModule = new StackModule(Logger, database);
 
 			IsInitialized = true;
 

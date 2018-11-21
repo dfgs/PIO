@@ -31,5 +31,19 @@ namespace PIOServerLib.Modules
 			return this.database.Execute(new Select<Factory>(Factory.FactoryID, Factory.Name).Where(Factory.PlanetID.IsEqualTo(PlanetID)) );
 		}
 
+		public Row BuildFactory(int PlanetID,int FactoryTypeID)
+		{
+			dynamic item;
+
+			item = new Row(Table<Factory>.Columns);
+			item.PlanetID = PlanetID;
+			item.Name = "New";
+
+			this.database.Execute(new Insert<Factory>().Set(Factory.PlanetID,PlanetID).Set(Factory.Name,"New"), new SelectIdentity<Factory>((key) => item.FactoryID = key));
+
+			return item;
+		}
+
+
 	}
 }

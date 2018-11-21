@@ -11,12 +11,11 @@ using System.Threading.Tasks;
 
 namespace PIOViewModelLib
 {
-	public class PlanetsViewModel : RowsViewModel<PlanetViewModel>
+	public class StacksViewModel : RowsViewModel<StackViewModel>
 	{
-		public PlanetsViewModel(ILogger Logger) : base(Logger, (logger)=>new PlanetViewModel(logger))
+		public StacksViewModel(ILogger Logger) : base(Logger, (logger)=>new StackViewModel(logger))
 		{
 		}
-	
-
+		
 	}
 }

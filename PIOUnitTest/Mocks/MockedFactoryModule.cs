@@ -23,7 +23,12 @@ namespace PIOUnitTest.Mocks
 
 		public IEnumerable<Row> GetFactories(int PlanetID)
 		{
-			return GenerateRows(3);
+			return GenerateRows(3,(item)=>item.PlanetID=PlanetID);
+		}
+
+		public Row BuildFactory(int PlanetID, int FactoryTypeID)
+		{
+			return GenerateRows(1, (item) => item.PlanetID = PlanetID).First();
 		}
 
 	}

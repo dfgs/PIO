@@ -53,6 +53,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Mocks\MockedStackModule.cs" />
     <Compile Include="Mocks\MockedPIOServer.cs" />
     <Compile Include="Mocks\MockedFactoryModule.cs" />
     <Compile Include="RowsViewModelUnitTest.cs" />

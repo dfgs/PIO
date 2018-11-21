@@ -28,14 +28,14 @@ namespace PIOViewModelLib
 			private set;
 		}
 
-		public PlanetViewModel(ILogger Logger, IPIOClient Client) : base(Logger, Client)
+		public PlanetViewModel(ILogger Logger) : base(Logger)
 		{
-			Factories = new FactoriesViewModel(Logger, Client);
+			Factories = new FactoriesViewModel(Logger);
 		}
 
-		protected override void OnLoaded()
+		protected override void OnLoaded(IPIOClient Client)
 		{
-			Factories.Load((Client) => Client.GetFactories(PlanetID));
+			Factories.Load(Client,Client.GetFactories(PlanetID));
 		}
 
 
