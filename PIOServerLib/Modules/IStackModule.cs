@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PIOServerLib.Modules
 {
-	public interface IStackModule:IModule
+	public interface IStackModule:IDatabaseModule
 	{
 		Row GetStack(int StackID);
 		IEnumerable<Row> GetStacks(int FactoryID);

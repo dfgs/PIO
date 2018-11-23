@@ -1,0 +1,46 @@
+﻿using LogLib;
+using ModuleLib;
+using NetORMLib;
+using NetORMLib.Databases;
+using NetORMLib.Queries;
+using PIOServerLib.Tables;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace PIOServerLib.Modules
+{
+	public abstract class DatabaseModule : Module,IDatabaseModule
+	{
+		private IDatabase database;
+
+		public DatabaseModule(ILogger Logger,IDatabase Database) : base(Logger)
+		{
+			this.database = Database;
+		}
+
+		protected ITryFunction<IEnumerable<Row>> Try(ISelect Query, [CallerMemberName]string MethodName = null)
+		{
+			return Try(() => this.database.Execute(Query),MethodName);
+		}
+
+		protected ITryAction Try(IInsert Query, [CallerMemberName]string MethodName = null)
+		{
+			return Try(() => this.database.Execute(Query), MethodName);
+		}
+
+		protected ITryAction Try(IUpdate Query, [CallerMemberName]string MethodName = null)
+		{
+			return Try(() => this.database.Execute(Query), MethodName);
+		}
+
+		protected ITryAction Try(IEnumerable<IQuery> Queries, [CallerMemberName]string MethodName = null)
+		{
+			return Try(() => this.database.Execute(Queries), MethodName);
+		}
+
+	}
+}

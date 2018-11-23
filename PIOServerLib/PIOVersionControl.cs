@@ -46,8 +46,9 @@ namespace PIOServerLib
 					yield return new Insert<Planet>().Set(Planet.Name, "Default");
 					yield return new SelectIdentity<Planet>((result) => planetID = Convert.ToInt32(result));
 
-					yield return new Insert<FactoryState>().Set(FactoryState.FactoryStateID, 0).Set(FactoryState.Name, "Under construction");
-					yield return new Insert<FactoryState>().Set(FactoryState.FactoryStateID, 1).Set(FactoryState.Name, "Operational");
+					yield return new Insert<FactoryState>().Set(FactoryState.FactoryStateID, 0).Set(FactoryState.Name, "Undefined");
+					yield return new Insert<FactoryState>().Set(FactoryState.FactoryStateID, 1).Set(FactoryState.Name, "CollectMaterial");
+					yield return new Insert<FactoryState>().Set(FactoryState.FactoryStateID, 2).Set(FactoryState.Name, "ProgressBuilding");
 
 					yield return new Insert<Resource>().Set(Resource.ResourceID, 0).Set(Resource.Name, "Wood");
 					yield return new Insert<Resource>().Set(Resource.ResourceID, 1).Set(Resource.Name, "Stone");

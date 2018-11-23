@@ -12,23 +12,27 @@ using System.Threading.Tasks;
 
 namespace PIOServerLib.Modules
 {
-	public class StackModule : Module,IStackModule
+	public class StackModule : DatabaseModule,IStackModule
 	{
-		private IDatabase database;
 
-		public StackModule(ILogger Logger,IDatabase Database) : base(Logger)
+		public StackModule(ILogger Logger,IDatabase Database) : base(Logger,Database)
 		{
-			this.database = Database;
 		}
 
 		public Row GetStack(int StackID)
 		{
-			return this.database.Execute(new Select<Stack>(Stack.StackID, Stack.FactoryID,Stack.ResourceID,Stack.Quantity).Where(Stack.StackID.IsEqualTo(StackID))).FirstOrDefault();
+			ISelect query;
+
+			query = new Select<Stack>(Stack.StackID, Stack.FactoryID, Stack.ResourceID, Stack.Quantity).Where(Stack.StackID.IsEqualTo(StackID));
+			return Try(query).OrThrow("Failed to query").FirstOrDefault();
 		}
 
 		public IEnumerable<Row> GetStacks(int FactoryID)
 		{
-			return this.database.Execute(new Select<Stack>(Stack.StackID, Stack.FactoryID, Stack.ResourceID, Stack.Quantity).Where(Stack.FactoryID.IsEqualTo(FactoryID)));
+			ISelect query;
+
+			query=new Select<Stack>(Stack.StackID, Stack.FactoryID, Stack.ResourceID, Stack.Quantity).Where(Stack.FactoryID.IsEqualTo(FactoryID));
+			return Try(query).OrThrow("Failed to query");
 		}
 
 	}

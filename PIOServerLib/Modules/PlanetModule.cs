@@ -12,23 +12,27 @@ using System.Threading.Tasks;
 
 namespace PIOServerLib.Modules
 {
-	public class PlanetModule : Module,IPlanetModule
+	public class PlanetModule : DatabaseModule,IPlanetModule
 	{
-		private IDatabase database;
 
-		public PlanetModule(ILogger Logger,IDatabase Database) : base(Logger)
+		public PlanetModule(ILogger Logger,IDatabase Database) : base(Logger,Database)
 		{
-			this.database = Database;
 		}
 
 		public Row GetPlanet(int PlanetID)
 		{
-			return this.database.Execute(new Select<Planet>(Planet.PlanetID, Planet.Name).Where(Planet.PlanetID.IsEqualTo(PlanetID))).FirstOrDefault();
+			ISelect query;
+
+			query = new Select<Planet>(Planet.PlanetID, Planet.Name).Where(Planet.PlanetID.IsEqualTo(PlanetID));
+			return Try(query).OrThrow("Failed to query").FirstOrDefault();
 		}
 
 		public IEnumerable<Row> GetPlanets()
 		{
-			return this.database.Execute(new Select<Planet>(Planet.PlanetID, Planet.Name));
+			ISelect query;
+
+			query = new Select<Planet>(Planet.PlanetID, Planet.Name);
+			return Try(query).OrThrow("Failed to query");
 		}
 
 	}

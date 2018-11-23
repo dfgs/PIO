@@ -40,6 +40,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Modules\TaskSchedulerModule.cs" />
+    <Compile Include="Modules\IDatabaseModule.cs" />
+    <Compile Include="Modules\ITaskSchedulerModule.cs" />
+    <Compile Include="Modules\DatabaseModule.cs" />
     <Compile Include="Modules\StackModule.cs" />
     <Compile Include="Modules\IStackModule.cs" />
     <Compile Include="Modules\IFactoryModule.cs" />
@@ -47,6 +51,10 @@
     <Compile Include="Modules\FactoryModule.cs" />
     <Compile Include="Modules\PlanetModule.cs" />
     <Compile Include="IPIOServer.cs" />
+    <Compile Include="Modules\Tasks\CollectMaterialTask.cs" />
+    <Compile Include="Modules\Tasks\Task.cs" />
+    <Compile Include="Modules\Tasks\ITask.cs" />
+    <Compile Include="Modules\Tasks\ProgressBuildingTask.cs" />
     <Compile Include="PIOServer.cs" />
     <Compile Include="PIOVersionControl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
