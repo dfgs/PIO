@@ -22,6 +22,7 @@ namespace PIOServerLib.Modules
 		public Row GetPlanet(int PlanetID)
 		{
 			ISelect query;
+			LogEnter();
 
 			query = new Select<Planet>(Planet.PlanetID, Planet.Name).Where(Planet.PlanetID.IsEqualTo(PlanetID));
 			return Try(query).OrThrow("Failed to query").FirstOrDefault();
@@ -30,6 +31,7 @@ namespace PIOServerLib.Modules
 		public IEnumerable<Row> GetPlanets()
 		{
 			ISelect query;
+			LogEnter();
 
 			query = new Select<Planet>(Planet.PlanetID, Planet.Name);
 			return Try(query).OrThrow("Failed to query");

@@ -31,23 +31,23 @@ namespace PIOClientLib
 
 		protected override Row OnGetPlanet(int PlanetID)
 		{
-			return server.PlanetModule.GetPlanet(PlanetID);
+			return server.GetPlanet(PlanetID);
 		}
 		protected override IEnumerable<Row> OnGetPlanets()
 		{
-			return server.PlanetModule.GetPlanets();
+			return server.GetPlanets();
 		}
 		protected override IEnumerable<Row> OnGetFactories(int PlanetID)
 		{
-			return server.FactoryModule.GetFactories(PlanetID);
+			return server.GetFactories(PlanetID);
 		}
 		protected override Row OnBuildFactory(int PlanetID, int FactoryTypeID)
 		{
-			return server.FactoryModule.BuildFactory(PlanetID, FactoryTypeID);
+			return server.BuildFactory(PlanetID, FactoryTypeID);
 		}
 		protected override IEnumerable<Row> OnGetStacks(int FactoryID)
 		{
-			return server.StackModule.GetStacks(FactoryID);
+			return server.GetStacks(FactoryID);
 		}
 
 

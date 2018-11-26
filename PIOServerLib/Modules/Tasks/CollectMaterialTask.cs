@@ -9,10 +9,18 @@ namespace PIOServerLib.Modules.Tasks
 {
 	public class CollectMaterialTask : Task
 	{
-		public override int ID => 1;
+		public override int TaskID => 1;
 
 
 		public CollectMaterialTask(ILogger Logger) : base(Logger)
+		{
+		}
+
+		public override void Enter()
+		{
+		}
+
+		public override void Leave()
 		{
 		}
 

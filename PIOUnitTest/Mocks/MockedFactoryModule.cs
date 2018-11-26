@@ -31,5 +31,9 @@ namespace PIOUnitTest.Mocks
 			return GenerateRows(1, (item) => item.PlanetID = PlanetID).First();
 		}
 
+		public int CreateFactory(int PlanetID, int FactoryTypeID)
+		{
+			throw new NotImplementedException();
+		}
 	}
 }

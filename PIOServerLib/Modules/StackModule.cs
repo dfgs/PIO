@@ -22,6 +22,7 @@ namespace PIOServerLib.Modules
 		public Row GetStack(int StackID)
 		{
 			ISelect query;
+			LogEnter();
 
 			query = new Select<Stack>(Stack.StackID, Stack.FactoryID, Stack.ResourceID, Stack.Quantity).Where(Stack.StackID.IsEqualTo(StackID));
 			return Try(query).OrThrow("Failed to query").FirstOrDefault();
@@ -30,8 +31,9 @@ namespace PIOServerLib.Modules
 		public IEnumerable<Row> GetStacks(int FactoryID)
 		{
 			ISelect query;
+			LogEnter();
 
-			query=new Select<Stack>(Stack.StackID, Stack.FactoryID, Stack.ResourceID, Stack.Quantity).Where(Stack.FactoryID.IsEqualTo(FactoryID));
+			query = new Select<Stack>(Stack.StackID, Stack.FactoryID, Stack.ResourceID, Stack.Quantity).Where(Stack.FactoryID.IsEqualTo(FactoryID));
 			return Try(query).OrThrow("Failed to query");
 		}
 

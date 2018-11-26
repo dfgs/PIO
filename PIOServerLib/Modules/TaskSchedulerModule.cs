@@ -15,41 +15,46 @@ namespace PIOServerLib.Modules
 	public class TaskSchedulerModule : Module,ITaskSchedulerModule
 	{
 		//private IDatabase database;
-		private Dictionary<int, ITask> states;
+		private Dictionary<int, ITask> tasks;
 		private IFactoryModule factoryModule;
+		private ITaskModule taskModule;
 
-		public TaskSchedulerModule(ILogger Logger, IFactoryModule FactoryModule) : base(Logger)
+		public TaskSchedulerModule(ILogger Logger, IFactoryModule FactoryModule,ITaskModule TaskModule) : base(Logger)
 		{
 			ITask Task;
 
 			this.factoryModule = FactoryModule;
-			states = new Dictionary<int, ITask>();
+			this.taskModule = TaskModule;
+			tasks = new Dictionary<int, ITask>();
 
-			Task = new CollectMaterialTask(Logger); states.Add(Task.TaskID, Task);
-			Task = new ProgressBuildingTask(Logger); states.Add(Task.TaskID, Task);
+			Task = new CollectMaterialTask(Logger); tasks.Add(Task.TaskID, Task);
+			Task = new ProgressBuildingTask(Logger); tasks.Add(Task.TaskID, Task);
 		}
 
 		private ITask GetTask(int TaskID)
 		{
-			return Try( ()=>states[TaskID]).OrThrow($"TaskID {TaskID} is not registed");
+			return Try( ()=>tasks[TaskID]).OrThrow($"TaskID {TaskID} is not registed");
 		}
 
 		public void SetTask(int FactoryID,int TaskID)
 		{
-			ITask state;
+			dynamic row;
+			ITask task;
 			int currentTaskID;
 			
 			LogEnter();
 
-			currentTaskID = Try(() => factoryModule.GetTaskID(FactoryID)).OrThrow($"Failed to retrieve current TaskID for FactoryID {FactoryID}");
+			row = Try(() => taskModule.GetTask(FactoryID)).OrThrow($"Failed to retrieve current task for FactoryID {FactoryID}");
+			if (row != null)
+			{
+				currentTaskID = row.TaskID;
+				task = Try(() => GetTask(currentTaskID)).OrThrow($"Cannot find valid task with ID {currentTaskID}");
+				Try(task.Leave).OrThrow($"Failed to leave current task with ID {currentTaskID}");
+			}
 
-			state = Try(() => GetTask(currentTaskID)).OrThrow($"Cannot find valid factory state with ID {currentTaskID}");
-			state.Leave();
-
-			Try(() => factoryModule.SetTaskID(FactoryID, TaskID)).OrThrow($"Failed to set TaskID for FactoryID {FactoryID}");
-
-			state = Try(() => GetTask(TaskID)).OrThrow($"Cannot find valid factory state with ID {TaskID}");
-			state.Enter();
+			task = Try(() => GetTask(TaskID)).OrThrow($"Cannot find valid task with ID {TaskID}");
+			Try(() => taskModule.SetTask(FactoryID, TaskID)).OrThrow($"Failed to create task for FactoryID {FactoryID}");
+			Try(task.Enter).OrThrow($"Failed to start task with ID {TaskID}");
 		}
 
 

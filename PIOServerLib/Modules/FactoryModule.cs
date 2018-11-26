@@ -22,6 +22,7 @@ namespace PIOServerLib.Modules
 		public Row GetFactory(int FactoryID)
 		{
 			ISelect query;
+			LogEnter();
 
 			query = new Select<Factory>(Factory.FactoryID, Factory.Name).Where(Factory.FactoryID.IsEqualTo(FactoryID));
 			return Try(query).OrThrow("Failed to query").FirstOrDefault();
@@ -30,28 +31,25 @@ namespace PIOServerLib.Modules
 		public IEnumerable<Row> GetFactories(int PlanetID)
 		{
 			ISelect query;
+			LogEnter();
 
-			query=new Select<Factory>(Factory.FactoryID, Factory.Name).Where(Factory.PlanetID.IsEqualTo(PlanetID));
+			query = new Select<Factory>(Factory.FactoryID, Factory.Name).Where(Factory.PlanetID.IsEqualTo(PlanetID));
 			return Try(query).OrThrow("Failed to query");
 		}
 
-		public Row BuildFactory(int PlanetID,int FactoryTypeID)
+		public int CreateFactory(int PlanetID,int FactoryTypeID)
 		{
 			IQuery[] queries;
-			dynamic item;
+			int result=-1;
+			LogEnter();
 
-			item = new Row(Table<Factory>.Columns);
-			item.PlanetID = PlanetID;
-			item.Name = "New";
-			item.FactoryStateID = 0;
-
-			queries=new IQuery[] { new Insert<Factory>().Set(Factory.PlanetID, PlanetID).Set(Factory.Name, "New").Set(Factory.FactoryStateID, 0), new SelectIdentity<Factory>((key) => item.FactoryID = Convert.ToInt32(key)) };
+			queries = new IQuery[] { new Insert<Factory>().Set(Factory.PlanetID, PlanetID).Set(Factory.Name, "New"), new SelectIdentity<Factory>((key) => result = Convert.ToInt32(key)) };
 			Try(queries).OrThrow("Failed to query");
 
-			return item;
+			return result;
 		}
 
-		
+
 
 
 

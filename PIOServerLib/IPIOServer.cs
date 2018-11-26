@@ -21,23 +21,16 @@ namespace PIOServerLib
 {
 	public interface IPIOServer
 	{
-		IPlanetModule PlanetModule
-		{
-			get;
-		}
-		IFactoryModule FactoryModule
-		{
-			get;
-		}
-		IStackModule StackModule
-		{
-			get;
-		}
-
 		bool IsInitialized
 		{
 			get;
 		}
+
+		Row BuildFactory(int PlanetID, int FactoryTypeID);
+		Row GetPlanet(int PlanetID);
+		IEnumerable<Row> GetPlanets();
+		IEnumerable<Row> GetFactories(int PlanetID);
+		IEnumerable<Row> GetStacks(int FactoryID);
 
 		
 	}

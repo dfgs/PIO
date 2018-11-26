@@ -9,12 +9,19 @@ namespace PIOServerLib.Modules.Tasks
 {
 	public class ProgressBuildingTask : Task
 	{
-		public override int ID => 2;
+		public override int TaskID => 2;
 
 
 		public ProgressBuildingTask(ILogger Logger) : base(Logger)
 		{
 		}
 
+		public override void Enter()
+		{
+		}
+
+		public override void Leave()
+		{
+		}
 	}
 }

@@ -8,10 +8,9 @@ using System.Threading.Tasks;
 
 namespace PIOServerLib.Modules
 {
-	public interface IFactoryModule:IDatabaseModule
+	public interface ITaskModule:IDatabaseModule
 	{
-		Row GetFactory(int FactoryID);
-		IEnumerable<Row> GetFactories(int PlanetID);
-		int CreateFactory(int PlanetID,int FactoryTypeID);
+		Row GetTask(int FactoryID);
+		void SetTask(int FactoryID, int TaskID);
 	}
 }
