@@ -60,7 +60,7 @@
 					<HierarchicalDataTemplate DataType="{x:Type viewModels:PlanetViewModel}" ItemsSource="{Binding Factories}">
 						<TextBlock Text="{Binding Name}"/>
 					</HierarchicalDataTemplate>
-					<HierarchicalDataTemplate DataType="{x:Type viewModels:FactoryViewModel}" ItemsSource="{Binding Stacks}">
+					<HierarchicalDataTemplate DataType="{x:Type viewModels:FactoryViewModel}" ItemsSource="{Binding ItemsSource}">
 						<TextBlock Text="{Binding Name}"/>
 					</HierarchicalDataTemplate>
 					<HierarchicalDataTemplate DataType="{x:Type viewModels:StackViewModel}" >

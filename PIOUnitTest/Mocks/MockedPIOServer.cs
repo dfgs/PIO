@@ -26,7 +26,11 @@ namespace PIOUnitTest.Mocks
 			get;
 			private set;
 		}
-
+		public ITaskModule TaskModule
+		{
+			get;
+			private set;
+		}
 		public bool IsInitialized
 		{
 			get;
@@ -39,6 +43,7 @@ namespace PIOUnitTest.Mocks
 			this.PlanetModule = new MockedPlanetModule(ThrowException);
 			this.FactoryModule = new MockedFactoryModule(ThrowException);
 			this.StackModule = new MockedStackModule(ThrowException);
+			this.TaskModule = new MockedTaskModule(ThrowException);
 		}
 
 		public Row BuildFactory(int PlanetID, int FactoryTypeID)
@@ -58,6 +63,11 @@ namespace PIOUnitTest.Mocks
 		public IEnumerable<Row> GetFactories(int PlanetID)
 		{
 			return FactoryModule.GetFactories(PlanetID);
+		}
+
+		public Row GetTask(int FactoryID)
+		{
+			return TaskModule.GetTask(FactoryID);
 		}
 
 		public IEnumerable<Row> GetStacks(int FactoryID)

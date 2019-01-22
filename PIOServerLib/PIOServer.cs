@@ -131,6 +131,11 @@ namespace PIOServerLib
 			return StackModule.GetStacks(FactoryID);
 		}
 
+		public Row GetTask(int FactoryID)
+		{
+			return TaskModule.GetTask(FactoryID);
+		}
+
 		public Row BuildFactory(int PlanetID, int FactoryTypeID)
 		{
 			dynamic item;
@@ -145,6 +150,8 @@ namespace PIOServerLib
 
 			return item;
 		}
+
+
 
 
 	}

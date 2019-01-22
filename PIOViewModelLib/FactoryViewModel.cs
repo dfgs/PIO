@@ -26,14 +26,30 @@ namespace PIOViewModelLib
 			get;
 			private set;
 		}
+		public TaskViewModel Task
+		{
+			get;
+			private set;
+		}
 
+		public IEnumerable<object> ItemsSource
+		{
+			get
+			{
+				foreach (StackViewModel item in Stacks) yield return item;
+				yield return Task;
+			}
+		}
 		public FactoryViewModel(ILogger Logger, IPIOClient Client) : base(Logger,Client)
 		{
 			Stacks = new StacksViewModel(Logger,Client);
+			Task = new TaskViewModel(Logger, Client);
 		}
+
 		protected override void OnLoaded()
 		{
 			Stacks.Load(()=>Client.GetStacks(this.FactoryID));
+			Task.Load(() => Client.GetTask(this.FactoryID));
 		}
 
 
