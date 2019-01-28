@@ -33,12 +33,20 @@ namespace PIOServerLib
 					yield return new CreateTable<Factory>(Factory.FactoryID, Factory.PlanetID, Factory.Name);
 					yield return new CreateTable<Task>( Task.FactoryID,Task.TaskID, Task.Name);
 					yield return new CreateTable<Stack>(Stack.StackID, Stack.FactoryID, Stack.ResourceID, Stack.Quantity);
+
+					yield return new CreateTable<State>(State.StateID, State.Name);
+					yield return new CreateTable<Event>(Event.EventID,Event.Name);
+					yield return new CreateTable<Transition>(Transition.TransitionID,Transition.StateID,Transition.NextStateID,Transition.EventID);
 					break;
 				case 2:
 					yield return new CreateRelation<Planet, Factory, int>(Planet.PlanetID, Factory.PlanetID);
 					yield return new CreateRelation<Factory, Task, int>(Factory.FactoryID, Task.FactoryID);
 					yield return new CreateRelation<Factory, Stack, int>(Factory.FactoryID, Stack.FactoryID);
 					yield return new CreateRelation<Resource, Stack, int>(Resource.ResourceID, Stack.ResourceID);
+					yield return new CreateRelation<State, Transition, int>(State.StateID, Transition.StateID);
+					yield return new CreateRelation<State, Transition, int>(State.StateID, Transition.NextStateID);
+					yield return new CreateRelation<Event, Transition, int>(Event.EventID, Transition.EventID);
+
 					break;
 				case 3:
 					yield return new Insert<Planet>().Set(Planet.Name, "Default");
@@ -54,7 +62,9 @@ namespace PIOServerLib
 
 					yield return new Insert<Stack>().Set(Stack.FactoryID, factoryID).Set(Stack.ResourceID, 0).Set(Stack.Quantity, 10);
 					yield return new Insert<Stack>().Set(Stack.FactoryID, factoryID).Set(Stack.ResourceID, 1).Set(Stack.Quantity, 5);
-					
+
+					yield return new Insert<Event>().Set(Event.EventID, 0).Set(Event.Name, "False");
+					yield return new Insert<Event>().Set(Event.EventID, 1).Set(Event.Name, "True");
 
 					break;
 				

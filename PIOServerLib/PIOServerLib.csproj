@@ -60,6 +60,9 @@
     <Compile Include="PIOServer.cs" />
     <Compile Include="PIOVersionControl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tables\Event.cs" />
+    <Compile Include="Tables\Transition.cs" />
+    <Compile Include="Tables\State.cs" />
     <Compile Include="Tables\Factory.cs" />
     <Compile Include="Tables\Resource.cs" />
     <Compile Include="Tables\Stack.cs" />
