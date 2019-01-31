@@ -63,6 +63,9 @@
 					<HierarchicalDataTemplate DataType="{x:Type viewModels:FactoryViewModel}" ItemsSource="{Binding ItemsSource}">
 						<TextBlock Text="{Binding Name}"/>
 					</HierarchicalDataTemplate>
+					<HierarchicalDataTemplate DataType="{x:Type viewModels:StateViewModel}" >
+						<TextBlock Text="{Binding Name}"/>
+					</HierarchicalDataTemplate>
 					<HierarchicalDataTemplate DataType="{x:Type viewModels:StackViewModel}" >
 						<StackPanel Orientation="Horizontal">
 							<TextBlock Text="{Binding ResourceID}"/>

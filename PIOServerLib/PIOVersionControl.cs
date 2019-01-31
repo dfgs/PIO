@@ -30,7 +30,7 @@ namespace PIOServerLib
 				case 1:
 					yield return new CreateTable<Planet>(Planet.PlanetID, Planet.Name);
 					yield return new CreateTable<Resource>(Resource.ResourceID, Resource.Name);
-					yield return new CreateTable<Factory>(Factory.FactoryID, Factory.PlanetID, Factory.Name);
+					yield return new CreateTable<Factory>(Factory.FactoryID, Factory.PlanetID, Factory.Name,Factory.StateID);
 					yield return new CreateTable<Task>( Task.FactoryID,Task.TaskID, Task.Name);
 					yield return new CreateTable<Stack>(Stack.StackID, Stack.FactoryID, Stack.ResourceID, Stack.Quantity);
 
@@ -46,6 +46,7 @@ namespace PIOServerLib
 					yield return new CreateRelation<State, Transition, int>(State.StateID, Transition.StateID);
 					yield return new CreateRelation<State, Transition, int>(State.StateID, Transition.NextStateID);
 					yield return new CreateRelation<Event, Transition, int>(Event.EventID, Transition.EventID);
+					yield return new CreateRelation<State, Factory, int>(State.StateID, Factory.StateID);
 
 					break;
 				case 3:
@@ -57,14 +58,31 @@ namespace PIOServerLib
 					yield return new Insert<Resource>().Set(Resource.ResourceID, 2).Set(Resource.Name, "Coal");
 					yield return new Insert<Resource>().Set(Resource.ResourceID, 3).Set(Resource.Name, "Plank");
 
-					yield return new Insert<Factory>().Set(Factory.PlanetID, planetID).Set(Factory.Name, "Stockpile");
+					yield return new Insert<State>().Set(State.StateID, 0).Set(State.Name, "Checking material");
+					yield return new Insert<State>().Set(State.StateID, 1).Set(State.Name, "Searching material");
+					yield return new Insert<State>().Set(State.StateID, 2).Set(State.Name, "Suspended (no material)");
+					yield return new Insert<State>().Set(State.StateID, 3).Set(State.Name, "Collecting material");
+					yield return new Insert<State>().Set(State.StateID, 4).Set(State.Name, "Building");
+					yield return new Insert<State>().Set(State.StateID, 5).Set(State.Name, "Producing");
+
+					yield return new Insert<Event>().Set(Event.EventID, 0).Set(Event.Name, "False");
+					yield return new Insert<Event>().Set(Event.EventID, 1).Set(Event.Name, "True");
+
+					yield return new Insert<Transition>().Set(Transition.StateID, 0).Set(Transition.NextStateID, 1).Set(Transition.EventID, 0);
+					yield return new Insert<Transition>().Set(Transition.StateID, 0).Set(Transition.NextStateID, 4).Set(Transition.EventID, 1);
+					yield return new Insert<Transition>().Set(Transition.StateID, 1).Set(Transition.NextStateID, 2).Set(Transition.EventID, 0);
+					yield return new Insert<Transition>().Set(Transition.StateID, 1).Set(Transition.NextStateID, 3).Set(Transition.EventID, 1);
+					yield return new Insert<Transition>().Set(Transition.StateID, 2).Set(Transition.NextStateID, 1).Set(Transition.EventID, 1);
+					yield return new Insert<Transition>().Set(Transition.StateID, 3).Set(Transition.NextStateID, 0).Set(Transition.EventID, 1);
+					yield return new Insert<Transition>().Set(Transition.StateID, 4).Set(Transition.NextStateID, 0).Set(Transition.EventID, 0);
+					yield return new Insert<Transition>().Set(Transition.StateID, 4).Set(Transition.NextStateID, 5).Set(Transition.EventID, 1);
+
+
+					yield return new Insert<Factory>().Set(Factory.PlanetID, planetID).Set(Factory.Name, "Stockpile").Set(Factory.StateID,5);
 					yield return new SelectIdentity<Factory>((result) => factoryID= Convert.ToInt32(result));
 
 					yield return new Insert<Stack>().Set(Stack.FactoryID, factoryID).Set(Stack.ResourceID, 0).Set(Stack.Quantity, 10);
 					yield return new Insert<Stack>().Set(Stack.FactoryID, factoryID).Set(Stack.ResourceID, 1).Set(Stack.Quantity, 5);
-
-					yield return new Insert<Event>().Set(Event.EventID, 0).Set(Event.Name, "False");
-					yield return new Insert<Event>().Set(Event.EventID, 1).Set(Event.Name, "True");
 
 					break;
 				

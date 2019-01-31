@@ -18,17 +18,17 @@ namespace PIOUnitTest.Mocks
 
 		public Row GetFactory(int FactoryID)
 		{
-			return GenerateRows(1).FirstOrDefault();
+			return GenerateRows(1,(item)=>item.Name= "New factory").FirstOrDefault();
 		}
 
 		public IEnumerable<Row> GetFactories(int PlanetID)
 		{
-			return GenerateRows(3,(item)=>item.PlanetID=PlanetID);
+			return GenerateRows(3, (item) => {item.PlanetID = PlanetID; item.Name = "New factory"; });
 		}
 
 		public Row BuildFactory(int PlanetID, int FactoryTypeID)
 		{
-			return GenerateRows(1, (item) => item.PlanetID = PlanetID).First();
+			return GenerateRows(1, (item) => { item.PlanetID = PlanetID; item.Name = "New factory"; }).First();
 		}
 
 		public int CreateFactory(int PlanetID, int FactoryTypeID)

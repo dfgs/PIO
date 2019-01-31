@@ -11,6 +11,8 @@ namespace PIOServerLib.Tables
 		public static readonly Column<Factory, int> FactoryID = new Column<Factory, int>() { IsPrimaryKey = true, IsIdentity = true };
 		public static readonly Column<Factory, int> PlanetID = new Column<Factory, int>();
 		public static readonly Column<Factory, string> Name = new Column<Factory, string>() {DefaultValue="New factory" };
-		//public static readonly Column<Factory, int> FactoryStateID = new Column<Factory, int>();
+		public static readonly Column<Factory, int> StateID = new Column<Factory, int>() { DefaultValue = 0 };
+		
+
 	}
 }

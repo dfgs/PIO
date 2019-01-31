@@ -27,6 +27,7 @@ namespace PIOServerLib
 		private IFactoryModule FactoryModule;
 		private IStackModule StackModule;
 		private ITaskModule TaskModule;
+		private IStateModule StateModule;
 
 		private IDatabase database;
 
@@ -100,6 +101,7 @@ namespace PIOServerLib
 			FactoryModule = new FactoryModule(Logger, database);
 			StackModule = new StackModule(Logger, database);
 			TaskModule = new TaskModule(Logger, database);
+			StateModule = new StateModule(Logger, database);
 
 			TaskSchedulerModule = new TaskSchedulerModule(Logger, FactoryModule, TaskModule);
 
@@ -131,9 +133,14 @@ namespace PIOServerLib
 			return StackModule.GetStacks(FactoryID);
 		}
 
-		public Row GetTask(int FactoryID)
+		public IEnumerable<Row> GetTasks(int FactoryID)
 		{
-			return TaskModule.GetTask(FactoryID);
+			return TaskModule.GetTasks(FactoryID);
+		}
+
+		public Row GetState(int StateID)
+		{
+			return StateModule.GetState(StateID);
 		}
 
 		public Row BuildFactory(int PlanetID, int FactoryTypeID)

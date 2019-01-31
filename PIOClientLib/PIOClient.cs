@@ -81,13 +81,23 @@ namespace PIOClientLib
 			return Try(() => OnGetStacks(FactoryID)).OrThrow((ex) => new PIOClientException("Failed to get stacks", ex));
 		}
 
-		protected abstract Row OnGetTask(int FactoryID);
-		public Row GetTask(int FactoryID)
+		protected abstract IEnumerable<Row> OnGetTasks(int FactoryID);
+		public IEnumerable<Row> GetTasks(int FactoryID)
 		{
 			LogEnter();
 			if (!IsConnected) throw new PIOClientException("Client is not connected", null);
-			return Try(() => OnGetTask(FactoryID)).OrThrow((ex) => new PIOClientException("Failed to get task", ex));
+			return Try(() => OnGetTasks(FactoryID)).OrThrow((ex) => new PIOClientException("Failed to get task", ex));
 		}
+
+		protected abstract Row OnGetState(int StateID);
+		public Row GetState(int StateID)
+		{
+			LogEnter();
+			if (!IsConnected) throw new PIOClientException("Client is not connected", null);
+			return Try(() => OnGetState(StateID)).OrThrow((ex) => new PIOClientException("Failed to get state", ex));
+		}
+
+
 
 	}
 }

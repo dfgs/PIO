@@ -49,9 +49,13 @@ namespace PIOClientLib
 		{
 			return server.GetStacks(FactoryID);
 		}
-		protected override Row OnGetTask(int FactoryID)
+		protected override IEnumerable<Row> OnGetTasks(int FactoryID)
 		{
-			return server.GetTask(FactoryID);
+			return server.GetTasks(FactoryID);
+		}
+		protected override Row OnGetState(int StateID)
+		{
+			return server.GetState(StateID);
 		}
 
 

@@ -44,7 +44,7 @@ namespace PIOServerLib.Modules
 			
 			LogEnter();
 
-			row = Try(() => taskModule.GetTask(FactoryID)).OrThrow($"Failed to retrieve current task for FactoryID {FactoryID}");
+			row = Try(() => taskModule.GetTasks(FactoryID)).OrThrow($"Failed to retrieve current task for FactoryID {FactoryID}");
 			if (row != null)
 			{
 				currentTaskID = row.TaskID;

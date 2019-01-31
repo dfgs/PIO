@@ -40,6 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Modules\StateModule.cs" />
+    <Compile Include="Modules\IStateModule.cs" />
+    <Compile Include="Modules\IFSMModule.cs" />
     <Compile Include="Modules\ITaskModule.cs" />
     <Compile Include="Modules\TaskModule.cs" />
     <Compile Include="Modules\TaskSchedulerModule.cs" />

@@ -15,9 +15,9 @@ namespace PIOUnitTest.Mocks
 		{
 		}
 
-		public Row GetTask(int FactoryID)
+		public IEnumerable<Row> GetTasks(int FactoryID)
 		{
-			return GenerateRows(1).FirstOrDefault();
+			return GenerateRows(1);
 		}
 
 		public void SetTask(int FactoryID, int TaskID)

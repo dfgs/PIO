@@ -41,19 +41,7 @@ namespace PIOUnitTest
 			Assert.AreEqual("New planet", vm.Name);
 		}
 
-		[TestMethod]
-		public void ShouldLoadExplicit()
-		{
-			IPIOClient client;
-			PlanetViewModel vm;
+		
 
-			client = new HostedPIOClient(NullLogger.Instance, new MockedPIOServer(true,false));
-			client.Connect();
-			vm = new PlanetViewModel(NullLogger.Instance,client);
-			vm.Load(() => new Row(Table<Planet>.Columns));
-			Assert.AreEqual(false, vm.HasError);
-			Assert.AreEqual(0, vm.PlanetID);
-			Assert.AreEqual("New planet", vm.Name);
-		}
 	}
 }

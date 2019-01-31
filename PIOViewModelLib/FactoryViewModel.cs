@@ -21,6 +21,11 @@ namespace PIOViewModelLib
 		{
 			get { return Model.Name; }
 		}
+		public int StateID
+		{
+			get { return Model.StateID; }
+		}
+
 		public StacksViewModel Stacks
 		{
 			get;
@@ -31,12 +36,17 @@ namespace PIOViewModelLib
 			get;
 			private set;
 		}
-
+		public StateViewModel State
+		{
+			get;
+			private set;
+		}
 		public IEnumerable<object> ItemsSource
 		{
 			get
 			{
 				foreach (StackViewModel item in Stacks) yield return item;
+				yield return State;
 				yield return Task;
 			}
 		}
@@ -44,12 +54,14 @@ namespace PIOViewModelLib
 		{
 			Stacks = new StacksViewModel(Logger,Client);
 			Task = new TaskViewModel(Logger, Client);
+			State = new StateViewModel(Logger, Client);
 		}
 
 		protected override void OnLoaded()
 		{
 			Stacks.Load(()=>Client.GetStacks(this.FactoryID));
-			Task.Load(() => Client.GetTask(this.FactoryID));
+			Task.Load(() => Client.GetTasks(this.FactoryID).FirstOrDefault());
+			State.Load(() => Client.GetState(this.StateID));
 		}
 
 

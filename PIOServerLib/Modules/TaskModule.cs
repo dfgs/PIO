@@ -18,13 +18,13 @@ namespace PIOServerLib.Modules
 		{
 		}
 
-		public Row GetTask(int FactoryID)
+		public IEnumerable<Row> GetTasks(int FactoryID)
 		{
 			ISelect query;
 			LogEnter();
 
 			query = new Select<Task>(Task.FactoryID, Task.Name).Where(Task.FactoryID.IsEqualTo(FactoryID));
-			return Try(query).OrThrow("Failed to query").FirstOrDefault();
+			return Try(query).OrThrow("Failed to query");
 		}
 
 		public void SetTask(int FactoryID, int TaskID)

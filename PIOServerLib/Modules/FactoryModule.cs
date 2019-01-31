@@ -24,7 +24,7 @@ namespace PIOServerLib.Modules
 			ISelect query;
 			LogEnter();
 
-			query = new Select<Factory>(Factory.FactoryID, Factory.Name).Where(Factory.FactoryID.IsEqualTo(FactoryID));
+			query = new Select<Factory>(Factory.FactoryID, Factory.Name,Factory.StateID).Where(Factory.FactoryID.IsEqualTo(FactoryID));
 			return Try(query).OrThrow("Failed to query").FirstOrDefault();
 		}
 
@@ -33,7 +33,7 @@ namespace PIOServerLib.Modules
 			ISelect query;
 			LogEnter();
 
-			query = new Select<Factory>(Factory.FactoryID, Factory.Name).Where(Factory.PlanetID.IsEqualTo(PlanetID));
+			query = new Select<Factory>(Factory.FactoryID, Factory.Name, Factory.StateID).Where(Factory.PlanetID.IsEqualTo(PlanetID));
 			return Try(query).OrThrow("Failed to query");
 		}
 
