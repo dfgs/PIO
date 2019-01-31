@@ -24,7 +24,7 @@ namespace PIOClientLib
 		Row BuildFactory(int PlanetID, int FactoryTypeID);
 
 		IEnumerable<Row> GetStacks(int FactoryID);
-		IEnumerable<Row> GetTasks(int FactoryID);
+		Row GetTask(int FactoryID);
 
 		Row GetState(int StateID);
 	}

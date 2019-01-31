@@ -8,10 +8,11 @@ using System.Threading.Tasks;
 
 namespace PIOServerLib.Modules
 {
-	public interface ITaskModule:IDatabaseModule
+	public interface IScheduledTaskModule:IDatabaseModule
 	{
-		Row GetTask(int TaskID);
-		//IEnumerable<Row> GetTasks(int FactoryID);
+		Row GetScheduledTask(int ScheduledTaskID);
+		IEnumerable<Row> GetScheduledTasks(int FactoryID);
+		int CreateScheduledTask(int FactoryID, int TaskID,DateTime ETA);
 		//void SetTask(int FactoryID, int TaskID);
 	}
 }

@@ -18,16 +18,25 @@ namespace PIOServerLib.Modules
 		{
 		}
 
-		public IEnumerable<Row> GetTasks(int FactoryID)
+		public Row GetTask(int TaskID)
 		{
 			ISelect query;
 			LogEnter();
 
-			query = new Select<Task>(Task.FactoryID, Task.Name).Where(Task.FactoryID.IsEqualTo(FactoryID));
-			return Try(query).OrThrow("Failed to query");
+			query = new Select<Task>(Task.TaskID, Task.Name).Where(Task.TaskID.IsEqualTo(TaskID));
+			return Try(query).OrThrow("Failed to query").FirstOrDefault();
 		}
 
-		public void SetTask(int FactoryID, int TaskID)
+		/*public IEnumerable<Row> GetTasks(int FactoryID)
+		{
+			ISelect query;
+			LogEnter();
+
+			query = new Select<Task>(Task.TaskID, Task.Name).Where(Task.FactoryID.IsEqualTo(FactoryID));
+			return Try(query).OrThrow("Failed to query");
+		}*/
+
+		/*public void SetTask(int FactoryID, int TaskID)
 		{
 			IQuery[] queries;
 			LogEnter();
@@ -36,7 +45,7 @@ namespace PIOServerLib.Modules
 
 			Try(queries).OrThrow("Failed to query");
 
-		}
+		}*/
 
 
 

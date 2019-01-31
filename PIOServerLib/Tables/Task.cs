@@ -8,8 +8,8 @@ namespace PIOServerLib.Tables
 {
 	public class Task
 	{
-		public static readonly Column<Task, int> FactoryID = new Column<Task, int>() { IsPrimaryKey = true };
-		public static readonly Column<Task, int> TaskID = new Column<Task, int>();
+		public static readonly Column<Task, int> TaskID = new Column<Task, int>() { IsPrimaryKey = true };
+		//public static readonly Column<Task, int> FactoryID = new Column<Task, int>() ;
 		public static readonly Column<Task, string> Name = new Column<Task, string>() ;
 	}
 }

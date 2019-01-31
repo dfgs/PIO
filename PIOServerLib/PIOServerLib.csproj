@@ -40,10 +40,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Modules\Executors\NOPExecutor.cs" />
+    <Compile Include="Modules\Executors\ScheduledExecutor.cs" />
+    <Compile Include="Modules\IScheduledTaskModule.cs" />
+    <Compile Include="Modules\FSMModule.cs" />
     <Compile Include="Modules\StateModule.cs" />
     <Compile Include="Modules\IStateModule.cs" />
     <Compile Include="Modules\IFSMModule.cs" />
     <Compile Include="Modules\ITaskModule.cs" />
+    <Compile Include="Modules\ScheduledTaskModule.cs" />
     <Compile Include="Modules\TaskModule.cs" />
     <Compile Include="Modules\TaskSchedulerModule.cs" />
     <Compile Include="Modules\IDatabaseModule.cs" />
@@ -56,14 +61,13 @@
     <Compile Include="Modules\FactoryModule.cs" />
     <Compile Include="Modules\PlanetModule.cs" />
     <Compile Include="IPIOServer.cs" />
-    <Compile Include="Modules\Tasks\CollectMaterialTask.cs" />
-    <Compile Include="Modules\Tasks\Task.cs" />
-    <Compile Include="Modules\Tasks\ITask.cs" />
-    <Compile Include="Modules\Tasks\ProgressBuildingTask.cs" />
+    <Compile Include="Modules\Executors\Executor.cs" />
+    <Compile Include="Modules\Executors\IExecutor.cs" />
     <Compile Include="PIOServer.cs" />
     <Compile Include="PIOVersionControl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tables\Event.cs" />
+    <Compile Include="Tables\ScheduledTask.cs" />
     <Compile Include="Tables\Transition.cs" />
     <Compile Include="Tables\State.cs" />
     <Compile Include="Tables\Factory.cs" />

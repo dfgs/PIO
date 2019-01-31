@@ -2,60 +2,58 @@
 using ModuleLib;
 using NetORMLib.Databases;
 using NetORMLib.Queries;
-using PIOServerLib.Modules.Tasks;
+using PIOServerLib.Modules.Executors;
 using PIOServerLib.Tables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+
 
 namespace PIOServerLib.Modules
 {
-	public class TaskSchedulerModule : Module,ITaskSchedulerModule
+	public class TaskSchedulerModule : AtModule<ScheduledExecutor>,ITaskSchedulerModule
 	{
-		//private IDatabase database;
-		private Dictionary<int, ITask> tasks;
-		private IFactoryModule factoryModule;
-		private ITaskModule taskModule;
+		private Dictionary<int, IExecutor> tasks;
+		private IScheduledTaskModule scheduledTaskModule;
 
-		public TaskSchedulerModule(ILogger Logger, IFactoryModule FactoryModule,ITaskModule TaskModule) : base(Logger)
+		public TaskSchedulerModule(ILogger Logger, IScheduledTaskModule ScheduledTaskModule) : base(Logger)
 		{
-			ITask Task;
+			IExecutor executor;
 
-			this.factoryModule = FactoryModule;
-			this.taskModule = TaskModule;
-			tasks = new Dictionary<int, ITask>();
+			this.scheduledTaskModule = ScheduledTaskModule;
+			tasks = new Dictionary<int, IExecutor>();
 
-			Task = new CollectMaterialTask(Logger); tasks.Add(Task.TaskID, Task);
-			Task = new ProgressBuildingTask(Logger); tasks.Add(Task.TaskID, Task);
+			executor = new NOPExecutor(Logger); tasks.Add(executor.TaskID, executor);
 		}
 
-		private ITask GetTask(int TaskID)
+		protected override void OnTriggerEvent(ScheduledExecutor ScheduledExecutor)
 		{
-			return Try( ()=>tasks[TaskID]).OrThrow($"TaskID {TaskID} is not registed");
-		}
+			int eventID;
 
-		public void SetTask(int FactoryID,int TaskID)
-		{
-			dynamic row;
-			ITask task;
-			int currentTaskID;
+			eventID=ScheduledExecutor.Executor.Execute(ScheduledExecutor.FactoryID);
 			
+		}
+
+		public void StartTask(int FactoryID, int TaskID, DateTime ETA)
+		{
+			IExecutor executor;
+			ScheduledExecutor scheduledExecutor;
+
 			LogEnter();
 
-			row = Try(() => taskModule.GetTasks(FactoryID)).OrThrow($"Failed to retrieve current task for FactoryID {FactoryID}");
-			if (row != null)
-			{
-				currentTaskID = row.TaskID;
-				task = Try(() => GetTask(currentTaskID)).OrThrow($"Cannot find valid task with ID {currentTaskID}");
-				Try(task.Leave).OrThrow($"Failed to leave current task with ID {currentTaskID}");
-			}
+			Try(() => { scheduledTaskModule.CreateScheduledTask(FactoryID, TaskID, ETA); }).OrThrow($"Failed to create scheduled task for FactoryID {FactoryID}");
 
-			task = Try(() => GetTask(TaskID)).OrThrow($"Cannot find valid task with ID {TaskID}");
-			Try(() => taskModule.SetTask(FactoryID, TaskID)).OrThrow($"Failed to create task for FactoryID {FactoryID}");
-			Try(task.Enter).OrThrow($"Failed to start task with ID {TaskID}");
+			if (!Try(() => tasks[TaskID]).OrWarn(out executor, $"TaskID {TaskID} is not registed")) return;
+
+			scheduledExecutor = new ScheduledExecutor() { Executor = executor, FactoryID = FactoryID };
+			Try(()=>this.Add(ETA, scheduledExecutor )).OrAlert($"Failed to schedule executor for FactoryID {FactoryID}, TaskID {TaskID}");
+
+			//*/
 		}
+
+
+
 
 
 	}

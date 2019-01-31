@@ -39,7 +39,7 @@ namespace PIOServerLib.Modules
 
 		protected ITryAction Try(IEnumerable<IQuery> Queries, [CallerMemberName]string MethodName = null)
 		{
-			return Try(() => this.database.Execute(Queries), MethodName);
+			return Try(()=>this.database.Execute(Queries), MethodName);
 		}
 
 	}

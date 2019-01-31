@@ -12,6 +12,7 @@ namespace PIOServerLib.Modules
 	{
 		Row GetFactory(int FactoryID);
 		IEnumerable<Row> GetFactories(int PlanetID);
-		int CreateFactory(int PlanetID,int FactoryTypeID);
+		int CreateFactory(int PlanetID,int FactoryTypeID,int StateID);
+		void SetState(int FactoryID, int StateID);
 	}
 }

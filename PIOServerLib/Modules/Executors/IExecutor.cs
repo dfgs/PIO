@@ -4,16 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PIOServerLib.Modules.Tasks
+namespace PIOServerLib.Modules.Executors
 {
-	public interface ITask
+	public interface IExecutor
 	{
 		int TaskID
 		{
 			get;
 		}
 
-		void Leave();
-		void Enter();
+		int Execute(int FactoryID);
+		
 	}
 }

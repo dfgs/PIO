@@ -60,7 +60,7 @@ namespace PIOViewModelLib
 		protected override void OnLoaded()
 		{
 			Stacks.Load(()=>Client.GetStacks(this.FactoryID));
-			Task.Load(() => Client.GetTasks(this.FactoryID).FirstOrDefault());
+			//Task.Load(() => Client.GetTask(this.FactoryID);
 			State.Load(() => Client.GetState(this.StateID));
 		}
 

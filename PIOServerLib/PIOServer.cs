@@ -23,11 +23,14 @@ namespace PIOServerLib
 	public class PIOServer : ThreadModule,IPIOServer
 	{
 		private ITaskSchedulerModule TaskSchedulerModule;
+		private IFSMModule FSMModule;
+
 		private IPlanetModule PlanetModule;
 		private IFactoryModule FactoryModule;
 		private IStackModule StackModule;
 		private ITaskModule TaskModule;
 		private IStateModule StateModule;
+		private IScheduledTaskModule ScheduledTaskModule;
 
 		private IDatabase database;
 
@@ -59,26 +62,26 @@ namespace PIOServerLib
 			IVersionControl versionControl;
 			versionControl = new PIOVersionControl(database);
 
-			Try(databaseCreator.DropDatabase).OrLog("Failed to drop database");
+			Try(databaseCreator.DropDatabase).OrAlert("Failed to drop database");
 
 			#region database initialisation
 			Log(LogLevels.Information, "Checking if database exists");
-			if (!Try(databaseCreator.DatabaseExists).OrLog(out result, "Failed to check database presence")) return false;
+			if (!Try(databaseCreator.DatabaseExists).OrAlert(out result, "Failed to check database presence")) return false;
 
 			if (!result)
 			{
 				Log(LogLevels.Information, "Creating database");
-				if (!Try(databaseCreator.CreateDatabase).OrLog("Failed to create database")) return false;
+				if (!Try(databaseCreator.CreateDatabase).OrAlert("Failed to create database")) return false;
 				Thread.Sleep(5000);
 			}
 
 			Log(LogLevels.Information, "Checking database revision");
-			if (!Try(versionControl.IsUpToDate).OrLog(out result, "Failed to check database revision")) return false;
+			if (!Try(versionControl.IsUpToDate).OrAlert(out result, "Failed to check database revision")) return false;
 
 			if (!result)
 			{
 				Log(LogLevels.Information, $"Upgrading database to revision {versionControl.GetTargetRevision()}");
-				if (!Try(versionControl.Upgrade).OrLog("Failed to upgrade database")) return false;
+				if (!Try(versionControl.Upgrade).OrAlert("Failed to upgrade database")) return false;
 			}
 			#endregion
 
@@ -102,15 +105,23 @@ namespace PIOServerLib
 			StackModule = new StackModule(Logger, database);
 			TaskModule = new TaskModule(Logger, database);
 			StateModule = new StateModule(Logger, database);
+			ScheduledTaskModule = new ScheduledTaskModule(Logger, database);
+				
 
-			TaskSchedulerModule = new TaskSchedulerModule(Logger, FactoryModule, TaskModule);
+			TaskSchedulerModule = new TaskSchedulerModule(Logger,ScheduledTaskModule);
+			FSMModule = new FSMModule(Logger,  FactoryModule, StateModule, TaskSchedulerModule);
 
+
+			TaskSchedulerModule.Start();
 			IsInitialized = true;
+
 
 			while (State==ModuleStates.Started)
 			{
 				WaitHandles(-1, QuitEvent);
 			}
+
+			TaskSchedulerModule.Stop();
 		}
 
 		public Row GetPlanet(int PlanetID)
@@ -133,9 +144,9 @@ namespace PIOServerLib
 			return StackModule.GetStacks(FactoryID);
 		}
 
-		public IEnumerable<Row> GetTasks(int FactoryID)
+		public Row GetTask(int TaskID)
 		{
-			return TaskModule.GetTasks(FactoryID);
+			return TaskModule.GetTask(TaskID);
 		}
 
 		public Row GetState(int StateID)
@@ -151,9 +162,9 @@ namespace PIOServerLib
 			item = new Row(Table<Factory>.Columns);
 			item.PlanetID = PlanetID;
 			item.Name = "New";
-			item.FactoryID = Try(() => FactoryModule.CreateFactory(PlanetID, FactoryTypeID)).OrThrow("Failed to build factory");
+			item.FactoryID = Try(() => FactoryModule.CreateFactory(PlanetID, FactoryTypeID,0)).OrThrow("Failed to build factory");
 
-			Try( ()=> { TaskSchedulerModule.SetTask(item.FactoryID, 1); } ).OrThrow("Failed to initialize factory task");
+			Try(() => { FSMModule.Initialize(item.FactoryID, 0); }).OrAlert("Failed to initialize factory state");
 
 			return item;
 		}

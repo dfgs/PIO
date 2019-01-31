@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace PIOServerLib.Modules
 {
-	public interface ITaskSchedulerModule:IModule
+	public interface ITaskSchedulerModule:IThreadModule
 	{
-		void SetTask(int FactoryID, int TaskID);
+		void StartTask(int FactoryID, int TaskID,DateTime ETA);
 
 	}
 }

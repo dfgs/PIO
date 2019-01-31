@@ -37,20 +37,26 @@ namespace PIOServerLib.Modules
 			return Try(query).OrThrow("Failed to query");
 		}
 
-		public int CreateFactory(int PlanetID,int FactoryTypeID)
+		public int CreateFactory(int PlanetID,int FactoryTypeID, int StateID)
 		{
 			IQuery[] queries;
 			int result=-1;
 			LogEnter();
 
-			queries = new IQuery[] { new Insert<Factory>().Set(Factory.PlanetID, PlanetID).Set(Factory.Name, "New"), new SelectIdentity<Factory>((key) => result = Convert.ToInt32(key)) };
+			queries = new IQuery[] { new Insert<Factory>().Set(Factory.PlanetID, PlanetID).Set(Factory.Name, "New").Set(Factory.StateID,StateID), new SelectIdentity<Factory>((key) => result = Convert.ToInt32(key)) };
 			Try(queries).OrThrow("Failed to query");
 
 			return result;
 		}
 
+		public void SetState(int FactoryID, int StateID)
+		{
+			IUpdate query;
+			LogEnter();
 
-
+			query = new Update<Factory>().Set(Factory.StateID,StateID).Where(Factory.FactoryID.IsEqualTo(FactoryID));
+			Try(query).OrThrow("Failed to query");
+		}
 
 
 	}

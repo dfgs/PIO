@@ -72,9 +72,9 @@ namespace PIOUnitTest.Mocks
 			return FactoryModule.GetFactories(PlanetID);
 		}
 
-		public IEnumerable<Row> GetTasks(int FactoryID)
+		public Row GetTask(int FactoryID)
 		{
-			return TaskModule.GetTasks(FactoryID);
+			return TaskModule.GetTask(FactoryID);
 		}
 
 		public Row GetState(int StateID)

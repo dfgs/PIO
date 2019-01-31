@@ -6,20 +6,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PIOServerLib.Modules.Tasks
+namespace PIOServerLib.Modules.Executors
 {
-	public abstract class Task : Module, ITask
+	public abstract class Executor : Module, IExecutor
 	{
 		public abstract int TaskID
 		{
 			get;
 		}
 
-		public Task(ILogger Logger) : base(Logger)
+		public Executor(ILogger Logger) : base(Logger)
 		{
 		}
 
-		public abstract void Enter();
-		public abstract void Leave();
+		public abstract int Execute(int FactoryID);
 	}
 }

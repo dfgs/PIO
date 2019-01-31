@@ -10,6 +10,7 @@ namespace PIOServerLib.Tables
 	{
 		public static readonly Column<State, int> StateID = new Column<State, int>() { IsPrimaryKey = true, IsIdentity = false };
 		public static readonly Column<State, string> Name = new Column<State, string>() {DefaultValue="New State" };
-		//public static readonly Column<State, int> StateStateID = new Column<State, int>();
+		public static readonly Column<State, int> TaskID = new Column<State, int>();
+		public static readonly Column<State, int> Duration = new Column<State, int>();
 	}
 }

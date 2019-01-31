@@ -31,7 +31,7 @@ namespace PIOServerLib
 		IEnumerable<Row> GetPlanets();
 		IEnumerable<Row> GetFactories(int PlanetID);
 		IEnumerable<Row> GetStacks(int FactoryID);
-		IEnumerable<Row> GetTasks(int FactoryID);
+		Row GetTask(int TaskID);
 		Row GetState(int StateID);
 
 

@@ -31,22 +31,29 @@ namespace PIOServerLib
 					yield return new CreateTable<Planet>(Planet.PlanetID, Planet.Name);
 					yield return new CreateTable<Resource>(Resource.ResourceID, Resource.Name);
 					yield return new CreateTable<Factory>(Factory.FactoryID, Factory.PlanetID, Factory.Name,Factory.StateID);
-					yield return new CreateTable<Task>( Task.FactoryID,Task.TaskID, Task.Name);
 					yield return new CreateTable<Stack>(Stack.StackID, Stack.FactoryID, Stack.ResourceID, Stack.Quantity);
 
-					yield return new CreateTable<State>(State.StateID, State.Name);
+					yield return new CreateTable<Task>(Task.TaskID, Task.Name);
+					yield return new CreateTable<State>(State.StateID, State.Name,State.TaskID,State.Duration);
 					yield return new CreateTable<Event>(Event.EventID,Event.Name);
 					yield return new CreateTable<Transition>(Transition.TransitionID,Transition.StateID,Transition.NextStateID,Transition.EventID);
+
+					yield return new CreateTable<ScheduledTask>(ScheduledTask.ScheduledTaskID, ScheduledTask.FactoryID, ScheduledTask.TaskID, ScheduledTask.ETA);
+
 					break;
 				case 2:
 					yield return new CreateRelation<Planet, Factory, int>(Planet.PlanetID, Factory.PlanetID);
-					yield return new CreateRelation<Factory, Task, int>(Factory.FactoryID, Task.FactoryID);
 					yield return new CreateRelation<Factory, Stack, int>(Factory.FactoryID, Stack.FactoryID);
 					yield return new CreateRelation<Resource, Stack, int>(Resource.ResourceID, Stack.ResourceID);
 					yield return new CreateRelation<State, Transition, int>(State.StateID, Transition.StateID);
 					yield return new CreateRelation<State, Transition, int>(State.StateID, Transition.NextStateID);
 					yield return new CreateRelation<Event, Transition, int>(Event.EventID, Transition.EventID);
 					yield return new CreateRelation<State, Factory, int>(State.StateID, Factory.StateID);
+
+					yield return new CreateRelation<Factory, ScheduledTask, int>(Factory.FactoryID, ScheduledTask.FactoryID);
+					yield return new CreateRelation<Task, ScheduledTask, int>(Task.TaskID, ScheduledTask.TaskID);
+
+					yield return new CreateRelation<Task, State, int>(Task.TaskID, State.TaskID);
 
 					break;
 				case 3:
@@ -58,12 +65,14 @@ namespace PIOServerLib
 					yield return new Insert<Resource>().Set(Resource.ResourceID, 2).Set(Resource.Name, "Coal");
 					yield return new Insert<Resource>().Set(Resource.ResourceID, 3).Set(Resource.Name, "Plank");
 
-					yield return new Insert<State>().Set(State.StateID, 0).Set(State.Name, "Checking material");
-					yield return new Insert<State>().Set(State.StateID, 1).Set(State.Name, "Searching material");
-					yield return new Insert<State>().Set(State.StateID, 2).Set(State.Name, "Suspended (no material)");
-					yield return new Insert<State>().Set(State.StateID, 3).Set(State.Name, "Collecting material");
-					yield return new Insert<State>().Set(State.StateID, 4).Set(State.Name, "Building");
-					yield return new Insert<State>().Set(State.StateID, 5).Set(State.Name, "Producing");
+					yield return new Insert<Task>().Set(Task.TaskID, 0).Set(Task.Name, "NOP");
+
+					yield return new Insert<State>().Set(State.StateID, 0).Set(State.TaskID, 0).Set(State.Duration,5).Set(State.Name, "Checking material");
+					yield return new Insert<State>().Set(State.StateID, 1).Set(State.TaskID, 0).Set(State.Duration, 5).Set(State.Name, "Searching material");
+					yield return new Insert<State>().Set(State.StateID, 2).Set(State.TaskID, 0).Set(State.Duration, 5).Set(State.Name, "Suspended (no material)");
+					yield return new Insert<State>().Set(State.StateID, 3).Set(State.TaskID, 0).Set(State.Duration, 5).Set(State.Name, "Collecting material");
+					yield return new Insert<State>().Set(State.StateID, 4).Set(State.TaskID, 0).Set(State.Duration, 5).Set(State.Name, "Building");
+					yield return new Insert<State>().Set(State.StateID, 5).Set(State.TaskID, 0).Set(State.Duration, 5).Set(State.Name, "Producing");
 
 					yield return new Insert<Event>().Set(Event.EventID, 0).Set(Event.Name, "False");
 					yield return new Insert<Event>().Set(Event.EventID, 1).Set(Event.Name, "True");

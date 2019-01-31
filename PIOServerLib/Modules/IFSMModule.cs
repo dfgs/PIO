@@ -10,6 +10,6 @@ namespace PIOServerLib.Modules
 {
 	public interface IFSMModule:IDatabaseModule
 	{
-		Row GetState(int FactoryID);
+		void Initialize(int FactoryID,int StateID);
 	}
 }

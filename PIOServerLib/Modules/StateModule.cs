@@ -24,7 +24,7 @@ namespace PIOServerLib.Modules
 			ISelect query;
 			LogEnter();
 
-			query = new Select<State>(State.StateID, State.Name).Where(State.StateID.IsEqualTo(StateID));
+			query = new Select<State>(State.StateID, State.Name,State.TaskID,State.Duration).Where(State.StateID.IsEqualTo(StateID));
 			return Try(query).OrThrow("Failed to query").FirstOrDefault();
 		}
 

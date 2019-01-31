@@ -15,14 +15,15 @@ namespace PIOUnitTest.Mocks
 		{
 		}
 
-		public IEnumerable<Row> GetTasks(int FactoryID)
+		public Row GetTask(int TaskID)
 		{
-			return GenerateRows(1);
+			return GenerateRows(1,(item)=>item.Name="New task").FirstOrDefault();
 		}
 
-		public void SetTask(int FactoryID, int TaskID)
+		/*public void SetTask(int FactoryID, int TaskID)
 		{
 			throw new NotImplementedException();
-		}
+		}*/
+
 	}
 }
