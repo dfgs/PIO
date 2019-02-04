@@ -31,7 +31,9 @@ namespace PIOServerLib.Modules
 		{
 			int eventID;
 
-			eventID=ScheduledExecutor.Executor.Execute(ScheduledExecutor.FactoryID);
+
+			if (!Try<int>(() => ScheduledExecutor.Executor.Execute(ScheduledExecutor.FactoryID)).OrAlert(out eventID, "Unexpected error occured in executor")) return;
+			// post event
 			
 		}
 
