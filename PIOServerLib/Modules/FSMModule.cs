@@ -11,36 +11,54 @@ using System.Text;
 
 namespace PIOServerLib.Modules
 {
-	public class FSMModule : Module,IFSMModule
+	public class FSMModule : Module,IFSMModule,IMessageListenerModule
 	{
 		private IFactoryModule factoryModule;
 		private IStateModule stateModule;
+		private ITransitionModule transitionModule;
 		private ITaskSchedulerModule taskSchedulerModule;
 
-		public FSMModule(ILogger Logger,IFactoryModule FactoryModule,IStateModule StateModule,ITaskSchedulerModule TaskSchedulerModule) : base(Logger)
+		public FSMModule(ILogger Logger,IFactoryModule FactoryModule,IStateModule StateModule,ITransitionModule TransitionModule, ITaskSchedulerModule TaskSchedulerModule) : base(Logger)
 		{
 			this.factoryModule = FactoryModule;
 			this.stateModule = StateModule;
+			this.transitionModule = TransitionModule;
 			this.taskSchedulerModule = TaskSchedulerModule;
 		}
 
-		/*public Row GetState(int StateID)
-		{
-			ISelect query;
-			LogEnter();
+		
 
-			query = new Select<State>(State.StateID, State.Name).Where(State.StateID.IsEqualTo(StateID));
-			return Try(query).OrThrow("Failed to query").FirstOrDefault();
-		}*/
+
+		private void UpdateState(int FactoryID,int StateID)
+		{
+			dynamic state;
+
+			LogEnter();
+			state = Try(() => stateModule.GetState(StateID)).OrThrow($"Failed to get state {StateID} information");
+			Log(LogLevels.Information, $"Update factory {FactoryID} state to {state.Name}");
+			Try(() => { factoryModule.SetState(FactoryID, StateID); }).OrThrow($"Failed to update factory {FactoryID} state");
+			Try(() => { taskSchedulerModule.StartTask(FactoryID, state.TaskID, DateTime.Now.AddSeconds(state.Duration)); }).OrThrow("Failed to schedule new state");
+		}
 
 		public void Initialize(int FactoryID, int StateID)
 		{
-			dynamic state;
 			LogEnter();
+			UpdateState(FactoryID, StateID);
+		}
 
-			state=Try(()=>stateModule.GetState(StateID)).OrThrow("Failed to get new state information");
-			Try(()=>factoryModule.SetState(FactoryID, StateID)).OrThrow("Failed to initialize factory new state");
-			Try( ()=> { taskSchedulerModule.StartTask(FactoryID, state.TaskID, DateTime.Now.AddSeconds(state.Duration)); } ).OrThrow("Failed to schedule new state"); 
+		public void Send(Message Message)
+		{
+			dynamic factory;
+			dynamic transition;
+
+			factory = Try(() => factoryModule.GetFactory(Message.FactoryID)).OrThrow("Failed to get factory");
+			transition = Try(() => transitionModule.GetTransition(factory.StateID, Message.EventID)).OrThrow("Failed to get transition");
+			if (transition==null)
+			{
+				Log(LogLevels.Warning, $"No transition found for current state in factory {Message.FactoryID}");
+				return;
+			}
+			UpdateState(Message.FactoryID, transition.NextStateID);
 		}
 
 

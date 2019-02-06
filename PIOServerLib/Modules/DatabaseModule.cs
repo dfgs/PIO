@@ -36,6 +36,10 @@ namespace PIOServerLib.Modules
 		{
 			return Try(() => this.database.Execute(Query), MethodName);
 		}
+		protected ITryAction Try(IDelete Query, [CallerMemberName]string MethodName = null)
+		{
+			return Try(() => this.database.Execute(Query), MethodName);
+		}
 
 		protected ITryAction Try(IEnumerable<IQuery> Queries, [CallerMemberName]string MethodName = null)
 		{

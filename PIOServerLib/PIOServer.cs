@@ -22,6 +22,7 @@ namespace PIOServerLib
 {
 	public class PIOServer : ThreadModule,IPIOServer
 	{
+		private IMessageBrokerModule MessageBrokerModule;
 		private ITaskSchedulerModule TaskSchedulerModule;
 		private IFSMModule FSMModule;
 
@@ -30,6 +31,8 @@ namespace PIOServerLib
 		private IStackModule StackModule;
 		private ITaskModule TaskModule;
 		private IStateModule StateModule;
+		private ITransitionModule TransitionModule;
+		private IEventModule EventModule;
 		private IScheduledTaskModule ScheduledTaskModule;
 
 		private IDatabase database;
@@ -49,10 +52,12 @@ namespace PIOServerLib
 			bool result;
 
 			IDatabaseCreator databaseCreator;
-			databaseCreator = new SqlLocalDatabaseCreator("PIO", Directory.GetCurrentDirectory());
+			//databaseCreator = new SqlLocalDatabaseCreator("PIO", Directory.GetCurrentDirectory());
+			databaseCreator = new SqlDatabaseCreator("127.0.0.1", "PIO");
 
 			IConnectionFactory connectionFactory;
-			connectionFactory = new SqlLocalConnectionFactory(System.IO.Path.Combine(Directory.GetCurrentDirectory(), "PIO.mdf"));
+			//connectionFactory = new SqlLocalConnectionFactory(System.IO.Path.Combine(Directory.GetCurrentDirectory(), "PIO.mdf"));
+			connectionFactory = new SqlConnectionFactory("127.0.0.1","PIO");
 
 			ICommandBuilder commandBuilder;
 			commandBuilder = new SqlCommandBuilder();
@@ -72,7 +77,7 @@ namespace PIOServerLib
 			{
 				Log(LogLevels.Information, "Creating database");
 				if (!Try(databaseCreator.CreateDatabase).OrAlert("Failed to create database")) return false;
-				Thread.Sleep(5000);
+				//Thread.Sleep(5000);
 			}
 
 			Log(LogLevels.Information, "Checking database revision");
@@ -105,12 +110,15 @@ namespace PIOServerLib
 			StackModule = new StackModule(Logger, database);
 			TaskModule = new TaskModule(Logger, database);
 			StateModule = new StateModule(Logger, database);
+			TransitionModule = new TransitionModule(Logger, database);
+			EventModule = new EventModule(Logger, database);
 			ScheduledTaskModule = new ScheduledTaskModule(Logger, database);
-				
 
-			TaskSchedulerModule = new TaskSchedulerModule(Logger,ScheduledTaskModule);
-			FSMModule = new FSMModule(Logger,  FactoryModule, StateModule, TaskSchedulerModule);
+			MessageBrokerModule = new MessageBrokerModule(Logger,EventModule);
+			TaskSchedulerModule = new TaskSchedulerModule(Logger,ScheduledTaskModule,MessageBrokerModule);
+			FSMModule = new FSMModule(Logger,  FactoryModule, StateModule,TransitionModule, TaskSchedulerModule);
 
+			MessageBrokerModule.Subscribe(FSMModule);
 
 			TaskSchedulerModule.Start();
 			IsInitialized = true;

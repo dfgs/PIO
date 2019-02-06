@@ -16,12 +16,15 @@ namespace PIOServerLib.Modules
 	{
 		private Dictionary<int, IExecutor> tasks;
 		private IScheduledTaskModule scheduledTaskModule;
+		private IMessageBrokerModule messageBrokerModule;
 
-		public TaskSchedulerModule(ILogger Logger, IScheduledTaskModule ScheduledTaskModule) : base(Logger)
+		public TaskSchedulerModule(ILogger Logger, IScheduledTaskModule ScheduledTaskModule, IMessageBrokerModule MessageBrokerModule) : base(Logger)
 		{
 			IExecutor executor;
 
 			this.scheduledTaskModule = ScheduledTaskModule;
+			this.messageBrokerModule = MessageBrokerModule;
+
 			tasks = new Dictionary<int, IExecutor>();
 
 			executor = new NOPExecutor(Logger); tasks.Add(executor.TaskID, executor);
@@ -34,22 +37,24 @@ namespace PIOServerLib.Modules
 
 			if (!Try<int>(() => ScheduledExecutor.Executor.Execute(ScheduledExecutor.FactoryID)).OrAlert(out eventID, "Unexpected error occured in executor")) return;
 			// post event
-			
+			Try(() => scheduledTaskModule.DeleteScheduledTask(ScheduledExecutor.ScheduledTaskID)).OrThrow("Failed to delete scheduled task");
+			Try(() => messageBrokerModule.Post(new Message(ScheduledExecutor.FactoryID, eventID))).OrAlert("Failed to post message to broker");
 		}
 
 		public void StartTask(int FactoryID, int TaskID, DateTime ETA)
 		{
 			IExecutor executor;
 			ScheduledExecutor scheduledExecutor;
+			int scheduledTaskID;
 
 			LogEnter();
 
-			Try(() => { scheduledTaskModule.CreateScheduledTask(FactoryID, TaskID, ETA); }).OrThrow($"Failed to create scheduled task for FactoryID {FactoryID}");
+			scheduledTaskID=Try(() =>  scheduledTaskModule.CreateScheduledTask(FactoryID, TaskID, ETA)).OrThrow($"Failed to create scheduled task for factory {FactoryID}");
 
-			if (!Try(() => tasks[TaskID]).OrWarn(out executor, $"TaskID {TaskID} is not registed")) return;
+			if (!Try(() => tasks[TaskID]).OrWarn(out executor, $"Task {TaskID} is not registed")) return;
 
-			scheduledExecutor = new ScheduledExecutor() { Executor = executor, FactoryID = FactoryID };
-			Try(()=>this.Add(ETA, scheduledExecutor )).OrAlert($"Failed to schedule executor for FactoryID {FactoryID}, TaskID {TaskID}");
+			scheduledExecutor = new ScheduledExecutor(executor, scheduledTaskID, FactoryID);
+			Try(()=>this.Add(ETA, scheduledExecutor )).OrAlert($"Failed to schedule executor for factory {FactoryID}, task {TaskID}");
 
 			//*/
 		}

@@ -1,5 +1,4 @@
 ﻿using ModuleLib;
-using NetORMLib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace PIOServerLib.Modules
 {
-	public interface IFSMModule:IMessageListenerModule
+	public interface IMessageListenerModule:IModule
 	{
-		void Initialize(int FactoryID,int StateID);
+		void Send(Message Message);
 	}
 }

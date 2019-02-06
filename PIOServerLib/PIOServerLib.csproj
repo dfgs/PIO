@@ -31,7 +31,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -40,10 +42,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Message.cs" />
     <Compile Include="Modules\Executors\NOPExecutor.cs" />
     <Compile Include="Modules\Executors\ScheduledExecutor.cs" />
+    <Compile Include="Modules\IMessageBrokerModule.cs" />
+    <Compile Include="Modules\IMessageListenerModule.cs" />
     <Compile Include="Modules\IScheduledTaskModule.cs" />
     <Compile Include="Modules\FSMModule.cs" />
+    <Compile Include="Modules\IEventModule.cs" />
+    <Compile Include="Modules\ITransitionModule.cs" />
+    <Compile Include="Modules\MessageBrokerModule.cs" />
+    <Compile Include="Modules\EventModule.cs" />
+    <Compile Include="Modules\TransitionModule.cs" />
     <Compile Include="Modules\StateModule.cs" />
     <Compile Include="Modules\IStateModule.cs" />
     <Compile Include="Modules\IFSMModule.cs" />

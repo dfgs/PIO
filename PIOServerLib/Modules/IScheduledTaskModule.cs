@@ -12,7 +12,8 @@ namespace PIOServerLib.Modules
 	{
 		Row GetScheduledTask(int ScheduledTaskID);
 		IEnumerable<Row> GetScheduledTasks(int FactoryID);
-		int CreateScheduledTask(int FactoryID, int TaskID,DateTime ETA);
+		int CreateScheduledTask(int FactoryID, int TaskID, DateTime ETA);
+		void DeleteScheduledTask(int ScheduledTaskID);
 		//void SetTask(int FactoryID, int TaskID);
 	}
 }

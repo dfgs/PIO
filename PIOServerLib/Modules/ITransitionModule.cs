@@ -8,8 +8,9 @@ using System.Threading.Tasks;
 
 namespace PIOServerLib.Modules
 {
-	public interface IFSMModule:IMessageListenerModule
+	public interface ITransitionModule:IDatabaseModule
 	{
-		void Initialize(int FactoryID,int StateID);
+		Row GetTransition(int TransitionID);
+		Row GetTransition(int StateID,int EventID);
 	}
 }

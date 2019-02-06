@@ -6,17 +6,27 @@ using System.Threading.Tasks;
 
 namespace PIOServerLib.Modules.Executors
 {
-	public class ScheduledExecutor
+	public struct ScheduledExecutor
 	{
 		public IExecutor Executor
 		{
 			get;
-			set;
+			private set;
+		}
+		public int ScheduledTaskID
+		{
+			get;
+			private set;
 		}
 		public int FactoryID
 		{
 			get;
-			set;
+			private set;
+		}
+
+		public ScheduledExecutor(IExecutor Executor, int ScheduledTaskID, int FactoryID)
+		{
+			this.Executor = Executor;this.ScheduledTaskID = ScheduledTaskID;this.FactoryID = FactoryID;
 		}
 	}
 }

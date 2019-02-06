@@ -26,7 +26,14 @@ namespace PIOServerLib.Modules
 			query = new Select<ScheduledTask>(ScheduledTask.ScheduledTaskID, ScheduledTask.FactoryID, ScheduledTask.TaskID, ScheduledTask.ETA).Where(ScheduledTask.ScheduledTaskID.IsEqualTo(ScheduledTaskID));
 			return Try(query).OrThrow("Failed to query").FirstOrDefault();
 		}
+		public void DeleteScheduledTask(int ScheduledTaskID)
+		{
+			IDelete query;
+			LogEnter();
 
+			query = new Delete<ScheduledTask>().Where(ScheduledTask.ScheduledTaskID.IsEqualTo(ScheduledTaskID));
+			Try(query).OrThrow("Failed to query");
+		}
 		public IEnumerable<Row> GetScheduledTasks(int FactoryID)
 		{
 			ISelect query;

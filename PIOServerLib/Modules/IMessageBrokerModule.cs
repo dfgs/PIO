@@ -8,8 +8,9 @@ using System.Threading.Tasks;
 
 namespace PIOServerLib.Modules
 {
-	public interface IFSMModule:IMessageListenerModule
+	public interface IMessageBrokerModule:IModule
 	{
-		void Initialize(int FactoryID,int StateID);
+		void Post(Message Message);
+		void Subscribe(IMessageListenerModule MessageListener);
 	}
 }
