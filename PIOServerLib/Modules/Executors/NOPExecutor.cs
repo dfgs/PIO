@@ -9,7 +9,7 @@ namespace PIOServerLib.Modules.Executors
 {
 	public class NOPExecutor : Executor
 	{
-		public override int TaskID => 0;
+		public override int TaskID => 9999;
 
 		public NOPExecutor(ILogger Logger):base(Logger)
 		{

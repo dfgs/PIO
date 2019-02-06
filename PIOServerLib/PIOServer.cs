@@ -34,6 +34,7 @@ namespace PIOServerLib
 		private ITransitionModule TransitionModule;
 		private IEventModule EventModule;
 		private IScheduledTaskModule ScheduledTaskModule;
+		private IMaterialModule MaterialModule;
 
 		private IDatabase database;
 
@@ -113,9 +114,10 @@ namespace PIOServerLib
 			TransitionModule = new TransitionModule(Logger, database);
 			EventModule = new EventModule(Logger, database);
 			ScheduledTaskModule = new ScheduledTaskModule(Logger, database);
+			MaterialModule = new MaterialModule(Logger, database);
 
 			MessageBrokerModule = new MessageBrokerModule(Logger,EventModule);
-			TaskSchedulerModule = new TaskSchedulerModule(Logger,ScheduledTaskModule,MessageBrokerModule);
+			TaskSchedulerModule = new TaskSchedulerModule(Logger,MessageBrokerModule, ScheduledTaskModule,FactoryModule,MaterialModule);
 			FSMModule = new FSMModule(Logger,  FactoryModule, StateModule,TransitionModule, TaskSchedulerModule);
 
 			MessageBrokerModule.Subscribe(FSMModule);

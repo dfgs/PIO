@@ -51,7 +51,7 @@ namespace PIOServerLib.Modules
 			dynamic factory;
 			dynamic transition;
 
-			factory = Try(() => factoryModule.GetFactory(Message.FactoryID)).OrThrow("Failed to get factory");
+			factory = Try(() => factoryModule.GetFactory(Message.FactoryID)).OrThrow($"Failed to get factory {Message.FactoryID}");
 			transition = Try(() => transitionModule.GetTransition(factory.StateID, Message.EventID)).OrThrow("Failed to get transition");
 			if (transition==null)
 			{
