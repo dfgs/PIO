@@ -1,5 +1,6 @@
 ﻿using NetORMLib;
 using PIOServerLib.Modules;
+using PIOServerLib.Rows;
 using PIOServerLib.Tables;
 using System;
 using System.Collections.Generic;
@@ -16,14 +17,19 @@ namespace PIOUnitTest.Mocks
 		{
 		}
 
-		public Row GetStack(int StackID)
+		public StackRow GetStack(int StackID)
 		{
-			return GenerateRows(1).FirstOrDefault();
+			return GenerateRows<StackRow>(1).FirstOrDefault();
 		}
 
-		public IEnumerable<Row> GetStacks(int FactoryID)
+		public StackRow GetStack(int FactoryID, int ResourceID)
 		{
-			return GenerateRows(3,(item)=>item.FactoryID=FactoryID);
+			throw new NotImplementedException();
+		}
+
+		public IEnumerable<StackRow> GetStacks(int FactoryID)
+		{
+			return GenerateRows<StackRow>(3,(item)=>item.FactoryID=FactoryID);
 		}
 
 	}

@@ -1,16 +1,10 @@
-﻿using ModuleLib;
-using NetORMLib;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using PIOServerLib.Rows;
 
 namespace PIOServerLib.Modules
 {
 	public interface ITaskModule:IDatabaseModule
 	{
-		Row GetTask(int TaskID);
+		TaskRow GetTask(int TaskID);
 		//IEnumerable<Row> GetTasks(int FactoryID);
 		//void SetTask(int FactoryID, int TaskID);
 	}

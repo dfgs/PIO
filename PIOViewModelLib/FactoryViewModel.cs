@@ -1,17 +1,12 @@
 ﻿using LogLib;
-using NetORMLib;
 using PIOClientLib;
-using PIOViewModelLib;
+using PIOServerLib.Rows;
 using PIOViewModelLib.ViewModels;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PIOViewModelLib
 {
-	public class FactoryViewModel : RowViewModel
+	public class FactoryViewModel : RowViewModel<FactoryRow>
 	{
 		public int FactoryID
 		{

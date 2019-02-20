@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>PIOViewModelLib</RootNamespace>
     <AssemblyName>PIOViewModelLib</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -69,6 +70,10 @@
     <ProjectReference Include="..\PIOClientLib\PIOClientLib.csproj">
       <Project>{C2B2EF76-3C03-4C08-BDEA-CE880E6193CD}</Project>
       <Name>PIOClientLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PIOServerLib\PIOServerLib.csproj">
+      <Project>{A1EE8881-47F8-4168-AB91-C43FAF81A2CE}</Project>
+      <Name>PIOServerLib</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

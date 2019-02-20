@@ -1,5 +1,6 @@
 ﻿using ModuleLib;
 using NetORMLib;
+using PIOServerLib.Rows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,6 @@ namespace PIOServerLib.Modules
 {
 	public interface IMaterialModule:IDatabaseModule
 	{
-		IEnumerable<Row> GetMaterials(int FactoryTypeID);
+		IEnumerable<MaterialRow> GetMaterials(int FactoryTypeID);
 	}
 }

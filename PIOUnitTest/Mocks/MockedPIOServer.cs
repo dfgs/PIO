@@ -1,6 +1,7 @@
 ﻿using NetORMLib;
 using PIOServerLib;
 using PIOServerLib.Modules;
+using PIOServerLib.Rows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -53,36 +54,36 @@ namespace PIOUnitTest.Mocks
 			this.StateModule = new MockedStateModule(ThrowException);
 		}
 
-		public Row BuildFactory(int PlanetID, int FactoryTypeID)
+		public FactoryRow BuildFactory(int PlanetID, int FactoryTypeID)
 		{
 			throw new NotImplementedException();
 		}
 
-		public Row GetPlanet(int PlanetID)
+		public PlanetRow GetPlanet(int PlanetID)
 		{
 			return PlanetModule.GetPlanet(PlanetID);
 		}
-		public IEnumerable<Row> GetPlanets()
+		public IEnumerable<PlanetRow> GetPlanets()
 		{
 			return PlanetModule.GetPlanets();
 		}
 
-		public IEnumerable<Row> GetFactories(int PlanetID)
+		public IEnumerable<FactoryRow> GetFactories(int PlanetID)
 		{
 			return FactoryModule.GetFactories(PlanetID);
 		}
 
-		public Row GetTask(int FactoryID)
+		public TaskRow GetTask(int FactoryID)
 		{
 			return TaskModule.GetTask(FactoryID);
 		}
 
-		public Row GetState(int StateID)
+		public StateRow GetState(int StateID)
 		{
 			return StateModule.GetState(StateID);
 		}
 
-		public IEnumerable<Row> GetStacks(int FactoryID)
+		public IEnumerable<StackRow> GetStacks(int FactoryID)
 		{
 			return StackModule.GetStacks(FactoryID);
 		}

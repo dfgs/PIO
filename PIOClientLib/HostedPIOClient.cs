@@ -7,6 +7,7 @@ using LogLib;
 using NetORMLib;
 using PIOServerLib;
 using PIOServerLib.Modules;
+using PIOServerLib.Rows;
 
 namespace PIOClientLib
 {
@@ -29,31 +30,31 @@ namespace PIOClientLib
 			
 		}
 
-		protected override Row OnGetPlanet(int PlanetID)
+		protected override PlanetRow OnGetPlanet(int PlanetID)
 		{
 			return server.GetPlanet(PlanetID);
 		}
-		protected override IEnumerable<Row> OnGetPlanets()
+		protected override IEnumerable<PlanetRow> OnGetPlanets()
 		{
 			return server.GetPlanets();
 		}
-		protected override IEnumerable<Row> OnGetFactories(int PlanetID)
+		protected override IEnumerable<FactoryRow> OnGetFactories(int PlanetID)
 		{
 			return server.GetFactories(PlanetID);
 		}
-		protected override Row OnBuildFactory(int PlanetID, int FactoryTypeID)
+		protected override FactoryRow OnBuildFactory(int PlanetID, int FactoryTypeID)
 		{
 			return server.BuildFactory(PlanetID, FactoryTypeID);
 		}
-		protected override IEnumerable<Row> OnGetStacks(int FactoryID)
+		protected override IEnumerable<StackRow> OnGetStacks(int FactoryID)
 		{
 			return server.GetStacks(FactoryID);
 		}
-		protected override Row OnGetTask(int TaskID)
+		protected override TaskRow OnGetTask(int TaskID)
 		{
 			return server.GetTask(TaskID);
 		}
-		protected override Row OnGetState(int StateID)
+		protected override StateRow OnGetState(int StateID)
 		{
 			return server.GetState(StateID);
 		}

@@ -1,6 +1,7 @@
 ﻿using LogLib;
 using NetORMLib;
 using PIOClientLib;
+using PIOServerLib.Rows;
 using PIOViewModelLib;
 using PIOViewModelLib.ViewModels;
 using System;
@@ -10,7 +11,7 @@ using System.Text;
 
 namespace PIOViewModelLib
 {
-	public class StateViewModel : RowViewModel
+	public class StateViewModel : RowViewModel<StateRow>
 	{
 		
 		public int StateID

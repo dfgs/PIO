@@ -9,6 +9,7 @@ using NetORMLib.Sql.ConnectionFactories;
 using NetORMLib.Sql.Databases;
 using NetORMLib.VersionControl;
 using PIOServerLib.Modules;
+using PIOServerLib.Rows;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -26,13 +27,13 @@ namespace PIOServerLib
 			get;
 		}
 
-		Row BuildFactory(int PlanetID, int FactoryTypeID);
-		Row GetPlanet(int PlanetID);
-		IEnumerable<Row> GetPlanets();
-		IEnumerable<Row> GetFactories(int PlanetID);
-		IEnumerable<Row> GetStacks(int FactoryID);
-		Row GetTask(int TaskID);
-		Row GetState(int StateID);
+		FactoryRow BuildFactory(int PlanetID, int FactoryTypeID);
+		PlanetRow GetPlanet(int PlanetID);
+		IEnumerable<PlanetRow> GetPlanets();
+		IEnumerable<FactoryRow> GetFactories(int PlanetID);
+		IEnumerable<StackRow> GetStacks(int FactoryID);
+		TaskRow GetTask(int TaskID);
+		StateRow GetState(int StateID);
 
 
 	}

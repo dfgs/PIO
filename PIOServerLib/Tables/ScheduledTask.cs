@@ -1,4 +1,5 @@
 ﻿using NetORMLib.Columns;
+using NetORMLib.DbTypes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +9,9 @@ namespace PIOServerLib.Tables
 {
 	public class ScheduledTask
 	{
-		public static readonly Column<ScheduledTask, int> ScheduledTaskID = new Column<ScheduledTask, int>() { IsIdentity=true, IsPrimaryKey = true };
-		public static readonly Column<ScheduledTask, int> FactoryID = new Column<ScheduledTask, int>();
-		public static readonly Column<ScheduledTask, int> TaskID = new Column<ScheduledTask, int>();
-		public static readonly Column<ScheduledTask, DateTime> ETA = new Column<ScheduledTask, DateTime>() ;
+		public static readonly Column<ScheduledTask, DbInt> ScheduledTaskID = new Column<ScheduledTask, DbInt>() { IsIdentity=true, IsPrimaryKey = true };
+		public static readonly Column<ScheduledTask, DbInt> FactoryID = new Column<ScheduledTask, DbInt>();
+		public static readonly Column<ScheduledTask, DbInt> TaskID = new Column<ScheduledTask, DbInt>();
+		public static readonly Column<ScheduledTask, DbDate> ETA = new Column<ScheduledTask, DbDate>() ;
 	}
 }

@@ -1,5 +1,6 @@
 ﻿using NetORMLib;
 using PIOServerLib.Modules;
+using PIOServerLib.Rows;
 using PIOServerLib.Tables;
 using System;
 using System.Collections.Generic;
@@ -15,9 +16,9 @@ namespace PIOUnitTest.Mocks
 		{
 		}
 
-		public Row GetState(int StateID)
+		public StateRow GetState(int StateID)
 		{
-			return GenerateRows(1,(item)=>item.Name="MockedState").FirstOrDefault();
+			return GenerateRows<StateRow>(1,(item)=>item.Name="MockedState").FirstOrDefault();
 		}
 
 		

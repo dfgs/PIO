@@ -1,5 +1,6 @@
 ﻿using NetORMLib;
 using PIOServerLib.Modules;
+using PIOServerLib.Rows;
 using PIOServerLib.Tables;
 using System;
 using System.Collections.Generic;
@@ -16,14 +17,14 @@ namespace PIOUnitTest.Mocks
 		{
 		}
 
-		public Row GetPlanet(int PlanetID)
+		public PlanetRow GetPlanet(int PlanetID)
 		{
-			return GenerateRows(1,(item)=>item.Name="New planet" ).FirstOrDefault() ;
+			return GenerateRows<PlanetRow>(1,(item)=>item.Name="New planet" ).FirstOrDefault() ;
 		}
 
-		public IEnumerable<Row> GetPlanets()
+		public IEnumerable<PlanetRow> GetPlanets()
 		{
-			return GenerateRows(1, (item) => item.Name = "New planet");
+			return GenerateRows<PlanetRow>(1, (item) => item.Name = "New planet");
 		}
 
 	}

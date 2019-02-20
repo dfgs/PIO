@@ -22,9 +22,10 @@ namespace PIOServerLib.Modules
 			this.database = Database;
 		}
 
-		protected ITryFunction<IEnumerable<Row>> Try(ISelect Query, [CallerMemberName]string MethodName = null)
+		protected ITryFunction<IEnumerable<T>> Try<T>(ISelect Query, [CallerMemberName]string MethodName = null)
+			where T:new()
 		{
-			return Try(() => this.database.Execute(Query),MethodName);
+			return Try(() => this.database.Execute<T>(Query),MethodName);
 		}
 
 		protected ITryAction Try(IInsert Query, [CallerMemberName]string MethodName = null)

@@ -1,4 +1,5 @@
 ﻿using NetORMLib.Columns;
+using NetORMLib.DbTypes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,8 +9,8 @@ namespace PIOServerLib.Tables
 {
 	public class Event
 	{
-		public static readonly Column<Event, int> EventID = new Column<Event, int>() { IsPrimaryKey = true, IsIdentity = false };
-		public static readonly Column<Event, string> Name = new Column<Event, string>() {DefaultValue="New Event" };
-		//public static readonly Column<Event, int> EventEventID = new Column<Event, int>();
+		public static readonly Column<Event, DbInt> EventID = new Column<Event, DbInt>() { IsPrimaryKey = true, IsIdentity = false };
+		public static readonly Column<Event, DbString> Name = new Column<Event, DbString>();
+		//public static readonly Column<Event, DbInt> EventEventID = new Column<Event, DbInt>();
 	}
 }

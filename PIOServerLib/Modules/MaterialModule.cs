@@ -3,6 +3,7 @@ using ModuleLib;
 using NetORMLib;
 using NetORMLib.Databases;
 using NetORMLib.Queries;
+using PIOServerLib.Rows;
 using PIOServerLib.Tables;
 using System;
 using System.Collections.Generic;
@@ -21,13 +22,13 @@ namespace PIOServerLib.Modules
 
 	
 
-		public IEnumerable<Row> GetMaterials(int FactoryTypeID)
+		public IEnumerable<MaterialRow> GetMaterials(int FactoryTypeID)
 		{
 			ISelect query;
 			LogEnter();
 
 			query = new Select<Material>(Material.MaterialID, Material.FactoryTypeID, Material.ResourceID, Material.Quantity).Where(Material.FactoryTypeID.IsEqualTo(FactoryTypeID));
-			return Try(query).OrThrow("Failed to query");
+			return Try<MaterialRow>(query).OrThrow("Failed to query");
 		}
 
 	}

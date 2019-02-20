@@ -1,4 +1,5 @@
 ﻿using NetORMLib.Columns;
+using NetORMLib.DbTypes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,11 +9,11 @@ namespace PIOServerLib.Tables
 {
 	public class Factory
 	{
-		public static readonly Column<Factory, int> FactoryID = new Column<Factory, int>() { IsPrimaryKey = true, IsIdentity = true };
-		public static readonly Column<Factory, int> FactoryTypeID = new Column<Factory, int>();
-		public static readonly Column<Factory, int> PlanetID = new Column<Factory, int>();
-		public static readonly Column<Factory, string> Name = new Column<Factory, string>() {DefaultValue="New factory" };
-		public static readonly Column<Factory, int> StateID = new Column<Factory, int>() { DefaultValue = 0 };
+		public static readonly Column<Factory, DbInt> FactoryID = new Column<Factory, DbInt>() { IsPrimaryKey = true, IsIdentity = true };
+		public static readonly Column<Factory, DbInt> FactoryTypeID = new Column<Factory, DbInt>();
+		public static readonly Column<Factory, DbInt> PlanetID = new Column<Factory, DbInt>();
+		public static readonly Column<Factory, DbString> Name = new Column<Factory, DbString>();
+		public static readonly Column<Factory, DbInt> StateID = new Column<Factory, DbInt>();
 		
 
 	}

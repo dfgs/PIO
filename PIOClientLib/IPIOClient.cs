@@ -1,4 +1,5 @@
 ﻿using NetORMLib;
+using PIOServerLib.Rows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,15 +18,15 @@ namespace PIOClientLib
 		void Connect();
 		void Disconnect();
 
-		Row GetPlanet(int PlanetID);
-		IEnumerable<Row> GetPlanets();
+		PlanetRow GetPlanet(int PlanetID);
+		IEnumerable<PlanetRow> GetPlanets();
 
-		IEnumerable<Row> GetFactories(int PlanetID);
-		Row BuildFactory(int PlanetID, int FactoryTypeID);
+		IEnumerable<FactoryRow> GetFactories(int PlanetID);
+		FactoryRow BuildFactory(int PlanetID, int FactoryTypeID);
 
-		IEnumerable<Row> GetStacks(int FactoryID);
-		Row GetTask(int FactoryID);
+		IEnumerable<StackRow> GetStacks(int FactoryID);
+		TaskRow GetTask(int FactoryID);
 
-		Row GetState(int StateID);
+		StateRow GetState(int StateID);
 	}
 }

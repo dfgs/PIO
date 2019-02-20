@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace PIOViewModelLib.ViewModels
 {
-	public abstract class RowViewModel : ViewModel<Row>
+	public abstract class RowViewModel<TRow> : ViewModel<TRow>
 	{
 		protected dynamic Model
 		{
@@ -21,7 +21,7 @@ namespace PIOViewModelLib.ViewModels
 		{
 		}
 
-		protected override sealed void OnSetModel(Row Model)
+		protected override sealed void OnSetModel(TRow Model)
 		{
 			this.Model = Model;
 		}

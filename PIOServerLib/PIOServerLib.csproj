@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>PIOServerLib</RootNamespace>
     <AssemblyName>PIOServerLib</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -79,6 +80,17 @@
     <Compile Include="PIOServer.cs" />
     <Compile Include="PIOVersionControl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rows\EventRow.cs" />
+    <Compile Include="Rows\FactoryRow.cs" />
+    <Compile Include="Rows\FactoryTypeRow.cs" />
+    <Compile Include="Rows\MaterialRow.cs" />
+    <Compile Include="Rows\PlanetRow.cs" />
+    <Compile Include="Rows\ResourceRow.cs" />
+    <Compile Include="Rows\ScheduledTaskRow.cs" />
+    <Compile Include="Rows\StackRow.cs" />
+    <Compile Include="Rows\StateRow.cs" />
+    <Compile Include="Rows\TaskRow.cs" />
+    <Compile Include="Rows\TransitionRow.cs" />
     <Compile Include="Tables\Event.cs" />
     <Compile Include="Tables\FactoryType.cs" />
     <Compile Include="Tables\ScheduledTask.cs" />

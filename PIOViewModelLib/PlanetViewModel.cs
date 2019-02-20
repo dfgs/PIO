@@ -1,6 +1,8 @@
 ﻿using LogLib;
 using NetORMLib;
 using PIOClientLib;
+using PIOServerLib.Rows;
+using PIOServerLib.Tables;
 using PIOViewModelLib;
 using PIOViewModelLib.ViewModels;
 using System;
@@ -11,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace PIOViewModelLib
 {
-	public class PlanetViewModel : RowViewModel
+	public class PlanetViewModel : RowViewModel<PlanetRow>
 	{
 		public int PlanetID
 		{
@@ -40,7 +42,7 @@ namespace PIOViewModelLib
 
 		public void BuildFactory()
 		{
-			Row item;
+			FactoryRow item;
 			LogEnter();
 
 			try

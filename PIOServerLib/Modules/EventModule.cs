@@ -3,6 +3,7 @@ using ModuleLib;
 using NetORMLib;
 using NetORMLib.Databases;
 using NetORMLib.Queries;
+using PIOServerLib.Rows;
 using PIOServerLib.Tables;
 using System;
 using System.Collections.Generic;
@@ -19,13 +20,13 @@ namespace PIOServerLib.Modules
 		{
 		}
 
-		public Row GetEvent(int EventID)
+		public EventRow GetEvent(int EventID)
 		{
 			ISelect query;
 			LogEnter();
 
 			query = new Select<Event>(Event.EventID, Event.Name).Where(Event.EventID.IsEqualTo(EventID));
-			return Try(query).OrThrow("Failed to query").FirstOrDefault();
+			return Try<EventRow>(query).OrThrow("Failed to query").FirstOrDefault();
 		}
 
 	

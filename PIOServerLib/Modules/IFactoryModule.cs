@@ -1,5 +1,6 @@
 ﻿using ModuleLib;
 using NetORMLib;
+using PIOServerLib.Rows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,8 +11,8 @@ namespace PIOServerLib.Modules
 {
 	public interface IFactoryModule:IDatabaseModule
 	{
-		Row GetFactory(int FactoryID);
-		IEnumerable<Row> GetFactories(int PlanetID);
+		FactoryRow GetFactory(int FactoryID);
+		IEnumerable<FactoryRow> GetFactories(int PlanetID);
 		int CreateFactory(int PlanetID,int FactoryTypeID,int StateID);
 		void SetState(int FactoryID, int StateID);
 	}

@@ -1,5 +1,6 @@
 ﻿using ModuleLib;
 using NetORMLib;
+using PIOServerLib.Rows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,8 @@ namespace PIOServerLib.Modules
 {
 	public interface IStackModule:IDatabaseModule
 	{
-		Row GetStack(int StackID);
-		IEnumerable<Row> GetStacks(int FactoryID);
+		StackRow GetStack(int StackID);
+		StackRow GetStack(int FactoryID, int ResourceID);
+		IEnumerable<StackRow> GetStacks(int FactoryID);
 	}
 }

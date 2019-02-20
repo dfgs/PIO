@@ -11,8 +11,8 @@ using PIOClientLib;
 
 namespace PIOViewModelLib.ViewModels
 {
-	public abstract class RowsViewModel<T> : ViewModel<IEnumerable<Row>>,IEnumerable<T>,INotifyCollectionChanged
-		where T: RowViewModel
+	public abstract class RowsViewModel<T, TRow> : ViewModel<IEnumerable<TRow>>,IEnumerable<T>,INotifyCollectionChanged
+		where T: RowViewModel<TRow>
 	{
 		private List<T> items;
 
@@ -43,7 +43,7 @@ namespace PIOViewModelLib.ViewModels
 			OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, Item, Count - 1));
 		}
 
-		public void Add(Row Row)
+		public void Add(TRow Row)
 		{
 			T vm;
 			vm = createItem();
@@ -51,12 +51,12 @@ namespace PIOViewModelLib.ViewModels
 			Add(vm);
 		}
 
-		protected override sealed void OnSetModel(IEnumerable<Row> Model)
+		protected override sealed void OnSetModel(IEnumerable<TRow> Model)
 		{
 			T vm;
 
 			items.Clear();
-			foreach(Row row in Model)
+			foreach(TRow row in Model)
 			{
 				vm = createItem();
 				vm.Load(() => row);

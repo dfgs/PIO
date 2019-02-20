@@ -1,5 +1,6 @@
 ﻿using ModuleLib;
 using NetORMLib;
+using PIOServerLib.Rows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace PIOServerLib.Modules
 {
 	public interface ITransitionModule:IDatabaseModule
 	{
-		Row GetTransition(int TransitionID);
-		Row GetTransition(int StateID,int EventID);
+		TransitionRow GetTransition(int TransitionID);
+		TransitionRow GetTransition(int StateID,int EventID);
 	}
 }

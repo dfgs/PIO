@@ -3,6 +3,7 @@ using ModuleLib;
 using NetORMLib;
 using NetORMLib.Databases;
 using NetORMLib.Queries;
+using PIOServerLib.Rows;
 using PIOServerLib.Tables;
 using System;
 using System.Collections.Generic;
@@ -18,13 +19,13 @@ namespace PIOServerLib.Modules
 		{
 		}
 
-		public Row GetTask(int TaskID)
+		public TaskRow GetTask(int TaskID)
 		{
 			ISelect query;
 			LogEnter();
 
 			query = new Select<Task>(Task.TaskID, Task.Name).Where(Task.TaskID.IsEqualTo(TaskID));
-			return Try(query).OrThrow("Failed to query").FirstOrDefault();
+			return Try<TaskRow>(query).OrThrow("Failed to query").FirstOrDefault();
 		}
 
 		/*public IEnumerable<Row> GetTasks(int FactoryID)

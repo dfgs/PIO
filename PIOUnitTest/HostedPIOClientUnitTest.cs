@@ -4,6 +4,7 @@ using LogLib;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetORMLib;
 using PIOClientLib;
+using PIOServerLib.Rows;
 using PIOServerLib.Tables;
 using PIOUnitTest.Mocks;
 
@@ -68,7 +69,7 @@ namespace PIOUnitTest
 		public void ShouldGetPlanets()
 		{
 			IPIOClient client;
-			Row[] items;
+			PlanetRow[] items;
 
 			client = new HostedPIOClient(NullLogger.Instance, new MockedPIOServer(true, false));
 			client.Connect();
@@ -105,7 +106,7 @@ namespace PIOUnitTest
 		public void ShouldGetFactories()
 		{
 			IPIOClient client;
-			Row[] items;
+			FactoryRow[] items;
 
 			client = new HostedPIOClient(NullLogger.Instance, new MockedPIOServer(true, false));
 			client.Connect();
@@ -143,7 +144,7 @@ namespace PIOUnitTest
 		public void ShouldGetStacks()
 		{
 			IPIOClient client;
-			Row[] items;
+			StackRow[] items;
 
 			client = new HostedPIOClient(NullLogger.Instance, new MockedPIOServer(true, false));
 			client.Connect();

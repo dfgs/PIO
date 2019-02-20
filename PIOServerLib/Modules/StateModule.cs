@@ -3,6 +3,7 @@ using ModuleLib;
 using NetORMLib;
 using NetORMLib.Databases;
 using NetORMLib.Queries;
+using PIOServerLib.Rows;
 using PIOServerLib.Tables;
 using System;
 using System.Collections.Generic;
@@ -19,13 +20,13 @@ namespace PIOServerLib.Modules
 		{
 		}
 
-		public Row GetState(int StateID)
+		public StateRow GetState(int StateID)
 		{
 			ISelect query;
 			LogEnter();
 
 			query = new Select<State>(State.StateID, State.Name,State.TaskID,State.Duration).Where(State.StateID.IsEqualTo(StateID));
-			return Try(query).OrThrow("Failed to query").FirstOrDefault();
+			return Try<StateRow>(query).OrThrow("Failed to query").FirstOrDefault();
 		}
 
 	

@@ -1,5 +1,6 @@
 ﻿using NetORMLib;
 using PIOServerLib.Modules;
+using PIOServerLib.Rows;
 using PIOServerLib.Tables;
 using System;
 using System.Collections.Generic;
@@ -15,9 +16,9 @@ namespace PIOUnitTest.Mocks
 		{
 		}
 
-		public Row GetTask(int TaskID)
+		public TaskRow GetTask(int TaskID)
 		{
-			return GenerateRows(1,(item)=>item.Name="New task").FirstOrDefault();
+			return GenerateRows<TaskRow>(1,(item)=>item.Name="New task").FirstOrDefault();
 		}
 
 		/*public void SetTask(int FactoryID, int TaskID)

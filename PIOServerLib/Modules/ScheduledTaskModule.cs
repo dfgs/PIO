@@ -3,6 +3,7 @@ using ModuleLib;
 using NetORMLib;
 using NetORMLib.Databases;
 using NetORMLib.Queries;
+using PIOServerLib.Rows;
 using PIOServerLib.Tables;
 using System;
 using System.Collections.Generic;
@@ -18,13 +19,13 @@ namespace PIOServerLib.Modules
 		{
 		}
 
-		public Row GetScheduledTask(int ScheduledTaskID)
+		public ScheduledTaskRow GetScheduledTask(int ScheduledTaskID)
 		{
 			ISelect query;
 			LogEnter();
 
 			query = new Select<ScheduledTask>(ScheduledTask.ScheduledTaskID, ScheduledTask.FactoryID, ScheduledTask.TaskID, ScheduledTask.ETA).Where(ScheduledTask.ScheduledTaskID.IsEqualTo(ScheduledTaskID));
-			return Try(query).OrThrow("Failed to query").FirstOrDefault();
+			return Try<ScheduledTaskRow>(query).OrThrow("Failed to query").FirstOrDefault();
 		}
 		public void DeleteScheduledTask(int ScheduledTaskID)
 		{
@@ -34,13 +35,13 @@ namespace PIOServerLib.Modules
 			query = new Delete<ScheduledTask>().Where(ScheduledTask.ScheduledTaskID.IsEqualTo(ScheduledTaskID));
 			Try(query).OrThrow("Failed to query");
 		}
-		public IEnumerable<Row> GetScheduledTasks(int FactoryID)
+		public IEnumerable<ScheduledTaskRow> GetScheduledTasks(int FactoryID)
 		{
 			ISelect query;
 			LogEnter();
 
 			query = new Select<ScheduledTask>(ScheduledTask.ScheduledTaskID, ScheduledTask.FactoryID, ScheduledTask.TaskID, ScheduledTask.ETA).Where(ScheduledTask.FactoryID.IsEqualTo(FactoryID));
-			return Try(query).OrThrow("Failed to query");
+			return Try<ScheduledTaskRow>(query).OrThrow("Failed to query");
 		}
 		public int CreateScheduledTask(int FactoryID, int TaskID,DateTime ETA)
 		{

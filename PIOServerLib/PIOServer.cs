@@ -9,6 +9,7 @@ using NetORMLib.Sql.ConnectionFactories;
 using NetORMLib.Sql.Databases;
 using NetORMLib.VersionControl;
 using PIOServerLib.Modules;
+using PIOServerLib.Rows;
 using PIOServerLib.Tables;
 using System;
 using System.Collections.Generic;
@@ -117,7 +118,7 @@ namespace PIOServerLib
 			MaterialModule = new MaterialModule(Logger, database);
 
 			MessageBrokerModule = new MessageBrokerModule(Logger,EventModule);
-			TaskSchedulerModule = new TaskSchedulerModule(Logger,MessageBrokerModule, ScheduledTaskModule,FactoryModule,MaterialModule);
+			TaskSchedulerModule = new TaskSchedulerModule(Logger,MessageBrokerModule, ScheduledTaskModule,FactoryModule,MaterialModule,StackModule);
 			FSMModule = new FSMModule(Logger,  FactoryModule, StateModule,TransitionModule, TaskSchedulerModule);
 
 			MessageBrokerModule.Subscribe(FSMModule);
@@ -134,42 +135,42 @@ namespace PIOServerLib
 			TaskSchedulerModule.Stop();
 		}
 
-		public Row GetPlanet(int PlanetID)
+		public PlanetRow GetPlanet(int PlanetID)
 		{
 			return PlanetModule.GetPlanet(PlanetID);
 		}
 
-		public IEnumerable<Row> GetPlanets()
+		public IEnumerable<PlanetRow> GetPlanets()
 		{
 			return PlanetModule.GetPlanets();
 		}
 
-		public IEnumerable<Row> GetFactories(int PlanetID)
+		public IEnumerable<FactoryRow> GetFactories(int PlanetID)
 		{
 			return FactoryModule.GetFactories(PlanetID);
 		}
 
-		public IEnumerable<Row> GetStacks(int FactoryID)
+		public IEnumerable<StackRow> GetStacks(int FactoryID)
 		{
 			return StackModule.GetStacks(FactoryID);
 		}
 
-		public Row GetTask(int TaskID)
+		public TaskRow GetTask(int TaskID)
 		{
 			return TaskModule.GetTask(TaskID);
 		}
 
-		public Row GetState(int StateID)
+		public StateRow GetState(int StateID)
 		{
 			return StateModule.GetState(StateID);
 		}
 
-		public Row BuildFactory(int PlanetID, int FactoryTypeID)
+		public FactoryRow BuildFactory(int PlanetID, int FactoryTypeID)
 		{
-			dynamic item;
+			FactoryRow item;
 			LogEnter();
 
-			item = new Row(Table<Factory>.Columns);
+			item = new FactoryRow();
 			item.PlanetID = PlanetID;
 			item.Name = "New";
 			item.FactoryID = Try(() => FactoryModule.CreateFactory(PlanetID, FactoryTypeID,0)).OrThrow("Failed to build factory");

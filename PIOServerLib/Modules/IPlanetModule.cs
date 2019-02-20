@@ -1,5 +1,6 @@
 ﻿using ModuleLib;
 using NetORMLib;
+using PIOServerLib.Rows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace PIOServerLib.Modules
 {
 	public interface IPlanetModule:IDatabaseModule
 	{
-		Row GetPlanet(int PlanetID);
-		IEnumerable<Row> GetPlanets();
+		PlanetRow GetPlanet(int PlanetID);
+		IEnumerable<PlanetRow> GetPlanets();
 	}
 }

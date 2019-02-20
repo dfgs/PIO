@@ -1,6 +1,7 @@
 ﻿using LogLib;
 using NetORMLib;
 using PIOClientLib;
+using PIOServerLib.Rows;
 using PIOViewModelLib;
 using PIOViewModelLib.ViewModels;
 using System;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace PIOViewModelLib
 {
-	public class TaskViewModel : RowViewModel
+	public class TaskViewModel : RowViewModel<TaskRow>
 	{
 		public int FactoryID
 		{

@@ -1,4 +1,5 @@
 ﻿using NetORMLib.Columns;
+using NetORMLib.DbTypes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +9,9 @@ namespace PIOServerLib.Tables
 {
 	public class Transition
 	{
-		public static readonly Column<Transition, int> TransitionID = new Column<Transition, int>() { IsPrimaryKey = true, IsIdentity = true };
-		public static readonly Column<Transition, int> StateID = new Column<Transition, int>();
-		public static readonly Column<Transition, int> NextStateID = new Column<Transition, int>();
-		public static readonly Column<Transition, int> EventID = new Column<Transition, int>();
+		public static readonly Column<Transition, DbInt> TransitionID = new Column<Transition, DbInt>() { IsPrimaryKey = true, IsIdentity = true };
+		public static readonly Column<Transition, DbInt> StateID = new Column<Transition, DbInt>();
+		public static readonly Column<Transition, DbInt> NextStateID = new Column<Transition, DbInt>();
+		public static readonly Column<Transition, DbInt> EventID = new Column<Transition, DbInt>();
 	}
 }
