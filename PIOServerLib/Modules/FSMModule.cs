@@ -3,6 +3,7 @@ using ModuleLib;
 using NetORMLib;
 using NetORMLib.Databases;
 using NetORMLib.Queries;
+using PIOServerLib.Rows;
 using PIOServerLib.Tables;
 using System;
 using System.Collections.Generic;
@@ -13,10 +14,10 @@ namespace PIOServerLib.Modules
 {
 	public class FSMModule : Module,IFSMModule,IMessageListenerModule
 	{
-		private IFactoryModule factoryModule;
-		private IStateModule stateModule;
-		private ITransitionModule transitionModule;
-		private ITaskSchedulerModule taskSchedulerModule;
+		private readonly IFactoryModule factoryModule;
+		private readonly IStateModule stateModule;
+		private readonly ITransitionModule transitionModule;
+		private readonly ITaskSchedulerModule taskSchedulerModule;
 
 		public FSMModule(ILogger Logger,IFactoryModule FactoryModule,IStateModule StateModule,ITransitionModule TransitionModule, ITaskSchedulerModule TaskSchedulerModule) : base(Logger)
 		{
@@ -31,7 +32,7 @@ namespace PIOServerLib.Modules
 
 		private void UpdateState(int FactoryID,int StateID)
 		{
-			dynamic state;
+			StateRow state;
 
 			LogEnter();
 			state = Try(() => stateModule.GetState(StateID)).OrThrow($"Failed to get state {StateID} information");
@@ -48,8 +49,8 @@ namespace PIOServerLib.Modules
 
 		public void Send(Message Message)
 		{
-			dynamic factory;
-			dynamic transition;
+			FactoryRow factory;
+			TransitionRow transition;
 
 			factory = Try(() => factoryModule.GetFactory(Message.FactoryID)).OrThrow($"Failed to get factory {Message.FactoryID}");
 			transition = Try(() => transitionModule.GetTransition(factory.StateID, Message.EventID)).OrThrow("Failed to get transition");

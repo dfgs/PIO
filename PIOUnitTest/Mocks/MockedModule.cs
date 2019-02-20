@@ -21,11 +21,11 @@ namespace PIOUnitTest.Mocks
 			this.throwException = ThrowException;
 		}
 
-		protected TRow[] GenerateRows<TRow>(int Count,Action<dynamic> Initializer=null)
+		protected TRow[] GenerateRows<TRow>(int Count,Action<TRow> Initializer=null)
 			where TRow:new()
 		{
 			TRow[] items;
-			dynamic item;
+			TRow item;
 
 			// don't use yield operator here, in order to trigger exception
 

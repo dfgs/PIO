@@ -11,7 +11,7 @@ namespace PIOViewModelLib.ViewModels
 {
 	public abstract class RowViewModel<TRow> : ViewModel<TRow>
 	{
-		protected dynamic Model
+		protected TRow Model
 		{
 			get;
 			private set;

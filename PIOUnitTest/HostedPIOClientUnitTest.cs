@@ -76,7 +76,7 @@ namespace PIOUnitTest
 
 			items = client.GetPlanets().ToArray();
 			Assert.AreEqual(1, items.Length);
-			foreach (dynamic item in items)
+			foreach (PlanetRow item in items)
 			{
 				Assert.AreEqual(0, item.PlanetID);
 				Assert.AreEqual("New planet", item.Name);
@@ -113,7 +113,7 @@ namespace PIOUnitTest
 
 			items = client.GetFactories(1).ToArray();
 			Assert.AreEqual(3, items.Length);
-			foreach (dynamic item in items)
+			foreach (FactoryRow item in items)
 			{
 				Assert.AreEqual(0, item.FactoryID);
 				Assert.AreEqual(1, item.PlanetID);
@@ -151,7 +151,7 @@ namespace PIOUnitTest
 
 			items = client.GetStacks(1).ToArray();
 			Assert.AreEqual(3, items.Length);
-			foreach (dynamic item in items)
+			foreach (StackRow item in items)
 			{
 				Assert.AreEqual(0, item.StackID);
 				Assert.AreEqual(1, item.FactoryID);

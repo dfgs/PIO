@@ -1,4 +1,5 @@
 ﻿using LogLib;
+using PIOServerLib.Rows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,15 +25,16 @@ namespace PIOServerLib.Modules.Executors
 
 		public override int Execute(int FactoryID)
 		{
-			dynamic factory,stack;
-			IEnumerable<dynamic> materials;
+			FactoryRow factory;
+			StackRow stack;
+			IEnumerable<MaterialRow> materials;
 
 			factory = Try(() => factoryModule.GetFactory(FactoryID)).OrThrow($"Failed to get factory {FactoryID}");
 			
 			Log(LogLevels.Information, $"Getting materials for factory {FactoryID}, factory type {factory.FactoryTypeID}");
 			materials = Try(() => materialModule.GetMaterials(factory.FactoryTypeID)).OrThrow($"Failed to get material for factory type {factory.FactoryTypeID}");
 
-			foreach(dynamic material in materials)
+			foreach(MaterialRow material in materials)
 			{
 				stack = Try(() => stackModule.GetStack(FactoryID, material.ResourceID)).OrThrow($"Failed to check material quantity in factory {FactoryID}");
 				if (stack.Quantity<material.Quantity)

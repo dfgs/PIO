@@ -14,14 +14,15 @@ namespace PIOViewModelLib
 {
 	public class TaskViewModel : RowViewModel<TaskRow>
 	{
-		public int FactoryID
-		{
-			get { return Model.FactoryID; }
-		}
 		public int TaskID
 		{
 			get { return Model.TaskID; }
 		}
+		public string Name
+		{
+			get { return Model.Name; }
+		}
+		
 		
 
 		public TaskViewModel(ILogger Logger, IPIOClient Client) : base(Logger,Client)
