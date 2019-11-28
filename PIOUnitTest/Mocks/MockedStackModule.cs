@@ -16,12 +16,12 @@ namespace PIOUnitTest.Mocks
 		{
 		}
 
-		public Row GetStack(int StackID)
+		public Row<Stack> GetStack(int StackID)
 		{
 			return GenerateRows(1).FirstOrDefault();
 		}
 
-		public IEnumerable<Row> GetStacks(int FactoryID)
+		public IEnumerable<Row<Stack>> GetStacks(int FactoryID)
 		{
 			return GenerateRows(3,(item)=>item.FactoryID=FactoryID);
 		}

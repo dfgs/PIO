@@ -3,7 +3,7 @@ using ModuleLib;
 using NetORMLib;
 using NetORMLib.Databases;
 using NetORMLib.Queries;
-using PIOServerLib.Tables;
+using PIO.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,18 +19,18 @@ namespace PIOServerLib.Modules
 		{
 		}
 
-		public Row GetStack(int StackID)
+		public Row<Stack> GetStack(int StackID)
 		{
-			ISelect query;
+			ISelect<Stack> query;
 			LogEnter();
 
 			query = new Select<Stack>(Stack.StackID, Stack.FactoryID, Stack.ResourceID, Stack.Quantity).Where(Stack.StackID.IsEqualTo(StackID));
 			return Try(query).OrThrow("Failed to query").FirstOrDefault();
 		}
 
-		public IEnumerable<Row> GetStacks(int FactoryID)
+		public IEnumerable<Row<Stack>> GetStacks(int FactoryID)
 		{
-			ISelect query;
+			ISelect<Stack> query;
 			LogEnter();
 
 			query = new Select<Stack>(Stack.StackID, Stack.FactoryID, Stack.ResourceID, Stack.Quantity).Where(Stack.FactoryID.IsEqualTo(FactoryID));

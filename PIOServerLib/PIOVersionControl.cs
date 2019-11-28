@@ -1,7 +1,8 @@
 ﻿using NetORMLib.Databases;
+using NetORMLib.DbTypes;
 using NetORMLib.Queries;
 using NetORMLib.VersionControl;
-using PIOServerLib.Tables;
+using PIO.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,18 +43,18 @@ namespace PIOServerLib
 
 					break;
 				case 2:
-					yield return new CreateRelation<Planet, Factory, int>(Planet.PlanetID, Factory.PlanetID);
-					yield return new CreateRelation<Factory, Stack, int>(Factory.FactoryID, Stack.FactoryID);
-					yield return new CreateRelation<Resource, Stack, int>(Resource.ResourceID, Stack.ResourceID);
-					yield return new CreateRelation<State, Transition, int>(State.StateID, Transition.StateID);
-					yield return new CreateRelation<State, Transition, int>(State.StateID, Transition.NextStateID);
-					yield return new CreateRelation<Event, Transition, int>(Event.EventID, Transition.EventID);
-					yield return new CreateRelation<State, Factory, int>(State.StateID, Factory.StateID);
+					yield return new CreateRelation<Planet, Factory, DbInt>(Planet.PlanetID, Factory.PlanetID);
+					yield return new CreateRelation<Factory, Stack, DbInt>(Factory.FactoryID, Stack.FactoryID);
+					yield return new CreateRelation<Resource, Stack, DbInt>(Resource.ResourceID, Stack.ResourceID);
+					yield return new CreateRelation<State, Transition, DbInt>(State.StateID, Transition.StateID);
+					yield return new CreateRelation<State, Transition, DbInt>(State.StateID, Transition.NextStateID);
+					yield return new CreateRelation<Event, Transition, DbInt>(Event.EventID, Transition.EventID);
+					yield return new CreateRelation<State, Factory, DbInt>(State.StateID, Factory.StateID);
 
-					yield return new CreateRelation<Factory, ScheduledTask, int>(Factory.FactoryID, ScheduledTask.FactoryID);
-					yield return new CreateRelation<Task, ScheduledTask, int>(Task.TaskID, ScheduledTask.TaskID);
+					yield return new CreateRelation<Factory, ScheduledTask, DbInt>(Factory.FactoryID, ScheduledTask.FactoryID);
+					yield return new CreateRelation<Task, ScheduledTask, DbInt>(Task.TaskID, ScheduledTask.TaskID);
 
-					yield return new CreateRelation<Task, State, int>(Task.TaskID, State.TaskID);
+					yield return new CreateRelation<Task, State, DbInt>(Task.TaskID, State.TaskID);
 
 					break;
 				case 3:

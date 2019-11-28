@@ -90,10 +90,6 @@
       <Project>{A1EE8881-47F8-4168-AB91-C43FAF81A2CE}</Project>
       <Name>PIOServerLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PIOViewModelLib\PIOViewModelLib.csproj">
-      <Project>{355ff4e2-b4d4-4e5d-a179-9763b211e3ed}</Project>
-      <Name>PIOViewModelLib</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

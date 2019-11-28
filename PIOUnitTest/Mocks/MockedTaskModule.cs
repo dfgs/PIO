@@ -15,7 +15,7 @@ namespace PIOUnitTest.Mocks
 		{
 		}
 
-		public Row GetTask(int TaskID)
+		public Row<Task> GetTask(int TaskID)
 		{
 			return GenerateRows(1,(item)=>item.Name="New task").FirstOrDefault();
 		}

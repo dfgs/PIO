@@ -11,7 +11,7 @@ using PIOClientLib;
 
 namespace PIOViewModelLib.ViewModels
 {
-	public abstract class RowsViewModel<T> : ViewModel<IEnumerable<Row>>,IEnumerable<T>,INotifyCollectionChanged
+	public abstract class RowsViewModel<T> : ViewModel<IEnumerable<Row<T>>>,IEnumerable<T>,INotifyCollectionChanged
 		where T: RowViewModel
 	{
 		private List<T> items;

@@ -1,11 +1,11 @@
 ﻿using LogLib;
 using ModuleLib;
 using NetORMLib;
+using PIO.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace PIOClientLib
 {
@@ -41,56 +41,56 @@ namespace PIOClientLib
 		}
 
 
-		protected abstract Row OnGetPlanet(int PlanetID);
-		public Row GetPlanet(int PlanetID)
+		protected abstract Row<Planet> OnGetPlanet(int PlanetID);
+		public Row<Planet> GetPlanet(int PlanetID)
 		{
 			LogEnter();
 			if (!IsConnected) throw new PIOClientException("Client is not connected", null);
 			return Try(() => OnGetPlanet(PlanetID)).OrThrow((ex) => new PIOClientException("Failed to get planet", ex));
 		}
 
-		protected abstract IEnumerable<Row> OnGetPlanets();
-		public IEnumerable<Row> GetPlanets()
+		protected abstract IEnumerable<Row<Planet>> OnGetPlanets();
+		public IEnumerable<Row<Planet>> GetPlanets()
 		{
 			LogEnter();
 			if (!IsConnected) throw new PIOClientException("Client is not connected", null);
 			return Try(() => OnGetPlanets()).OrThrow((ex) => new PIOClientException("Failed to get planets", ex));
 		}
 
-		protected abstract IEnumerable<Row> OnGetFactories(int PlanetID);
-		public IEnumerable<Row> GetFactories(int PlanetID)
+		protected abstract IEnumerable<Row<Factory>> OnGetFactories(int PlanetID);
+		public IEnumerable<Row<Factory>> GetFactories(int PlanetID)
 		{
 			LogEnter();
 			if (!IsConnected) throw new PIOClientException("Client is not connected", null);
 			return Try(() => OnGetFactories(PlanetID)).OrThrow((ex) => new PIOClientException("Failed to get factories", ex));
 		}
 
-		protected abstract Row OnBuildFactory(int PlanetID, int FactoryTypeID);
-		public Row BuildFactory(int PlanetID,int FactoryTypeID)
+		protected abstract Row<Factory> OnBuildFactory(int PlanetID, int FactoryTypeID);
+		public Row<Factory> BuildFactory(int PlanetID,int FactoryTypeID)
 		{
 			LogEnter();
 			if (!IsConnected) throw new PIOClientException("Client is not connected", null);
 			return Try(() => OnBuildFactory(PlanetID,FactoryTypeID)).OrThrow((ex) => new PIOClientException("Failed to build factory", ex));
 		}
 
-		protected abstract IEnumerable<Row> OnGetStacks(int FactoryID);
-		public IEnumerable<Row> GetStacks(int FactoryID)
+		protected abstract IEnumerable<Row<Stack>> OnGetStacks(int FactoryID);
+		public IEnumerable<Row<Stack>> GetStacks(int FactoryID)
 		{
 			LogEnter();
 			if (!IsConnected) throw new PIOClientException("Client is not connected", null);
 			return Try(() => OnGetStacks(FactoryID)).OrThrow((ex) => new PIOClientException("Failed to get stacks", ex));
 		}
 
-		protected abstract Row OnGetTask(int TaskID);
-		public Row GetTask(int TaskID)
+		protected abstract Row<Task> OnGetTask(int TaskID);
+		public Row<Task> GetTask(int TaskID)
 		{
 			LogEnter();
 			if (!IsConnected) throw new PIOClientException("Client is not connected", null);
 			return Try(() => OnGetTask(TaskID)).OrThrow((ex) => new PIOClientException("Failed to get task", ex));
 		}
 
-		protected abstract Row OnGetState(int StateID);
-		public Row GetState(int StateID)
+		protected abstract Row<State> OnGetState(int StateID);
+		public Row<State> GetState(int StateID)
 		{
 			LogEnter();
 			if (!IsConnected) throw new PIOClientException("Client is not connected", null);

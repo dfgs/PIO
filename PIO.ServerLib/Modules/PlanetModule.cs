@@ -1,0 +1,41 @@
+﻿using LogLib;
+using ModuleLib;
+using NetORMLib;
+using NetORMLib.Databases;
+using NetORMLib.Queries;
+using PIO.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace PIO.ServerLib.Modules
+{
+	public class PlanetModule : DatabaseModule,IPlanetModule
+	{
+
+		public PlanetModule(ILogger Logger,IDatabase Database) : base(Logger,Database)
+		{
+		}
+
+		public Row<Planet> GetPlanet(int PlanetID)
+		{
+			ISelect<Planet> query;
+			LogEnter();
+
+			query = new Select<Planet>(Planet.PlanetID, Planet.Name).Where(Planet.PlanetID.IsEqualTo(PlanetID));
+			return Try(query).OrThrow("Failed to query").FirstOrDefault();
+		}
+
+		public IEnumerable<Row<Planet>> GetPlanets()
+		{
+			ISelect<Planet> query;
+			LogEnter();
+
+			query = new Select<Planet>(Planet.PlanetID, Planet.Name);
+			return Try(query).OrThrow("Failed to query");
+		}
+
+	}
+}

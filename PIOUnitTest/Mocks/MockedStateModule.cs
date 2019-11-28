@@ -15,7 +15,7 @@ namespace PIOUnitTest.Mocks
 		{
 		}
 
-		public Row GetState(int StateID)
+		public Row<State> GetState(int StateID)
 		{
 			return GenerateRows(1,(item)=>item.Name="MockedState").FirstOrDefault();
 		}

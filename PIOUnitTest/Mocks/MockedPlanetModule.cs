@@ -16,12 +16,12 @@ namespace PIOUnitTest.Mocks
 		{
 		}
 
-		public Row GetPlanet(int PlanetID)
+		public Row<Planet> GetPlanet(int PlanetID)
 		{
 			return GenerateRows(1,(item)=>item.Name="New planet" ).FirstOrDefault() ;
 		}
 
-		public IEnumerable<Row> GetPlanets()
+		public IEnumerable<Row<Planet>> GetPlanets()
 		{
 			return GenerateRows(1, (item) => item.Name = "New planet");
 		}

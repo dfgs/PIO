@@ -3,7 +3,7 @@ using ModuleLib;
 using NetORMLib;
 using NetORMLib.Databases;
 using NetORMLib.Queries;
-using PIOServerLib.Tables;
+using PIO.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,9 +18,9 @@ namespace PIOServerLib.Modules
 		{
 		}
 
-		public Row GetScheduledTask(int ScheduledTaskID)
+		public Row<ScheduledTask> GetScheduledTask(int ScheduledTaskID)
 		{
-			ISelect query;
+			ISelect<ScheduledTask> query;
 			LogEnter();
 
 			query = new Select<ScheduledTask>(ScheduledTask.ScheduledTaskID, ScheduledTask.FactoryID, ScheduledTask.TaskID, ScheduledTask.ETA).Where(ScheduledTask.ScheduledTaskID.IsEqualTo(ScheduledTaskID));
@@ -34,9 +34,9 @@ namespace PIOServerLib.Modules
 			query = new Delete<ScheduledTask>().Where(ScheduledTask.ScheduledTaskID.IsEqualTo(ScheduledTaskID));
 			Try(query).OrThrow("Failed to query");
 		}
-		public IEnumerable<Row> GetScheduledTasks(int FactoryID)
+		public IEnumerable<Row<ScheduledTask>> GetScheduledTasks(int FactoryID)
 		{
-			ISelect query;
+			ISelect<ScheduledTask> query;
 			LogEnter();
 
 			query = new Select<ScheduledTask>(ScheduledTask.ScheduledTaskID, ScheduledTask.FactoryID, ScheduledTask.TaskID, ScheduledTask.ETA).Where(ScheduledTask.FactoryID.IsEqualTo(FactoryID));

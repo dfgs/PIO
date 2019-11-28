@@ -8,15 +8,15 @@ using NetORMLib.Sql.CommandBuilders;
 using NetORMLib.Sql.ConnectionFactories;
 using NetORMLib.Sql.Databases;
 using NetORMLib.VersionControl;
+using PIO.Models;
 using PIOServerLib.Modules;
-using PIOServerLib.Tables;
+
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+
 
 namespace PIOServerLib
 {
@@ -132,42 +132,42 @@ namespace PIOServerLib
 			TaskSchedulerModule.Stop();
 		}
 
-		public Row GetPlanet(int PlanetID)
+		public Row<Planet> GetPlanet(int PlanetID)
 		{
 			return PlanetModule.GetPlanet(PlanetID);
 		}
 
-		public IEnumerable<Row> GetPlanets()
+		public IEnumerable<Row<Planet>> GetPlanets()
 		{
 			return PlanetModule.GetPlanets();
 		}
 
-		public IEnumerable<Row> GetFactories(int PlanetID)
+		public IEnumerable<Row<Factory>> GetFactories(int PlanetID)
 		{
 			return FactoryModule.GetFactories(PlanetID);
 		}
 
-		public IEnumerable<Row> GetStacks(int FactoryID)
+		public IEnumerable<Row<Stack>> GetStacks(int FactoryID)
 		{
 			return StackModule.GetStacks(FactoryID);
 		}
 
-		public Row GetTask(int TaskID)
+		public Row<Task> GetTask(int TaskID)
 		{
 			return TaskModule.GetTask(TaskID);
 		}
 
-		public Row GetState(int StateID)
+		public Row<State> GetState(int StateID)
 		{
 			return StateModule.GetState(StateID);
 		}
 
-		public Row BuildFactory(int PlanetID, int FactoryTypeID)
+		public Row<Factory> BuildFactory(int PlanetID, int FactoryTypeID)
 		{
 			dynamic item;
 			LogEnter();
 
-			item = new Row(Table<Factory>.Columns);
+			item = new Row<Factory>();
 			item.PlanetID = PlanetID;
 			item.Name = "New";
 			item.FactoryID = Try(() => FactoryModule.CreateFactory(PlanetID, FactoryTypeID,0)).OrThrow("Failed to build factory");

@@ -3,7 +3,7 @@ using ModuleLib;
 using NetORMLib;
 using NetORMLib.Databases;
 using NetORMLib.Queries;
-using PIOServerLib.Tables;
+using PIO.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,9 +19,9 @@ namespace PIOServerLib.Modules
 		{
 		}
 
-		public Row GetEvent(int EventID)
+		public Row<Event> GetEvent(int EventID)
 		{
-			ISelect query;
+			ISelect<Event> query;
 			LogEnter();
 
 			query = new Select<Event>(Event.EventID, Event.Name).Where(Event.EventID.IsEqualTo(EventID));

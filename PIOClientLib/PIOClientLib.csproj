@@ -60,9 +60,9 @@
       <Project>{C94B7BF1-BF85-4483-B032-1582F9EC6423}</Project>
       <Name>NetORMLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PIOServerLib\PIOServerLib.csproj">
-      <Project>{A1EE8881-47F8-4168-AB91-C43FAF81A2CE}</Project>
-      <Name>PIOServerLib</Name>
+    <ProjectReference Include="..\PIO.Models\PIO.Models.csproj">
+      <Project>{7883D2F9-F04E-467A-A0A6-61158DCA5956}</Project>
+      <Name>PIO.Models</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

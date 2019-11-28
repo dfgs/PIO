@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{BCD967FA-4DA8-47AD-A1F5-A66EA4575617}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PIO.ServerLib</RootNamespace>
+    <AssemblyName>PIO.ServerLib</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="IVersionControlModule.cs" />
+    <Compile Include="IWebServiceModule.cs" />
+    <Compile Include="IPIOServer.cs" />
+    <Compile Include="Message.cs" />
+    <Compile Include="Modules\DatabaseModule.cs" />
+    <Compile Include="Modules\EventModule.cs" />
+    <Compile Include="Modules\Executors\Executor.cs" />
+    <Compile Include="Modules\Executors\IExecutor.cs" />
+    <Compile Include="Modules\Executors\NOPExecutor.cs" />
+    <Compile Include="Modules\Executors\ScheduledExecutor.cs" />
+    <Compile Include="Modules\FactoryModule.cs" />
+    <Compile Include="Modules\FSMModule.cs" />
+    <Compile Include="Modules\IDatabaseModule.cs" />
+    <Compile Include="Modules\IEventModule.cs" />
+    <Compile Include="Modules\IFactoryModule.cs" />
+    <Compile Include="Modules\IFSMModule.cs" />
+    <Compile Include="Modules\IMessageBrokerModule.cs" />
+    <Compile Include="Modules\IMessageListenerModule.cs" />
+    <Compile Include="Modules\IPlanetModule.cs" />
+    <Compile Include="Modules\IScheduledTaskModule.cs" />
+    <Compile Include="Modules\IStackModule.cs" />
+    <Compile Include="Modules\IStateModule.cs" />
+    <Compile Include="Modules\ITaskModule.cs" />
+    <Compile Include="Modules\ITaskSchedulerModule.cs" />
+    <Compile Include="Modules\ITransitionModule.cs" />
+    <Compile Include="Modules\MessageBrokerModule.cs" />
+    <Compile Include="Modules\PlanetModule.cs" />
+    <Compile Include="Modules\ScheduledTaskModule.cs" />
+    <Compile Include="Modules\StackModule.cs" />
+    <Compile Include="Modules\StateModule.cs" />
+    <Compile Include="Modules\TaskModule.cs" />
+    <Compile Include="Modules\TaskSchedulerModule.cs" />
+    <Compile Include="Modules\TransitionModule.cs" />
+    <Compile Include="VersionControlModule.cs" />
+    <Compile Include="PIOServer.cs" />
+    <Compile Include="PIOVersionControl.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WebServiceModule.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\LogLib\LogLib\LogLib.csproj">
+      <Project>{ef4b0001-2859-4a09-8f95-3e5bef4a5272}</Project>
+      <Name>LogLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ModuleLib\ModuleLib\ModuleLib.csproj">
+      <Project>{f89b06c7-43cc-4589-9859-3a4656aaa4a6}</Project>
+      <Name>ModuleLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\NetORMLib\NetORMLib.Sql\NetORMLib.Sql.csproj">
+      <Project>{d0d3e5a2-440c-4b0a-9b01-4633f2a74bdf}</Project>
+      <Name>NetORMLib.Sql</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\NetORMLib\NetORMLib.VersionControl\NetORMLib.VersionControl.csproj">
+      <Project>{54987791-5d6c-4f07-8355-c3c909c0632a}</Project>
+      <Name>NetORMLib.VersionControl</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\NetORMLib\NetORMLib\NetORMLib.csproj">
+      <Project>{C94B7BF1-BF85-4483-B032-1582F9EC6423}</Project>
+      <Name>NetORMLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PIO.Models\PIO.Models.csproj">
+      <Project>{7883D2F9-F04E-467A-A0A6-61158DCA5956}</Project>
+      <Name>PIO.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PIO.WebServiceLib\PIO.WebServiceLib.csproj">
+      <Project>{e8437e04-b58f-40a7-a811-485645ff6137}</Project>
+      <Name>PIO.WebServiceLib</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

@@ -3,7 +3,7 @@ using ModuleLib;
 using NetORMLib;
 using NetORMLib.Databases;
 using NetORMLib.Queries;
-using PIOServerLib.Tables;
+using PIO.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,18 +19,18 @@ namespace PIOServerLib.Modules
 		{
 		}
 
-		public Row GetFactory(int FactoryID)
+		public Row<Factory> GetFactory(int FactoryID)
 		{
-			ISelect query;
+			ISelect<Factory> query;
 			LogEnter();
 
 			query = new Select<Factory>(Factory.FactoryID, Factory.Name,Factory.StateID).Where(Factory.FactoryID.IsEqualTo(FactoryID));
 			return Try(query).OrThrow("Failed to query").FirstOrDefault();
 		}
 
-		public IEnumerable<Row> GetFactories(int PlanetID)
+		public IEnumerable<Row<Factory>> GetFactories(int PlanetID)
 		{
-			ISelect query;
+			ISelect<Factory> query;
 			LogEnter();
 
 			query = new Select<Factory>(Factory.FactoryID, Factory.Name, Factory.StateID).Where(Factory.PlanetID.IsEqualTo(PlanetID));

@@ -1,5 +1,6 @@
 ﻿using ModuleLib;
 using NetORMLib;
+using PIO.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,6 @@ namespace PIOServerLib.Modules
 {
 	public interface IEventModule:IDatabaseModule
 	{
-		Row GetEvent(int EventID);
+		Row<Event> GetEvent(int EventID);
 	}
 }

@@ -3,7 +3,7 @@ using ModuleLib;
 using NetORMLib;
 using NetORMLib.Databases;
 using NetORMLib.Queries;
-using PIOServerLib.Tables;
+using PIO.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,9 +18,9 @@ namespace PIOServerLib.Modules
 		{
 		}
 
-		public Row GetTask(int TaskID)
+		public Row<Task> GetTask(int TaskID)
 		{
-			ISelect query;
+			ISelect<Task> query;
 			LogEnter();
 
 			query = new Select<Task>(Task.TaskID, Task.Name).Where(Task.TaskID.IsEqualTo(TaskID));

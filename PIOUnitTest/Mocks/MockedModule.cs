@@ -21,18 +21,18 @@ namespace PIOUnitTest.Mocks
 			this.throwException = ThrowException;
 		}
 
-		protected Row[] GenerateRows(int Count,Action<dynamic> Initializer=null)
+		protected Row<T>[] GenerateRows(int Count,Action<dynamic> Initializer=null)
 		{
-			Row[] items;
+			Row<T>[] items;
 			dynamic item;
 
 			// don't use yield operator here, in order to trigger exception
 
 			if (throwException) throw new Exception();
-			items = new Row[Count];
+			items = new Row<T>[Count];
 			for (int t = 0; t < Count; t++)
 			{
-				item= new Row(Table<T>.Columns);
+				item = new Row<T>();
 				if (Initializer != null) Initializer(item);
 				items[t] = item;
 			}

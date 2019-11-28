@@ -4,7 +4,7 @@ using NetORMLib;
 using NetORMLib.Databases;
 using NetORMLib.Filters;
 using NetORMLib.Queries;
-using PIOServerLib.Tables;
+using PIO.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,17 +20,17 @@ namespace PIOServerLib.Modules
 		{
 		}
 
-		public Row GetTransition(int TransitionID)
+		public Row<Transition> GetTransition(int TransitionID)
 		{
-			ISelect query;
+			ISelect<Transition> query;
 			LogEnter();
 
 			query = new Select<Transition>(Transition.TransitionID,Transition.StateID, Transition.EventID,Transition.NextStateID).Where(Transition.TransitionID.IsEqualTo(TransitionID));
 			return Try(query).OrThrow("Failed to query").FirstOrDefault();
 		}
-		public Row GetTransition(int StateID, int EventID)
+		public Row<Transition> GetTransition(int StateID, int EventID)
 		{
-			ISelect query;
+			ISelect<Transition> query;
 			LogEnter();
 
 			query = new Select<Transition>(Transition.TransitionID, Transition.StateID, Transition.EventID, Transition.NextStateID).Where(new AndFilter<Transition>(Transition.StateID.IsEqualTo(StateID), Transition.EventID.IsEqualTo(EventID)));

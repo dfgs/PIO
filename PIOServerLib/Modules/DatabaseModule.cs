@@ -3,7 +3,7 @@ using ModuleLib;
 using NetORMLib;
 using NetORMLib.Databases;
 using NetORMLib.Queries;
-using PIOServerLib.Tables;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,9 +22,9 @@ namespace PIOServerLib.Modules
 			this.database = Database;
 		}
 
-		protected ITryFunction<IEnumerable<Row>> Try(ISelect Query, [CallerMemberName]string MethodName = null)
+		protected ITryFunction<IEnumerable<Row<T>>> Try<T>(ISelect<T> Query, [CallerMemberName]string MethodName = null)
 		{
-			return Try(() => this.database.Execute(Query),MethodName);
+			return Try<IEnumerable<Row<T>>>(() => this.database.Execute<T>(Query), MethodName);
 		}
 
 		protected ITryAction Try(IInsert Query, [CallerMemberName]string MethodName = null)
