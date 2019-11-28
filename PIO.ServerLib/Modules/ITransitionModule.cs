@@ -11,7 +11,7 @@ namespace PIO.ServerLib.Modules
 {
 	public interface ITransitionModule:IDatabaseModule
 	{
-		Row<Transition> GetTransition(int TransitionID);
-		Row<Transition> GetTransition(int StateID,int EventID);
+		Transition GetTransition(int TransitionID);
+		Transition GetTransition(int StateID,int EventID);
 	}
 }

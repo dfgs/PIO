@@ -11,8 +11,8 @@ namespace PIO.ServerLib.Modules
 {
 	public interface IFactoryModule:IDatabaseModule
 	{
-		Row<Factory> GetFactory(int FactoryID);
-		IEnumerable<Row<Factory>> GetFactories(int PlanetID);
+		Factory GetFactory(int FactoryID);
+		IEnumerable<Factory> GetFactories(int PlanetID);
 		int CreateFactory(int PlanetID,int FactoryTypeID,int StateID);
 		void SetState(int FactoryID, int StateID);
 	}

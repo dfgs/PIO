@@ -11,7 +11,7 @@ namespace PIO.ServerLib.Modules
 {
 	public interface IStackModule:IDatabaseModule
 	{
-		Row<Stack> GetStack(int StackID);
-		IEnumerable<Row<Stack>> GetStacks(int FactoryID);
+		Stack GetStack(int StackID);
+		IEnumerable<Stack> GetStacks(int FactoryID);
 	}
 }

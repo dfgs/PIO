@@ -5,6 +5,7 @@ using NetORMLib.Databases;
 using NetORMLib.Filters;
 using NetORMLib.Queries;
 using PIO.Models;
+using PIO.ServerLib.Tables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,21 +21,21 @@ namespace PIO.ServerLib.Modules
 		{
 		}
 
-		public Row<Transition> GetTransition(int TransitionID)
+		public Transition GetTransition(int TransitionID)
 		{
-			ISelect<Transition> query;
+			ISelect<TransitionTable> query;
 			LogEnter();
 
-			query = new Select<Transition>(Transition.TransitionID,Transition.StateID, Transition.EventID,Transition.NextStateID).Where(Transition.TransitionID.IsEqualTo(TransitionID));
-			return Try(query).OrThrow("Failed to query").FirstOrDefault();
+			query = new Select<TransitionTable>(TransitionTable.TransitionID,TransitionTable.StateID, TransitionTable.EventID,TransitionTable.NextStateID).Where(TransitionTable.TransitionID.IsEqualTo(TransitionID));
+			return Try<TransitionTable,Transition>(query).OrThrow("Failed to query").FirstOrDefault();
 		}
-		public Row<Transition> GetTransition(int StateID, int EventID)
+		public Transition GetTransition(int StateID, int EventID)
 		{
-			ISelect<Transition> query;
+			ISelect<TransitionTable> query;
 			LogEnter();
 
-			query = new Select<Transition>(Transition.TransitionID, Transition.StateID, Transition.EventID, Transition.NextStateID).Where(new AndFilter<Transition>(Transition.StateID.IsEqualTo(StateID), Transition.EventID.IsEqualTo(EventID)));
-			return Try(query).OrThrow("Failed to query").FirstOrDefault();
+			query = new Select<TransitionTable>(TransitionTable.TransitionID, TransitionTable.StateID, TransitionTable.EventID, TransitionTable.NextStateID).Where(new AndFilter<TransitionTable>(TransitionTable.StateID.IsEqualTo(StateID), TransitionTable.EventID.IsEqualTo(EventID)));
+			return Try<TransitionTable, Transition>(query).OrThrow("Failed to query").FirstOrDefault();
 		}
 
 

@@ -1,17 +1,24 @@
 ﻿using NetORMLib.Columns;
-using NetORMLib.DbTypes;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 
 namespace PIO.Models
 {
+	[DataContract]
 	public class State
 	{
-		public static readonly Column<State, DbInt> StateID = new Column<State, DbInt>() { IsPrimaryKey = true, IsIdentity = false };
-		public static readonly Column<State, DbString> Name = new Column<State, DbString>() {DefaultValue="New State" };
-		public static readonly Column<State, DbInt> TaskID = new Column<State, DbInt>();
-		public static readonly Column<State, DbInt> Duration = new Column<State, DbInt>();
+		[DataMember]
+		public int StatID { get; set; }
+		[DataMember]
+		public string Name { get; set; }
+		[DataMember]
+		public int TaskID { get; set; }
+		[DataMember]
+		public int Duration { get; set; }
+
 	}
 }

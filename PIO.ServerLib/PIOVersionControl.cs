@@ -1,8 +1,9 @@
 ﻿using NetORMLib.Databases;
-using NetORMLib.DbTypes;
+
 using NetORMLib.Queries;
 using NetORMLib.VersionControl;
 using PIO.Models;
+using PIO.ServerLib.Tables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,70 +30,70 @@ namespace PIO.ServerLib
 			switch(Version)
 			{
 				case 1:
-					yield return new CreateTable<Planet>(Planet.PlanetID, Planet.Name);
-					yield return new CreateTable<Resource>(Resource.ResourceID, Resource.Name);
-					yield return new CreateTable<Factory>(Factory.FactoryID, Factory.PlanetID, Factory.Name,Factory.StateID);
-					yield return new CreateTable<Stack>(Stack.StackID, Stack.FactoryID, Stack.ResourceID, Stack.Quantity);
+					yield return new CreateTable<PlanetTable>(PlanetTable.PlanetID, PlanetTable.Name);
+					yield return new CreateTable<ResourceTable>(ResourceTable.ResourceID, ResourceTable.Name);
+					yield return new CreateTable<FactoryTable>(FactoryTable.FactoryID, FactoryTable.PlanetID, FactoryTable.Name,FactoryTable.StateID);
+					yield return new CreateTable<StackTable>(StackTable.StackID, StackTable.FactoryID, StackTable.ResourceID, StackTable.Quantity);
 
-					yield return new CreateTable<Task>(Task.TaskID, Task.Name);
-					yield return new CreateTable<State>(State.StateID, State.Name,State.TaskID,State.Duration);
-					yield return new CreateTable<Event>(Event.EventID,Event.Name);
-					yield return new CreateTable<Transition>(Transition.TransitionID,Transition.StateID,Transition.NextStateID,Transition.EventID);
+					yield return new CreateTable<TaskTable>(TaskTable.TaskID, TaskTable.Name);
+					yield return new CreateTable<StateTable>(StateTable.StateID, StateTable.Name,StateTable.TaskID,StateTable.Duration);
+					yield return new CreateTable<EventTable>(EventTable.EventID,EventTable.Name);
+					yield return new CreateTable<TransitionTable>(TransitionTable.TransitionID,TransitionTable.StateID,TransitionTable.NextStateID,TransitionTable.EventID);
 
-					yield return new CreateTable<ScheduledTask>(ScheduledTask.ScheduledTaskID, ScheduledTask.FactoryID, ScheduledTask.TaskID, ScheduledTask.ETA);
+					yield return new CreateTable<ScheduledTaskTable>(ScheduledTaskTable.ScheduledTaskID, ScheduledTaskTable.FactoryID, ScheduledTaskTable.TaskID, ScheduledTaskTable.ETA);
 
 					break;
 				case 2:
-					yield return new CreateRelation<Planet, Factory, DbInt>(Planet.PlanetID, Factory.PlanetID);
-					yield return new CreateRelation<Factory, Stack, DbInt>(Factory.FactoryID, Stack.FactoryID);
-					yield return new CreateRelation<Resource, Stack, DbInt>(Resource.ResourceID, Stack.ResourceID);
-					yield return new CreateRelation<State, Transition, DbInt>(State.StateID, Transition.StateID);
-					yield return new CreateRelation<State, Transition, DbInt>(State.StateID, Transition.NextStateID);
-					yield return new CreateRelation<Event, Transition, DbInt>(Event.EventID, Transition.EventID);
-					yield return new CreateRelation<State, Factory, DbInt>(State.StateID, Factory.StateID);
+					yield return new CreateRelation<PlanetTable, FactoryTable, int>(PlanetTable.PlanetID, FactoryTable.PlanetID);
+					yield return new CreateRelation<FactoryTable, StackTable, int>(FactoryTable.FactoryID, StackTable.FactoryID);
+					yield return new CreateRelation<ResourceTable, StackTable, int>(ResourceTable.ResourceID, StackTable.ResourceID);
+					yield return new CreateRelation<StateTable, TransitionTable, int>(StateTable.StateID, TransitionTable.StateID);
+					yield return new CreateRelation<StateTable, TransitionTable, int>(StateTable.StateID, TransitionTable.NextStateID);
+					yield return new CreateRelation<EventTable, TransitionTable, int>(EventTable.EventID, TransitionTable.EventID);
+					yield return new CreateRelation<StateTable, FactoryTable, int>(StateTable.StateID, FactoryTable.StateID);
 
-					yield return new CreateRelation<Factory, ScheduledTask, DbInt>(Factory.FactoryID, ScheduledTask.FactoryID);
-					yield return new CreateRelation<Task, ScheduledTask, DbInt>(Task.TaskID, ScheduledTask.TaskID);
+					yield return new CreateRelation<FactoryTable, ScheduledTaskTable, int>(FactoryTable.FactoryID, ScheduledTaskTable.FactoryID);
+					yield return new CreateRelation<TaskTable, ScheduledTaskTable, int>(TaskTable.TaskID, ScheduledTaskTable.TaskID);
 
-					yield return new CreateRelation<Task, State, DbInt>(Task.TaskID, State.TaskID);
+					yield return new CreateRelation<TaskTable, StateTable, int>(TaskTable.TaskID, StateTable.TaskID);
 
 					break;
 				case 3:
-					yield return new Insert<Planet>().Set(Planet.Name, "Default");
-					yield return new SelectIdentity<Planet>((result) => planetID = Convert.ToInt32(result));
+					yield return new Insert<PlanetTable>().Set(PlanetTable.Name, "Default");
+					yield return new SelectIdentity<PlanetTable>((result) => planetID = Convert.ToInt32(result));
 
-					yield return new Insert<Resource>().Set(Resource.ResourceID, 0).Set(Resource.Name, "Wood");
-					yield return new Insert<Resource>().Set(Resource.ResourceID, 1).Set(Resource.Name, "Stone");
-					yield return new Insert<Resource>().Set(Resource.ResourceID, 2).Set(Resource.Name, "Coal");
-					yield return new Insert<Resource>().Set(Resource.ResourceID, 3).Set(Resource.Name, "Plank");
+					yield return new Insert<ResourceTable>().Set(ResourceTable.ResourceID, 0).Set(ResourceTable.Name, "Wood");
+					yield return new Insert<ResourceTable>().Set(ResourceTable.ResourceID, 1).Set(ResourceTable.Name, "Stone");
+					yield return new Insert<ResourceTable>().Set(ResourceTable.ResourceID, 2).Set(ResourceTable.Name, "Coal");
+					yield return new Insert<ResourceTable>().Set(ResourceTable.ResourceID, 3).Set(ResourceTable.Name, "Plank");
 
-					yield return new Insert<Task>().Set(Task.TaskID, 0).Set(Task.Name, "NOP");
+					yield return new Insert<TaskTable>().Set(TaskTable.TaskID, 0).Set(TaskTable.Name, "NOP");
 
-					yield return new Insert<State>().Set(State.StateID, 0).Set(State.TaskID, 0).Set(State.Duration,5).Set(State.Name, "Checking material");
-					yield return new Insert<State>().Set(State.StateID, 1).Set(State.TaskID, 0).Set(State.Duration, 5).Set(State.Name, "Searching material");
-					yield return new Insert<State>().Set(State.StateID, 2).Set(State.TaskID, 0).Set(State.Duration, 5).Set(State.Name, "Suspended (no material)");
-					yield return new Insert<State>().Set(State.StateID, 3).Set(State.TaskID, 0).Set(State.Duration, 5).Set(State.Name, "Collecting material");
-					yield return new Insert<State>().Set(State.StateID, 4).Set(State.TaskID, 0).Set(State.Duration, 5).Set(State.Name, "Building");
-					yield return new Insert<State>().Set(State.StateID, 5).Set(State.TaskID, 0).Set(State.Duration, 5).Set(State.Name, "Producing");
+					yield return new Insert<StateTable>().Set(StateTable.StateID, 0).Set(StateTable.TaskID, 0).Set(StateTable.Duration,5).Set(StateTable.Name, "Checking material");
+					yield return new Insert<StateTable>().Set(StateTable.StateID, 1).Set(StateTable.TaskID, 0).Set(StateTable.Duration, 5).Set(StateTable.Name, "Searching material");
+					yield return new Insert<StateTable>().Set(StateTable.StateID, 2).Set(StateTable.TaskID, 0).Set(StateTable.Duration, 5).Set(StateTable.Name, "Suspended (no material)");
+					yield return new Insert<StateTable>().Set(StateTable.StateID, 3).Set(StateTable.TaskID, 0).Set(StateTable.Duration, 5).Set(StateTable.Name, "Collecting material");
+					yield return new Insert<StateTable>().Set(StateTable.StateID, 4).Set(StateTable.TaskID, 0).Set(StateTable.Duration, 5).Set(StateTable.Name, "Building");
+					yield return new Insert<StateTable>().Set(StateTable.StateID, 5).Set(StateTable.TaskID, 0).Set(StateTable.Duration, 5).Set(StateTable.Name, "Producing");
 
-					yield return new Insert<Event>().Set(Event.EventID, 0).Set(Event.Name, "False");
-					yield return new Insert<Event>().Set(Event.EventID, 1).Set(Event.Name, "True");
+					yield return new Insert<EventTable>().Set(EventTable.EventID, 0).Set(EventTable.Name, "False");
+					yield return new Insert<EventTable>().Set(EventTable.EventID, 1).Set(EventTable.Name, "True");
 
-					yield return new Insert<Transition>().Set(Transition.StateID, 0).Set(Transition.NextStateID, 1).Set(Transition.EventID, 0);
-					yield return new Insert<Transition>().Set(Transition.StateID, 0).Set(Transition.NextStateID, 4).Set(Transition.EventID, 1);
-					yield return new Insert<Transition>().Set(Transition.StateID, 1).Set(Transition.NextStateID, 2).Set(Transition.EventID, 0);
-					yield return new Insert<Transition>().Set(Transition.StateID, 1).Set(Transition.NextStateID, 3).Set(Transition.EventID, 1);
-					yield return new Insert<Transition>().Set(Transition.StateID, 2).Set(Transition.NextStateID, 1).Set(Transition.EventID, 1);
-					yield return new Insert<Transition>().Set(Transition.StateID, 3).Set(Transition.NextStateID, 0).Set(Transition.EventID, 1);
-					yield return new Insert<Transition>().Set(Transition.StateID, 4).Set(Transition.NextStateID, 0).Set(Transition.EventID, 0);
-					yield return new Insert<Transition>().Set(Transition.StateID, 4).Set(Transition.NextStateID, 5).Set(Transition.EventID, 1);
+					yield return new Insert<TransitionTable>().Set(TransitionTable.StateID, 0).Set(TransitionTable.NextStateID, 1).Set(TransitionTable.EventID, 0);
+					yield return new Insert<TransitionTable>().Set(TransitionTable.StateID, 0).Set(TransitionTable.NextStateID, 4).Set(TransitionTable.EventID, 1);
+					yield return new Insert<TransitionTable>().Set(TransitionTable.StateID, 1).Set(TransitionTable.NextStateID, 2).Set(TransitionTable.EventID, 0);
+					yield return new Insert<TransitionTable>().Set(TransitionTable.StateID, 1).Set(TransitionTable.NextStateID, 3).Set(TransitionTable.EventID, 1);
+					yield return new Insert<TransitionTable>().Set(TransitionTable.StateID, 2).Set(TransitionTable.NextStateID, 1).Set(TransitionTable.EventID, 1);
+					yield return new Insert<TransitionTable>().Set(TransitionTable.StateID, 3).Set(TransitionTable.NextStateID, 0).Set(TransitionTable.EventID, 1);
+					yield return new Insert<TransitionTable>().Set(TransitionTable.StateID, 4).Set(TransitionTable.NextStateID, 0).Set(TransitionTable.EventID, 0);
+					yield return new Insert<TransitionTable>().Set(TransitionTable.StateID, 4).Set(TransitionTable.NextStateID, 5).Set(TransitionTable.EventID, 1);
 
 
-					yield return new Insert<Factory>().Set(Factory.PlanetID, planetID).Set(Factory.Name, "Stockpile").Set(Factory.StateID,5);
-					yield return new SelectIdentity<Factory>((result) => factoryID= Convert.ToInt32(result));
+					yield return new Insert<FactoryTable>().Set(FactoryTable.PlanetID, planetID).Set(FactoryTable.Name, "Stockpile").Set(FactoryTable.StateID,5);
+					yield return new SelectIdentity<FactoryTable>((result) => factoryID= Convert.ToInt32(result));
 
-					yield return new Insert<Stack>().Set(Stack.FactoryID, factoryID).Set(Stack.ResourceID, 0).Set(Stack.Quantity, 10);
-					yield return new Insert<Stack>().Set(Stack.FactoryID, factoryID).Set(Stack.ResourceID, 1).Set(Stack.Quantity, 5);
+					yield return new Insert<StackTable>().Set(StackTable.FactoryID, factoryID).Set(StackTable.ResourceID, 0).Set(StackTable.Quantity, 10);
+					yield return new Insert<StackTable>().Set(StackTable.FactoryID, factoryID).Set(StackTable.ResourceID, 1).Set(StackTable.Quantity, 5);
 
 					break;
 				

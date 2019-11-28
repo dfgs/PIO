@@ -34,5 +34,17 @@ namespace PIO.ServerHost.Properties {
                 this["Server"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool DropDatabase {
+            get {
+                return ((bool)(this["DropDatabase"]));
+            }
+            set {
+                this["DropDatabase"] = value;
+            }
+        }
     }
 }

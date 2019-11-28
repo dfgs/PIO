@@ -11,8 +11,8 @@ namespace PIO.ServerLib.Modules
 {
 	public interface IScheduledTaskModule:IDatabaseModule
 	{
-		Row<ScheduledTask> GetScheduledTask(int ScheduledTaskID);
-		IEnumerable<Row<ScheduledTask>> GetScheduledTasks(int FactoryID);
+		ScheduledTask GetScheduledTask(int ScheduledTaskID);
+		IEnumerable<ScheduledTask> GetScheduledTasks(int FactoryID);
 		int CreateScheduledTask(int FactoryID, int TaskID, DateTime ETA);
 		void DeleteScheduledTask(int ScheduledTaskID);
 		//void SetTask(int FactoryID, int TaskID);

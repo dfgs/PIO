@@ -69,6 +69,10 @@
       <Project>{f89b06c7-43cc-4589-9859-3a4656aaa4a6}</Project>
       <Name>ModuleLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PIO.Models\PIO.Models.csproj">
+      <Project>{7883d2f9-f04e-467a-a0a6-61158dca5956}</Project>
+      <Name>PIO.Models</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PIO.ServerLib\PIO.ServerLib.csproj">
       <Project>{bcd967fa-4da8-47ad-a1f5-a66ea4575617}</Project>
       <Name>PIO.ServerLib</Name>

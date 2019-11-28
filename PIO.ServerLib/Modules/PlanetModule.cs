@@ -4,6 +4,7 @@ using NetORMLib;
 using NetORMLib.Databases;
 using NetORMLib.Queries;
 using PIO.Models;
+using PIO.ServerLib.Tables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,22 +20,22 @@ namespace PIO.ServerLib.Modules
 		{
 		}
 
-		public Row<Planet> GetPlanet(int PlanetID)
+		public Planet GetPlanet(int PlanetID)
 		{
-			ISelect<Planet> query;
+			ISelect<PlanetTable> query;
 			LogEnter();
 
-			query = new Select<Planet>(Planet.PlanetID, Planet.Name).Where(Planet.PlanetID.IsEqualTo(PlanetID));
-			return Try(query).OrThrow("Failed to query").FirstOrDefault();
+			query = new Select<PlanetTable>(PlanetTable.PlanetID, PlanetTable.Name).Where(PlanetTable.PlanetID.IsEqualTo(PlanetID));
+			return Try<PlanetTable,Planet>(query).OrThrow("Failed to query").FirstOrDefault();
 		}
 
-		public IEnumerable<Row<Planet>> GetPlanets()
+		public IEnumerable<Planet> GetPlanets()
 		{
-			ISelect<Planet> query;
+			ISelect<PlanetTable> query;
 			LogEnter();
 
-			query = new Select<Planet>(Planet.PlanetID, Planet.Name);
-			return Try(query).OrThrow("Failed to query");
+			query = new Select<PlanetTable>(PlanetTable.PlanetID, PlanetTable.Name);
+			return Try<PlanetTable,Planet>(query).OrThrow("Failed to query");
 		}
 
 	}

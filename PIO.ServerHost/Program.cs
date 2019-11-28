@@ -21,7 +21,7 @@ namespace PIO.ServerHost
 			logger = new ConsoleLogger(new DefaultLogFormatter());
 
 			versionControlModule = new VersionControlModule(logger,Properties.Settings.Default.Server);
-			if (!versionControlModule.InitializeDatabase(false))
+			if (!versionControlModule.InitializeDatabase(Properties.Settings.Default.DropDatabase))
 			{
 				Console.ReadLine();
 				return;

@@ -11,7 +11,7 @@ namespace PIO.ServerLib.Modules
 {
 	public interface IPlanetModule:IDatabaseModule
 	{
-		Row<Planet> GetPlanet(int PlanetID);
-		IEnumerable<Row<Planet>> GetPlanets();
+		Planet GetPlanet(int PlanetID);
+		IEnumerable<Planet> GetPlanets();
 	}
 }

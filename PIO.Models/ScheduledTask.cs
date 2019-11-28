@@ -1,17 +1,24 @@
 ﻿using NetORMLib.Columns;
-using NetORMLib.DbTypes;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 
 namespace PIO.Models
 {
+	[DataContract]
 	public class ScheduledTask
 	{
-		public static readonly Column<ScheduledTask, DbInt> ScheduledTaskID = new Column<ScheduledTask, DbInt>() { IsIdentity=true, IsPrimaryKey = true };
-		public static readonly Column<ScheduledTask, DbInt> FactoryID = new Column<ScheduledTask, DbInt>();
-		public static readonly Column<ScheduledTask, DbInt> TaskID = new Column<ScheduledTask, DbInt>();
-		public static readonly Column<ScheduledTask, DbDate> ETA = new Column<ScheduledTask, DbDate>() ;
+		[DataMember]
+		public int ScheduledTaskID { get; set; }
+		[DataMember]
+		public int FactoryID { get; set; }
+		[DataMember]
+		public int TaskID { get; set; }
+		[DataMember]
+		public DateTime ETA { get; set; }
+
 	}
 }

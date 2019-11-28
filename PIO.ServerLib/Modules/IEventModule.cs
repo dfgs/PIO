@@ -11,6 +11,6 @@ namespace PIO.ServerLib.Modules
 {
 	public interface IEventModule:IDatabaseModule
 	{
-		Row<Event> GetEvent(int EventID);
+		Event GetEvent(int EventID);
 	}
 }

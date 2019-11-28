@@ -27,13 +27,13 @@ namespace PIO.ServerLib
 			get;
 		}
 
-		Row<Factory> BuildFactory(int PlanetID, int FactoryTypeID);
-		Row<Planet> GetPlanet(int PlanetID);
-		IEnumerable<Row<Planet>> GetPlanets();
-		IEnumerable<Row<Factory>> GetFactories(int PlanetID);
-		IEnumerable<Row<Stack>> GetStacks(int FactoryID);
-		Row<Task> GetTask(int TaskID);
-		Row<State> GetState(int StateID);
+		Factory BuildFactory(int PlanetID, int FactoryTypeID);
+		Planet GetPlanet(int PlanetID);
+		IEnumerable<Planet> GetPlanets();
+		IEnumerable<Factory> GetFactories(int PlanetID);
+		IEnumerable<Stack> GetStacks(int FactoryID);
+		Task GetTask(int TaskID);
+		State GetState(int StateID);
 
 
 	}

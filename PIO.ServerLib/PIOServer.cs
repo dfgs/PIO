@@ -132,42 +132,42 @@ namespace PIO.ServerLib
 			TaskSchedulerModule.Stop();
 		}
 
-		public Row<Planet> GetPlanet(int PlanetID)
+		public Planet GetPlanet(int PlanetID)
 		{
 			return PlanetModule.GetPlanet(PlanetID);
 		}
 
-		public IEnumerable<Row<Planet>> GetPlanets()
+		public IEnumerable<Planet> GetPlanets()
 		{
 			return PlanetModule.GetPlanets();
 		}
 
-		public IEnumerable<Row<Factory>> GetFactories(int PlanetID)
+		public IEnumerable<Factory> GetFactories(int PlanetID)
 		{
 			return FactoryModule.GetFactories(PlanetID);
 		}
 
-		public IEnumerable<Row<Stack>> GetStacks(int FactoryID)
+		public IEnumerable<Stack> GetStacks(int FactoryID)
 		{
 			return StackModule.GetStacks(FactoryID);
 		}
 
-		public Row<Task> GetTask(int TaskID)
+		public Task GetTask(int TaskID)
 		{
 			return TaskModule.GetTask(TaskID);
 		}
 
-		public Row<State> GetState(int StateID)
+		public State GetState(int StateID)
 		{
 			return StateModule.GetState(StateID);
 		}
 
-		public Row<Factory> BuildFactory(int PlanetID, int FactoryTypeID)
+		public Factory BuildFactory(int PlanetID, int FactoryTypeID)
 		{
 			dynamic item;
 			LogEnter();
 
-			item = new Row<Factory>();
+			item = new Factory();
 			item.PlanetID = PlanetID;
 			item.Name = "New";
 			item.FactoryID = Try(() => FactoryModule.CreateFactory(PlanetID, FactoryTypeID,0)).OrThrow("Failed to build factory");

@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PIO.ServerLib.Tables;
 
 namespace PIO.ServerLib.Modules
 {
@@ -19,22 +20,22 @@ namespace PIO.ServerLib.Modules
 		{
 		}
 
-		public Row<Factory> GetFactory(int FactoryID)
+		public Factory GetFactory(int FactoryID)
 		{
-			ISelect<Factory> query;
+			ISelect<FactoryTable> query;
 			LogEnter();
 
-			query = new Select<Factory>(Factory.FactoryID, Factory.Name,Factory.StateID).Where(Factory.FactoryID.IsEqualTo(FactoryID));
-			return Try(query).OrThrow("Failed to query").FirstOrDefault();
+			query = new Select<FactoryTable>(FactoryTable.FactoryID, FactoryTable.Name,FactoryTable.StateID).Where(FactoryTable.FactoryID.IsEqualTo(FactoryID));
+			return Try<FactoryTable,Factory>(query).OrThrow("Failed to query").FirstOrDefault();
 		}
 
-		public IEnumerable<Row<Factory>> GetFactories(int PlanetID)
+		public IEnumerable<Factory> GetFactories(int PlanetID)
 		{
-			ISelect<Factory> query;
+			ISelect<FactoryTable> query;
 			LogEnter();
 
-			query = new Select<Factory>(Factory.FactoryID, Factory.Name, Factory.StateID).Where(Factory.PlanetID.IsEqualTo(PlanetID));
-			return Try(query).OrThrow("Failed to query");
+			query = new Select<FactoryTable>(FactoryTable.FactoryID, FactoryTable.Name, FactoryTable.StateID).Where(FactoryTable.PlanetID.IsEqualTo(PlanetID));
+			return Try<FactoryTable, Factory>(query).OrThrow("Failed to query");
 		}
 
 		public int CreateFactory(int PlanetID,int FactoryTypeID, int StateID)
@@ -43,7 +44,7 @@ namespace PIO.ServerLib.Modules
 			int result=-1;
 			LogEnter();
 
-			queries = new IQuery[] { new Insert<Factory>().Set(Factory.PlanetID, PlanetID).Set(Factory.Name, "New").Set(Factory.StateID,StateID), new SelectIdentity<Factory>((key) => result = Convert.ToInt32(key)) };
+			queries = new IQuery[] { new Insert<FactoryTable>().Set(FactoryTable.PlanetID, PlanetID).Set(FactoryTable.Name, "New").Set(FactoryTable.StateID,StateID), new SelectIdentity<Factory>((key) => result = Convert.ToInt32(key)) };
 			Try(queries).OrThrow("Failed to query");
 
 			return result;
@@ -54,7 +55,7 @@ namespace PIO.ServerLib.Modules
 			IUpdate query;
 			LogEnter();
 
-			query = new Update<Factory>().Set(Factory.StateID,StateID).Where(Factory.FactoryID.IsEqualTo(FactoryID));
+			query = new Update<FactoryTable>().Set(FactoryTable.StateID,StateID).Where(FactoryTable.FactoryID.IsEqualTo(FactoryID));
 			Try(query).OrThrow("Failed to query");
 		}
 

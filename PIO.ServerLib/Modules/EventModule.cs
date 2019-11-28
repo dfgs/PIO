@@ -4,6 +4,7 @@ using NetORMLib;
 using NetORMLib.Databases;
 using NetORMLib.Queries;
 using PIO.Models;
+using PIO.ServerLib.Tables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,13 +20,13 @@ namespace PIO.ServerLib.Modules
 		{
 		}
 
-		public Row<Event> GetEvent(int EventID)
+		public Event GetEvent(int EventID)
 		{
-			ISelect<Event> query;
+			ISelect<EventTable> query;
 			LogEnter();
 
-			query = new Select<Event>(Event.EventID, Event.Name).Where(Event.EventID.IsEqualTo(EventID));
-			return Try(query).OrThrow("Failed to query").FirstOrDefault();
+			query = new Select<EventTable>(EventTable.EventID, EventTable.Name).Where(EventTable.EventID.IsEqualTo(EventID));
+			return Try<EventTable,Event>(query).OrThrow("Failed to query").FirstOrDefault();
 		}
 
 	

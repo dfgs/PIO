@@ -4,6 +4,7 @@ using NetORMLib;
 using NetORMLib.Databases;
 using NetORMLib.Queries;
 using PIO.Models;
+using PIO.ServerLib.Tables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,13 +19,13 @@ namespace PIO.ServerLib.Modules
 		{
 		}
 
-		public Row<Task> GetTask(int TaskID)
+		public Task GetTask(int TaskID)
 		{
-			ISelect<Task> query;
+			ISelect<TaskTable> query;
 			LogEnter();
 
-			query = new Select<Task>(Task.TaskID, Task.Name).Where(Task.TaskID.IsEqualTo(TaskID));
-			return Try(query).OrThrow("Failed to query").FirstOrDefault();
+			query = new Select<TaskTable>(TaskTable.TaskID, TaskTable.Name).Where(TaskTable.TaskID.IsEqualTo(TaskID));
+			return Try<TaskTable,Task>(query).OrThrow("Failed to query").FirstOrDefault();
 		}
 
 		/*public IEnumerable<Row> GetTasks(int FactoryID)
@@ -32,7 +33,7 @@ namespace PIO.ServerLib.Modules
 			ISelect query;
 			LogEnter();
 
-			query = new Select<Task>(Task.TaskID, Task.Name).Where(Task.FactoryID.IsEqualTo(FactoryID));
+			query = new Select<TaskTable>(TaskTable.TaskID, TaskTable.Name).Where(TaskTable.FactoryID.IsEqualTo(FactoryID));
 			return Try(query).OrThrow("Failed to query");
 		}*/
 
@@ -41,7 +42,7 @@ namespace PIO.ServerLib.Modules
 			IQuery[] queries;
 			LogEnter();
 
-			queries = new IQuery[] { new Delete<Task>().Where(Task.FactoryID.IsEqualTo(FactoryID)), new Insert<Task>().Set(Task.FactoryID,FactoryID).Set(Task.Name,"test").Set(Task.TaskID,TaskID) };
+			queries = new IQuery[] { new Delete<Task>().Where(TaskTable.FactoryID.IsEqualTo(FactoryID)), new Insert<Task>().Set(TaskTable.FactoryID,FactoryID).Set(TaskTable.Name,"test").Set(TaskTable.TaskID,TaskID) };
 
 			Try(queries).OrThrow("Failed to query");
 

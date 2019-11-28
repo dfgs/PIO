@@ -76,6 +76,15 @@
     <Compile Include="Modules\TaskModule.cs" />
     <Compile Include="Modules\TaskSchedulerModule.cs" />
     <Compile Include="Modules\TransitionModule.cs" />
+    <Compile Include="Tables\EventTable.cs" />
+    <Compile Include="Tables\FactoryTable.cs" />
+    <Compile Include="Tables\PlanetTable.cs" />
+    <Compile Include="Tables\ResourceTable.cs" />
+    <Compile Include="Tables\ScheduledTaskTable.cs" />
+    <Compile Include="Tables\StackTable.cs" />
+    <Compile Include="Tables\StateTable.cs" />
+    <Compile Include="Tables\TaskTable.cs" />
+    <Compile Include="Tables\TransitionTable.cs" />
     <Compile Include="VersionControlModule.cs" />
     <Compile Include="PIOServer.cs" />
     <Compile Include="PIOVersionControl.cs" />

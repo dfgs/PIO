@@ -11,6 +11,6 @@ namespace PIO.ServerLib.Modules
 {
 	public interface IStateModule:IDatabaseModule
 	{
-		Row<State> GetState(int StateID);
+		State GetState(int StateID);
 	}
 }

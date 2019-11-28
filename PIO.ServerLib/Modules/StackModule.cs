@@ -4,6 +4,7 @@ using NetORMLib;
 using NetORMLib.Databases;
 using NetORMLib.Queries;
 using PIO.Models;
+using PIO.ServerLib.Tables;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,22 +20,22 @@ namespace PIO.ServerLib.Modules
 		{
 		}
 
-		public Row<Stack> GetStack(int StackID)
+		public Stack GetStack(int StackID)
 		{
-			ISelect<Stack> query;
+			ISelect<StackTable> query;
 			LogEnter();
 
-			query = new Select<Stack>(Stack.StackID, Stack.FactoryID, Stack.ResourceID, Stack.Quantity).Where(Stack.StackID.IsEqualTo(StackID));
-			return Try(query).OrThrow("Failed to query").FirstOrDefault();
+			query = new Select<StackTable>(StackTable.StackID, StackTable.FactoryID, StackTable.ResourceID, StackTable.Quantity).Where(StackTable.StackID.IsEqualTo(StackID));
+			return Try <StackTable,Stack>(query).OrThrow("Failed to query").FirstOrDefault();
 		}
 
-		public IEnumerable<Row<Stack>> GetStacks(int FactoryID)
+		public IEnumerable<Stack> GetStacks(int FactoryID)
 		{
-			ISelect<Stack> query;
+			ISelect<StackTable> query;
 			LogEnter();
 
-			query = new Select<Stack>(Stack.StackID, Stack.FactoryID, Stack.ResourceID, Stack.Quantity).Where(Stack.FactoryID.IsEqualTo(FactoryID));
-			return Try(query).OrThrow("Failed to query");
+			query = new Select<StackTable>(StackTable.StackID, StackTable.FactoryID, StackTable.ResourceID, StackTable.Quantity).Where(StackTable.FactoryID.IsEqualTo(FactoryID));
+			return Try<StackTable,Stack>(query).OrThrow("Failed to query");
 		}
 
 	}
