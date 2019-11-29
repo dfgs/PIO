@@ -1,16 +1,16 @@
-﻿using ModuleLib;
-using NetORMLib;
-using PIOServerLib.Rows;
+﻿using NetORMLib;
+using PIO.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PIOServerLib.Modules
+namespace PIO.WebServerLib.Modules
 {
 	public interface IMaterialModule:IDatabaseModule
 	{
-		IEnumerable<MaterialRow> GetMaterials(int FactoryTypeID);
+		Material GetMaterial(int MaterialID);
+		IEnumerable<Material> GetMaterials(int FactoryTypeID);
 	}
 }

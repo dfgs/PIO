@@ -33,6 +33,10 @@ namespace PIO.WebServiceLib
 		FactoryType GetFactoryType(int FactoryTypeID);
 		[OperationContract]
 		FactoryType[] GetFactoryTypes();
+		[OperationContract]
+		Material GetMaterial(int MaterialID);
+		[OperationContract]
+		Material[] GetMaterials(int FactoryTypeID);
 
 	}
 

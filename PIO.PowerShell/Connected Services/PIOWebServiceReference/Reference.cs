@@ -74,6 +74,18 @@ namespace PIO.PowerShell.PIOWebServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetFactoryTypes", ReplyAction="http://tempuri.org/IPIOService/GetFactoryTypesResponse")]
         System.Threading.Tasks.Task<PIO.Models.FactoryType[]> GetFactoryTypesAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetMaterial", ReplyAction="http://tempuri.org/IPIOService/GetMaterialResponse")]
+        PIO.Models.Material GetMaterial(int MaterialID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetMaterial", ReplyAction="http://tempuri.org/IPIOService/GetMaterialResponse")]
+        System.Threading.Tasks.Task<PIO.Models.Material> GetMaterialAsync(int MaterialID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetMaterials", ReplyAction="http://tempuri.org/IPIOService/GetMaterialsResponse")]
+        PIO.Models.Material[] GetMaterials(int FactoryTypeID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetMaterials", ReplyAction="http://tempuri.org/IPIOService/GetMaterialsResponse")]
+        System.Threading.Tasks.Task<PIO.Models.Material[]> GetMaterialsAsync(int FactoryTypeID);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -181,6 +193,22 @@ namespace PIO.PowerShell.PIOWebServiceReference {
         
         public System.Threading.Tasks.Task<PIO.Models.FactoryType[]> GetFactoryTypesAsync() {
             return base.Channel.GetFactoryTypesAsync();
+        }
+        
+        public PIO.Models.Material GetMaterial(int MaterialID) {
+            return base.Channel.GetMaterial(MaterialID);
+        }
+        
+        public System.Threading.Tasks.Task<PIO.Models.Material> GetMaterialAsync(int MaterialID) {
+            return base.Channel.GetMaterialAsync(MaterialID);
+        }
+        
+        public PIO.Models.Material[] GetMaterials(int FactoryTypeID) {
+            return base.Channel.GetMaterials(FactoryTypeID);
+        }
+        
+        public System.Threading.Tasks.Task<PIO.Models.Material[]> GetMaterialsAsync(int FactoryTypeID) {
+            return base.Channel.GetMaterialsAsync(FactoryTypeID);
         }
     }
 }

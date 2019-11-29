@@ -49,6 +49,7 @@
     <Compile Include="FactoryType.cs" />
     <Compile Include="Resource.cs" />
     <Compile Include="ScheduledTask.cs" />
+    <Compile Include="Material.cs" />
     <Compile Include="Stack.cs" />
     <Compile Include="State.cs" />
     <Compile Include="Task.cs" />

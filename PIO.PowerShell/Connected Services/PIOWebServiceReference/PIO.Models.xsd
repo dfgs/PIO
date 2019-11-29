@@ -70,4 +70,19 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfFactoryType" nillable="true" type="tns:ArrayOfFactoryType" />
+  <xs:complexType name="Material">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="FactoryTypeID" type="xs:int" />
+      <xs:element minOccurs="0" name="MaterialID" type="xs:int" />
+      <xs:element minOccurs="0" name="Quantity" type="xs:int" />
+      <xs:element minOccurs="0" name="ResourceID" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Material" nillable="true" type="tns:Material" />
+  <xs:complexType name="ArrayOfMaterial">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Material" nillable="true" type="tns:Material" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfMaterial" nillable="true" type="tns:ArrayOfMaterial" />
 </xs:schema>

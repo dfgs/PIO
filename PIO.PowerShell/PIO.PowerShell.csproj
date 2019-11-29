@@ -55,6 +55,8 @@
     <Compile Include="GetFactoryTypesCmdlet.cs" />
     <Compile Include="GetResourcesCmdlet.cs" />
     <Compile Include="GetResourceCmdlet.cs" />
+    <Compile Include="GetMaterialCmdlet.cs" />
+    <Compile Include="GetMaterialsCmdlet.cs" />
     <Compile Include="GetStacksCmdlet.cs" />
     <Compile Include="GetStackCmdlet.cs" />
     <Compile Include="GetFactoryCmdlet.cs" />
@@ -79,6 +81,7 @@
     <None Include="packages.config" />
     <None Include="Properties\DataSources\PIO.Models.Factory.datasource" />
     <None Include="Properties\DataSources\PIO.Models.FactoryType.datasource" />
+    <None Include="Properties\DataSources\PIO.Models.Material.datasource" />
     <None Include="Properties\DataSources\PIO.Models.Planet.datasource" />
     <None Include="Properties\DataSources\PIO.Models.Resource.datasource" />
     <None Include="Properties\DataSources\PIO.Models.Stack.datasource" />

@@ -35,6 +35,7 @@ namespace PIO.ServerLib
 					yield return new CreateTable<FactoryTypeTable>(FactoryTypeTable.FactoryTypeID, FactoryTypeTable.Name, FactoryTypeTable.HealthPoints);
 					yield return new CreateTable<FactoryTable>(FactoryTable.FactoryID, FactoryTable.PlanetID, FactoryTable.FactoryTypeID,FactoryTable.StateID);
 					yield return new CreateTable<StackTable>(StackTable.StackID, StackTable.FactoryID, StackTable.ResourceID, StackTable.Quantity);
+					yield return new CreateTable<MaterialTable>(MaterialTable.MaterialID, MaterialTable.FactoryTypeID, MaterialTable.ResourceID, MaterialTable.Quantity);
 
 					yield return new CreateTable<TaskTable>(TaskTable.TaskID, TaskTable.Name);
 					yield return new CreateTable<StateTable>(StateTable.StateID, StateTable.Name,StateTable.TaskID,StateTable.Duration);
@@ -48,6 +49,8 @@ namespace PIO.ServerLib
 					yield return new CreateRelation<PlanetTable, FactoryTable, int>(PlanetTable.PlanetID, FactoryTable.PlanetID);
 					yield return new CreateRelation<FactoryTable, StackTable, int>(FactoryTable.FactoryID, StackTable.FactoryID);
 					yield return new CreateRelation<ResourceTable, StackTable, int>(ResourceTable.ResourceID, StackTable.ResourceID);
+					yield return new CreateRelation<FactoryTypeTable, MaterialTable, int>(FactoryTypeTable.FactoryTypeID, MaterialTable.FactoryTypeID);
+					yield return new CreateRelation<ResourceTable, MaterialTable, int>(ResourceTable.ResourceID, MaterialTable.ResourceID);
 					yield return new CreateRelation<StateTable, TransitionTable, int>(StateTable.StateID, TransitionTable.StateID);
 					yield return new CreateRelation<StateTable, TransitionTable, int>(StateTable.StateID, TransitionTable.NextStateID);
 					yield return new CreateRelation<EventTable, TransitionTable, int>(EventTable.EventID, TransitionTable.EventID);
@@ -99,6 +102,11 @@ namespace PIO.ServerLib
 
 					yield return new Insert<StackTable>().Set(StackTable.FactoryID, factoryID).Set(StackTable.ResourceID, 0).Set(StackTable.Quantity, 10);
 					yield return new Insert<StackTable>().Set(StackTable.FactoryID, factoryID).Set(StackTable.ResourceID, 1).Set(StackTable.Quantity, 5);
+
+					yield return new Insert<MaterialTable>().Set(MaterialTable.FactoryTypeID, 0).Set(MaterialTable.ResourceID, 0).Set(MaterialTable.Quantity, 1);
+					yield return new Insert<MaterialTable>().Set(MaterialTable.FactoryTypeID, 0).Set(MaterialTable.ResourceID, 1).Set(MaterialTable.Quantity, 2);
+
+					yield return new Insert<MaterialTable>().Set(MaterialTable.FactoryTypeID, 1).Set(MaterialTable.ResourceID, 0).Set(MaterialTable.Quantity, 1);
 
 					break;
 				

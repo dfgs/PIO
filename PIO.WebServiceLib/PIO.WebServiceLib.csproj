@@ -61,6 +61,7 @@
     <Compile Include="Modules\IPlanetModule.cs" />
     <Compile Include="Modules\IFactoryTypeModule.cs" />
     <Compile Include="Modules\IResourceModule.cs" />
+    <Compile Include="Modules\IMaterialModule.cs" />
     <Compile Include="Modules\IStackModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PIOService.cs" />

@@ -3,15 +3,16 @@ using ModuleLib;
 using NetORMLib;
 using NetORMLib.Databases;
 using NetORMLib.Queries;
-using PIOServerLib.Rows;
-using PIOServerLib.Tables;
+using PIO.Models;
+using PIO.ServerLib.Tables;
+using PIO.WebServerLib.Modules;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PIOServerLib.Modules
+namespace PIO.ServerLib.Modules
 {
 	public class MaterialModule : DatabaseModule,IMaterialModule
 	{
@@ -20,15 +21,24 @@ namespace PIOServerLib.Modules
 		{
 		}
 
-	
-
-		public IEnumerable<MaterialRow> GetMaterials(int FactoryTypeID)
+		public Material GetMaterial(int MaterialID)
 		{
-			ISelect query;
+			ISelect<MaterialTable> query;
 			LogEnter();
 
-			query = new Select<Material>(Material.MaterialID, Material.FactoryTypeID, Material.ResourceID, Material.Quantity).Where(Material.FactoryTypeID.IsEqualTo(FactoryTypeID));
-			return Try<MaterialRow>(query).OrThrow("Failed to query");
+			Log(LogLevels.Information, $"Querying stack with MaterialID {MaterialID}");
+			query = new Select<MaterialTable>(MaterialTable.MaterialID, MaterialTable.FactoryTypeID, MaterialTable.ResourceID, MaterialTable.Quantity).Where(MaterialTable.MaterialID.IsEqualTo(MaterialID));
+			return TrySelectFirst <MaterialTable,Material>(query).OrThrow("Failed to query");
+		}
+
+		public IEnumerable<Material> GetMaterials(int FactoryTypeID)
+		{
+			ISelect<MaterialTable> query;
+			LogEnter();
+
+			Log(LogLevels.Information, $"Querying stacks with FactoryTypeID {FactoryTypeID}");
+			query = new Select<MaterialTable>(MaterialTable.MaterialID, MaterialTable.FactoryTypeID, MaterialTable.ResourceID, MaterialTable.Quantity).Where(MaterialTable.FactoryTypeID.IsEqualTo(FactoryTypeID));
+			return TrySelectMany<MaterialTable,Material>(query).OrThrow("Failed to query");
 		}
 
 	}

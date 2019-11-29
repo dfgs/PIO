@@ -135,4 +135,32 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="GetMaterial">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="MaterialID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetMaterialResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetMaterialResult" nillable="true" type="q11:Material" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetMaterials">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="FactoryTypeID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetMaterialsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetMaterialsResult" nillable="true" type="q12:ArrayOfMaterial" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>
