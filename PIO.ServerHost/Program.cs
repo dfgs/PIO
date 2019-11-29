@@ -5,7 +5,10 @@ using NetORMLib.Databases;
 using NetORMLib.Sql.CommandBuilders;
 using NetORMLib.Sql.ConnectionFactories;
 using NetORMLib.Sql.Databases;
+using PIO.Models.Modules;
 using PIO.ServerLib;
+using PIO.ServerLib.Modules;
+using PIO.WebServiceLib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,12 +29,22 @@ namespace PIO.ServerHost
 			ILogger logger;
 			VersionControlModule versionControlModule;
 			ServiceHostModule serviceHostModule;
-			PIOServiceFactoryModule serviceFactoryModule;
-			
+			TaskSchedulerModule taskSchedulerModule;
+
+			IPIOService service;
 			IDatabase database;
 			IConnectionFactory connectionFactory;
 			ICommandBuilder commandBuilder;
 			IDatabaseCreator databaseCreator;
+
+			IPlanetModule planetModule;
+			IFactoryModule factoryModule;
+			IStackModule stackModule;
+			IResourceTypeModule resourceTypeModule;
+			IFactoryTypeModule factoryTypeModule;
+			IMaterialModule materialModule;
+			ITaskTypeModule taskTypeModule;
+			ITaskModule taskModule;
 
 
 			quitEvent = new AutoResetEvent(false);
@@ -51,13 +64,26 @@ namespace PIO.ServerHost
 				return;
 			}
 
+			planetModule = new PlanetModule(logger, database);
+			factoryModule = new FactoryModule(logger, database);
+			stackModule = new StackModule(logger, database);
+			resourceTypeModule = new ResourceTypeModule(logger, database);
+			factoryTypeModule = new FactoryTypeModule(logger, database);
+			materialModule = new MaterialModule(logger, database);
+			taskTypeModule = new TaskTypeModule(logger, database);
+			taskModule = new TaskModule(logger, database);
 
-			serviceFactoryModule = new PIOServiceFactoryModule(logger,database);
-			serviceHostModule = new ServiceHostModule(logger,serviceFactoryModule);
-			
-   
+			service = new PIOService(planetModule,factoryModule,stackModule,resourceTypeModule,factoryTypeModule,materialModule,taskTypeModule,taskModule);
+
+			serviceHostModule = new ServiceHostModule(logger,service);
 			serviceHostModule.Start();
+
+			taskSchedulerModule = new TaskSchedulerModule(logger,taskModule);
+			if (taskSchedulerModule.Initialize()) taskSchedulerModule.Start();
+
 			WaitHandle.WaitAny(new WaitHandle[] {quitEvent }, -1);
+
+			taskSchedulerModule.Stop();
 			serviceHostModule.Stop();
 
 			Console.CancelKeyPress -= new ConsoleCancelEventHandler(Console_CancelKeyPress);

@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PIO.ServerLib.Tables;
-using PIO.WebServerLib.Modules;
+using PIO.Models.Modules;
 
 namespace PIO.ServerLib.Modules
 {

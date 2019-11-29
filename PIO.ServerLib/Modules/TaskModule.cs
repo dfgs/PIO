@@ -5,7 +5,7 @@ using NetORMLib.Databases;
 using NetORMLib.Queries;
 using PIO.Models;
 using PIO.ServerLib.Tables;
-using PIO.WebServerLib.Modules;
+using PIO.Models.Modules;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,7 +40,15 @@ namespace PIO.ServerLib.Modules
 			return TrySelectMany<TaskTable, Task>(query).OrThrow("Failed to query");
 		}
 
+		public IEnumerable<Task> GetTasks()
+		{
+			ISelect<TaskTable> query;
+			LogEnter();
 
+			Log(LogLevels.Information, $"Querying tasks");
+			query = new Select<TaskTable>(TaskTable.TaskID, TaskTable.FactoryID, TaskTable.TaskTypeID, TaskTable.ETA);
+			return TrySelectMany<TaskTable, Task>(query).OrThrow("Failed to query");
+		}
 
 	}
 }

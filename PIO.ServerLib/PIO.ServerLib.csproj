@@ -43,33 +43,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IPIOServiceFactoryModule.cs" />
     <Compile Include="IVersionControlModule.cs" />
     <Compile Include="IWebServiceModule.cs" />
     <Compile Include="Message.cs" />
     <Compile Include="Modules\DatabaseModule.cs" />
     <Compile Include="Modules\EventModule.cs" />
-    <Compile Include="Modules\Executors\Executor.cs" />
-    <Compile Include="Modules\Executors\IExecutor.cs" />
-    <Compile Include="Modules\Executors\NOPExecutor.cs" />
-    <Compile Include="Modules\Executors\ScheduledExecutor.cs" />
     <Compile Include="Modules\FactoryModule.cs" />
     <Compile Include="Modules\IEventModule.cs" />
     <Compile Include="Modules\IMessageBrokerModule.cs" />
     <Compile Include="Modules\IMessageListenerModule.cs" />
-    <Compile Include="Modules\IScheduledTaskModule.cs" />
     <Compile Include="Modules\ITaskSchedulerModule.cs" />
     <Compile Include="Modules\MessageBrokerModule.cs" />
     <Compile Include="Modules\FactoryTypeModule.cs" />
     <Compile Include="Modules\TaskTypeModule.cs" />
     <Compile Include="Modules\ResourceTypeModule.cs" />
     <Compile Include="Modules\PlanetModule.cs" />
-    <Compile Include="Modules\ScheduledTaskModule.cs" />
     <Compile Include="Modules\MaterialModule.cs" />
     <Compile Include="Modules\StackModule.cs" />
     <Compile Include="Modules\TaskModule.cs" />
     <Compile Include="Modules\TaskSchedulerModule.cs" />
-    <Compile Include="PIOServiceFactoryModule.cs" />
     <Compile Include="Tables\EventTable.cs" />
     <Compile Include="Tables\FactoryTable.cs" />
     <Compile Include="Tables\PlanetTable.cs" />
@@ -119,6 +111,9 @@
       <Project>{e8437e04-b58f-40a7-a811-485645ff6137}</Project>
       <Name>PIO.WebServiceLib</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="TaskHandler\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

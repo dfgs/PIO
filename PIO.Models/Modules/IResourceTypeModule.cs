@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PIO.WebServerLib.Modules
+namespace PIO.Models.Modules
 {
 	public interface IResourceTypeModule:IDatabaseModule
 	{

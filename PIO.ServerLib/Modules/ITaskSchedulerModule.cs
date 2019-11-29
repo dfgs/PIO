@@ -9,7 +9,8 @@ namespace PIO.ServerLib.Modules
 {
 	public interface ITaskSchedulerModule:IThreadModule
 	{
-		void StartTask(int FactoryID, int TaskID,DateTime ETA);
+		bool Initialize();
+		//void StartTask(int FactoryID, int TaskID,DateTime ETA);
 
 	}
 }

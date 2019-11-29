@@ -49,8 +49,10 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Mocks\MockedTaskModule.cs" />
     <Compile Include="Mocks\MockedDatabase.cs" />
     <Compile Include="Modules\FactoryTypeModuleUnitTest.cs" />
+    <Compile Include="Modules\TaskSchedulerModuleUnitTest.cs" />
     <Compile Include="Modules\TaskModuleUnitTest.cs" />
     <Compile Include="Modules\TaskTypeModuleUnitTest.cs" />
     <Compile Include="Modules\ResourceTypeModuleUnitTest.cs" />
@@ -83,6 +85,10 @@
     <ProjectReference Include="..\PIO.ServerLib\PIO.ServerLib.csproj">
       <Project>{bcd967fa-4da8-47ad-a1f5-a66ea4575617}</Project>
       <Name>PIO.ServerLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PIO.WebServiceLib\PIO.WebServiceLib.csproj">
+      <Project>{E8437E04-B58F-40A7-A811-485645FF6137}</Project>
+      <Name>PIO.WebServiceLib</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

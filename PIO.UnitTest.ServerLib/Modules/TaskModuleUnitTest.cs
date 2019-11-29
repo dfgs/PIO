@@ -37,7 +37,24 @@ namespace PIO.UnitTest.ServerLib.Modules
 			results = module.GetTasks(1).ToArray();
 			Assert.IsNotNull(results);
 			Assert.AreEqual(3, results.Length);
-			for(int t=0;t<3;t++)
+			for (int t = 0; t < 3; t++)
+			{
+				Assert.IsNotNull(results[t]);
+			}
+		}
+		[TestMethod]
+		public void ShouldGetAllTasks()
+		{
+			IDatabase database;
+			TaskModule module;
+			Task[] results;
+
+			database = new MockedDatabase(false, 3);
+			module = new TaskModule(NullLogger.Instance, database);
+			results = module.GetTasks().ToArray();
+			Assert.IsNotNull(results);
+			Assert.AreEqual(3, results.Length);
+			for (int t = 0; t < 3; t++)
 			{
 				Assert.IsNotNull(results[t]);
 			}
@@ -68,6 +85,20 @@ namespace PIO.UnitTest.ServerLib.Modules
 			database = new MockedDatabase(true, 3);
 			module = new TaskModule(logger, database);
 			Assert.ThrowsException<Exception>(() => module.GetTasks(1));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
+		}
+		[TestMethod]
+		public void ShouldNotGetAllTasksAndLogError()
+		{
+			IDatabase database;
+			TaskModule module;
+			MemoryLogger logger;
+
+
+			logger = new MemoryLogger(new DefaultLogFormatter());
+			database = new MockedDatabase(true, 3);
+			module = new TaskModule(logger, database);
+			Assert.ThrowsException<Exception>(() => module.GetTasks());
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
 		}
 

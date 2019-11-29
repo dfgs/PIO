@@ -12,20 +12,17 @@ namespace PIO.ServerLib
 {
 	public class ServiceHostModule : ThreadModule, IWebServiceModule
 	{
-		private IPIOServiceFactoryModule serviceFactoryModule;
+		private IPIOService service;
 
-		public ServiceHostModule(ILogger Logger,IPIOServiceFactoryModule ServiceFactoryModule) : base(Logger)
+		public ServiceHostModule(ILogger Logger,IPIOService Service) : base(Logger)
 		{
-			this.serviceFactoryModule = ServiceFactoryModule;	
+			this.service = Service;	
 		}
 
 		protected override void ThreadLoop()
 		{
 			ServiceHost host;
-			IPIOService service;
 
-			service = serviceFactoryModule.CreateService();
-			if (service == null) return;
 
 			Log(LogLib.LogLevels.Information, "Creating ServiceHost");
 			if (!Try<ServiceHost>(() => new ServiceHost(service)).OrAlert(out host, "Failed to create ServiceHost")) return;

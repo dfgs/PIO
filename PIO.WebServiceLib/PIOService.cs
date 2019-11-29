@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
 using PIO.Models;
-using PIO.WebServerLib.Modules;
+using PIO.Models.Modules;
 
 namespace PIO.WebServiceLib
 {
