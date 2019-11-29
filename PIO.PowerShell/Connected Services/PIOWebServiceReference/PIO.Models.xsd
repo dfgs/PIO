@@ -44,19 +44,19 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfStack" nillable="true" type="tns:ArrayOfStack" />
-  <xs:complexType name="Resource">
+  <xs:complexType name="ResourceType">
     <xs:sequence>
       <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="ResourceID" type="xs:int" />
+      <xs:element minOccurs="0" name="ResourceTypeID" type="xs:int" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="Resource" nillable="true" type="tns:Resource" />
-  <xs:complexType name="ArrayOfResource">
+  <xs:element name="ResourceType" nillable="true" type="tns:ResourceType" />
+  <xs:complexType name="ArrayOfResourceType">
     <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="Resource" nillable="true" type="tns:Resource" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ResourceType" nillable="true" type="tns:ResourceType" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="ArrayOfResource" nillable="true" type="tns:ArrayOfResource" />
+  <xs:element name="ArrayOfResourceType" nillable="true" type="tns:ArrayOfResourceType" />
   <xs:complexType name="FactoryType">
     <xs:sequence>
       <xs:element minOccurs="0" name="FactoryTypeID" type="xs:int" />

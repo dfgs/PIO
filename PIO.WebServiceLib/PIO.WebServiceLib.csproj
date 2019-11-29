@@ -60,7 +60,7 @@
     <Compile Include="Modules\IFactoryModule.cs" />
     <Compile Include="Modules\IPlanetModule.cs" />
     <Compile Include="Modules\IFactoryTypeModule.cs" />
-    <Compile Include="Modules\IResourceModule.cs" />
+    <Compile Include="Modules\IResourceTypeModule.cs" />
     <Compile Include="Modules\IMaterialModule.cs" />
     <Compile Include="Modules\IStackModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -9,10 +9,10 @@ using System.Text;
 namespace PIO.Models
 {
 	[DataContract]
-	public class Resource
+	public class ResourceType
 	{
 		[DataMember]
-		public int ResourceID { get; set; }
+		public int ResourceTypeID { get; set; }
 		[DataMember]
 		public string Name { get; set; }
 		

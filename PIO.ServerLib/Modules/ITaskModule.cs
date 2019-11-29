@@ -12,7 +12,7 @@ namespace PIO.ServerLib.Modules
 {
 	public interface ITaskModule:IDatabaseModule
 	{
-		Task GetTask(int TaskID);
+		TaskType GetTask(int TaskID);
 		//IEnumerable<Row> GetTasks(int FactoryID);
 		//void SetTask(int FactoryID, int TaskID);
 	}

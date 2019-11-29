@@ -51,7 +51,7 @@
   <ItemGroup>
     <Compile Include="Mocks\MockedDatabase.cs" />
     <Compile Include="Modules\FactoryTypeModuleUnitTest.cs" />
-    <Compile Include="Modules\ResourceModuleUnitTest.cs" />
+    <Compile Include="Modules\ResourceTypeModuleUnitTest.cs" />
     <Compile Include="Modules\MaterialModuleUnitTest.cs" />
     <Compile Include="Modules\StackModuleUnitTest.cs" />
     <Compile Include="Modules\FactoryModuleUnitTest.cs" />

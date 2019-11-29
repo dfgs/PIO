@@ -31,13 +31,13 @@ namespace PIO.ServerLib
 			{
 				case 1:
 					yield return new CreateTable<PlanetTable>(PlanetTable.PlanetID, PlanetTable.Name);
-					yield return new CreateTable<ResourceTable>(ResourceTable.ResourceID, ResourceTable.Name);
+					yield return new CreateTable<ResourceTypeTable>(ResourceTypeTable.ResourceTypeID, ResourceTypeTable.Name);
 					yield return new CreateTable<FactoryTypeTable>(FactoryTypeTable.FactoryTypeID, FactoryTypeTable.Name, FactoryTypeTable.HealthPoints);
 					yield return new CreateTable<FactoryTable>(FactoryTable.FactoryID, FactoryTable.PlanetID, FactoryTable.FactoryTypeID, FactoryTable.HealthPoints, FactoryTable.StateID);
 					yield return new CreateTable<StackTable>(StackTable.StackID, StackTable.FactoryID, StackTable.ResourceID, StackTable.Quantity);
 					yield return new CreateTable<MaterialTable>(MaterialTable.MaterialID, MaterialTable.FactoryTypeID, MaterialTable.ResourceID, MaterialTable.Quantity);
 
-					yield return new CreateTable<TaskTable>(TaskTable.TaskID, TaskTable.Name);
+					yield return new CreateTable<TaskTypeTable>(TaskTypeTable.TaskTypeID, TaskTypeTable.Name);
 					yield return new CreateTable<StateTable>(StateTable.StateID, StateTable.Name,StateTable.TaskID,StateTable.Duration);
 					yield return new CreateTable<EventTable>(EventTable.EventID,EventTable.Name);
 					yield return new CreateTable<TransitionTable>(TransitionTable.TransitionID,TransitionTable.StateID,TransitionTable.NextStateID,TransitionTable.EventID);
@@ -48,9 +48,9 @@ namespace PIO.ServerLib
 				case 2:
 					yield return new CreateRelation<PlanetTable, FactoryTable, int>(PlanetTable.PlanetID, FactoryTable.PlanetID);
 					yield return new CreateRelation<FactoryTable, StackTable, int>(FactoryTable.FactoryID, StackTable.FactoryID);
-					yield return new CreateRelation<ResourceTable, StackTable, int>(ResourceTable.ResourceID, StackTable.ResourceID);
+					yield return new CreateRelation<ResourceTypeTable, StackTable, int>(ResourceTypeTable.ResourceTypeID, StackTable.ResourceID);
 					yield return new CreateRelation<FactoryTypeTable, MaterialTable, int>(FactoryTypeTable.FactoryTypeID, MaterialTable.FactoryTypeID);
-					yield return new CreateRelation<ResourceTable, MaterialTable, int>(ResourceTable.ResourceID, MaterialTable.ResourceID);
+					yield return new CreateRelation<ResourceTypeTable, MaterialTable, int>(ResourceTypeTable.ResourceTypeID, MaterialTable.ResourceID);
 					yield return new CreateRelation<StateTable, TransitionTable, int>(StateTable.StateID, TransitionTable.StateID);
 					yield return new CreateRelation<StateTable, TransitionTable, int>(StateTable.StateID, TransitionTable.NextStateID);
 					yield return new CreateRelation<EventTable, TransitionTable, int>(EventTable.EventID, TransitionTable.EventID);
@@ -58,24 +58,24 @@ namespace PIO.ServerLib
 					yield return new CreateRelation<StateTable, FactoryTable, int>(StateTable.StateID, FactoryTable.StateID);
 
 					yield return new CreateRelation<FactoryTable, ScheduledTaskTable, int>(FactoryTable.FactoryID, ScheduledTaskTable.FactoryID);
-					yield return new CreateRelation<TaskTable, ScheduledTaskTable, int>(TaskTable.TaskID, ScheduledTaskTable.TaskID);
+					yield return new CreateRelation<TaskTypeTable, ScheduledTaskTable, int>(TaskTypeTable.TaskTypeID, ScheduledTaskTable.TaskID);
 
-					yield return new CreateRelation<TaskTable, StateTable, int>(TaskTable.TaskID, StateTable.TaskID);
+					yield return new CreateRelation<TaskTypeTable, StateTable, int>(TaskTypeTable.TaskTypeID, StateTable.TaskID);
 
 					break;
 				case 3:
 					yield return new Insert<PlanetTable>().Set(PlanetTable.Name, "Default");
 					yield return new SelectIdentity<PlanetTable>((result) => planetID = Convert.ToInt32(result));
 
-					yield return new Insert<ResourceTable>().Set(ResourceTable.ResourceID, 0).Set(ResourceTable.Name, "Wood");
-					yield return new Insert<ResourceTable>().Set(ResourceTable.ResourceID, 1).Set(ResourceTable.Name, "Stone");
-					yield return new Insert<ResourceTable>().Set(ResourceTable.ResourceID, 2).Set(ResourceTable.Name, "Coal");
-					yield return new Insert<ResourceTable>().Set(ResourceTable.ResourceID, 3).Set(ResourceTable.Name, "Plank");
+					yield return new Insert<ResourceTypeTable>().Set(ResourceTypeTable.ResourceTypeID, 0).Set(ResourceTypeTable.Name, "Wood");
+					yield return new Insert<ResourceTypeTable>().Set(ResourceTypeTable.ResourceTypeID, 1).Set(ResourceTypeTable.Name, "Stone");
+					yield return new Insert<ResourceTypeTable>().Set(ResourceTypeTable.ResourceTypeID, 2).Set(ResourceTypeTable.Name, "Coal");
+					yield return new Insert<ResourceTypeTable>().Set(ResourceTypeTable.ResourceTypeID, 3).Set(ResourceTypeTable.Name, "Plank");
 
 					yield return new Insert<FactoryTypeTable>().Set(FactoryTypeTable.FactoryTypeID, 0).Set(FactoryTypeTable.Name, "Stockpile").Set(FactoryTypeTable.HealthPoints,50);
 					yield return new Insert<FactoryTypeTable>().Set(FactoryTypeTable.FactoryTypeID, 1).Set(FactoryTypeTable.Name, "Wood cuter").Set(FactoryTypeTable.HealthPoints, 5);
 
-					yield return new Insert<TaskTable>().Set(TaskTable.TaskID, 0).Set(TaskTable.Name, "NOP");
+					yield return new Insert<TaskTypeTable>().Set(TaskTypeTable.TaskTypeID, 0).Set(TaskTypeTable.Name, "NOP");
 
 					yield return new Insert<StateTable>().Set(StateTable.StateID, 0).Set(StateTable.TaskID, 0).Set(StateTable.Duration,5).Set(StateTable.Name, "Checking material");
 					yield return new Insert<StateTable>().Set(StateTable.StateID, 1).Set(StateTable.TaskID, 0).Set(StateTable.Duration, 5).Set(StateTable.Name, "Searching material");

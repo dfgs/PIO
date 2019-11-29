@@ -11,21 +11,17 @@ using System.Threading.Tasks;
 
 namespace PIO.PowerShell
 {
-	[Cmdlet(VerbsCommon.Get, "Resource")]
-	[OutputType(typeof(Resource))]
-	public class GetResourceCmdlet : PIOCmdLet
+	[Cmdlet(VerbsCommon.Get, "ResourceTypes")]
+	[OutputType(typeof(ResourceType[]))]
+	public class GetResourceTypesCmdlet : PIOCmdLet
 	{
-		[Parameter(Position = 0, ValueFromPipeline =true,Mandatory =true)]
-		public int ResourceID { get; set; }
-
-
-		
+			
 
 		protected override void ProcessRecord()
 		{
-			Resource result;
+			ResourceType[] result;
 
-			result = client.GetResource(ResourceID);
+			result = client.GetResourceTypes();
 
 			WriteObject(result);
 		}

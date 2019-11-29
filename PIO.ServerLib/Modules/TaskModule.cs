@@ -19,13 +19,13 @@ namespace PIO.ServerLib.Modules
 		{
 		}
 
-		public Task GetTask(int TaskID)
+		public TaskType GetTask(int TaskID)
 		{
-			ISelect<TaskTable> query;
+			ISelect<TaskTypeTable> query;
 			LogEnter();
 
-			query = new Select<TaskTable>(TaskTable.TaskID, TaskTable.Name).Where(TaskTable.TaskID.IsEqualTo(TaskID));
-			return TrySelectMany<TaskTable,Task>(query).OrThrow("Failed to query").FirstOrDefault();
+			query = new Select<TaskTypeTable>(TaskTypeTable.TaskTypeID, TaskTypeTable.Name).Where(TaskTypeTable.TaskTypeID.IsEqualTo(TaskID));
+			return TrySelectMany<TaskTypeTable,TaskType>(query).OrThrow("Failed to query").FirstOrDefault();
 		}
 
 		/*public IEnumerable<Row> GetTasks(int FactoryID)

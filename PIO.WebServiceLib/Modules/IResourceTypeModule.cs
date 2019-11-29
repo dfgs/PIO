@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace PIO.WebServerLib.Modules
 {
-	public interface IResourceModule:IDatabaseModule
+	public interface IResourceTypeModule:IDatabaseModule
 	{
-		Resource GetResource(int ResourceID);
-		IEnumerable<Resource> GetResources();
+		ResourceType GetResourceType(int ResourceID);
+		IEnumerable<ResourceType> GetResourceTypes();
 	}
 }

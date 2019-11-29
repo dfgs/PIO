@@ -51,17 +51,17 @@ namespace PIO.PowerShell.PIOWebServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetStacks", ReplyAction="http://tempuri.org/IPIOService/GetStacksResponse")]
         System.Threading.Tasks.Task<PIO.Models.Stack[]> GetStacksAsync(int FactoryID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetResource", ReplyAction="http://tempuri.org/IPIOService/GetResourceResponse")]
-        PIO.Models.Resource GetResource(int ResourceID);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetResourceType", ReplyAction="http://tempuri.org/IPIOService/GetResourceTypeResponse")]
+        PIO.Models.ResourceType GetResourceType(int ResourceTypeID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetResource", ReplyAction="http://tempuri.org/IPIOService/GetResourceResponse")]
-        System.Threading.Tasks.Task<PIO.Models.Resource> GetResourceAsync(int ResourceID);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetResourceType", ReplyAction="http://tempuri.org/IPIOService/GetResourceTypeResponse")]
+        System.Threading.Tasks.Task<PIO.Models.ResourceType> GetResourceTypeAsync(int ResourceTypeID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetResources", ReplyAction="http://tempuri.org/IPIOService/GetResourcesResponse")]
-        PIO.Models.Resource[] GetResources();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetResourceTypes", ReplyAction="http://tempuri.org/IPIOService/GetResourceTypesResponse")]
+        PIO.Models.ResourceType[] GetResourceTypes();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetResources", ReplyAction="http://tempuri.org/IPIOService/GetResourcesResponse")]
-        System.Threading.Tasks.Task<PIO.Models.Resource[]> GetResourcesAsync();
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetResourceTypes", ReplyAction="http://tempuri.org/IPIOService/GetResourceTypesResponse")]
+        System.Threading.Tasks.Task<PIO.Models.ResourceType[]> GetResourceTypesAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetFactoryType", ReplyAction="http://tempuri.org/IPIOService/GetFactoryTypeResponse")]
         PIO.Models.FactoryType GetFactoryType(int FactoryTypeID);
@@ -163,20 +163,20 @@ namespace PIO.PowerShell.PIOWebServiceReference {
             return base.Channel.GetStacksAsync(FactoryID);
         }
         
-        public PIO.Models.Resource GetResource(int ResourceID) {
-            return base.Channel.GetResource(ResourceID);
+        public PIO.Models.ResourceType GetResourceType(int ResourceTypeID) {
+            return base.Channel.GetResourceType(ResourceTypeID);
         }
         
-        public System.Threading.Tasks.Task<PIO.Models.Resource> GetResourceAsync(int ResourceID) {
-            return base.Channel.GetResourceAsync(ResourceID);
+        public System.Threading.Tasks.Task<PIO.Models.ResourceType> GetResourceTypeAsync(int ResourceTypeID) {
+            return base.Channel.GetResourceTypeAsync(ResourceTypeID);
         }
         
-        public PIO.Models.Resource[] GetResources() {
-            return base.Channel.GetResources();
+        public PIO.Models.ResourceType[] GetResourceTypes() {
+            return base.Channel.GetResourceTypes();
         }
         
-        public System.Threading.Tasks.Task<PIO.Models.Resource[]> GetResourcesAsync() {
-            return base.Channel.GetResourcesAsync();
+        public System.Threading.Tasks.Task<PIO.Models.ResourceType[]> GetResourceTypesAsync() {
+            return base.Channel.GetResourceTypesAsync();
         }
         
         public PIO.Models.FactoryType GetFactoryType(int FactoryTypeID) {

@@ -32,7 +32,7 @@ namespace PIO.ServerLib
 		IEnumerable<Planet> GetPlanets();
 		IEnumerable<Factory> GetFactories(int PlanetID);
 		IEnumerable<Stack> GetStacks(int FactoryID);
-		Task GetTask(int TaskID);
+		TaskType GetTask(int TaskID);
 		State GetState(int StateID);
 
 

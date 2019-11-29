@@ -67,7 +67,7 @@
     <Compile Include="Modules\ITransitionModule.cs" />
     <Compile Include="Modules\MessageBrokerModule.cs" />
     <Compile Include="Modules\FactoryTypeModule.cs" />
-    <Compile Include="Modules\ResourceModule.cs" />
+    <Compile Include="Modules\ResourceTypeModule.cs" />
     <Compile Include="Modules\PlanetModule.cs" />
     <Compile Include="Modules\ScheduledTaskModule.cs" />
     <Compile Include="Modules\MaterialModule.cs" />
@@ -80,13 +80,13 @@
     <Compile Include="Tables\EventTable.cs" />
     <Compile Include="Tables\FactoryTable.cs" />
     <Compile Include="Tables\PlanetTable.cs" />
-    <Compile Include="Tables\ResourceTable.cs" />
+    <Compile Include="Tables\ResourceTypeTable.cs" />
     <Compile Include="Tables\ScheduledTaskTable.cs" />
     <Compile Include="Tables\FactoryTypeTable.cs" />
     <Compile Include="Tables\MaterialTable.cs" />
     <Compile Include="Tables\StackTable.cs" />
     <Compile Include="Tables\StateTable.cs" />
-    <Compile Include="Tables\TaskTable.cs" />
+    <Compile Include="Tables\TaskTypeTable.cs" />
     <Compile Include="Tables\TransitionTable.cs" />
     <Compile Include="VersionControlModule.cs" />
     <Compile Include="PIOServer.cs" />

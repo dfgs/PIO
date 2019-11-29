@@ -104,7 +104,7 @@ namespace PIO.ServerLib
 			return StackModule.GetStacks(FactoryID);
 		}
 
-		public Task GetTask(int TaskID)
+		public TaskType GetTask(int TaskID)
 		{
 			return TaskModule.GetTask(TaskID);
 		}

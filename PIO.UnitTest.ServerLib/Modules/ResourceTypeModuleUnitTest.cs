@@ -11,30 +11,30 @@ using PIO.UnitTest.ServerLib.Mocks;
 namespace PIO.UnitTest.ServerLib.Modules
 {
 	[TestClass]
-	public class ResourceModuleUnitTest
+	public class ResourceTypeModuleUnitTest
 	{
 		[TestMethod]
-		public void ShouldGetResource()
+		public void ShouldGetResourceType()
 		{
 			IDatabase database;
-			ResourceModule module;
-			Resource result;
+			ResourceTypeModule module;
+			ResourceType result;
 
 			database = new MockedDatabase(false, 1);
-			module = new ResourceModule(NullLogger.Instance, database);
-			result = module.GetResource(1);
+			module = new ResourceTypeModule(NullLogger.Instance, database);
+			result = module.GetResourceType(1);
 			Assert.IsNotNull(result);
 		}
 		[TestMethod]
-		public void ShouldGetResources()
+		public void ShouldGetResourceTypes()
 		{
 			IDatabase database;
-			ResourceModule module;
-			Resource[] results;
+			ResourceTypeModule module;
+			ResourceType[] results;
 
 			database = new MockedDatabase(false, 3);
-			module = new ResourceModule(NullLogger.Instance, database);
-			results = module.GetResources().ToArray();
+			module = new ResourceTypeModule(NullLogger.Instance, database);
+			results = module.GetResourceTypes().ToArray();
 			Assert.IsNotNull(results);
 			Assert.AreEqual(3, results.Length);
 			for(int t=0;t<3;t++)
@@ -43,31 +43,31 @@ namespace PIO.UnitTest.ServerLib.Modules
 			}
 		}
 		[TestMethod]
-		public void ShouldNotGetResourceAndLogError()
+		public void ShouldNotGetResourceTypeAndLogError()
 		{
 			IDatabase database;
-			ResourceModule module;
+			ResourceTypeModule module;
 			MemoryLogger logger;
 
 
 			logger = new MemoryLogger(new DefaultLogFormatter());
 			database = new MockedDatabase(true,1);
-			module = new ResourceModule(logger, database);
-			Assert.ThrowsException<Exception>(() => module.GetResource(1));
+			module = new ResourceTypeModule(logger, database);
+			Assert.ThrowsException<Exception>(() => module.GetResourceType(1));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
 		}
 		[TestMethod]
-		public void ShouldNotGetResourcesAndLogError()
+		public void ShouldNotGetResourceTypesAndLogError()
 		{
 			IDatabase database;
-			ResourceModule module;
+			ResourceTypeModule module;
 			MemoryLogger logger;
 
 
 			logger = new MemoryLogger(new DefaultLogFormatter());
 			database = new MockedDatabase(true, 3);
-			module = new ResourceModule(logger, database);
-			Assert.ThrowsException<Exception>(() => module.GetResources());
+			module = new ResourceTypeModule(logger, database);
+			Assert.ThrowsException<Exception>(() => module.GetResourceTypes());
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
 		}
 

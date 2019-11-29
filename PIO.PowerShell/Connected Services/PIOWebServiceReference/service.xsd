@@ -83,29 +83,29 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetResource">
+  <xs:element name="GetResourceType">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="ResourceID" type="xs:int" />
+        <xs:element minOccurs="0" name="ResourceTypeID" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetResourceResponse">
+  <xs:element name="GetResourceTypeResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetResourceResult" nillable="true" type="q7:Resource" />
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetResourceTypeResult" nillable="true" type="q7:ResourceType" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetResources">
+  <xs:element name="GetResourceTypes">
     <xs:complexType>
       <xs:sequence />
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetResourcesResponse">
+  <xs:element name="GetResourceTypesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetResourcesResult" nillable="true" type="q8:ArrayOfResource" />
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetResourceTypesResult" nillable="true" type="q8:ArrayOfResourceType" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
