@@ -27,6 +27,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PIO.ServerHost", "PIO.Serve
 		{E8437E04-B58F-40A7-A811-485645FF6137} = {E8437E04-B58F-40A7-A811-485645FF6137}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PIO.PowerShell", "PIO.PowerShell\PIO.PowerShell.csproj", "{EDB67878-7CDC-4DD8-B39C-B70CE73CB7AA}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E8437E04-B58F-40A7-A811-485645FF6137} = {E8437E04-B58F-40A7-A811-485645FF6137}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +74,10 @@ Global
 		{7359C2BF-7A05-43E7-99C2-4647C4695B12}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7359C2BF-7A05-43E7-99C2-4647C4695B12}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7359C2BF-7A05-43E7-99C2-4647C4695B12}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EDB67878-7CDC-4DD8-B39C-B70CE73CB7AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDB67878-7CDC-4DD8-B39C-B70CE73CB7AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDB67878-7CDC-4DD8-B39C-B70CE73CB7AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDB67878-7CDC-4DD8-B39C-B70CE73CB7AA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

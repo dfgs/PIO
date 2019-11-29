@@ -10,19 +10,25 @@ using System.Threading.Tasks;
 
 namespace PIO.ServerLib
 {
-	public class WebServiceModule : ThreadModule, IWebServiceModule
+	public class ServiceHostModule : ThreadModule, IWebServiceModule
 	{
-		public WebServiceModule(ILogger Logger) : base(Logger)
+		private IPIOServiceFactoryModule serviceFactoryModule;
+
+		public ServiceHostModule(ILogger Logger,IPIOServiceFactoryModule ServiceFactoryModule) : base(Logger)
 		{
-			
+			this.serviceFactoryModule = ServiceFactoryModule;	
 		}
 
 		protected override void ThreadLoop()
 		{
 			ServiceHost host;
+			IPIOService service;
+
+			service = serviceFactoryModule.CreateService();
+			if (service == null) return;
 
 			Log(LogLib.LogLevels.Information, "Creating ServiceHost");
-			if (!Try<ServiceHost>(() => new ServiceHost(typeof(PIOService))).OrAlert(out host, "Failed to create ServiceHost")) return;
+			if (!Try<ServiceHost>(() => new ServiceHost(service)).OrAlert(out host, "Failed to create ServiceHost")) return;
 
 			Log(LogLib.LogLevels.Information, "Opening ServiceHost");
 			if (!Try(() => host.Open()).OrAlert("Failed to open ServiceHost")) return;

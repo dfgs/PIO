@@ -22,30 +22,18 @@ namespace PIO.ServerLib
 {
 	public class VersionControlModule : Module,IVersionControlModule
 	{
-		private string server;
-		
-		public VersionControlModule(ILogger Logger,string Server) : base( Logger)
+		private IDatabase database;
+		private IDatabaseCreator databaseCreator;
+
+		public VersionControlModule(ILogger Logger, IDatabaseCreator DatabaseCreator, IDatabase Database) : base( Logger)
 		{
-			this.server = Server;
+			this.databaseCreator = DatabaseCreator;
+			this.database = Database;
 		}
 
 		public bool InitializeDatabase(bool DropDatabase )
 		{
 			bool result;
-
-			IDatabase database;
-			IDatabaseCreator databaseCreator;
-			//databaseCreator = new SqlLocalDatabaseCreator("PIO", Directory.GetCurrentDirectory());
-			databaseCreator = new SqlDatabaseCreator(server, "PIO");
-
-			IConnectionFactory connectionFactory;
-			//connectionFactory = new SqlLocalConnectionFactory(System.IO.Path.Combine(Directory.GetCurrentDirectory(), "PIO.mdf"));
-			connectionFactory = new SqlConnectionFactory(server, "PIO");
-
-			ICommandBuilder commandBuilder;
-			commandBuilder = new SqlCommandBuilder();
-
-			database = new Database(connectionFactory, commandBuilder);
 
 			IVersionControl versionControl;
 			versionControl = new PIOVersionControl(database);

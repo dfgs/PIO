@@ -10,7 +10,7 @@ using NetORMLib.Sql.Databases;
 using NetORMLib.VersionControl;
 using PIO.Models;
 using PIO.ServerLib.Modules;
-
+using PIO.WebServerLib.Modules;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -47,53 +47,6 @@ namespace PIO.ServerLib
 		{
 		}
 
-		private bool InitializeDatabase()
-		{
-			bool result;
-
-			IDatabaseCreator databaseCreator;
-			//databaseCreator = new SqlLocalDatabaseCreator("PIO", Directory.GetCurrentDirectory());
-			databaseCreator = new SqlDatabaseCreator("127.0.0.1", "PIO");
-
-			IConnectionFactory connectionFactory;
-			//connectionFactory = new SqlLocalConnectionFactory(System.IO.Path.Combine(Directory.GetCurrentDirectory(), "PIO.mdf"));
-			connectionFactory = new SqlConnectionFactory("127.0.0.1","PIO");
-
-			ICommandBuilder commandBuilder;
-			commandBuilder = new SqlCommandBuilder();
-
-			database = new Database(connectionFactory, commandBuilder);
-
-			IVersionControl versionControl;
-			versionControl = new PIOVersionControl(database);
-
-			Try(databaseCreator.DropDatabase).OrAlert("Failed to drop database");
-
-			#region database initialisation
-			Log(LogLevels.Information, "Checking if database exists");
-			if (!Try(databaseCreator.DatabaseExists).OrAlert(out result, "Failed to check database presence")) return false;
-
-			if (!result)
-			{
-				Log(LogLevels.Information, "Creating database");
-				if (!Try(databaseCreator.CreateDatabase).OrAlert("Failed to create database")) return false;
-				//Thread.Sleep(5000);
-			}
-
-			Log(LogLevels.Information, "Checking database revision");
-			if (!Try(versionControl.IsUpToDate).OrAlert(out result, "Failed to check database revision")) return false;
-
-			if (!result)
-			{
-				Log(LogLevels.Information, $"Upgrading database to revision {versionControl.GetTargetRevision()}");
-				if (!Try(versionControl.Upgrade).OrAlert("Failed to upgrade database")) return false;
-			}
-			#endregion
-
-
-
-			return true;
-		}
 
 
 	
@@ -103,8 +56,7 @@ namespace PIO.ServerLib
 		protected override void ThreadLoop()
 		{
 
-			if (!InitializeDatabase()) return;
-
+	
 			PlanetModule = new PlanetModule(Logger, database);
 			FactoryModule = new FactoryModule(Logger, database);
 			StackModule = new StackModule(Logger, database);

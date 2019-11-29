@@ -56,6 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IPIOService.cs" />
+    <Compile Include="Modules\IPlanetModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PIOService.cs" />
   </ItemGroup>
@@ -72,6 +73,7 @@
       <Name>PIO.Models</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <VSToolsPath Condition="'$(VSToolsPath)' == '' and '$(VisualStudioVersion)' != '' and '$(VisualStudioVersion)' != '11.0'">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

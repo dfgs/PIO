@@ -8,5 +8,8 @@
     <Setting Name="DropDatabase" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
+    <Setting Name="DatabaseName" Type="System.String" Scope="User">
+      <Value Profile="(Default)">PIO</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
