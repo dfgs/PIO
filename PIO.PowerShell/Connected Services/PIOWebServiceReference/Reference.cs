@@ -20,6 +20,12 @@ namespace PIO.PowerShell.PIOWebServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetPlanet", ReplyAction="http://tempuri.org/IPIOService/GetPlanetResponse")]
         System.Threading.Tasks.Task<PIO.Models.Planet> GetPlanetAsync(int PlanetID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetPlanets", ReplyAction="http://tempuri.org/IPIOService/GetPlanetsResponse")]
+        PIO.Models.Planet[] GetPlanets();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetPlanets", ReplyAction="http://tempuri.org/IPIOService/GetPlanetsResponse")]
+        System.Threading.Tasks.Task<PIO.Models.Planet[]> GetPlanetsAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -55,6 +61,14 @@ namespace PIO.PowerShell.PIOWebServiceReference {
         
         public System.Threading.Tasks.Task<PIO.Models.Planet> GetPlanetAsync(int PlanetID) {
             return base.Channel.GetPlanetAsync(PlanetID);
+        }
+        
+        public PIO.Models.Planet[] GetPlanets() {
+            return base.Channel.GetPlanets();
+        }
+        
+        public System.Threading.Tasks.Task<PIO.Models.Planet[]> GetPlanetsAsync() {
+            return base.Channel.GetPlanetsAsync();
         }
     }
 }

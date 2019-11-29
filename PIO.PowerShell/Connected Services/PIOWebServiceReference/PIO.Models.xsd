@@ -7,4 +7,10 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Planet" nillable="true" type="tns:Planet" />
+  <xs:complexType name="ArrayOfPlanet">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Planet" nillable="true" type="tns:Planet" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfPlanet" nillable="true" type="tns:ArrayOfPlanet" />
 </xs:schema>

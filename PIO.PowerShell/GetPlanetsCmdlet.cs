@@ -11,21 +11,17 @@ using System.Threading.Tasks;
 
 namespace PIO.PowerShell
 {
-	[Cmdlet(VerbsCommon.Get, "Planet")]
-	[OutputType(typeof(Planet))]
-	public class GetPlanetCmdlet : PIOCmdLet
+	[Cmdlet(VerbsCommon.Get, "Planets")]
+	[OutputType(typeof(Planet[]))]
+	public class GetPlanetsCmdlet : PIOCmdLet
 	{
-		[Parameter(Position = 0, ValueFromPipeline =true,Mandatory =true)]
-		public int PlanetID { get; set; }
-
-
-		
+			
 
 		protected override void ProcessRecord()
 		{
-			Planet result;
+			Planet[] result;
 
-			result = client.GetPlanet(PlanetID);
+			result = client.GetPlanets();
 
 			WriteObject(result);
 		}

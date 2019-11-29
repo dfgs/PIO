@@ -21,8 +21,14 @@ namespace PIO.WebServiceLib
 
 		public Planet GetPlanet(int PlanetID)
 		{
-			//return new Planet() { PlanetID = PlanetID };
 			return PlanetModule.GetPlanet(PlanetID);
 		}
+		public Planet[] GetPlanets()
+		{
+			return PlanetModule.GetPlanets().ToArray();
+		}
+
+
+
 	}
 }

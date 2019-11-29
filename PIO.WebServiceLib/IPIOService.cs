@@ -15,8 +15,10 @@ namespace PIO.WebServiceLib
 
 		[OperationContract]
 		Planet GetPlanet(int PlanetID);
+		[OperationContract]
+		Planet[] GetPlanets();
 
 	}
 
-	
+
 }
