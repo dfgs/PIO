@@ -58,7 +58,6 @@
     <Compile Include="Modules\FSMModule.cs" />
     <Compile Include="Modules\IDatabaseModule.cs" />
     <Compile Include="Modules\IEventModule.cs" />
-    <Compile Include="Modules\IFactoryModule.cs" />
     <Compile Include="Modules\IFSMModule.cs" />
     <Compile Include="Modules\IMessageBrokerModule.cs" />
     <Compile Include="Modules\IMessageListenerModule.cs" />

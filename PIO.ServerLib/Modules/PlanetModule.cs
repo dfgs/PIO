@@ -26,7 +26,7 @@ namespace PIO.ServerLib.Modules
 			ISelect<PlanetTable> query;
 			LogEnter();
 
-			Log(LogLevels.Information, $"Querying planet with ID {PlanetID}");
+			Log(LogLevels.Information, $"Querying planet with PlanetID {PlanetID}");
 			query = new Select<PlanetTable>(PlanetTable.PlanetID, PlanetTable.Name).Where(PlanetTable.PlanetID.IsEqualTo(PlanetID));
 			return TrySelectFirst<PlanetTable,Planet>(query).OrThrow("Failed to query");
 		}

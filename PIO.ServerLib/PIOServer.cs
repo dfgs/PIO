@@ -122,7 +122,7 @@ namespace PIO.ServerLib
 			item = new Factory();
 			item.PlanetID = PlanetID;
 			item.Name = "New";
-			item.FactoryID = Try(() => FactoryModule.CreateFactory(PlanetID, FactoryTypeID,0)).OrThrow("Failed to build factory");
+			//item.FactoryID = Try(() => FactoryModule.CreateFactory(PlanetID, FactoryTypeID,0)).OrThrow("Failed to build factory");
 
 			Try(() => { FSMModule.Initialize(item.FactoryID, 0); }).OrAlert("Failed to initialize factory state");
 

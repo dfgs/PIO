@@ -3,7 +3,7 @@ using ModuleLib;
 using NetORMLib;
 using NetORMLib.Databases;
 using NetORMLib.Queries;
-
+using PIO.WebServerLib.Modules;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,7 +36,8 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 			state = Try(() => stateModule.GetState(StateID)).OrThrow($"Failed to get state {StateID} information");
 			Log(LogLevels.Information, $"Update factory {FactoryID} state to {state.Name}");
-			Try(() => { factoryModule.SetState(FactoryID, StateID); }).OrThrow($"Failed to update factory {FactoryID} state");
+			throw new Exception("TODO");
+			//Try(() => { factoryModule.SetState(FactoryID, StateID); }).OrThrow($"Failed to update factory {FactoryID} state");
 			Try(() => { taskSchedulerModule.StartTask(FactoryID, state.TaskID, DateTime.Now.AddSeconds(state.Duration)); }).OrThrow("Failed to schedule new state");
 		}
 

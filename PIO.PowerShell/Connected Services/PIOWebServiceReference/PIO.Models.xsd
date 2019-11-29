@@ -13,4 +13,19 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfPlanet" nillable="true" type="tns:ArrayOfPlanet" />
+  <xs:complexType name="Factory">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="FactoryID" type="xs:int" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PlanetID" type="xs:int" />
+      <xs:element minOccurs="0" name="StateID" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Factory" nillable="true" type="tns:Factory" />
+  <xs:complexType name="ArrayOfFactory">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Factory" nillable="true" type="tns:Factory" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfFactory" nillable="true" type="tns:ArrayOfFactory" />
 </xs:schema>

@@ -19,6 +19,18 @@
   <wsdl:message name="IPIOService_GetPlanets_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetPlanetsResponse" />
   </wsdl:message>
+  <wsdl:message name="IPIOService_GetFactory_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetFactory" />
+  </wsdl:message>
+  <wsdl:message name="IPIOService_GetFactory_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetFactoryResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPIOService_GetFactories_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetFactories" />
+  </wsdl:message>
+  <wsdl:message name="IPIOService_GetFactories_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetFactoriesResponse" />
+  </wsdl:message>
   <wsdl:portType name="IPIOService">
     <wsdl:operation name="GetPlanet">
       <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetPlanet" message="tns:IPIOService_GetPlanet_InputMessage" />
@@ -27,6 +39,14 @@
     <wsdl:operation name="GetPlanets">
       <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetPlanets" message="tns:IPIOService_GetPlanets_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/GetPlanetsResponse" message="tns:IPIOService_GetPlanets_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetFactory">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetFactory" message="tns:IPIOService_GetFactory_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/GetFactoryResponse" message="tns:IPIOService_GetFactory_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetFactories">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetFactories" message="tns:IPIOService_GetFactories_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/GetFactoriesResponse" message="tns:IPIOService_GetFactories_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IPIOService" type="tns:IPIOService">
@@ -42,6 +62,24 @@
     </wsdl:operation>
     <wsdl:operation name="GetPlanets">
       <soap:operation soapAction="http://tempuri.org/IPIOService/GetPlanets" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFactory">
+      <soap:operation soapAction="http://tempuri.org/IPIOService/GetFactory" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFactories">
+      <soap:operation soapAction="http://tempuri.org/IPIOService/GetFactories" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

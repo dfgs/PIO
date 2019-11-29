@@ -26,6 +26,18 @@ namespace PIO.PowerShell.PIOWebServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetPlanets", ReplyAction="http://tempuri.org/IPIOService/GetPlanetsResponse")]
         System.Threading.Tasks.Task<PIO.Models.Planet[]> GetPlanetsAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetFactory", ReplyAction="http://tempuri.org/IPIOService/GetFactoryResponse")]
+        PIO.Models.Factory GetFactory(int FactoryID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetFactory", ReplyAction="http://tempuri.org/IPIOService/GetFactoryResponse")]
+        System.Threading.Tasks.Task<PIO.Models.Factory> GetFactoryAsync(int FactoryID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetFactories", ReplyAction="http://tempuri.org/IPIOService/GetFactoriesResponse")]
+        PIO.Models.Factory[] GetFactories(int PlanetID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetFactories", ReplyAction="http://tempuri.org/IPIOService/GetFactoriesResponse")]
+        System.Threading.Tasks.Task<PIO.Models.Factory[]> GetFactoriesAsync(int PlanetID);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -69,6 +81,22 @@ namespace PIO.PowerShell.PIOWebServiceReference {
         
         public System.Threading.Tasks.Task<PIO.Models.Planet[]> GetPlanetsAsync() {
             return base.Channel.GetPlanetsAsync();
+        }
+        
+        public PIO.Models.Factory GetFactory(int FactoryID) {
+            return base.Channel.GetFactory(FactoryID);
+        }
+        
+        public System.Threading.Tasks.Task<PIO.Models.Factory> GetFactoryAsync(int FactoryID) {
+            return base.Channel.GetFactoryAsync(FactoryID);
+        }
+        
+        public PIO.Models.Factory[] GetFactories(int PlanetID) {
+            return base.Channel.GetFactories(PlanetID);
+        }
+        
+        public System.Threading.Tasks.Task<PIO.Models.Factory[]> GetFactoriesAsync(int PlanetID) {
+            return base.Channel.GetFactoriesAsync(PlanetID);
         }
     }
 }

@@ -13,10 +13,12 @@ namespace PIO.WebServiceLib
 	public class PIOService : IPIOService
 	{
 		private IPlanetModule PlanetModule;
+		private IFactoryModule FactoryModule;
 
-		public PIOService(IPlanetModule PlanetModule)
+		public PIOService(IPlanetModule PlanetModule, IFactoryModule FactoryModule)
 		{
 			this.PlanetModule = PlanetModule;
+			this.FactoryModule = FactoryModule;
 		}
 
 		public Planet GetPlanet(int PlanetID)
@@ -28,7 +30,14 @@ namespace PIO.WebServiceLib
 			return PlanetModule.GetPlanets().ToArray();
 		}
 
-
+		public Factory GetFactory(int FactoryID)
+		{
+			return FactoryModule.GetFactory(FactoryID);
+		}
+		public Factory[] GetFactories(int PlanetID)
+		{
+			return FactoryModule.GetFactories(PlanetID).ToArray();
+		}
 
 	}
 }

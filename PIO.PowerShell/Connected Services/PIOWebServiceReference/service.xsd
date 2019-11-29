@@ -27,4 +27,32 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="GetFactory">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="FactoryID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetFactoryResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetFactoryResult" nillable="true" type="q3:Factory" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetFactories">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="PlanetID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetFactoriesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetFactoriesResult" nillable="true" type="q4:ArrayOfFactory" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

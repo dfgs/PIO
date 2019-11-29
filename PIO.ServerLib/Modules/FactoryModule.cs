@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PIO.ServerLib.Tables;
+using PIO.WebServerLib.Modules;
 
 namespace PIO.ServerLib.Modules
 {
@@ -25,8 +26,9 @@ namespace PIO.ServerLib.Modules
 			ISelect<FactoryTable> query;
 			LogEnter();
 
+			Log(LogLevels.Information, $"Querying factory with FactoryID {FactoryID}");
 			query = new Select<FactoryTable>(FactoryTable.FactoryID, FactoryTable.Name,FactoryTable.StateID).Where(FactoryTable.FactoryID.IsEqualTo(FactoryID));
-			return TrySelectMany<FactoryTable,Factory>(query).OrThrow("Failed to query").FirstOrDefault();
+			return TrySelectFirst<FactoryTable,Factory>(query).OrThrow("Failed to query");
 		}
 
 		public IEnumerable<Factory> GetFactories(int PlanetID)
@@ -34,16 +36,18 @@ namespace PIO.ServerLib.Modules
 			ISelect<FactoryTable> query;
 			LogEnter();
 
+			Log(LogLevels.Information, $"Querying factories with PlanetID {PlanetID}");
 			query = new Select<FactoryTable>(FactoryTable.FactoryID, FactoryTable.Name, FactoryTable.StateID).Where(FactoryTable.PlanetID.IsEqualTo(PlanetID));
 			return TrySelectMany<FactoryTable, Factory>(query).OrThrow("Failed to query");
 		}
 
-		public int CreateFactory(int PlanetID,int FactoryTypeID, int StateID)
+		/*public int CreateFactory(int PlanetID,int FactoryTypeID, int StateID)
 		{
 			IQuery[] queries;
 			int result=-1;
 			LogEnter();
 
+			//Log(LogLevels.Information, $"Creating factory");
 			queries = new IQuery[] { new Insert<FactoryTable>().Set(FactoryTable.PlanetID, PlanetID).Set(FactoryTable.Name, "New").Set(FactoryTable.StateID,StateID), new SelectIdentity<Factory>((key) => result = Convert.ToInt32(key)) };
 			Try(queries).OrThrow("Failed to query");
 
@@ -57,7 +61,7 @@ namespace PIO.ServerLib.Modules
 
 			query = new Update<FactoryTable>().Set(FactoryTable.StateID,StateID).Where(FactoryTable.FactoryID.IsEqualTo(FactoryID));
 			Try(query).OrThrow("Failed to query");
-		}
+		}*/
 
 
 	}
