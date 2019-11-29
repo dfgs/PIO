@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PIO.WebServerLib.Modules
 {
-	public interface IPlanetModule
+	public interface IPlanetModule : IDatabaseModule
 	{
 		Planet GetPlanet(int PlanetID);
 		IEnumerable<Planet> GetPlanets();

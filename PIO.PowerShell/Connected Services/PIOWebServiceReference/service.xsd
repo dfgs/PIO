@@ -55,4 +55,32 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="GetStack">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="StackID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetStackResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetStackResult" nillable="true" type="q5:Stack" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetStacks">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="FactoryID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetStacksResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetStacksResult" nillable="true" type="q6:ArrayOfStack" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

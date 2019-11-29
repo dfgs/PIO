@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Mocks\MockedDatabase.cs" />
+    <Compile Include="Modules\StackModuleUnitTest.cs" />
     <Compile Include="Modules\FactoryModuleUnitTest.cs" />
     <Compile Include="Modules\PlanetModuleUnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

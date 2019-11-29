@@ -56,13 +56,11 @@
     <Compile Include="Modules\Executors\ScheduledExecutor.cs" />
     <Compile Include="Modules\FactoryModule.cs" />
     <Compile Include="Modules\FSMModule.cs" />
-    <Compile Include="Modules\IDatabaseModule.cs" />
     <Compile Include="Modules\IEventModule.cs" />
     <Compile Include="Modules\IFSMModule.cs" />
     <Compile Include="Modules\IMessageBrokerModule.cs" />
     <Compile Include="Modules\IMessageListenerModule.cs" />
     <Compile Include="Modules\IScheduledTaskModule.cs" />
-    <Compile Include="Modules\IStackModule.cs" />
     <Compile Include="Modules\IStateModule.cs" />
     <Compile Include="Modules\ITaskModule.cs" />
     <Compile Include="Modules\ITaskSchedulerModule.cs" />

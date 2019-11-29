@@ -5,6 +5,7 @@ using NetORMLib.Databases;
 using NetORMLib.Queries;
 using PIO.Models;
 using PIO.ServerLib.Tables;
+using PIO.WebServerLib.Modules;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,8 +26,9 @@ namespace PIO.ServerLib.Modules
 			ISelect<StackTable> query;
 			LogEnter();
 
+			Log(LogLevels.Information, $"Querying stack with StackID {StackID}");
 			query = new Select<StackTable>(StackTable.StackID, StackTable.FactoryID, StackTable.ResourceID, StackTable.Quantity).Where(StackTable.StackID.IsEqualTo(StackID));
-			return TrySelectMany <StackTable,Stack>(query).OrThrow("Failed to query").FirstOrDefault();
+			return TrySelectFirst <StackTable,Stack>(query).OrThrow("Failed to query");
 		}
 
 		public IEnumerable<Stack> GetStacks(int FactoryID)
@@ -34,6 +36,7 @@ namespace PIO.ServerLib.Modules
 			ISelect<StackTable> query;
 			LogEnter();
 
+			Log(LogLevels.Information, $"Querying stacks with FactoryID {FactoryID}");
 			query = new Select<StackTable>(StackTable.StackID, StackTable.FactoryID, StackTable.ResourceID, StackTable.Quantity).Where(StackTable.FactoryID.IsEqualTo(FactoryID));
 			return TrySelectMany<StackTable,Stack>(query).OrThrow("Failed to query");
 		}

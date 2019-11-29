@@ -21,6 +21,10 @@ namespace PIO.WebServiceLib
 		Factory GetFactory(int FactoryID);
 		[OperationContract]
 		Factory[] GetFactories(int PlanetID);
+		[OperationContract]
+		Stack GetStack(int StackID);
+		[OperationContract]
+		Stack[] GetStacks(int FactoryID);
 
 	}
 

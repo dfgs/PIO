@@ -38,6 +38,18 @@ namespace PIO.PowerShell.PIOWebServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetFactories", ReplyAction="http://tempuri.org/IPIOService/GetFactoriesResponse")]
         System.Threading.Tasks.Task<PIO.Models.Factory[]> GetFactoriesAsync(int PlanetID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetStack", ReplyAction="http://tempuri.org/IPIOService/GetStackResponse")]
+        PIO.Models.Stack GetStack(int StackID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetStack", ReplyAction="http://tempuri.org/IPIOService/GetStackResponse")]
+        System.Threading.Tasks.Task<PIO.Models.Stack> GetStackAsync(int StackID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetStacks", ReplyAction="http://tempuri.org/IPIOService/GetStacksResponse")]
+        PIO.Models.Stack[] GetStacks(int FactoryID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetStacks", ReplyAction="http://tempuri.org/IPIOService/GetStacksResponse")]
+        System.Threading.Tasks.Task<PIO.Models.Stack[]> GetStacksAsync(int FactoryID);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -97,6 +109,22 @@ namespace PIO.PowerShell.PIOWebServiceReference {
         
         public System.Threading.Tasks.Task<PIO.Models.Factory[]> GetFactoriesAsync(int PlanetID) {
             return base.Channel.GetFactoriesAsync(PlanetID);
+        }
+        
+        public PIO.Models.Stack GetStack(int StackID) {
+            return base.Channel.GetStack(StackID);
+        }
+        
+        public System.Threading.Tasks.Task<PIO.Models.Stack> GetStackAsync(int StackID) {
+            return base.Channel.GetStackAsync(StackID);
+        }
+        
+        public PIO.Models.Stack[] GetStacks(int FactoryID) {
+            return base.Channel.GetStacks(FactoryID);
+        }
+        
+        public System.Threading.Tasks.Task<PIO.Models.Stack[]> GetStacksAsync(int FactoryID) {
+            return base.Channel.GetStacksAsync(FactoryID);
         }
     }
 }

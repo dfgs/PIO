@@ -11,19 +11,21 @@ using System.Threading.Tasks;
 
 namespace PIO.PowerShell
 {
-	[Cmdlet(VerbsCommon.Get, "Factories")]
-	[OutputType(typeof(Factory[]))]
-	public class GetFactoriesCmdlet : PIOCmdLet
+	[Cmdlet(VerbsCommon.Get, "Stack")]
+	[OutputType(typeof(Stack))]
+	public class GetStackCmdlet : PIOCmdLet
 	{
+		[Parameter(Position = 0, ValueFromPipeline =true,Mandatory =true)]
+		public int StackID { get; set; }
 
-		[Parameter(Position = 0, ValueFromPipeline = true, Mandatory = true)]
-		public int PlanetID { get; set; }
+
+		
 
 		protected override void ProcessRecord()
 		{
-			Factory[] result;
+			Stack result;
 
-			result = client.GetFactories(PlanetID);
+			result = client.GetStack(StackID);
 
 			WriteObject(result);
 		}

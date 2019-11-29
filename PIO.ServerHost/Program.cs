@@ -12,12 +12,15 @@ using System.Linq;
 using System.ServiceModel;
 using System.ServiceModel.Description;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace PIO.ServerHost
 {
 	class Program
 	{
+		private static AutoResetEvent quitEvent;
+
 		static void Main(string[] args)
 		{
 			ILogger logger;
@@ -29,6 +32,10 @@ namespace PIO.ServerHost
 			IConnectionFactory connectionFactory;
 			ICommandBuilder commandBuilder;
 			IDatabaseCreator databaseCreator;
+
+
+			quitEvent = new AutoResetEvent(false);
+			Console.CancelKeyPress += new ConsoleCancelEventHandler(Console_CancelKeyPress);
 
 			logger = new ConsoleLogger(new DefaultLogFormatter());
 
@@ -50,10 +57,25 @@ namespace PIO.ServerHost
 			
    
 			serviceHostModule.Start();
-			Console.ReadLine();
+			WaitHandle.WaitAny(new WaitHandle[] {quitEvent }, -1);
 			serviceHostModule.Stop();
-			
+
+			Console.CancelKeyPress -= new ConsoleCancelEventHandler(Console_CancelKeyPress);
 		}
+
+		static void Console_CancelKeyPress(object sender, ConsoleCancelEventArgs e)
+		{
+			if (e.SpecialKey == ConsoleSpecialKey.ControlC)
+			{
+				Console.WriteLine("Control break invoked");
+				e.Cancel = true;
+				quitEvent.Set();
+			}
+
+		}
+
+
+
 
 	}
 

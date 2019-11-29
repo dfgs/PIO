@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PIO.WebServerLib.Modules
 {
-	public interface IFactoryModule
+	public interface IFactoryModule : IDatabaseModule
 	{
 		Factory GetFactory(int FactoryID);
 		IEnumerable<Factory> GetFactories(int PlanetID);
