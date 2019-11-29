@@ -15,12 +15,14 @@ namespace PIO.WebServiceLib
 		private IPlanetModule PlanetModule;
 		private IFactoryModule FactoryModule;
 		private IStackModule StackModule;
+		private IResourceModule ResourceModule;
 
-		public PIOService(IPlanetModule PlanetModule, IFactoryModule FactoryModule,IStackModule StackModule)
+		public PIOService(IPlanetModule PlanetModule, IFactoryModule FactoryModule,IStackModule StackModule,IResourceModule ResourceModule)
 		{
 			this.PlanetModule = PlanetModule;
 			this.FactoryModule = FactoryModule;
 			this.StackModule = StackModule;
+			this.ResourceModule = ResourceModule;
 		}
 
 		public Planet GetPlanet(int PlanetID)
@@ -50,5 +52,16 @@ namespace PIO.WebServiceLib
 		{
 			return StackModule.GetStacks(FactoryID).ToArray();
 		}
+
+		public Resource GetResource(int ResourceID)
+		{
+			return ResourceModule.GetResource(ResourceID);
+		}
+		public Resource[] GetResources()
+		{
+			return ResourceModule.GetResources().ToArray();
+		}
+
+
 	}
 }

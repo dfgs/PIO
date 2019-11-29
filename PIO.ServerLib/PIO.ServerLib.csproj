@@ -66,6 +66,7 @@
     <Compile Include="Modules\ITaskSchedulerModule.cs" />
     <Compile Include="Modules\ITransitionModule.cs" />
     <Compile Include="Modules\MessageBrokerModule.cs" />
+    <Compile Include="Modules\ResourceModule.cs" />
     <Compile Include="Modules\PlanetModule.cs" />
     <Compile Include="Modules\ScheduledTaskModule.cs" />
     <Compile Include="Modules\StackModule.cs" />

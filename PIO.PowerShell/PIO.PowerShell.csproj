@@ -51,6 +51,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="GetResourcesCmdlet.cs" />
+    <Compile Include="GetResourceCmdlet.cs" />
     <Compile Include="GetStacksCmdlet.cs" />
     <Compile Include="GetStackCmdlet.cs" />
     <Compile Include="GetFactoryCmdlet.cs" />
@@ -75,6 +77,7 @@
     <None Include="packages.config" />
     <None Include="Properties\DataSources\PIO.Models.Factory.datasource" />
     <None Include="Properties\DataSources\PIO.Models.Planet.datasource" />
+    <None Include="Properties\DataSources\PIO.Models.Resource.datasource" />
     <None Include="Properties\DataSources\PIO.Models.Stack.datasource" />
   </ItemGroup>
   <ItemGroup>

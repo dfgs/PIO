@@ -50,6 +50,18 @@ namespace PIO.PowerShell.PIOWebServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetStacks", ReplyAction="http://tempuri.org/IPIOService/GetStacksResponse")]
         System.Threading.Tasks.Task<PIO.Models.Stack[]> GetStacksAsync(int FactoryID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetResource", ReplyAction="http://tempuri.org/IPIOService/GetResourceResponse")]
+        PIO.Models.Resource GetResource(int ResourceID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetResource", ReplyAction="http://tempuri.org/IPIOService/GetResourceResponse")]
+        System.Threading.Tasks.Task<PIO.Models.Resource> GetResourceAsync(int ResourceID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetResources", ReplyAction="http://tempuri.org/IPIOService/GetResourcesResponse")]
+        PIO.Models.Resource[] GetResources();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetResources", ReplyAction="http://tempuri.org/IPIOService/GetResourcesResponse")]
+        System.Threading.Tasks.Task<PIO.Models.Resource[]> GetResourcesAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -125,6 +137,22 @@ namespace PIO.PowerShell.PIOWebServiceReference {
         
         public System.Threading.Tasks.Task<PIO.Models.Stack[]> GetStacksAsync(int FactoryID) {
             return base.Channel.GetStacksAsync(FactoryID);
+        }
+        
+        public PIO.Models.Resource GetResource(int ResourceID) {
+            return base.Channel.GetResource(ResourceID);
+        }
+        
+        public System.Threading.Tasks.Task<PIO.Models.Resource> GetResourceAsync(int ResourceID) {
+            return base.Channel.GetResourceAsync(ResourceID);
+        }
+        
+        public PIO.Models.Resource[] GetResources() {
+            return base.Channel.GetResources();
+        }
+        
+        public System.Threading.Tasks.Task<PIO.Models.Resource[]> GetResourcesAsync() {
+            return base.Channel.GetResourcesAsync();
         }
     }
 }

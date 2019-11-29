@@ -25,7 +25,10 @@ namespace PIO.WebServiceLib
 		Stack GetStack(int StackID);
 		[OperationContract]
 		Stack[] GetStacks(int FactoryID);
-
+		[OperationContract]
+		Resource GetResource(int ResourceID);
+		[OperationContract]
+		Resource[] GetResources();
 	}
 
 

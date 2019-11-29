@@ -25,7 +25,12 @@ namespace PIO.ServerLib
 			
 			Log(LogLib.LogLevels.Information, "Creating Service");
 			Try<PIOService>(() =>
-				new PIOService(new PlanetModule(Logger, database), new FactoryModule(Logger, database), new StackModule(Logger, database))
+				new PIOService(
+					new PlanetModule(Logger, database), 
+					new FactoryModule(Logger, database),
+					new StackModule(Logger, database),
+					new ResourceModule(Logger, database)
+				)
 			).OrAlert(out service, "Failed to create Service");
 			
 			return service;

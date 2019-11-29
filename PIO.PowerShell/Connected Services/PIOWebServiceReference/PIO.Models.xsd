@@ -43,4 +43,17 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfStack" nillable="true" type="tns:ArrayOfStack" />
+  <xs:complexType name="Resource">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ResourceID" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Resource" nillable="true" type="tns:Resource" />
+  <xs:complexType name="ArrayOfResource">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Resource" nillable="true" type="tns:Resource" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfResource" nillable="true" type="tns:ArrayOfResource" />
 </xs:schema>
