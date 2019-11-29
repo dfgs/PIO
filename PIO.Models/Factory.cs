@@ -18,6 +18,8 @@ namespace PIO.Models
 		[DataMember]
 		public int FactoryTypeID { get; set; }
 		[DataMember]
+		public int HealthPoints { get; set; }
+		[DataMember]
 		public int StateID { get; set; }
 
 	}

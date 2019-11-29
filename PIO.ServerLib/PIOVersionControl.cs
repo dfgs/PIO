@@ -33,7 +33,7 @@ namespace PIO.ServerLib
 					yield return new CreateTable<PlanetTable>(PlanetTable.PlanetID, PlanetTable.Name);
 					yield return new CreateTable<ResourceTable>(ResourceTable.ResourceID, ResourceTable.Name);
 					yield return new CreateTable<FactoryTypeTable>(FactoryTypeTable.FactoryTypeID, FactoryTypeTable.Name, FactoryTypeTable.HealthPoints);
-					yield return new CreateTable<FactoryTable>(FactoryTable.FactoryID, FactoryTable.PlanetID, FactoryTable.FactoryTypeID,FactoryTable.StateID);
+					yield return new CreateTable<FactoryTable>(FactoryTable.FactoryID, FactoryTable.PlanetID, FactoryTable.FactoryTypeID, FactoryTable.HealthPoints, FactoryTable.StateID);
 					yield return new CreateTable<StackTable>(StackTable.StackID, StackTable.FactoryID, StackTable.ResourceID, StackTable.Quantity);
 					yield return new CreateTable<MaterialTable>(MaterialTable.MaterialID, MaterialTable.FactoryTypeID, MaterialTable.ResourceID, MaterialTable.Quantity);
 
@@ -97,7 +97,7 @@ namespace PIO.ServerLib
 					yield return new Insert<TransitionTable>().Set(TransitionTable.StateID, 4).Set(TransitionTable.NextStateID, 5).Set(TransitionTable.EventID, 1);
 
 
-					yield return new Insert<FactoryTable>().Set(FactoryTable.PlanetID, planetID).Set(FactoryTable.FactoryTypeID, 0).Set(FactoryTable.StateID,5);
+					yield return new Insert<FactoryTable>().Set(FactoryTable.PlanetID, planetID).Set(FactoryTable.FactoryTypeID,0).Set(FactoryTable.HealthPoints, 0).Set(FactoryTable.StateID, 5);
 					yield return new SelectIdentity<FactoryTable>((result) => factoryID= Convert.ToInt32(result));
 
 					yield return new Insert<StackTable>().Set(StackTable.FactoryID, factoryID).Set(StackTable.ResourceID, 0).Set(StackTable.Quantity, 10);
