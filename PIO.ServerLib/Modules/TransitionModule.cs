@@ -27,7 +27,7 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 
 			query = new Select<TransitionTable>(TransitionTable.TransitionID,TransitionTable.StateID, TransitionTable.EventID,TransitionTable.NextStateID).Where(TransitionTable.TransitionID.IsEqualTo(TransitionID));
-			return Try<TransitionTable,Transition>(query).OrThrow("Failed to query").FirstOrDefault();
+			return TrySelectMany<TransitionTable,Transition>(query).OrThrow("Failed to query").FirstOrDefault();
 		}
 		public Transition GetTransition(int StateID, int EventID)
 		{
@@ -35,7 +35,7 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 
 			query = new Select<TransitionTable>(TransitionTable.TransitionID, TransitionTable.StateID, TransitionTable.EventID, TransitionTable.NextStateID).Where(new AndFilter<TransitionTable>(TransitionTable.StateID.IsEqualTo(StateID), TransitionTable.EventID.IsEqualTo(EventID)));
-			return Try<TransitionTable, Transition>(query).OrThrow("Failed to query").FirstOrDefault();
+			return TrySelectMany<TransitionTable, Transition>(query).OrThrow("Failed to query").FirstOrDefault();
 		}
 
 

@@ -26,7 +26,7 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 
 			query = new Select<FactoryTable>(FactoryTable.FactoryID, FactoryTable.Name,FactoryTable.StateID).Where(FactoryTable.FactoryID.IsEqualTo(FactoryID));
-			return Try<FactoryTable,Factory>(query).OrThrow("Failed to query").FirstOrDefault();
+			return TrySelectMany<FactoryTable,Factory>(query).OrThrow("Failed to query").FirstOrDefault();
 		}
 
 		public IEnumerable<Factory> GetFactories(int PlanetID)
@@ -35,7 +35,7 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 
 			query = new Select<FactoryTable>(FactoryTable.FactoryID, FactoryTable.Name, FactoryTable.StateID).Where(FactoryTable.PlanetID.IsEqualTo(PlanetID));
-			return Try<FactoryTable, Factory>(query).OrThrow("Failed to query");
+			return TrySelectMany<FactoryTable, Factory>(query).OrThrow("Failed to query");
 		}
 
 		public int CreateFactory(int PlanetID,int FactoryTypeID, int StateID)

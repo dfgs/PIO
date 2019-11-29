@@ -26,7 +26,7 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 
 			query = new Select<StateTable>(StateTable.StateID, StateTable.Name,StateTable.TaskID,StateTable.Duration).Where(StateTable.StateID.IsEqualTo(StateID));
-			return Try<StateTable,State>(query).OrThrow("Failed to query").FirstOrDefault();
+			return TrySelectMany<StateTable,State>(query).OrThrow("Failed to query").FirstOrDefault();
 		}
 
 	

@@ -25,7 +25,7 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 
 			query = new Select<ScheduledTaskTable>(ScheduledTaskTable.ScheduledTaskID, ScheduledTaskTable.FactoryID, ScheduledTaskTable.TaskID, ScheduledTaskTable.ETA).Where(ScheduledTaskTable.ScheduledTaskID.IsEqualTo(ScheduledTaskID));
-			return Try<ScheduledTaskTable,ScheduledTask>(query).OrThrow("Failed to query").FirstOrDefault();
+			return TrySelectMany<ScheduledTaskTable,ScheduledTask>(query).OrThrow("Failed to query").FirstOrDefault();
 		}
 		public void DeleteScheduledTask(int ScheduledTaskID)
 		{
@@ -41,7 +41,7 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 
 			query = new Select<ScheduledTaskTable>(ScheduledTaskTable.ScheduledTaskID, ScheduledTaskTable.FactoryID, ScheduledTaskTable.TaskID, ScheduledTaskTable.ETA).Where(ScheduledTaskTable.FactoryID.IsEqualTo(FactoryID));
-			return Try<ScheduledTaskTable, ScheduledTask>(query).OrThrow("Failed to query");
+			return TrySelectMany<ScheduledTaskTable, ScheduledTask>(query).OrThrow("Failed to query");
 		}
 		public int CreateScheduledTask(int FactoryID, int TaskID,DateTime ETA)
 		{

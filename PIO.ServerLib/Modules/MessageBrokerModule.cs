@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using LogLib;
-using PIOServerLib.Rows;
+using PIO.Models;
 
 namespace PIO.ServerLib.Modules
 {
@@ -22,7 +22,7 @@ namespace PIO.ServerLib.Modules
 
 		public void Post(Message Message)
 		{
-			EventRow ev;
+			Event ev;
 
 			LogEnter();
 			ev = Try(() => eventModule.GetEvent(Message.EventID)).OrThrow($"Failed to get event {Message.EventID} information");

@@ -26,7 +26,7 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 
 			query = new Select<StackTable>(StackTable.StackID, StackTable.FactoryID, StackTable.ResourceID, StackTable.Quantity).Where(StackTable.StackID.IsEqualTo(StackID));
-			return Try <StackTable,Stack>(query).OrThrow("Failed to query").FirstOrDefault();
+			return TrySelectMany <StackTable,Stack>(query).OrThrow("Failed to query").FirstOrDefault();
 		}
 
 		public IEnumerable<Stack> GetStacks(int FactoryID)
@@ -35,7 +35,7 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 
 			query = new Select<StackTable>(StackTable.StackID, StackTable.FactoryID, StackTable.ResourceID, StackTable.Quantity).Where(StackTable.FactoryID.IsEqualTo(FactoryID));
-			return Try<StackTable,Stack>(query).OrThrow("Failed to query");
+			return TrySelectMany<StackTable,Stack>(query).OrThrow("Failed to query");
 		}
 
 	}

@@ -26,7 +26,7 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 
 			query = new Select<EventTable>(EventTable.EventID, EventTable.Name).Where(EventTable.EventID.IsEqualTo(EventID));
-			return Try<EventTable,Event>(query).OrThrow("Failed to query").FirstOrDefault();
+			return TrySelectMany<EventTable,Event>(query).OrThrow("Failed to query").FirstOrDefault();
 		}
 
 	

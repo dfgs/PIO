@@ -25,7 +25,7 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 
 			query = new Select<TaskTable>(TaskTable.TaskID, TaskTable.Name).Where(TaskTable.TaskID.IsEqualTo(TaskID));
-			return Try<TaskTable,Task>(query).OrThrow("Failed to query").FirstOrDefault();
+			return TrySelectMany<TaskTable,Task>(query).OrThrow("Failed to query").FirstOrDefault();
 		}
 
 		/*public IEnumerable<Row> GetTasks(int FactoryID)

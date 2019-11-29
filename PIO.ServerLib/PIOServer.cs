@@ -67,7 +67,7 @@ namespace PIO.ServerLib
 			ScheduledTaskModule = new ScheduledTaskModule(Logger, database);
 
 			MessageBrokerModule = new MessageBrokerModule(Logger,EventModule);
-			TaskSchedulerModule = new TaskSchedulerModule(Logger,ScheduledTaskModule,MessageBrokerModule);
+			//TaskSchedulerModule = new TaskSchedulerModule(Logger,ScheduledTaskModule,MessageBrokerModule);
 			FSMModule = new FSMModule(Logger,  FactoryModule, StateModule,TransitionModule, TaskSchedulerModule);
 
 			MessageBrokerModule.Subscribe(FSMModule);

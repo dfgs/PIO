@@ -28,7 +28,7 @@ namespace PIO.ServerLib.Modules
 
 			Log(LogLevels.Information, $"Querying planet with ID {PlanetID}");
 			query = new Select<PlanetTable>(PlanetTable.PlanetID, PlanetTable.Name).Where(PlanetTable.PlanetID.IsEqualTo(PlanetID));
-			return Try<PlanetTable,Planet>(query).OrThrow("Failed to query").FirstOrDefault();
+			return TrySelectFirst<PlanetTable,Planet>(query).OrThrow("Failed to query");
 		}
 
 		public IEnumerable<Planet> GetPlanets()
@@ -38,7 +38,7 @@ namespace PIO.ServerLib.Modules
 
 			Log(LogLevels.Information, $"Querying planets");
 			query = new Select<PlanetTable>(PlanetTable.PlanetID, PlanetTable.Name);
-			return Try<PlanetTable,Planet>(query).OrThrow("Failed to query");
+			return TrySelectMany<PlanetTable,Planet>(query).OrThrow("Failed to query");
 		}
 
 	}
