@@ -29,7 +29,8 @@ namespace PIO.ServerLib
 					new PlanetModule(Logger, database), 
 					new FactoryModule(Logger, database),
 					new StackModule(Logger, database),
-					new ResourceModule(Logger, database)
+					new ResourceModule(Logger, database),
+					new FactoryTypeModule(Logger,database)
 				)
 			).OrAlert(out service, "Failed to create Service");
 			

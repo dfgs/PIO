@@ -62,6 +62,18 @@ namespace PIO.PowerShell.PIOWebServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetResources", ReplyAction="http://tempuri.org/IPIOService/GetResourcesResponse")]
         System.Threading.Tasks.Task<PIO.Models.Resource[]> GetResourcesAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetFactoryType", ReplyAction="http://tempuri.org/IPIOService/GetFactoryTypeResponse")]
+        PIO.Models.FactoryType GetFactoryType(int FactoryTypeID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetFactoryType", ReplyAction="http://tempuri.org/IPIOService/GetFactoryTypeResponse")]
+        System.Threading.Tasks.Task<PIO.Models.FactoryType> GetFactoryTypeAsync(int FactoryTypeID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetFactoryTypes", ReplyAction="http://tempuri.org/IPIOService/GetFactoryTypesResponse")]
+        PIO.Models.FactoryType[] GetFactoryTypes();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetFactoryTypes", ReplyAction="http://tempuri.org/IPIOService/GetFactoryTypesResponse")]
+        System.Threading.Tasks.Task<PIO.Models.FactoryType[]> GetFactoryTypesAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -153,6 +165,22 @@ namespace PIO.PowerShell.PIOWebServiceReference {
         
         public System.Threading.Tasks.Task<PIO.Models.Resource[]> GetResourcesAsync() {
             return base.Channel.GetResourcesAsync();
+        }
+        
+        public PIO.Models.FactoryType GetFactoryType(int FactoryTypeID) {
+            return base.Channel.GetFactoryType(FactoryTypeID);
+        }
+        
+        public System.Threading.Tasks.Task<PIO.Models.FactoryType> GetFactoryTypeAsync(int FactoryTypeID) {
+            return base.Channel.GetFactoryTypeAsync(FactoryTypeID);
+        }
+        
+        public PIO.Models.FactoryType[] GetFactoryTypes() {
+            return base.Channel.GetFactoryTypes();
+        }
+        
+        public System.Threading.Tasks.Task<PIO.Models.FactoryType[]> GetFactoryTypesAsync() {
+            return base.Channel.GetFactoryTypesAsync();
         }
     }
 }

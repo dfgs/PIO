@@ -9,16 +9,14 @@ using System.Text;
 namespace PIO.Models
 {
 	[DataContract]
-	public class Factory
+	public class FactoryType
 	{
-		[DataMember]
-		public int FactoryID { get; set; }
-		[DataMember]
-		public int PlanetID { get; set; }
 		[DataMember]
 		public int FactoryTypeID { get; set; }
 		[DataMember]
-		public int StateID { get; set; }
+		public string Name { get; set; }
+		[DataMember]
+		public int HealthPoints { get; set; }
 
 	}
 }

@@ -109,4 +109,30 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="GetFactoryType">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="FactoryTypeID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetFactoryTypeResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetFactoryTypeResult" nillable="true" type="q9:FactoryType" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetFactoryTypes">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetFactoryTypesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetFactoryTypesResult" nillable="true" type="q10:ArrayOfFactoryType" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

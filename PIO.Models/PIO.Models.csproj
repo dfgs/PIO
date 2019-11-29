@@ -46,6 +46,7 @@
     <Compile Include="Factory.cs" />
     <Compile Include="Planet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="FactoryType.cs" />
     <Compile Include="Resource.cs" />
     <Compile Include="ScheduledTask.cs" />
     <Compile Include="Stack.cs" />

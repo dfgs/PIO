@@ -29,6 +29,11 @@ namespace PIO.WebServiceLib
 		Resource GetResource(int ResourceID);
 		[OperationContract]
 		Resource[] GetResources();
+		[OperationContract]
+		FactoryType GetFactoryType(int FactoryTypeID);
+		[OperationContract]
+		FactoryType[] GetFactoryTypes();
+
 	}
 
 

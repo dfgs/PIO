@@ -66,6 +66,7 @@
     <Compile Include="Modules\ITaskSchedulerModule.cs" />
     <Compile Include="Modules\ITransitionModule.cs" />
     <Compile Include="Modules\MessageBrokerModule.cs" />
+    <Compile Include="Modules\FactoryTypeModule.cs" />
     <Compile Include="Modules\ResourceModule.cs" />
     <Compile Include="Modules\PlanetModule.cs" />
     <Compile Include="Modules\ScheduledTaskModule.cs" />
@@ -80,6 +81,7 @@
     <Compile Include="Tables\PlanetTable.cs" />
     <Compile Include="Tables\ResourceTable.cs" />
     <Compile Include="Tables\ScheduledTaskTable.cs" />
+    <Compile Include="Tables\FactoryTypeTable.cs" />
     <Compile Include="Tables\StackTable.cs" />
     <Compile Include="Tables\StateTable.cs" />
     <Compile Include="Tables\TaskTable.cs" />
