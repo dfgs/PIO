@@ -5,13 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using LogLib;
+using PIOServerLib.Rows;
 
 namespace PIO.ServerLib.Modules
 {
 	public class MessageBrokerModule : Module, IMessageBrokerModule
 	{
-		private List<IMessageListenerModule> listeners;
-		private IEventModule eventModule;
+		private readonly List<IMessageListenerModule> listeners;
+		private readonly IEventModule eventModule;
 
 		public MessageBrokerModule(ILogger Logger,IEventModule EventModule) : base(Logger)
 		{
@@ -21,7 +22,7 @@ namespace PIO.ServerLib.Modules
 
 		public void Post(Message Message)
 		{
-			dynamic ev;
+			EventRow ev;
 
 			LogEnter();
 			ev = Try(() => eventModule.GetEvent(Message.EventID)).OrThrow($"Failed to get event {Message.EventID} information");

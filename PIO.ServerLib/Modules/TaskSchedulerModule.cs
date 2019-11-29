@@ -14,11 +14,12 @@ namespace PIO.ServerLib.Modules
 {
 	public class TaskSchedulerModule : AtModule<ScheduledExecutor>,ITaskSchedulerModule
 	{
-		private Dictionary<int, IExecutor> tasks;
-		private IScheduledTaskModule scheduledTaskModule;
-		private IMessageBrokerModule messageBrokerModule;
+		private readonly Dictionary<int, IExecutor> tasks;
+		private readonly IScheduledTaskModule scheduledTaskModule;
+		private readonly IMessageBrokerModule messageBrokerModule;
+		private readonly IStackModule stackModule;
 
-		public TaskSchedulerModule(ILogger Logger, IScheduledTaskModule ScheduledTaskModule, IMessageBrokerModule MessageBrokerModule) : base(Logger)
+		public TaskSchedulerModule(ILogger Logger, IMessageBrokerModule MessageBrokerModule, IScheduledTaskModule ScheduledTaskModule, IFactoryModule FactoryModule,IMaterialModule MaterialModule ,IStackModule StackModule) : base(Logger)
 		{
 			IExecutor executor;
 
@@ -28,6 +29,7 @@ namespace PIO.ServerLib.Modules
 			tasks = new Dictionary<int, IExecutor>();
 
 			executor = new NOPExecutor(Logger); tasks.Add(executor.TaskID, executor);
+			executor = new CheckMaterialExecutor(Logger,FactoryModule,MaterialModule,StackModule); tasks.Add(executor.TaskID, executor);
 		}
 
 		protected override void OnTriggerEvent(ScheduledExecutor ScheduledExecutor)
