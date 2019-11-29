@@ -7,25 +7,24 @@ using System.Management.Automation;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace PIO.PowerShell
 {
-	[Cmdlet(VerbsCommon.Get, "ResourceType")]
-	[OutputType(typeof(ResourceType))]
-	public class GetResourceTypeCmdlet : PIOCmdLet
+	[Cmdlet(VerbsCommon.Get, "Task")]
+	[OutputType(typeof(Task))]
+	public class GetTaskCmdlet : PIOCmdLet
 	{
 		[Parameter(Position = 0, ValueFromPipeline =true,Mandatory =true)]
-		public int ResourceTypeID { get; set; }
+		public int TaskID { get; set; }
 
 
 		
 
 		protected override void ProcessRecord()
 		{
-			ResourceType result;
+			Task result;
 
-			result = client.GetResourceType(ResourceTypeID);
+			result = client.GetTask(TaskID);
 
 			WriteObject(result);
 		}

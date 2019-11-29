@@ -15,18 +15,27 @@ namespace PIO.WebServiceLib
 		private IPlanetModule PlanetModule;
 		private IFactoryModule FactoryModule;
 		private IStackModule StackModule;
-		private IResourceTypeModule ResourceModule;
+		private IResourceTypeModule ResourceTypeModule;
 		private IFactoryTypeModule FactoryTypeModule;
 		private IMaterialModule MaterialModule;
+		private ITaskTypeModule TaskTypeModule;
+		private ITaskModule TaskModule;
 
-		public PIOService(IPlanetModule PlanetModule, IFactoryModule FactoryModule,IStackModule StackModule,IResourceTypeModule ResourceModule,IFactoryTypeModule FactoryTypeModule,IMaterialModule MaterialModule)
+		public PIOService(
+			IPlanetModule PlanetModule, IFactoryModule FactoryModule,
+			IStackModule StackModule,IResourceTypeModule ResourceTypeModule,
+			IFactoryTypeModule FactoryTypeModule,IMaterialModule MaterialModule,
+			ITaskTypeModule TaskTypeModule,ITaskModule TaskModule
+		)
 		{
 			this.PlanetModule = PlanetModule;
 			this.FactoryModule = FactoryModule;
 			this.StackModule = StackModule;
-			this.ResourceModule = ResourceModule;
+			this.ResourceTypeModule = ResourceTypeModule;
 			this.FactoryTypeModule = FactoryTypeModule;
 			this.MaterialModule = MaterialModule;
+			this.TaskTypeModule = TaskTypeModule;
+			this.TaskModule = TaskModule;
 		}
 
 		public Planet GetPlanet(int PlanetID)
@@ -57,13 +66,13 @@ namespace PIO.WebServiceLib
 			return StackModule.GetStacks(FactoryID).ToArray();
 		}
 
-		public ResourceType GetResourceType(int ResourceID)
+		public ResourceType GetResourceType(int ResourceTypeID)
 		{
-			return ResourceModule.GetResourceType(ResourceID);
+			return ResourceTypeModule.GetResourceType(ResourceTypeID);
 		}
 		public ResourceType[] GetResourceTypes()
 		{
-			return ResourceModule.GetResourceTypes().ToArray();
+			return ResourceTypeModule.GetResourceTypes().ToArray();
 		}
 
 		public FactoryType GetFactoryType(int FactoryTypeID)
@@ -85,8 +94,24 @@ namespace PIO.WebServiceLib
 			return MaterialModule.GetMaterials(FactoryID).ToArray();
 		}
 
+		public TaskType GetTaskType(int TaskTypeID)
+		{
+			return TaskTypeModule.GetTaskType(TaskTypeID);
+		}
+		public TaskType[] GetTaskTypes()
+		{
+			return TaskTypeModule.GetTaskTypes().ToArray();
+		}
 
+		public Task GetTask(int TaskID)
+		{
+			return TaskModule.GetTask(TaskID);
+		}
 
+		public Task[] GetTasks(int FactoryID)
+		{
+			return TaskModule.GetTasks(FactoryID).ToArray();
+		}
 
 
 	}

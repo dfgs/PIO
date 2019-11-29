@@ -79,6 +79,30 @@
   <wsdl:message name="IPIOService_GetMaterials_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetMaterialsResponse" />
   </wsdl:message>
+  <wsdl:message name="IPIOService_GetTaskType_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetTaskType" />
+  </wsdl:message>
+  <wsdl:message name="IPIOService_GetTaskType_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetTaskTypeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPIOService_GetTaskTypes_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetTaskTypes" />
+  </wsdl:message>
+  <wsdl:message name="IPIOService_GetTaskTypes_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetTaskTypesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPIOService_GetTask_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetTask" />
+  </wsdl:message>
+  <wsdl:message name="IPIOService_GetTask_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetTaskResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPIOService_GetTasks_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetTasks" />
+  </wsdl:message>
+  <wsdl:message name="IPIOService_GetTasks_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetTasksResponse" />
+  </wsdl:message>
   <wsdl:portType name="IPIOService">
     <wsdl:operation name="GetPlanet">
       <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetPlanet" message="tns:IPIOService_GetPlanet_InputMessage" />
@@ -127,6 +151,22 @@
     <wsdl:operation name="GetMaterials">
       <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetMaterials" message="tns:IPIOService_GetMaterials_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/GetMaterialsResponse" message="tns:IPIOService_GetMaterials_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTaskType">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetTaskType" message="tns:IPIOService_GetTaskType_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/GetTaskTypeResponse" message="tns:IPIOService_GetTaskType_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTaskTypes">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetTaskTypes" message="tns:IPIOService_GetTaskTypes_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/GetTaskTypesResponse" message="tns:IPIOService_GetTaskTypes_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTask">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetTask" message="tns:IPIOService_GetTask_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/GetTaskResponse" message="tns:IPIOService_GetTask_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTasks">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetTasks" message="tns:IPIOService_GetTasks_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/GetTasksResponse" message="tns:IPIOService_GetTasks_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IPIOService" type="tns:IPIOService">
@@ -232,6 +272,42 @@
     </wsdl:operation>
     <wsdl:operation name="GetMaterials">
       <soap:operation soapAction="http://tempuri.org/IPIOService/GetMaterials" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTaskType">
+      <soap:operation soapAction="http://tempuri.org/IPIOService/GetTaskType" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTaskTypes">
+      <soap:operation soapAction="http://tempuri.org/IPIOService/GetTaskTypes" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTask">
+      <soap:operation soapAction="http://tempuri.org/IPIOService/GetTask" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTasks">
+      <soap:operation soapAction="http://tempuri.org/IPIOService/GetTasks" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

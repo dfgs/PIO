@@ -9,16 +9,16 @@ using System.Text;
 namespace PIO.Models
 {
 	[DataContract]
-	public class State
+	public class Task
 	{
-		[DataMember]
-		public int StatID { get; set; }
-		[DataMember]
-		public string Name { get; set; }
 		[DataMember]
 		public int TaskID { get; set; }
 		[DataMember]
-		public int Duration { get; set; }
+		public int FactoryID { get; set; }
+		[DataMember]
+		public int TaskTypeID { get; set; }
+		[DataMember]
+		public DateTime ETA { get; set; }
 
 	}
 }

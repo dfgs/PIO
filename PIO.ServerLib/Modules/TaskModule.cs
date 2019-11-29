@@ -5,6 +5,7 @@ using NetORMLib.Databases;
 using NetORMLib.Queries;
 using PIO.Models;
 using PIO.ServerLib.Tables;
+using PIO.WebServerLib.Modules;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,39 +16,29 @@ namespace PIO.ServerLib.Modules
 	public class TaskModule : DatabaseModule,ITaskModule
 	{
 
-		public TaskModule(ILogger Logger,IDatabase Database) : base(Logger,Database)
+		public TaskModule(ILogger Logger, IDatabase Database) : base(Logger, Database)
 		{
 		}
 
-		public TaskType GetTask(int TaskID)
+		public Task GetTask(int TaskID)
 		{
-			ISelect<TaskTypeTable> query;
+			ISelect<TaskTable> query;
 			LogEnter();
 
-			query = new Select<TaskTypeTable>(TaskTypeTable.TaskTypeID, TaskTypeTable.Name).Where(TaskTypeTable.TaskTypeID.IsEqualTo(TaskID));
-			return TrySelectMany<TaskTypeTable,TaskType>(query).OrThrow("Failed to query").FirstOrDefault();
+			Log(LogLevels.Information, $"Querying task with TaskID {TaskID}");
+			query = new Select<TaskTable>(TaskTable.TaskID, TaskTable.FactoryID, TaskTable.TaskTypeID, TaskTable.ETA).Where(TaskTable.TaskID.IsEqualTo(TaskID));
+			return TrySelectFirst<TaskTable, Task>(query).OrThrow("Failed to query");
 		}
 
-		/*public IEnumerable<Row> GetTasks(int FactoryID)
+		public IEnumerable<Task> GetTasks(int FactoryID)
 		{
-			ISelect query;
+			ISelect<TaskTable> query;
 			LogEnter();
 
-			query = new Select<TaskTable>(TaskTable.TaskID, TaskTable.Name).Where(TaskTable.FactoryID.IsEqualTo(FactoryID));
-			return Try(query).OrThrow("Failed to query");
-		}*/
-
-		/*public void SetTask(int FactoryID, int TaskID)
-		{
-			IQuery[] queries;
-			LogEnter();
-
-			queries = new IQuery[] { new Delete<Task>().Where(TaskTable.FactoryID.IsEqualTo(FactoryID)), new Insert<Task>().Set(TaskTable.FactoryID,FactoryID).Set(TaskTable.Name,"test").Set(TaskTable.TaskID,TaskID) };
-
-			Try(queries).OrThrow("Failed to query");
-
-		}*/
-
+			Log(LogLevels.Information, $"Querying tasks with FactoryID {FactoryID}");
+			query = new Select<TaskTable>(TaskTable.TaskID, TaskTable.FactoryID, TaskTable.TaskTypeID, TaskTable.ETA).Where(TaskTable.FactoryID.IsEqualTo(FactoryID));
+			return TrySelectMany<TaskTable, Task>(query).OrThrow("Failed to query");
+		}
 
 
 

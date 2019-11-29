@@ -27,7 +27,7 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying stack with MaterialID {MaterialID}");
-			query = new Select<MaterialTable>(MaterialTable.MaterialID, MaterialTable.FactoryTypeID, MaterialTable.ResourceID, MaterialTable.Quantity).Where(MaterialTable.MaterialID.IsEqualTo(MaterialID));
+			query = new Select<MaterialTable>(MaterialTable.MaterialID, MaterialTable.FactoryTypeID, MaterialTable.ResourceTypeID, MaterialTable.Quantity).Where(MaterialTable.MaterialID.IsEqualTo(MaterialID));
 			return TrySelectFirst <MaterialTable,Material>(query).OrThrow("Failed to query");
 		}
 
@@ -37,7 +37,7 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying stacks with FactoryTypeID {FactoryTypeID}");
-			query = new Select<MaterialTable>(MaterialTable.MaterialID, MaterialTable.FactoryTypeID, MaterialTable.ResourceID, MaterialTable.Quantity).Where(MaterialTable.FactoryTypeID.IsEqualTo(FactoryTypeID));
+			query = new Select<MaterialTable>(MaterialTable.MaterialID, MaterialTable.FactoryTypeID, MaterialTable.ResourceTypeID, MaterialTable.Quantity).Where(MaterialTable.FactoryTypeID.IsEqualTo(FactoryTypeID));
 			return TrySelectMany<MaterialTable,Material>(query).OrThrow("Failed to query");
 		}
 

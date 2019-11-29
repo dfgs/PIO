@@ -33,7 +33,7 @@
     <xs:sequence>
       <xs:element minOccurs="0" name="FactoryID" type="xs:int" />
       <xs:element minOccurs="0" name="Quantity" type="xs:int" />
-      <xs:element minOccurs="0" name="ResourceID" type="xs:int" />
+      <xs:element minOccurs="0" name="ResourceTypeID" type="xs:int" />
       <xs:element minOccurs="0" name="StackID" type="xs:int" />
     </xs:sequence>
   </xs:complexType>
@@ -76,7 +76,7 @@
       <xs:element minOccurs="0" name="FactoryTypeID" type="xs:int" />
       <xs:element minOccurs="0" name="MaterialID" type="xs:int" />
       <xs:element minOccurs="0" name="Quantity" type="xs:int" />
-      <xs:element minOccurs="0" name="ResourceID" type="xs:int" />
+      <xs:element minOccurs="0" name="ResourceTypeID" type="xs:int" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Material" nillable="true" type="tns:Material" />
@@ -86,4 +86,32 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfMaterial" nillable="true" type="tns:ArrayOfMaterial" />
+  <xs:complexType name="TaskType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TaskTypeID" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="TaskType" nillable="true" type="tns:TaskType" />
+  <xs:complexType name="ArrayOfTaskType">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="TaskType" nillable="true" type="tns:TaskType" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfTaskType" nillable="true" type="tns:ArrayOfTaskType" />
+  <xs:complexType name="Task">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ETA" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="FactoryID" type="xs:int" />
+      <xs:element minOccurs="0" name="TaskID" type="xs:int" />
+      <xs:element minOccurs="0" name="TaskTypeID" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Task" nillable="true" type="tns:Task" />
+  <xs:complexType name="ArrayOfTask">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Task" nillable="true" type="tns:Task" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfTask" nillable="true" type="tns:ArrayOfTask" />
 </xs:schema>

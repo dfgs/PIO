@@ -1,5 +1,4 @@
-﻿using ModuleLib;
-using NetORMLib;
+﻿using NetORMLib;
 using PIO.Models;
 using PIO.WebServerLib.Modules;
 using System;
@@ -8,12 +7,11 @@ using System.Linq;
 using System.Text;
 
 
-namespace PIO.ServerLib.Modules
+namespace PIO.WebServerLib.Modules
 {
 	public interface ITaskModule:IDatabaseModule
 	{
-		TaskType GetTask(int TaskID);
-		//IEnumerable<Row> GetTasks(int FactoryID);
-		//void SetTask(int FactoryID, int TaskID);
+		Task GetTask(int TaskID);
+		IEnumerable<Task> GetTasks(int FactoryID);
 	}
 }

@@ -53,6 +53,10 @@
     </Compile>
     <Compile Include="GetFactoryTypeCmdlet.cs" />
     <Compile Include="GetFactoryTypesCmdlet.cs" />
+    <Compile Include="GetTasksCmdlet.cs" />
+    <Compile Include="GetTaskCmdlet.cs" />
+    <Compile Include="GetTaskTypesCmdlet.cs" />
+    <Compile Include="GetTaskTypeCmdlet.cs" />
     <Compile Include="GetResourceTypesCmdlet.cs" />
     <Compile Include="GetResourceTypeCmdlet.cs" />
     <Compile Include="GetMaterialCmdlet.cs" />
@@ -86,6 +90,8 @@
     <None Include="Properties\DataSources\PIO.Models.Resource.datasource" />
     <None Include="Properties\DataSources\PIO.Models.ResourceType.datasource" />
     <None Include="Properties\DataSources\PIO.Models.Stack.datasource" />
+    <None Include="Properties\DataSources\PIO.Models.Task.datasource" />
+    <None Include="Properties\DataSources\PIO.Models.TaskType.datasource" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PIO.Models\PIO.Models.csproj">

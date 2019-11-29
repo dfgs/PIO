@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace PIO.WebServerLib.Modules
 {
-	public interface IResourceTypeModule:IDatabaseModule
+	public interface ITaskTypeModule:IDatabaseModule
 	{
-		ResourceType GetResourceType(int ResourceTypeID);
-		IEnumerable<ResourceType> GetResourceTypes();
+		TaskType GetTaskType(int TaskTypeID);
+		IEnumerable<TaskType> GetTaskTypes();
 	}
 }

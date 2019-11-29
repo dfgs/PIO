@@ -19,29 +19,29 @@ namespace PIO.ServerLib.Modules
 		{
 		}
 
-		public ScheduledTask GetScheduledTask(int ScheduledTaskID)
+		public Task GetScheduledTask(int ScheduledTaskID)
 		{
-			ISelect<ScheduledTaskTable> query;
+			ISelect<TaskTable> query;
 			LogEnter();
 
-			query = new Select<ScheduledTaskTable>(ScheduledTaskTable.ScheduledTaskID, ScheduledTaskTable.FactoryID, ScheduledTaskTable.TaskID, ScheduledTaskTable.ETA).Where(ScheduledTaskTable.ScheduledTaskID.IsEqualTo(ScheduledTaskID));
-			return TrySelectMany<ScheduledTaskTable,ScheduledTask>(query).OrThrow("Failed to query").FirstOrDefault();
+			query = new Select<TaskTable>(TaskTable.TaskID, TaskTable.FactoryID, TaskTable.TaskTypeID, TaskTable.ETA).Where(TaskTable.TaskID.IsEqualTo(ScheduledTaskID));
+			return TrySelectMany<TaskTable,Task>(query).OrThrow("Failed to query").FirstOrDefault();
 		}
 		public void DeleteScheduledTask(int ScheduledTaskID)
 		{
 			IDelete query;
 			LogEnter();
 
-			query = new Delete<ScheduledTaskTable>().Where(ScheduledTaskTable.ScheduledTaskID.IsEqualTo(ScheduledTaskID));
+			query = new Delete<TaskTable>().Where(TaskTable.TaskID.IsEqualTo(ScheduledTaskID));
 			Try(query).OrThrow("Failed to query");
 		}
-		public IEnumerable<ScheduledTask> GetScheduledTasks(int FactoryID)
+		public IEnumerable<Task> GetScheduledTasks(int FactoryID)
 		{
-			ISelect<ScheduledTaskTable> query;
+			ISelect<TaskTable> query;
 			LogEnter();
 
-			query = new Select<ScheduledTaskTable>(ScheduledTaskTable.ScheduledTaskID, ScheduledTaskTable.FactoryID, ScheduledTaskTable.TaskID, ScheduledTaskTable.ETA).Where(ScheduledTaskTable.FactoryID.IsEqualTo(FactoryID));
-			return TrySelectMany<ScheduledTaskTable, ScheduledTask>(query).OrThrow("Failed to query");
+			query = new Select<TaskTable>(TaskTable.TaskID, TaskTable.FactoryID, TaskTable.TaskTypeID, TaskTable.ETA).Where(TaskTable.FactoryID.IsEqualTo(FactoryID));
+			return TrySelectMany<TaskTable, Task>(query).OrThrow("Failed to query");
 		}
 		public int CreateScheduledTask(int FactoryID, int TaskID,DateTime ETA)
 		{
@@ -49,7 +49,7 @@ namespace PIO.ServerLib.Modules
 			int result = -1;
 			LogEnter();
 
-			queries = new IQuery[] { new Insert<ScheduledTaskTable>().Set(ScheduledTaskTable.FactoryID, FactoryID).Set(ScheduledTaskTable.TaskID, TaskID).Set(ScheduledTaskTable.ETA,ETA), new SelectIdentity<ScheduledTask>((key) => result = Convert.ToInt32(key)) };
+			queries = new IQuery[] { new Insert<TaskTable>().Set(TaskTable.FactoryID, FactoryID).Set(TaskTable.TaskTypeID, TaskID).Set(TaskTable.ETA,ETA), new SelectIdentity<Task>((key) => result = Convert.ToInt32(key)) };
 			Try(queries).OrThrow("Failed to query");
 
 			return result;

@@ -16,7 +16,7 @@ namespace PIO.Models
 		[DataMember]
 		public int FactoryID { get; set; }
 		[DataMember]
-		public int ResourceID { get; set; }
+		public int ResourceTypeID { get; set; }
 		[DataMember]
 		public int Quantity { get; set; }
 

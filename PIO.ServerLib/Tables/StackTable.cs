@@ -11,7 +11,7 @@ namespace PIO.ServerLib.Tables
 	{
 		public static readonly Column<StackTable, int> StackID = new Column<StackTable, int>() { IsPrimaryKey = true, IsIdentity = true };
 		public static readonly Column<StackTable, int> FactoryID = new Column<StackTable, int>();
-		public static readonly Column<StackTable, int> ResourceID = new Column<StackTable, int>();
+		public static readonly Column<StackTable, int> ResourceTypeID = new Column<StackTable, int>();
 		public static readonly Column<StackTable, int> Quantity = new Column<StackTable, int>() {DefaultValue=0 } ;
 	}
 }

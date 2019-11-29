@@ -31,7 +31,9 @@ namespace PIO.ServerLib
 					new StackModule(Logger, database),
 					new ResourceTypeModule(Logger, database),
 					new FactoryTypeModule(Logger,database),
-					new MaterialModule(Logger,database)
+					new MaterialModule(Logger,database),
+					new TaskTypeModule(Logger,database),
+					new TaskModule(Logger,database)
 				)
 			).OrAlert(out service, "Failed to create Service");
 			
