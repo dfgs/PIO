@@ -8,18 +8,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using PIO.Models;
+using PIO.ServerLib.TaskHandler;
 
-namespace PIO.ServerLib.Modules
+namespace PIO.ServerLib
 {
 	public class TaskSchedulerModule : AtModule<Task>,ITaskSchedulerModule
 	{
 		private readonly ITaskModule taskModule;
+		private Dictionary<int, ITaskHandler> taskHandlers;
 
 		public TaskSchedulerModule(ILogger Logger, ITaskModule TaskModule) : base(Logger)
 		{
 
 			this.taskModule = TaskModule;
-			
+			taskHandlers = new Dictionary<int, ITaskHandler>();
 		}
 
 		public bool Initialize()
@@ -37,9 +39,26 @@ namespace PIO.ServerLib.Modules
 			return true;
 		}
 
+		public bool Register(ITaskHandler TaskHandler)
+		{
+			Log(LogLevels.Information, $"Registering TaskHandler with TaskTypeID {TaskHandler.TaskTypeID}");
+			return Try(() => taskHandlers.Add(TaskHandler.TaskTypeID, TaskHandler)).OrAlert("Failed to register TaskHandler");
+		}
+
 		protected override void OnTriggerEvent(Task Task)
 		{
-			int t = 0;
+			ITaskHandler handler;
+
+			LogEnter();
+
+			Log(LogLevels.Information, $"Trying to find TaskHandler with TaskTypeID {Task.TaskTypeID}");
+			if (!taskHandlers.TryGetValue(Task.TaskTypeID, out handler))
+			{
+				Log(LogLevels.Fatal, $"Failed to find TaskHandler with TaskTypeID {Task.TaskTypeID}");
+				return;
+			}
+
+
 			/*
 			int eventID;
 

@@ -47,13 +47,8 @@
     <Compile Include="IWebServiceModule.cs" />
     <Compile Include="Message.cs" />
     <Compile Include="Modules\DatabaseModule.cs" />
-    <Compile Include="Modules\EventModule.cs" />
     <Compile Include="Modules\FactoryModule.cs" />
-    <Compile Include="Modules\IEventModule.cs" />
-    <Compile Include="Modules\IMessageBrokerModule.cs" />
-    <Compile Include="Modules\IMessageListenerModule.cs" />
-    <Compile Include="Modules\ITaskSchedulerModule.cs" />
-    <Compile Include="Modules\MessageBrokerModule.cs" />
+    <Compile Include="ITaskSchedulerModule.cs" />
     <Compile Include="Modules\FactoryTypeModule.cs" />
     <Compile Include="Modules\TaskTypeModule.cs" />
     <Compile Include="Modules\ResourceTypeModule.cs" />
@@ -61,7 +56,10 @@
     <Compile Include="Modules\MaterialModule.cs" />
     <Compile Include="Modules\StackModule.cs" />
     <Compile Include="Modules\TaskModule.cs" />
-    <Compile Include="Modules\TaskSchedulerModule.cs" />
+    <Compile Include="TaskHandler\CheckMaterialsTaskHandler.cs" />
+    <Compile Include="TaskHandler\ITaskHandler.cs" />
+    <Compile Include="TaskHandler\TaskHandler.cs" />
+    <Compile Include="TaskSchedulerModule.cs" />
     <Compile Include="Tables\EventTable.cs" />
     <Compile Include="Tables\FactoryTable.cs" />
     <Compile Include="Tables\PlanetTable.cs" />
@@ -112,8 +110,6 @@
       <Name>PIO.WebServiceLib</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="TaskHandler\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

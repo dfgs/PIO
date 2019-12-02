@@ -8,6 +8,7 @@ using NetORMLib.Sql.Databases;
 using PIO.Models.Modules;
 using PIO.ServerLib;
 using PIO.ServerLib.Modules;
+using PIO.ServerLib.TaskHandler;
 using PIO.WebServiceLib;
 using System;
 using System.Collections.Generic;
@@ -79,6 +80,7 @@ namespace PIO.ServerHost
 			serviceHostModule.Start();
 
 			taskSchedulerModule = new TaskSchedulerModule(logger,taskModule);
+			taskSchedulerModule.Register(new CheckMaterialsTaskHandler(logger,database));
 			if (taskSchedulerModule.Initialize()) taskSchedulerModule.Start();
 
 			WaitHandle.WaitAny(new WaitHandle[] {quitEvent }, -1);

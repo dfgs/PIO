@@ -49,6 +49,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Mocks\MockedTaskHandler.cs" />
     <Compile Include="Mocks\MockedTaskModule.cs" />
     <Compile Include="Mocks\MockedDatabase.cs" />
     <Compile Include="Modules\FactoryTypeModuleUnitTest.cs" />
