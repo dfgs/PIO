@@ -19,6 +19,10 @@ namespace PIO.Models
 		public int TaskTypeID { get; set; }
 		[DataMember]
 		public DateTime ETA { get; set; }
+		[DataMember]
+		public int? TargetFactoryID { get; set; }
+		[DataMember]
+		public int? TargetResourceTypeID { get; set; }
 
 	}
 }

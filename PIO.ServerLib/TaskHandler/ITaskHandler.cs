@@ -1,17 +1,21 @@
-﻿using PIO.Models.Modules;
+﻿using ModuleLib;
+using PIO.Models;
+using PIO.Models.Modules;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace PIO.ServerLib.TaskHandler
 {
-	public interface ITaskHandler:IDatabaseModule
+	public interface ITaskHandler:IModule
 	{
 		int TaskTypeID
 		{
 			get;
 		}
+
+		void Execute(ITaskSchedulerModule TaskSchedulerModule,Task Task);
+
 	}
 }

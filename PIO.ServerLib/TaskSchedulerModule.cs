@@ -51,23 +51,20 @@ namespace PIO.ServerLib
 
 			LogEnter();
 
+			if (!Try(()=>taskModule.RemoveTask(Task.TaskID)).OrAlert("Failed to remove task"))
+			{
+				return;
+			}
+
 			Log(LogLevels.Information, $"Trying to find TaskHandler with TaskTypeID {Task.TaskTypeID}");
 			if (!taskHandlers.TryGetValue(Task.TaskTypeID, out handler))
 			{
 				Log(LogLevels.Fatal, $"Failed to find TaskHandler with TaskTypeID {Task.TaskTypeID}");
 				return;
 			}
+			handler.Execute(this,Task);
 
-
-			/*
-			int eventID;
-
-
-			if (!Try<int>(() => ScheduledExecutor.Executor.Execute(ScheduledExecutor.FactoryID)).OrAlert(out eventID, "Unexpected error occured in executor")) return;
-			// post event
-			Try(() => taskModule.DeleteScheduledTask(ScheduledExecutor.ScheduledTaskID)).OrThrow("Failed to delete scheduled task");
-			Try(() => messageBrokerModule.Post(new Message(ScheduledExecutor.FactoryID, eventID))).OrAlert("Failed to post message to broker");
-			*/
+			
 		}
 
 		

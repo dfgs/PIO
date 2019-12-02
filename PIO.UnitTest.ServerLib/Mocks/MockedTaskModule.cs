@@ -25,7 +25,10 @@ namespace PIO.UnitTest.ServerLib.Mocks
 			if (throwException) throw new NotImplementedException();
 			return new Task() {TaskID=TaskID ,FactoryID=1,ETA=DateTime.Now,TaskTypeID=1};
 		}
-
+		public void RemoveTask(int TaskID)
+		{
+			throw new NotImplementedException();
+		}
 		public Task[] GetTasks(int FactoryID)
 		{
 			Task[] items;
@@ -51,5 +54,7 @@ namespace PIO.UnitTest.ServerLib.Mocks
 			}
 			return items;
 		}
+
+		
 	}
 }

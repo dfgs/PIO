@@ -40,7 +40,7 @@ namespace PIO.ServerLib
 					yield return new CreateTable<TaskTypeTable>(TaskTypeTable.TaskTypeID, TaskTypeTable.Name);
 					yield return new CreateTable<EventTable>(EventTable.EventID,EventTable.Name);
 
-					yield return new CreateTable<TaskTable>(TaskTable.TaskID, TaskTable.FactoryID, TaskTable.TaskTypeID, TaskTable.ETA);
+					yield return new CreateTable<TaskTable>(TaskTable.TaskID, TaskTable.FactoryID, TaskTable.TaskTypeID, TaskTable.ETA,TaskTable.TargetFactoryID,TaskTable.TargetResourceTypeID);
 
 					break;
 				case 2:
@@ -53,6 +53,8 @@ namespace PIO.ServerLib
 
 					yield return new CreateRelation<FactoryTable, TaskTable, int>(FactoryTable.FactoryID, TaskTable.FactoryID);
 					yield return new CreateRelation<TaskTypeTable, TaskTable, int>(TaskTypeTable.TaskTypeID, TaskTable.TaskTypeID);
+					yield return new CreateRelation<FactoryTable, TaskTable, int>(FactoryTable.FactoryID, TaskTable.TargetFactoryID);
+					yield return new CreateRelation<ResourceTypeTable, TaskTable, int>(ResourceTypeTable.ResourceTypeID, TaskTable.TargetResourceTypeID);
 
 
 					break;

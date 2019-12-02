@@ -26,8 +26,18 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying task with TaskID {TaskID}");
-			query = new Select<TaskTable>(TaskTable.TaskID, TaskTable.FactoryID, TaskTable.TaskTypeID, TaskTable.ETA).Where(TaskTable.TaskID.IsEqualTo(TaskID));
+			query = new Select<TaskTable>(TaskTable.TaskID, TaskTable.FactoryID, TaskTable.TaskTypeID, TaskTable.ETA, TaskTable.TargetFactoryID, TaskTable.TargetResourceTypeID).Where(TaskTable.TaskID.IsEqualTo(TaskID));
 			return TrySelectFirst<TaskTable, Task>(query).OrThrow("Failed to query");
+		}
+
+		public void RemoveTask(int TaskID)
+		{
+			IDelete<TaskTable> query;
+			LogEnter();
+
+			Log(LogLevels.Information, $"Removing task with TaskID {TaskID}");
+			query = new Delete<TaskTable>().Where(TaskTable.TaskID.IsEqualTo(TaskID));
+			Try(query).OrThrow("Failed to query");
 		}
 
 		public Task[] GetTasks(int FactoryID)
@@ -36,7 +46,7 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying tasks with FactoryID {FactoryID}");
-			query = new Select<TaskTable>(TaskTable.TaskID, TaskTable.FactoryID, TaskTable.TaskTypeID, TaskTable.ETA).Where(TaskTable.FactoryID.IsEqualTo(FactoryID));
+			query = new Select<TaskTable>(TaskTable.TaskID, TaskTable.FactoryID, TaskTable.TaskTypeID, TaskTable.ETA, TaskTable.TargetFactoryID, TaskTable.TargetResourceTypeID).Where(TaskTable.FactoryID.IsEqualTo(FactoryID));
 			return TrySelectMany<TaskTable, Task>(query).OrThrow("Failed to query");
 		}
 
@@ -46,7 +56,7 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying tasks");
-			query = new Select<TaskTable>(TaskTable.TaskID, TaskTable.FactoryID, TaskTable.TaskTypeID, TaskTable.ETA);
+			query = new Select<TaskTable>(TaskTable.TaskID, TaskTable.FactoryID, TaskTable.TaskTypeID, TaskTable.ETA, TaskTable.TargetFactoryID, TaskTable.TargetResourceTypeID);
 			return TrySelectMany<TaskTable, Task>(query).OrThrow("Failed to query");
 		}
 
