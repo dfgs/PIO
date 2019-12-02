@@ -31,7 +31,7 @@ namespace PIO.ServerLib.Modules
 			return TrySelectFirst <MaterialTable,Material>(query).OrThrow("Failed to query");
 		}
 
-		public IEnumerable<Material> GetMaterials(int FactoryTypeID)
+		public Material[] GetMaterials(int FactoryTypeID)
 		{
 			ISelect<MaterialTable> query;
 			LogEnter();

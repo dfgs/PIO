@@ -11,6 +11,6 @@ namespace PIO.Models.Modules
 	public interface IResourceTypeModule:IDatabaseModule
 	{
 		ResourceType GetResourceType(int ResourceTypeID);
-		IEnumerable<ResourceType> GetResourceTypes();
+		ResourceType[] GetResourceTypes();
 	}
 }

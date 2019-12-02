@@ -31,7 +31,7 @@ namespace PIO.ServerLib.Modules
 			return TrySelectFirst<TaskTypeTable,TaskType>(query).OrThrow("Failed to query");
 		}
 
-		public IEnumerable<TaskType> GetTaskTypes()
+		public TaskType[] GetTaskTypes()
 		{
 			ISelect<TaskTypeTable> query;
 			LogEnter();

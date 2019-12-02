@@ -11,6 +11,6 @@ namespace PIO.Models.Modules
 	public interface ITaskTypeModule:IDatabaseModule
 	{
 		TaskType GetTaskType(int TaskTypeID);
-		IEnumerable<TaskType> GetTaskTypes();
+		TaskType[] GetTaskTypes();
 	}
 }

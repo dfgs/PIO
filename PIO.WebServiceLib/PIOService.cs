@@ -44,7 +44,7 @@ namespace PIO.WebServiceLib
 		}
 		public Planet[] GetPlanets()
 		{
-			return PlanetModule.GetPlanets().ToArray();
+			return PlanetModule.GetPlanets();
 		}
 
 		public Factory GetFactory(int FactoryID)
@@ -53,7 +53,7 @@ namespace PIO.WebServiceLib
 		}
 		public Factory[] GetFactories(int PlanetID)
 		{
-			return FactoryModule.GetFactories(PlanetID).ToArray();
+			return FactoryModule.GetFactories(PlanetID);
 		}
 
 		public Stack GetStack(int StackID)
@@ -63,7 +63,7 @@ namespace PIO.WebServiceLib
 
 		public Stack[] GetStacks(int FactoryID)
 		{
-			return StackModule.GetStacks(FactoryID).ToArray();
+			return StackModule.GetStacks(FactoryID);
 		}
 
 		public ResourceType GetResourceType(int ResourceTypeID)
@@ -72,7 +72,7 @@ namespace PIO.WebServiceLib
 		}
 		public ResourceType[] GetResourceTypes()
 		{
-			return ResourceTypeModule.GetResourceTypes().ToArray();
+			return ResourceTypeModule.GetResourceTypes();
 		}
 
 		public FactoryType GetFactoryType(int FactoryTypeID)
@@ -81,7 +81,7 @@ namespace PIO.WebServiceLib
 		}
 		public FactoryType[] GetFactoryTypes()
 		{
-			return FactoryTypeModule.GetFactoryTypes().ToArray();
+			return FactoryTypeModule.GetFactoryTypes();
 		}
 
 		public Material GetMaterial(int MaterialID)
@@ -91,7 +91,7 @@ namespace PIO.WebServiceLib
 
 		public Material[] GetMaterials(int FactoryID)
 		{
-			return MaterialModule.GetMaterials(FactoryID).ToArray();
+			return MaterialModule.GetMaterials(FactoryID);
 		}
 
 		public TaskType GetTaskType(int TaskTypeID)
@@ -100,7 +100,7 @@ namespace PIO.WebServiceLib
 		}
 		public TaskType[] GetTaskTypes()
 		{
-			return TaskTypeModule.GetTaskTypes().ToArray();
+			return TaskTypeModule.GetTaskTypes();
 		}
 
 		public Task GetTask(int TaskID)
@@ -110,7 +110,7 @@ namespace PIO.WebServiceLib
 
 		public Task[] GetTasks(int FactoryID)
 		{
-			return TaskModule.GetTasks(FactoryID).ToArray();
+			return TaskModule.GetTasks(FactoryID);
 		}
 
 

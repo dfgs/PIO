@@ -34,7 +34,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 
 			database = new MockedDatabase(false, 3);
 			module = new TaskModule(NullLogger.Instance, database);
-			results = module.GetTasks(1).ToArray();
+			results = module.GetTasks(1);
 			Assert.IsNotNull(results);
 			Assert.AreEqual(3, results.Length);
 			for (int t = 0; t < 3; t++)
@@ -51,7 +51,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 
 			database = new MockedDatabase(false, 3);
 			module = new TaskModule(NullLogger.Instance, database);
-			results = module.GetTasks().ToArray();
+			results = module.GetTasks();
 			Assert.IsNotNull(results);
 			Assert.AreEqual(3, results.Length);
 			for (int t = 0; t < 3; t++)

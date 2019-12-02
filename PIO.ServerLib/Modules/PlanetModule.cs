@@ -31,7 +31,7 @@ namespace PIO.ServerLib.Modules
 			return TrySelectFirst<PlanetTable,Planet>(query).OrThrow("Failed to query");
 		}
 
-		public IEnumerable<Planet> GetPlanets()
+		public Planet[] GetPlanets()
 		{
 			ISelect<PlanetTable> query;
 			LogEnter();

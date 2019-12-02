@@ -30,7 +30,7 @@ namespace PIO.ServerLib.Modules
 			return TrySelectFirst<TaskTable, Task>(query).OrThrow("Failed to query");
 		}
 
-		public IEnumerable<Task> GetTasks(int FactoryID)
+		public Task[] GetTasks(int FactoryID)
 		{
 			ISelect<TaskTable> query;
 			LogEnter();
@@ -40,7 +40,7 @@ namespace PIO.ServerLib.Modules
 			return TrySelectMany<TaskTable, Task>(query).OrThrow("Failed to query");
 		}
 
-		public IEnumerable<Task> GetTasks()
+		public Task[] GetTasks()
 		{
 			ISelect<TaskTable> query;
 			LogEnter();

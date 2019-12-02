@@ -11,6 +11,6 @@ namespace PIO.Models.Modules
 	public interface IStackModule:IDatabaseModule
 	{
 		Stack GetStack(int StackID);
-		IEnumerable<Stack> GetStacks(int FactoryID);
+		Stack[] GetStacks(int FactoryID);
 	}
 }

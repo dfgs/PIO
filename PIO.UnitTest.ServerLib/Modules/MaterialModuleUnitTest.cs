@@ -34,7 +34,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 
 			database = new MockedDatabase(false, 3);
 			module = new MaterialModule(NullLogger.Instance, database);
-			results = module.GetMaterials(1).ToArray();
+			results = module.GetMaterials(1);
 			Assert.IsNotNull(results);
 			Assert.AreEqual(3, results.Length);
 			for(int t=0;t<3;t++)

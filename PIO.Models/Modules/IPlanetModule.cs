@@ -11,6 +11,6 @@ namespace PIO.Models.Modules
 	public interface IPlanetModule : IDatabaseModule
 	{
 		Planet GetPlanet(int PlanetID);
-		IEnumerable<Planet> GetPlanets();
+		Planet[] GetPlanets();
 	}
 }

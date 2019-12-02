@@ -26,22 +26,30 @@ namespace PIO.UnitTest.ServerLib.Mocks
 			return new Task() {TaskID=TaskID ,FactoryID=1,ETA=DateTime.Now,TaskTypeID=1};
 		}
 
-		public IEnumerable<Task> GetTasks(int FactoryID)
+		public Task[] GetTasks(int FactoryID)
 		{
+			Task[] items;
+
 			if (throwException) throw new NotImplementedException();
+			items = new Task[results];
 			for (int t = 0; t < results; t++)
 			{
-				yield return new Task() { TaskID = t, FactoryID = FactoryID, ETA = DateTime.Now, TaskTypeID = 1 };
+				items[t]=new Task() { TaskID = t, FactoryID = FactoryID, ETA = DateTime.Now, TaskTypeID = 1 };
 			}
+			return items;
 		}
 
-		public IEnumerable<Task> GetTasks()
+		public Task[] GetTasks()
 		{
+			Task[] items;
+
 			if (throwException) throw new NotImplementedException();
+			items = new Task[results];
 			for (int t = 0; t < results; t++)
 			{
-				yield return new Task() { TaskID = t, FactoryID = 1, ETA = DateTime.Now, TaskTypeID = 1 };
+				items[t] = new Task() { TaskID = t, FactoryID = 1, ETA = DateTime.Now, TaskTypeID = 1 };
 			}
+			return items;
 		}
 	}
 }

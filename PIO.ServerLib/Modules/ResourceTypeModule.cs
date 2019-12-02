@@ -31,7 +31,7 @@ namespace PIO.ServerLib.Modules
 			return TrySelectFirst<ResourceTypeTable,ResourceType>(query).OrThrow("Failed to query");
 		}
 
-		public IEnumerable<ResourceType> GetResourceTypes()
+		public ResourceType[] GetResourceTypes()
 		{
 			ISelect<ResourceTypeTable> query;
 			LogEnter();

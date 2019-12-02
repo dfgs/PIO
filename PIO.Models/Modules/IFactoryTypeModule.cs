@@ -11,6 +11,6 @@ namespace PIO.Models.Modules
 	public interface IFactoryTypeModule:IDatabaseModule
 	{
 		FactoryType GetFactoryType(int FactoryTypeID);
-		IEnumerable<FactoryType> GetFactoryTypes();
+		FactoryType[] GetFactoryTypes();
 	}
 }

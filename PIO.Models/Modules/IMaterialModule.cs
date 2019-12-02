@@ -11,6 +11,6 @@ namespace PIO.Models.Modules
 	public interface IMaterialModule:IDatabaseModule
 	{
 		Material GetMaterial(int MaterialID);
-		IEnumerable<Material> GetMaterials(int FactoryTypeID);
+		Material[] GetMaterials(int FactoryTypeID);
 	}
 }

@@ -31,7 +31,7 @@ namespace PIO.ServerLib.Modules
 			return TrySelectFirst<FactoryTypeTable,FactoryType>(query).OrThrow("Failed to query");
 		}
 
-		public IEnumerable<FactoryType> GetFactoryTypes()
+		public FactoryType[] GetFactoryTypes()
 		{
 			ISelect<FactoryTypeTable> query;
 			LogEnter();

@@ -11,7 +11,7 @@ namespace PIO.Models.Modules
 	public interface ITaskModule:IDatabaseModule
 	{
 		Task GetTask(int TaskID);
-		IEnumerable<Task> GetTasks(int FactoryID);
-		IEnumerable<Task> GetTasks();
+		Task[] GetTasks(int FactoryID);
+		Task[] GetTasks();
 	}
 }

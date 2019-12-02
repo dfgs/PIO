@@ -31,7 +31,7 @@ namespace PIO.ServerLib.Modules
 			return TrySelectFirst <StackTable,Stack>(query).OrThrow("Failed to query");
 		}
 
-		public IEnumerable<Stack> GetStacks(int FactoryID)
+		public Stack[] GetStacks(int FactoryID)
 		{
 			ISelect<StackTable> query;
 			LogEnter();
