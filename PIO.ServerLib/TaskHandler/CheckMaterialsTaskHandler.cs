@@ -15,7 +15,7 @@ namespace PIO.ServerLib.TaskHandler
 		private IStackModule stackModule;
 		private IMaterialModule materialModule;
 
-		public override int TaskTypeID => 0;
+		public override int TaskTypeID => (int)TaskTypeIDs.CheckMaterials;
 		public CheckMaterialsTaskHandler(ILogger Logger, IFactoryModule FactoryModule,IStackModule StackModule, IMaterialModule MaterialModule ) : base(Logger)
 		{
 			this.factoryModule = FactoryModule;this.stackModule = StackModule;this.materialModule = MaterialModule;

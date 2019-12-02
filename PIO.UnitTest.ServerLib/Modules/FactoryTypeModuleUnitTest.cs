@@ -20,10 +20,11 @@ namespace PIO.UnitTest.ServerLib.Modules
 			FactoryTypeModule module;
 			FactoryType result;
 
-			database = new MockedDatabase(false, 1);
+			database = new MockedDatabase<FactoryType>(false, 1, (t) => new FactoryType() { FactoryTypeID = t });
 			module = new FactoryTypeModule(NullLogger.Instance, database);
 			result = module.GetFactoryType(1);
 			Assert.IsNotNull(result);
+			Assert.AreEqual(0, result.FactoryTypeID);
 		}
 		[TestMethod]
 		public void ShouldGetFactoryTypes()
@@ -32,7 +33,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			FactoryTypeModule module;
 			FactoryType[] results;
 
-			database = new MockedDatabase(false, 3);
+			database = new MockedDatabase<FactoryType>(false, 3, (t) => new FactoryType() { FactoryTypeID = t });
 			module = new FactoryTypeModule(NullLogger.Instance, database);
 			results = module.GetFactoryTypes();
 			Assert.IsNotNull(results);
@@ -40,6 +41,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			for(int t=0;t<3;t++)
 			{
 				Assert.IsNotNull(results[t]);
+				Assert.AreEqual(t, results[t].FactoryTypeID);
 			}
 		}
 		[TestMethod]
@@ -51,7 +53,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 
 
 			logger = new MemoryLogger(new DefaultLogFormatter());
-			database = new MockedDatabase(true,1);
+			database = new MockedDatabase<FactoryType>(true,1, (t) => new FactoryType() { FactoryTypeID = t });
 			module = new FactoryTypeModule(logger, database);
 			Assert.ThrowsException<Exception>(() => module.GetFactoryType(1));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
@@ -65,7 +67,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 
 
 			logger = new MemoryLogger(new DefaultLogFormatter());
-			database = new MockedDatabase(true, 3);
+			database = new MockedDatabase<FactoryType>(true, 3, (t) => new FactoryType() { FactoryTypeID = t });
 			module = new FactoryTypeModule(logger, database);
 			Assert.ThrowsException<Exception>(() => module.GetFactoryTypes());
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));

@@ -20,10 +20,11 @@ namespace PIO.UnitTest.ServerLib.Modules
 			MaterialModule module;
 			Material result;
 
-			database = new MockedDatabase(false, 1);
+			database = new MockedDatabase<Material>(false, 1, (t) => new Material() { MaterialID = t });
 			module = new MaterialModule(NullLogger.Instance, database);
 			result = module.GetMaterial(1);
 			Assert.IsNotNull(result);
+			Assert.AreEqual(0, result.MaterialID);
 		}
 		[TestMethod]
 		public void ShouldGetMaterials()
@@ -32,7 +33,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			MaterialModule module;
 			Material[] results;
 
-			database = new MockedDatabase(false, 3);
+			database = new MockedDatabase<Material>(false, 3, (t) => new Material() { MaterialID = t });
 			module = new MaterialModule(NullLogger.Instance, database);
 			results = module.GetMaterials(1);
 			Assert.IsNotNull(results);
@@ -40,6 +41,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			for(int t=0;t<3;t++)
 			{
 				Assert.IsNotNull(results[t]);
+				Assert.AreEqual(t, results[t].MaterialID);
 			}
 		}
 		[TestMethod]
@@ -51,7 +53,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 
 
 			logger = new MemoryLogger(new DefaultLogFormatter());
-			database = new MockedDatabase(true,1);
+			database = new MockedDatabase<Material>(true,1, (t) => new Material() { MaterialID = t });
 			module = new MaterialModule(logger, database);
 			Assert.ThrowsException<Exception>(() => module.GetMaterial(1));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
@@ -65,7 +67,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 
 
 			logger = new MemoryLogger(new DefaultLogFormatter());
-			database = new MockedDatabase(true, 3);
+			database = new MockedDatabase<Material>(true, 3, (t) => new Material() { MaterialID = t });
 			module = new MaterialModule(logger, database);
 			Assert.ThrowsException<Exception>(() => module.GetMaterials(1));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));

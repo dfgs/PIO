@@ -20,10 +20,11 @@ namespace PIO.UnitTest.ServerLib.Modules
 			ResourceTypeModule module;
 			ResourceType result;
 
-			database = new MockedDatabase(false, 1);
+			database = new MockedDatabase<ResourceType>(false, 1, (t) => new ResourceType() { ResourceTypeID = t });
 			module = new ResourceTypeModule(NullLogger.Instance, database);
 			result = module.GetResourceType(1);
 			Assert.IsNotNull(result);
+			Assert.AreEqual(0, result.ResourceTypeID);
 		}
 		[TestMethod]
 		public void ShouldGetResourceTypes()
@@ -32,7 +33,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			ResourceTypeModule module;
 			ResourceType[] results;
 
-			database = new MockedDatabase(false, 3);
+			database = new MockedDatabase<ResourceType>(false, 3, (t) => new ResourceType() { ResourceTypeID = t });
 			module = new ResourceTypeModule(NullLogger.Instance, database);
 			results = module.GetResourceTypes();
 			Assert.IsNotNull(results);
@@ -40,6 +41,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			for(int t=0;t<3;t++)
 			{
 				Assert.IsNotNull(results[t]);
+				Assert.AreEqual(t, results[t].ResourceTypeID);
 			}
 		}
 		[TestMethod]
@@ -51,7 +53,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 
 
 			logger = new MemoryLogger(new DefaultLogFormatter());
-			database = new MockedDatabase(true,1);
+			database = new MockedDatabase<ResourceType>(true,1, (t) => new ResourceType() { ResourceTypeID = t });
 			module = new ResourceTypeModule(logger, database);
 			Assert.ThrowsException<Exception>(() => module.GetResourceType(1));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
@@ -65,7 +67,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 
 
 			logger = new MemoryLogger(new DefaultLogFormatter());
-			database = new MockedDatabase(true, 3);
+			database = new MockedDatabase<ResourceType>(true, 3, (t) => new ResourceType() { ResourceTypeID = t });
 			module = new ResourceTypeModule(logger, database);
 			Assert.ThrowsException<Exception>(() => module.GetResourceTypes());
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));

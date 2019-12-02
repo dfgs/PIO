@@ -70,10 +70,10 @@ namespace PIO.ServerLib
 					yield return new Insert<FactoryTypeTable>().Set(FactoryTypeTable.FactoryTypeID, 0).Set(FactoryTypeTable.Name, "Stockpile").Set(FactoryTypeTable.HealthPoints,50);
 					yield return new Insert<FactoryTypeTable>().Set(FactoryTypeTable.FactoryTypeID, 1).Set(FactoryTypeTable.Name, "Wood cuter").Set(FactoryTypeTable.HealthPoints, 5);
 
-					yield return new Insert<TaskTypeTable>().Set(TaskTypeTable.TaskTypeID, 0).Set(TaskTypeTable.Name, "Check materials");
-					yield return new Insert<TaskTypeTable>().Set(TaskTypeTable.TaskTypeID, 1).Set(TaskTypeTable.Name, "Search material");
-					yield return new Insert<TaskTypeTable>().Set(TaskTypeTable.TaskTypeID, 2).Set(TaskTypeTable.Name, "Collect material");
-					yield return new Insert<TaskTypeTable>().Set(TaskTypeTable.TaskTypeID, 3).Set(TaskTypeTable.Name, "Build");
+					yield return new Insert<TaskTypeTable>().Set(TaskTypeTable.TaskTypeID, (int)TaskTypeIDs.CheckMaterials).Set(TaskTypeTable.Name, "Check materials");
+					yield return new Insert<TaskTypeTable>().Set(TaskTypeTable.TaskTypeID, (int)TaskTypeIDs.SearchMaterial).Set(TaskTypeTable.Name, "Search material");
+					yield return new Insert<TaskTypeTable>().Set(TaskTypeTable.TaskTypeID, (int)TaskTypeIDs.CollectMaterial).Set(TaskTypeTable.Name, "Collect material");
+					yield return new Insert<TaskTypeTable>().Set(TaskTypeTable.TaskTypeID, (int)TaskTypeIDs.Build).Set(TaskTypeTable.Name, "Build");
 
 					yield return new Insert<EventTable>().Set(EventTable.EventID, 0).Set(EventTable.Name, "False");
 					yield return new Insert<EventTable>().Set(EventTable.EventID, 1).Set(EventTable.Name, "True");

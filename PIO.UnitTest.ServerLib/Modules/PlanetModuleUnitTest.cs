@@ -20,10 +20,11 @@ namespace PIO.UnitTest.ServerLib.Modules
 			PlanetModule module;
 			Planet result;
 
-			database = new MockedDatabase(false, 1);
+			database = new MockedDatabase<Planet>(false, 1, (t) => new Planet() { PlanetID = t });
 			module = new PlanetModule(NullLogger.Instance, database);
 			result = module.GetPlanet(1);
 			Assert.IsNotNull(result);
+			Assert.AreEqual(0, result.PlanetID);
 		}
 		[TestMethod]
 		public void ShouldGetPlanets()
@@ -32,7 +33,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			PlanetModule module;
 			Planet[] results;
 
-			database = new MockedDatabase(false, 3);
+			database = new MockedDatabase<Planet>(false, 3, (t) => new Planet() { PlanetID = t });
 			module = new PlanetModule(NullLogger.Instance, database);
 			results = module.GetPlanets();
 			Assert.IsNotNull(results);
@@ -40,6 +41,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			for(int t=0;t<3;t++)
 			{
 				Assert.IsNotNull(results[t]);
+				Assert.AreEqual(t, results[t].PlanetID);
 			}
 		}
 		[TestMethod]
@@ -51,7 +53,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 
 
 			logger = new MemoryLogger(new DefaultLogFormatter());
-			database = new MockedDatabase(true,1);
+			database = new MockedDatabase<Planet>(true,1, (t) => new Planet() { PlanetID = t });
 			module = new PlanetModule(logger, database);
 			Assert.ThrowsException<Exception>(() => module.GetPlanet(1));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
@@ -65,7 +67,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 
 
 			logger = new MemoryLogger(new DefaultLogFormatter());
-			database = new MockedDatabase(true, 3);
+			database = new MockedDatabase<Planet>(true, 3, (t) => new Planet() { PlanetID = t });
 			module = new PlanetModule(logger, database);
 			Assert.ThrowsException<Exception>(() => module.GetPlanets());
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));

@@ -20,10 +20,11 @@ namespace PIO.UnitTest.ServerLib.Modules
 			StackModule module;
 			Stack result;
 
-			database = new MockedDatabase(false, 1);
+			database = new MockedDatabase<Stack>(false, 1, (t) => new Stack() { StackID = t });
 			module = new StackModule(NullLogger.Instance, database);
 			result = module.GetStack(1);
 			Assert.IsNotNull(result);
+			Assert.AreEqual(0, result.StackID);
 		}
 		[TestMethod]
 		public void ShouldGetStacks()
@@ -32,7 +33,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			StackModule module;
 			Stack[] results;
 
-			database = new MockedDatabase(false, 3);
+			database = new MockedDatabase<Stack>(false, 3, (t) => new Stack() { StackID = t });
 			module = new StackModule(NullLogger.Instance, database);
 			results = module.GetStacks(1);
 			Assert.IsNotNull(results);
@@ -40,6 +41,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			for(int t=0;t<3;t++)
 			{
 				Assert.IsNotNull(results[t]);
+				Assert.AreEqual(t, results[t].StackID);
 			}
 		}
 		[TestMethod]
@@ -51,7 +53,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 
 
 			logger = new MemoryLogger(new DefaultLogFormatter());
-			database = new MockedDatabase(true,1);
+			database = new MockedDatabase<Stack>(true,1, (t) => new Stack() { StackID = t });
 			module = new StackModule(logger, database);
 			Assert.ThrowsException<Exception>(() => module.GetStack(1));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
@@ -65,11 +67,40 @@ namespace PIO.UnitTest.ServerLib.Modules
 
 
 			logger = new MemoryLogger(new DefaultLogFormatter());
-			database = new MockedDatabase(true, 3);
+			database = new MockedDatabase<Stack>(true, 3, (t) => new Stack() { StackID = t });
 			module = new StackModule(logger, database);
 			Assert.ThrowsException<Exception>(() => module.GetStacks(1));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
 		}
+
+
+
+
+		[TestMethod]
+		public void ShouldConsume()
+		{
+			IDatabase database;
+			StackModule module;
+
+			database = new MockedDatabase<Stack>(false, 1, (t) => new Stack() { StackID = t, Quantity=5 });
+			module = new StackModule(NullLogger.Instance, database);
+			module.Consume(0,1);
+		}
+		[TestMethod]
+		public void ShouldNotConsumeAndLogError()
+		{
+			IDatabase database;
+			StackModule module;
+			MemoryLogger logger;
+
+
+			logger = new MemoryLogger(new DefaultLogFormatter());
+			database = new MockedDatabase<Stack>(true, 1, (t) => new Stack() { StackID = t, Quantity = 5 });
+			module = new StackModule(logger, database);
+			Assert.ThrowsException<Exception>(() => module.Consume(0,10));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
+		}
+
 
 
 	}

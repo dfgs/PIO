@@ -41,5 +41,25 @@ namespace PIO.ServerLib.Modules
 			return TrySelectMany<StackTable,Stack>(query).OrThrow("Failed to query");
 		}
 
+		public void Consume(int StackID,  int Quantity)
+		{
+			Stack stack;
+			ISelect<StackTable> query;
+			IUpdate<StackTable> update;
+
+			LogEnter();
+
+			Log(LogLevels.Information, $"Consuming {Quantity} resource(s) from stack with StackID {StackID}");
+			query = new Select<StackTable>(StackTable.StackID, StackTable.FactoryID, StackTable.ResourceTypeID, StackTable.Quantity).Where(StackTable.StackID.IsEqualTo(StackID));
+			stack=TrySelectFirst<StackTable, Stack>(query).OrThrow("Failed to query");
+			if (stack == null) throw new InvalidOperationException($"Invalid stack with StackID {StackID}");
+			if (stack.Quantity<Quantity) throw new InvalidOperationException($"Not enough quantity in stack with StackID {StackID}");
+			stack.Quantity -= Quantity;
+			update = new Update<StackTable>().Set(StackTable.Quantity, stack.Quantity).Where(StackTable.StackID.IsEqualTo(StackID));
+			Try(update).OrThrow("Failed to update");
+
+		}
+
+
 	}
 }

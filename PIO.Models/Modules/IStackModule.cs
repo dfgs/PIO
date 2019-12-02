@@ -12,5 +12,6 @@ namespace PIO.Models.Modules
 	{
 		Stack GetStack(int StackID);
 		Stack[] GetStacks(int FactoryID);
+		void Consume(int StackID,int Quantity);
 	}
 }

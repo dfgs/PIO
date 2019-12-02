@@ -20,10 +20,11 @@ namespace PIO.UnitTest.ServerLib.Modules
 			TaskTypeModule module;
 			TaskType result;
 
-			database = new MockedDatabase(false, 1);
+			database = new MockedDatabase<TaskType>(false, 1, (t) => new TaskType() { TaskTypeID = t });
 			module = new TaskTypeModule(NullLogger.Instance, database);
 			result = module.GetTaskType(1);
 			Assert.IsNotNull(result);
+			Assert.AreEqual(0, result.TaskTypeID);
 		}
 		[TestMethod]
 		public void ShouldGetTaskTypes()
@@ -32,7 +33,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			TaskTypeModule module;
 			TaskType[] results;
 
-			database = new MockedDatabase(false, 3);
+			database = new MockedDatabase<TaskType>(false, 3, (t) => new TaskType() { TaskTypeID = t });
 			module = new TaskTypeModule(NullLogger.Instance, database);
 			results = module.GetTaskTypes();
 			Assert.IsNotNull(results);
@@ -40,6 +41,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			for(int t=0;t<3;t++)
 			{
 				Assert.IsNotNull(results[t]);
+				Assert.AreEqual(t, results[t].TaskTypeID);
 			}
 		}
 		[TestMethod]
@@ -51,7 +53,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 
 
 			logger = new MemoryLogger(new DefaultLogFormatter());
-			database = new MockedDatabase(true,1);
+			database = new MockedDatabase<TaskType>(true,1, (t) => new TaskType() { TaskTypeID = t });
 			module = new TaskTypeModule(logger, database);
 			Assert.ThrowsException<Exception>(() => module.GetTaskType(1));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
@@ -65,7 +67,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 
 
 			logger = new MemoryLogger(new DefaultLogFormatter());
-			database = new MockedDatabase(true, 3);
+			database = new MockedDatabase<TaskType>(true, 3, (t) => new TaskType() { TaskTypeID = t });
 			module = new TaskTypeModule(logger, database);
 			Assert.ThrowsException<Exception>(() => module.GetTaskTypes());
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
