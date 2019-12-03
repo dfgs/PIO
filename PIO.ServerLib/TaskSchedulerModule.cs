@@ -24,12 +24,23 @@ namespace PIO.ServerLib
 			taskHandlers = new Dictionary<int, ITaskHandler>();
 		}
 
+		public void EnqueueTask(int FactoryID, int TaskTypeID, int DelayInSec)
+		{
+			Task task;
+			LogEnter();
+
+			Log(LogLevels.Information, $"Enqueuing task (FactoryID={FactoryID}, TaskTypeID={TaskTypeID}, DelayInSec={DelayInSec})");
+			task = Try<Task>(()=> taskModule.CreateTask(FactoryID, TaskTypeID, DateTime.Now.AddSeconds( DelayInSec))).OrThrow("Failed to enqueue task");
+			Add(task.ETA, task);
+		}
+
 		public bool Initialize()
 		{
 			Task[] tasks;
+			LogEnter();
 
-			Log(LogLevels.Information, "Retrieving tasks");
-			if (!Try<Task[]>( ()=>taskModule.GetTasks().ToArray() ).OrAlert(out tasks,"Failed to retrieve tasks")) return false;
+			Log(LogLevels.Information, "Loading tasks");
+			if (!Try<Task[]>( ()=>taskModule.GetTasks() ).OrAlert(out tasks,"Failed to load tasks")) return false;
 
 			foreach(Task task in tasks)
 			{
@@ -41,7 +52,9 @@ namespace PIO.ServerLib
 
 		public bool Register(ITaskHandler TaskHandler)
 		{
-			Log(LogLevels.Information, $"Registering TaskHandler with TaskTypeID {TaskHandler.TaskTypeID}");
+			LogEnter();
+
+			Log(LogLevels.Information, $"Registering TaskHandler (TaskTypeID={TaskHandler.TaskTypeID})");
 			return Try(() => taskHandlers.Add(TaskHandler.TaskTypeID, TaskHandler)).OrAlert("Failed to register TaskHandler");
 		}
 
@@ -62,7 +75,7 @@ namespace PIO.ServerLib
 				Log(LogLevels.Fatal, $"Failed to find TaskHandler with TaskTypeID {Task.TaskTypeID}");
 				return;
 			}
-			handler.Execute(this,Task);
+			Try(() => handler.Execute(this, Task)).OrAlert("Failed to execute task handler");
 
 			
 		}

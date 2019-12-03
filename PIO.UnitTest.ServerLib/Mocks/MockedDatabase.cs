@@ -14,7 +14,24 @@ namespace PIO.UnitTest.ServerLib.Mocks
 	{
 		private bool throwException;
 		private int results;
-		private RowFactoryDelegate<T> rowFactoryDelegate ;
+		private RowFactoryDelegate<T> rowFactoryDelegate;
+
+		public int InsertedCount
+		{
+			get;
+			private set;
+		}
+		public int UpdatedCount
+		{
+			get;
+			private set;
+		}
+		public int DeletedCount
+		{
+			get;
+			private set;
+		}
+
 
 		public MockedDatabase(bool ThrowException,int Results, RowFactoryDelegate<T> RowFactoryDelegate )
 		{
@@ -40,14 +57,32 @@ namespace PIO.UnitTest.ServerLib.Mocks
 
 		public void Execute(IQuery Query)
 		{
+			if (throwException) throw new NotImplementedException();
+
+			switch (Query)
+			{
+				case IUpdate update:
+					UpdatedCount++;
+					break;
+				case IDelete delete:
+					DeletedCount++;
+					break;
+				case IInsert insert:
+					InsertedCount++;
+					break;
+			}
 		}
 
-		public void Execute(params IQuery[] Queries)
+		public object Execute(params IQuery[] Queries)
 		{
+			foreach (IQuery query in Queries) Execute(query);
+			return null;
 		}
 
-		public void Execute(IEnumerable<IQuery> Queries)
+		public object Execute(IEnumerable<IQuery> Queries)
 		{
+			foreach (IQuery query in Queries) Execute(query);
+			return null;
 		}
 
 		public IEnumerable<string> GetTables()

@@ -105,6 +105,32 @@ namespace PIO.UnitTest.ServerLib.Modules
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
 		}
 
+		[TestMethod]
+		public void ShouldRemoveTask()
+		{
+			MockedDatabase<Task> database;
+			TaskModule module;
+
+			database = new MockedDatabase<Task>(false, 1, (t) => new Task() { TaskID = t });
+			module = new TaskModule(NullLogger.Instance, database);
+			module.RemoveTask(1);
+			Assert.AreEqual(1, database.DeletedCount);
+		}
+		[TestMethod]
+		public void ShouldNotRemoveTaskAndLogError()
+		{
+			MockedDatabase<Task> database;
+			TaskModule module;
+			MemoryLogger logger;
+
+
+			logger = new MemoryLogger(new DefaultLogFormatter());
+			database = new MockedDatabase<Task>(true, 1, (t) => new Task() { TaskID = t });
+			module = new TaskModule(logger, database);
+			Assert.ThrowsException<Exception>(() => module.RemoveTask(1));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
+		}
+
 
 	}
 }

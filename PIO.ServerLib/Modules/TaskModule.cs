@@ -25,7 +25,7 @@ namespace PIO.ServerLib.Modules
 			ISelect<TaskTable> query;
 			LogEnter();
 
-			Log(LogLevels.Information, $"Querying task with TaskID {TaskID}");
+			Log(LogLevels.Information, $"Querying Task table (TaskID={TaskID})");
 			query = new Select<TaskTable>(TaskTable.TaskID, TaskTable.FactoryID, TaskTable.TaskTypeID, TaskTable.ETA, TaskTable.TargetFactoryID, TaskTable.TargetResourceTypeID).Where(TaskTable.TaskID.IsEqualTo(TaskID));
 			return TrySelectFirst<TaskTable, Task>(query).OrThrow("Failed to query");
 		}
@@ -35,9 +35,9 @@ namespace PIO.ServerLib.Modules
 			IDelete<TaskTable> query;
 			LogEnter();
 
-			Log(LogLevels.Information, $"Removing task with TaskID {TaskID}");
+			Log(LogLevels.Information, $"Deleting from Task table (TaskID={TaskID})");
 			query = new Delete<TaskTable>().Where(TaskTable.TaskID.IsEqualTo(TaskID));
-			Try(query).OrThrow("Failed to query");
+			Try(query).OrThrow("Failed to delete");
 		}
 
 		public Task[] GetTasks(int FactoryID)
@@ -45,7 +45,7 @@ namespace PIO.ServerLib.Modules
 			ISelect<TaskTable> query;
 			LogEnter();
 
-			Log(LogLevels.Information, $"Querying tasks with FactoryID {FactoryID}");
+			Log(LogLevels.Information, $"Querying Task table (FactoryID={FactoryID})");
 			query = new Select<TaskTable>(TaskTable.TaskID, TaskTable.FactoryID, TaskTable.TaskTypeID, TaskTable.ETA, TaskTable.TargetFactoryID, TaskTable.TargetResourceTypeID).Where(TaskTable.FactoryID.IsEqualTo(FactoryID));
 			return TrySelectMany<TaskTable, Task>(query).OrThrow("Failed to query");
 		}
@@ -55,10 +55,27 @@ namespace PIO.ServerLib.Modules
 			ISelect<TaskTable> query;
 			LogEnter();
 
-			Log(LogLevels.Information, $"Querying tasks");
+			Log(LogLevels.Information, $"Querying Task table");
 			query = new Select<TaskTable>(TaskTable.TaskID, TaskTable.FactoryID, TaskTable.TaskTypeID, TaskTable.ETA, TaskTable.TargetFactoryID, TaskTable.TargetResourceTypeID);
 			return TrySelectMany<TaskTable, Task>(query).OrThrow("Failed to query");
 		}
+
+		public Task CreateTask(int FactoryID, int TaskTypeID, DateTime ETA)
+		{
+			IInsert<TaskTable> query;
+			Task item;
+			object result;
+
+			LogEnter();
+			Log(LogLevels.Information, $"Inserting into Task table (FactoryID={FactoryID}, TaskTypeID={TaskTypeID}, ETA={ETA})");
+			item = new Task() { FactoryID=FactoryID,TaskTypeID=TaskTypeID,ETA=ETA };
+			query = new Insert<TaskTable>().Set(TaskTable.FactoryID,item.FactoryID).Set(TaskTable.TaskTypeID,item.TaskTypeID).Set(TaskTable.ETA,item.ETA);
+			result=Try(query).OrThrow("Failed to insert");
+			item.TaskID = Convert.ToInt32(result);
+			return item;
+		}
+
+
 
 	}
 }

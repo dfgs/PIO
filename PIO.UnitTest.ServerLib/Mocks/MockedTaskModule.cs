@@ -55,6 +55,9 @@ namespace PIO.UnitTest.ServerLib.Mocks
 			return items;
 		}
 
-		
+		public Task CreateTask(int FactoryID, int TaskTypeID, DateTime ETA)
+		{
+			throw new NotImplementedException();
+		}
 	}
 }

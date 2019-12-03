@@ -26,7 +26,7 @@ namespace PIO.ServerLib.Modules
 			ISelect<TaskTypeTable> query;
 			LogEnter();
 
-			Log(LogLevels.Information, $"Querying task type with TaskTypeID {TaskTypeID}");
+			Log(LogLevels.Information, $"Querying TaskType table (TaskTypeID={TaskTypeID})");
 			query = new Select<TaskTypeTable>(TaskTypeTable.TaskTypeID, TaskTypeTable.Name).Where(TaskTypeTable.TaskTypeID.IsEqualTo(TaskTypeID));
 			return TrySelectFirst<TaskTypeTable,TaskType>(query).OrThrow("Failed to query");
 		}
@@ -36,7 +36,7 @@ namespace PIO.ServerLib.Modules
 			ISelect<TaskTypeTable> query;
 			LogEnter();
 
-			Log(LogLevels.Information, $"Querying task types");
+			Log(LogLevels.Information, $"Querying TaskType table");
 			query = new Select<TaskTypeTable>(TaskTypeTable.TaskTypeID, TaskTypeTable.Name);
 			return TrySelectMany<TaskTypeTable,TaskType>(query).OrThrow("Failed to query");
 		}

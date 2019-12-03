@@ -26,7 +26,7 @@ namespace PIO.ServerLib.Modules
 			ISelect<ResourceTypeTable> query;
 			LogEnter();
 
-			Log(LogLevels.Information, $"Querying resource type with ResourceTypeID {ResourceTypeID}");
+			Log(LogLevels.Information, $"Querying ResourceType table (ResourceTypeID={ResourceTypeID})");
 			query = new Select<ResourceTypeTable>(ResourceTypeTable.ResourceTypeID, ResourceTypeTable.Name).Where(ResourceTypeTable.ResourceTypeID.IsEqualTo(ResourceTypeID));
 			return TrySelectFirst<ResourceTypeTable,ResourceType>(query).OrThrow("Failed to query");
 		}
@@ -36,7 +36,7 @@ namespace PIO.ServerLib.Modules
 			ISelect<ResourceTypeTable> query;
 			LogEnter();
 
-			Log(LogLevels.Information, $"Querying resource types");
+			Log(LogLevels.Information, $"Querying ResourceType table");
 			query = new Select<ResourceTypeTable>(ResourceTypeTable.ResourceTypeID, ResourceTypeTable.Name);
 			return TrySelectMany<ResourceTypeTable,ResourceType>(query).OrThrow("Failed to query");
 		}

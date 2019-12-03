@@ -16,17 +16,15 @@ namespace PIO.ServerLib.TaskHandler
 		private IMaterialModule materialModule;
 
 		public override int TaskTypeID => (int)TaskTypeIDs.CheckMaterials;
-		public CheckMaterialsTaskHandler(ILogger Logger, IFactoryModule FactoryModule,IStackModule StackModule, IMaterialModule MaterialModule ) : base(Logger)
+		public CheckMaterialsTaskHandler(ILogger Logger, IFactoryModule FactoryModule, IStackModule StackModule, IMaterialModule MaterialModule) : base(Logger)
 		{
-			this.factoryModule = FactoryModule;this.stackModule = StackModule;this.materialModule = MaterialModule;
+			this.factoryModule = FactoryModule; this.stackModule = StackModule; this.materialModule = MaterialModule;
 		}
 
 		public override void Execute(ITaskSchedulerModule TaskSchedulerModule, Task Task)
 		{
 			Factory factory;
 			Material[] materials;
-			Stack[] stacks;
-			Stack stack;
 
 			LogEnter();
 
@@ -34,21 +32,23 @@ namespace PIO.ServerLib.TaskHandler
 
 			factory = factoryModule.GetFactory(Task.FactoryID);
 			materials = materialModule.GetMaterials(factory.FactoryTypeID);
-			stacks = stackModule.GetStacks(Task.FactoryID);
 
-			foreach(Material material in materials)
+			foreach (Material material in materials)
 			{
-				stack = stacks.FirstOrDefault(item => item.ResourceTypeID == material.ResourceTypeID);
-				if ((stack==null) || (stack.Quantity<material.Quantity))
-				{
-					Log(LogLevels.Information, $"Factory with FactoryID {Task.FactoryID} is missing material with ResourceTypeID {material.ResourceTypeID}");
-					return;
-				}
+				if (stackModule.HasEnoughResources(Task.FactoryID, material.ResourceTypeID, material.Quantity)) continue;
+				Log(LogLevels.Information, $"Factory with FactoryID {Task.FactoryID} is missing material with ResourceTypeID {material.ResourceTypeID}");
+				return;
 			}
 
-			Log(LogLevels.Information, $"Factory with FactoryID {Task.FactoryID} has enough material to build");
-
+			Log(LogLevels.Information, $"Factory with FactoryID {Task.FactoryID} has enough material to build, consuming resources");
+			foreach (Material material in materials)
+			{
+				Try(() => stackModule.Consume(Task.FactoryID, material.ResourceTypeID, material.Quantity)).OrAlert($"Failed to consume material with ResourceTypeID {material.MaterialID}");
+			}
+			
+			Try(()=>TaskSchedulerModule.EnqueueTask(Task.FactoryID,(int)TaskTypeIDs.Build,10)).OrAlert("Failed to enqueue new task");
 		}
+
 
 	}
 }

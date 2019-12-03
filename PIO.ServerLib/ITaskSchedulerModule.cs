@@ -1,10 +1,10 @@
 ﻿using ModuleLib;
+using PIO.Models;
 using PIO.ServerLib.TaskHandler;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace PIO.ServerLib
 {
@@ -12,7 +12,7 @@ namespace PIO.ServerLib
 	{
 		bool Initialize();
 		bool Register(ITaskHandler TaskHandler);
-		//void StartTask(int FactoryID, int TaskID,DateTime ETA);
+		void EnqueueTask(int FactoryID,int TaskTypeID,int DelayInSec);
 
 	}
 }

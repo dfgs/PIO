@@ -34,10 +34,25 @@ namespace PIO.ServerLib.Modules
 		{
 			return Try<TRow>(() => this.database.Execute<TRow>(Query).FirstOrDefault(), MethodName);
 		}
-
-		protected ITryAction Try(IInsert Query, [CallerMemberName]string MethodName = null)
+		/*protected ITryFunction<int> Try<TTable>(ISelectIdentity<TTable> Query, [CallerMemberName]string MethodName = null)
 		{
-			return Try(() => this.database.Execute(Query), MethodName);
+			return Try<int>(() =>
+			{
+				object result;
+
+				result = this.database.Execute(Query);
+				return (int)result;
+			}
+			, MethodName) ;
+		}*/
+
+		protected ITryFunction<object> Try<TTable>(IInsert<TTable> Query, [CallerMemberName]string MethodName = null)
+		{
+			return Try(() =>
+			{
+				return this.database.Execute(Query, new SelectIdentity<TTable>());
+			}	
+			, MethodName);
 		}
 
 		protected ITryAction Try(IUpdate Query, [CallerMemberName]string MethodName = null)
@@ -49,10 +64,10 @@ namespace PIO.ServerLib.Modules
 			return Try(() => this.database.Execute(Query), MethodName);
 		}
 
-		protected ITryAction Try(IEnumerable<IQuery> Queries, [CallerMemberName]string MethodName = null)
+		/*protected ITryAction Try(IEnumerable<IQuery> Queries, [CallerMemberName]string MethodName = null)
 		{
 			return Try(()=>this.database.Execute(Queries), MethodName);
-		}
+		}*/
 
 	}
 }

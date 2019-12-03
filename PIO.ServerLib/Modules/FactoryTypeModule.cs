@@ -26,7 +26,7 @@ namespace PIO.ServerLib.Modules
 			ISelect<FactoryTypeTable> query;
 			LogEnter();
 
-			Log(LogLevels.Information, $"Querying factory type with FactoryTypeID {FactoryTypeID}");
+			Log(LogLevels.Information, $"Querying FactoryType table (FactoryTypeID={FactoryTypeID})");
 			query = new Select<FactoryTypeTable>(FactoryTypeTable.FactoryTypeID, FactoryTypeTable.Name,FactoryTypeTable.HealthPoints).Where(FactoryTypeTable.FactoryTypeID.IsEqualTo(FactoryTypeID));
 			return TrySelectFirst<FactoryTypeTable,FactoryType>(query).OrThrow("Failed to query");
 		}
@@ -36,7 +36,7 @@ namespace PIO.ServerLib.Modules
 			ISelect<FactoryTypeTable> query;
 			LogEnter();
 
-			Log(LogLevels.Information, $"Querying factory types");
+			Log(LogLevels.Information, $"Querying FactoryType table");
 			query = new Select<FactoryTypeTable>(FactoryTypeTable.FactoryTypeID, FactoryTypeTable.Name, FactoryTypeTable.HealthPoints);
 			return TrySelectMany<FactoryTypeTable,FactoryType>(query).OrThrow("Failed to query");
 		}

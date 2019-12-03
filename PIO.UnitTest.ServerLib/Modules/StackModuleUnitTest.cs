@@ -79,29 +79,43 @@ namespace PIO.UnitTest.ServerLib.Modules
 		[TestMethod]
 		public void ShouldConsume()
 		{
-			IDatabase database;
+			MockedDatabase<Stack> database;
 			StackModule module;
 
-			database = new MockedDatabase<Stack>(false, 1, (t) => new Stack() { StackID = t, Quantity=5 });
+			database = new MockedDatabase<Stack>(false, 1, (t) => new Stack() { StackID = t,FactoryID=0,ResourceTypeID=0, Quantity=5 });
 			module = new StackModule(NullLogger.Instance, database);
-			module.Consume(0,1);
+			module.Consume(0,0,1);
+			Assert.AreEqual(1, database.UpdatedCount);
 		}
 		[TestMethod]
-		public void ShouldNotConsumeAndLogError()
+		public void ShouldNotConsume()
 		{
 			IDatabase database;
 			StackModule module;
-			MemoryLogger logger;
 
 
-			logger = new MemoryLogger(new DefaultLogFormatter());
-			database = new MockedDatabase<Stack>(true, 1, (t) => new Stack() { StackID = t, Quantity = 5 });
-			module = new StackModule(logger, database);
-			Assert.ThrowsException<Exception>(() => module.Consume(0,10));
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
+			database = new MockedDatabase<Stack>(false, 1, (t) => new Stack() { StackID = t, FactoryID = 0, ResourceTypeID = 0, Quantity = 5 });
+			module = new StackModule(NullLogger.Instance, database);
+			Assert.ThrowsException<InvalidOperationException>(() => module.Consume(0,0,10));
 		}
 
+		[TestMethod]
+		public void ShouldReturnHasEnoughResources()
+		{
+			IDatabase database;
+			StackModule module;
 
+			database = new MockedDatabase<Stack>(false, 1, (t) => new Stack() { StackID = t, FactoryID = 0, ResourceTypeID=0, Quantity =1 });
+			module = new StackModule(NullLogger.Instance, database);
+			Assert.IsTrue(module.HasEnoughResources(0, 0, 1));
+			Assert.IsFalse(module.HasEnoughResources(0, 0, 2));
+
+
+			database = new MockedDatabase<Stack>(false, 0, (t) => null);
+			module = new StackModule(NullLogger.Instance, database);
+			Assert.IsTrue(module.HasEnoughResources(0, 0, 0));
+			Assert.IsFalse(module.HasEnoughResources(0, 0, 1));
+		}
 
 	}
 }
