@@ -16,7 +16,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 		[TestMethod]
 		public void ShouldGetStack()
 		{
-			IDatabase database;
+			MockedDatabase<Stack> database;
 			StackModule module;
 			Stack result;
 
@@ -29,7 +29,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 		[TestMethod]
 		public void ShouldGetStacks()
 		{
-			IDatabase database;
+			MockedDatabase<Stack> database;
 			StackModule module;
 			Stack[] results;
 
@@ -47,7 +47,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 		[TestMethod]
 		public void ShouldNotGetStackAndLogError()
 		{
-			IDatabase database;
+			MockedDatabase<Stack> database;
 			StackModule module;
 			MemoryLogger logger;
 
@@ -61,7 +61,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 		[TestMethod]
 		public void ShouldNotGetStacksAndLogError()
 		{
-			IDatabase database;
+			MockedDatabase<Stack> database;
 			StackModule module;
 			MemoryLogger logger;
 
@@ -90,7 +90,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 		[TestMethod]
 		public void ShouldNotConsume()
 		{
-			IDatabase database;
+			MockedDatabase<Stack> database;
 			StackModule module;
 
 
@@ -102,7 +102,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 		[TestMethod]
 		public void ShouldReturnHasEnoughResources()
 		{
-			IDatabase database;
+			MockedDatabase<Stack> database;
 			StackModule module;
 
 			database = new MockedDatabase<Stack>(false, 1, (t) => new Stack() { StackID = t, FactoryID = 0, ResourceTypeID=0, Quantity =1 });

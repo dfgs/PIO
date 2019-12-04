@@ -16,7 +16,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 		[TestMethod]
 		public void ShouldGetMaterial()
 		{
-			IDatabase database;
+			MockedDatabase<Material> database;
 			MaterialModule module;
 			Material result;
 
@@ -29,7 +29,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 		[TestMethod]
 		public void ShouldGetMaterials()
 		{
-			IDatabase database;
+			MockedDatabase<Material> database;
 			MaterialModule module;
 			Material[] results;
 
@@ -47,7 +47,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 		[TestMethod]
 		public void ShouldNotGetMaterialAndLogError()
 		{
-			IDatabase database;
+			MockedDatabase<Material> database;
 			MaterialModule module;
 			MemoryLogger logger;
 
@@ -61,7 +61,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 		[TestMethod]
 		public void ShouldNotGetMaterialsAndLogError()
 		{
-			IDatabase database;
+			MockedDatabase<Material> database;
 			MaterialModule module;
 			MemoryLogger logger;
 

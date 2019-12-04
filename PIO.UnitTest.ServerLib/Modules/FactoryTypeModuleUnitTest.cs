@@ -16,7 +16,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 		[TestMethod]
 		public void ShouldGetFactoryType()
 		{
-			IDatabase database;
+			MockedDatabase<FactoryType> database;
 			FactoryTypeModule module;
 			FactoryType result;
 
@@ -29,7 +29,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 		[TestMethod]
 		public void ShouldGetFactoryTypes()
 		{
-			IDatabase database;
+			MockedDatabase<FactoryType> database;
 			FactoryTypeModule module;
 			FactoryType[] results;
 
@@ -47,7 +47,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 		[TestMethod]
 		public void ShouldNotGetFactoryTypeAndLogError()
 		{
-			IDatabase database;
+			MockedDatabase<FactoryType> database;
 			FactoryTypeModule module;
 			MemoryLogger logger;
 
@@ -61,7 +61,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 		[TestMethod]
 		public void ShouldNotGetFactoryTypesAndLogError()
 		{
-			IDatabase database;
+			MockedDatabase<FactoryType> database;
 			FactoryTypeModule module;
 			MemoryLogger logger;
 

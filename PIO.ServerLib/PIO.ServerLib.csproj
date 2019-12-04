@@ -57,6 +57,7 @@
     <Compile Include="Modules\MaterialModule.cs" />
     <Compile Include="Modules\StackModule.cs" />
     <Compile Include="Modules\TaskModule.cs" />
+    <Compile Include="TaskHandler\BuildTaskHandler.cs" />
     <Compile Include="TaskHandler\CheckMaterialsTaskHandler.cs" />
     <Compile Include="TaskHandler\ITaskHandler.cs" />
     <Compile Include="TaskHandler\TaskHandler.cs" />

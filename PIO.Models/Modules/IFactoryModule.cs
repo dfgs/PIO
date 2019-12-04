@@ -12,6 +12,8 @@ namespace PIO.Models.Modules
 	{
 		Factory GetFactory(int FactoryID);
 		Factory[] GetFactories(int PlanetID);
+
+		void Build(int FactoryID);
 		/*int CreateFactory(int PlanetID,int FactoryTypeID,int StateID);
 		void SetState(int FactoryID, int StateID);*/
 	}

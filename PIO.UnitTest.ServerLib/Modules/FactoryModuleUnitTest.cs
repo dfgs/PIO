@@ -16,7 +16,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 		[TestMethod]
 		public void ShouldGetFactory()
 		{
-			IDatabase database;
+			MockedDatabase<Factory> database;
 			FactoryModule module;
 			Factory result;
 
@@ -29,7 +29,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 		[TestMethod]
 		public void ShouldGetFactories()
 		{
-			IDatabase database;
+			MockedDatabase<Factory> database;
 			FactoryModule module;
 			Factory[] results;
 
@@ -47,7 +47,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 		[TestMethod]
 		public void ShouldNotGetFactoryAndLogError()
 		{
-			IDatabase database;
+			MockedDatabase<Factory> database;
 			FactoryModule module;
 			MemoryLogger logger;
 
@@ -61,7 +61,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 		[TestMethod]
 		public void ShouldNotGetFactoriesAndLogError()
 		{
-			IDatabase database;
+			MockedDatabase<Factory> database;
 			FactoryModule module;
 			MemoryLogger logger;
 
@@ -72,7 +72,30 @@ namespace PIO.UnitTest.ServerLib.Modules
 			Assert.ThrowsException<Exception>(() => module.GetFactories(1));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
 		}
+		[TestMethod]
+		public void ShouldBuild()
+		{
+			MockedDatabase<Factory> database;
+			FactoryModule module;
+
+			database = new MockedDatabase<Factory>(false, 1, (t) => new Factory() { FactoryID = t,HealthPoints=5 });
+			module = new FactoryModule(NullLogger.Instance, database);
+			module.Build(0);
+			Assert.AreEqual(1, database.UpdatedCount);
+		}
+		[TestMethod]
+		public void ShouldNotBuildAndLogError()
+		{
+			MockedDatabase<Factory> database;
+			FactoryModule module;
+			MemoryLogger logger;
 
 
+			logger = new MemoryLogger(new DefaultLogFormatter());
+			database = new MockedDatabase<Factory>(true, 3, (t) => new Factory() { FactoryID = t });
+			module = new FactoryModule(logger, database);
+			Assert.ThrowsException<Exception>(() => module.Build(1));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
+		}
 	}
 }

@@ -16,7 +16,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 		[TestMethod]
 		public void ShouldGetPlanet()
 		{
-			IDatabase database;
+			MockedDatabase<Planet> database;
 			PlanetModule module;
 			Planet result;
 
@@ -29,7 +29,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 		[TestMethod]
 		public void ShouldGetPlanets()
 		{
-			IDatabase database;
+			MockedDatabase<Planet> database;
 			PlanetModule module;
 			Planet[] results;
 
@@ -47,7 +47,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 		[TestMethod]
 		public void ShouldNotGetPlanetAndLogError()
 		{
-			IDatabase database;
+			MockedDatabase<Planet> database;
 			PlanetModule module;
 			MemoryLogger logger;
 
@@ -61,7 +61,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 		[TestMethod]
 		public void ShouldNotGetPlanetsAndLogError()
 		{
-			IDatabase database;
+			MockedDatabase<Planet> database;
 			PlanetModule module;
 			MemoryLogger logger;
 

@@ -25,25 +25,27 @@ namespace PIO.ServerLib.TaskHandler
 		{
 			Factory factory;
 			Material[] materials;
+			bool result;
 
 			LogEnter();
 
-			Log(LogLevels.Information, $"Checking material availability for Factory with FactoryID {Task.FactoryID}");
+			Log(LogLevels.Information, $"Checking material availability (FactoryID={Task.FactoryID})");
 
-			factory = factoryModule.GetFactory(Task.FactoryID);
-			materials = materialModule.GetMaterials(factory.FactoryTypeID);
+			factory = Try(() => factoryModule.GetFactory(Task.FactoryID)).OrThrow("Failed to get factory");
+			materials = Try(() => materialModule.GetMaterials(factory.FactoryTypeID)).OrThrow("Failed to get materials");
 
 			foreach (Material material in materials)
 			{
-				if (stackModule.HasEnoughResources(Task.FactoryID, material.ResourceTypeID, material.Quantity)) continue;
-				Log(LogLevels.Information, $"Factory with FactoryID {Task.FactoryID} is missing material with ResourceTypeID {material.ResourceTypeID}");
+				result = Try(() => stackModule.HasEnoughResources(Task.FactoryID, material.ResourceTypeID, material.Quantity)).OrThrow("Failed to check resource");
+				if (result) continue;
+				Log(LogLevels.Information, $"Factory is missing material with (FactoryID={Task.FactoryID}, ResourceTypeID={material.ResourceTypeID})");
 				return;
 			}
 
-			Log(LogLevels.Information, $"Factory with FactoryID {Task.FactoryID} has enough material to build, consuming resources");
+			Log(LogLevels.Information, $"Factory has enough material to build, consuming resources (FactoryID={Task.FactoryID})");
 			foreach (Material material in materials)
 			{
-				Try(() => stackModule.Consume(Task.FactoryID, material.ResourceTypeID, material.Quantity)).OrAlert($"Failed to consume material with ResourceTypeID {material.MaterialID}");
+				Try(() => stackModule.Consume(Task.FactoryID, material.ResourceTypeID, material.Quantity)).OrAlert($"Failed to consume material  (FactoryID={Task.FactoryID}, ResourceTypeID={material.MaterialID})");
 			}
 			
 			Try(()=>TaskSchedulerModule.EnqueueTask(Task.FactoryID,(int)TaskTypeIDs.Build,10)).OrAlert("Failed to enqueue new task");

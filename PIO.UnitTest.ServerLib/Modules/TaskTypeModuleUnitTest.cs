@@ -16,7 +16,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 		[TestMethod]
 		public void ShouldGetTaskType()
 		{
-			IDatabase database;
+			MockedDatabase<TaskType> database;
 			TaskTypeModule module;
 			TaskType result;
 
@@ -29,7 +29,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 		[TestMethod]
 		public void ShouldGetTaskTypes()
 		{
-			IDatabase database;
+			MockedDatabase<TaskType> database;
 			TaskTypeModule module;
 			TaskType[] results;
 
@@ -47,7 +47,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 		[TestMethod]
 		public void ShouldNotGetTaskTypeAndLogError()
 		{
-			IDatabase database;
+			MockedDatabase<TaskType> database;
 			TaskTypeModule module;
 			MemoryLogger logger;
 
@@ -61,7 +61,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 		[TestMethod]
 		public void ShouldNotGetTaskTypesAndLogError()
 		{
-			IDatabase database;
+			MockedDatabase<TaskType> database;
 			TaskTypeModule module;
 			MemoryLogger logger;
 

@@ -16,7 +16,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 		[TestMethod]
 		public void ShouldGetResourceType()
 		{
-			IDatabase database;
+			MockedDatabase<ResourceType> database;
 			ResourceTypeModule module;
 			ResourceType result;
 
@@ -29,7 +29,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 		[TestMethod]
 		public void ShouldGetResourceTypes()
 		{
-			IDatabase database;
+			MockedDatabase<ResourceType> database;
 			ResourceTypeModule module;
 			ResourceType[] results;
 
@@ -47,7 +47,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 		[TestMethod]
 		public void ShouldNotGetResourceTypeAndLogError()
 		{
-			IDatabase database;
+			MockedDatabase<ResourceType> database;
 			ResourceTypeModule module;
 			MemoryLogger logger;
 
@@ -61,7 +61,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 		[TestMethod]
 		public void ShouldNotGetResourceTypesAndLogError()
 		{
-			IDatabase database;
+			MockedDatabase<ResourceType> database;
 			ResourceTypeModule module;
 			MemoryLogger logger;
 

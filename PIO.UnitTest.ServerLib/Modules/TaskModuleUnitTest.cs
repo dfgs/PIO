@@ -16,7 +16,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 		[TestMethod]
 		public void ShouldGetTask()
 		{
-			IDatabase database;
+			MockedDatabase<Task> database;
 			TaskModule module;
 			Task result;
 
@@ -29,7 +29,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 		[TestMethod]
 		public void ShouldGetTasks()
 		{
-			IDatabase database;
+			MockedDatabase<Task> database;
 			TaskModule module;
 			Task[] results;
 
@@ -47,7 +47,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 		[TestMethod]
 		public void ShouldGetAllTasks()
 		{
-			IDatabase database;
+			MockedDatabase<Task> database;
 			TaskModule module;
 			Task[] results;
 
@@ -65,7 +65,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 		[TestMethod]
 		public void ShouldNotGetTaskAndLogError()
 		{
-			IDatabase database;
+			MockedDatabase<Task> database;
 			TaskModule module;
 			MemoryLogger logger;
 
@@ -79,7 +79,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 		[TestMethod]
 		public void ShouldNotGetTasksAndLogError()
 		{
-			IDatabase database;
+			MockedDatabase<Task> database;
 			TaskModule module;
 			MemoryLogger logger;
 
@@ -93,7 +93,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 		[TestMethod]
 		public void ShouldNotGetAllTasksAndLogError()
 		{
-			IDatabase database;
+			MockedDatabase<Task> database;
 			TaskModule module;
 			MemoryLogger logger;
 

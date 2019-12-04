@@ -80,7 +80,8 @@ namespace PIO.ServerHost
 			serviceHostModule.Start();
 
 			taskSchedulerModule = new TaskSchedulerModule(logger,taskModule);
-			taskSchedulerModule.Register(new CheckMaterialsTaskHandler(logger,factoryModule,stackModule,materialModule));
+			taskSchedulerModule.Register(new CheckMaterialsTaskHandler(logger, factoryModule, stackModule, materialModule));
+			taskSchedulerModule.Register(new BuildTaskHandler(logger, factoryModule));
 			if (taskSchedulerModule.Initialize()) taskSchedulerModule.Start();
 
 			WaitHandle.WaitAny(new WaitHandle[] {quitEvent }, -1);

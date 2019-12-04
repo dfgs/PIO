@@ -41,7 +41,24 @@ namespace PIO.ServerLib.Modules
 			return TrySelectMany<FactoryTable, Factory>(query).OrThrow("Failed to query");
 		}
 
-		
+		public void Build(int FactoryID)
+		{
+			Factory factory;
+			ISelect<FactoryTable> query;
+			IUpdate<FactoryTable> update;
+
+			LogEnter();
+
+			Log(LogLevels.Information, $"Querying Factory table (FactoryID={FactoryID})");
+			query = new Select<FactoryTable>(FactoryTable.FactoryID, FactoryTable.HealthPoints ).Where(FactoryTable.FactoryID.IsEqualTo(FactoryID));
+			factory = TrySelectFirst<FactoryTable, Factory>(query).OrThrow("Failed to query");
+			if ((factory == null) ) throw new InvalidOperationException($"Invalid factory");
+
+			factory.HealthPoints++;
+			Log(LogLevels.Information, $"Updating Factory table (FactoryID={factory.FactoryID}, HealthPoints={factory.HealthPoints})");
+			update = new Update<FactoryTable>().Set(FactoryTable.HealthPoints, factory.HealthPoints).Where(FactoryTable.FactoryID.IsEqualTo(FactoryID));
+			Try(update).OrThrow("Failed to update");
+		}
 
 
 	}
