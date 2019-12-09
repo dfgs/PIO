@@ -1,0 +1,43 @@
+﻿using PIO.Models;
+using PIO.Models.Modules;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace PIO.UnitTest.ServerLib.Mocks
+{
+	public class MockedFactoryModule :MockedDatabaseModule<Factory>, IFactoryModule
+	{
+
+		public MockedFactoryModule( params Factory[] Items):base(Items)
+		{
+		}
+
+		public Factory[] GetFactories(int PlanetID)
+		{
+			if (ThrowException) throw new InvalidOperationException();
+			return items.Where(item => item.PlanetID == PlanetID).ToArray();
+		}
+
+		public Factory GetFactory(int FactoryID)
+		{
+			if (ThrowException) throw new InvalidOperationException();
+			return items.FirstOrDefault(item => item.FactoryID == FactoryID);
+		}
+
+		public void SetHealthPoints(int FactoryID, int HealthPoints)
+		{
+			Factory factory;
+
+			if (ThrowException) throw new InvalidOperationException();
+
+			factory = GetFactory(FactoryID);
+			if (factory == null) return;
+			factory.HealthPoints+=HealthPoints;
+		}
+
+
+	}
+}

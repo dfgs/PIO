@@ -9,14 +9,14 @@ using PIO.Models.Modules;
 
 namespace PIO.ServerLib.TaskHandler
 {
-	public class CheckMaterialsTaskHandler : TaskHandler
+	public class SearchMaterialsTaskHandler : TaskHandler
 	{
 		private IFactoryModule factoryModule;
 		private IStackModule stackModule;
 		private IMaterialModule materialModule;
 
-		public override int TaskTypeID => (int)TaskTypeIDs.CheckMaterials;
-		public CheckMaterialsTaskHandler(ILogger Logger, IFactoryModule FactoryModule, IStackModule StackModule, IMaterialModule MaterialModule) : base(Logger)
+		public override int TaskTypeID => (int)TaskTypeIDs.SearchMaterial;
+		public SearchMaterialsTaskHandler(ILogger Logger, IFactoryModule FactoryModule, IStackModule StackModule, IMaterialModule MaterialModule) : base(Logger)
 		{
 			this.factoryModule = FactoryModule; this.stackModule = StackModule; this.materialModule = MaterialModule;
 		}
@@ -40,7 +40,7 @@ namespace PIO.ServerLib.TaskHandler
 				if (result) continue;
 				Log(LogLevels.Information, $"Factory is missing material with (FactoryID={Task.FactoryID}, ResourceTypeID={material.ResourceTypeID})");
 
-				Try(() => TaskSchedulerModule.EnqueueTask(Task.FactoryID, (int)TaskTypeIDs.SearchMaterial, null, 1)).OrAlert("Failed to enqueue new task");
+				Try(() => TaskSchedulerModule.EnqueueTask(Task.FactoryID, (int)TaskTypeIDs.SearchMaterial,null, 1)).OrAlert("Failed to enqueue new task");
 				return;
 			}
 

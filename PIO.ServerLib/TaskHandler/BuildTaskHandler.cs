@@ -11,14 +11,12 @@ namespace PIO.ServerLib.TaskHandler
 {
 	public class BuildTaskHandler : TaskHandler
 	{
-		private IFactoryModule factoryModule;
-		//private IStackModule stackModule;
-		//private IMaterialModule materialModule;
+		private IFactoryBuilderModule factoryBuilderModule;
 
 		public override int TaskTypeID => (int)TaskTypeIDs.Build;
-		public BuildTaskHandler(ILogger Logger, IFactoryModule FactoryModule) : base(Logger)
+		public BuildTaskHandler(ILogger Logger, IFactoryBuilderModule FactoryBuilderModule) : base(Logger)
 		{
-			this.factoryModule = FactoryModule;
+			this.factoryBuilderModule = FactoryBuilderModule;
 		}
 
 		public override void Execute(ITaskSchedulerModule TaskSchedulerModule, Task Task)
@@ -27,9 +25,9 @@ namespace PIO.ServerLib.TaskHandler
 			LogEnter();
 
 			Log(LogLevels.Information, $"Building Factory (FactoryID={Task.FactoryID})");
-			Try(() => factoryModule.Build(Task.FactoryID)).OrThrow("Failed to build");
+			Try(() => factoryBuilderModule.Build(Task.FactoryID)).OrThrow("Failed to build");
 			
-			Try(()=>TaskSchedulerModule.EnqueueTask(Task.FactoryID,(int)TaskTypeIDs.CheckMaterials,10)).OrAlert("Failed to enqueue new task");
+			Try(()=>TaskSchedulerModule.EnqueueTask(Task.FactoryID,(int)TaskTypeIDs.CheckMaterials, null, 1)).OrAlert("Failed to enqueue new task");
 		}
 
 

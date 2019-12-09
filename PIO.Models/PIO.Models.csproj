@@ -44,14 +44,18 @@
   <ItemGroup>
     <Compile Include="Event.cs" />
     <Compile Include="Factory.cs" />
+    <Compile Include="Modules\IPIOModule.cs" />
     <Compile Include="Modules\IDatabaseModule.cs" />
+    <Compile Include="Modules\IFactoryBuilderModule.cs" />
     <Compile Include="Modules\IFactoryModule.cs" />
     <Compile Include="Modules\IFactoryTypeModule.cs" />
     <Compile Include="Modules\IMaterialModule.cs" />
     <Compile Include="Modules\IPlanetModule.cs" />
     <Compile Include="Modules\IResourceTypeModule.cs" />
     <Compile Include="Modules\IStackModule.cs" />
+    <Compile Include="Modules\ITaskHandler.cs" />
     <Compile Include="Modules\ITaskModule.cs" />
+    <Compile Include="Modules\ITaskSchedulerModule.cs" />
     <Compile Include="Modules\ITaskTypeModule.cs" />
     <Compile Include="Planet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -64,6 +68,10 @@
     <Compile Include="Transition.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\ModuleLib\ModuleLib\ModuleLib.csproj">
+      <Project>{F89B06C7-43CC-4589-9859-3A4656AAA4A6}</Project>
+      <Name>ModuleLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\NetORMLib\NetORMLib\NetORMLib.csproj">
       <Project>{C94B7BF1-BF85-4483-B032-1582F9EC6423}</Project>
       <Name>NetORMLib</Name>

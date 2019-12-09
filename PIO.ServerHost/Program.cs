@@ -40,6 +40,7 @@ namespace PIO.ServerHost
 
 			IPlanetModule planetModule;
 			IFactoryModule factoryModule;
+			IFactoryBuilderModule factoryBuilderModule;
 			IStackModule stackModule;
 			IResourceTypeModule resourceTypeModule;
 			IFactoryTypeModule factoryTypeModule;
@@ -73,6 +74,7 @@ namespace PIO.ServerHost
 			materialModule = new MaterialModule(logger, database);
 			taskTypeModule = new TaskTypeModule(logger, database);
 			taskModule = new TaskModule(logger, database);
+			factoryBuilderModule = new FactoryBuilderModule(logger,factoryModule,factoryTypeModule);
 
 			service = new PIOService(planetModule,factoryModule,stackModule,resourceTypeModule,factoryTypeModule,materialModule,taskTypeModule,taskModule);
 
@@ -81,7 +83,8 @@ namespace PIO.ServerHost
 
 			taskSchedulerModule = new TaskSchedulerModule(logger,taskModule);
 			taskSchedulerModule.Register(new CheckMaterialsTaskHandler(logger, factoryModule, stackModule, materialModule));
-			taskSchedulerModule.Register(new BuildTaskHandler(logger, factoryModule));
+			taskSchedulerModule.Register(new SearchMaterialsTaskHandler(logger, factoryModule, stackModule, materialModule));
+			taskSchedulerModule.Register(new BuildTaskHandler(logger, factoryBuilderModule));
 			if (taskSchedulerModule.Initialize()) taskSchedulerModule.Start();
 
 			WaitHandle.WaitAny(new WaitHandle[] {quitEvent }, -1);

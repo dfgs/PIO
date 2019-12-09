@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace PIO.ServerLib.Modules
 {
-	public abstract class DatabaseModule : Module,IDatabaseModule
+	public abstract class DatabaseModule : PIOModule,IDatabaseModule
 	{
 		private IDatabase database;
 

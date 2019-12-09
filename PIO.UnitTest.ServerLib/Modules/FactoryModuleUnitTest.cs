@@ -73,28 +73,27 @@ namespace PIO.UnitTest.ServerLib.Modules
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
 		}
 		[TestMethod]
-		public void ShouldBuild()
+		public void ShouldSetHealthPoints()
 		{
 			MockedDatabase<Factory> database;
 			FactoryModule module;
 
 			database = new MockedDatabase<Factory>(false, 1, (t) => new Factory() { FactoryID = t,HealthPoints=5 });
 			module = new FactoryModule(NullLogger.Instance, database);
-			module.Build(0);
+			module.SetHealthPoints(0,10);
 			Assert.AreEqual(1, database.UpdatedCount);
 		}
 		[TestMethod]
-		public void ShouldNotBuildAndLogError()
+		public void ShouldNotSetHealthPointsAndLogError()
 		{
 			MockedDatabase<Factory> database;
 			FactoryModule module;
 			MemoryLogger logger;
 
-
 			logger = new MemoryLogger(new DefaultLogFormatter());
 			database = new MockedDatabase<Factory>(true, 3, (t) => new Factory() { FactoryID = t });
 			module = new FactoryModule(logger, database);
-			Assert.ThrowsException<Exception>(() => module.Build(1));
+			Assert.ThrowsException<Exception>(() => module.SetHealthPoints(0,1));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
 		}
 	}

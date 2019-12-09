@@ -14,7 +14,7 @@ namespace PIO.Models.Modules
 		void RemoveTask(int TaskID);
 		Task[] GetTasks(int FactoryID);
 		Task[] GetTasks();
-		Task CreateTask(int FactoryID, int TaskTypeID, DateTime ETA);
+		Task CreateTask(int FactoryID, int TaskTypeID,int? TargetResourceTypeID, DateTime ETA);
 
 	}
 }

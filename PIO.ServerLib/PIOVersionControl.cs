@@ -53,8 +53,8 @@ namespace PIO.ServerLib
 
 					yield return new CreateRelation<FactoryTable, TaskTable, int>(FactoryTable.FactoryID, TaskTable.FactoryID);
 					yield return new CreateRelation<TaskTypeTable, TaskTable, int>(TaskTypeTable.TaskTypeID, TaskTable.TaskTypeID);
-					yield return new CreateRelation<FactoryTable, TaskTable, int>(FactoryTable.FactoryID, TaskTable.TargetFactoryID);
-					yield return new CreateRelation<ResourceTypeTable, TaskTable, int>(ResourceTypeTable.ResourceTypeID, TaskTable.TargetResourceTypeID);
+					yield return new CreateRelation<FactoryTable, TaskTable, int, int?>(FactoryTable.FactoryID, TaskTable.TargetFactoryID);
+					yield return new CreateRelation<ResourceTypeTable, TaskTable, int, int?>(ResourceTypeTable.ResourceTypeID, TaskTable.TargetResourceTypeID);
 
 
 					break;
@@ -85,7 +85,7 @@ namespace PIO.ServerLib
 					yield return new Insert<StackTable>().Set(StackTable.FactoryID, factoryID).Set(StackTable.ResourceTypeID, 0).Set(StackTable.Quantity, 10);
 					yield return new Insert<StackTable>().Set(StackTable.FactoryID, factoryID).Set(StackTable.ResourceTypeID, 1).Set(StackTable.Quantity, 5);
 
-					yield return new Insert<TaskTable>().Set(TaskTable.FactoryID, factoryID).Set(TaskTable.TaskTypeID, 0).Set(TaskTable.ETA, DateTime.Now.AddSeconds(15));
+					yield return new Insert<TaskTable>().Set(TaskTable.FactoryID, factoryID).Set(TaskTable.TaskTypeID, 0).Set(TaskTable.ETA, DateTime.Now);
 
 
 					yield return new Insert<MaterialTable>().Set(MaterialTable.FactoryTypeID, 0).Set(MaterialTable.ResourceTypeID, 0).Set(MaterialTable.Quantity, 1);

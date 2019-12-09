@@ -60,16 +60,16 @@ namespace PIO.ServerLib.Modules
 			return TrySelectMany<TaskTable, Task>(query).OrThrow("Failed to query");
 		}
 
-		public Task CreateTask(int FactoryID, int TaskTypeID, DateTime ETA)
+		public Task CreateTask(int FactoryID, int TaskTypeID,int? TargetResourceTypeID, DateTime ETA)
 		{
 			IInsert<TaskTable> query;
 			Task item;
 			object result;
 
 			LogEnter();
-			Log(LogLevels.Information, $"Inserting into Task table (FactoryID={FactoryID}, TaskTypeID={TaskTypeID}, ETA={ETA})");
-			item = new Task() { FactoryID=FactoryID,TaskTypeID=TaskTypeID,ETA=ETA };
-			query = new Insert<TaskTable>().Set(TaskTable.FactoryID,item.FactoryID).Set(TaskTable.TaskTypeID,item.TaskTypeID).Set(TaskTable.ETA,item.ETA);
+			Log(LogLevels.Information, $"Inserting into Task table (FactoryID={FactoryID}, TaskTypeID={TaskTypeID}, TargetResourceTypeID={TargetResourceTypeID}, ETA={ETA})");
+			item = new Task() { FactoryID=FactoryID,TaskTypeID=TaskTypeID,TargetResourceTypeID=TargetResourceTypeID, ETA=ETA };
+			query = new Insert<TaskTable>().Set(TaskTable.FactoryID,item.FactoryID).Set(TaskTable.TaskTypeID, item.TaskTypeID).Set(TaskTable.TargetResourceTypeID, item.TargetResourceTypeID).Set(TaskTable.ETA,item.ETA);
 			result=Try(query).OrThrow("Failed to insert");
 			item.TaskID = Convert.ToInt32(result);
 			return item;

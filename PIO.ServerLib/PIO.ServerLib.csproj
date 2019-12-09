@@ -48,8 +48,8 @@
     <Compile Include="IWebServiceModule.cs" />
     <Compile Include="Message.cs" />
     <Compile Include="Modules\DatabaseModule.cs" />
+    <Compile Include="Modules\FactoryBuilderModule.cs" />
     <Compile Include="Modules\FactoryModule.cs" />
-    <Compile Include="ITaskSchedulerModule.cs" />
     <Compile Include="Modules\FactoryTypeModule.cs" />
     <Compile Include="Modules\TaskTypeModule.cs" />
     <Compile Include="Modules\ResourceTypeModule.cs" />
@@ -57,9 +57,10 @@
     <Compile Include="Modules\MaterialModule.cs" />
     <Compile Include="Modules\StackModule.cs" />
     <Compile Include="Modules\TaskModule.cs" />
+    <Compile Include="PIOModule.cs" />
     <Compile Include="TaskHandler\BuildTaskHandler.cs" />
+    <Compile Include="TaskHandler\SearchMaterialsTaskHandler.cs" />
     <Compile Include="TaskHandler\CheckMaterialsTaskHandler.cs" />
-    <Compile Include="TaskHandler\ITaskHandler.cs" />
     <Compile Include="TaskHandler\TaskHandler.cs" />
     <Compile Include="TaskSchedulerModule.cs" />
     <Compile Include="Tables\EventTable.cs" />

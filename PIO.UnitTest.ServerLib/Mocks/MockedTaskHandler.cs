@@ -1,4 +1,5 @@
 ﻿using PIO.Models;
+using PIO.Models.Modules;
 using PIO.ServerLib;
 using PIO.ServerLib.TaskHandler;
 using System;

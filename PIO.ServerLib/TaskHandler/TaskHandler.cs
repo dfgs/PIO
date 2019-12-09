@@ -1,6 +1,7 @@
 ﻿using LogLib;
 using ModuleLib;
 using NetORMLib.Databases;
+using PIO.Models.Modules;
 using PIO.Models;
 using PIO.ServerLib.Modules;
 using System;
@@ -11,7 +12,7 @@ using System.Text;
 
 namespace PIO.ServerLib.TaskHandler
 {
-	public abstract class TaskHandler : Module, ITaskHandler
+	public abstract class TaskHandler : PIOModule, ITaskHandler
 	{
 		public abstract int TaskTypeID { get; }
 

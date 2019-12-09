@@ -6,9 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace PIO.ServerLib.TaskHandler
+namespace PIO.Models.Modules
 {
-	public interface ITaskHandler:IModule
+	public interface ITaskHandler:IPIOModule
 	{
 		int TaskTypeID
 		{

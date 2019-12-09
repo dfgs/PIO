@@ -24,13 +24,13 @@ namespace PIO.ServerLib
 			taskHandlers = new Dictionary<int, ITaskHandler>();
 		}
 
-		public void EnqueueTask(int FactoryID, int TaskTypeID, int DelayInSec)
+		public void EnqueueTask(int FactoryID, int TaskTypeID, int? TargetResourceTypeID, int DelayInSec)
 		{
 			Task task;
 			LogEnter();
 
-			Log(LogLevels.Information, $"Enqueuing task (FactoryID={FactoryID}, TaskTypeID={TaskTypeID}, DelayInSec={DelayInSec})");
-			task = Try<Task>(()=> taskModule.CreateTask(FactoryID, TaskTypeID, DateTime.Now.AddSeconds( DelayInSec))).OrThrow("Failed to enqueue task");
+			Log(LogLevels.Information, $"Enqueuing task (FactoryID={FactoryID}, TaskTypeID={TaskTypeID},TargetResourceTypeID={TargetResourceTypeID}, DelayInSec={DelayInSec})");
+			task = Try<Task>(()=> taskModule.CreateTask(FactoryID, TaskTypeID, TargetResourceTypeID, DateTime.Now.AddSeconds( DelayInSec))).OrThrow("Failed to enqueue task");
 			Add(task.ETA, task);
 		}
 
