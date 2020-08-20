@@ -11,17 +11,21 @@ using System.Threading.Tasks;
 
 namespace PIO.PowerShell
 {
-	[Cmdlet(VerbsCommon.Get, "TaskTypes")]
-	[OutputType(typeof(TaskType[]))]
-	public class GetTaskTypesCmdlet : PIOCmdLet
+	[Cmdlet(VerbsCommon.Get, "Worker")]
+	[OutputType(typeof(Worker))]
+	public class GetWorkerCmdlet : PIOCmdLet
 	{
-			
+		[Parameter(Position = 0, ValueFromPipeline =true,Mandatory =true)]
+		public int WorkerID { get; set; }
+
+
+		
 
 		protected override void ProcessRecord()
 		{
-			TaskType[] result;
+			Worker result;
 
-			result = client.GetTaskTypes();
+			result = client.GetWorker(WorkerID);
 
 			WriteObject(result);
 		}

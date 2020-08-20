@@ -14,27 +14,28 @@ namespace PIO.WebServiceLib
 	{
 		private IPlanetModule PlanetModule;
 		private IFactoryModule FactoryModule;
+		private IWorkerModule WorkerModule;
 		private IStackModule StackModule;
 		private IResourceTypeModule ResourceTypeModule;
 		private IFactoryTypeModule FactoryTypeModule;
 		private IMaterialModule MaterialModule;
-		private ITaskTypeModule TaskTypeModule;
 		private ITaskModule TaskModule;
 
 		public PIOService(
 			IPlanetModule PlanetModule, IFactoryModule FactoryModule,
+			IWorkerModule WorkerModule,
 			IStackModule StackModule,IResourceTypeModule ResourceTypeModule,
 			IFactoryTypeModule FactoryTypeModule,IMaterialModule MaterialModule,
-			ITaskTypeModule TaskTypeModule,ITaskModule TaskModule
+			ITaskModule TaskModule
 		)
 		{
 			this.PlanetModule = PlanetModule;
 			this.FactoryModule = FactoryModule;
+			this.WorkerModule = WorkerModule;
 			this.StackModule = StackModule;
 			this.ResourceTypeModule = ResourceTypeModule;
 			this.FactoryTypeModule = FactoryTypeModule;
 			this.MaterialModule = MaterialModule;
-			this.TaskTypeModule = TaskTypeModule;
 			this.TaskModule = TaskModule;
 		}
 
@@ -47,6 +48,14 @@ namespace PIO.WebServiceLib
 			return PlanetModule.GetPlanets();
 		}
 
+		public Worker GetWorker(int WorkerID)
+		{
+			return WorkerModule.GetWorker(WorkerID);
+		}
+		public Worker[] GetWorkers(int PlanetID)
+		{
+			return WorkerModule.GetWorkers(PlanetID);
+		}
 		public Factory GetFactory(int FactoryID)
 		{
 			return FactoryModule.GetFactory(FactoryID);
@@ -94,15 +103,7 @@ namespace PIO.WebServiceLib
 			return MaterialModule.GetMaterials(FactoryID);
 		}
 
-		public TaskType GetTaskType(int TaskTypeID)
-		{
-			return TaskTypeModule.GetTaskType(TaskTypeID);
-		}
-		public TaskType[] GetTaskTypes()
-		{
-			return TaskTypeModule.GetTaskTypes();
-		}
-
+	
 		public Task GetTask(int TaskID)
 		{
 			return TaskModule.GetTask(TaskID);

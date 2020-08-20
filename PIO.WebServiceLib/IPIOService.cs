@@ -22,6 +22,10 @@ namespace PIO.WebServiceLib
 		[OperationContract]
 		Factory[] GetFactories(int PlanetID);
 		[OperationContract]
+		Worker GetWorker(int WorkerID);
+		[OperationContract]
+		Worker[] GetWorkers(int PlanetID);
+		[OperationContract]
 		Stack GetStack(int StackID);
 		[OperationContract]
 		Stack[] GetStacks(int FactoryID);
@@ -37,10 +41,6 @@ namespace PIO.WebServiceLib
 		Material GetMaterial(int MaterialID);
 		[OperationContract]
 		Material[] GetMaterials(int FactoryTypeID);
-		[OperationContract]
-		TaskType GetTaskType(int TaskTypeID);
-		[OperationContract]
-		TaskType[] GetTaskTypes();
 		[OperationContract]
 		Task GetTask(int TaskID);
 		[OperationContract]

@@ -12,9 +12,9 @@ namespace PIO.Models.Modules
 	{
 		Task GetTask(int TaskID);
 		void RemoveTask(int TaskID);
-		Task[] GetTasks(int FactoryID);
+		Task[] GetTasks(int WorkerID);
 		Task[] GetTasks();
-		Task CreateTask(int FactoryID, int TaskTypeID,int? TargetResourceTypeID, DateTime ETA);
+		Task CreateTask(int WorkerID, DateTime ETA);
 
 	}
 }

@@ -52,14 +52,12 @@
     <Compile Include="Mocks\MockedDatabaseModule.cs" />
     <Compile Include="Mocks\MockedFactoryModule.cs" />
     <Compile Include="Mocks\MockedFactoryTypeModule.cs" />
-    <Compile Include="Mocks\MockedTaskHandler.cs" />
     <Compile Include="Mocks\MockedTaskModule.cs" />
     <Compile Include="Mocks\MockedDatabase.cs" />
     <Compile Include="Modules\FactoryBuilderModuleUnitTest.cs" />
+    <Compile Include="Modules\WorkerModuleUnitTest.cs" />
     <Compile Include="Modules\FactoryTypeModuleUnitTest.cs" />
-    <Compile Include="Modules\TaskSchedulerModuleUnitTest.cs" />
     <Compile Include="Modules\TaskModuleUnitTest.cs" />
-    <Compile Include="Modules\TaskTypeModuleUnitTest.cs" />
     <Compile Include="Modules\ResourceTypeModuleUnitTest.cs" />
     <Compile Include="Modules\MaterialModuleUnitTest.cs" />
     <Compile Include="Modules\StackModuleUnitTest.cs" />

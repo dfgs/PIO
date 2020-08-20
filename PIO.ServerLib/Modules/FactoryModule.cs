@@ -27,7 +27,7 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying Factory table (FactoryID={FactoryID})");
-			query = new Select<FactoryTable>(FactoryTable.FactoryID, FactoryTable.FactoryTypeID,FactoryTable.HealthPoints).Where(FactoryTable.FactoryID.IsEqualTo(FactoryID));
+			query = new Select<FactoryTable>(FactoryTable.PlanetID,FactoryTable.FactoryID, FactoryTable.FactoryTypeID,FactoryTable.HealthPoints).Where(FactoryTable.FactoryID.IsEqualTo(FactoryID));
 			return TrySelectFirst<FactoryTable,Factory>(query).OrThrow("Failed to query");
 		}
 
@@ -37,7 +37,7 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying Factory table (PlanetID={PlanetID})");
-			query = new Select<FactoryTable>(FactoryTable.FactoryID, FactoryTable.FactoryTypeID, FactoryTable.HealthPoints).Where(FactoryTable.PlanetID.IsEqualTo(PlanetID));
+			query = new Select<FactoryTable>(FactoryTable.PlanetID, FactoryTable.FactoryID, FactoryTable.FactoryTypeID, FactoryTable.HealthPoints).Where(FactoryTable.PlanetID.IsEqualTo(PlanetID));
 			return TrySelectMany<FactoryTable, Factory>(query).OrThrow("Failed to query");
 		}
 

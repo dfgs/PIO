@@ -55,6 +55,34 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="GetWorker">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="WorkerID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetWorkerResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetWorkerResult" nillable="true" type="q5:Worker" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetWorkers">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="PlanetID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetWorkersResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetWorkersResult" nillable="true" type="q6:ArrayOfWorker" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="GetStack">
     <xs:complexType>
       <xs:sequence>
@@ -65,7 +93,7 @@
   <xs:element name="GetStackResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetStackResult" nillable="true" type="q5:Stack" />
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetStackResult" nillable="true" type="q7:Stack" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -79,7 +107,7 @@
   <xs:element name="GetStacksResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetStacksResult" nillable="true" type="q6:ArrayOfStack" />
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetStacksResult" nillable="true" type="q8:ArrayOfStack" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -93,7 +121,7 @@
   <xs:element name="GetResourceTypeResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetResourceTypeResult" nillable="true" type="q7:ResourceType" />
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetResourceTypeResult" nillable="true" type="q9:ResourceType" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -105,7 +133,7 @@
   <xs:element name="GetResourceTypesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetResourceTypesResult" nillable="true" type="q8:ArrayOfResourceType" />
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetResourceTypesResult" nillable="true" type="q10:ArrayOfResourceType" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -119,7 +147,7 @@
   <xs:element name="GetFactoryTypeResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetFactoryTypeResult" nillable="true" type="q9:FactoryType" />
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetFactoryTypeResult" nillable="true" type="q11:FactoryType" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -131,7 +159,7 @@
   <xs:element name="GetFactoryTypesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetFactoryTypesResult" nillable="true" type="q10:ArrayOfFactoryType" />
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetFactoryTypesResult" nillable="true" type="q12:ArrayOfFactoryType" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -145,7 +173,7 @@
   <xs:element name="GetMaterialResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetMaterialResult" nillable="true" type="q11:Material" />
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetMaterialResult" nillable="true" type="q13:Material" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -159,33 +187,7 @@
   <xs:element name="GetMaterialsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetMaterialsResult" nillable="true" type="q12:ArrayOfMaterial" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="GetTaskType">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" name="TaskTypeID" type="xs:int" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="GetTaskTypeResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetTaskTypeResult" nillable="true" type="q13:TaskType" />
-      </xs:sequence>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="GetTaskTypes">
-    <xs:complexType>
-      <xs:sequence />
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="GetTaskTypesResponse">
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetTaskTypesResult" nillable="true" type="q14:ArrayOfTaskType" />
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetMaterialsResult" nillable="true" type="q14:ArrayOfMaterial" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

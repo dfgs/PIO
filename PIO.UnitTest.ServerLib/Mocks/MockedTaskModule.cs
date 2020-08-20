@@ -23,13 +23,13 @@ namespace PIO.UnitTest.ServerLib.Mocks
 		public Task GetTask(int TaskID)
 		{
 			if (throwException) throw new NotImplementedException();
-			return new Task() {TaskID=TaskID ,FactoryID=1,ETA=DateTime.Now,TaskTypeID=1};
+			return new Task() {TaskID=TaskID ,WorkerID=1,ETA=DateTime.Now};
 		}
 		public void RemoveTask(int TaskID)
 		{
 			throw new NotImplementedException();
 		}
-		public Task[] GetTasks(int FactoryID)
+		public Task[] GetTasks(int WorkerID)
 		{
 			Task[] items;
 
@@ -37,7 +37,7 @@ namespace PIO.UnitTest.ServerLib.Mocks
 			items = new Task[results];
 			for (int t = 0; t < results; t++)
 			{
-				items[t]=new Task() { TaskID = t, FactoryID = FactoryID, ETA = DateTime.Now, TaskTypeID = 1 };
+				items[t]=new Task() { TaskID = t, WorkerID = WorkerID, ETA = DateTime.Now };
 			}
 			return items;
 		}
@@ -50,12 +50,12 @@ namespace PIO.UnitTest.ServerLib.Mocks
 			items = new Task[results];
 			for (int t = 0; t < results; t++)
 			{
-				items[t] = new Task() { TaskID = t, FactoryID = 1, ETA = DateTime.Now, TaskTypeID = 1 };
+				items[t] = new Task() { TaskID = t, WorkerID = 1, ETA = DateTime.Now };
 			}
 			return items;
 		}
 
-		public Task CreateTask(int FactoryID, int TaskTypeID,int? TargetResourceTypeID, DateTime ETA)
+		public Task CreateTask(int WorkerID, DateTime ETA)
 		{
 			throw new NotImplementedException();
 		}

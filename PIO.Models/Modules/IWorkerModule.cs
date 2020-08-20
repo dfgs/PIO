@@ -8,9 +8,11 @@ using System.Threading.Tasks;
 
 namespace PIO.Models.Modules
 {
-	public interface ITaskTypeModule:IDatabaseModule
+	public interface IWorkerModule : IDatabaseModule
 	{
-		TaskType GetTaskType(int TaskTypeID);
-		TaskType[] GetTaskTypes();
+		Worker GetWorker(int WorkerID);
+		Worker[] GetWorkers(int PlanetID);
+
+		
 	}
 }

@@ -8,7 +8,6 @@ using NetORMLib.Sql.Databases;
 using PIO.Models.Modules;
 using PIO.ServerLib;
 using PIO.ServerLib.Modules;
-using PIO.ServerLib.TaskHandler;
 using PIO.WebServiceLib;
 using System;
 using System.Collections.Generic;
@@ -30,7 +29,6 @@ namespace PIO.ServerHost
 			ILogger logger;
 			VersionControlModule versionControlModule;
 			ServiceHostModule serviceHostModule;
-			TaskSchedulerModule taskSchedulerModule;
 
 			IPIOService service;
 			IDatabase database;
@@ -40,12 +38,12 @@ namespace PIO.ServerHost
 
 			IPlanetModule planetModule;
 			IFactoryModule factoryModule;
+			IWorkerModule workerModule;
 			IFactoryBuilderModule factoryBuilderModule;
 			IStackModule stackModule;
 			IResourceTypeModule resourceTypeModule;
 			IFactoryTypeModule factoryTypeModule;
 			IMaterialModule materialModule;
-			ITaskTypeModule taskTypeModule;
 			ITaskModule taskModule;
 
 
@@ -68,28 +66,23 @@ namespace PIO.ServerHost
 
 			planetModule = new PlanetModule(logger, database);
 			factoryModule = new FactoryModule(logger, database);
+			workerModule = new WorkerModule(logger, database);
 			stackModule = new StackModule(logger, database);
 			resourceTypeModule = new ResourceTypeModule(logger, database);
 			factoryTypeModule = new FactoryTypeModule(logger, database);
 			materialModule = new MaterialModule(logger, database);
-			taskTypeModule = new TaskTypeModule(logger, database);
 			taskModule = new TaskModule(logger, database);
 			factoryBuilderModule = new FactoryBuilderModule(logger,factoryModule,factoryTypeModule);
 
-			service = new PIOService(planetModule,factoryModule,stackModule,resourceTypeModule,factoryTypeModule,materialModule,taskTypeModule,taskModule);
+			service = new PIOService(planetModule,factoryModule,workerModule,stackModule,resourceTypeModule,factoryTypeModule,materialModule,taskModule);
 
 			serviceHostModule = new ServiceHostModule(logger,service);
 			serviceHostModule.Start();
 
-			taskSchedulerModule = new TaskSchedulerModule(logger,taskModule);
-			taskSchedulerModule.Register(new CheckMaterialsTaskHandler(logger, factoryModule, stackModule, materialModule));
-			taskSchedulerModule.Register(new SearchMaterialsTaskHandler(logger, factoryModule, stackModule, materialModule));
-			taskSchedulerModule.Register(new BuildTaskHandler(logger, factoryBuilderModule));
-			if (taskSchedulerModule.Initialize()) taskSchedulerModule.Start();
+			
 
 			WaitHandle.WaitAny(new WaitHandle[] {quitEvent }, -1);
 
-			taskSchedulerModule.Stop();
 			serviceHostModule.Stop();
 
 			Console.CancelKeyPress -= new ConsoleCancelEventHandler(Console_CancelKeyPress);

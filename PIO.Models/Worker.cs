@@ -9,11 +9,15 @@ using System.Text;
 namespace PIO.Models
 {
 	[DataContract]
-	public class TaskType
+	public class Worker
 	{
 		[DataMember]
-		public int TaskTypeID { get; set; }
+		public int WorkerID { get; set; }
 		[DataMember]
-		public string Name { get; set; }
+		public int PlanetID { get; set; }
+		
+		
+	
+
 	}
 }

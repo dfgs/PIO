@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="Server" Type="System.String" Scope="User">
-      <Value Profile="(Default)">FRLAPL525\SQLEXPRESS</Value>
+      <Value Profile="(Default)">.\SQLEXPRESS</Value>
     </Setting>
     <Setting Name="DropDatabase" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
