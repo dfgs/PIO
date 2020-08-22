@@ -51,6 +51,11 @@
   <ItemGroup>
     <Compile Include="Mocks\MockedDatabaseModule.cs" />
     <Compile Include="Mocks\MockedFactoryModule.cs" />
+    <Compile Include="Mocks\MockedFactoryTypeModule.cs" />
+    <Compile Include="Mocks\MockedIngredientModule.cs" />
+    <Compile Include="Mocks\MockedResourceTypeModule.cs" />
+    <Compile Include="Mocks\MockedMaterialModule.cs" />
+    <Compile Include="Mocks\MockedTaskModule.cs" />
     <Compile Include="Mocks\MockedStackModule.cs" />
     <Compile Include="Mocks\MockedWorkerModule.cs" />
     <Compile Include="Mocks\MockedPlanetModule.cs" />

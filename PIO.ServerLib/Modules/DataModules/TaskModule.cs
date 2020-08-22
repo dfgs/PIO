@@ -30,7 +30,7 @@ namespace PIO.ServerLib.Modules
 			return TrySelectFirst<TaskTable, Task>(query).OrThrow("Failed to query");
 		}
 
-		public void RemoveTask(int TaskID)
+		/*public void RemoveTask(int TaskID)
 		{
 			IDelete<TaskTable> query;
 			LogEnter();
@@ -38,19 +38,19 @@ namespace PIO.ServerLib.Modules
 			Log(LogLevels.Information, $"Deleting from Task table (TaskID={TaskID})");
 			query = new Delete<TaskTable>().Where(TaskTable.TaskID.IsEqualTo(TaskID));
 			Try(query).OrThrow("Failed to delete");
-		}
+		}*/
 
-		public Task[] GetTasks(int FactoryID)
+		public Task[] GetTasks(int WorkerID)
 		{
 			ISelect<TaskTable> query;
 			LogEnter();
 
-			Log(LogLevels.Information, $"Querying Task table (FactoryID={FactoryID})");
-			query = new Select<TaskTable>(TaskTable.TaskID, TaskTable.WorkerID, TaskTable.ETA).Where(TaskTable.WorkerID.IsEqualTo(FactoryID));
+			Log(LogLevels.Information, $"Querying Task table (WorkerID={WorkerID})");
+			query = new Select<TaskTable>(TaskTable.TaskID, TaskTable.WorkerID, TaskTable.ETA).Where(TaskTable.WorkerID.IsEqualTo(WorkerID));
 			return TrySelectMany<TaskTable, Task>(query).OrThrow("Failed to query");
 		}
 
-		public Task[] GetTasks()
+		/*public Task[] GetTasks()
 		{
 			ISelect<TaskTable> query;
 			LogEnter();
@@ -58,9 +58,9 @@ namespace PIO.ServerLib.Modules
 			Log(LogLevels.Information, $"Querying Task table");
 			query = new Select<TaskTable>(TaskTable.TaskID, TaskTable.WorkerID,  TaskTable.ETA);
 			return TrySelectMany<TaskTable, Task>(query).OrThrow("Failed to query");
-		}
+		}*/
 
-		public Task CreateTask(int WorkerID,  DateTime ETA)
+		/*public Task CreateTask(int WorkerID,  DateTime ETA)
 		{
 			IInsert<TaskTable> query;
 			Task item;
@@ -73,7 +73,7 @@ namespace PIO.ServerLib.Modules
 			result=Try(query).OrThrow("Failed to insert");
 			item.TaskID = Convert.ToInt32(result);
 			return item;
-		}
+		}*/
 
 
 

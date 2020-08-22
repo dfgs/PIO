@@ -44,24 +44,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 				Assert.AreEqual(t, results[t].TaskID);
 			}
 		}
-		[TestMethod]
-		public void ShouldGetAllTasks()
-		{
-			MockedDatabase<Task> database;
-			TaskModule module;
-			Task[] results;
-
-			database = new MockedDatabase<Task>(false, 3, (t) => new Task() { TaskID = t });
-			module = new TaskModule(NullLogger.Instance, database);
-			results = module.GetTasks();
-			Assert.IsNotNull(results);
-			Assert.AreEqual(3, results.Length);
-			for (int t = 0; t < 3; t++)
-			{
-				Assert.IsNotNull(results[t]);
-				Assert.AreEqual(t, results[t].TaskID);
-			}
-		}
+		
 		[TestMethod]
 		public void ShouldNotGetTaskAndLogError()
 		{
@@ -90,71 +73,10 @@ namespace PIO.UnitTest.ServerLib.Modules
 			Assert.ThrowsException<Exception>(() => module.GetTasks(1));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
 		}
-		[TestMethod]
-		public void ShouldNotGetAllTasksAndLogError()
-		{
-			MockedDatabase<Task> database;
-			TaskModule module;
-			MemoryLogger logger;
+		
 
-
-			logger = new MemoryLogger(new DefaultLogFormatter());
-			database = new MockedDatabase<Task>(true, 3, (t) => new Task() { TaskID = t });
-			module = new TaskModule(logger, database);
-			Assert.ThrowsException<Exception>(() => module.GetTasks());
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
-		}
-
-		[TestMethod]
-		public void ShouldRemoveTask()
-		{
-			MockedDatabase<Task> database;
-			TaskModule module;
-
-			database = new MockedDatabase<Task>(false, 1, (t) => new Task() { TaskID = t });
-			module = new TaskModule(NullLogger.Instance, database);
-			module.RemoveTask(1);
-			Assert.AreEqual(1, database.DeletedCount);
-		}
-		[TestMethod]
-		public void ShouldNotRemoveTaskAndLogError()
-		{
-			MockedDatabase<Task> database;
-			TaskModule module;
-			MemoryLogger logger;
-
-
-			logger = new MemoryLogger(new DefaultLogFormatter());
-			database = new MockedDatabase<Task>(true, 1, (t) => new Task() { TaskID = t });
-			module = new TaskModule(logger, database);
-			Assert.ThrowsException<Exception>(() => module.RemoveTask(1));
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
-		}
-		[TestMethod]
-		public void ShouldCreateTask()
-		{
-			MockedDatabase<Task> database;
-			TaskModule module;
-
-			database = new MockedDatabase<Task>(false, 1, (t) => new Task() { TaskID = t });
-			module = new TaskModule(NullLogger.Instance, database);
-			module.CreateTask(1, DateTime.Now);
-			Assert.AreEqual(1, database.InsertedCount);
-		}
-		[TestMethod]
-		public void ShouldNotCreateTaskAndLogError()
-		{
-			MockedDatabase<Task> database;
-			TaskModule module;
-			MemoryLogger logger;
-
-
-			logger = new MemoryLogger(new DefaultLogFormatter());
-			database = new MockedDatabase<Task>(true, 1, (t) => new Task() { TaskID = t });
-			module = new TaskModule(logger, database);
-			Assert.ThrowsException<Exception>(() => module.CreateTask(1, DateTime.Now));
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
-		}
+		
+		
 
 	}
 }
