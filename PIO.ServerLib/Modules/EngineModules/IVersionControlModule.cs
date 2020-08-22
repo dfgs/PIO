@@ -9,6 +9,7 @@ using NetORMLib.Sql.ConnectionFactories;
 using NetORMLib.Sql.Databases;
 using NetORMLib.VersionControl;
 using PIO.Models;
+using PIO.Models.Modules;
 using PIO.ServerLib.Modules;
 
 using System;
@@ -18,9 +19,9 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 
-namespace PIO.ServerLib
+namespace PIO.ServerLib.Modules
 {
-	public interface IVersionControlModule
+	public interface IVersionControlModule: IEngineModule
 	{
 		bool InitializeDatabase(bool DropDatabase); 
 

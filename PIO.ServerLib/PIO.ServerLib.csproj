@@ -43,21 +43,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Consts.cs" />
-    <Compile Include="IVersionControlModule.cs" />
-    <Compile Include="IWebServiceModule.cs" />
-    <Compile Include="Message.cs" />
-    <Compile Include="Modules\DatabaseModule.cs" />
-    <Compile Include="Modules\FactoryBuilderModule.cs" />
-    <Compile Include="Modules\WorkerModule.cs" />
-    <Compile Include="Modules\FactoryModule.cs" />
-    <Compile Include="Modules\FactoryTypeModule.cs" />
-    <Compile Include="Modules\ResourceTypeModule.cs" />
-    <Compile Include="Modules\PlanetModule.cs" />
-    <Compile Include="Modules\MaterialModule.cs" />
-    <Compile Include="Modules\StackModule.cs" />
-    <Compile Include="Modules\TaskModule.cs" />
-    <Compile Include="PIOModule.cs" />
+    <Compile Include="Modules\EngineModules\IVersionControlModule.cs" />
+    <Compile Include="Modules\EngineModules\IWebServiceModule.cs" />
+    <Compile Include="Modules\DataModules\DatabaseModule.cs" />
+    <Compile Include="Modules\FunctionalModules\FactoryBuilderModule.cs" />
+    <Compile Include="Modules\DataModules\WorkerModule.cs" />
+    <Compile Include="Modules\DataModules\FactoryModule.cs" />
+    <Compile Include="Modules\DataModules\FactoryTypeModule.cs" />
+    <Compile Include="Modules\DataModules\ResourceTypeModule.cs" />
+    <Compile Include="Modules\DataModules\PlanetModule.cs" />
+    <Compile Include="Modules\DataModules\MaterialModule.cs" />
+    <Compile Include="Modules\DataModules\StackModule.cs" />
+    <Compile Include="Modules\DataModules\TaskModule.cs" />
+    <Compile Include="Modules\PIOModule.cs" />
+    <Compile Include="Tables\IngredientTable.cs" />
     <Compile Include="Tables\WorkerTable.cs" />
     <Compile Include="Tables\EventTable.cs" />
     <Compile Include="Tables\FactoryTable.cs" />
@@ -67,10 +66,10 @@
     <Compile Include="Tables\FactoryTypeTable.cs" />
     <Compile Include="Tables\MaterialTable.cs" />
     <Compile Include="Tables\StackTable.cs" />
-    <Compile Include="VersionControlModule.cs" />
+    <Compile Include="Modules\EngineModules\VersionControlModule.cs" />
     <Compile Include="PIOVersionControl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ServiceHostModule.cs" />
+    <Compile Include="Modules\EngineModules\ServiceHostModule.cs" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />

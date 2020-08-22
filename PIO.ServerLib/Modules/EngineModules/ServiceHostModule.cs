@@ -8,7 +8,7 @@ using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PIO.ServerLib
+namespace PIO.ServerLib.Modules
 {
 	public class ServiceHostModule : ThreadModule, IWebServiceModule
 	{

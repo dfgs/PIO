@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PIO.ServerLib
+namespace PIO.Models.Modules
 {
-	public enum TaskTypeIDs { CheckMaterials=0, SearchMaterial=1,CollectMaterial=2,Build=3};
-
-
+	public interface IFunctionalModule:IPIOModule
+	{
+	}
 }

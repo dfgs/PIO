@@ -18,7 +18,7 @@ using System.Linq;
 using System.Text;
 
 
-namespace PIO.ServerLib
+namespace PIO.ServerLib.Modules
 {
 	public class VersionControlModule : Module,IVersionControlModule
 	{

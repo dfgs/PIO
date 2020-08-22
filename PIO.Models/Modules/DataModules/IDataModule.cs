@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PIO.Models.Modules
 {
-	public interface IDatabaseModule:IPIOModule
+	public interface IDataModule:IPIOModule
 	{
 	}
 }
