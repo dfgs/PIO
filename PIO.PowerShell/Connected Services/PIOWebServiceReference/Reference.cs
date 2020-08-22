@@ -99,6 +99,18 @@ namespace PIO.PowerShell.PIOWebServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetMaterials", ReplyAction="http://tempuri.org/IPIOService/GetMaterialsResponse")]
         System.Threading.Tasks.Task<PIO.Models.Material[]> GetMaterialsAsync(int FactoryTypeID);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetIngredient", ReplyAction="http://tempuri.org/IPIOService/GetIngredientResponse")]
+        PIO.Models.Ingredient GetIngredient(int IngredientID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetIngredient", ReplyAction="http://tempuri.org/IPIOService/GetIngredientResponse")]
+        System.Threading.Tasks.Task<PIO.Models.Ingredient> GetIngredientAsync(int IngredientID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetIngredients", ReplyAction="http://tempuri.org/IPIOService/GetIngredientsResponse")]
+        PIO.Models.Ingredient[] GetIngredients(int FactoryTypeID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetIngredients", ReplyAction="http://tempuri.org/IPIOService/GetIngredientsResponse")]
+        System.Threading.Tasks.Task<PIO.Models.Ingredient[]> GetIngredientsAsync(int FactoryTypeID);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetTask", ReplyAction="http://tempuri.org/IPIOService/GetTaskResponse")]
         PIO.Models.Task GetTask(int TaskID);
         
@@ -249,6 +261,22 @@ namespace PIO.PowerShell.PIOWebServiceReference {
         
         public System.Threading.Tasks.Task<PIO.Models.Material[]> GetMaterialsAsync(int FactoryTypeID) {
             return base.Channel.GetMaterialsAsync(FactoryTypeID);
+        }
+        
+        public PIO.Models.Ingredient GetIngredient(int IngredientID) {
+            return base.Channel.GetIngredient(IngredientID);
+        }
+        
+        public System.Threading.Tasks.Task<PIO.Models.Ingredient> GetIngredientAsync(int IngredientID) {
+            return base.Channel.GetIngredientAsync(IngredientID);
+        }
+        
+        public PIO.Models.Ingredient[] GetIngredients(int FactoryTypeID) {
+            return base.Channel.GetIngredients(FactoryTypeID);
+        }
+        
+        public System.Threading.Tasks.Task<PIO.Models.Ingredient[]> GetIngredientsAsync(int FactoryTypeID) {
+            return base.Channel.GetIngredientsAsync(FactoryTypeID);
         }
         
         public PIO.Models.Task GetTask(int TaskID) {

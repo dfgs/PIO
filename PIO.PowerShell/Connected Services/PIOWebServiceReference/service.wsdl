@@ -91,6 +91,18 @@
   <wsdl:message name="IPIOService_GetMaterials_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetMaterialsResponse" />
   </wsdl:message>
+  <wsdl:message name="IPIOService_GetIngredient_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetIngredient" />
+  </wsdl:message>
+  <wsdl:message name="IPIOService_GetIngredient_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetIngredientResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPIOService_GetIngredients_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetIngredients" />
+  </wsdl:message>
+  <wsdl:message name="IPIOService_GetIngredients_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetIngredientsResponse" />
+  </wsdl:message>
   <wsdl:message name="IPIOService_GetTask_InputMessage">
     <wsdl:part name="parameters" element="tns:GetTask" />
   </wsdl:message>
@@ -159,6 +171,14 @@
     <wsdl:operation name="GetMaterials">
       <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetMaterials" message="tns:IPIOService_GetMaterials_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/GetMaterialsResponse" message="tns:IPIOService_GetMaterials_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetIngredient">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetIngredient" message="tns:IPIOService_GetIngredient_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/GetIngredientResponse" message="tns:IPIOService_GetIngredient_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetIngredients">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetIngredients" message="tns:IPIOService_GetIngredients_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/GetIngredientsResponse" message="tns:IPIOService_GetIngredients_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetTask">
       <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetTask" message="tns:IPIOService_GetTask_InputMessage" />
@@ -290,6 +310,24 @@
     </wsdl:operation>
     <wsdl:operation name="GetMaterials">
       <soap:operation soapAction="http://tempuri.org/IPIOService/GetMaterials" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetIngredient">
+      <soap:operation soapAction="http://tempuri.org/IPIOService/GetIngredient" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetIngredients">
+      <soap:operation soapAction="http://tempuri.org/IPIOService/GetIngredients" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

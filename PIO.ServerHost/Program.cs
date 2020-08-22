@@ -44,6 +44,7 @@ namespace PIO.ServerHost
 			IResourceTypeModule resourceTypeModule;
 			IFactoryTypeModule factoryTypeModule;
 			IMaterialModule materialModule;
+			IIngredientModule ingredientModule;
 			ITaskModule taskModule;
 
 
@@ -71,10 +72,11 @@ namespace PIO.ServerHost
 			resourceTypeModule = new ResourceTypeModule(logger, database);
 			factoryTypeModule = new FactoryTypeModule(logger, database);
 			materialModule = new MaterialModule(logger, database);
+			ingredientModule = new IngredientModule(logger, database);
 			taskModule = new TaskModule(logger, database);
 			factoryBuilderModule = new FactoryBuilderModule(logger,factoryModule,factoryTypeModule);
 
-			service = new PIOService(planetModule,factoryModule,workerModule,stackModule,resourceTypeModule,factoryTypeModule,materialModule,taskModule);
+			service = new PIOService(logger,planetModule,factoryModule,workerModule,stackModule,resourceTypeModule,factoryTypeModule,materialModule,ingredientModule,taskModule);
 
 			serviceHostModule = new ServiceHostModule(logger,service);
 			serviceHostModule.Start();

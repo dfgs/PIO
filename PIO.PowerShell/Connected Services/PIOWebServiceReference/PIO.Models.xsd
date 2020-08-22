@@ -98,6 +98,21 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfMaterial" nillable="true" type="tns:ArrayOfMaterial" />
+  <xs:complexType name="Ingredient">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="FactoryTypeID" type="xs:int" />
+      <xs:element minOccurs="0" name="IngredientID" type="xs:int" />
+      <xs:element minOccurs="0" name="Quantity" type="xs:int" />
+      <xs:element minOccurs="0" name="ResourceTypeID" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Ingredient" nillable="true" type="tns:Ingredient" />
+  <xs:complexType name="ArrayOfIngredient">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Ingredient" nillable="true" type="tns:Ingredient" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfIngredient" nillable="true" type="tns:ArrayOfIngredient" />
   <xs:complexType name="Task">
     <xs:sequence>
       <xs:element minOccurs="0" name="ETA" type="xs:dateTime" />

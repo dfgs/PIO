@@ -59,34 +59,53 @@ namespace PIO.ServerLib
 
 					break;
 				case 3:
+					#region create ResourceType
+					yield return new Insert<ResourceTypeTable>().Set(ResourceTypeTable.ResourceTypeID, (int)ResourceTypeIDs.Tree).Set(ResourceTypeTable.Name, "Tree");
+					yield return new Insert<ResourceTypeTable>().Set(ResourceTypeTable.ResourceTypeID, (int)ResourceTypeIDs.Wood).Set(ResourceTypeTable.Name, "Wood");
+					yield return new Insert<ResourceTypeTable>().Set(ResourceTypeTable.ResourceTypeID, (int)ResourceTypeIDs.Stone).Set(ResourceTypeTable.Name, "Stone");
+					yield return new Insert<ResourceTypeTable>().Set(ResourceTypeTable.ResourceTypeID, (int)ResourceTypeIDs.Coal).Set(ResourceTypeTable.Name, "Coal");
+					yield return new Insert<ResourceTypeTable>().Set(ResourceTypeTable.ResourceTypeID, (int)ResourceTypeIDs.Plank).Set(ResourceTypeTable.Name, "Plank");
+					#endregion
+
+					#region create FactoryType
+					yield return new Insert<FactoryTypeTable>().Set(FactoryTypeTable.FactoryTypeID, (int)FactoryTypeIDs.Forest).Set(FactoryTypeTable.Name, "Forest").Set(FactoryTypeTable.HealthPoints, 999);
+					yield return new Insert<FactoryTypeTable>().Set(FactoryTypeTable.FactoryTypeID, (int)FactoryTypeIDs.Stockpile).Set(FactoryTypeTable.Name, "Stockpile").Set(FactoryTypeTable.HealthPoints, 50);
+					yield return new Insert<FactoryTypeTable>().Set(FactoryTypeTable.FactoryTypeID, (int)FactoryTypeIDs.WoodCutter).Set(FactoryTypeTable.Name, "Wood cuter").Set(FactoryTypeTable.HealthPoints, 5);
+					#endregion
+
+					#region create Ingredient
+					yield return new Insert<IngredientTable>().Set(IngredientTable.FactoryTypeID, (int)FactoryTypeIDs.Forest).Set(IngredientTable.ResourceTypeID,(int)ResourceTypeIDs.Tree).Set(IngredientTable.Quantity,1);
+					#endregion
+
+
+					#region create startup Planet
 					yield return new Insert<PlanetTable>().Set(PlanetTable.Name, "Default");
 					yield return new SelectIdentity<PlanetTable>((result) => planetID = Convert.ToInt32(result));
+					#endregion
 
-					yield return new Insert<ResourceTypeTable>().Set(ResourceTypeTable.ResourceTypeID, 0).Set(ResourceTypeTable.Name, "Tree");
-					yield return new Insert<ResourceTypeTable>().Set(ResourceTypeTable.ResourceTypeID, 1).Set(ResourceTypeTable.Name, "Wood");
-					yield return new Insert<ResourceTypeTable>().Set(ResourceTypeTable.ResourceTypeID, 2).Set(ResourceTypeTable.Name, "Stone");
-					yield return new Insert<ResourceTypeTable>().Set(ResourceTypeTable.ResourceTypeID, 3).Set(ResourceTypeTable.Name, "Coal");
-					yield return new Insert<ResourceTypeTable>().Set(ResourceTypeTable.ResourceTypeID, 4).Set(ResourceTypeTable.Name, "Plank");
-
-					yield return new Insert<FactoryTypeTable>().Set(FactoryTypeTable.FactoryTypeID, 0).Set(FactoryTypeTable.Name, "Stockpile").Set(FactoryTypeTable.HealthPoints,50);
-					yield return new Insert<FactoryTypeTable>().Set(FactoryTypeTable.FactoryTypeID, 1).Set(FactoryTypeTable.Name, "Wood cuter").Set(FactoryTypeTable.HealthPoints, 5);
-
-					yield return new Insert<FactoryTable>().Set(FactoryTable.PlanetID, planetID).Set(FactoryTable.FactoryTypeID,0).Set(FactoryTable.HealthPoints, 0);
-					yield return new SelectIdentity<FactoryTable>((result) => factoryID = Convert.ToInt32(result));
-
+					#region create startup Worker
 					yield return new Insert<WorkerTable>().Set(WorkerTable.PlanetID, planetID);
 					yield return new SelectIdentity<WorkerTable>((result) => workerID = Convert.ToInt32(result));
+					#endregion
 
-					yield return new Insert<StackTable>().Set(StackTable.FactoryID, factoryID).Set(StackTable.ResourceTypeID, 0).Set(StackTable.Quantity, 10);
-					yield return new Insert<StackTable>().Set(StackTable.FactoryID, factoryID).Set(StackTable.ResourceTypeID, 1).Set(StackTable.Quantity, 5);
+					#region create startup Factories
+					yield return new Insert<FactoryTable>().Set(FactoryTable.PlanetID, planetID).Set(FactoryTable.FactoryTypeID,(int)FactoryTypeIDs.Forest).Set(FactoryTable.HealthPoints,999);
+					yield return new SelectIdentity<FactoryTable>((result) => factoryID = Convert.ToInt32(result));
+					#region fill startup factories with material
+					yield return new Insert<StackTable>().Set(StackTable.FactoryID, factoryID).Set(StackTable.ResourceTypeID, (int)ResourceTypeIDs.Tree).Set(StackTable.Quantity, 100);
+					#endregion
+					#endregion
+
+
+
 
 					//yield return new Insert<TaskTable>().Set(TaskTable.WorkerID, factoryID).Set(TaskTable.ETA, DateTime.Now);
 
 
-					yield return new Insert<MaterialTable>().Set(MaterialTable.FactoryTypeID, 0).Set(MaterialTable.ResourceTypeID, 0).Set(MaterialTable.Quantity, 1);
-					yield return new Insert<MaterialTable>().Set(MaterialTable.FactoryTypeID, 0).Set(MaterialTable.ResourceTypeID, 1).Set(MaterialTable.Quantity, 2);
+					yield return new Insert<MaterialTable>().Set(MaterialTable.FactoryTypeID, 0).Set(MaterialTable.ResourceTypeID, (int)ResourceTypeIDs.Wood).Set(MaterialTable.Quantity, 1);
+					yield return new Insert<MaterialTable>().Set(MaterialTable.FactoryTypeID, 0).Set(MaterialTable.ResourceTypeID, (int)ResourceTypeIDs.Stone).Set(MaterialTable.Quantity, 2);
 
-					yield return new Insert<MaterialTable>().Set(MaterialTable.FactoryTypeID, 1).Set(MaterialTable.ResourceTypeID, 0).Set(MaterialTable.Quantity, 1);
+					yield return new Insert<MaterialTable>().Set(MaterialTable.FactoryTypeID, 1).Set(MaterialTable.ResourceTypeID, (int)ResourceTypeIDs.Wood).Set(MaterialTable.Quantity, 1);
 
 					break;
 				

@@ -43,7 +43,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Event.cs" />
+    <Compile Include="Ingredient.cs" />
     <Compile Include="Modules\DataModules\IDataModule.cs" />
+    <Compile Include="Modules\DataModules\IIngredientModule.cs" />
     <Compile Include="Modules\EngineModules\IEngineModule.cs" />
     <Compile Include="Modules\FunctionalModules\IFunctionalModule.cs" />
     <Compile Include="Worker.cs" />

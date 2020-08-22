@@ -191,6 +191,34 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="GetIngredient">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="IngredientID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetIngredientResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetIngredientResult" nillable="true" type="q15:Ingredient" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetIngredients">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="FactoryTypeID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetIngredientsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetIngredientsResult" nillable="true" type="q16:ArrayOfIngredient" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="GetTask">
     <xs:complexType>
       <xs:sequence>
@@ -201,7 +229,7 @@
   <xs:element name="GetTaskResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetTaskResult" nillable="true" type="q15:Task" />
+        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetTaskResult" nillable="true" type="q17:Task" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -215,7 +243,7 @@
   <xs:element name="GetTasksResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetTasksResult" nillable="true" type="q16:ArrayOfTask" />
+        <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetTasksResult" nillable="true" type="q18:ArrayOfTask" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
