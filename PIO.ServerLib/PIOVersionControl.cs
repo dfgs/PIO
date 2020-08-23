@@ -41,6 +41,7 @@ namespace PIO.ServerLib
 					yield return new CreateTable<TaskTable>(TaskTable.TaskID, TaskTable.WorkerID, TaskTable.ETA);
 
 					yield return new CreateTable<IngredientTable>(IngredientTable.IngredientID, IngredientTable.FactoryTypeID, IngredientTable.ResourceTypeID, IngredientTable.Quantity);
+					yield return new CreateTable<ProductTable>(ProductTable.ProductID, ProductTable.FactoryTypeID, ProductTable.ResourceTypeID, ProductTable.Quantity, ProductTable.Duration);
 					break;
 				case 2:
 					yield return new CreateRelation<PlanetTable, FactoryTable, int>(PlanetTable.PlanetID, FactoryTable.PlanetID);
@@ -55,6 +56,8 @@ namespace PIO.ServerLib
 
 					yield return new CreateRelation<FactoryTypeTable, IngredientTable, int>(FactoryTypeTable.FactoryTypeID, IngredientTable.FactoryTypeID);
 					yield return new CreateRelation<ResourceTypeTable, IngredientTable, int>(ResourceTypeTable.ResourceTypeID, IngredientTable.ResourceTypeID);
+					yield return new CreateRelation<FactoryTypeTable, ProductTable, int>(FactoryTypeTable.FactoryTypeID, ProductTable.FactoryTypeID);
+					yield return new CreateRelation<ResourceTypeTable, ProductTable, int>(ResourceTypeTable.ResourceTypeID, ProductTable.ResourceTypeID);
 
 
 					break;
@@ -77,6 +80,9 @@ namespace PIO.ServerLib
 					yield return new Insert<IngredientTable>().Set(IngredientTable.FactoryTypeID, (int)FactoryTypeIDs.Forest).Set(IngredientTable.ResourceTypeID,(int)ResourceTypeIDs.Tree).Set(IngredientTable.Quantity,1);
 					#endregion
 
+					#region create Product
+					yield return new Insert<ProductTable>().Set(ProductTable.FactoryTypeID, (int)FactoryTypeIDs.Forest).Set(ProductTable.ResourceTypeID, (int)ResourceTypeIDs.Wood).Set(ProductTable.Quantity, 5).Set(ProductTable.Duration,5);
+					#endregion
 
 					#region create startup Planet
 					yield return new Insert<PlanetTable>().Set(PlanetTable.Name, "Default");

@@ -22,6 +22,7 @@ namespace PIO.WebServiceLib
 		private IFactoryTypeModule FactoryTypeModule;
 		private IMaterialModule MaterialModule;
 		private IIngredientModule IngredientModule;
+		private IProductModule ProductModule;
 		private ITaskModule TaskModule;
 
 		public PIOService(ILogger Logger,
@@ -29,7 +30,8 @@ namespace PIO.WebServiceLib
 			IWorkerModule WorkerModule,
 			IStackModule StackModule,IResourceTypeModule ResourceTypeModule,
 			IFactoryTypeModule FactoryTypeModule,IMaterialModule MaterialModule,
-			IIngredientModule IngredientModule, ITaskModule TaskModule
+			IIngredientModule IngredientModule, IProductModule ProductModule, 
+			ITaskModule TaskModule
 		):base(Logger)
 		{
 			LogEnter();
@@ -41,6 +43,7 @@ namespace PIO.WebServiceLib
 			this.FactoryTypeModule = FactoryTypeModule;
 			this.MaterialModule = MaterialModule;
 			this.IngredientModule = IngredientModule;
+			this.ProductModule = ProductModule;
 			this.TaskModule = TaskModule;
 		}
 
@@ -132,6 +135,17 @@ namespace PIO.WebServiceLib
 		{
 			LogEnter();
 			return Try(() => IngredientModule.GetIngredients(FactoryID)).OrThrow("Internal error");
+		}
+		public Product GetProduct(int ProductID)
+		{
+			LogEnter();
+			return Try(() => ProductModule.GetProduct(ProductID)).OrThrow("Internal error");
+		}
+
+		public Product[] GetProducts(int FactoryID)
+		{
+			LogEnter();
+			return Try(() => ProductModule.GetProducts(FactoryID)).OrThrow("Internal error");
 		}
 
 		public Task GetTask(int TaskID)

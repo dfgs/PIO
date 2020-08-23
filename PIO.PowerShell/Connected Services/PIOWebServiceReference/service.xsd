@@ -219,6 +219,34 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="GetProduct">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="ProductID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetProductResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetProductResult" nillable="true" type="q17:Product" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetProducts">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="FactoryTypeID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetProductsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetProductsResult" nillable="true" type="q18:ArrayOfProduct" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="GetTask">
     <xs:complexType>
       <xs:sequence>
@@ -229,7 +257,7 @@
   <xs:element name="GetTaskResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetTaskResult" nillable="true" type="q17:Task" />
+        <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetTaskResult" nillable="true" type="q19:Task" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -243,7 +271,7 @@
   <xs:element name="GetTasksResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetTasksResult" nillable="true" type="q18:ArrayOfTask" />
+        <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetTasksResult" nillable="true" type="q20:ArrayOfTask" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

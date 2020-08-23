@@ -111,6 +111,18 @@ namespace PIO.PowerShell.PIOWebServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetIngredients", ReplyAction="http://tempuri.org/IPIOService/GetIngredientsResponse")]
         System.Threading.Tasks.Task<PIO.Models.Ingredient[]> GetIngredientsAsync(int FactoryTypeID);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetProduct", ReplyAction="http://tempuri.org/IPIOService/GetProductResponse")]
+        PIO.Models.Product GetProduct(int ProductID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetProduct", ReplyAction="http://tempuri.org/IPIOService/GetProductResponse")]
+        System.Threading.Tasks.Task<PIO.Models.Product> GetProductAsync(int ProductID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetProducts", ReplyAction="http://tempuri.org/IPIOService/GetProductsResponse")]
+        PIO.Models.Product[] GetProducts(int FactoryTypeID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetProducts", ReplyAction="http://tempuri.org/IPIOService/GetProductsResponse")]
+        System.Threading.Tasks.Task<PIO.Models.Product[]> GetProductsAsync(int FactoryTypeID);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetTask", ReplyAction="http://tempuri.org/IPIOService/GetTaskResponse")]
         PIO.Models.Task GetTask(int TaskID);
         
@@ -277,6 +289,22 @@ namespace PIO.PowerShell.PIOWebServiceReference {
         
         public System.Threading.Tasks.Task<PIO.Models.Ingredient[]> GetIngredientsAsync(int FactoryTypeID) {
             return base.Channel.GetIngredientsAsync(FactoryTypeID);
+        }
+        
+        public PIO.Models.Product GetProduct(int ProductID) {
+            return base.Channel.GetProduct(ProductID);
+        }
+        
+        public System.Threading.Tasks.Task<PIO.Models.Product> GetProductAsync(int ProductID) {
+            return base.Channel.GetProductAsync(ProductID);
+        }
+        
+        public PIO.Models.Product[] GetProducts(int FactoryTypeID) {
+            return base.Channel.GetProducts(FactoryTypeID);
+        }
+        
+        public System.Threading.Tasks.Task<PIO.Models.Product[]> GetProductsAsync(int FactoryTypeID) {
+            return base.Channel.GetProductsAsync(FactoryTypeID);
         }
         
         public PIO.Models.Task GetTask(int TaskID) {

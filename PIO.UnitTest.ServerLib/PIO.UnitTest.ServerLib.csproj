@@ -54,6 +54,7 @@
     <Compile Include="Mocks\MockedFactoryTypeModule.cs" />
     <Compile Include="Mocks\MockedTaskModule.cs" />
     <Compile Include="Mocks\MockedDatabase.cs" />
+    <Compile Include="Modules\DataModules\ProductModuleUnitTest.cs" />
     <Compile Include="Modules\DataModules\IngredientModuleUnitTest.cs" />
     <Compile Include="Modules\FunctionalModules\FactoryBuilderModuleUnitTest.cs" />
     <Compile Include="Modules\DataModules\WorkerModuleUnitTest.cs" />
