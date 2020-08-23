@@ -41,7 +41,7 @@ namespace PIO.ServerLib.Modules
 			query = new Select<StackTable>(StackTable.StackID, StackTable.FactoryID, StackTable.ResourceTypeID, StackTable.Quantity).Where(StackTable.FactoryID.IsEqualTo(FactoryID));
 			return TrySelectMany<StackTable,Stack>(query).OrThrow("Failed to query");
 		}
-		public bool HasEnoughResources(int FactoryID, int ResourceTypeID, int Quantity)
+		/*public bool HasEnoughResources(int FactoryID, int ResourceTypeID, int Quantity)
 		{
 			ISelect<StackTable> query;
 			Stack stack;
@@ -53,7 +53,7 @@ namespace PIO.ServerLib.Modules
 			query = new Select<StackTable>(StackTable.StackID, StackTable.FactoryID, StackTable.ResourceTypeID, StackTable.Quantity).Where(new AndFilter<StackTable>(StackTable.FactoryID.IsEqualTo(FactoryID), StackTable.ResourceTypeID.IsEqualTo(ResourceTypeID)) );
 			stack= TrySelectFirst<StackTable, Stack>(query).OrThrow("Failed to query");
 			return ((stack != null) && (stack.Quantity >= Quantity));
-		}
+		}*/
 
 		public void Consume(int FactoryID, int ResourceTypeID, int Quantity)
 		{

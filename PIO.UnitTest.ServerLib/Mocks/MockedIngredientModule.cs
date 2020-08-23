@@ -1,0 +1,39 @@
+﻿using NetORMLib.Databases;
+using NetORMLib.Queries;
+using PIO.Models;
+using PIO.Models.Modules;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
+namespace PIO.UnitTest.ServerLib.Mocks
+{
+	public class MockedIngredientModule :IIngredientModule
+	{
+		private bool throwException;
+		private List<Ingredient> items;
+
+		public MockedIngredientModule(bool ThrowException, params Ingredient[] Items)
+		{
+			this.throwException = ThrowException;
+			this.items = new List<Ingredient>(Items);
+		}
+
+		public Ingredient GetIngredient(int IngredientID)
+		{
+			if (throwException) throw new NotImplementedException();
+			return items.FirstOrDefault(item => item.IngredientID == IngredientID);
+		}
+
+		public Ingredient[] GetIngredients(int FactoryTypeID)
+		{
+			if (throwException) throw new NotImplementedException();
+			return items.Where(item => item.FactoryTypeID == FactoryTypeID).ToArray();
+		}
+
+
+
+		
+	}
+}

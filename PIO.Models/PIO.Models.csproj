@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Event.cs" />
     <Compile Include="Modules\DataModules\IProductModule.cs" />
+    <Compile Include="Modules\FunctionalModules\IResourceCheckerModule.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="Ingredient.cs" />
     <Compile Include="Modules\DataModules\IDataModule.cs" />

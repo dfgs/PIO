@@ -99,23 +99,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			Assert.ThrowsException<InvalidOperationException>(() => module.Consume(0,0,10));
 		}
 
-		[TestMethod]
-		public void ShouldReturnHasEnoughResources()
-		{
-			MockedDatabase<Stack> database;
-			StackModule module;
-
-			database = new MockedDatabase<Stack>(false, 1, (t) => new Stack() { StackID = t, FactoryID = 0, ResourceTypeID=0, Quantity =1 });
-			module = new StackModule(NullLogger.Instance, database);
-			Assert.IsTrue(module.HasEnoughResources(0, 0, 1));
-			Assert.IsFalse(module.HasEnoughResources(0, 0, 2));
-
-
-			database = new MockedDatabase<Stack>(false, 0, (t) => null);
-			module = new StackModule(NullLogger.Instance, database);
-			Assert.IsTrue(module.HasEnoughResources(0, 0, 0));
-			Assert.IsFalse(module.HasEnoughResources(0, 0, 1));
-		}
+		
 
 	}
 }
