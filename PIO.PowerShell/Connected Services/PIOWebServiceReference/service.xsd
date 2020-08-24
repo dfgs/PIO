@@ -285,7 +285,7 @@
   <xs:element name="HasEnoughResourcesToProduceResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element minOccurs="0" name="HasEnoughResourcesToProduceResult" nillable="true" type="xs:boolean" />
+        <xs:element minOccurs="0" name="HasEnoughResourcesToProduceResult" type="xs:boolean" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

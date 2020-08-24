@@ -56,8 +56,8 @@ namespace PIO.WebServiceLib
 		#endregion
 
 		#region functional
-		[OperationContract]
-		bool? HasEnoughResourcesToProduce(int FactoryID);
+		[OperationContract,FaultContract(typeof(PIOFault))]
+		bool HasEnoughResourcesToProduce(int FactoryID);
 		#endregion
 
 	}

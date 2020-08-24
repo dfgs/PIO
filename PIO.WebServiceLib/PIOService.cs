@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Runtime.Serialization;
 using System.ServiceModel;
+using System.ServiceModel.Web;
 using System.Text;
 using LogLib;
 using ModuleLib;
@@ -171,10 +173,12 @@ namespace PIO.WebServiceLib
 
 		#region functional
 
-		public bool? HasEnoughResourcesToProduce(int FactoryID)
+		public bool HasEnoughResourcesToProduce(int FactoryID)
 		{
 			LogEnter();
-			return Try(() => ResourceCheckerModule.HasEnoughResourcesToProduce(FactoryID)).OrThrow<PIOWebServiceException>("Internal error");
+			throw new FaultException<PIOFault>(new PIOFault("Not found"));
+
+			//return Try(() => ResourceCheckerModule.HasEnoughResourcesToProduce(FactoryID)).OrThrow<PIOWebServiceException>("Internal error");
 		}
 		#endregion
 

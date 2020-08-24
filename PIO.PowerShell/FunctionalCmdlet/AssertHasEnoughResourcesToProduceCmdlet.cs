@@ -23,10 +23,17 @@ namespace PIO.PowerShell
 
 		protected override void ProcessRecord()
 		{
-			bool? result;
-
-			result = client.HasEnoughResourcesToProduce(FactoryID);
-
+			bool result=false;
+			try
+			{
+				result = client.HasEnoughResourcesToProduce(FactoryID);
+			}
+			catch(FaultException<PIOFault> ex)
+			{
+				
+				ThrowTerminatingError(new ErrorRecord(
+					 ex,ex.Detail.Message,ErrorCategory.InvalidOperation,null));
+			}
 			WriteObject(result);
 		}
 
