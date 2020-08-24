@@ -5,6 +5,7 @@ using LogLib;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetORMLib.Databases;
 using PIO.Models;
+using PIO.Models.Exceptions;
 using PIO.Models.Modules;
 using PIO.ServerLib.Modules;
 using PIO.UnitTest.ServerLib.Mocks;
@@ -47,12 +48,12 @@ namespace PIO.UnitTest.ServerLib.Modules
 
 			factoryModule.ThrowException = true;
 			factoryTypeModule.ThrowException = false;
-			Assert.ThrowsException<Exception>(() => module.Build(0));
+			Assert.ThrowsException<TryException>(() => module.Build(0));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
 
 			factoryModule.ThrowException = false;
 			factoryTypeModule.ThrowException = true;
-			Assert.ThrowsException<Exception>(() => module.Build(0));
+			Assert.ThrowsException<TryException>(() => module.Build(0));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
 		}
 

@@ -8,6 +8,7 @@ using LogLib;
 using ModuleLib;
 using PIO.Models;
 using PIO.Models.Modules;
+using PIO.WebServiceLib.Exceptions;
 
 namespace PIO.WebServiceLib
 {
@@ -50,114 +51,114 @@ namespace PIO.WebServiceLib
 		public Planet GetPlanet(int PlanetID)
 		{
 			LogEnter();
-			return Try( ()=>PlanetModule.GetPlanet(PlanetID)).OrThrow("Internal error");
+			return Try( ()=>PlanetModule.GetPlanet(PlanetID)).OrThrow<PIOWebServiceException>("Internal error");
 		}
 		public Planet[] GetPlanets()
 		{
 			LogEnter();
-			return Try(() => PlanetModule.GetPlanets()).OrThrow("Internal error");
+			return Try(() => PlanetModule.GetPlanets()).OrThrow<PIOWebServiceException>("Internal error");
 		}
 
 		public Worker GetWorker(int WorkerID)
 		{
 			LogEnter();
-			return Try(() => WorkerModule.GetWorker(WorkerID)).OrThrow("Internal error");
+			return Try(() => WorkerModule.GetWorker(WorkerID)).OrThrow<PIOWebServiceException>("Internal error");
 		}
 		public Worker[] GetWorkers(int PlanetID)
 		{
 			LogEnter();
-			return Try(() => WorkerModule.GetWorkers(PlanetID)).OrThrow("Internal error");
+			return Try(() => WorkerModule.GetWorkers(PlanetID)).OrThrow<PIOWebServiceException>("Internal error");
 		}
 		public Factory GetFactory(int FactoryID)
 		{
 			LogEnter();
-			return Try(() => FactoryModule.GetFactory(FactoryID)).OrThrow("Internal error");
+			return Try(() => FactoryModule.GetFactory(FactoryID)).OrThrow<PIOWebServiceException>("Internal error");
 		}
 		public Factory[] GetFactories(int PlanetID)
 		{
 			LogEnter();
-			return Try(() => FactoryModule.GetFactories(PlanetID)).OrThrow("Internal error");
+			return Try(() => FactoryModule.GetFactories(PlanetID)).OrThrow<PIOWebServiceException>("Internal error");
 		}
 
 		public Stack GetStack(int StackID)
 		{
 			LogEnter();
-			return Try(() => StackModule.GetStack(StackID)).OrThrow("Internal error");
+			return Try(() => StackModule.GetStack(StackID)).OrThrow<PIOWebServiceException>("Internal error");
 		}
 
 		public Stack[] GetStacks(int FactoryID)
 		{
 			LogEnter();
-			return Try(() => StackModule.GetStacks(FactoryID)).OrThrow("Internal error");
+			return Try(() => StackModule.GetStacks(FactoryID)).OrThrow<PIOWebServiceException>("Internal error");
 		}
 
 		public ResourceType GetResourceType(int ResourceTypeID)
 		{
 			LogEnter();
-			return Try(() => ResourceTypeModule.GetResourceType(ResourceTypeID)).OrThrow("Internal error");
+			return Try(() => ResourceTypeModule.GetResourceType(ResourceTypeID)).OrThrow<PIOWebServiceException>("Internal error");
 		}
 		public ResourceType[] GetResourceTypes()
 		{
 			LogEnter();
-			return Try(() => ResourceTypeModule.GetResourceTypes()).OrThrow("Internal error");
+			return Try(() => ResourceTypeModule.GetResourceTypes()).OrThrow<PIOWebServiceException>("Internal error");
 		}
 
 		public FactoryType GetFactoryType(int FactoryTypeID)
 		{
 			LogEnter();
-			return Try(() => FactoryTypeModule.GetFactoryType(FactoryTypeID)).OrThrow("Internal error");
+			return Try(() => FactoryTypeModule.GetFactoryType(FactoryTypeID)).OrThrow<PIOWebServiceException>("Internal error");
 		}
 		public FactoryType[] GetFactoryTypes()
 		{
 			LogEnter();
-			return Try(() => FactoryTypeModule.GetFactoryTypes()).OrThrow("Internal error");
+			return Try(() => FactoryTypeModule.GetFactoryTypes()).OrThrow<PIOWebServiceException>("Internal error");
 		}
 
 		public Material GetMaterial(int MaterialID)
 		{
 			LogEnter();
-			return Try(() => MaterialModule.GetMaterial(MaterialID)).OrThrow("Internal error");
+			return Try(() => MaterialModule.GetMaterial(MaterialID)).OrThrow<PIOWebServiceException>("Internal error");
 		}
 
 		public Material[] GetMaterials(int FactoryID)
 		{
 			LogEnter();
-			return Try(() => MaterialModule.GetMaterials(FactoryID)).OrThrow("Internal error");
+			return Try(() => MaterialModule.GetMaterials(FactoryID)).OrThrow<PIOWebServiceException>("Internal error");
 		}
 
 		public Ingredient GetIngredient(int IngredientID)
 		{
 			LogEnter();
-			return Try(() => IngredientModule.GetIngredient(IngredientID)).OrThrow("Internal error");
+			return Try(() => IngredientModule.GetIngredient(IngredientID)).OrThrow<PIOWebServiceException>("Internal error");
 		}
 
 		public Ingredient[] GetIngredients(int FactoryID)
 		{
 			LogEnter();
-			return Try(() => IngredientModule.GetIngredients(FactoryID)).OrThrow("Internal error");
+			return Try(() => IngredientModule.GetIngredients(FactoryID)).OrThrow<PIOWebServiceException>("Internal error");
 		}
 		public Product GetProduct(int ProductID)
 		{
 			LogEnter();
-			return Try(() => ProductModule.GetProduct(ProductID)).OrThrow("Internal error");
+			return Try(() => ProductModule.GetProduct(ProductID)).OrThrow<PIOWebServiceException>("Internal error");
 		}
 
 		public Product[] GetProducts(int FactoryID)
 		{
 			LogEnter();
-			return Try(() => ProductModule.GetProducts(FactoryID)).OrThrow("Internal error");
+			return Try(() => ProductModule.GetProducts(FactoryID)).OrThrow<PIOWebServiceException>("Internal error");
 		}
 
 		public Task GetTask(int TaskID)
 		{
 			LogEnter();
-			return Try(() => TaskModule.GetTask(TaskID)).OrThrow("Internal error");
+			return Try(() => TaskModule.GetTask(TaskID)).OrThrow<PIOWebServiceException>("Internal error");
 		}
 
 		public Task[] GetTasks(int FactoryID)
 		{
 			LogEnter();
-			return Try(() => TaskModule.GetTasks(FactoryID)).OrThrow("Internal error");
+			return Try(() => TaskModule.GetTasks(FactoryID)).OrThrow<PIOWebServiceException>("Internal error");
 		}
 
 

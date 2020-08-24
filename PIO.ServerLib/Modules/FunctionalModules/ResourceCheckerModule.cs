@@ -11,11 +11,12 @@ using System.Text;
 using System.Threading.Tasks;
 using PIO.ServerLib.Tables;
 using PIO.Models.Modules;
-using PIO.ServerLib.Exceptions;
+using PIO.Models.Exceptions;
+
 
 namespace PIO.ServerLib.Modules
 {
-	public class ResourceCheckerModule :Module, IResourceCheckerModule
+	public class ResourceCheckerModule : FunctionalModule, IResourceCheckerModule
 	{
 		private IFactoryModule factoryModule;
 		private IStackModule stackModule;
@@ -36,19 +37,15 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 
 			Log(LogLevels.Information, $"Get factory (FactoryID={FactoryID})");
-			factory = Try(() => factoryModule.GetFactory(FactoryID)).OrThrow("Failed to get factory");
+			factory = Try(() => factoryModule.GetFactory(FactoryID)).OrThrow<PIOFunctionalException>("Failed to get factory");
 
-			if (factory==null)
-			{
-				Log(LogLevels.Warning, $"Factory doesn't exist (FactoryID={FactoryID})");
-				throw new PIOException($"Factory doesn't exist (FactoryID={FactoryID})");
-			}
+			if (factory==null) ThrowFunctionalException($"Factory doesn't exist (FactoryID={FactoryID})");
 
 			Log(LogLevels.Information, $"Get ingredients (FactoryTypeID={factory.FactoryTypeID})");
-			ingredients= Try(() => ingredientModule.GetIngredients(factory.FactoryTypeID)).OrThrow("Failed to get ingredients");
+			ingredients= Try(() => ingredientModule.GetIngredients(factory.FactoryTypeID)).OrThrow<PIOFunctionalException>("Failed to get ingredients");
 
 			Log(LogLevels.Information, $"Get stacks (FactoryID={factory.FactoryID})");
-			stacks = Try(() => stackModule.GetStacks(factory.FactoryID)).OrThrow("Failed to get stacks");
+			stacks = Try(() => stackModule.GetStacks(factory.FactoryID)).OrThrow<PIOFunctionalException>("Failed to get stacks");
 
 
 			foreach (Ingredient ingredient in ingredients)

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PIO.Models.Exceptions;
 
 namespace PIO.ServerLib.Modules
 {
@@ -28,7 +29,7 @@ namespace PIO.ServerLib.Modules
 
 			Log(LogLevels.Information, $"Querying Product table (ProductID={ProductID})");
 			query = new Select<ProductTable>(ProductTable.ProductID, ProductTable.FactoryTypeID, ProductTable.ResourceTypeID, ProductTable.Quantity, ProductTable.Duration).Where(ProductTable.ProductID.IsEqualTo(ProductID));
-			return TrySelectFirst <ProductTable,Product>(query).OrThrow("Failed to query");
+			return TrySelectFirst <ProductTable,Product>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
 		public Product[] GetProducts(int FactoryTypeID)
@@ -38,7 +39,7 @@ namespace PIO.ServerLib.Modules
 
 			Log(LogLevels.Information, $"Querying Product table (FactoryTypeID={FactoryTypeID})");
 			query = new Select<ProductTable>(ProductTable.ProductID, ProductTable.FactoryTypeID, ProductTable.ResourceTypeID, ProductTable.Quantity, ProductTable.Duration).Where(ProductTable.FactoryTypeID.IsEqualTo(FactoryTypeID));
-			return TrySelectMany<ProductTable,Product>(query).OrThrow("Failed to query");
+			return TrySelectMany<ProductTable,Product>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
 	}

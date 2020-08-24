@@ -5,6 +5,7 @@ using NetORMLib.Databases;
 using NetORMLib.Queries;
 using PIO.Models;
 using PIO.Models.Modules;
+using PIO.Models.Exceptions;
 using PIO.ServerLib.Tables;
 using System;
 using System.Collections.Generic;
@@ -28,7 +29,7 @@ namespace PIO.ServerLib.Modules
 
 			Log(LogLevels.Information, $"Querying Planet table (PlanetID={PlanetID})");
 			query = new Select<PlanetTable>(PlanetTable.PlanetID, PlanetTable.Name).Where(PlanetTable.PlanetID.IsEqualTo(PlanetID));
-			return TrySelectFirst<PlanetTable,Planet>(query).OrThrow("Failed to query");
+			return TrySelectFirst<PlanetTable,Planet>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
 		public Planet[] GetPlanets()
@@ -38,7 +39,7 @@ namespace PIO.ServerLib.Modules
 
 			Log(LogLevels.Information, $"Querying Planet table");
 			query = new Select<PlanetTable>(PlanetTable.PlanetID, PlanetTable.Name);
-			return TrySelectMany<PlanetTable,Planet>(query).OrThrow("Failed to query");
+			return TrySelectMany<PlanetTable,Planet>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
 	}

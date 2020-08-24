@@ -43,6 +43,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Event.cs" />
+    <Compile Include="Exceptions\PIODataException.cs" />
+    <Compile Include="Exceptions\PIOEngineException.cs" />
+    <Compile Include="Exceptions\PIOException.cs" />
+    <Compile Include="Exceptions\PIOFunctionalException.cs" />
     <Compile Include="Modules\DataModules\IProductModule.cs" />
     <Compile Include="Modules\FunctionalModules\IResourceCheckerModule.cs" />
     <Compile Include="Product.cs" />
@@ -73,6 +77,10 @@
     <Compile Include="Stack.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\LogLib\LogLib\LogLib.csproj">
+      <Project>{EF4B0001-2859-4A09-8F95-3E5BEF4A5272}</Project>
+      <Name>LogLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\ModuleLib\ModuleLib\ModuleLib.csproj">
       <Project>{F89B06C7-43CC-4589-9859-3A4656AAA4A6}</Project>
       <Name>ModuleLib</Name>

@@ -44,12 +44,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Consts.cs" />
-    <Compile Include="Exceptions\PIOException.cs" />
     <Compile Include="Modules\DataModules\ProductModule.cs" />
     <Compile Include="Modules\DataModules\IngredientModule.cs" />
     <Compile Include="Modules\EngineModules\IVersionControlModule.cs" />
     <Compile Include="Modules\EngineModules\IWebServiceModule.cs" />
     <Compile Include="Modules\DataModules\DatabaseModule.cs" />
+    <Compile Include="Modules\FunctionalModules\FunctionalModule.cs" />
     <Compile Include="Modules\FunctionalModules\ResourceCheckerModule.cs" />
     <Compile Include="Modules\FunctionalModules\FactoryBuilderModule.cs" />
     <Compile Include="Modules\DataModules\WorkerModule.cs" />

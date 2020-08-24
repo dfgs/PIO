@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NetORMLib.Filters;
+using PIO.Models.Exceptions;
 
 namespace PIO.ServerLib.Modules
 {
@@ -29,7 +30,7 @@ namespace PIO.ServerLib.Modules
 
 			Log(LogLevels.Information, $"Querying Stack table (StackID={StackID})");
 			query = new Select<StackTable>(StackTable.StackID, StackTable.FactoryID, StackTable.ResourceTypeID, StackTable.Quantity).Where(StackTable.StackID.IsEqualTo(StackID));
-			return TrySelectFirst <StackTable,Stack>(query).OrThrow("Failed to query");
+			return TrySelectFirst <StackTable,Stack>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
 		public Stack[] GetStacks(int FactoryID)
@@ -39,7 +40,7 @@ namespace PIO.ServerLib.Modules
 
 			Log(LogLevels.Information, $"Querying Stack table (FactoryID={FactoryID})");
 			query = new Select<StackTable>(StackTable.StackID, StackTable.FactoryID, StackTable.ResourceTypeID, StackTable.Quantity).Where(StackTable.FactoryID.IsEqualTo(FactoryID));
-			return TrySelectMany<StackTable,Stack>(query).OrThrow("Failed to query");
+			return TrySelectMany<StackTable,Stack>(query).OrThrow<PIODataException>("Failed to query");
 		}
 		/*public bool HasEnoughResources(int FactoryID, int ResourceTypeID, int Quantity)
 		{
@@ -67,13 +68,13 @@ namespace PIO.ServerLib.Modules
 
 			Log(LogLevels.Information, $"Querying Stack table (FactoryID={FactoryID}, ResourceTypeID={ResourceTypeID})");
 			query = new Select<StackTable>(StackTable.StackID, StackTable.FactoryID, StackTable.ResourceTypeID, StackTable.Quantity).Where(new AndFilter<StackTable>(StackTable.FactoryID.IsEqualTo(FactoryID), StackTable.ResourceTypeID.IsEqualTo(ResourceTypeID)));
-			stack = TrySelectFirst<StackTable, Stack>(query).OrThrow("Failed to query");
+			stack = TrySelectFirst<StackTable, Stack>(query).OrThrow<PIODataException>("Failed to query");
 			if ((stack == null) || (stack.Quantity < Quantity)) throw new InvalidOperationException($"Not enough quantity in stack");
 
 			stack.Quantity -= Quantity;
 			Log(LogLevels.Information, $"Updating Stack table (StackID={stack.StackID}, Quantity={stack.Quantity})");
 			update = new Update<StackTable>().Set(StackTable.Quantity, stack.Quantity).Where(StackTable.StackID.IsEqualTo(stack.StackID));
-			Try(update).OrThrow("Failed to update");
+			Try(update).OrThrow<PIODataException>("Failed to update");
 		}
 
 

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PIO.Models.Exceptions;
 
 namespace PIO.ServerLib.Modules
 {
@@ -28,7 +29,7 @@ namespace PIO.ServerLib.Modules
 
 			Log(LogLevels.Information, $"Querying ResourceType table (ResourceTypeID={ResourceTypeID})");
 			query = new Select<ResourceTypeTable>(ResourceTypeTable.ResourceTypeID, ResourceTypeTable.Name).Where(ResourceTypeTable.ResourceTypeID.IsEqualTo(ResourceTypeID));
-			return TrySelectFirst<ResourceTypeTable,ResourceType>(query).OrThrow("Failed to query");
+			return TrySelectFirst<ResourceTypeTable,ResourceType>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
 		public ResourceType[] GetResourceTypes()
@@ -38,7 +39,7 @@ namespace PIO.ServerLib.Modules
 
 			Log(LogLevels.Information, $"Querying ResourceType table");
 			query = new Select<ResourceTypeTable>(ResourceTypeTable.ResourceTypeID, ResourceTypeTable.Name);
-			return TrySelectMany<ResourceTypeTable,ResourceType>(query).OrThrow("Failed to query");
+			return TrySelectMany<ResourceTypeTable,ResourceType>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
 	}

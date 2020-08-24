@@ -6,7 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetORMLib.Databases;
 using PIO.Models;
 using PIO.Models.Modules;
-using PIO.ServerLib.Exceptions;
+using PIO.Models.Exceptions;
 using PIO.ServerLib.Modules;
 using PIO.UnitTest.ServerLib.Mocks;
 
@@ -105,7 +105,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 
 			logger = new MemoryLogger(new DefaultLogFormatter());
 			module = new ResourceCheckerModule(logger, factoryModule, stackModule, ingredientModule);
-			Assert.ThrowsException<PIOException>(() => module.HasEnoughResourcesToProduce(2));
+			Assert.ThrowsException<PIOFunctionalException>(() => module.HasEnoughResourcesToProduce(2));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Warning") && item.Contains(module.ModuleName)));
 		}
 
@@ -125,7 +125,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			ingredientModule = new MockedIngredientModule(false);
 			logger = new MemoryLogger(new DefaultLogFormatter());
 			module = new ResourceCheckerModule(logger, factoryModule, stackModule, ingredientModule);
-			Assert.ThrowsException<Exception>(() => module.HasEnoughResourcesToProduce(1));
+			Assert.ThrowsException<PIOFunctionalException>(() => module.HasEnoughResourcesToProduce(1));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
 
 
@@ -135,7 +135,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			ingredientModule = new MockedIngredientModule(true);
 			logger = new MemoryLogger(new DefaultLogFormatter());
 			module = new ResourceCheckerModule(logger, factoryModule, stackModule, ingredientModule);
-			Assert.ThrowsException<Exception>(() => module.HasEnoughResourcesToProduce(1));
+			Assert.ThrowsException<PIOFunctionalException>(() => module.HasEnoughResourcesToProduce(1));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
 		}
 

@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using PIO.ServerLib.Tables;
 using PIO.Models.Modules;
+using PIO.Models.Exceptions;
 
 namespace PIO.ServerLib.Modules
 {
@@ -28,7 +29,7 @@ namespace PIO.ServerLib.Modules
 
 			Log(LogLevels.Information, $"Querying Worker table (WorkerID={WorkerID})");
 			query = new Select<WorkerTable>(WorkerTable.PlanetID,WorkerTable.WorkerID).Where(WorkerTable.WorkerID.IsEqualTo(WorkerID));
-			return TrySelectFirst<WorkerTable,Worker>(query).OrThrow("Failed to query");
+			return TrySelectFirst<WorkerTable,Worker>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
 		public Worker[] GetWorkers(int PlanetID)
@@ -38,7 +39,7 @@ namespace PIO.ServerLib.Modules
 
 			Log(LogLevels.Information, $"Querying Worker table (PlanetID={PlanetID})");
 			query = new Select<WorkerTable>(WorkerTable.PlanetID, WorkerTable.WorkerID).Where(WorkerTable.PlanetID.IsEqualTo(PlanetID));
-			return TrySelectMany<WorkerTable, Worker>(query).OrThrow("Failed to query");
+			return TrySelectMany<WorkerTable, Worker>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
 		

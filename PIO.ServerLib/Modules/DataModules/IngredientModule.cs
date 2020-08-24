@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PIO.Models.Exceptions;
 
 namespace PIO.ServerLib.Modules
 {
@@ -28,7 +29,7 @@ namespace PIO.ServerLib.Modules
 
 			Log(LogLevels.Information, $"Querying Ingredient table (IngredientID={IngredientID})");
 			query = new Select<IngredientTable>(IngredientTable.IngredientID, IngredientTable.FactoryTypeID, IngredientTable.ResourceTypeID, IngredientTable.Quantity).Where(IngredientTable.IngredientID.IsEqualTo(IngredientID));
-			return TrySelectFirst <IngredientTable,Ingredient>(query).OrThrow("Failed to query");
+			return TrySelectFirst <IngredientTable,Ingredient>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
 		public Ingredient[] GetIngredients(int FactoryTypeID)
@@ -38,7 +39,7 @@ namespace PIO.ServerLib.Modules
 
 			Log(LogLevels.Information, $"Querying Ingredient table (FactoryTypeID={FactoryTypeID})");
 			query = new Select<IngredientTable>(IngredientTable.IngredientID, IngredientTable.FactoryTypeID, IngredientTable.ResourceTypeID, IngredientTable.Quantity).Where(IngredientTable.FactoryTypeID.IsEqualTo(FactoryTypeID));
-			return TrySelectMany<IngredientTable,Ingredient>(query).OrThrow("Failed to query");
+			return TrySelectMany<IngredientTable,Ingredient>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
 	}

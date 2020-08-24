@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PIO.Models.Exceptions;
 
 namespace PIO.ServerLib.Modules
 {
@@ -28,7 +29,7 @@ namespace PIO.ServerLib.Modules
 
 			Log(LogLevels.Information, $"Querying Material table (MaterialID={MaterialID})");
 			query = new Select<MaterialTable>(MaterialTable.MaterialID, MaterialTable.FactoryTypeID, MaterialTable.ResourceTypeID, MaterialTable.Quantity).Where(MaterialTable.MaterialID.IsEqualTo(MaterialID));
-			return TrySelectFirst <MaterialTable,Material>(query).OrThrow("Failed to query");
+			return TrySelectFirst <MaterialTable,Material>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
 		public Material[] GetMaterials(int FactoryTypeID)
@@ -38,7 +39,7 @@ namespace PIO.ServerLib.Modules
 
 			Log(LogLevels.Information, $"Querying Material table (FactoryTypeID={FactoryTypeID})");
 			query = new Select<MaterialTable>(MaterialTable.MaterialID, MaterialTable.FactoryTypeID, MaterialTable.ResourceTypeID, MaterialTable.Quantity).Where(MaterialTable.FactoryTypeID.IsEqualTo(FactoryTypeID));
-			return TrySelectMany<MaterialTable,Material>(query).OrThrow("Failed to query");
+			return TrySelectMany<MaterialTable,Material>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
 	}

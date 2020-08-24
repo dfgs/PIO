@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using PIO.Models.Exceptions;
 
 namespace PIO.ServerLib.Modules
 {
@@ -24,10 +25,10 @@ namespace PIO.ServerLib.Modules
 		{
 			ISelect<TaskTable> query;
 			LogEnter();
-
+			
 			Log(LogLevels.Information, $"Querying Task table (TaskID={TaskID})");
 			query = new Select<TaskTable>(TaskTable.TaskID, TaskTable.WorkerID,  TaskTable.ETA).Where(TaskTable.TaskID.IsEqualTo(TaskID));
-			return TrySelectFirst<TaskTable, Task>(query).OrThrow("Failed to query");
+			return TrySelectFirst<TaskTable, Task>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
 		/*public void RemoveTask(int TaskID)
@@ -47,7 +48,7 @@ namespace PIO.ServerLib.Modules
 
 			Log(LogLevels.Information, $"Querying Task table (WorkerID={WorkerID})");
 			query = new Select<TaskTable>(TaskTable.TaskID, TaskTable.WorkerID, TaskTable.ETA).Where(TaskTable.WorkerID.IsEqualTo(WorkerID));
-			return TrySelectMany<TaskTable, Task>(query).OrThrow("Failed to query");
+			return TrySelectMany<TaskTable, Task>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
 		/*public Task[] GetTasks()

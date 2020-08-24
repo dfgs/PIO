@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using PIO.ServerLib.Tables;
 using PIO.Models.Modules;
+using PIO.Models.Exceptions;
 
 namespace PIO.ServerLib.Modules
 {
@@ -28,7 +29,7 @@ namespace PIO.ServerLib.Modules
 
 			Log(LogLevels.Information, $"Querying Factory table (FactoryID={FactoryID})");
 			query = new Select<FactoryTable>(FactoryTable.PlanetID,FactoryTable.FactoryID, FactoryTable.FactoryTypeID,FactoryTable.HealthPoints).Where(FactoryTable.FactoryID.IsEqualTo(FactoryID));
-			return TrySelectFirst<FactoryTable,Factory>(query).OrThrow("Failed to query");
+			return TrySelectFirst<FactoryTable,Factory>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
 		public Factory[] GetFactories(int PlanetID)
@@ -38,7 +39,7 @@ namespace PIO.ServerLib.Modules
 
 			Log(LogLevels.Information, $"Querying Factory table (PlanetID={PlanetID})");
 			query = new Select<FactoryTable>(FactoryTable.PlanetID, FactoryTable.FactoryID, FactoryTable.FactoryTypeID, FactoryTable.HealthPoints).Where(FactoryTable.PlanetID.IsEqualTo(PlanetID));
-			return TrySelectMany<FactoryTable, Factory>(query).OrThrow("Failed to query");
+			return TrySelectMany<FactoryTable, Factory>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
 		public void SetHealthPoints(int FactoryID,int HealthPoints)
@@ -49,7 +50,7 @@ namespace PIO.ServerLib.Modules
 
 			Log(LogLevels.Information, $"Updating Factory table (FactoryID={FactoryID}, HealthPoints={HealthPoints})");
 			update = new Update<FactoryTable>().Set(FactoryTable.HealthPoints, HealthPoints).Where(FactoryTable.FactoryID.IsEqualTo(FactoryID));
-			Try(update).OrThrow("Failed to update");
+			Try(update).OrThrow<PIODataException>("Failed to update");
 		}
 
 

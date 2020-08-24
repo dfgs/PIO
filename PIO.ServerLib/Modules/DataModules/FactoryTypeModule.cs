@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using PIO.Models.Exceptions;
 
 namespace PIO.ServerLib.Modules
 {
@@ -28,7 +29,7 @@ namespace PIO.ServerLib.Modules
 
 			Log(LogLevels.Information, $"Querying FactoryType table (FactoryTypeID={FactoryTypeID})");
 			query = new Select<FactoryTypeTable>(FactoryTypeTable.FactoryTypeID, FactoryTypeTable.Name,FactoryTypeTable.HealthPoints).Where(FactoryTypeTable.FactoryTypeID.IsEqualTo(FactoryTypeID));
-			return TrySelectFirst<FactoryTypeTable,FactoryType>(query).OrThrow("Failed to query");
+			return TrySelectFirst<FactoryTypeTable,FactoryType>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
 		public FactoryType[] GetFactoryTypes()
@@ -38,7 +39,7 @@ namespace PIO.ServerLib.Modules
 
 			Log(LogLevels.Information, $"Querying FactoryType table");
 			query = new Select<FactoryTypeTable>(FactoryTypeTable.FactoryTypeID, FactoryTypeTable.Name, FactoryTypeTable.HealthPoints);
-			return TrySelectMany<FactoryTypeTable,FactoryType>(query).OrThrow("Failed to query");
+			return TrySelectMany<FactoryTypeTable,FactoryType>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
 	}

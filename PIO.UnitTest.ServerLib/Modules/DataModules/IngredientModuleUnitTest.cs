@@ -5,6 +5,7 @@ using LogLib;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetORMLib.Databases;
 using PIO.Models;
+using PIO.Models.Exceptions;
 using PIO.ServerLib.Modules;
 using PIO.UnitTest.ServerLib.Mocks;
 
@@ -55,7 +56,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			logger = new MemoryLogger(new DefaultLogFormatter());
 			database = new MockedDatabase<Ingredient>(true,1, (t) => new Ingredient() { IngredientID = t });
 			module = new IngredientModule(logger, database);
-			Assert.ThrowsException<Exception>(() => module.GetIngredient(1));
+			Assert.ThrowsException<PIODataException>(() => module.GetIngredient(1));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
 		}
 		[TestMethod]
@@ -69,7 +70,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			logger = new MemoryLogger(new DefaultLogFormatter());
 			database = new MockedDatabase<Ingredient>(true, 3, (t) => new Ingredient() { IngredientID = t });
 			module = new IngredientModule(logger, database);
-			Assert.ThrowsException<Exception>(() => module.GetIngredients(1));
+			Assert.ThrowsException<PIODataException>(() => module.GetIngredients(1));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
 		}
 
