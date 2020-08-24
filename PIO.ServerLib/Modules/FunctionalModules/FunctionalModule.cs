@@ -16,10 +16,10 @@ namespace PIO.ServerLib.Modules
 		{
 		}
 
-		protected void ThrowFunctionalException(string Message,[CallerMemberName]string Caller=null)
+		protected void ThrowFunctionalException(string Message,[CallerMemberName]string MethodName=null)
 		{
 			Log(LogLevels.Warning, Message);
-			throw new PIOFunctionalException(Message, null, ID, ModuleName, Caller);
+			throw new PIOFunctionalException(Message, null, ID, ModuleName, MethodName);
 		}
 	}
 }

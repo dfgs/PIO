@@ -27,7 +27,7 @@ namespace PIO.ServerLib.Modules
 			this.factoryModule = FactoryModule;this.stackModule = StackModule;this.ingredientModule = IngredientModule;
 		}
 
-		public bool HasEnoughResourcesToProduce(int FactoryID)
+		public bool? HasEnoughResourcesToProduce(int FactoryID)
 		{
 			Factory factory;
 			Ingredient[] ingredients;
@@ -39,7 +39,11 @@ namespace PIO.ServerLib.Modules
 			Log(LogLevels.Information, $"Get factory (FactoryID={FactoryID})");
 			factory = Try(() => factoryModule.GetFactory(FactoryID)).OrThrow<PIOFunctionalException>("Failed to get factory");
 
-			if (factory==null) ThrowFunctionalException($"Factory doesn't exist (FactoryID={FactoryID})");
+			if (factory == null)
+			{
+				Log(LogLevels.Warning, $"Factory doesn't exist (FactoryID={FactoryID})");
+				return null;
+			}
 
 			Log(LogLevels.Information, $"Get ingredients (FactoryTypeID={factory.FactoryTypeID})");
 			ingredients= Try(() => ingredientModule.GetIngredients(factory.FactoryTypeID)).OrThrow<PIOFunctionalException>("Failed to get ingredients");

@@ -275,4 +275,18 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="HasEnoughResourcesToProduce">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="FactoryID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="HasEnoughResourcesToProduceResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="HasEnoughResourcesToProduceResult" nillable="true" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

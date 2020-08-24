@@ -12,7 +12,7 @@ namespace PIO.WebServiceLib
 	[ServiceContract]
 	public interface IPIOService
 	{
-
+		#region data
 		[OperationContract]
 		Planet GetPlanet(int PlanetID);
 		[OperationContract]
@@ -53,6 +53,12 @@ namespace PIO.WebServiceLib
 		Task GetTask(int TaskID);
 		[OperationContract]
 		Task[] GetTasks(int FactoryID);
+		#endregion
+
+		#region functional
+		[OperationContract]
+		bool? HasEnoughResourcesToProduce(int FactoryID);
+		#endregion
 
 	}
 

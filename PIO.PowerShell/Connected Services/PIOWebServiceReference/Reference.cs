@@ -134,6 +134,12 @@ namespace PIO.PowerShell.PIOWebServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetTasks", ReplyAction="http://tempuri.org/IPIOService/GetTasksResponse")]
         System.Threading.Tasks.Task<PIO.Models.Task[]> GetTasksAsync(int FactoryID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/HasEnoughResourcesToProduce", ReplyAction="http://tempuri.org/IPIOService/HasEnoughResourcesToProduceResponse")]
+        System.Nullable<bool> HasEnoughResourcesToProduce(int FactoryID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/HasEnoughResourcesToProduce", ReplyAction="http://tempuri.org/IPIOService/HasEnoughResourcesToProduceResponse")]
+        System.Threading.Tasks.Task<System.Nullable<bool>> HasEnoughResourcesToProduceAsync(int FactoryID);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -321,6 +327,14 @@ namespace PIO.PowerShell.PIOWebServiceReference {
         
         public System.Threading.Tasks.Task<PIO.Models.Task[]> GetTasksAsync(int FactoryID) {
             return base.Channel.GetTasksAsync(FactoryID);
+        }
+        
+        public System.Nullable<bool> HasEnoughResourcesToProduce(int FactoryID) {
+            return base.Channel.HasEnoughResourcesToProduce(FactoryID);
+        }
+        
+        public System.Threading.Tasks.Task<System.Nullable<bool>> HasEnoughResourcesToProduceAsync(int FactoryID) {
+            return base.Channel.HasEnoughResourcesToProduceAsync(FactoryID);
         }
     }
 }

@@ -127,6 +127,12 @@
   <wsdl:message name="IPIOService_GetTasks_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetTasksResponse" />
   </wsdl:message>
+  <wsdl:message name="IPIOService_HasEnoughResourcesToProduce_InputMessage">
+    <wsdl:part name="parameters" element="tns:HasEnoughResourcesToProduce" />
+  </wsdl:message>
+  <wsdl:message name="IPIOService_HasEnoughResourcesToProduce_OutputMessage">
+    <wsdl:part name="parameters" element="tns:HasEnoughResourcesToProduceResponse" />
+  </wsdl:message>
   <wsdl:portType name="IPIOService">
     <wsdl:operation name="GetPlanet">
       <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetPlanet" message="tns:IPIOService_GetPlanet_InputMessage" />
@@ -207,6 +213,10 @@
     <wsdl:operation name="GetTasks">
       <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetTasks" message="tns:IPIOService_GetTasks_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/GetTasksResponse" message="tns:IPIOService_GetTasks_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="HasEnoughResourcesToProduce">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/HasEnoughResourcesToProduce" message="tns:IPIOService_HasEnoughResourcesToProduce_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/HasEnoughResourcesToProduceResponse" message="tns:IPIOService_HasEnoughResourcesToProduce_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IPIOService" type="tns:IPIOService">
@@ -384,6 +394,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetTasks">
       <soap:operation soapAction="http://tempuri.org/IPIOService/GetTasks" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="HasEnoughResourcesToProduce">
+      <soap:operation soapAction="http://tempuri.org/IPIOService/HasEnoughResourcesToProduce" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

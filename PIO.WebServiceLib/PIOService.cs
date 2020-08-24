@@ -12,7 +12,7 @@ using PIO.WebServiceLib.Exceptions;
 
 namespace PIO.WebServiceLib
 {
-	[ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
+	[ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Single)]
 	public class PIOService : Module, IPIOService
 	{
 		private IPlanetModule PlanetModule;
@@ -26,14 +26,18 @@ namespace PIO.WebServiceLib
 		private IProductModule ProductModule;
 		private ITaskModule TaskModule;
 
+		private IResourceCheckerModule ResourceCheckerModule;
+
 		public PIOService(ILogger Logger,
 			IPlanetModule PlanetModule, IFactoryModule FactoryModule,
 			IWorkerModule WorkerModule,
 			IStackModule StackModule,IResourceTypeModule ResourceTypeModule,
 			IFactoryTypeModule FactoryTypeModule,IMaterialModule MaterialModule,
 			IIngredientModule IngredientModule, IProductModule ProductModule, 
-			ITaskModule TaskModule
-		):base(Logger)
+			ITaskModule TaskModule,
+
+			IResourceCheckerModule ResourceCheckerModule
+		) :base(Logger)
 		{
 			LogEnter();
 			this.PlanetModule = PlanetModule;
@@ -46,8 +50,11 @@ namespace PIO.WebServiceLib
 			this.IngredientModule = IngredientModule;
 			this.ProductModule = ProductModule;
 			this.TaskModule = TaskModule;
+
+			this.ResourceCheckerModule = ResourceCheckerModule;
 		}
 
+		#region data
 		public Planet GetPlanet(int PlanetID)
 		{
 			LogEnter();
@@ -160,6 +167,16 @@ namespace PIO.WebServiceLib
 			LogEnter();
 			return Try(() => TaskModule.GetTasks(FactoryID)).OrThrow<PIOWebServiceException>("Internal error");
 		}
+		#endregion
+
+		#region functional
+
+		public bool? HasEnoughResourcesToProduce(int FactoryID)
+		{
+			LogEnter();
+			return Try(() => ResourceCheckerModule.HasEnoughResourcesToProduce(FactoryID)).OrThrow<PIOWebServiceException>("Internal error");
+		}
+		#endregion
 
 
 	}

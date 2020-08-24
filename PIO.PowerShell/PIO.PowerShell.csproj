@@ -51,26 +51,27 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
-    <Compile Include="GetProductCmdlet.cs" />
-    <Compile Include="GetIngredientCmdlet.cs" />
-    <Compile Include="GetProductsCmdlet.cs" />
-    <Compile Include="GetIngredientsCmdlet.cs" />
-    <Compile Include="GetWorkersCmdlet.cs" />
-    <Compile Include="GetWorkerCmdlet.cs" />
-    <Compile Include="GetFactoryTypeCmdlet.cs" />
-    <Compile Include="GetFactoryTypesCmdlet.cs" />
-    <Compile Include="GetTasksCmdlet.cs" />
-    <Compile Include="GetTaskCmdlet.cs" />
-    <Compile Include="GetResourceTypesCmdlet.cs" />
-    <Compile Include="GetResourceTypeCmdlet.cs" />
-    <Compile Include="GetMaterialCmdlet.cs" />
-    <Compile Include="GetMaterialsCmdlet.cs" />
-    <Compile Include="GetStacksCmdlet.cs" />
-    <Compile Include="GetStackCmdlet.cs" />
-    <Compile Include="GetFactoryCmdlet.cs" />
-    <Compile Include="GetFactoriesCmdlet.cs" />
-    <Compile Include="GetPlanetsCmdlet.cs" />
-    <Compile Include="GetPlanetCmdlet.cs" />
+    <Compile Include="DataCmdlet\GetProductCmdlet.cs" />
+    <Compile Include="DataCmdlet\GetIngredientCmdlet.cs" />
+    <Compile Include="DataCmdlet\GetProductsCmdlet.cs" />
+    <Compile Include="DataCmdlet\GetIngredientsCmdlet.cs" />
+    <Compile Include="DataCmdlet\GetWorkersCmdlet.cs" />
+    <Compile Include="DataCmdlet\GetWorkerCmdlet.cs" />
+    <Compile Include="DataCmdlet\GetFactoryTypeCmdlet.cs" />
+    <Compile Include="DataCmdlet\GetFactoryTypesCmdlet.cs" />
+    <Compile Include="DataCmdlet\GetTasksCmdlet.cs" />
+    <Compile Include="DataCmdlet\GetTaskCmdlet.cs" />
+    <Compile Include="DataCmdlet\GetResourceTypesCmdlet.cs" />
+    <Compile Include="DataCmdlet\GetResourceTypeCmdlet.cs" />
+    <Compile Include="DataCmdlet\GetMaterialCmdlet.cs" />
+    <Compile Include="DataCmdlet\GetMaterialsCmdlet.cs" />
+    <Compile Include="DataCmdlet\GetStacksCmdlet.cs" />
+    <Compile Include="DataCmdlet\GetStackCmdlet.cs" />
+    <Compile Include="DataCmdlet\GetFactoryCmdlet.cs" />
+    <Compile Include="DataCmdlet\GetFactoriesCmdlet.cs" />
+    <Compile Include="DataCmdlet\GetPlanetsCmdlet.cs" />
+    <Compile Include="DataCmdlet\GetPlanetCmdlet.cs" />
+    <Compile Include="FunctionalCmdlet\AssertHasEnoughResourcesToProduceCmdlet.cs" />
     <Compile Include="PIOCmdLet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
