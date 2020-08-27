@@ -23,7 +23,7 @@ namespace PIO.PowerShell
 		{
 			Material[] result;
 
-			result = client.GetMaterials(FactoryTypeID);
+			result = Try(() => client.GetMaterials(FactoryTypeID));
 
 			WriteObject(result);
 		}

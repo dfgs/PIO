@@ -25,7 +25,7 @@ namespace PIO.PowerShell
 		{
 			Stack result;
 
-			result = client.GetStack(StackID);
+			result = Try(() => client.GetStack(StackID));
 
 			WriteObject(result);
 		}

@@ -1,4 +1,5 @@
 ﻿using PIO.Models;
+using PIO.Models.Exceptions;
 using PIO.Models.Modules;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ namespace PIO.UnitTest.WebServiceLib.Mocks
 
 		public Factory GetFactory(int FactoryID)
 		{
-			if (ThrowException) throw new Exception("Mocked exception");
+			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
 			return new Factory() { FactoryID = FactoryID };
 		}
 
@@ -28,7 +29,7 @@ namespace PIO.UnitTest.WebServiceLib.Mocks
 
 		public Factory[] GetFactories(int PlanetID)
 		{
-			if (ThrowException) throw new Exception("Mocked exception");
+			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
 			return Generate((t) => new Factory() { FactoryID = t,PlanetID=PlanetID });
 		}
 

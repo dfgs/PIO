@@ -1,4 +1,5 @@
 ﻿using PIO.Models;
+using PIO.Models.Exceptions;
 using PIO.Models.Modules;
 using System;
 using System.Collections.Generic;
@@ -17,13 +18,13 @@ namespace PIO.UnitTest.ServerLib.Mocks
 
 		public FactoryType GetFactoryType(int FactoryTypeID)
 		{
-			if (ThrowException) throw new InvalidOperationException();
+			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
 			return items.FirstOrDefault(item => item.FactoryTypeID == FactoryTypeID);
 		}
 
 		public FactoryType[] GetFactoryTypes()
 		{
-			if (ThrowException) throw new InvalidOperationException();
+			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
 			return items;
 		}
 

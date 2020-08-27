@@ -23,7 +23,7 @@ namespace PIO.PowerShell
 		{
 			Worker[] result;
 
-			result = client.GetWorkers(PlanetID);
+			result = Try(() => client.GetWorkers(PlanetID));
 
 			WriteObject(result);
 		}

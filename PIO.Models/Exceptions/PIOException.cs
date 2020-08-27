@@ -9,6 +9,10 @@ namespace PIO.Models.Exceptions
 {
 	public abstract class PIOException:TryException
 	{
+		public abstract string FaultCode
+		{
+			get;
+		}
 		public PIOException(string Message,Exception InnerException,int ModuleID,string ModuleName,string MethodName):base(Message,InnerException,ModuleID,ModuleName,MethodName)
 		{
 

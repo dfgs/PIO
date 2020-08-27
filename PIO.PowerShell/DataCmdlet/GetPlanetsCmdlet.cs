@@ -21,7 +21,7 @@ namespace PIO.PowerShell
 		{
 			Planet[] result;
 
-			result = client.GetPlanets();
+			result = Try(() => client.GetPlanets());
 
 			WriteObject(result);
 		}

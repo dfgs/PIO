@@ -25,7 +25,7 @@ namespace PIO.PowerShell
 		{
 			Ingredient result;
 
-			result = client.GetIngredient(IngredientID);
+			result = Try(() => client.GetIngredient(IngredientID));
 
 			WriteObject(result);
 		}

@@ -43,10 +43,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Event.cs" />
-    <Compile Include="Exceptions\PIODataException.cs" />
-    <Compile Include="Exceptions\PIOEngineException.cs" />
+    <Compile Include="Exceptions\DataExceptions\PIODataException.cs" />
+    <Compile Include="Exceptions\EngineExceptions\PIOInternalErrorException.cs" />
+    <Compile Include="Exceptions\EngineExceptions\PIOEngineException.cs" />
+    <Compile Include="Exceptions\FunctionalExceptions\PIONotFoundException.cs" />
     <Compile Include="Exceptions\PIOException.cs" />
-    <Compile Include="Exceptions\PIOFunctionalException.cs" />
+    <Compile Include="Exceptions\FunctionalExceptions\PIOFunctionalException.cs" />
     <Compile Include="Modules\DataModules\IProductModule.cs" />
     <Compile Include="Modules\FunctionalModules\IResourceCheckerModule.cs" />
     <Compile Include="Product.cs" />

@@ -1,6 +1,7 @@
 ﻿using NetORMLib.Databases;
 using NetORMLib.Queries;
 using PIO.Models;
+using PIO.Models.Exceptions;
 using PIO.Models.Modules;
 using System;
 using System.Collections.Generic;
@@ -22,13 +23,13 @@ namespace PIO.UnitTest.ServerLib.Mocks
 
 		public Ingredient GetIngredient(int IngredientID)
 		{
-			if (throwException) throw new NotImplementedException();
+			if (throwException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
 			return items.FirstOrDefault(item => item.IngredientID == IngredientID);
 		}
 
 		public Ingredient[] GetIngredients(int FactoryTypeID)
 		{
-			if (throwException) throw new NotImplementedException();
+			if (throwException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
 			return items.Where(item => item.FactoryTypeID == FactoryTypeID).ToArray();
 		}
 

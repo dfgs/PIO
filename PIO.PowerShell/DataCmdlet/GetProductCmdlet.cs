@@ -25,7 +25,7 @@ namespace PIO.PowerShell
 		{
 			Product result;
 
-			result = client.GetProduct(ProductID);
+			result = Try(() => client.GetProduct(ProductID));
 
 			WriteObject(result);
 		}

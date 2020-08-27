@@ -1,4 +1,5 @@
 ﻿using PIO.Models;
+using PIO.Models.Exceptions;
 using PIO.Models.Modules;
 using System;
 using System.Collections.Generic;
@@ -17,13 +18,13 @@ namespace PIO.UnitTest.ServerLib.Mocks
 
 		public Factory[] GetFactories(int PlanetID)
 		{
-			if (ThrowException) throw new InvalidOperationException();
+			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
 			return items.Where(item => item.PlanetID == PlanetID).ToArray();
 		}
 
 		public Factory GetFactory(int FactoryID)
 		{
-			if (ThrowException) throw new InvalidOperationException();
+			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
 			return items.FirstOrDefault(item => item.FactoryID == FactoryID);
 		}
 
@@ -31,7 +32,7 @@ namespace PIO.UnitTest.ServerLib.Mocks
 		{
 			Factory factory;
 
-			if (ThrowException) throw new InvalidOperationException();
+			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
 
 			factory = GetFactory(FactoryID);
 			if (factory == null) return;

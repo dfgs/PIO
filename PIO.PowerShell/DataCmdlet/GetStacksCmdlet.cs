@@ -23,7 +23,7 @@ namespace PIO.PowerShell
 		{
 			Stack[] result;
 
-			result = client.GetStacks(FactoryID);
+			result = Try(() => client.GetStacks(FactoryID));
 
 			WriteObject(result);
 		}

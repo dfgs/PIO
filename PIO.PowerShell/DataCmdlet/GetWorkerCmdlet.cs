@@ -25,7 +25,7 @@ namespace PIO.PowerShell
 		{
 			Worker result;
 
-			result = client.GetWorker(WorkerID);
+			result = Try(() => client.GetWorker(WorkerID));
 
 			WriteObject(result);
 		}

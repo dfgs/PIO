@@ -1,4 +1,5 @@
 ﻿using PIO.Models;
+using PIO.Models.Exceptions;
 using PIO.Models.Modules;
 using System;
 using System.Collections.Generic;
@@ -11,16 +12,16 @@ namespace PIO.UnitTest.WebServiceLib.Mocks
 	public class MockedResourceCheckerModule :MockedFunctionalModule,  IResourceCheckerModule
 	{
 
-		private bool? result;
+		private bool result;
 
-		public MockedResourceCheckerModule(bool ThrowException,bool? Result) : base( ThrowException)
+		public MockedResourceCheckerModule(bool ThrowException,bool Result) : base( ThrowException)
 		{
 			this.result = Result;
 		}
 
-		public bool? HasEnoughResourcesToProduce(int FactoryID)
+		public bool HasEnoughResourcesToProduce(int FactoryID)
 		{
-			if (ThrowException) throw new Exception("Mocked exception");
+			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
 			return result;
 		}
 

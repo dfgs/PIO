@@ -25,7 +25,7 @@ namespace PIO.PowerShell
 		{
 			Planet result;
 
-			result = client.GetPlanet(PlanetID);
+			result = Try(() => client.GetPlanet(PlanetID));
 
 			WriteObject(result);
 		}

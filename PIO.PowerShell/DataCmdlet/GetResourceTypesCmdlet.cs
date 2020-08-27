@@ -21,7 +21,7 @@ namespace PIO.PowerShell
 		{
 			ResourceType[] result;
 
-			result = client.GetResourceTypes();
+			result = Try(() => client.GetResourceTypes());
 
 			WriteObject(result);
 		}

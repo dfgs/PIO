@@ -23,7 +23,7 @@ namespace PIO.PowerShell
 		{
 			Product[] result;
 
-			result = client.GetProducts(FactoryTypeID);
+			result = Try(() => client.GetProducts(FactoryTypeID));
 
 			WriteObject(result);
 		}

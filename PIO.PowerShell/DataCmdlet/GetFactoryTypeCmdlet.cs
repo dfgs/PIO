@@ -25,7 +25,7 @@ namespace PIO.PowerShell
 		{
 			FactoryType result;
 
-			result = client.GetFactoryType(FactoryTypeID);
+			result = Try(() => client.GetFactoryType(FactoryTypeID));
 
 			WriteObject(result);
 		}

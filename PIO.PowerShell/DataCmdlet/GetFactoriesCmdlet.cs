@@ -23,7 +23,7 @@ namespace PIO.PowerShell
 		{
 			Factory[] result;
 
-			result = client.GetFactories(PlanetID);
+			result = Try(() => client.GetFactories(PlanetID));
 
 			WriteObject(result);
 		}

@@ -39,7 +39,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 				);
 			module = new ResourceCheckerModule(NullLogger.Instance,factoryModule,stackModule,ingredientModule);
 
-			Assert.IsTrue(module.HasEnoughResourcesToProduce(1).Value);
+			Assert.IsTrue(module.HasEnoughResourcesToProduce(1));
 		}
 
 		[TestMethod]
@@ -67,7 +67,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 				);
 			module = new ResourceCheckerModule(NullLogger.Instance, factoryModule, stackModule, ingredientModule);
 
-			Assert.IsFalse(module.HasEnoughResourcesToProduce(1).Value);
+			Assert.IsFalse(module.HasEnoughResourcesToProduce(1));
 			#endregion
 
 			#region when a stack is missing
@@ -83,13 +83,13 @@ namespace PIO.UnitTest.ServerLib.Modules
 				);
 			module = new ResourceCheckerModule(NullLogger.Instance, factoryModule, stackModule, ingredientModule);
 
-			Assert.IsFalse(module.HasEnoughResourcesToProduce(1).Value);
+			Assert.IsFalse(module.HasEnoughResourcesToProduce(1));
 			#endregion
 
 		}
 
 		[TestMethod]
-		public void ShouldReturnNullAndLogErrorWhenFactoryDoesntExists()
+		public void ShouldThrowExceptionAndLogErrorWhenFactoryDoesntExists()
 		{
 			MemoryLogger logger;
 			ResourceCheckerModule module;
@@ -105,12 +105,12 @@ namespace PIO.UnitTest.ServerLib.Modules
 
 			logger = new MemoryLogger(new DefaultLogFormatter());
 			module = new ResourceCheckerModule(logger, factoryModule, stackModule, ingredientModule);
-			Assert.IsNull(module.HasEnoughResourcesToProduce(2));
+			Assert.ThrowsException< PIONotFoundException>(()=>module.HasEnoughResourcesToProduce(2));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Warning") && item.Contains(module.ModuleName)));
 		}
 
 		[TestMethod]
-		public void ShouldNotReturnAndLogErrorWhenSubModuleFails()
+		public void ShouldThrowExceptionAndLogErrorWhenSubModuleFails()
 		{
 			MemoryLogger logger;
 			ResourceCheckerModule module;
@@ -125,7 +125,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			ingredientModule = new MockedIngredientModule(false);
 			logger = new MemoryLogger(new DefaultLogFormatter());
 			module = new ResourceCheckerModule(logger, factoryModule, stackModule, ingredientModule);
-			Assert.ThrowsException<PIOFunctionalException>(() => module.HasEnoughResourcesToProduce(1));
+			Assert.ThrowsException<PIOInternalErrorException>(() => module.HasEnoughResourcesToProduce(1));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
 
 

@@ -25,7 +25,7 @@ namespace PIO.PowerShell
 		{
 			Material result;
 
-			result = client.GetMaterial(MaterialID);
+			result = Try(() => client.GetMaterial(MaterialID));
 
 			WriteObject(result);
 		}

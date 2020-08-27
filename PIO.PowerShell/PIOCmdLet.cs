@@ -17,6 +17,24 @@ namespace PIO.PowerShell
 
 		protected PIOServiceClient client;
 
+		protected T Try<T>(Func<T> Func)
+		{
+			try
+			{
+				return Func();
+			}
+			catch(FaultException ex)
+			{
+				ErrorRecord record = new ErrorRecord(ex, ex.Code.Name, ErrorCategory.NotSpecified, null);
+				ThrowTerminatingError(record);
+			}
+			catch (Exception ex)
+			{
+				ErrorRecord record = new ErrorRecord(ex, "Undefined", ErrorCategory.NotSpecified, null);
+				ThrowTerminatingError(record);
+			}
+			return default(T);
+		}
 
 		protected override void BeginProcessing()
 		{

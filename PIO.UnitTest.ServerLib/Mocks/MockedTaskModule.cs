@@ -1,6 +1,7 @@
 ﻿using NetORMLib.Databases;
 using NetORMLib.Queries;
 using PIO.Models;
+using PIO.Models.Exceptions;
 using PIO.Models.Modules;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,7 @@ namespace PIO.UnitTest.ServerLib.Mocks
 
 		public Task GetTask(int TaskID)
 		{
-			if (throwException) throw new NotImplementedException();
+			if (throwException) throw new PIODataException("UnitTestException",null,1,"UnitTest","UnitTest");
 			return new Task() {TaskID=TaskID ,WorkerID=1,ETA=DateTime.Now};
 		}
 		public void RemoveTask(int TaskID)
@@ -33,7 +34,7 @@ namespace PIO.UnitTest.ServerLib.Mocks
 		{
 			Task[] items;
 
-			if (throwException) throw new NotImplementedException();
+			if (throwException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
 			items = new Task[results];
 			for (int t = 0; t < results; t++)
 			{

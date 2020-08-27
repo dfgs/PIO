@@ -24,7 +24,7 @@ namespace PIO.PowerShell
 		{
 			Task result;
 
-			result = client.GetTask(TaskID);
+			result = Try(() => client.GetTask(TaskID));
 
 			WriteObject(result);
 		}

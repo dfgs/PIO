@@ -1,4 +1,5 @@
 ﻿using PIO.Models;
+using PIO.Models.Exceptions;
 using PIO.Models.Modules;
 using System;
 using System.Collections.Generic;
@@ -16,13 +17,13 @@ namespace PIO.UnitTest.WebServiceLib.Mocks
 		
 		public Task GetTask(int TaskID)
 		{
-			if (ThrowException) throw new Exception("Mocked exception");
+			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
 			return new Task() { TaskID = TaskID };
 		}
 
 		public Task[] GetTasks(int WorkerID)
 		{
-			if (ThrowException) throw new Exception("Mocked exception");
+			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
 			return Generate((t) => new Task() { TaskID = t,WorkerID=WorkerID });
 		}
 		
