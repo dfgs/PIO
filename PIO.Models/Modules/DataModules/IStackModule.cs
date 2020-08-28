@@ -13,6 +13,6 @@ namespace PIO.Models.Modules
 		Stack GetStack(int StackID);
 		Stack[] GetStacks(int FactoryID);
 		//bool HasEnoughResources(int FactoryID, int ResourceTypeID, int Quantity);
-		void Consume(int FactoryID, int ResourceTypeID, int Quantity);
+		void UpdateStack(int StackID,int Quantity);
 	}
 }

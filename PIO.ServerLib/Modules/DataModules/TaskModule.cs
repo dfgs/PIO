@@ -61,7 +61,7 @@ namespace PIO.ServerLib.Modules
 			return TrySelectMany<TaskTable, Task>(query).OrThrow("Failed to query");
 		}*/
 
-		/*public Task CreateTask(int WorkerID,  DateTime ETA)
+		public Task InsertTask(int WorkerID,  DateTime ETA)
 		{
 			IInsert<TaskTable> query;
 			Task item;
@@ -71,10 +71,10 @@ namespace PIO.ServerLib.Modules
 			Log(LogLevels.Information, $"Inserting into Task table (WorkerID={WorkerID}, ETA={ETA})");
 			item = new Task() { WorkerID=WorkerID, ETA=ETA };
 			query = new Insert<TaskTable>().Set(TaskTable.WorkerID,item.WorkerID).Set(TaskTable.ETA,item.ETA);
-			result=Try(query).OrThrow("Failed to insert");
+			result=Try(query).OrThrow<PIODataException>("Failed to insert");
 			item.TaskID = Convert.ToInt32(result);
 			return item;
-		}*/
+		}
 
 
 

@@ -4,15 +4,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using System.Threading.Tasks;
 
 namespace PIO.Models.Modules
 {
-	public interface ITaskModule:IDatabaseModule
+	public interface IProducerModule : IFunctionalModule
 	{
-		Task GetTask(int TaskID);
-		Task[] GetTasks(int WorkerID);
 
-		Task InsertTask(int WorkerID, DateTime ETA);
+		Task Produce(int WorkerID, int FactoryID);
 	}
 }

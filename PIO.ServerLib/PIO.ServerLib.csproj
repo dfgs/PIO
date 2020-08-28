@@ -50,6 +50,7 @@
     <Compile Include="Modules\EngineModules\IWebServiceModule.cs" />
     <Compile Include="Modules\DataModules\DatabaseModule.cs" />
     <Compile Include="Modules\FunctionalModules\FunctionalModule.cs" />
+    <Compile Include="Modules\FunctionalModules\ProducerModule.cs" />
     <Compile Include="Modules\FunctionalModules\ResourceCheckerModule.cs" />
     <Compile Include="Modules\FunctionalModules\FactoryBuilderModule.cs" />
     <Compile Include="Modules\DataModules\WorkerModule.cs" />

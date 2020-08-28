@@ -15,10 +15,7 @@ namespace PIO.UnitTest.WebServiceLib.Mocks
 		{
 		}
 
-		public void Consume(int FactoryID, int ResourceTypeID, int Quantity)
-		{
-			throw new NotImplementedException();
-		}
+		
 
 		public Stack GetStack(int StackID)
 		{
@@ -32,7 +29,7 @@ namespace PIO.UnitTest.WebServiceLib.Mocks
 			return Generate((t) => new Stack() { StackID = t,FactoryID=FactoryID });
 		}
 
-		public bool HasEnoughResources(int FactoryID, int ResourceTypeID, int Quantity)
+		public void UpdateStack(int StackID, int Quantity)
 		{
 			throw new NotImplementedException();
 		}

@@ -74,10 +74,39 @@ namespace PIO.UnitTest.ServerLib.Modules
 			Assert.ThrowsException<PIODataException>(() => module.GetTasks(1));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
 		}
-		
 
-		
-		
+		[TestMethod]
+		public void ShouldInsertTask()
+		{
+			MockedDatabase<Task> database;
+			TaskModule module;
+			Task result;
+			DateTime eta;
+
+			database = new MockedDatabase<Task>(false, 1, (t) => new Task() { TaskID = t });
+			module = new TaskModule(NullLogger.Instance, database);
+			eta = DateTime.Now;
+			result = module.InsertTask(1,eta);
+			Assert.IsNotNull(result);
+			Assert.AreEqual(1, result.WorkerID);
+			Assert.AreEqual(eta, result.ETA);
+			Assert.AreEqual(1, database.InsertedCount);
+		}
+
+		[TestMethod]
+		public void ShouldNotInsertTaskAndLogError()
+		{
+			MockedDatabase<Task> database;
+			TaskModule module;
+			MemoryLogger logger;
+
+
+			logger = new MemoryLogger(new DefaultLogFormatter());
+			database = new MockedDatabase<Task>(true, 1, (t) => new Task() { TaskID = t });
+			module = new TaskModule(logger, database);
+			Assert.ThrowsException<PIODataException>(() => module.InsertTask(1,DateTime.Now));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
+		}
 
 	}
 }

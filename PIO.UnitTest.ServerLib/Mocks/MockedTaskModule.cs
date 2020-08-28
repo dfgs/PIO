@@ -56,9 +56,14 @@ namespace PIO.UnitTest.ServerLib.Mocks
 			return items;
 		}
 
-		public Task CreateTask(int WorkerID, DateTime ETA)
+		
+		public Task InsertTask(int WorkerID, DateTime ETA)
 		{
-			throw new NotImplementedException();
+			Task item;
+			item = new Task() {WorkerID=WorkerID,ETA=ETA };
+			return item;
 		}
+
+
 	}
 }

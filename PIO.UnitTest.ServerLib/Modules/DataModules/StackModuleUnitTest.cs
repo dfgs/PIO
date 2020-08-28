@@ -78,29 +78,33 @@ namespace PIO.UnitTest.ServerLib.Modules
 
 
 		[TestMethod]
-		public void ShouldConsume()
+		public void ShouldUpdateStack()
 		{
 			MockedDatabase<Stack> database;
 			StackModule module;
 
 			database = new MockedDatabase<Stack>(false, 1, (t) => new Stack() { StackID = t,FactoryID=0,ResourceTypeID=0, Quantity=5 });
 			module = new StackModule(NullLogger.Instance, database);
-			module.Consume(0,0,1);
+			module.UpdateStack(1,2);
 			Assert.AreEqual(1, database.UpdatedCount);
+			
 		}
 		[TestMethod]
-		public void ShouldNotConsume()
+		public void ShouldNotUpdateStackAndLogError()
 		{
 			MockedDatabase<Stack> database;
 			StackModule module;
+			MemoryLogger logger;
 
 
-			database = new MockedDatabase<Stack>(false, 1, (t) => new Stack() { StackID = t, FactoryID = 0, ResourceTypeID = 0, Quantity = 5 });
-			module = new StackModule(NullLogger.Instance, database);
-			Assert.ThrowsException<InvalidOperationException>(() => module.Consume(0,0,10));
+			logger = new MemoryLogger(new DefaultLogFormatter());
+			database = new MockedDatabase<Stack>(true, 1, (t) => new Stack() { StackID = t, FactoryID = 0, ResourceTypeID = 0, Quantity = 5 });
+			module = new StackModule(logger, database);
+			Assert.ThrowsException<PIODataException>(() => module.UpdateStack(0,10));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
 		}
 
-		
+
 
 	}
 }
