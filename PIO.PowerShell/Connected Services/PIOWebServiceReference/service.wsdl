@@ -5,7 +5,6 @@
       <xsd:import namespace="http://tempuri.org/" />
       <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/PIO.Models" />
-      <xsd:import namespace="http://schemas.datacontract.org/2004/07/PIO.WebServiceLib" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="IPIOService_GetPlanet_InputMessage">
@@ -134,8 +133,11 @@
   <wsdl:message name="IPIOService_HasEnoughResourcesToProduce_OutputMessage">
     <wsdl:part name="parameters" element="tns:HasEnoughResourcesToProduceResponse" />
   </wsdl:message>
-  <wsdl:message name="IPIOService_HasEnoughResourcesToProduce_PIOFaultFault_FaultMessage">
-    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/PIO.WebServiceLib" name="detail" element="q1:PIOFault" />
+  <wsdl:message name="IPIOService_Produce_InputMessage">
+    <wsdl:part name="parameters" element="tns:Produce" />
+  </wsdl:message>
+  <wsdl:message name="IPIOService_Produce_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ProduceResponse" />
   </wsdl:message>
   <wsdl:portType name="IPIOService">
     <wsdl:operation name="GetPlanet">
@@ -221,7 +223,10 @@
     <wsdl:operation name="HasEnoughResourcesToProduce">
       <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/HasEnoughResourcesToProduce" message="tns:IPIOService_HasEnoughResourcesToProduce_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/HasEnoughResourcesToProduceResponse" message="tns:IPIOService_HasEnoughResourcesToProduce_OutputMessage" />
-      <wsdl:fault wsaw:Action="http://tempuri.org/IPIOService/HasEnoughResourcesToProducePIOFaultFault" name="PIOFaultFault" message="tns:IPIOService_HasEnoughResourcesToProduce_PIOFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Produce">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/Produce" message="tns:IPIOService_Produce_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/ProduceResponse" message="tns:IPIOService_Produce_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IPIOService" type="tns:IPIOService">
@@ -414,9 +419,15 @@
       <wsdl:output>
         <soap:body use="literal" />
       </wsdl:output>
-      <wsdl:fault name="PIOFaultFault">
-        <soap:fault use="literal" name="PIOFaultFault" namespace="" />
-      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="Produce">
+      <soap:operation soapAction="http://tempuri.org/IPIOService/Produce" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
     </wsdl:operation>
   </wsdl:binding>
   <wsdl:service name="PIOService">

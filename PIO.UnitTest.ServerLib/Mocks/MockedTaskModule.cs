@@ -60,6 +60,9 @@ namespace PIO.UnitTest.ServerLib.Mocks
 		public Task InsertTask(int WorkerID, DateTime ETA)
 		{
 			Task item;
+
+			if (throwException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
+
 			item = new Task() {WorkerID=WorkerID,ETA=ETA };
 			return item;
 		}

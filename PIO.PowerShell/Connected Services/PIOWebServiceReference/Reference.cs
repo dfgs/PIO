@@ -9,54 +9,7 @@
 //------------------------------------------------------------------------------
 
 namespace PIO.PowerShell.PIOWebServiceReference {
-    using System.Runtime.Serialization;
-    using System;
     
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="PIOFault", Namespace="http://schemas.datacontract.org/2004/07/PIO.WebServiceLib")]
-    [System.SerializableAttribute()]
-    public partial class PIOFault : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string MessageField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Message {
-            get {
-                return this.MessageField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.MessageField, value) != true)) {
-                    this.MessageField = value;
-                    this.RaisePropertyChanged("Message");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="PIOWebServiceReference.IPIOService")]
@@ -183,11 +136,16 @@ namespace PIO.PowerShell.PIOWebServiceReference {
         System.Threading.Tasks.Task<PIO.Models.Task[]> GetTasksAsync(int FactoryID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/HasEnoughResourcesToProduce", ReplyAction="http://tempuri.org/IPIOService/HasEnoughResourcesToProduceResponse")]
-        [System.ServiceModel.FaultContractAttribute(typeof(PIO.PowerShell.PIOWebServiceReference.PIOFault), Action="http://tempuri.org/IPIOService/HasEnoughResourcesToProducePIOFaultFault", Name="PIOFault", Namespace="http://schemas.datacontract.org/2004/07/PIO.WebServiceLib")]
         bool HasEnoughResourcesToProduce(int FactoryID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/HasEnoughResourcesToProduce", ReplyAction="http://tempuri.org/IPIOService/HasEnoughResourcesToProduceResponse")]
         System.Threading.Tasks.Task<bool> HasEnoughResourcesToProduceAsync(int FactoryID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/Produce", ReplyAction="http://tempuri.org/IPIOService/ProduceResponse")]
+        PIO.Models.Task Produce(int WorkerID, int FactoryID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/Produce", ReplyAction="http://tempuri.org/IPIOService/ProduceResponse")]
+        System.Threading.Tasks.Task<PIO.Models.Task> ProduceAsync(int WorkerID, int FactoryID);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -383,6 +341,14 @@ namespace PIO.PowerShell.PIOWebServiceReference {
         
         public System.Threading.Tasks.Task<bool> HasEnoughResourcesToProduceAsync(int FactoryID) {
             return base.Channel.HasEnoughResourcesToProduceAsync(FactoryID);
+        }
+        
+        public PIO.Models.Task Produce(int WorkerID, int FactoryID) {
+            return base.Channel.Produce(WorkerID, FactoryID);
+        }
+        
+        public System.Threading.Tasks.Task<PIO.Models.Task> ProduceAsync(int WorkerID, int FactoryID) {
+            return base.Channel.ProduceAsync(WorkerID, FactoryID);
         }
     }
 }

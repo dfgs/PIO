@@ -71,6 +71,7 @@
     <Compile Include="DataCmdlet\GetFactoriesCmdlet.cs" />
     <Compile Include="DataCmdlet\GetPlanetsCmdlet.cs" />
     <Compile Include="DataCmdlet\GetPlanetCmdlet.cs" />
+    <Compile Include="FunctionalCmdlet\InvokeProduceCmdlet.cs" />
     <Compile Include="FunctionalCmdlet\AssertHasEnoughResourcesToProduceCmdlet.cs" />
     <Compile Include="PIOCmdLet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -78,9 +79,6 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="Connected Services\PIOWebServiceReference\PIO.Models.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\PIOWebServiceReference\PIO.WebServiceLib.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Connected Services\PIOWebServiceReference\service.wsdl" />

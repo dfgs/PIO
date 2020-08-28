@@ -58,6 +58,8 @@ namespace PIO.WebServiceLib
 		#region functional
 		[OperationContract]
 		bool HasEnoughResourcesToProduce(int FactoryID);
+		[OperationContract]
+		Task Produce(int WorkerID,int FactoryID);
 		#endregion
 
 	}

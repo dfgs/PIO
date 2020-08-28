@@ -289,4 +289,19 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="Produce">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="WorkerID" type="xs:int" />
+        <xs:element minOccurs="0" name="FactoryID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="ProduceResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q21="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="ProduceResult" nillable="true" type="q21:Task" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

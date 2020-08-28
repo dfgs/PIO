@@ -29,6 +29,7 @@ namespace PIO.WebServiceLib
 		private ITaskModule TaskModule;
 
 		private IResourceCheckerModule ResourceCheckerModule;
+		private IProducerModule ProducerModule;
 
 		public PIOService(ILogger Logger,
 			IPlanetModule PlanetModule, IFactoryModule FactoryModule,
@@ -38,7 +39,7 @@ namespace PIO.WebServiceLib
 			IIngredientModule IngredientModule, IProductModule ProductModule, 
 			ITaskModule TaskModule,
 
-			IResourceCheckerModule ResourceCheckerModule
+			IResourceCheckerModule ResourceCheckerModule,IProducerModule ProducerModule
 		) :base(Logger)
 		{
 			LogEnter();
@@ -54,6 +55,7 @@ namespace PIO.WebServiceLib
 			this.TaskModule = TaskModule;
 
 			this.ResourceCheckerModule = ResourceCheckerModule;
+			this.ProducerModule = ProducerModule;
 		}
 
 		private FaultException GenerateFaultException(Exception InnerException, int ComponentID, string ComponentName, string MethodName)
@@ -181,9 +183,15 @@ namespace PIO.WebServiceLib
 		public bool HasEnoughResourcesToProduce(int FactoryID)
 		{
 			LogEnter();
-			//throw new FaultException("Factory not found",FaultCodes.NotFound);
 
 			return Try(() => ResourceCheckerModule.HasEnoughResourcesToProduce(FactoryID)).OrThrow(GenerateFaultException);
+		}
+
+		public Task Produce(int WorkerID,int FactoryID)
+		{
+			LogEnter();
+
+			return Try(() => ProducerModule.Produce(WorkerID,FactoryID)).OrThrow(GenerateFaultException);
 		}
 		#endregion
 
