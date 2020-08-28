@@ -135,7 +135,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			ingredientModule = new MockedIngredientModule(true);
 			logger = new MemoryLogger(new DefaultLogFormatter());
 			module = new ResourceCheckerModule(logger, factoryModule, stackModule, ingredientModule);
-			Assert.ThrowsException<PIOFunctionalException>(() => module.HasEnoughResourcesToProduce(1));
+			Assert.ThrowsException<PIOInternalErrorException>(() => module.HasEnoughResourcesToProduce(1));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
 		}
 
