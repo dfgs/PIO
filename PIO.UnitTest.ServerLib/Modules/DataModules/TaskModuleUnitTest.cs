@@ -86,7 +86,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			database = new MockedDatabase<Task>(false, 1, (t) => new Task() { TaskID = t });
 			module = new TaskModule(NullLogger.Instance, database);
 			eta = DateTime.Now;
-			result = module.InsertTask(1,eta);
+			result = module.InsertTask(0,1,eta);
 			Assert.IsNotNull(result);
 			Assert.AreEqual(1, result.WorkerID);
 			Assert.AreEqual(eta, result.ETA);
@@ -104,7 +104,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			logger = new MemoryLogger(new DefaultLogFormatter());
 			database = new MockedDatabase<Task>(true, 1, (t) => new Task() { TaskID = t });
 			module = new TaskModule(logger, database);
-			Assert.ThrowsException<PIODataException>(() => module.InsertTask(1,DateTime.Now));
+			Assert.ThrowsException<PIODataException>(() => module.InsertTask(0,1,DateTime.Now));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
 		}
 

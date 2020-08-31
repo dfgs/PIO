@@ -38,6 +38,10 @@ namespace PIO.WebServiceLib
 		[OperationContract]
 		FactoryType[] GetFactoryTypes();
 		[OperationContract]
+		TaskType GetTaskType(int TaskTypeID);
+		[OperationContract]
+		TaskType[] GetTaskTypes();
+		[OperationContract]
 		Material GetMaterial(int MaterialID);
 		[OperationContract]
 		Material[] GetMaterials(int FactoryTypeID);

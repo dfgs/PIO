@@ -90,7 +90,7 @@ namespace PIO.ServerLib.Modules
 			task.ETA = DateTime.Now.AddMinutes(5);
 			
 			Log(LogLevels.Information, $"Creating task (WorkerID={WorkerID})");
-			task=Try(() => taskModule.InsertTask(WorkerID,DateTime.Now.AddMinutes(5))).OrThrow<PIOInternalErrorException>("Failed to create task");
+			task=Try(() => taskModule.InsertTask((int)TaskTypeIDs.Produce, WorkerID,DateTime.Now.AddMinutes(5))).OrThrow<PIOInternalErrorException>("Failed to create task");
 
 
 			return task;

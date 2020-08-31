@@ -83,6 +83,19 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfFactoryType" nillable="true" type="tns:ArrayOfFactoryType" />
+  <xs:complexType name="TaskType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="TaskTypeID" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="TaskType" nillable="true" type="tns:TaskType" />
+  <xs:complexType name="ArrayOfTaskType">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="TaskType" nillable="true" type="tns:TaskType" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfTaskType" nillable="true" type="tns:ArrayOfTaskType" />
   <xs:complexType name="Material">
     <xs:sequence>
       <xs:element minOccurs="0" name="FactoryTypeID" type="xs:int" />
@@ -133,6 +146,7 @@
     <xs:sequence>
       <xs:element minOccurs="0" name="ETA" type="xs:dateTime" />
       <xs:element minOccurs="0" name="TaskID" type="xs:int" />
+      <xs:element minOccurs="0" name="TaskTypeID" type="xs:int" />
       <xs:element minOccurs="0" name="WorkerID" type="xs:int" />
     </xs:sequence>
   </xs:complexType>

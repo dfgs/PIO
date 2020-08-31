@@ -79,6 +79,18 @@
   <wsdl:message name="IPIOService_GetFactoryTypes_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetFactoryTypesResponse" />
   </wsdl:message>
+  <wsdl:message name="IPIOService_GetTaskType_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetTaskType" />
+  </wsdl:message>
+  <wsdl:message name="IPIOService_GetTaskType_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetTaskTypeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPIOService_GetTaskTypes_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetTaskTypes" />
+  </wsdl:message>
+  <wsdl:message name="IPIOService_GetTaskTypes_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetTaskTypesResponse" />
+  </wsdl:message>
   <wsdl:message name="IPIOService_GetMaterial_InputMessage">
     <wsdl:part name="parameters" element="tns:GetMaterial" />
   </wsdl:message>
@@ -187,6 +199,14 @@
     <wsdl:operation name="GetFactoryTypes">
       <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetFactoryTypes" message="tns:IPIOService_GetFactoryTypes_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/GetFactoryTypesResponse" message="tns:IPIOService_GetFactoryTypes_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTaskType">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetTaskType" message="tns:IPIOService_GetTaskType_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/GetTaskTypeResponse" message="tns:IPIOService_GetTaskType_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetTaskTypes">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetTaskTypes" message="tns:IPIOService_GetTaskTypes_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/GetTaskTypesResponse" message="tns:IPIOService_GetTaskTypes_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetMaterial">
       <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetMaterial" message="tns:IPIOService_GetMaterial_InputMessage" />
@@ -332,6 +352,24 @@
     </wsdl:operation>
     <wsdl:operation name="GetFactoryTypes">
       <soap:operation soapAction="http://tempuri.org/IPIOService/GetFactoryTypes" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTaskType">
+      <soap:operation soapAction="http://tempuri.org/IPIOService/GetTaskType" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetTaskTypes">
+      <soap:operation soapAction="http://tempuri.org/IPIOService/GetTaskTypes" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

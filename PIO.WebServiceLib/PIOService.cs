@@ -23,6 +23,7 @@ namespace PIO.WebServiceLib
 		private IStackModule StackModule;
 		private IResourceTypeModule ResourceTypeModule;
 		private IFactoryTypeModule FactoryTypeModule;
+		private ITaskTypeModule TaskTypeModule;
 		private IMaterialModule MaterialModule;
 		private IIngredientModule IngredientModule;
 		private IProductModule ProductModule;
@@ -35,7 +36,8 @@ namespace PIO.WebServiceLib
 			IPlanetModule PlanetModule, IFactoryModule FactoryModule,
 			IWorkerModule WorkerModule,
 			IStackModule StackModule,IResourceTypeModule ResourceTypeModule,
-			IFactoryTypeModule FactoryTypeModule,IMaterialModule MaterialModule,
+			IFactoryTypeModule FactoryTypeModule,ITaskTypeModule TaskTypeModule,
+			IMaterialModule MaterialModule,
 			IIngredientModule IngredientModule, IProductModule ProductModule, 
 			ITaskModule TaskModule,
 
@@ -49,6 +51,7 @@ namespace PIO.WebServiceLib
 			this.StackModule = StackModule;
 			this.ResourceTypeModule = ResourceTypeModule;
 			this.FactoryTypeModule = FactoryTypeModule;
+			this.TaskTypeModule = TaskTypeModule;
 			this.MaterialModule = MaterialModule;
 			this.IngredientModule = IngredientModule;
 			this.ProductModule = ProductModule;
@@ -128,6 +131,16 @@ namespace PIO.WebServiceLib
 		{
 			LogEnter();
 			return Try(() => FactoryTypeModule.GetFactoryTypes()).OrThrow(GenerateFaultException);
+		}
+		public TaskType GetTaskType(int TaskTypeID)
+		{
+			LogEnter();
+			return Try(() => TaskTypeModule.GetTaskType(TaskTypeID)).OrThrow(GenerateFaultException);
+		}
+		public TaskType[] GetTaskTypes()
+		{
+			LogEnter();
+			return Try(() => TaskTypeModule.GetTaskTypes()).OrThrow(GenerateFaultException);
 		}
 
 		public Material GetMaterial(int MaterialID)

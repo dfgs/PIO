@@ -50,6 +50,8 @@
     <Compile Include="Exceptions\FunctionalExceptions\PIONotFoundException.cs" />
     <Compile Include="Exceptions\PIOException.cs" />
     <Compile Include="Exceptions\FunctionalExceptions\PIOFunctionalException.cs" />
+    <Compile Include="Modules\DataModules\ITaskTypeModule.cs" />
+    <Compile Include="TaskType.cs" />
     <Compile Include="Modules\DataModules\IProductModule.cs" />
     <Compile Include="Modules\FunctionalModules\IProducerModule.cs" />
     <Compile Include="Modules\FunctionalModules\IResourceCheckerModule.cs" />

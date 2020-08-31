@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Consts.cs" />
+    <Compile Include="Modules\DataModules\TaskTypeModule.cs" />
     <Compile Include="Modules\DataModules\ProductModule.cs" />
     <Compile Include="Modules\DataModules\IngredientModule.cs" />
     <Compile Include="Modules\EngineModules\IVersionControlModule.cs" />
@@ -62,6 +63,7 @@
     <Compile Include="Modules\DataModules\StackModule.cs" />
     <Compile Include="Modules\DataModules\TaskModule.cs" />
     <Compile Include="Modules\PIOModule.cs" />
+    <Compile Include="Tables\TaskTypeTable.cs" />
     <Compile Include="Tables\ProductTable.cs" />
     <Compile Include="Tables\IngredientTable.cs" />
     <Compile Include="Tables\WorkerTable.cs" />
