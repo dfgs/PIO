@@ -15,6 +15,7 @@ namespace PIO.UnitTest.WebServiceLib.Mocks
 		}
 
 		
+
 		public Task GetTask(int TaskID)
 		{
 			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
@@ -31,5 +32,12 @@ namespace PIO.UnitTest.WebServiceLib.Mocks
 		{
 			throw new NotImplementedException();
 		}
+
+		public void DeleteTask(int TaskID)
+		{
+			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
+		}
+
+
 	}
 }

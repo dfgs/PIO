@@ -21,6 +21,8 @@ namespace PIO.ServerLib.Modules
 		{
 		}
 
+		
+
 		public Task GetTask(int TaskID)
 		{
 			ISelect<TaskTable> query;
@@ -60,7 +62,15 @@ namespace PIO.ServerLib.Modules
 			return item;
 		}
 
+		public void DeleteTask(int TaskID)
+		{
+			IDelete<TaskTable> query;
 
+			LogEnter();
+			Log(LogLevels.Information, $"Deleting ftom Task table (TaskID={TaskID})");
+			query = new Delete<TaskTable>().Where(TaskTable.TaskID.IsEqualTo(TaskID));
+			Try(query).OrThrow<PIODataException>("Failed to delete");
+		}
 
 	}
 }

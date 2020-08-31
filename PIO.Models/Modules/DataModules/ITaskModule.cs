@@ -13,6 +13,7 @@ namespace PIO.Models.Modules
 		Task GetTask(int TaskID);
 		Task[] GetTasks(int WorkerID);
 
-		Task InsertTask(int TaskTypeID,int WorkerID, DateTime ETA);
+		Task InsertTask(int TaskTypeID, int WorkerID, DateTime ETA);
+		void DeleteTask(int TaskID);
 	}
 }

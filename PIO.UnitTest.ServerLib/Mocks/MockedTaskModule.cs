@@ -26,9 +26,9 @@ namespace PIO.UnitTest.ServerLib.Mocks
 			if (throwException) throw new PIODataException("UnitTestException",null,1,"UnitTest","UnitTest");
 			return new Task() {TaskID=TaskID ,WorkerID=1,ETA=DateTime.Now};
 		}
-		public void RemoveTask(int TaskID)
+		public void DeleteTask(int TaskID)
 		{
-			throw new NotImplementedException();
+			if (throwException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
 		}
 		public Task[] GetTasks(int WorkerID)
 		{

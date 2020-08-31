@@ -83,7 +83,7 @@ namespace PIO.ServerHost
 			productModule = new ProductModule(logger, database);
 			taskModule = new TaskModule(logger, database);
 
-			schedulerModule = new SchedulerModule(logger);
+			schedulerModule = new SchedulerModule(logger,taskModule);
 
 			resourceCheckerModule = new ResourceCheckerModule(logger, factoryModule, stackModule, ingredientModule);
 			producerModule = new ProducerModule(logger,schedulerModule, factoryModule, workerModule, stackModule, ingredientModule, taskModule);

@@ -25,9 +25,9 @@ namespace PIO.UnitTest.ServerLib.Modules
 
 			item = new Task() { TaskID=1,TaskTypeID=2, ETA=DateTime.Now,WorkerID=3 };
 
-			module = new SchedulerModule(NullLogger.Instance);
+			module = new SchedulerModule(NullLogger.Instance,null);
 			module.Add(item);
-			
+			Assert.AreEqual(1, module.Count);
 		}
 
 
