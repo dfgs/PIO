@@ -29,6 +29,7 @@ namespace PIO.ServerHost
 			ILogger logger;
 			VersionControlModule versionControlModule;
 			ServiceHostModule serviceHostModule;
+			SchedulerModule schedulerModule;
 
 			IPIOService service;
 			IDatabase database;
@@ -69,6 +70,7 @@ namespace PIO.ServerHost
 				return;
 			}
 
+
 			planetModule = new PlanetModule(logger, database);
 			factoryModule = new FactoryModule(logger, database);
 			workerModule = new WorkerModule(logger, database);
@@ -81,9 +83,14 @@ namespace PIO.ServerHost
 			productModule = new ProductModule(logger, database);
 			taskModule = new TaskModule(logger, database);
 
+			schedulerModule = new SchedulerModule(logger);
+
 			resourceCheckerModule = new ResourceCheckerModule(logger, factoryModule, stackModule, ingredientModule);
-			producerModule = new ProducerModule(logger, factoryModule, workerModule, stackModule, ingredientModule, taskModule);
+			producerModule = new ProducerModule(logger,schedulerModule, factoryModule, workerModule, stackModule, ingredientModule, taskModule);
 			factoryBuilderModule = new FactoryBuilderModule(logger,factoryModule,factoryTypeModule);
+
+			schedulerModule.Start();
+			
 
 			service = new PIOService(
 				logger,planetModule,factoryModule,workerModule,stackModule,resourceTypeModule,factoryTypeModule,taskTypeModule,materialModule,ingredientModule,productModule,taskModule, 
@@ -97,6 +104,7 @@ namespace PIO.ServerHost
 			WaitHandle.WaitAny(new WaitHandle[] {quitEvent }, -1);
 
 			serviceHostModule.Stop();
+			schedulerModule.Stop();
 
 			Console.CancelKeyPress -= new ConsoleCancelEventHandler(Console_CancelKeyPress);
 		}

@@ -17,14 +17,17 @@ namespace PIO.ServerLib.Modules
 {
 	public class ProducerModule : FunctionalModule, IProducerModule
 	{
+		private ISchedulerModule schedulerModule;
+
 		private IFactoryModule factoryModule;
 		private IWorkerModule workerModule;
 		private IStackModule stackModule;
 		private IIngredientModule ingredientModule;
 		private ITaskModule taskModule;
-		
-		public ProducerModule(ILogger Logger, IFactoryModule FactoryModule,IWorkerModule WorkerModule, IStackModule StackModule, IIngredientModule IngredientModule,ITaskModule TaskModule) : base(Logger)
+
+		public ProducerModule(ILogger Logger,ISchedulerModule SchedulerModule, IFactoryModule FactoryModule,IWorkerModule WorkerModule, IStackModule StackModule, IIngredientModule IngredientModule,ITaskModule TaskModule) : base(Logger)
 		{
+			this.schedulerModule = SchedulerModule;
 			this.factoryModule = FactoryModule; this.workerModule = WorkerModule; this.stackModule = StackModule; this.ingredientModule = IngredientModule;this.taskModule = TaskModule;
 		}
 
@@ -85,13 +88,13 @@ namespace PIO.ServerLib.Modules
 				Try(() => stackModule.UpdateStack(stack.StackID, stack.Quantity)).OrThrow<PIOInternalErrorException>("Failed to update stack");
 			}
 
-			task = new Task();
-			task.WorkerID = WorkerID;
-			task.ETA = DateTime.Now.AddMinutes(5);
+			
 			
 			Log(LogLevels.Information, $"Creating task (WorkerID={WorkerID})");
-			task=Try(() => taskModule.InsertTask((int)TaskTypeIDs.Produce, WorkerID,DateTime.Now.AddMinutes(5))).OrThrow<PIOInternalErrorException>("Failed to create task");
+			task=Try(() => taskModule.InsertTask((int)TaskTypeIDs.Produce, WorkerID,DateTime.Now.AddMinutes(1))).OrThrow<PIOInternalErrorException>("Failed to create task");
 
+			Log(LogLevels.Information, $"Scheduling task (TaskID={task.TaskID})");
+			Try(()=>schedulerModule.Add(task)).OrThrow<PIOInternalErrorException>("Failed to schedule task");
 
 			return task;
 		}

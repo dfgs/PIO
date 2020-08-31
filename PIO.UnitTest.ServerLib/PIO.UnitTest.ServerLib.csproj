@@ -60,6 +60,8 @@
     <Compile Include="Modules\DataModules\TaskTypeModuleUnitTest.cs" />
     <Compile Include="Modules\DataModules\ProductModuleUnitTest.cs" />
     <Compile Include="Modules\DataModules\IngredientModuleUnitTest.cs" />
+    <Compile Include="Mocks\EngineModules\MockedSchedulerModule.cs" />
+    <Compile Include="Modules\EngineModules\SchedulerModuleUnitTest.cs" />
     <Compile Include="Modules\FunctionalModules\ProducerModuleUnitTest.cs" />
     <Compile Include="Modules\FunctionalModules\ResourceCheckerModuleUnitTest.cs" />
     <Compile Include="Modules\FunctionalModules\FactoryBuilderModuleUnitTest.cs" />
