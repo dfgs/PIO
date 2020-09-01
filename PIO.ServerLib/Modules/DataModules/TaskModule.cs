@@ -45,7 +45,16 @@ namespace PIO.ServerLib.Modules
 			return TrySelectMany<TaskTable, Task>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
-		
+		public Task[] GetTasks()
+		{
+			ISelect<TaskTable> query;
+			LogEnter();
+
+			Log(LogLevels.Information, $"Querying Task table");
+			query = new Select<TaskTable>(TaskTable.TaskID, TaskTable.TaskTypeID, TaskTable.WorkerID, TaskTable.ETA);
+			return TrySelectMany<TaskTable, Task>(query).OrThrow<PIODataException>("Failed to query");
+		}
+
 
 		public Task InsertTask(int TaskTypeID, int WorkerID,  DateTime ETA)
 		{
@@ -67,7 +76,7 @@ namespace PIO.ServerLib.Modules
 			IDelete<TaskTable> query;
 
 			LogEnter();
-			Log(LogLevels.Information, $"Deleting ftom Task table (TaskID={TaskID})");
+			Log(LogLevels.Information, $"Deleting from Task table (TaskID={TaskID})");
 			query = new Delete<TaskTable>().Where(TaskTable.TaskID.IsEqualTo(TaskID));
 			Try(query).OrThrow<PIODataException>("Failed to delete");
 		}

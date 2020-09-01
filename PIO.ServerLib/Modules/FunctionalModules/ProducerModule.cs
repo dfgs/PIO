@@ -91,7 +91,7 @@ namespace PIO.ServerLib.Modules
 			
 			
 			Log(LogLevels.Information, $"Creating task (WorkerID={WorkerID})");
-			task=Try(() => taskModule.InsertTask((int)TaskTypeIDs.Produce, WorkerID,DateTime.Now.AddMinutes(1))).OrThrow<PIOInternalErrorException>("Failed to create task");
+			task=Try(() => taskModule.InsertTask((int)TaskTypeIDs.Produce, WorkerID,DateTime.Now.AddMinutes(5))).OrThrow<PIOInternalErrorException>("Failed to create task");
 
 			Log(LogLevels.Information, $"Scheduling task (TaskID={task.TaskID})");
 			Try(()=>schedulerModule.Add(task)).OrThrow<PIOInternalErrorException>("Failed to schedule task");

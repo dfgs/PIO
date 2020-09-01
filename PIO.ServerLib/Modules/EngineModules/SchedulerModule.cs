@@ -33,7 +33,26 @@ namespace PIO.ServerLib.Modules
 
 		public void Add(Task Task)
 		{
-			this.Add(Task.ETA, Task);
+			LogEnter();
+
+			Log(LogLevels.Information, $"Adding new task (TaskID={Task.TaskID}, WorkerID={Task.WorkerID}, ETA={Task.ETA})");
+
+			Try(() => this.Add(Task.ETA, Task)).OrThrow<PIOInternalErrorException>("Failed to enqueue task");
+		}
+
+		protected override void OnStarting()
+		{
+			Task[] items;
+
+			LogEnter();
+
+			Log(LogLevels.Information, $"Loading existing tasks");
+			items=Try(() => taskModule.GetTasks()).OrThrow<PIOInternalErrorException>("Failed to load tasks");
+		
+			foreach(Task item in items)
+			{
+				Add(item.ETA, item);
+			}
 		}
 
 		protected override void OnTriggerEvent(Task Task)
