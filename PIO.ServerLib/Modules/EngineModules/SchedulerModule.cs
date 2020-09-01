@@ -76,7 +76,7 @@ namespace PIO.ServerLib.Modules
 			switch (Task.TaskTypeID)
 			{
 				case (int)TaskTypeIDs.Produce:
-					Try(() => producerModule.EndProduce(Task.WorkerID, Task.FactoryID)).OrAlert($"Failed to terminate task (TaskID={Task.TaskID})");
+					Try(() => producerModule.EndProduce(Task.WorkerID)).OrAlert($"Failed to terminate task (TaskID={Task.TaskID})");
 					break;
 				default:
 					Log(LogLevels.Warning, $"Unhandled task type (TaskTypeID={Task.TaskTypeID})");

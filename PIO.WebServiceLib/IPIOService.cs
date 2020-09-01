@@ -24,7 +24,7 @@ namespace PIO.WebServiceLib
 		[OperationContract]
 		Worker GetWorker(int WorkerID);
 		[OperationContract]
-		Worker[] GetWorkers(int PlanetID);
+		Worker[] GetWorkers(int FactoryID);
 		[OperationContract]
 		Stack GetStack(int StackID);
 		[OperationContract]
@@ -56,14 +56,14 @@ namespace PIO.WebServiceLib
 		[OperationContract]
 		Task GetTask(int TaskID);
 		[OperationContract]
-		Task[] GetTasks(int FactoryID);
+		Task[] GetTasks(int WorkerID);
 		#endregion
 
 		#region functional
 		[OperationContract]
 		bool HasEnoughResourcesToProduce(int FactoryID);
 		[OperationContract]
-		Task Produce(int WorkerID,int FactoryID);
+		Task Produce(int WorkerID);
 		#endregion
 
 	}

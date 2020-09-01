@@ -12,7 +12,6 @@ namespace PIO.ServerLib.Tables
 		public static readonly Column<TaskTable, int> TaskID = new Column<TaskTable, int>() { IsIdentity = true, IsPrimaryKey = true };
 		public static readonly Column<TaskTable, int> TaskTypeID = new Column<TaskTable, int>() ;
 		public static readonly Column<TaskTable, int> WorkerID = new Column<TaskTable, int>();
-		public static readonly Column<TaskTable, int> FactoryID = new Column<TaskTable, int>();
 		public static readonly Column<TaskTable, DateTime> ETA = new Column<TaskTable, DateTime>() ;
 	}
 }

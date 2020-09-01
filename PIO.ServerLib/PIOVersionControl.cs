@@ -36,16 +36,17 @@ namespace PIO.ServerLib
 					yield return new CreateTable<FactoryTypeTable>(FactoryTypeTable.FactoryTypeID, FactoryTypeTable.Name, FactoryTypeTable.HealthPoints);
 					yield return new CreateTable<TaskTypeTable>(TaskTypeTable.TaskTypeID, TaskTypeTable.Name);
 					yield return new CreateTable<FactoryTable>(FactoryTable.FactoryID, FactoryTable.PlanetID, FactoryTable.FactoryTypeID, FactoryTable.HealthPoints);
-					yield return new CreateTable<WorkerTable>(WorkerTable.WorkerID, WorkerTable.PlanetID);
+					yield return new CreateTable<WorkerTable>(WorkerTable.WorkerID, WorkerTable.FactoryID);
 					yield return new CreateTable<StackTable>(StackTable.StackID, StackTable.FactoryID, StackTable.ResourceTypeID, StackTable.Quantity);
 					yield return new CreateTable<MaterialTable>(MaterialTable.MaterialID, MaterialTable.FactoryTypeID, MaterialTable.ResourceTypeID, MaterialTable.Quantity);
-					yield return new CreateTable<TaskTable>(TaskTable.TaskID,TaskTable.TaskTypeID, TaskTable.WorkerID, TaskTable.FactoryID, TaskTable.ETA);
+					yield return new CreateTable<TaskTable>(TaskTable.TaskID,TaskTable.TaskTypeID, TaskTable.WorkerID,  TaskTable.ETA);
 
 					yield return new CreateTable<IngredientTable>(IngredientTable.IngredientID, IngredientTable.FactoryTypeID, IngredientTable.ResourceTypeID, IngredientTable.Quantity);
 					yield return new CreateTable<ProductTable>(ProductTable.ProductID, ProductTable.FactoryTypeID, ProductTable.ResourceTypeID, ProductTable.Quantity, ProductTable.Duration);
 					break;
 				case 2:
 					yield return new CreateRelation<PlanetTable, FactoryTable, int>(PlanetTable.PlanetID, FactoryTable.PlanetID);
+					yield return new CreateRelation<FactoryTable, WorkerTable, int>(FactoryTable.FactoryID, WorkerTable.FactoryID);
 					yield return new CreateRelation<FactoryTable, StackTable, int>(FactoryTable.FactoryID, StackTable.FactoryID);
 					yield return new CreateRelation<ResourceTypeTable, StackTable, int>(ResourceTypeTable.ResourceTypeID, StackTable.ResourceTypeID);
 					yield return new CreateRelation<FactoryTypeTable, MaterialTable, int>(FactoryTypeTable.FactoryTypeID, MaterialTable.FactoryTypeID);
@@ -54,7 +55,6 @@ namespace PIO.ServerLib
 					yield return new CreateRelation<TaskTypeTable, TaskTable, int>(TaskTypeTable.TaskTypeID, TaskTable.TaskTypeID);
 
 					yield return new CreateRelation<WorkerTable, TaskTable, int>(WorkerTable.WorkerID, TaskTable.WorkerID);
-					yield return new CreateRelation<FactoryTable, TaskTable, int>(FactoryTable.FactoryID, TaskTable.FactoryID);
 
 					yield return new CreateRelation<FactoryTypeTable, IngredientTable, int>(FactoryTypeTable.FactoryTypeID, IngredientTable.FactoryTypeID);
 					yield return new CreateRelation<ResourceTypeTable, IngredientTable, int>(ResourceTypeTable.ResourceTypeID, IngredientTable.ResourceTypeID);
@@ -95,18 +95,21 @@ namespace PIO.ServerLib
 					yield return new SelectIdentity<PlanetTable>((result) => planetID = Convert.ToInt32(result));
 					#endregion
 
-					#region create startup Worker
-					yield return new Insert<WorkerTable>().Set(WorkerTable.PlanetID, planetID);
-					yield return new SelectIdentity<WorkerTable>((result) => workerID = Convert.ToInt32(result));
-					#endregion
-
 					#region create startup Factories
-					yield return new Insert<FactoryTable>().Set(FactoryTable.PlanetID, planetID).Set(FactoryTable.FactoryTypeID,(int)FactoryTypeIDs.Forest).Set(FactoryTable.HealthPoints,999);
+					yield return new Insert<FactoryTable>().Set(FactoryTable.PlanetID, planetID).Set(FactoryTable.FactoryTypeID, (int)FactoryTypeIDs.Forest).Set(FactoryTable.HealthPoints, 999);
 					yield return new SelectIdentity<FactoryTable>((result) => factoryID = Convert.ToInt32(result));
 					#region fill startup factories with material
 					yield return new Insert<StackTable>().Set(StackTable.FactoryID, factoryID).Set(StackTable.ResourceTypeID, (int)ResourceTypeIDs.Tree).Set(StackTable.Quantity, 100);
 					#endregion
+
+					yield return new Insert<FactoryTable>().Set(FactoryTable.PlanetID, planetID).Set(FactoryTable.FactoryTypeID, (int)FactoryTypeIDs.Forest).Set(FactoryTable.HealthPoints, 999);
 					#endregion
+
+					#region create startup Worker
+					yield return new Insert<WorkerTable>().Set(WorkerTable.FactoryID,factoryID);
+					yield return new SelectIdentity<WorkerTable>((result) => workerID = Convert.ToInt32(result));
+					#endregion
+
 
 
 

@@ -30,7 +30,7 @@
   <xs:element name="ArrayOfFactory" nillable="true" type="tns:ArrayOfFactory" />
   <xs:complexType name="Worker">
     <xs:sequence>
-      <xs:element minOccurs="0" name="PlanetID" type="xs:int" />
+      <xs:element minOccurs="0" name="FactoryID" type="xs:int" />
       <xs:element minOccurs="0" name="WorkerID" type="xs:int" />
     </xs:sequence>
   </xs:complexType>

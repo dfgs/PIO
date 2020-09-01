@@ -33,7 +33,7 @@ namespace PIO.UnitTest.WebServiceLib.Mocks
 			return Generate((t) => new Task() { TaskID = t, WorkerID = 1 });
 		}
 
-		public Task InsertTask(int TaskTypeID, int WorkerID, int FactoryID, DateTime ETA)
+		public Task InsertTask(int TaskTypeID, int WorkerID,  DateTime ETA)
 		{
 			throw new NotImplementedException();
 		}

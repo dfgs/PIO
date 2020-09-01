@@ -25,7 +25,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 
 			producerModule = new MockedProducerModule();
 			module = new SchedulerModule(NullLogger.Instance,null,producerModule);
-			producerModule.BeginProduce(1, 1);
+			producerModule.BeginProduce(1);
 			Assert.AreEqual(1, module.Count);
 		}
 

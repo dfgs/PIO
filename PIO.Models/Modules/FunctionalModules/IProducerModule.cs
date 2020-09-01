@@ -11,7 +11,7 @@ namespace PIO.Models.Modules
 	public interface IProducerModule : ITaskGeneratorModule
 	{
 
-		Task BeginProduce(int WorkerID, int FactoryID);
-		void EndProduce(int WorkerID, int FactoryID);
+		Task BeginProduce(int WorkerID);
+		void EndProduce(int WorkerID);
 	}
 }

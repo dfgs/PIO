@@ -16,13 +16,13 @@ namespace PIO.PowerShell
 	{
 
 		[Parameter(Position = 0, ValueFromPipeline = true, Mandatory = true)]
-		public int FactoryID { get; set; }
+		public int WorkerID { get; set; }
 
 		protected override void ProcessRecord()
 		{
 			Task[] result;
 
-			result = Try(() => client.GetTasks(FactoryID));
+			result = Try(() => client.GetTasks(WorkerID));
 
 			WriteObject(result);
 		}

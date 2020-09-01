@@ -11,14 +11,14 @@ namespace PIO.UnitTest.ServerLib.Mocks
 	{
 		public event TaskCreatedHandler TaskCreated;
 
-		public Models.Task BeginProduce(int WorkerID, int FactoryID)
+		public Models.Task BeginProduce(int WorkerID)
 		{
 			Task task=new Models.Task() { WorkerID = WorkerID };
 			TaskCreated(this, task);
 			return task;
 		}
 
-		public void EndProduce(int WorkerID, int FactoryID)
+		public void EndProduce(int WorkerID)
 		{
 		}
 	}

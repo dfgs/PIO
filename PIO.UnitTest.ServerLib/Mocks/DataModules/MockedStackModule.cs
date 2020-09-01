@@ -35,7 +35,10 @@ namespace PIO.UnitTest.ServerLib.Mocks
 
 		public Stack InsertStack(int FactoryID, int ResourceTypeID, int Quantity)
 		{
-			throw new NotImplementedException();
+			Stack item;
+			item = new Stack() {StackID=items.Count, FactoryID = FactoryID, ResourceTypeID = ResourceTypeID, Quantity = Quantity };
+			items.Add(item);
+			return item;
 		}
 
 		public void UpdateStack(int StackID, int Quantity)

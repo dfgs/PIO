@@ -34,9 +34,9 @@ namespace PIO.UnitTest.ServerLib.Modules
 			WorkerModule module;
 			Worker[] results;
 
-			database = new MockedDatabase<Worker>(false, 3, (t) => new Worker() { WorkerID = t });
+			database = new MockedDatabase<Worker>(false, 3, (t) => new Worker() { WorkerID = t,FactoryID=2 });
 			module = new WorkerModule(NullLogger.Instance, database);
-			results = module.GetWorkers(1);
+			results = module.GetWorkers(2);
 			Assert.IsNotNull(results);
 			Assert.AreEqual(3, results.Length);
 			for(int t=0;t<3;t++)

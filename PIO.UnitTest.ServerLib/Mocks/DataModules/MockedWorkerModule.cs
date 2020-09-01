@@ -16,10 +16,10 @@ namespace PIO.UnitTest.ServerLib.Mocks
 		{
 		}
 
-		public Worker[] GetWorkers(int PlanetID)
+		public Worker[] GetWorkers(int FactoryID)
 		{
 			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
-			return items.Where(item => item.PlanetID == PlanetID).ToArray();
+			return items.Where(item => item.FactoryID == FactoryID).ToArray();
 		}
 
 		public Worker GetWorker(int WorkerID)

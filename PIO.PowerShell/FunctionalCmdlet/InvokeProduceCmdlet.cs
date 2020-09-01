@@ -17,9 +17,7 @@ namespace PIO.PowerShell
 		[Parameter(Position = 0, ValueFromPipeline = true, Mandatory = true)]
 		public int WorkerID { get; set; }
 
-		[Parameter(Position = 1, ValueFromPipeline = true, Mandatory = true)]
-		public int FactoryID { get; set; }
-
+		
 
 
 
@@ -27,7 +25,7 @@ namespace PIO.PowerShell
 		{
 			Task result;
 
-			result = Try(()=>client.Produce(WorkerID,FactoryID));
+			result = Try(()=>client.Produce(WorkerID));
 			
 			WriteObject(result);
 		}

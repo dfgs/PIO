@@ -83,10 +83,10 @@ namespace PIO.WebServiceLib
 			LogEnter();
 			return Try(() => WorkerModule.GetWorker(WorkerID)).OrThrow(GenerateFaultException);
 		}
-		public Worker[] GetWorkers(int PlanetID)
+		public Worker[] GetWorkers(int FactoryID)
 		{
 			LogEnter();
-			return Try(() => WorkerModule.GetWorkers(PlanetID)).OrThrow(GenerateFaultException);
+			return Try(() => WorkerModule.GetWorkers(FactoryID)).OrThrow(GenerateFaultException);
 		}
 		public Factory GetFactory(int FactoryID)
 		{
@@ -184,10 +184,10 @@ namespace PIO.WebServiceLib
 			return Try(() => TaskModule.GetTask(TaskID)).OrThrow(GenerateFaultException);
 		}
 
-		public Task[] GetTasks(int FactoryID)
+		public Task[] GetTasks(int WorkerID)
 		{
 			LogEnter();
-			return Try(() => TaskModule.GetTasks(FactoryID)).OrThrow(GenerateFaultException);
+			return Try(() => TaskModule.GetTasks(WorkerID)).OrThrow(GenerateFaultException);
 		}
 		#endregion
 
@@ -200,11 +200,11 @@ namespace PIO.WebServiceLib
 			return Try(() => ResourceCheckerModule.HasEnoughResourcesToProduce(FactoryID)).OrThrow(GenerateFaultException);
 		}
 
-		public Task Produce(int WorkerID,int FactoryID)
+		public Task Produce(int WorkerID)
 		{
 			LogEnter();
 
-			return Try(() => ProducerModule.BeginProduce(WorkerID,FactoryID)).OrThrow(GenerateFaultException);
+			return Try(() => ProducerModule.BeginProduce(WorkerID)).OrThrow(GenerateFaultException);
 		}
 		#endregion
 

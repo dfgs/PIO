@@ -46,10 +46,10 @@ namespace PIO.PowerShell.PIOWebServiceReference {
         System.Threading.Tasks.Task<PIO.Models.Worker> GetWorkerAsync(int WorkerID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetWorkers", ReplyAction="http://tempuri.org/IPIOService/GetWorkersResponse")]
-        PIO.Models.Worker[] GetWorkers(int PlanetID);
+        PIO.Models.Worker[] GetWorkers(int FactoryID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetWorkers", ReplyAction="http://tempuri.org/IPIOService/GetWorkersResponse")]
-        System.Threading.Tasks.Task<PIO.Models.Worker[]> GetWorkersAsync(int PlanetID);
+        System.Threading.Tasks.Task<PIO.Models.Worker[]> GetWorkersAsync(int FactoryID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetStack", ReplyAction="http://tempuri.org/IPIOService/GetStackResponse")]
         PIO.Models.Stack GetStack(int StackID);
@@ -154,10 +154,10 @@ namespace PIO.PowerShell.PIOWebServiceReference {
         System.Threading.Tasks.Task<bool> HasEnoughResourcesToProduceAsync(int FactoryID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/Produce", ReplyAction="http://tempuri.org/IPIOService/ProduceResponse")]
-        PIO.Models.Task Produce(int WorkerID, int FactoryID);
+        PIO.Models.Task Produce(int WorkerID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/Produce", ReplyAction="http://tempuri.org/IPIOService/ProduceResponse")]
-        System.Threading.Tasks.Task<PIO.Models.Task> ProduceAsync(int WorkerID, int FactoryID);
+        System.Threading.Tasks.Task<PIO.Models.Task> ProduceAsync(int WorkerID);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -227,12 +227,12 @@ namespace PIO.PowerShell.PIOWebServiceReference {
             return base.Channel.GetWorkerAsync(WorkerID);
         }
         
-        public PIO.Models.Worker[] GetWorkers(int PlanetID) {
-            return base.Channel.GetWorkers(PlanetID);
+        public PIO.Models.Worker[] GetWorkers(int FactoryID) {
+            return base.Channel.GetWorkers(FactoryID);
         }
         
-        public System.Threading.Tasks.Task<PIO.Models.Worker[]> GetWorkersAsync(int PlanetID) {
-            return base.Channel.GetWorkersAsync(PlanetID);
+        public System.Threading.Tasks.Task<PIO.Models.Worker[]> GetWorkersAsync(int FactoryID) {
+            return base.Channel.GetWorkersAsync(FactoryID);
         }
         
         public PIO.Models.Stack GetStack(int StackID) {
@@ -371,12 +371,12 @@ namespace PIO.PowerShell.PIOWebServiceReference {
             return base.Channel.HasEnoughResourcesToProduceAsync(FactoryID);
         }
         
-        public PIO.Models.Task Produce(int WorkerID, int FactoryID) {
-            return base.Channel.Produce(WorkerID, FactoryID);
+        public PIO.Models.Task Produce(int WorkerID) {
+            return base.Channel.Produce(WorkerID);
         }
         
-        public System.Threading.Tasks.Task<PIO.Models.Task> ProduceAsync(int WorkerID, int FactoryID) {
-            return base.Channel.ProduceAsync(WorkerID, FactoryID);
+        public System.Threading.Tasks.Task<PIO.Models.Task> ProduceAsync(int WorkerID) {
+            return base.Channel.ProduceAsync(WorkerID);
         }
     }
 }
