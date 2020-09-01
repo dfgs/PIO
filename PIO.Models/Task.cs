@@ -18,6 +18,8 @@ namespace PIO.Models
 		[DataMember]
 		public int WorkerID { get; set; }
 		[DataMember]
+		public int FactoryID { get; set; }
+		[DataMember]
 		public DateTime ETA { get; set; }
 		
 

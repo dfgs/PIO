@@ -32,7 +32,12 @@ namespace PIO.UnitTest.ServerLib.Mocks
 			if (throwException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
 			return items.Where(item => item.FactoryID == FactoryID).ToArray();
 		}
-		
+
+		public Stack InsertStack(int FactoryID, int ResourceTypeID, int Quantity)
+		{
+			throw new NotImplementedException();
+		}
+
 		public void UpdateStack(int StackID, int Quantity)
 		{
 			Stack item;

@@ -8,9 +8,10 @@ using System.Threading.Tasks;
 
 namespace PIO.Models.Modules
 {
-	public interface IProducerModule : IFunctionalModule
+	public interface IProducerModule : ITaskGeneratorModule
 	{
 
-		Task Produce(int WorkerID, int FactoryID);
+		Task BeginProduce(int WorkerID, int FactoryID);
+		void EndProduce(int WorkerID, int FactoryID);
 	}
 }

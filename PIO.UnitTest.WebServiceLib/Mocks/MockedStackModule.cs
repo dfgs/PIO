@@ -29,6 +29,11 @@ namespace PIO.UnitTest.WebServiceLib.Mocks
 			return Generate((t) => new Stack() { StackID = t,FactoryID=FactoryID });
 		}
 
+		public Stack InsertStack(int FactoryID, int ResourceTypeID, int Quantity)
+		{
+			throw new NotImplementedException();
+		}
+
 		public void UpdateStack(int StackID, int Quantity)
 		{
 			throw new NotImplementedException();

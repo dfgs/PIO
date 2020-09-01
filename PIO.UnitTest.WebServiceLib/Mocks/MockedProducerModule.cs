@@ -16,11 +16,19 @@ namespace PIO.UnitTest.WebServiceLib.Mocks
 		{
 		}
 
-		public Task Produce(int WorkerID,int FactoryID)
+		public event TaskCreatedHandler TaskCreated;
+
+		public Task BeginProduce(int WorkerID,int FactoryID)
 		{
 			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
-			return new Task() { WorkerID=WorkerID,ETA=DateTime.Now };
+			Task task= new Task() { WorkerID = WorkerID, ETA = DateTime.Now };
+			TaskCreated?.Invoke(this, task);
+			return task;
 		}
 
+		public void EndProduce(int WorkerID, int FactoryID)
+		{
+			throw new NotImplementedException();
+		}
 	}
 }

@@ -42,7 +42,21 @@ namespace PIO.ServerLib.Modules
 			query = new Select<StackTable>(StackTable.StackID, StackTable.FactoryID, StackTable.ResourceTypeID, StackTable.Quantity).Where(StackTable.FactoryID.IsEqualTo(FactoryID));
 			return TrySelectMany<StackTable,Stack>(query).OrThrow<PIODataException>("Failed to query");
 		}
-		
+
+		public Stack InsertStack(int FactoryID, int ResourceTypeID, int Quantity)
+		{
+			IInsert<StackTable> query;
+			Stack item;
+			object result;
+
+			LogEnter();
+			Log(LogLevels.Information, $"Inserting into Stack table (FactoryID={FactoryID}, ResourceTypeID={ResourceTypeID}, Quantity={Quantity})");
+			item = new Stack() { FactoryID = FactoryID, ResourceTypeID= ResourceTypeID, Quantity= Quantity};
+			query = new Insert<StackTable>().Set(StackTable.FactoryID, item.FactoryID).Set(StackTable.ResourceTypeID, item.ResourceTypeID).Set(StackTable.Quantity, item.Quantity);
+			result = Try(query).OrThrow<PIODataException>("Failed to insert");
+			item.StackID = Convert.ToInt32(result);
+			return item;
+		}
 
 		public void UpdateStack(int StackID, int Quantity)
 		{

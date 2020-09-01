@@ -1,4 +1,5 @@
 ﻿using PIO.Models.Exceptions;
+using PIO.Models.Modules;
 using PIO.ServerLib.Modules;
 using System;
 using System.Collections.Generic;
@@ -16,9 +17,20 @@ namespace PIO.UnitTest.ServerLib.Mocks.EngineModules
 			set;
 		}
 		
-		public MockedSchedulerModule(bool ThrowException)
+		public int Count
+		{
+			get;
+			set;
+		}
+		public MockedSchedulerModule(bool ThrowException,IProducerModule ProducerModule)
 		{
 			this.ThrowException = ThrowException;
+			ProducerModule.TaskCreated += ProducerModule_TaskCreated;
+		}
+
+		private void ProducerModule_TaskCreated(ITaskGeneratorModule Module, Models.Task Task)
+		{
+			Count++;
 		}
 
 		public void Add(Models.Task Task)

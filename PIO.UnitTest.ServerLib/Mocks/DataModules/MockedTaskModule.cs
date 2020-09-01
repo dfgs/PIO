@@ -57,13 +57,13 @@ namespace PIO.UnitTest.ServerLib.Mocks
 		}
 
 		
-		public Task InsertTask(int TaskTypeID,int WorkerID, DateTime ETA)
+		public Task InsertTask(int TaskTypeID, int WorkerID, int FactoryID, DateTime ETA)
 		{
 			Task item;
 
 			if (throwException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
 
-			item = new Task() {TaskTypeID=TaskTypeID, WorkerID=WorkerID,ETA=ETA };
+			item = new Task() {TaskTypeID=TaskTypeID, WorkerID=WorkerID,FactoryID=FactoryID,ETA=ETA };
 			return item;
 		}
 

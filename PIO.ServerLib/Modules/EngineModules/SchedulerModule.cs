@@ -22,22 +22,32 @@ using System.Threading;
 
 namespace PIO.ServerLib.Modules
 {
+
+	// should not throw exceptions, in order to prevent module to stop
 	public class SchedulerModule : AtModule<Task>,ISchedulerModule
 	{
 		private ITaskModule taskModule;
+		private IProducerModule producerModule;
 
-		public SchedulerModule(ILogger Logger,ITaskModule TaskModule) : base(Logger, ThreadPriority.Normal)
+		public SchedulerModule(ILogger Logger,ITaskModule TaskModule,IProducerModule ProducerModule) : base(Logger, ThreadPriority.Normal)
 		{
-			this.taskModule = TaskModule;
+			this.taskModule = TaskModule;this.producerModule = ProducerModule;
+
+			ProducerModule.TaskCreated += ProducerModule_TaskCreated;
 		}
 
-		public void Add(Task Task)
+		private void ProducerModule_TaskCreated(ITaskGeneratorModule Module, Task Task)
+		{
+			Add(Task);
+		}
+
+		private void Add(Task Task)
 		{
 			LogEnter();
 
 			Log(LogLevels.Information, $"Adding new task (TaskID={Task.TaskID}, WorkerID={Task.WorkerID}, ETA={Task.ETA})");
 
-			Try(() => this.Add(Task.ETA, Task)).OrThrow<PIOInternalErrorException>("Failed to enqueue task");
+			Try(() => this.Add(Task.ETA, Task)).OrAlert("Failed to enqueue task");
 		}
 
 		protected override void OnStarting()
@@ -47,7 +57,7 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 
 			Log(LogLevels.Information, $"Loading existing tasks");
-			items=Try(() => taskModule.GetTasks()).OrThrow<PIOInternalErrorException>("Failed to load tasks");
+			if (!Try(() => taskModule.GetTasks()).OrAlert(out items, "Failed to load tasks")) return;
 		
 			foreach(Task item in items)
 			{
@@ -58,10 +68,21 @@ namespace PIO.ServerLib.Modules
 		protected override void OnTriggerEvent(Task Task)
 		{
 			Log(LogLevels.Information, $"Task finished (TaskID={Task.TaskID}, TaskTypeID={Task.TaskTypeID})");
-			//taskModule.
 
 			Log(LogLevels.Information, $"Deleting task (TaskID={Task.TaskID})");
-			Try(() => taskModule.DeleteTask(Task.TaskID)).OrThrow<PIOInternalErrorException>("Failed to delete task");
+			Try(() => taskModule.DeleteTask(Task.TaskID)).OrAlert("Failed to delete task");
+
+			Log(LogLevels.Information, $"Terminating task (TaskID={Task.TaskID})");
+			switch (Task.TaskTypeID)
+			{
+				case (int)TaskTypeIDs.Produce:
+					Try(() => producerModule.EndProduce(Task.WorkerID, Task.FactoryID)).OrAlert($"Failed to terminate task (TaskID={Task.TaskID})");
+					break;
+				default:
+					Log(LogLevels.Warning, $"Unhandled task type (TaskTypeID={Task.TaskTypeID})");
+					break;
+			}
+
 
 		}
 	}

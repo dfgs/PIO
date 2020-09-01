@@ -83,12 +83,12 @@ namespace PIO.ServerHost
 			productModule = new ProductModule(logger, database);
 			taskModule = new TaskModule(logger, database);
 
-			schedulerModule = new SchedulerModule(logger,taskModule);
 
 			resourceCheckerModule = new ResourceCheckerModule(logger, factoryModule, stackModule, ingredientModule);
-			producerModule = new ProducerModule(logger,schedulerModule, factoryModule, workerModule, stackModule, ingredientModule, taskModule);
+			producerModule = new ProducerModule(logger,factoryModule, workerModule, stackModule, ingredientModule, productModule, taskModule);
 			factoryBuilderModule = new FactoryBuilderModule(logger,factoryModule,factoryTypeModule);
 
+			schedulerModule = new SchedulerModule(logger, taskModule,producerModule);
 			schedulerModule.Start();
 			
 

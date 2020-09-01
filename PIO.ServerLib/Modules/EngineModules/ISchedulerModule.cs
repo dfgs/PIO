@@ -5,7 +5,7 @@ namespace PIO.ServerLib.Modules
 {
 	public interface ISchedulerModule: IEngineModule
 	{
-		void Add(Task Task); 
+		//void Add(Task Task); 
 
 
 	}

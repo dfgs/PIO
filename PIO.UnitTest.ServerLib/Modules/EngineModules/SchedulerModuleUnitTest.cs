@@ -20,13 +20,12 @@ namespace PIO.UnitTest.ServerLib.Modules
 		[TestMethod]
 		public void ShouldAddTask()
 		{
-			Task item;
 			SchedulerModule module;
+			IProducerModule producerModule;
 
-			item = new Task() { TaskID=1,TaskTypeID=2, ETA=DateTime.Now,WorkerID=3 };
-
-			module = new SchedulerModule(NullLogger.Instance,null);
-			module.Add(item);
+			producerModule = new MockedProducerModule();
+			module = new SchedulerModule(NullLogger.Instance,null,producerModule);
+			producerModule.BeginProduce(1, 1);
 			Assert.AreEqual(1, module.Count);
 		}
 

@@ -49,14 +49,16 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Mocks\MockedDatabaseModule.cs" />
-    <Compile Include="Mocks\MockedWorkerModule.cs" />
-    <Compile Include="Mocks\MockedFactoryModule.cs" />
-    <Compile Include="Mocks\MockedFactoryTypeModule.cs" />
-    <Compile Include="Mocks\MockedIngredientModule.cs" />
-    <Compile Include="Mocks\MockedStackModule.cs" />
-    <Compile Include="Mocks\MockedTaskModule.cs" />
-    <Compile Include="Mocks\MockedDatabase.cs" />
+    <Compile Include="Mocks\DataModules\MockedDatabaseModule.cs" />
+    <Compile Include="Mocks\DataModules\MockedProductModule.cs" />
+    <Compile Include="Mocks\DataModules\MockedWorkerModule.cs" />
+    <Compile Include="Mocks\DataModules\MockedFactoryModule.cs" />
+    <Compile Include="Mocks\DataModules\MockedFactoryTypeModule.cs" />
+    <Compile Include="Mocks\DataModules\MockedIngredientModule.cs" />
+    <Compile Include="Mocks\DataModules\MockedStackModule.cs" />
+    <Compile Include="Mocks\DataModules\MockedTaskModule.cs" />
+    <Compile Include="Mocks\DataModules\MockedDatabase.cs" />
+    <Compile Include="Mocks\FunctionalModules\MockedProducerModule.cs" />
     <Compile Include="Modules\DataModules\TaskTypeModuleUnitTest.cs" />
     <Compile Include="Modules\DataModules\ProductModuleUnitTest.cs" />
     <Compile Include="Modules\DataModules\IngredientModuleUnitTest.cs" />

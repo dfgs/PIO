@@ -204,7 +204,7 @@ namespace PIO.WebServiceLib
 		{
 			LogEnter();
 
-			return Try(() => ProducerModule.Produce(WorkerID,FactoryID)).OrThrow(GenerateFaultException);
+			return Try(() => ProducerModule.BeginProduce(WorkerID,FactoryID)).OrThrow(GenerateFaultException);
 		}
 		#endregion
 

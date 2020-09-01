@@ -39,7 +39,7 @@ namespace PIO.ServerLib
 					yield return new CreateTable<WorkerTable>(WorkerTable.WorkerID, WorkerTable.PlanetID);
 					yield return new CreateTable<StackTable>(StackTable.StackID, StackTable.FactoryID, StackTable.ResourceTypeID, StackTable.Quantity);
 					yield return new CreateTable<MaterialTable>(MaterialTable.MaterialID, MaterialTable.FactoryTypeID, MaterialTable.ResourceTypeID, MaterialTable.Quantity);
-					yield return new CreateTable<TaskTable>(TaskTable.TaskID,TaskTable.TaskTypeID, TaskTable.WorkerID, TaskTable.ETA);
+					yield return new CreateTable<TaskTable>(TaskTable.TaskID,TaskTable.TaskTypeID, TaskTable.WorkerID, TaskTable.FactoryID, TaskTable.ETA);
 
 					yield return new CreateTable<IngredientTable>(IngredientTable.IngredientID, IngredientTable.FactoryTypeID, IngredientTable.ResourceTypeID, IngredientTable.Quantity);
 					yield return new CreateTable<ProductTable>(ProductTable.ProductID, ProductTable.FactoryTypeID, ProductTable.ResourceTypeID, ProductTable.Quantity, ProductTable.Duration);
@@ -47,14 +47,14 @@ namespace PIO.ServerLib
 				case 2:
 					yield return new CreateRelation<PlanetTable, FactoryTable, int>(PlanetTable.PlanetID, FactoryTable.PlanetID);
 					yield return new CreateRelation<FactoryTable, StackTable, int>(FactoryTable.FactoryID, StackTable.FactoryID);
-					yield return new CreateRelation<WorkerTable, TaskTable, int>(WorkerTable.WorkerID, TaskTable.WorkerID);
 					yield return new CreateRelation<ResourceTypeTable, StackTable, int>(ResourceTypeTable.ResourceTypeID, StackTable.ResourceTypeID);
 					yield return new CreateRelation<FactoryTypeTable, MaterialTable, int>(FactoryTypeTable.FactoryTypeID, MaterialTable.FactoryTypeID);
 					yield return new CreateRelation<ResourceTypeTable, MaterialTable, int>(ResourceTypeTable.ResourceTypeID, MaterialTable.ResourceTypeID);
 					yield return new CreateRelation<FactoryTypeTable, FactoryTable, int>(FactoryTypeTable.FactoryTypeID, FactoryTable.FactoryTypeID);
 					yield return new CreateRelation<TaskTypeTable, TaskTable, int>(TaskTypeTable.TaskTypeID, TaskTable.TaskTypeID);
 
-					yield return new CreateRelation<FactoryTable, TaskTable, int>(FactoryTable.FactoryID, TaskTable.WorkerID);
+					yield return new CreateRelation<WorkerTable, TaskTable, int>(WorkerTable.WorkerID, TaskTable.WorkerID);
+					yield return new CreateRelation<FactoryTable, TaskTable, int>(FactoryTable.FactoryID, TaskTable.FactoryID);
 
 					yield return new CreateRelation<FactoryTypeTable, IngredientTable, int>(FactoryTypeTable.FactoryTypeID, IngredientTable.FactoryTypeID);
 					yield return new CreateRelation<ResourceTypeTable, IngredientTable, int>(ResourceTypeTable.ResourceTypeID, IngredientTable.ResourceTypeID);
@@ -87,7 +87,7 @@ namespace PIO.ServerLib
 					#endregion
 
 					#region create Product
-					yield return new Insert<ProductTable>().Set(ProductTable.FactoryTypeID, (int)FactoryTypeIDs.Forest).Set(ProductTable.ResourceTypeID, (int)ResourceTypeIDs.Wood).Set(ProductTable.Quantity, 5).Set(ProductTable.Duration,5);
+					yield return new Insert<ProductTable>().Set(ProductTable.FactoryTypeID, (int)FactoryTypeIDs.Forest).Set(ProductTable.ResourceTypeID, (int)ResourceTypeIDs.Wood).Set(ProductTable.Quantity, 5).Set(ProductTable.Duration,1);
 					#endregion
 
 					#region create startup Planet

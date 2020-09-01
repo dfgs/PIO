@@ -15,27 +15,30 @@ using PIO.Models.Exceptions;
 
 namespace PIO.ServerLib.Modules
 {
-	public class ProducerModule : FunctionalModule, IProducerModule
+	public class ProducerModule : TaskGeneratorModule, IProducerModule
 	{
-		private ISchedulerModule schedulerModule;
 
 		private IFactoryModule factoryModule;
 		private IWorkerModule workerModule;
 		private IStackModule stackModule;
 		private IIngredientModule ingredientModule;
+		private IProductModule productModule;
 		private ITaskModule taskModule;
 
-		public ProducerModule(ILogger Logger,ISchedulerModule SchedulerModule, IFactoryModule FactoryModule,IWorkerModule WorkerModule, IStackModule StackModule, IIngredientModule IngredientModule,ITaskModule TaskModule) : base(Logger)
+
+
+		public ProducerModule(ILogger Logger, IFactoryModule FactoryModule,IWorkerModule WorkerModule, IStackModule StackModule, IIngredientModule IngredientModule, IProductModule ProductModule, ITaskModule TaskModule) : base(Logger)
 		{
-			this.schedulerModule = SchedulerModule;
-			this.factoryModule = FactoryModule; this.workerModule = WorkerModule; this.stackModule = StackModule; this.ingredientModule = IngredientModule;this.taskModule = TaskModule;
+			this.factoryModule = FactoryModule; this.workerModule = WorkerModule; this.stackModule = StackModule; this.ingredientModule = IngredientModule;this.productModule = ProductModule; this.taskModule = TaskModule;
 		}
 
-		public Task Produce(int WorkerID,int FactoryID)
+
+		public Task BeginProduce(int WorkerID, int FactoryID)
 		{
 			Factory factory;
 			Worker worker;
 			Ingredient[] ingredients;
+			Product[] products;
 			Stack[] stacks;
 			Stack stack;
 			Task task;
@@ -64,6 +67,14 @@ namespace PIO.ServerLib.Modules
 			Log(LogLevels.Information, $"Get ingredients (FactoryTypeID={factory.FactoryTypeID})");
 			ingredients = Try(() => ingredientModule.GetIngredients(factory.FactoryTypeID)).OrThrow<PIOInternalErrorException>("Failed to get ingredients");
 
+			Log(LogLevels.Information, $"Get products (FactoryTypeID={factory.FactoryTypeID})");
+			products = Try(() => productModule.GetProducts(factory.FactoryTypeID)).OrThrow<PIOInternalErrorException>("Failed to get products");
+			if (products.Length==0)
+			{
+				Log(LogLevels.Warning, $"This factory has no product (FactoryTypeID={factory.FactoryTypeID})");
+				return null;
+			}
+
 			Log(LogLevels.Information, $"Get stacks (FactoryID={factory.FactoryID})");
 			stacks = Try(() => stackModule.GetStacks(factory.FactoryID)).OrThrow<PIOInternalErrorException>("Failed to get stacks");
 
@@ -90,16 +101,61 @@ namespace PIO.ServerLib.Modules
 
 			
 			
-			Log(LogLevels.Information, $"Creating task (WorkerID={WorkerID})");
-			task=Try(() => taskModule.InsertTask((int)TaskTypeIDs.Produce, WorkerID,DateTime.Now.AddMinutes(5))).OrThrow<PIOInternalErrorException>("Failed to create task");
+			Log(LogLevels.Information, $"Creating task (WorkerID={WorkerID}, FactoryID={FactoryID})");
+			task=Try(() => taskModule.InsertTask((int)TaskTypeIDs.Produce, WorkerID, FactoryID, DateTime.Now.AddMinutes(products[0].Duration))).OrThrow<PIOInternalErrorException>("Failed to create task");
 
-			Log(LogLevels.Information, $"Scheduling task (TaskID={task.TaskID})");
-			Try(()=>schedulerModule.Add(task)).OrThrow<PIOInternalErrorException>("Failed to schedule task");
+			OnTaskCreated(task);
 
 			return task;
 		}
 
+		public void EndProduce(int WorkerID, int FactoryID)
+		{
+			Factory factory;
+			Product[] products;
+			Stack[] stacks;
+			Stack stack;
 
+			LogEnter();
+
+			Log(LogLevels.Information, $"Get factory (FactoryID={FactoryID})");
+			factory = Try(() => factoryModule.GetFactory(FactoryID)).OrThrow<PIOInternalErrorException>("Failed to get factory");
+
+			if (factory == null)
+			{
+				Log(LogLevels.Warning, $"Factory doesn't exist (FactoryID={FactoryID})");
+				throw new PIONotFoundException($"Factory doesn't exist (FactoryID={FactoryID})", null, ID, ModuleName, "Produce");
+			}
+
+			Log(LogLevels.Information, $"Get stacks (FactoryID={factory.FactoryID})");
+			stacks = Try(() => stackModule.GetStacks(factory.FactoryID)).OrThrow<PIOInternalErrorException>("Failed to get stacks");
+
+			Log(LogLevels.Information, $"Get products (FactoryTypeID={factory.FactoryTypeID})");
+			products = Try(() => productModule.GetProducts(factory.FactoryTypeID)).OrThrow<PIOInternalErrorException>("Failed to get products");
+			if (products.Length == 0)
+			{
+				Log(LogLevels.Warning, $"This factory has no product (FactoryTypeID={factory.FactoryTypeID})");
+				return;
+			}
+
+			foreach (Product product in products)
+			{
+				Log(LogLevels.Information, $"Adding product (ResourceTypeID={product.ResourceTypeID}, Quantity={product.Quantity})");
+				stack = stacks.FirstOrDefault(item => item.ResourceTypeID == product.ResourceTypeID);
+
+				if (stack == null)
+				{
+					Try(() => stackModule.InsertStack(FactoryID,product.ResourceTypeID,product.Quantity )).OrThrow<PIOInternalErrorException>("Failed to insert stack");
+				}
+				else
+				{
+					stack.Quantity += product.Quantity;
+					Try(() => stackModule.UpdateStack(stack.StackID, stack.Quantity)).OrThrow<PIOInternalErrorException>("Failed to update stack");
+				}
+			}
+
+
+		}
 
 	}
 }
