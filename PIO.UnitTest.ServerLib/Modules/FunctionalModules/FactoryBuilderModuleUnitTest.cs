@@ -23,8 +23,8 @@ namespace PIO.UnitTest.ServerLib.Modules
 			IFactoryModule factoryModule;
 			IFactoryTypeModule factoryTypeModule;
 			
-			factoryModule = new MockedFactoryModule( new Factory()   );
-			factoryTypeModule = new MockedFactoryTypeModule( new FactoryType() { HealthPoints=10 } );
+			factoryModule = new MockedFactoryModule( false,new Factory()   );
+			factoryTypeModule = new MockedFactoryTypeModule(false, new FactoryType() { HealthPoints=10 } );
 			module = new FactoryBuilderModule(NullLogger.Instance,factoryModule,factoryTypeModule);
 
 			Assert.AreEqual(0, factoryModule.GetFactory(0).HealthPoints);
@@ -40,8 +40,8 @@ namespace PIO.UnitTest.ServerLib.Modules
 			MockedFactoryModule factoryModule;
 			MockedFactoryTypeModule factoryTypeModule;
 
-			factoryModule = new MockedFactoryModule(new Factory() );
-			factoryTypeModule = new MockedFactoryTypeModule(new FactoryType() { HealthPoints = 10 });
+			factoryModule = new MockedFactoryModule(false, new Factory() );
+			factoryTypeModule = new MockedFactoryTypeModule(false, new FactoryType() { HealthPoints = 10 });
 
 			logger = new MemoryLogger(new DefaultLogFormatter());
 			module = new FactoryBuilderModule(logger, factoryModule, factoryTypeModule);
@@ -65,8 +65,8 @@ namespace PIO.UnitTest.ServerLib.Modules
 			IFactoryModule factoryModule;
 			IFactoryTypeModule factoryTypeModule;
 
-			factoryModule = new MockedFactoryModule( new Factory() { HealthPoints=10 });
-			factoryTypeModule = new MockedFactoryTypeModule( new FactoryType() { HealthPoints = 10 });
+			factoryModule = new MockedFactoryModule(false, new Factory() { HealthPoints=10 });
+			factoryTypeModule = new MockedFactoryTypeModule(false, new FactoryType() { HealthPoints = 10 });
 
 			logger = new MemoryLogger(new DefaultLogFormatter());
 			module = new FactoryBuilderModule(logger, factoryModule, factoryTypeModule);

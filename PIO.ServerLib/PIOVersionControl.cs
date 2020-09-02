@@ -39,7 +39,7 @@ namespace PIO.ServerLib
 					yield return new CreateTable<WorkerTable>(WorkerTable.WorkerID, WorkerTable.FactoryID);
 					yield return new CreateTable<StackTable>(StackTable.StackID, StackTable.FactoryID, StackTable.ResourceTypeID, StackTable.Quantity);
 					yield return new CreateTable<MaterialTable>(MaterialTable.MaterialID, MaterialTable.FactoryTypeID, MaterialTable.ResourceTypeID, MaterialTable.Quantity);
-					yield return new CreateTable<TaskTable>(TaskTable.TaskID,TaskTable.TaskTypeID, TaskTable.WorkerID,  TaskTable.ETA);
+					yield return new CreateTable<TaskTable>(TaskTable.TaskID,TaskTable.TaskTypeID, TaskTable.WorkerID, TaskTable.TargetFactoryID,  TaskTable.ETA);
 
 					yield return new CreateTable<IngredientTable>(IngredientTable.IngredientID, IngredientTable.FactoryTypeID, IngredientTable.ResourceTypeID, IngredientTable.Quantity);
 					yield return new CreateTable<ProductTable>(ProductTable.ProductID, ProductTable.FactoryTypeID, ProductTable.ResourceTypeID, ProductTable.Quantity, ProductTable.Duration);
@@ -55,6 +55,7 @@ namespace PIO.ServerLib
 					yield return new CreateRelation<TaskTypeTable, TaskTable, int>(TaskTypeTable.TaskTypeID, TaskTable.TaskTypeID);
 
 					yield return new CreateRelation<WorkerTable, TaskTable, int>(WorkerTable.WorkerID, TaskTable.WorkerID);
+					yield return new CreateRelation<FactoryTable, TaskTable, int>(FactoryTable.FactoryID, TaskTable.TargetFactoryID);
 
 					yield return new CreateRelation<FactoryTypeTable, IngredientTable, int>(FactoryTypeTable.FactoryTypeID, IngredientTable.FactoryTypeID);
 					yield return new CreateRelation<ResourceTypeTable, IngredientTable, int>(ResourceTypeTable.ResourceTypeID, IngredientTable.ResourceTypeID);
@@ -80,6 +81,7 @@ namespace PIO.ServerLib
 
 					#region create TaskType
 					yield return new Insert<TaskTypeTable>().Set(TaskTypeTable.TaskTypeID, (int)TaskTypeIDs.Produce).Set(TaskTypeTable.Name, "Produce");
+					yield return new Insert<TaskTypeTable>().Set(TaskTypeTable.TaskTypeID, (int)TaskTypeIDs.MoveTo).Set(TaskTypeTable.Name, "MoveTo");
 					#endregion
 
 					#region create Ingredient

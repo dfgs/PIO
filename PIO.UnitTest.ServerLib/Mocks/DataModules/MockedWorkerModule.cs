@@ -12,7 +12,7 @@ namespace PIO.UnitTest.ServerLib.Mocks
 	public class MockedWorkerModule :MockedDatabaseModule<Worker>, IWorkerModule
 	{
 
-		public MockedWorkerModule( params Worker[] Items):base(Items)
+		public MockedWorkerModule(bool ThrowException, params Worker[] Items):base(ThrowException, Items)
 		{
 		}
 
@@ -28,8 +28,12 @@ namespace PIO.UnitTest.ServerLib.Mocks
 			return items.FirstOrDefault(item => item.WorkerID == WorkerID);
 		}
 
-		
-
-
+		public void UpdateWorker(int WorkerID, int FactoryID)
+		{
+			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
+			Worker item;
+			item = GetWorker(WorkerID);
+			item.FactoryID = FactoryID;
+		}
 	}
 }

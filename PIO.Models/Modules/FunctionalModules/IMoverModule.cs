@@ -8,11 +8,10 @@ using System.Threading.Tasks;
 
 namespace PIO.Models.Modules
 {
-	public interface IWorkerModule : IDatabaseModule
+	public interface IMoverModule : ITaskGeneratorModule
 	{
-		Worker GetWorker(int WorkerID);
-		Worker[] GetWorkers(int FactoryID);
 
-		void UpdateWorker(int WorkerID, int FactoryID);
+		Task BeginMoveTo(int WorkerID,int TargetFactoryID);
+		void EndMoveTo(int WorkerID, int TargetFactoryID);
 	}
 }

@@ -27,9 +27,9 @@ namespace PIO.ServerLib.Modules
 
 
 
-		public ProducerModule(ILogger Logger, IFactoryModule FactoryModule,IWorkerModule WorkerModule, IStackModule StackModule, IIngredientModule IngredientModule, IProductModule ProductModule, ITaskModule TaskModule) : base(Logger)
+		public ProducerModule(ILogger Logger, ITaskModule TaskModule,IFactoryModule FactoryModule,IWorkerModule WorkerModule, IStackModule StackModule, IIngredientModule IngredientModule, IProductModule ProductModule) : base(Logger)
 		{
-			this.factoryModule = FactoryModule; this.workerModule = WorkerModule; this.stackModule = StackModule; this.ingredientModule = IngredientModule;this.productModule = ProductModule; this.taskModule = TaskModule;
+			this.taskModule = TaskModule; this.factoryModule = FactoryModule; this.workerModule = WorkerModule; this.stackModule = StackModule; this.ingredientModule = IngredientModule;this.productModule = ProductModule; 
 		}
 
 
@@ -51,7 +51,7 @@ namespace PIO.ServerLib.Modules
 			if (worker == null)
 			{
 				Log(LogLevels.Warning, $"Worker doesn't exist (WorkerID={WorkerID})");
-				throw new PIONotFoundException($"Worker doesn't exist (WorkerID={WorkerID})", null, ID, ModuleName, "Produce");
+				throw new PIONotFoundException($"Worker doesn't exist (WorkerID={WorkerID})", null, ID, ModuleName, "BeginProduce");
 			}
 
 			Log(LogLevels.Information, $"Get factory (FactoryID={worker.FactoryID})");
@@ -60,7 +60,7 @@ namespace PIO.ServerLib.Modules
 			/*if (factory == null)
 			{
 				Log(LogLevels.Warning, $"Factory doesn't exist (FactoryID={worker.FactoryID})");
-				throw new PIONotFoundException($"Factory doesn't exist (FactoryID={worker.FactoryID})", null, ID, ModuleName, "Produce");
+				throw new PIONotFoundException($"Factory doesn't exist (FactoryID={worker.FactoryID})", null, ID, ModuleName, "BeginProduce");
 			}*/
 
 
@@ -86,7 +86,7 @@ namespace PIO.ServerLib.Modules
 				if ((stack == null) || (stack.Quantity < ingredient.Quantity))
 				{
 					Log(LogLevels.Warning, $"Not enough resources (FactoryID={factory.FactoryID}, ResourceTypeID={ingredient.ResourceTypeID})");
-					throw new PIONoResourcesException($"Not enough resources (FactoryID={factory.FactoryID}, ResourceTypeID={ingredient.ResourceTypeID})", null, ID, ModuleName, "Produce");
+					throw new PIONoResourcesException($"Not enough resources (FactoryID={factory.FactoryID}, ResourceTypeID={ingredient.ResourceTypeID})", null, ID, ModuleName, "BeginProduce");
 				}
 			}
 
@@ -102,7 +102,7 @@ namespace PIO.ServerLib.Modules
 			
 			
 			Log(LogLevels.Information, $"Creating task (WorkerID={WorkerID})");
-			task=Try(() => taskModule.InsertTask((int)TaskTypeIDs.Produce, WorkerID,  DateTime.Now.AddMinutes(products[0].Duration))).OrThrow<PIOInternalErrorException>("Failed to create task");
+			task=Try(() => taskModule.InsertTask((int)TaskTypeIDs.Produce, WorkerID, null, DateTime.Now.AddMinutes(products[0].Duration))).OrThrow<PIOInternalErrorException>("Failed to create task");
 
 			OnTaskCreated(task);
 
@@ -125,7 +125,7 @@ namespace PIO.ServerLib.Modules
 			if (worker == null)
 			{
 				Log(LogLevels.Warning, $"Worker doesn't exist (WorkerID={WorkerID})");
-				throw new PIONotFoundException($"Worker doesn't exist (WorkerID={WorkerID})", null, ID, ModuleName, "Produce");
+				throw new PIONotFoundException($"Worker doesn't exist (WorkerID={WorkerID})", null, ID, ModuleName, "BeginProduce");
 			}
 
 
@@ -135,7 +135,7 @@ namespace PIO.ServerLib.Modules
 			/*if (factory == null)
 			{
 				Log(LogLevels.Warning, $"Factory doesn't exist (FactoryID={FactoryID})");
-				throw new PIONotFoundException($"Factory doesn't exist (FactoryID={FactoryID})", null, ID, ModuleName, "Produce");
+				throw new PIONotFoundException($"Factory doesn't exist (FactoryID={FactoryID})", null, ID, ModuleName, "BeginProduce");
 			}*/
 
 			Log(LogLevels.Information, $"Get stacks (FactoryID={factory.FactoryID})");

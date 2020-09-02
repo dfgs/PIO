@@ -17,20 +17,21 @@ namespace PIO.WebServiceLib
 	[ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Single)]
 	public class PIOService : Module, IPIOService
 	{
-		private IPlanetModule PlanetModule;
-		private IFactoryModule FactoryModule;
-		private IWorkerModule WorkerModule;
-		private IStackModule StackModule;
-		private IResourceTypeModule ResourceTypeModule;
-		private IFactoryTypeModule FactoryTypeModule;
-		private ITaskTypeModule TaskTypeModule;
-		private IMaterialModule MaterialModule;
-		private IIngredientModule IngredientModule;
-		private IProductModule ProductModule;
-		private ITaskModule TaskModule;
+		private IPlanetModule planetModule;
+		private IFactoryModule factoryModule;
+		private IWorkerModule workerModule;
+		private IStackModule stackModule;
+		private IResourceTypeModule resourceTypeModule;
+		private IFactoryTypeModule factoryTypeModule;
+		private ITaskTypeModule taskTypeModule;
+		private IMaterialModule materialModule;
+		private IIngredientModule ingredientModule;
+		private IProductModule productModule;
+		private ITaskModule taskModule;
 
-		private IResourceCheckerModule ResourceCheckerModule;
-		private IProducerModule ProducerModule;
+		private IResourceCheckerModule resourceCheckerModule;
+		private IProducerModule producerModule;
+		private IMoverModule moverModule;
 
 		public PIOService(ILogger Logger,
 			IPlanetModule PlanetModule, IFactoryModule FactoryModule,
@@ -41,24 +42,25 @@ namespace PIO.WebServiceLib
 			IIngredientModule IngredientModule, IProductModule ProductModule, 
 			ITaskModule TaskModule,
 
-			IResourceCheckerModule ResourceCheckerModule,IProducerModule ProducerModule
+			IResourceCheckerModule ResourceCheckerModule,IProducerModule ProducerModule,IMoverModule MoverModule
 		) :base(Logger)
 		{
 			LogEnter();
-			this.PlanetModule = PlanetModule;
-			this.FactoryModule = FactoryModule;
-			this.WorkerModule = WorkerModule;
-			this.StackModule = StackModule;
-			this.ResourceTypeModule = ResourceTypeModule;
-			this.FactoryTypeModule = FactoryTypeModule;
-			this.TaskTypeModule = TaskTypeModule;
-			this.MaterialModule = MaterialModule;
-			this.IngredientModule = IngredientModule;
-			this.ProductModule = ProductModule;
-			this.TaskModule = TaskModule;
+			this.planetModule = PlanetModule;
+			this.factoryModule = FactoryModule;
+			this.workerModule = WorkerModule;
+			this.stackModule = StackModule;
+			this.resourceTypeModule = ResourceTypeModule;
+			this.factoryTypeModule = FactoryTypeModule;
+			this.taskTypeModule = TaskTypeModule;
+			this.materialModule = MaterialModule;
+			this.ingredientModule = IngredientModule;
+			this.productModule = ProductModule;
+			this.taskModule = TaskModule;
 
-			this.ResourceCheckerModule = ResourceCheckerModule;
-			this.ProducerModule = ProducerModule;
+			this.resourceCheckerModule = ResourceCheckerModule;
+			this.producerModule = ProducerModule;
+			this.moverModule = MoverModule;
 		}
 
 		private FaultException GenerateFaultException(Exception InnerException, int ComponentID, string ComponentName, string MethodName)
@@ -70,124 +72,124 @@ namespace PIO.WebServiceLib
 		public Planet GetPlanet(int PlanetID)
 		{
 			LogEnter();
-			return Try( ()=>PlanetModule.GetPlanet(PlanetID)).OrThrow(GenerateFaultException);
+			return Try( ()=>planetModule.GetPlanet(PlanetID)).OrThrow(GenerateFaultException);
 		}
 		public Planet[] GetPlanets()
 		{
 			LogEnter();
-			return Try(() => PlanetModule.GetPlanets()).OrThrow(GenerateFaultException);
+			return Try(() => planetModule.GetPlanets()).OrThrow(GenerateFaultException);
 		}
 
 		public Worker GetWorker(int WorkerID)
 		{
 			LogEnter();
-			return Try(() => WorkerModule.GetWorker(WorkerID)).OrThrow(GenerateFaultException);
+			return Try(() => workerModule.GetWorker(WorkerID)).OrThrow(GenerateFaultException);
 		}
 		public Worker[] GetWorkers(int FactoryID)
 		{
 			LogEnter();
-			return Try(() => WorkerModule.GetWorkers(FactoryID)).OrThrow(GenerateFaultException);
+			return Try(() => workerModule.GetWorkers(FactoryID)).OrThrow(GenerateFaultException);
 		}
 		public Factory GetFactory(int FactoryID)
 		{
 			LogEnter();
-			return Try(() => FactoryModule.GetFactory(FactoryID)).OrThrow(GenerateFaultException);
+			return Try(() => factoryModule.GetFactory(FactoryID)).OrThrow(GenerateFaultException);
 		}
 		public Factory[] GetFactories(int PlanetID)
 		{
 			LogEnter();
-			return Try(() => FactoryModule.GetFactories(PlanetID)).OrThrow(GenerateFaultException);
+			return Try(() => factoryModule.GetFactories(PlanetID)).OrThrow(GenerateFaultException);
 		}
 
 		public Stack GetStack(int StackID)
 		{
 			LogEnter();
-			return Try(() => StackModule.GetStack(StackID)).OrThrow(GenerateFaultException);
+			return Try(() => stackModule.GetStack(StackID)).OrThrow(GenerateFaultException);
 		}
 
 		public Stack[] GetStacks(int FactoryID)
 		{
 			LogEnter();
-			return Try(() => StackModule.GetStacks(FactoryID)).OrThrow(GenerateFaultException);
+			return Try(() => stackModule.GetStacks(FactoryID)).OrThrow(GenerateFaultException);
 		}
 
 		public ResourceType GetResourceType(int ResourceTypeID)
 		{
 			LogEnter();
-			return Try(() => ResourceTypeModule.GetResourceType(ResourceTypeID)).OrThrow(GenerateFaultException);
+			return Try(() => resourceTypeModule.GetResourceType(ResourceTypeID)).OrThrow(GenerateFaultException);
 		}
 		public ResourceType[] GetResourceTypes()
 		{
 			LogEnter();
-			return Try(() => ResourceTypeModule.GetResourceTypes()).OrThrow(GenerateFaultException);
+			return Try(() => resourceTypeModule.GetResourceTypes()).OrThrow(GenerateFaultException);
 		}
 
 		public FactoryType GetFactoryType(int FactoryTypeID)
 		{
 			LogEnter();
-			return Try(() => FactoryTypeModule.GetFactoryType(FactoryTypeID)).OrThrow(GenerateFaultException);
+			return Try(() => factoryTypeModule.GetFactoryType(FactoryTypeID)).OrThrow(GenerateFaultException);
 		}
 		public FactoryType[] GetFactoryTypes()
 		{
 			LogEnter();
-			return Try(() => FactoryTypeModule.GetFactoryTypes()).OrThrow(GenerateFaultException);
+			return Try(() => factoryTypeModule.GetFactoryTypes()).OrThrow(GenerateFaultException);
 		}
 		public TaskType GetTaskType(int TaskTypeID)
 		{
 			LogEnter();
-			return Try(() => TaskTypeModule.GetTaskType(TaskTypeID)).OrThrow(GenerateFaultException);
+			return Try(() => taskTypeModule.GetTaskType(TaskTypeID)).OrThrow(GenerateFaultException);
 		}
 		public TaskType[] GetTaskTypes()
 		{
 			LogEnter();
-			return Try(() => TaskTypeModule.GetTaskTypes()).OrThrow(GenerateFaultException);
+			return Try(() => taskTypeModule.GetTaskTypes()).OrThrow(GenerateFaultException);
 		}
 
 		public Material GetMaterial(int MaterialID)
 		{
 			LogEnter();
-			return Try(() => MaterialModule.GetMaterial(MaterialID)).OrThrow(GenerateFaultException);
+			return Try(() => materialModule.GetMaterial(MaterialID)).OrThrow(GenerateFaultException);
 		}
 
 		public Material[] GetMaterials(int FactoryID)
 		{
 			LogEnter();
-			return Try(() => MaterialModule.GetMaterials(FactoryID)).OrThrow(GenerateFaultException);
+			return Try(() => materialModule.GetMaterials(FactoryID)).OrThrow(GenerateFaultException);
 		}
 
 		public Ingredient GetIngredient(int IngredientID)
 		{
 			LogEnter();
-			return Try(() => IngredientModule.GetIngredient(IngredientID)).OrThrow(GenerateFaultException);
+			return Try(() => ingredientModule.GetIngredient(IngredientID)).OrThrow(GenerateFaultException);
 		}
 
 		public Ingredient[] GetIngredients(int FactoryID)
 		{
 			LogEnter();
-			return Try(() => IngredientModule.GetIngredients(FactoryID)).OrThrow(GenerateFaultException);
+			return Try(() => ingredientModule.GetIngredients(FactoryID)).OrThrow(GenerateFaultException);
 		}
 		public Product GetProduct(int ProductID)
 		{
 			LogEnter();
-			return Try(() => ProductModule.GetProduct(ProductID)).OrThrow(GenerateFaultException);
+			return Try(() => productModule.GetProduct(ProductID)).OrThrow(GenerateFaultException);
 		}
 
 		public Product[] GetProducts(int FactoryID)
 		{
 			LogEnter();
-			return Try(() => ProductModule.GetProducts(FactoryID)).OrThrow(GenerateFaultException);
+			return Try(() => productModule.GetProducts(FactoryID)).OrThrow(GenerateFaultException);
 		}
 
 		public Task GetTask(int TaskID)
 		{
 			LogEnter();
-			return Try(() => TaskModule.GetTask(TaskID)).OrThrow(GenerateFaultException);
+			return Try(() => taskModule.GetTask(TaskID)).OrThrow(GenerateFaultException);
 		}
 
 		public Task[] GetTasks(int WorkerID)
 		{
 			LogEnter();
-			return Try(() => TaskModule.GetTasks(WorkerID)).OrThrow(GenerateFaultException);
+			return Try(() => taskModule.GetTasks(WorkerID)).OrThrow(GenerateFaultException);
 		}
 		#endregion
 
@@ -197,17 +199,25 @@ namespace PIO.WebServiceLib
 		{
 			LogEnter();
 
-			return Try(() => ResourceCheckerModule.HasEnoughResourcesToProduce(FactoryID)).OrThrow(GenerateFaultException);
+			return Try(() => resourceCheckerModule.HasEnoughResourcesToProduce(FactoryID)).OrThrow(GenerateFaultException);
 		}
 
 		public Task Produce(int WorkerID)
 		{
 			LogEnter();
 
-			return Try(() => ProducerModule.BeginProduce(WorkerID)).OrThrow(GenerateFaultException);
+			return Try(() => producerModule.BeginProduce(WorkerID)).OrThrow(GenerateFaultException);
 		}
-		#endregion
+
+		public Task MoveTo(int WorkerID, int TargetFactoryID)
+		{
+			LogEnter();
+
+			return Try(() => moverModule.BeginMoveTo(WorkerID,TargetFactoryID)).OrThrow(GenerateFaultException);
+		}
+
+	#endregion
 
 
-	}
+}
 }

@@ -18,18 +18,28 @@ namespace PIO.UnitTest.ServerLib.Modules
 	public class SchedulerModuleUnitTest
 	{
 		[TestMethod]
-		public void ShouldAddTask()
+		public void ShouldAddTaskFromProducer()
 		{
 			SchedulerModule module;
-			IProducerModule producerModule;
+			IProducerModule taskModule;
 
-			producerModule = new MockedProducerModule();
-			module = new SchedulerModule(NullLogger.Instance,null,producerModule);
-			producerModule.BeginProduce(1);
+			taskModule = new MockedProducerModule();
+			module = new SchedulerModule(NullLogger.Instance,null, taskModule, new MockedMoverModule());
+			taskModule.BeginProduce(1);
 			Assert.AreEqual(1, module.Count);
 		}
 
+		[TestMethod]
+		public void ShouldAddTaskFromMover()
+		{
+			SchedulerModule module;
+			IMoverModule taskModule;
 
-	
+			taskModule = new MockedMoverModule();
+			module = new SchedulerModule(NullLogger.Instance, null, new MockedProducerModule(), taskModule);
+			taskModule.BeginMoveTo(1,2);
+			Assert.AreEqual(1, module.Count);
+		}
+
 	}
 }

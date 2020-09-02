@@ -12,7 +12,7 @@ namespace PIO.UnitTest.ServerLib.Mocks
 	public class MockedFactoryTypeModule : MockedDatabaseModule<FactoryType>, IFactoryTypeModule
 	{
 
-		public MockedFactoryTypeModule(params FactoryType[] Items) : base(Items)
+		public MockedFactoryTypeModule(bool ThrowException, params FactoryType[] Items) : base(ThrowException,Items)
 		{
 		}
 

@@ -10,31 +10,29 @@ using System.Text;
 
 namespace PIO.UnitTest.ServerLib.Mocks
 {
-	public class MockedTaskModule :ITaskModule
+	public class MockedTaskModule :MockedDatabaseModule<Task>,ITaskModule
 	{
-		private bool throwException;
 		private int results;
 
-		public MockedTaskModule(bool ThrowException,int Results )
+		public MockedTaskModule(bool ThrowException,int Results ):base(ThrowException)
 		{
-			this.throwException = ThrowException;
 			this.results = Results;
 		}
 
 		public Task GetTask(int TaskID)
 		{
-			if (throwException) throw new PIODataException("UnitTestException",null,1,"UnitTest","UnitTest");
+			if (ThrowException) throw new PIODataException("UnitTestException",null,1,"UnitTest","UnitTest");
 			return new Task() {TaskID=TaskID ,WorkerID=1,ETA=DateTime.Now};
 		}
 		public void DeleteTask(int TaskID)
 		{
-			if (throwException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
+			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
 		}
 		public Task[] GetTasks(int WorkerID)
 		{
 			Task[] items;
 
-			if (throwException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
+			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
 			items = new Task[results];
 			for (int t = 0; t < results; t++)
 			{
@@ -47,7 +45,7 @@ namespace PIO.UnitTest.ServerLib.Mocks
 		{
 			Task[] items;
 
-			if (throwException) throw new NotImplementedException();
+			if (ThrowException) throw new NotImplementedException();
 			items = new Task[results];
 			for (int t = 0; t < results; t++)
 			{
@@ -57,11 +55,11 @@ namespace PIO.UnitTest.ServerLib.Mocks
 		}
 
 		
-		public Task InsertTask(int TaskTypeID, int WorkerID,  DateTime ETA)
+		public Task InsertTask(int TaskTypeID, int WorkerID, int? TargetFactoryID, DateTime ETA)
 		{
 			Task item;
 
-			if (throwException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
+			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
 
 			item = new Task() {TaskTypeID=TaskTypeID, WorkerID=WorkerID,ETA=ETA };
 			return item;

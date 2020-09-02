@@ -25,7 +25,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			IIngredientModule ingredientModule;
 			
 
-			factoryModule = new MockedFactoryModule( new Factory() {FactoryID=1, FactoryTypeID=2, PlanetID=3,HealthPoints=100 }   );
+			factoryModule = new MockedFactoryModule(false, new Factory() {FactoryID=1, FactoryTypeID=2, PlanetID=3,HealthPoints=100 }   );
 			stackModule = new MockedStackModule(false,
 				new Stack() { StackID = 0, FactoryID = 1, ResourceTypeID = 5, Quantity = 10 },
 				new Stack() { StackID = 1, FactoryID = 1, ResourceTypeID = 1, Quantity = 10 },
@@ -51,7 +51,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			IIngredientModule ingredientModule;
 
 
-			factoryModule = new MockedFactoryModule(new Factory() { FactoryID = 1, FactoryTypeID = 2, PlanetID = 3, HealthPoints = 100 });
+			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 1, FactoryTypeID = 2, PlanetID = 3, HealthPoints = 100 });
 
 			#region when all stacks exist
 			stackModule = new MockedStackModule(false,
@@ -98,7 +98,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			IIngredientModule ingredientModule;
 
 
-			factoryModule = new MockedFactoryModule(new Factory() { FactoryID = 1, FactoryTypeID = 2, PlanetID = 3, HealthPoints = 100 });
+			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 1, FactoryTypeID = 2, PlanetID = 3, HealthPoints = 100 });
 
 			stackModule = new MockedStackModule(false);
 			ingredientModule = new MockedIngredientModule(false);
@@ -119,7 +119,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			IIngredientModule ingredientModule;
 
 
-			factoryModule = new MockedFactoryModule(new Factory() { FactoryID = 1, FactoryTypeID = 2, PlanetID = 3, HealthPoints = 100 });
+			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 1, FactoryTypeID = 2, PlanetID = 3, HealthPoints = 100 });
 
 			stackModule = new MockedStackModule(true);
 			ingredientModule = new MockedIngredientModule(false);

@@ -42,7 +42,16 @@ namespace PIO.ServerLib.Modules
 			return TrySelectMany<WorkerTable, Worker>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
-		
+		public void UpdateWorker(int WorkerID, int FactoryID)
+		{
+			IUpdate<WorkerTable> update;
+
+			LogEnter();
+
+			Log(LogLevels.Information, $"Updating Worker table (WorkerID={WorkerID}, FactoryID={FactoryID})");
+			update = new Update<WorkerTable>().Set(WorkerTable.FactoryID, FactoryID).Where(WorkerTable.WorkerID.IsEqualTo(WorkerID));
+			Try(update).OrThrow<PIODataException>("Failed to update");
+		}
 
 
 	}

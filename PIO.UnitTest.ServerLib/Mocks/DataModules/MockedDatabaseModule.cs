@@ -14,9 +14,9 @@ namespace PIO.UnitTest.ServerLib.Mocks
 			get;
 			set;
 		}
-		public MockedDatabaseModule(params T[] Items)
+		public MockedDatabaseModule(bool ThrowException, params T[] Items)
 		{
-			this.items = Items;
+			this.ThrowException = ThrowException; this.items = Items;
 		}
 
 	}

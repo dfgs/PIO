@@ -64,6 +64,8 @@ namespace PIO.WebServiceLib
 		bool HasEnoughResourcesToProduce(int FactoryID);
 		[OperationContract]
 		Task Produce(int WorkerID);
+		[OperationContract]
+		Task MoveTo(int WorkerID,int TargetFactoryID);
 		#endregion
 
 	}

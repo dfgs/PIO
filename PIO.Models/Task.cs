@@ -19,7 +19,9 @@ namespace PIO.Models
 		public int WorkerID { get; set; }
 		[DataMember]
 		public DateTime ETA { get; set; }
-		
+		[DataMember]
+		public int? TargetFactoryID { get; set; }
+
 
 	}
 }

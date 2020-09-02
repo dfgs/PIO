@@ -151,6 +151,12 @@
   <wsdl:message name="IPIOService_Produce_OutputMessage">
     <wsdl:part name="parameters" element="tns:ProduceResponse" />
   </wsdl:message>
+  <wsdl:message name="IPIOService_MoveTo_InputMessage">
+    <wsdl:part name="parameters" element="tns:MoveTo" />
+  </wsdl:message>
+  <wsdl:message name="IPIOService_MoveTo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MoveToResponse" />
+  </wsdl:message>
   <wsdl:portType name="IPIOService">
     <wsdl:operation name="GetPlanet">
       <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetPlanet" message="tns:IPIOService_GetPlanet_InputMessage" />
@@ -247,6 +253,10 @@
     <wsdl:operation name="Produce">
       <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/Produce" message="tns:IPIOService_Produce_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/ProduceResponse" message="tns:IPIOService_Produce_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="MoveTo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/MoveTo" message="tns:IPIOService_MoveTo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/MoveToResponse" message="tns:IPIOService_MoveTo_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IPIOService" type="tns:IPIOService">
@@ -460,6 +470,15 @@
     </wsdl:operation>
     <wsdl:operation name="Produce">
       <soap:operation soapAction="http://tempuri.org/IPIOService/Produce" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="MoveTo">
+      <soap:operation soapAction="http://tempuri.org/IPIOService/MoveTo" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

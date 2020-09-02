@@ -29,7 +29,7 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 			
 			Log(LogLevels.Information, $"Querying Task table (TaskID={TaskID})");
-			query = new Select<TaskTable>(TaskTable.TaskID, TaskTable.TaskTypeID, TaskTable.WorkerID,  TaskTable.ETA).Where(TaskTable.TaskID.IsEqualTo(TaskID));
+			query = new Select<TaskTable>(TaskTable.TaskID, TaskTable.TaskTypeID, TaskTable.WorkerID, TaskTable.TargetFactoryID, TaskTable.ETA).Where(TaskTable.TaskID.IsEqualTo(TaskID));
 			return TrySelectFirst<TaskTable, Task>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
@@ -41,7 +41,7 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying Task table (WorkerID={WorkerID})");
-			query = new Select<TaskTable>(TaskTable.TaskID, TaskTable.TaskTypeID, TaskTable.WorkerID,  TaskTable.ETA).Where(TaskTable.WorkerID.IsEqualTo(WorkerID));
+			query = new Select<TaskTable>(TaskTable.TaskID, TaskTable.TaskTypeID, TaskTable.WorkerID, TaskTable.TargetFactoryID, TaskTable.ETA).Where(TaskTable.WorkerID.IsEqualTo(WorkerID));
 			return TrySelectMany<TaskTable, Task>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
@@ -51,12 +51,12 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying Task table");
-			query = new Select<TaskTable>(TaskTable.TaskID, TaskTable.TaskTypeID, TaskTable.WorkerID, TaskTable.ETA);
+			query = new Select<TaskTable>(TaskTable.TaskID, TaskTable.TaskTypeID, TaskTable.WorkerID, TaskTable.TargetFactoryID, TaskTable.ETA);
 			return TrySelectMany<TaskTable, Task>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
 
-		public Task InsertTask(int TaskTypeID, int WorkerID,  DateTime ETA)
+		public Task InsertTask(int TaskTypeID, int WorkerID, int? TargetFactoryID, DateTime ETA)
 		{
 			IInsert<TaskTable> query;
 			Task item;
@@ -64,8 +64,8 @@ namespace PIO.ServerLib.Modules
 
 			LogEnter();
 			Log(LogLevels.Information, $"Inserting into Task table (TaskTypeID={TaskTypeID}, WorkerID={WorkerID}, ETA={ETA})");
-			item = new Task() { TaskTypeID=TaskTypeID, WorkerID=WorkerID,  ETA=ETA };
-			query = new Insert<TaskTable>().Set(TaskTable.TaskTypeID,item.TaskTypeID).Set(TaskTable.WorkerID, item.WorkerID).Set(TaskTable.ETA,item.ETA);
+			item = new Task() { TaskTypeID=TaskTypeID, WorkerID=WorkerID, TargetFactoryID=TargetFactoryID, ETA=ETA };
+			query = new Insert<TaskTable>().Set(TaskTable.TaskTypeID,item.TaskTypeID).Set(TaskTable.WorkerID, item.WorkerID).Set(TaskTable.TargetFactoryID, item.TargetFactoryID).Set(TaskTable.ETA,item.ETA);
 			result=Try(query).OrThrow<PIODataException>("Failed to insert");
 			item.TaskID = Convert.ToInt32(result);
 			return item;

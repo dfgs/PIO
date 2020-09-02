@@ -142,10 +142,10 @@ namespace PIO.PowerShell.PIOWebServiceReference {
         System.Threading.Tasks.Task<PIO.Models.Task> GetTaskAsync(int TaskID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetTasks", ReplyAction="http://tempuri.org/IPIOService/GetTasksResponse")]
-        PIO.Models.Task[] GetTasks(int FactoryID);
+        PIO.Models.Task[] GetTasks(int WorkerID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetTasks", ReplyAction="http://tempuri.org/IPIOService/GetTasksResponse")]
-        System.Threading.Tasks.Task<PIO.Models.Task[]> GetTasksAsync(int FactoryID);
+        System.Threading.Tasks.Task<PIO.Models.Task[]> GetTasksAsync(int WorkerID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/HasEnoughResourcesToProduce", ReplyAction="http://tempuri.org/IPIOService/HasEnoughResourcesToProduceResponse")]
         bool HasEnoughResourcesToProduce(int FactoryID);
@@ -158,6 +158,12 @@ namespace PIO.PowerShell.PIOWebServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/Produce", ReplyAction="http://tempuri.org/IPIOService/ProduceResponse")]
         System.Threading.Tasks.Task<PIO.Models.Task> ProduceAsync(int WorkerID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/MoveTo", ReplyAction="http://tempuri.org/IPIOService/MoveToResponse")]
+        PIO.Models.Task MoveTo(int WorkerID, int TargetFactoryID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/MoveTo", ReplyAction="http://tempuri.org/IPIOService/MoveToResponse")]
+        System.Threading.Tasks.Task<PIO.Models.Task> MoveToAsync(int WorkerID, int TargetFactoryID);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -355,12 +361,12 @@ namespace PIO.PowerShell.PIOWebServiceReference {
             return base.Channel.GetTaskAsync(TaskID);
         }
         
-        public PIO.Models.Task[] GetTasks(int FactoryID) {
-            return base.Channel.GetTasks(FactoryID);
+        public PIO.Models.Task[] GetTasks(int WorkerID) {
+            return base.Channel.GetTasks(WorkerID);
         }
         
-        public System.Threading.Tasks.Task<PIO.Models.Task[]> GetTasksAsync(int FactoryID) {
-            return base.Channel.GetTasksAsync(FactoryID);
+        public System.Threading.Tasks.Task<PIO.Models.Task[]> GetTasksAsync(int WorkerID) {
+            return base.Channel.GetTasksAsync(WorkerID);
         }
         
         public bool HasEnoughResourcesToProduce(int FactoryID) {
@@ -377,6 +383,14 @@ namespace PIO.PowerShell.PIOWebServiceReference {
         
         public System.Threading.Tasks.Task<PIO.Models.Task> ProduceAsync(int WorkerID) {
             return base.Channel.ProduceAsync(WorkerID);
+        }
+        
+        public PIO.Models.Task MoveTo(int WorkerID, int TargetFactoryID) {
+            return base.Channel.MoveTo(WorkerID, TargetFactoryID);
+        }
+        
+        public System.Threading.Tasks.Task<PIO.Models.Task> MoveToAsync(int WorkerID, int TargetFactoryID) {
+            return base.Channel.MoveToAsync(WorkerID, TargetFactoryID);
         }
     }
 }
