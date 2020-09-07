@@ -16,7 +16,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 	[TestClass]
 	public class MoverModuleUnitTest
 	{
-	
+
 		[TestMethod]
 		public void ShouldMove()
 		{
@@ -24,17 +24,48 @@ namespace PIO.UnitTest.ServerLib.Modules
 			IFactoryModule factoryModule;
 			IWorkerModule workerModule;
 			ITaskModule taskModule;
+			MockedSchedulerModule schedulerModule;
 			Task result;
 
-			factoryModule = new MockedFactoryModule(false, new Factory() {FactoryID=1, FactoryTypeID=2, PlanetID=3,HealthPoints=100 }, new Factory() { FactoryID = 2, FactoryTypeID = 2, PlanetID = 3, HealthPoints = 100 });
+			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 1, FactoryTypeID = 2, PlanetID = 3, HealthPoints = 100 }, new Factory() { FactoryID = 2, FactoryTypeID = 2, PlanetID = 3, HealthPoints = 100 });
 			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, FactoryID = 1 });
 			taskModule = new MockedTaskModule(false, 1);
-			module = new MoverModule(NullLogger.Instance, taskModule, factoryModule,workerModule);
+			module = new MoverModule(NullLogger.Instance, taskModule, factoryModule, workerModule);
+			schedulerModule = new MockedSchedulerModule(false, module);
 
-			result = module.BeginMoveTo(1,2);
+			result = module.BeginMoveTo(1, 2);
 
 			Assert.IsNotNull(result);
 			Assert.AreEqual(1, result.WorkerID);
+			Assert.AreEqual(1, schedulerModule.Count);
+		}
+		[TestMethod]
+		public void ShouldEnqueueTaskWithCorrectETA()
+		{
+			MoverModule module;
+			IFactoryModule factoryModule;
+			IWorkerModule workerModule;
+			ITaskModule taskModule;
+			MockedSchedulerModule schedulerModule;
+			Task result,result2;
+
+			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 1, FactoryTypeID = 2, PlanetID = 3, HealthPoints = 100 }, new Factory() { FactoryID = 2, FactoryTypeID = 2, PlanetID = 3, HealthPoints = 100 });
+			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, FactoryID = 1 });
+			taskModule = new MockedTaskModule(false, 1);
+			module = new MoverModule(NullLogger.Instance, taskModule, factoryModule, workerModule);
+			schedulerModule = new MockedSchedulerModule(false, module);
+
+			result = module.BeginMoveTo(1, 2);
+			Assert.IsNotNull(result);
+			Assert.AreEqual(1, result.WorkerID);
+			Assert.AreEqual(1, schedulerModule.Count);
+			
+			result2 = module.BeginMoveTo(1, 2);
+			Assert.IsNotNull(result);
+			Assert.AreEqual(1, result.WorkerID);
+			Assert.AreEqual(2, schedulerModule.Count);
+
+			Assert.IsTrue((result2.ETA - result.ETA).TotalMinutes >= 4);
 		}
 
 

@@ -33,7 +33,15 @@ namespace PIO.ServerLib.Modules
 			return TrySelectFirst<TaskTable, Task>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
-		
+		public Task GetLastTask(int WorkerID)
+		{
+			ISelect<TaskTable> query;
+			LogEnter();
+
+			Log(LogLevels.Information, $"Querying Task table (WorkerID={WorkerID})");
+			query = new Select<TaskTable>(TaskTable.TaskID, TaskTable.TaskTypeID, TaskTable.WorkerID, TaskTable.TargetFactoryID, TaskTable.ETA).Top(1).Where(TaskTable.WorkerID.IsEqualTo(WorkerID)).OrderBy(OrderModes.DESC, TaskTable.TaskID);
+			return TrySelectFirst<TaskTable, Task>(query).OrThrow<PIODataException>("Failed to query");
+		}
 
 		public Task[] GetTasks(int WorkerID)
 		{

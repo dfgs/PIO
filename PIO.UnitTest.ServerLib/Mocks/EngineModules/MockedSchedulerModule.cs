@@ -22,10 +22,10 @@ namespace PIO.UnitTest.ServerLib.Mocks.EngineModules
 			get;
 			set;
 		}
-		public MockedSchedulerModule(bool ThrowException,IProducerModule ProducerModule)
+		public MockedSchedulerModule(bool ThrowException,ITaskGeneratorModule TaskGeneratorModule)
 		{
 			this.ThrowException = ThrowException;
-			ProducerModule.TaskCreated += ProducerModule_TaskCreated;
+			TaskGeneratorModule.TaskCreated += ProducerModule_TaskCreated;
 		}
 
 		private void ProducerModule_TaskCreated(ITaskGeneratorModule Module, Models.Task Task)

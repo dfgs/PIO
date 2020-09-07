@@ -64,6 +64,19 @@ namespace PIO.UnitTest.ServerLib.Modules
 			}
 		}
 		[TestMethod]
+		public void ShouldGetLastTask()
+		{
+			MockedDatabase<Task> database;
+			TaskModule module;
+			Task result;
+
+			database = new MockedDatabase<Task>(false, 5, (t) => new Task() { TaskID = t });
+			module = new TaskModule(NullLogger.Instance, database);
+			result = module.GetLastTask(1);
+			Assert.IsNotNull(result);
+			Assert.AreEqual(4, result.TaskID);
+		}
+		[TestMethod]
 		public void ShouldNotGetTaskAndLogError()
 		{
 			MockedDatabase<Task> database;
@@ -105,6 +118,21 @@ namespace PIO.UnitTest.ServerLib.Modules
 			Assert.ThrowsException<PIODataException>(() => module.GetTasks());
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
 		}
+		[TestMethod]
+		public void ShouldNotGetLastTaskAndLogError()
+		{
+			MockedDatabase<Task> database;
+			TaskModule module;
+			MemoryLogger logger;
+
+
+			logger = new MemoryLogger(new DefaultLogFormatter());
+			database = new MockedDatabase<Task>(true, 1, (t) => new Task() { TaskID = t });
+			module = new TaskModule(logger, database);
+			Assert.ThrowsException<PIODataException>(() => module.GetLastTask(1));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
+		}
+
 		[TestMethod]
 		public void ShouldInsertTask()
 		{

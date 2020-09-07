@@ -44,6 +44,12 @@ namespace PIO.UnitTest.ServerLib.Mocks
 			where TRow:new()
 		{
 			if (throwException) throw new NotImplementedException();
+			// simulate select top 
+			if (Query.Limit >= 0)
+			{
+				yield return (TRow)(object)rowFactoryDelegate(results - 1);
+				yield break;
+			}
 			for (int t = 0; t < results; t++)
 			{
 				yield return (TRow)(object)rowFactoryDelegate(t) ;

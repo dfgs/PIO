@@ -147,6 +147,12 @@ namespace PIO.PowerShell.PIOWebServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetTasks", ReplyAction="http://tempuri.org/IPIOService/GetTasksResponse")]
         System.Threading.Tasks.Task<PIO.Models.Task[]> GetTasksAsync(int WorkerID);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetLastTask", ReplyAction="http://tempuri.org/IPIOService/GetLastTaskResponse")]
+        PIO.Models.Task GetLastTask(int WorkerID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetLastTask", ReplyAction="http://tempuri.org/IPIOService/GetLastTaskResponse")]
+        System.Threading.Tasks.Task<PIO.Models.Task> GetLastTaskAsync(int WorkerID);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/HasEnoughResourcesToProduce", ReplyAction="http://tempuri.org/IPIOService/HasEnoughResourcesToProduceResponse")]
         bool HasEnoughResourcesToProduce(int FactoryID);
         
@@ -367,6 +373,14 @@ namespace PIO.PowerShell.PIOWebServiceReference {
         
         public System.Threading.Tasks.Task<PIO.Models.Task[]> GetTasksAsync(int WorkerID) {
             return base.Channel.GetTasksAsync(WorkerID);
+        }
+        
+        public PIO.Models.Task GetLastTask(int WorkerID) {
+            return base.Channel.GetLastTask(WorkerID);
+        }
+        
+        public System.Threading.Tasks.Task<PIO.Models.Task> GetLastTaskAsync(int WorkerID) {
+            return base.Channel.GetLastTaskAsync(WorkerID);
         }
         
         public bool HasEnoughResourcesToProduce(int FactoryID) {

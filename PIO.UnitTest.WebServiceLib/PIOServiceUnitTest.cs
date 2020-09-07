@@ -543,7 +543,17 @@ namespace PIO.UnitTest.WebServiceLib
 			Assert.AreEqual(3, result.Length);
 			Assert.IsTrue(result.All((item) => item != null));
 		}
+		[TestMethod]
+		public void ShouldGetLastTask()
+		{
+			PIOService service;
+			Task result;
 
+			service = new PIOService(NullLogger.Instance, null, null, null, null, null, null, null, null, null, null, new MockedTaskModule(3, false), null, null, null);
+			result = service.GetLastTask(1);
+			Assert.IsNotNull(result);
+			Assert.AreEqual(2, result.TaskID);
+		}
 		[TestMethod]
 		public void ShouldNotGetTaskAndLogError()
 		{
@@ -569,6 +579,18 @@ namespace PIO.UnitTest.WebServiceLib
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(service.ModuleName)));
 		}
 
+		[TestMethod]
+		public void ShouldNotGetLastTaskAndLogError()
+		{
+			PIOService service;
+			MemoryLogger logger;
+
+			logger = new MemoryLogger(new DefaultLogFormatter());
+			service = new PIOService(logger, null, null, null, null, null, null, null, null, null, null, new MockedTaskModule(3, true), null, null, null);
+
+			Assert.ThrowsException<FaultException>(() => service.GetLastTask(1));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(service.ModuleName)));
+		}
 
 
 

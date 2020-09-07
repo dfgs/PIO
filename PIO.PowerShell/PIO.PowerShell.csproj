@@ -51,6 +51,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="DataCmdlet\GetLastTaskCmdlet.cs" />
     <Compile Include="DataCmdlet\GetTaskTypeCmdlet.cs" />
     <Compile Include="DataCmdlet\GetTaskTypesCmdlet.cs" />
     <Compile Include="DataCmdlet\GetProductCmdlet.cs" />

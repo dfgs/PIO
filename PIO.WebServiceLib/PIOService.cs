@@ -191,6 +191,11 @@ namespace PIO.WebServiceLib
 			LogEnter();
 			return Try(() => taskModule.GetTasks(WorkerID)).OrThrow(GenerateFaultException);
 		}
+		public Task GetLastTask(int WorkerID)
+		{
+			LogEnter();
+			return Try(() => taskModule.GetLastTask(WorkerID)).OrThrow(GenerateFaultException);
+		}
 		#endregion
 
 		#region functional

@@ -145,6 +145,7 @@
   <xs:complexType name="Task">
     <xs:sequence>
       <xs:element minOccurs="0" name="ETA" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="TargetFactoryID" nillable="true" type="xs:int" />
       <xs:element minOccurs="0" name="TaskID" type="xs:int" />
       <xs:element minOccurs="0" name="TaskTypeID" type="xs:int" />
       <xs:element minOccurs="0" name="WorkerID" type="xs:int" />

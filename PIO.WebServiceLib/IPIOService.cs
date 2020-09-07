@@ -57,6 +57,8 @@ namespace PIO.WebServiceLib
 		Task GetTask(int TaskID);
 		[OperationContract]
 		Task[] GetTasks(int WorkerID);
+		[OperationContract]
+		Task GetLastTask(int WorkerID);
 		#endregion
 
 		#region functional

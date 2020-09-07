@@ -301,6 +301,20 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="GetLastTask">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="WorkerID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetLastTaskResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetLastTaskResult" nillable="true" type="q23:Task" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="HasEnoughResourcesToProduce">
     <xs:complexType>
       <xs:sequence>
@@ -325,7 +339,7 @@
   <xs:element name="ProduceResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="ProduceResult" nillable="true" type="q23:Task" />
+        <xs:element xmlns:q24="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="ProduceResult" nillable="true" type="q24:Task" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -340,7 +354,7 @@
   <xs:element name="MoveToResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q24="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="MoveToResult" nillable="true" type="q24:Task" />
+        <xs:element xmlns:q25="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="MoveToResult" nillable="true" type="q25:Task" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

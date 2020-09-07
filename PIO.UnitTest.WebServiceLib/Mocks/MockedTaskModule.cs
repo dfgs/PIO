@@ -32,7 +32,11 @@ namespace PIO.UnitTest.WebServiceLib.Mocks
 			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
 			return Generate((t) => new Task() { TaskID = t, WorkerID = 1 });
 		}
-
+		public Task GetLastTask(int WorkerID)
+		{
+			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
+			return Generate((t) => new Task() { TaskID = t, WorkerID = 1 }).Last();
+		}
 		public Task InsertTask(int TaskTypeID, int WorkerID, int? TargetFactoryID, DateTime ETA)
 		{
 			throw new NotImplementedException();

@@ -54,6 +54,53 @@ namespace PIO.UnitTest.ServerLib.Modules
 			Assert.AreEqual(1, result.WorkerID);
 			Assert.AreEqual(1, schedulerModule.Count);
 		}
+
+		[TestMethod]
+		public void ShouldEnqueueTaskWithCorrectETA()
+		{
+			ProducerModule module;
+			IFactoryModule factoryModule;
+			IWorkerModule workerModule;
+			IStackModule stackModule;
+			IIngredientModule ingredientModule;
+			IProductModule productModule;
+			ITaskModule taskModule;
+			MockedSchedulerModule schedulerModule;
+			Task result,result2;
+
+			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 1, FactoryTypeID = 2, PlanetID = 3, HealthPoints = 100 });
+			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, FactoryID = 1 });
+			stackModule = new MockedStackModule(false,
+				new Stack() { StackID = 0, FactoryID = 1, ResourceTypeID = 5, Quantity = 20 },
+				new Stack() { StackID = 1, FactoryID = 1, ResourceTypeID = 1, Quantity = 20 },
+				new Stack() { StackID = 2, FactoryID = 1, ResourceTypeID = 2, Quantity = 20 },
+				new Stack() { StackID = 3, FactoryID = 1, ResourceTypeID = 3, Quantity = 20 }
+				);
+			ingredientModule = new MockedIngredientModule(false,
+				new Ingredient() { IngredientID = 0, FactoryTypeID = 2, ResourceTypeID = 1, Quantity = 5 },
+				new Ingredient() { IngredientID = 1, FactoryTypeID = 2, ResourceTypeID = 2, Quantity = 10 },
+				new Ingredient() { IngredientID = 3, FactoryTypeID = 2, ResourceTypeID = 3, Quantity = 6 }
+				);
+			productModule = new MockedProductModule(false, new Product() { ProductID = 1, FactoryTypeID = 2, Duration = 4, Quantity = 2 });
+			taskModule = new MockedTaskModule(false, 1);
+			module = new ProducerModule(NullLogger.Instance, taskModule, factoryModule, workerModule, stackModule, ingredientModule, productModule);
+			schedulerModule = new MockedSchedulerModule(false, module);
+
+			result = module.BeginProduce(1);
+			Assert.IsNotNull(result);
+			Assert.AreEqual(1, result.WorkerID);
+			Assert.AreEqual(1, schedulerModule.Count);
+
+			result2 = module.BeginProduce(1);
+			Assert.IsNotNull(result);
+			Assert.AreEqual(1, result.WorkerID);
+			Assert.AreEqual(2, schedulerModule.Count);
+
+			Assert.IsTrue((result2.ETA - result.ETA).TotalMinutes >= 4);
+
+
+		}
+
 		[TestMethod]
 		public void ShouldReturnNullWhenFactoryHasNoProduct()
 		{
