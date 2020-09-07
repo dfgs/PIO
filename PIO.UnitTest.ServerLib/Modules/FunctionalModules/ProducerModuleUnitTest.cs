@@ -44,7 +44,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 				new Ingredient() { IngredientID = 3, FactoryTypeID = 2, ResourceTypeID = 3, Quantity = 6 }
 				);
 			productModule = new MockedProductModule(false, new Product() { ProductID=1, FactoryTypeID=2, Duration=4, Quantity=2 });
-			taskModule = new MockedTaskModule(false, 1);
+			taskModule = new MockedTaskModule(false);
 			module = new ProducerModule(NullLogger.Instance, taskModule, factoryModule,workerModule,stackModule,ingredientModule,productModule);
 			schedulerModule = new MockedSchedulerModule(false,module);
 
@@ -82,7 +82,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 				new Ingredient() { IngredientID = 3, FactoryTypeID = 2, ResourceTypeID = 3, Quantity = 6 }
 				);
 			productModule = new MockedProductModule(false, new Product() { ProductID = 1, FactoryTypeID = 2, Duration = 4, Quantity = 2 });
-			taskModule = new MockedTaskModule(false, 1);
+			taskModule = new MockedTaskModule(false);
 			module = new ProducerModule(NullLogger.Instance, taskModule, factoryModule, workerModule, stackModule, ingredientModule, productModule);
 			schedulerModule = new MockedSchedulerModule(false, module);
 
@@ -96,7 +96,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			Assert.AreEqual(1, result.WorkerID);
 			Assert.AreEqual(2, schedulerModule.Count);
 
-			Assert.IsTrue((result2.ETA - result.ETA).TotalMinutes >= 4);
+			Assert.IsTrue((result2.ETA - result.ETA).TotalSeconds >= 4);
 
 
 		}
@@ -128,7 +128,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 				new Ingredient() { IngredientID = 3, FactoryTypeID = 2, ResourceTypeID = 3, Quantity = 6 }
 				);
 			productModule = new MockedProductModule(false);
-			taskModule = new MockedTaskModule(false, 1);
+			taskModule = new MockedTaskModule(false);
 			module = new ProducerModule(NullLogger.Instance, taskModule, factoryModule, workerModule, stackModule, ingredientModule, productModule);
 			schedulerModule = new MockedSchedulerModule(false, module);
 
@@ -165,7 +165,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 				new Ingredient() { IngredientID = 3, FactoryTypeID = 2, ResourceTypeID = 3, Quantity = 6 }
 				);
 			productModule = new MockedProductModule(false, new Product() { ProductID = 1, FactoryTypeID = 2, Duration = 4, Quantity = 2 });
-			taskModule = new MockedTaskModule(false, 1);
+			taskModule = new MockedTaskModule(false);
 			logger = new MemoryLogger(new DefaultLogFormatter());
 			module = new ProducerModule(logger, taskModule, factoryModule,workerModule, stackModule, ingredientModule, productModule);
 			schedulerModule = new MockedSchedulerModule(false,module);
@@ -187,7 +187,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 				new Ingredient() { IngredientID = 3, FactoryTypeID = 2, ResourceTypeID = 3, Quantity = 6 }
 				);
 			productModule = new MockedProductModule(false, new Product() { ProductID = 1, FactoryTypeID = 2, Duration = 4, Quantity = 2 });
-			taskModule = new MockedTaskModule(false, 1);
+			taskModule = new MockedTaskModule(false);
 			logger = new MemoryLogger(new DefaultLogFormatter());
 			module = new ProducerModule(logger, taskModule, factoryModule, workerModule, stackModule, ingredientModule,productModule);
 			schedulerModule = new MockedSchedulerModule(false, module);
@@ -244,7 +244,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			stackModule = new MockedStackModule(false);
 			ingredientModule = new MockedIngredientModule(false);
 			productModule = new MockedProductModule(false, new Product() { ProductID = 1, FactoryTypeID = 2, Duration = 4, Quantity = 2 });
-			taskModule = new MockedTaskModule(false, 1);
+			taskModule = new MockedTaskModule(false);
 
 			logger = new MemoryLogger(new DefaultLogFormatter());
 			module = new ProducerModule(logger, taskModule, factoryModule,workerModule, stackModule, ingredientModule, productModule);
@@ -274,7 +274,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			stackModule = new MockedStackModule(true);
 			ingredientModule = new MockedIngredientModule(false);
 			productModule = new MockedProductModule(false, new Product() { ProductID = 1, FactoryTypeID = 2, Duration = 4, Quantity = 2 });
-			taskModule = new MockedTaskModule(false, 1);
+			taskModule = new MockedTaskModule(false);
 			logger = new MemoryLogger(new DefaultLogFormatter());
 			module = new ProducerModule(logger, taskModule, factoryModule, workerModule,stackModule, ingredientModule, productModule);
 			schedulerModule = new MockedSchedulerModule(false, module);
@@ -285,7 +285,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			stackModule = new MockedStackModule(false);
 			ingredientModule = new MockedIngredientModule(true);
 			productModule = new MockedProductModule(false, new Product() { ProductID = 1, FactoryTypeID = 2, Duration = 4, Quantity = 2 });
-			taskModule = new MockedTaskModule(false, 1);
+			taskModule = new MockedTaskModule(false);
 			logger = new MemoryLogger(new DefaultLogFormatter());
 			module = new ProducerModule(logger, taskModule, factoryModule, workerModule, stackModule, ingredientModule, productModule);
 			schedulerModule = new MockedSchedulerModule(false, module);
@@ -296,7 +296,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			stackModule = new MockedStackModule(false);
 			ingredientModule = new MockedIngredientModule(false);
 			productModule = new MockedProductModule(true, new Product() { ProductID = 1, FactoryTypeID = 2, Duration = 4, Quantity = 2 });
-			taskModule = new MockedTaskModule(false, 1);
+			taskModule = new MockedTaskModule(false);
 			logger = new MemoryLogger(new DefaultLogFormatter());
 			module = new ProducerModule(logger, taskModule, factoryModule, workerModule, stackModule, ingredientModule, productModule);
 			schedulerModule = new MockedSchedulerModule(false, module);
@@ -308,7 +308,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			stackModule = new MockedStackModule(false);
 			ingredientModule = new MockedIngredientModule(false);
 			productModule = new MockedProductModule(false, new Product() { ProductID = 1, FactoryTypeID = 2, Duration = 4, Quantity = 2 });
-			taskModule = new MockedTaskModule(true, 1);
+			taskModule = new MockedTaskModule(true);
 			logger = new MemoryLogger(new DefaultLogFormatter());
 			module = new ProducerModule(logger, taskModule,  factoryModule, workerModule, stackModule, ingredientModule, productModule);
 			schedulerModule = new MockedSchedulerModule(false, module);
@@ -347,7 +347,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 				new Ingredient() { IngredientID = 3, FactoryTypeID = 2, ResourceTypeID = 3, Quantity = 6 }
 				);
 			productModule = new MockedProductModule(false, new Product() { ProductID = 1, ResourceTypeID=2, FactoryTypeID = 2, Duration = 4, Quantity = 2 });
-			taskModule = new MockedTaskModule(false, 1);
+			taskModule = new MockedTaskModule(false);
 			module = new ProducerModule(NullLogger.Instance, taskModule, factoryModule, workerModule, stackModule, ingredientModule, productModule);
 			schedulerModule = new MockedSchedulerModule(false, module);
 
@@ -383,7 +383,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 				new Ingredient() { IngredientID = 3, FactoryTypeID = 2, ResourceTypeID = 3, Quantity = 6 }
 				);
 			productModule = new MockedProductModule(false, new Product() { ProductID = 1, ResourceTypeID = 6, FactoryTypeID = 2, Duration = 4, Quantity = 2 });
-			taskModule = new MockedTaskModule(false, 1);
+			taskModule = new MockedTaskModule(false);
 			module = new ProducerModule(NullLogger.Instance, taskModule, factoryModule, workerModule, stackModule, ingredientModule, productModule);
 			schedulerModule = new MockedSchedulerModule(false, module);
 
@@ -419,7 +419,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 				new Ingredient() { IngredientID = 3, FactoryTypeID = 2, ResourceTypeID = 3, Quantity = 6 }
 				);
 			productModule = new MockedProductModule(false);
-			taskModule = new MockedTaskModule(false, 1);
+			taskModule = new MockedTaskModule(false);
 			module = new ProducerModule(NullLogger.Instance, taskModule, factoryModule, workerModule, stackModule, ingredientModule, productModule);
 			schedulerModule = new MockedSchedulerModule(false, module);
 
@@ -472,7 +472,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			stackModule = new MockedStackModule(false);
 			ingredientModule = new MockedIngredientModule(false);
 			productModule = new MockedProductModule(false, new Product() { ProductID = 1, FactoryTypeID = 2, Duration = 4, Quantity = 2 });
-			taskModule = new MockedTaskModule(false, 1);
+			taskModule = new MockedTaskModule(false);
 
 			logger = new MemoryLogger(new DefaultLogFormatter());
 			module = new ProducerModule(logger, taskModule, factoryModule, workerModule, stackModule, ingredientModule, productModule);
@@ -501,7 +501,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			stackModule = new MockedStackModule(true);
 			ingredientModule = new MockedIngredientModule(false);
 			productModule = new MockedProductModule(false, new Product() { ProductID = 1, FactoryTypeID = 2, Duration = 4, Quantity = 2 });
-			taskModule = new MockedTaskModule(false, 1);
+			taskModule = new MockedTaskModule(false);
 			logger = new MemoryLogger(new DefaultLogFormatter());
 			module = new ProducerModule(logger, taskModule, factoryModule, workerModule, stackModule, ingredientModule, productModule);
 			schedulerModule = new MockedSchedulerModule(false, module);
@@ -511,7 +511,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			stackModule = new MockedStackModule(false);
 			ingredientModule = new MockedIngredientModule(false);
 			productModule = new MockedProductModule(true, new Product() { ProductID = 1, FactoryTypeID = 2, Duration = 4, Quantity = 2 });
-			taskModule = new MockedTaskModule(false, 1);
+			taskModule = new MockedTaskModule(false);
 			logger = new MemoryLogger(new DefaultLogFormatter());
 			module = new ProducerModule(logger, taskModule, factoryModule, workerModule, stackModule, ingredientModule, productModule);
 			schedulerModule = new MockedSchedulerModule(false, module);

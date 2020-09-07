@@ -29,7 +29,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 
 			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 1, FactoryTypeID = 2, PlanetID = 3, HealthPoints = 100 }, new Factory() { FactoryID = 2, FactoryTypeID = 2, PlanetID = 3, HealthPoints = 100 });
 			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, FactoryID = 1 });
-			taskModule = new MockedTaskModule(false, 1);
+			taskModule = new MockedTaskModule(false);
 			module = new MoverModule(NullLogger.Instance, taskModule, factoryModule, workerModule);
 			schedulerModule = new MockedSchedulerModule(false, module);
 
@@ -51,7 +51,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 
 			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 1, FactoryTypeID = 2, PlanetID = 3, HealthPoints = 100 }, new Factory() { FactoryID = 2, FactoryTypeID = 2, PlanetID = 3, HealthPoints = 100 });
 			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, FactoryID = 1 });
-			taskModule = new MockedTaskModule(false, 1);
+			taskModule = new MockedTaskModule(false);
 			module = new MoverModule(NullLogger.Instance, taskModule, factoryModule, workerModule);
 			schedulerModule = new MockedSchedulerModule(false, module);
 
@@ -65,7 +65,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			Assert.AreEqual(1, result.WorkerID);
 			Assert.AreEqual(2, schedulerModule.Count);
 
-			Assert.IsTrue((result2.ETA - result.ETA).TotalMinutes >= 4);
+			Assert.IsTrue((result2.ETA - result.ETA).TotalSeconds >= 4);
 		}
 
 
@@ -81,7 +81,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 
 			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 1, FactoryTypeID = 2, PlanetID = 3, HealthPoints = 100 }, new Factory() { FactoryID = 2, FactoryTypeID = 2, PlanetID = 3, HealthPoints = 100 });
 			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, FactoryID = 1 });
-			taskModule = new MockedTaskModule(false, 1);
+			taskModule = new MockedTaskModule(false);
 
 			logger = new MemoryLogger(new DefaultLogFormatter());
 			module = new MoverModule(logger, taskModule, factoryModule, workerModule);
@@ -100,7 +100,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 
 			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 1, FactoryTypeID = 2, PlanetID = 3, HealthPoints = 100 }, new Factory() { FactoryID = 2, FactoryTypeID = 2, PlanetID = 3, HealthPoints = 100 });
 			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, FactoryID = 1 });
-			taskModule = new MockedTaskModule(false, 1);
+			taskModule = new MockedTaskModule(false);
 
 			logger = new MemoryLogger(new DefaultLogFormatter());
 			module = new MoverModule(logger, taskModule, factoryModule, workerModule);
@@ -119,7 +119,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 
 			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 1, FactoryTypeID = 2, PlanetID = 3, HealthPoints = 100 }, new Factory() { FactoryID = 2, FactoryTypeID = 2, PlanetID = 3, HealthPoints = 100 });
 			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, FactoryID = 1 });
-			taskModule = new MockedTaskModule(true, 1);
+			taskModule = new MockedTaskModule(true);
 			logger = new MemoryLogger(new DefaultLogFormatter());
 			module = new MoverModule(logger, taskModule, factoryModule, workerModule);
 			Assert.ThrowsException<PIOInternalErrorException>(() => module.BeginMoveTo(1, 2));
@@ -127,7 +127,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 
 			factoryModule = new MockedFactoryModule(true, new Factory() { FactoryID = 1, FactoryTypeID = 2, PlanetID = 3, HealthPoints = 100 }, new Factory() { FactoryID = 2, FactoryTypeID = 2, PlanetID = 3, HealthPoints = 100 });
 			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, FactoryID = 1 });
-			taskModule = new MockedTaskModule(false, 1);
+			taskModule = new MockedTaskModule(false);
 			logger = new MemoryLogger(new DefaultLogFormatter());
 			module = new MoverModule(logger, taskModule, factoryModule, workerModule);
 			Assert.ThrowsException<PIOInternalErrorException>(() => module.BeginMoveTo(1, 2));
@@ -135,7 +135,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 
 			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 1, FactoryTypeID = 2, PlanetID = 3, HealthPoints = 100 }, new Factory() { FactoryID = 2, FactoryTypeID = 2, PlanetID = 3, HealthPoints = 100 });
 			workerModule = new MockedWorkerModule(true, new Worker() { WorkerID = 1, FactoryID = 1 });
-			taskModule = new MockedTaskModule(false, 1);
+			taskModule = new MockedTaskModule(false);
 			logger = new MemoryLogger(new DefaultLogFormatter());
 			module = new MoverModule(logger, taskModule, factoryModule, workerModule);
 			Assert.ThrowsException<PIOInternalErrorException>(() => module.BeginMoveTo(1, 2));
@@ -155,7 +155,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 
 			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 1, FactoryTypeID = 2, PlanetID = 3, HealthPoints = 100 }, new Factory() { FactoryID = 2, FactoryTypeID = 2, PlanetID = 3, HealthPoints = 100 });
 			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, FactoryID = 1 });
-			taskModule = new MockedTaskModule(false, 1);
+			taskModule = new MockedTaskModule(false);
 			module = new MoverModule(NullLogger.Instance, taskModule, factoryModule, workerModule);
 
 			module.EndMoveTo(1, 2);
@@ -174,7 +174,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			logger = new MemoryLogger(new DefaultLogFormatter());
 			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 1, FactoryTypeID = 2, PlanetID = 3, HealthPoints = 100 }, new Factory() { FactoryID = 2, FactoryTypeID = 2, PlanetID = 3, HealthPoints = 100 });
 			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, FactoryID = 1 });
-			taskModule = new MockedTaskModule(false, 1);
+			taskModule = new MockedTaskModule(false);
 			module = new MoverModule(logger, taskModule, factoryModule, workerModule);
 
 			Assert.ThrowsException<PIONotFoundException>(() => module.BeginMoveTo(2, 2));
@@ -193,7 +193,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			logger = new MemoryLogger(new DefaultLogFormatter());
 			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 1, FactoryTypeID = 2, PlanetID = 3, HealthPoints = 100 }, new Factory() { FactoryID = 2, FactoryTypeID = 2, PlanetID = 3, HealthPoints = 100 });
 			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, FactoryID = 1 });
-			taskModule = new MockedTaskModule(false, 1);
+			taskModule = new MockedTaskModule(false);
 			module = new MoverModule(logger, taskModule, factoryModule, workerModule);
 
 			Assert.ThrowsException<PIONotFoundException>(() => module.BeginMoveTo(1, 3));
@@ -212,7 +212,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			logger = new MemoryLogger(new DefaultLogFormatter());
 			factoryModule = new MockedFactoryModule(true, new Factory() { FactoryID = 1, FactoryTypeID = 2, PlanetID = 3, HealthPoints = 100 }, new Factory() { FactoryID = 2, FactoryTypeID = 2, PlanetID = 3, HealthPoints = 100 });
 			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, FactoryID = 1 });
-			taskModule = new MockedTaskModule(false, 1);
+			taskModule = new MockedTaskModule(false);
 			module = new MoverModule(logger, taskModule, factoryModule, workerModule);
 
 			Assert.ThrowsException<PIOInternalErrorException>(() => module.BeginMoveTo(1, 2));
@@ -222,7 +222,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			logger = new MemoryLogger(new DefaultLogFormatter());
 			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 1, FactoryTypeID = 2, PlanetID = 3, HealthPoints = 100 }, new Factory() { FactoryID = 2, FactoryTypeID = 2, PlanetID = 3, HealthPoints = 100 });
 			workerModule = new MockedWorkerModule(true, new Worker() { WorkerID = 1, FactoryID = 1 });
-			taskModule = new MockedTaskModule(false, 1);
+			taskModule = new MockedTaskModule(false);
 			module = new MoverModule(logger, taskModule, factoryModule, workerModule);
 
 			Assert.ThrowsException<PIOInternalErrorException>(() => module.BeginMoveTo(1, 2));

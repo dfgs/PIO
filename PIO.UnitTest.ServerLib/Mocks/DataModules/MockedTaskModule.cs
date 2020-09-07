@@ -12,56 +12,39 @@ namespace PIO.UnitTest.ServerLib.Mocks
 {
 	public class MockedTaskModule :MockedDatabaseModule<Task>,ITaskModule
 	{
-		private int results;
 
-		public MockedTaskModule(bool ThrowException,int Results ):base(ThrowException)
+		public MockedTaskModule(bool ThrowException,params Task[] Items ):base(ThrowException,Items)
 		{
-			this.results = Results;
 		}
 
 		public Task GetTask(int TaskID)
 		{
 			if (ThrowException) throw new PIODataException("UnitTestException",null,1,"UnitTest","UnitTest");
-			return new Task() {TaskID=TaskID ,WorkerID=1,ETA=DateTime.Now};
+			return items.FirstOrDefault(item => item.TaskID == TaskID);
 		}
 		public void DeleteTask(int TaskID)
 		{
 			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
+			Task task= items.FirstOrDefault(item => item.TaskID == TaskID);
+			items.Remove(task);
 		}
 		public Task[] GetTasks(int WorkerID)
 		{
-			Task[] items;
-
 			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
-			items = new Task[results];
-			for (int t = 0; t < results; t++)
-			{
-				items[t]=new Task() { TaskID = t, WorkerID = WorkerID, ETA = DateTime.Now };
-			}
-			return items;
+			return items.Where(item=>item.WorkerID==WorkerID).ToArray();
 		}
 
 		public Task[] GetTasks()
 		{
-			Task[] items;
-
-			if (ThrowException) throw new NotImplementedException();
-			items = new Task[results];
-			for (int t = 0; t < results; t++)
-			{
-				items[t] = new Task() { TaskID = t, WorkerID = 1, ETA = DateTime.Now };
-			}
-			return items;
+			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
+			return items.ToArray();
 		}
 
 		public Task GetLastTask(int WorkerID)
 		{
-			Task item;
 
 			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
-			item = new Task() { TaskID = results-1, WorkerID = WorkerID, ETA = DateTime.Now };
-			
-			return item;
+			return items.LastOrDefault();
 		}
 		public Task InsertTask(int TaskTypeID, int WorkerID, int? TargetFactoryID, DateTime ETA)
 		{
@@ -70,6 +53,7 @@ namespace PIO.UnitTest.ServerLib.Mocks
 			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
 
 			item = new Task() {TaskTypeID=TaskTypeID, WorkerID=WorkerID,ETA=ETA };
+			items.Add(item);
 			return item;
 		}
 

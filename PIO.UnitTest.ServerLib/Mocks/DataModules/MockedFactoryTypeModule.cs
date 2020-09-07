@@ -25,7 +25,7 @@ namespace PIO.UnitTest.ServerLib.Mocks
 		public FactoryType[] GetFactoryTypes()
 		{
 			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
-			return items;
+			return items.ToArray();
 		}
 
 

@@ -8,7 +8,7 @@ namespace PIO.UnitTest.ServerLib.Mocks
 {
 	public class MockedDatabaseModule<T>
 	{
-		protected T[] items;
+		protected List<T> items;
 		public bool ThrowException
 		{
 			get;
@@ -16,7 +16,7 @@ namespace PIO.UnitTest.ServerLib.Mocks
 		}
 		public MockedDatabaseModule(bool ThrowException, params T[] Items)
 		{
-			this.ThrowException = ThrowException; this.items = Items;
+			this.ThrowException = ThrowException; this.items =new List<T>( Items);
 		}
 
 	}

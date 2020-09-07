@@ -20,13 +20,12 @@ namespace PIO.ServerLib.Modules
 
 		private IFactoryModule factoryModule;
 		private IWorkerModule workerModule;
-		private ITaskModule taskModule;
 
 
 
-		public MoverModule(ILogger Logger, ITaskModule TaskModule, IFactoryModule FactoryModule,IWorkerModule WorkerModule) : base(Logger)
+		public MoverModule(ILogger Logger, ITaskModule TaskModule, IFactoryModule FactoryModule,IWorkerModule WorkerModule) : base(Logger,TaskModule)
 		{
-			this.factoryModule = FactoryModule; this.workerModule = WorkerModule; this.taskModule = TaskModule;
+			this.factoryModule = FactoryModule; this.workerModule = WorkerModule; 
 		}
 
 		public Task BeginMoveTo(int WorkerID, int TargetFactoryID)
@@ -54,7 +53,7 @@ namespace PIO.ServerLib.Modules
 			}
 
 			Log(LogLevels.Information, $"Creating task (WorkerID={WorkerID})");
-			task = Try(() => taskModule.InsertTask((int)TaskTypeIDs.MoveTo, WorkerID,TargetFactoryID, DateTime.Now.AddMinutes(1))).OrThrow<PIOInternalErrorException>("Failed to create task");
+			task = Try(() => taskModule.InsertTask((int)TaskTypeIDs.MoveTo, WorkerID,TargetFactoryID, GetLastETA(WorkerID).AddMinutes(1))).OrThrow<PIOInternalErrorException>("Failed to create task");
 
 			OnTaskCreated(task);
 

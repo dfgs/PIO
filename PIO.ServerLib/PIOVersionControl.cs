@@ -89,7 +89,7 @@ namespace PIO.ServerLib
 					#endregion
 
 					#region create Product
-					yield return new Insert<ProductTable>().Set(ProductTable.FactoryTypeID, (int)FactoryTypeIDs.Forest).Set(ProductTable.ResourceTypeID, (int)ResourceTypeIDs.Wood).Set(ProductTable.Quantity, 5).Set(ProductTable.Duration,1);
+					yield return new Insert<ProductTable>().Set(ProductTable.FactoryTypeID, (int)FactoryTypeIDs.Forest).Set(ProductTable.ResourceTypeID, (int)ResourceTypeIDs.Wood).Set(ProductTable.Quantity, 5).Set(ProductTable.Duration,60);
 					#endregion
 
 					#region create startup Planet

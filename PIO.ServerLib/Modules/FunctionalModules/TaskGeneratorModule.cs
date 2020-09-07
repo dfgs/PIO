@@ -13,9 +13,23 @@ namespace PIO.ServerLib.Modules
 	public abstract class TaskGeneratorModule : FunctionalModule, ITaskGeneratorModule
 	{
 		public event TaskCreatedHandler TaskCreated;
+		protected ITaskModule taskModule;
 
-		protected TaskGeneratorModule(ILogger Logger) : base(Logger)
+		protected TaskGeneratorModule(ILogger Logger,ITaskModule TaskModule) : base(Logger)
 		{
+			this.taskModule = TaskModule;
+		}
+
+		protected DateTime GetLastETA(int WorkerID)
+		{
+			Task task;
+
+			LogEnter();
+			
+			Log(LogLevels.Information, $"Getting last task (WorkerID={WorkerID})");
+			task=Try(() => taskModule.GetLastTask(WorkerID)).OrThrow<PIOInternalErrorException>("Failed to get last task");
+			if (task == null) return DateTime.Now;
+			return task.ETA;
 		}
 
 		protected virtual void OnTaskCreated(Task Task)
