@@ -32,6 +32,7 @@ namespace PIO.WebServiceLib
 		private IResourceCheckerModule resourceCheckerModule;
 		private IProducerModule producerModule;
 		private IMoverModule moverModule;
+		private ICarrierModule carrierModule;
 
 		public PIOService(ILogger Logger,
 			IPlanetModule PlanetModule, IFactoryModule FactoryModule,
@@ -42,7 +43,7 @@ namespace PIO.WebServiceLib
 			IIngredientModule IngredientModule, IProductModule ProductModule, 
 			ITaskModule TaskModule,
 
-			IResourceCheckerModule ResourceCheckerModule,IProducerModule ProducerModule,IMoverModule MoverModule
+			IResourceCheckerModule ResourceCheckerModule,IProducerModule ProducerModule,IMoverModule MoverModule,ICarrierModule CarrierModule
 		) :base(Logger)
 		{
 			LogEnter();
@@ -61,6 +62,7 @@ namespace PIO.WebServiceLib
 			this.resourceCheckerModule = ResourceCheckerModule;
 			this.producerModule = ProducerModule;
 			this.moverModule = MoverModule;
+			this.carrierModule = CarrierModule;
 		}
 
 		private FaultException GenerateFaultException(Exception InnerException, int ComponentID, string ComponentName, string MethodName)
@@ -218,11 +220,18 @@ namespace PIO.WebServiceLib
 		{
 			LogEnter();
 
-			return Try(() => moverModule.BeginMoveTo(WorkerID,TargetFactoryID)).OrThrow(GenerateFaultException);
+			return Try(() => moverModule.BeginMoveTo(WorkerID, TargetFactoryID)).OrThrow(GenerateFaultException);
 		}
 
-	#endregion
+		public Task CarryTo(int WorkerID, int TargetFactoryID,int ResourceTypeID)
+		{
+			LogEnter();
+
+			return Try(() => carrierModule.BeginCarryTo(WorkerID, TargetFactoryID,ResourceTypeID)).OrThrow(GenerateFaultException);
+		}
+
+		#endregion
 
 
-}
+	}
 }

@@ -170,6 +170,12 @@ namespace PIO.PowerShell.PIOWebServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/MoveTo", ReplyAction="http://tempuri.org/IPIOService/MoveToResponse")]
         System.Threading.Tasks.Task<PIO.Models.Task> MoveToAsync(int WorkerID, int TargetFactoryID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/CarryTo", ReplyAction="http://tempuri.org/IPIOService/CarryToResponse")]
+        PIO.Models.Task CarryTo(int WorkerID, int TargetFactoryID, int ResourceTypeID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/CarryTo", ReplyAction="http://tempuri.org/IPIOService/CarryToResponse")]
+        System.Threading.Tasks.Task<PIO.Models.Task> CarryToAsync(int WorkerID, int TargetFactoryID, int ResourceTypeID);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -405,6 +411,14 @@ namespace PIO.PowerShell.PIOWebServiceReference {
         
         public System.Threading.Tasks.Task<PIO.Models.Task> MoveToAsync(int WorkerID, int TargetFactoryID) {
             return base.Channel.MoveToAsync(WorkerID, TargetFactoryID);
+        }
+        
+        public PIO.Models.Task CarryTo(int WorkerID, int TargetFactoryID, int ResourceTypeID) {
+            return base.Channel.CarryTo(WorkerID, TargetFactoryID, ResourceTypeID);
+        }
+        
+        public System.Threading.Tasks.Task<PIO.Models.Task> CarryToAsync(int WorkerID, int TargetFactoryID, int ResourceTypeID) {
+            return base.Channel.CarryToAsync(WorkerID, TargetFactoryID, ResourceTypeID);
         }
     }
 }

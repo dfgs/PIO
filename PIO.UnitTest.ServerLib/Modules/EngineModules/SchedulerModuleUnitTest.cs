@@ -24,7 +24,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			IProducerModule taskModule;
 
 			taskModule = new MockedProducerModule();
-			module = new SchedulerModule(NullLogger.Instance,null, taskModule, new MockedMoverModule());
+			module = new SchedulerModule(NullLogger.Instance,null, taskModule, new MockedMoverModule(),new MockedCarrierModule());
 			taskModule.BeginProduce(1);
 			Assert.AreEqual(1, module.Count);
 		}
@@ -36,10 +36,21 @@ namespace PIO.UnitTest.ServerLib.Modules
 			IMoverModule taskModule;
 
 			taskModule = new MockedMoverModule();
-			module = new SchedulerModule(NullLogger.Instance, null, new MockedProducerModule(), taskModule);
+			module = new SchedulerModule(NullLogger.Instance, null, new MockedProducerModule(), taskModule, new MockedCarrierModule());
 			taskModule.BeginMoveTo(1,2);
 			Assert.AreEqual(1, module.Count);
 		}
 
+		[TestMethod]
+		public void ShouldAddTaskFromCarrier()
+		{
+			SchedulerModule module;
+			ICarrierModule taskModule;
+
+			taskModule = new MockedCarrierModule();
+			module = new SchedulerModule(NullLogger.Instance, null, new MockedProducerModule(),new MockedMoverModule(), taskModule);
+			taskModule.BeginCarryTo(1, 2,1);
+			Assert.AreEqual(1, module.Count);
+		}
 	}
 }

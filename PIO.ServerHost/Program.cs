@@ -53,6 +53,7 @@ namespace PIO.ServerHost
 			IResourceCheckerModule resourceCheckerModule;
 			IProducerModule producerModule;
 			IMoverModule moverModule;
+			ICarrierModule carrierModule;
 
 			quitEvent = new AutoResetEvent(false);
 			Console.CancelKeyPress += new ConsoleCancelEventHandler(Console_CancelKeyPress);
@@ -89,14 +90,15 @@ namespace PIO.ServerHost
 			resourceCheckerModule = new ResourceCheckerModule(logger, factoryModule, stackModule, ingredientModule);
 			producerModule = new ProducerModule(logger, taskModule, factoryModule, workerModule, stackModule, ingredientModule, productModule);
 			moverModule = new MoverModule(logger, taskModule, factoryModule, workerModule);
+			carrierModule = new CarrierModule(logger, taskModule, factoryModule, workerModule, stackModule);
 
-			schedulerModule = new SchedulerModule(logger, taskModule,producerModule,moverModule);
+			schedulerModule = new SchedulerModule(logger, taskModule,producerModule,moverModule,carrierModule);
 			schedulerModule.Start();
 			
 
 			service = new PIOService(
 				logger,planetModule,factoryModule,workerModule,stackModule,resourceTypeModule,factoryTypeModule,taskTypeModule,materialModule,ingredientModule,productModule,taskModule, 
-				resourceCheckerModule,producerModule,moverModule);
+				resourceCheckerModule,producerModule,moverModule,carrierModule);
 
 			serviceHostModule = new ServiceHostModule(logger,service);
 			serviceHostModule.Start();

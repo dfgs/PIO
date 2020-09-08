@@ -30,7 +30,7 @@ namespace PIO.ServerLib.Modules
 
 		public Task BeginMoveTo(int WorkerID, int TargetFactoryID)
 		{
-			Factory factory;
+			Factory targetFactory;
 			Worker worker;
 			Task task;
 
@@ -44,16 +44,16 @@ namespace PIO.ServerLib.Modules
 				throw new PIONotFoundException($"Worker doesn't exist (WorkerID={WorkerID})", null, ID, ModuleName, "BeginMoveTo");
 			}
 
-			Log(LogLevels.Information, $"Get factory (FactoryID={TargetFactoryID})");
-			factory = Try(() => factoryModule.GetFactory(TargetFactoryID)).OrThrow<PIOInternalErrorException>("Failed to get factory");
-			if (factory == null)
+			Log(LogLevels.Information, $"Get target factory (FactoryID={TargetFactoryID})");
+			targetFactory = Try(() => factoryModule.GetFactory(TargetFactoryID)).OrThrow<PIOInternalErrorException>("Failed to get target factory");
+			if (targetFactory == null)
 			{
 				Log(LogLevels.Warning, $"Factory doesn't exist (FactoryID={TargetFactoryID})");
 				throw new PIONotFoundException($"Factory doesn't exist (FactoryID={TargetFactoryID})", null, ID, ModuleName, "BeginMoveTo");
 			}
 
 			Log(LogLevels.Information, $"Creating task (WorkerID={WorkerID})");
-			task = Try(() => taskModule.InsertTask((int)TaskTypeIDs.MoveTo, WorkerID,TargetFactoryID, GetLastETA(WorkerID).AddMinutes(1))).OrThrow<PIOInternalErrorException>("Failed to create task");
+			task = Try(() => taskModule.InsertTask((int)TaskTypeIDs.MoveTo, WorkerID,TargetFactoryID, null,GetLastETA(WorkerID).AddSeconds(10))).OrThrow<PIOInternalErrorException>("Failed to create task");
 
 			OnTaskCreated(task);
 
@@ -63,7 +63,7 @@ namespace PIO.ServerLib.Modules
 		public void EndMoveTo(int WorkerID, int TargetFactoryID)
 		{
 			Worker worker;
-			Factory factory;
+			Factory targetFactory;
 
 			LogEnter();
 
@@ -75,9 +75,9 @@ namespace PIO.ServerLib.Modules
 				throw new PIONotFoundException($"Worker doesn't exist (WorkerID={WorkerID})", null, ID, ModuleName, "EndMoveTo");
 			}
 
-			Log(LogLevels.Information, $"Get factory (FactoryID={TargetFactoryID})");
-			factory = Try(() => factoryModule.GetFactory(TargetFactoryID)).OrThrow<PIOInternalErrorException>("Failed to get factory");
-			if (factory == null)
+			Log(LogLevels.Information, $"Get target factory (FactoryID={TargetFactoryID})");
+			targetFactory = Try(() => factoryModule.GetFactory(TargetFactoryID)).OrThrow<PIOInternalErrorException>("Failed to get target factory");
+			if (targetFactory == null)
 			{
 				Log(LogLevels.Warning, $"Factory doesn't exist (FactoryID={TargetFactoryID})");
 				throw new PIONotFoundException($"Factory doesn't exist (FactoryID={TargetFactoryID})", null, ID, ModuleName, "EndMoveTo");

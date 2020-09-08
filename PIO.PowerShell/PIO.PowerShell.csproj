@@ -74,6 +74,7 @@
     <Compile Include="DataCmdlet\GetFactoriesCmdlet.cs" />
     <Compile Include="DataCmdlet\GetPlanetsCmdlet.cs" />
     <Compile Include="DataCmdlet\GetPlanetCmdlet.cs" />
+    <Compile Include="FunctionalCmdlet\InvokeCarryToCmdlet.cs" />
     <Compile Include="FunctionalCmdlet\InvokeMoveToCmdlet.cs" />
     <Compile Include="FunctionalCmdlet\InvokeProduceCmdlet.cs" />
     <Compile Include="FunctionalCmdlet\AssertHasEnoughResourcesToProduceCmdlet.cs" />

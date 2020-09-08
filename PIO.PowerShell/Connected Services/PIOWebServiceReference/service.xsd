@@ -358,4 +358,20 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="CarryTo">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="WorkerID" type="xs:int" />
+        <xs:element minOccurs="0" name="TargetFactoryID" type="xs:int" />
+        <xs:element minOccurs="0" name="ResourceTypeID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CarryToResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q26="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="CarryToResult" nillable="true" type="q26:Task" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

@@ -52,6 +52,7 @@
     <Compile Include="Exceptions\FunctionalExceptions\PIOFunctionalException.cs" />
     <Compile Include="Modules\DataModules\ITaskTypeModule.cs" />
     <Compile Include="Modules\FunctionalModules\IMoverModule.cs" />
+    <Compile Include="Modules\FunctionalModules\ICarrierModule.cs" />
     <Compile Include="Modules\FunctionalModules\ITaskGeneratorModule.cs" />
     <Compile Include="TaskType.cs" />
     <Compile Include="Modules\DataModules\IProductModule.cs" />

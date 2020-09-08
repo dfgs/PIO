@@ -21,6 +21,8 @@ namespace PIO.Models
 		public DateTime ETA { get; set; }
 		[DataMember]
 		public int? TargetFactoryID { get; set; }
+		[DataMember]
+		public int? ResourceTypeID { get; set; }
 
 
 	}

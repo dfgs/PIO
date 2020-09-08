@@ -29,12 +29,15 @@ namespace PIO.ServerLib.Modules
 		private ITaskModule taskModule;
 		private IProducerModule producerModule;
 		private IMoverModule moverModule;
-		public SchedulerModule(ILogger Logger,ITaskModule TaskModule,IProducerModule ProducerModule,IMoverModule MoverModule) : base(Logger, ThreadPriority.Normal)
+		private ICarrierModule carrierModule;
+
+		public SchedulerModule(ILogger Logger,ITaskModule TaskModule,IProducerModule ProducerModule,IMoverModule MoverModule, ICarrierModule CarrierModule) : base(Logger, ThreadPriority.Normal)
 		{
-			this.taskModule = TaskModule;this.producerModule = ProducerModule;this.moverModule = MoverModule;
+			this.taskModule = TaskModule;this.producerModule = ProducerModule;this.moverModule = MoverModule;this.carrierModule = CarrierModule;
 
 			producerModule.TaskCreated += TaskGeneratorModule_TaskCreated;
-			moverModule.TaskCreated+= TaskGeneratorModule_TaskCreated;
+			moverModule.TaskCreated += TaskGeneratorModule_TaskCreated;
+			carrierModule.TaskCreated += TaskGeneratorModule_TaskCreated;
 		}
 
 		private void TaskGeneratorModule_TaskCreated(ITaskGeneratorModule Module, Task Task)
@@ -80,7 +83,10 @@ namespace PIO.ServerLib.Modules
 					Try(() => producerModule.EndProduce(Task.WorkerID)).OrAlert($"Failed to terminate task (TaskID={Task.TaskID})");
 					break;
 				case (int)TaskTypeIDs.MoveTo:
-					Try(() => moverModule.EndMoveTo(Task.WorkerID,Task.TargetFactoryID.Value)).OrAlert($"Failed to terminate task (TaskID={Task.TaskID})");
+					Try(() => moverModule.EndMoveTo(Task.WorkerID, Task.TargetFactoryID.Value)).OrAlert($"Failed to terminate task (TaskID={Task.TaskID})");
+					break;
+				case (int)TaskTypeIDs.CarryTo:
+					Try(() => carrierModule.EndCarryTo(Task.WorkerID, Task.TargetFactoryID.Value,Task.ResourceTypeID.Value)).OrAlert($"Failed to terminate task (TaskID={Task.TaskID})");
 					break;
 				default:
 					Log(LogLevels.Warning, $"Unhandled task type (TaskTypeID={Task.TaskTypeID})");
