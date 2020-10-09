@@ -17,7 +17,7 @@ namespace PIO.UnitTest.WebServiceLib.Mocks
 
 		
 
-		public TaskType GetTaskType(int TaskTypeID)
+		public TaskType GetTaskType(TaskTypeIDs TaskTypeID)
 		{
 			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
 			return new TaskType() { TaskTypeID = TaskTypeID };
@@ -26,7 +26,7 @@ namespace PIO.UnitTest.WebServiceLib.Mocks
 		public TaskType[] GetTaskTypes()
 		{
 			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
-			return Generate((t) => new TaskType() { TaskTypeID = t });
+			return Generate((t) => new TaskType() { TaskTypeID = (TaskTypeIDs)t });
 		}
 
 		

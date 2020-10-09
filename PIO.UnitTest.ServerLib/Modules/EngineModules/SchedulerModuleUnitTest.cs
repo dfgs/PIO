@@ -49,7 +49,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 
 			taskModule = new MockedCarrierModule();
 			module = new SchedulerModule(NullLogger.Instance, null, new MockedProducerModule(),new MockedMoverModule(), taskModule);
-			taskModule.BeginCarryTo(1, 2,1);
+			taskModule.BeginCarryTo(1, 2,ResourceTypeIDs.Wood);
 			Assert.AreEqual(1, module.Count);
 		}
 	}

@@ -79,13 +79,13 @@ namespace PIO.ServerLib.Modules
 			Log(LogLevels.Information, $"Terminating task (TaskID={Task.TaskID})");
 			switch (Task.TaskTypeID)
 			{
-				case (int)TaskTypeIDs.Produce:
+				case TaskTypeIDs.Produce:
 					Try(() => producerModule.EndProduce(Task.WorkerID)).OrAlert($"Failed to terminate task (TaskID={Task.TaskID})");
 					break;
-				case (int)TaskTypeIDs.MoveTo:
+				case TaskTypeIDs.MoveTo:
 					Try(() => moverModule.EndMoveTo(Task.WorkerID, Task.TargetFactoryID.Value)).OrAlert($"Failed to terminate task (TaskID={Task.TaskID})");
 					break;
-				case (int)TaskTypeIDs.CarryTo:
+				case TaskTypeIDs.CarryTo:
 					Try(() => carrierModule.EndCarryTo(Task.WorkerID, Task.TargetFactoryID.Value,Task.ResourceTypeID.Value)).OrAlert($"Failed to terminate task (TaskID={Task.TaskID})");
 					break;
 				default:

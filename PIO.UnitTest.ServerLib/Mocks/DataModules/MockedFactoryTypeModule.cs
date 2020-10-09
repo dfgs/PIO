@@ -16,7 +16,7 @@ namespace PIO.UnitTest.ServerLib.Mocks
 		{
 		}
 
-		public FactoryType GetFactoryType(int FactoryTypeID)
+		public FactoryType GetFactoryType(FactoryTypeIDs FactoryTypeID)
 		{
 			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
 			return items.FirstOrDefault(item => item.FactoryTypeID == FactoryTypeID);

@@ -10,7 +10,7 @@ namespace PIO.Models.Modules
 {
 	public interface ITaskTypeModule:IDatabaseModule
 	{
-		TaskType GetTaskType(int TaskTypeID);
+		TaskType GetTaskType(TaskTypeIDs TaskTypeID);
 		TaskType[] GetTaskTypes();
 	}
 }

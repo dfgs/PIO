@@ -11,7 +11,7 @@ namespace PIO.Models.Modules
 	public interface ICarrierModule : ITaskGeneratorModule
 	{
 
-		Task BeginCarryTo(int WorkerID, int TargetFactoryID, int ResourceTypeID);
-		void EndCarryTo(int WorkerID, int TargetFactoryID, int ResourceTypeID);
+		Task BeginCarryTo(int WorkerID, int TargetFactoryID, ResourceTypeIDs ResourceTypeID);
+		void EndCarryTo(int WorkerID, int TargetFactoryID, ResourceTypeIDs ResourceTypeID);
 	}
 }

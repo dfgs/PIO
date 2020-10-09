@@ -43,7 +43,7 @@ namespace PIO.ServerLib.Modules
 			return TrySelectMany<StackTable,Stack>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
-		public Stack InsertStack(int FactoryID, int ResourceTypeID, int Quantity)
+		public Stack InsertStack(int FactoryID, ResourceTypeIDs ResourceTypeID, int Quantity)
 		{
 			IInsert<StackTable> query;
 			Stack item;

@@ -12,7 +12,7 @@ namespace PIO.Models
 	public class ResourceType
 	{
 		[DataMember]
-		public int ResourceTypeID { get; set; }
+		public ResourceTypeIDs ResourceTypeID { get; set; }
 		[DataMember]
 		public string Name { get; set; }
 		

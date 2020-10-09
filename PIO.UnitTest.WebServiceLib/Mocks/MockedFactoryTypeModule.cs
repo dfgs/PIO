@@ -17,7 +17,7 @@ namespace PIO.UnitTest.WebServiceLib.Mocks
 
 		
 
-		public FactoryType GetFactoryType(int FactoryTypeID)
+		public FactoryType GetFactoryType(FactoryTypeIDs FactoryTypeID)
 		{
 			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
 			return new FactoryType() { FactoryTypeID = FactoryTypeID };
@@ -26,7 +26,7 @@ namespace PIO.UnitTest.WebServiceLib.Mocks
 		public FactoryType[] GetFactoryTypes()
 		{
 			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
-			return Generate((t) => new FactoryType() { FactoryTypeID = t });
+			return Generate((t) => new FactoryType() { FactoryTypeID = (FactoryTypeIDs)t });
 		}
 
 		

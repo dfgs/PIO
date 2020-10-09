@@ -22,7 +22,7 @@ namespace PIO.ServerLib.Modules
 		{
 		}
 
-		public ResourceType GetResourceType(int ResourceTypeID)
+		public ResourceType GetResourceType(ResourceTypeIDs ResourceTypeID)
 		{
 			ISelect<ResourceTypeTable> query;
 			LogEnter();

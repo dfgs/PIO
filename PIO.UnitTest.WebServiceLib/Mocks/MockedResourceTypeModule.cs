@@ -17,7 +17,7 @@ namespace PIO.UnitTest.WebServiceLib.Mocks
 
 		
 
-		public ResourceType GetResourceType(int ResourceTypeID)
+		public ResourceType GetResourceType(ResourceTypeIDs ResourceTypeID)
 		{
 			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
 			return new ResourceType() { ResourceTypeID = ResourceTypeID };
@@ -26,7 +26,7 @@ namespace PIO.UnitTest.WebServiceLib.Mocks
 		public ResourceType[] GetResourceTypes()
 		{
 			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
-			return Generate((t) => new ResourceType() { ResourceTypeID = t });
+			return Generate((t) => new ResourceType() { ResourceTypeID = (ResourceTypeIDs)t });
 		}
 
 		

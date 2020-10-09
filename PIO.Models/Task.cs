@@ -14,7 +14,7 @@ namespace PIO.Models
 		[DataMember]
 		public int TaskID { get; set; }
 		[DataMember]
-		public int TaskTypeID { get; set; }
+		public TaskTypeIDs TaskTypeID { get; set; }
 		[DataMember]
 		public int WorkerID { get; set; }
 		[DataMember]
@@ -22,7 +22,7 @@ namespace PIO.Models
 		[DataMember]
 		public int? TargetFactoryID { get; set; }
 		[DataMember]
-		public int? ResourceTypeID { get; set; }
+		public ResourceTypeIDs? ResourceTypeID { get; set; }
 
 
 	}

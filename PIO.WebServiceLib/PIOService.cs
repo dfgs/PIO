@@ -115,7 +115,7 @@ namespace PIO.WebServiceLib
 			return Try(() => stackModule.GetStacks(FactoryID)).OrThrow(GenerateFaultException);
 		}
 
-		public ResourceType GetResourceType(int ResourceTypeID)
+		public ResourceType GetResourceType(ResourceTypeIDs ResourceTypeID)
 		{
 			LogEnter();
 			return Try(() => resourceTypeModule.GetResourceType(ResourceTypeID)).OrThrow(GenerateFaultException);
@@ -126,7 +126,7 @@ namespace PIO.WebServiceLib
 			return Try(() => resourceTypeModule.GetResourceTypes()).OrThrow(GenerateFaultException);
 		}
 
-		public FactoryType GetFactoryType(int FactoryTypeID)
+		public FactoryType GetFactoryType(FactoryTypeIDs FactoryTypeID)
 		{
 			LogEnter();
 			return Try(() => factoryTypeModule.GetFactoryType(FactoryTypeID)).OrThrow(GenerateFaultException);
@@ -136,7 +136,7 @@ namespace PIO.WebServiceLib
 			LogEnter();
 			return Try(() => factoryTypeModule.GetFactoryTypes()).OrThrow(GenerateFaultException);
 		}
-		public TaskType GetTaskType(int TaskTypeID)
+		public TaskType GetTaskType(TaskTypeIDs TaskTypeID)
 		{
 			LogEnter();
 			return Try(() => taskTypeModule.GetTaskType(TaskTypeID)).OrThrow(GenerateFaultException);
@@ -153,10 +153,10 @@ namespace PIO.WebServiceLib
 			return Try(() => materialModule.GetMaterial(MaterialID)).OrThrow(GenerateFaultException);
 		}
 
-		public Material[] GetMaterials(int FactoryID)
+		public Material[] GetMaterials(FactoryTypeIDs FactoryTypeID)
 		{
 			LogEnter();
-			return Try(() => materialModule.GetMaterials(FactoryID)).OrThrow(GenerateFaultException);
+			return Try(() => materialModule.GetMaterials(FactoryTypeID)).OrThrow(GenerateFaultException);
 		}
 
 		public Ingredient GetIngredient(int IngredientID)
@@ -165,10 +165,10 @@ namespace PIO.WebServiceLib
 			return Try(() => ingredientModule.GetIngredient(IngredientID)).OrThrow(GenerateFaultException);
 		}
 
-		public Ingredient[] GetIngredients(int FactoryID)
+		public Ingredient[] GetIngredients(FactoryTypeIDs FactoryTypeID)
 		{
 			LogEnter();
-			return Try(() => ingredientModule.GetIngredients(FactoryID)).OrThrow(GenerateFaultException);
+			return Try(() => ingredientModule.GetIngredients(FactoryTypeID)).OrThrow(GenerateFaultException);
 		}
 		public Product GetProduct(int ProductID)
 		{
@@ -176,10 +176,10 @@ namespace PIO.WebServiceLib
 			return Try(() => productModule.GetProduct(ProductID)).OrThrow(GenerateFaultException);
 		}
 
-		public Product[] GetProducts(int FactoryID)
+		public Product[] GetProducts(FactoryTypeIDs FactoryTypeID)
 		{
 			LogEnter();
-			return Try(() => productModule.GetProducts(FactoryID)).OrThrow(GenerateFaultException);
+			return Try(() => productModule.GetProducts(FactoryTypeID)).OrThrow(GenerateFaultException);
 		}
 
 		public Task GetTask(int TaskID)
@@ -223,7 +223,7 @@ namespace PIO.WebServiceLib
 			return Try(() => moverModule.BeginMoveTo(WorkerID, TargetFactoryID)).OrThrow(GenerateFaultException);
 		}
 
-		public Task CarryTo(int WorkerID, int TargetFactoryID,int ResourceTypeID)
+		public Task CarryTo(int WorkerID, int TargetFactoryID,ResourceTypeIDs ResourceTypeID)
 		{
 			LogEnter();
 

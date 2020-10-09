@@ -222,9 +222,9 @@ namespace PIO.UnitTest.WebServiceLib
 			ResourceType result;
 
 			service = new PIOService(NullLogger.Instance, null, null, null, null, new MockedResourceTypeModule(3, false), null, null, null, null, null, null, null, null, null, null);
-			result = service.GetResourceType(1);
+			result = service.GetResourceType(ResourceTypeIDs.Wood);
 			Assert.IsNotNull(result);
-			Assert.AreEqual(1, result.ResourceTypeID);
+			Assert.AreEqual(ResourceTypeIDs.Wood, result.ResourceTypeID);
 		}
 		[TestMethod]
 		public void ShouldGetResourceTypes()
@@ -248,7 +248,7 @@ namespace PIO.UnitTest.WebServiceLib
 			logger = new MemoryLogger(new DefaultLogFormatter());
 			service = new PIOService(logger, null, null, null, null, new MockedResourceTypeModule(3, true),  null, null, null, null, null, null, null, null, null, null);
 
-			Assert.ThrowsException<FaultException>(() => service.GetResourceType(1));
+			Assert.ThrowsException<FaultException>(() => service.GetResourceType(ResourceTypeIDs.Wood));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(service.ModuleName)));
 		}
 		[TestMethod]
@@ -273,9 +273,9 @@ namespace PIO.UnitTest.WebServiceLib
 			FactoryType result;
 
 			service = new PIOService(NullLogger.Instance, null, null, null, null, null, new MockedFactoryTypeModule(3, false), null, null, null, null, null, null, null, null, null);
-			result = service.GetFactoryType(1);
+			result = service.GetFactoryType(FactoryTypeIDs.Stockpile);
 			Assert.IsNotNull(result);
-			Assert.AreEqual(1, result.FactoryTypeID);
+			Assert.AreEqual(FactoryTypeIDs.Stockpile, result.FactoryTypeID);
 		}
 		[TestMethod]
 		public void ShouldGetFactoryTypes()
@@ -299,7 +299,7 @@ namespace PIO.UnitTest.WebServiceLib
 			logger = new MemoryLogger(new DefaultLogFormatter());
 			service = new PIOService(logger, null, null, null, null, null, new MockedFactoryTypeModule(3, true), null, null, null, null, null, null, null, null, null);
 
-			Assert.ThrowsException<FaultException>(() => service.GetFactoryType(1));
+			Assert.ThrowsException<FaultException>(() => service.GetFactoryType(FactoryTypeIDs.Stockpile));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(service.ModuleName)));
 		}
 		[TestMethod]
@@ -324,9 +324,9 @@ namespace PIO.UnitTest.WebServiceLib
 			TaskType result;
 
 			service = new PIOService(NullLogger.Instance, null, null, null, null, null, null, new MockedTaskTypeModule(3, false),null, null, null, null, null, null, null, null);
-			result = service.GetTaskType(1);
+			result = service.GetTaskType(TaskTypeIDs.MoveTo);
 			Assert.IsNotNull(result);
-			Assert.AreEqual(1, result.TaskTypeID);
+			Assert.AreEqual(TaskTypeIDs.MoveTo, result.TaskTypeID);
 		}
 		[TestMethod]
 		public void ShouldGetTaskTypes()
@@ -350,7 +350,7 @@ namespace PIO.UnitTest.WebServiceLib
 			logger = new MemoryLogger(new DefaultLogFormatter());
 			service = new PIOService(logger, null, null, null, null, null, null, new MockedTaskTypeModule(3, true),null, null, null, null, null, null, null, null);
 
-			Assert.ThrowsException<FaultException>(() => service.GetTaskType(1));
+			Assert.ThrowsException<FaultException>(() => service.GetTaskType(TaskTypeIDs.MoveTo));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(service.ModuleName)));
 		}
 		[TestMethod]
@@ -386,7 +386,7 @@ namespace PIO.UnitTest.WebServiceLib
 			Material[] result;
 
 			service = new PIOService(NullLogger.Instance, null, null, null, null, null, null, null, new MockedMaterialModule(3, false), null, null, null, null, null, null, null);
-			result = service.GetMaterials(1);
+			result = service.GetMaterials(FactoryTypeIDs.Stockpile);
 			Assert.IsNotNull(result);
 			Assert.AreEqual(3, result.Length);
 			Assert.IsTrue(result.All((item) => item != null));
@@ -413,7 +413,7 @@ namespace PIO.UnitTest.WebServiceLib
 			logger = new MemoryLogger(new DefaultLogFormatter());
 			service = new PIOService(logger, null, null, null, null, null, null, null, new MockedMaterialModule(3, true),  null, null, null, null, null, null, null);
 
-			Assert.ThrowsException<FaultException>(() => service.GetMaterials(1));
+			Assert.ThrowsException<FaultException>(() => service.GetMaterials(FactoryTypeIDs.Stockpile));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(service.ModuleName)));
 		}
 
@@ -436,7 +436,7 @@ namespace PIO.UnitTest.WebServiceLib
 			Ingredient[] result;
 
 			service = new PIOService(NullLogger.Instance, null, null, null, null, null, null, null, null, new MockedIngredientModule(3, false), null, null, null, null, null, null);
-			result = service.GetIngredients(1);
+			result = service.GetIngredients(FactoryTypeIDs.Stockpile);
 			Assert.IsNotNull(result);
 			Assert.AreEqual(3, result.Length);
 			Assert.IsTrue(result.All((item) => item != null));
@@ -463,7 +463,7 @@ namespace PIO.UnitTest.WebServiceLib
 			logger = new MemoryLogger(new DefaultLogFormatter());
 			service = new PIOService(logger, null, null, null, null, null, null, null, null, new MockedIngredientModule(3, true), null, null, null, null, null, null);
 
-			Assert.ThrowsException<FaultException>(() => service.GetIngredients(1));
+			Assert.ThrowsException<FaultException>(() => service.GetIngredients(FactoryTypeIDs.Stockpile));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(service.ModuleName)));
 		}
 
@@ -487,7 +487,7 @@ namespace PIO.UnitTest.WebServiceLib
 			Product[] result;
 
 			service = new PIOService(NullLogger.Instance, null, null, null, null, null, null, null, null, null, new MockedProductModule(3, false),  null, null, null, null, null);
-			result = service.GetProducts(1);
+			result = service.GetProducts(FactoryTypeIDs.Stockpile);
 			Assert.IsNotNull(result);
 			Assert.AreEqual(3, result.Length);
 			Assert.IsTrue(result.All((item) => item != null));
@@ -514,7 +514,7 @@ namespace PIO.UnitTest.WebServiceLib
 			logger = new MemoryLogger(new DefaultLogFormatter());
 			service = new PIOService(logger, null, null, null, null, null, null, null, null, null, new MockedProductModule(3, true),  null, null, null, null, null);
 
-			Assert.ThrowsException<FaultException>(() => service.GetProducts(1));
+			Assert.ThrowsException<FaultException>(() => service.GetProducts(FactoryTypeIDs.Stockpile));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(service.ModuleName)));
 		}
 
@@ -685,7 +685,7 @@ namespace PIO.UnitTest.WebServiceLib
 			Task result;
 
 			service = new PIOService(NullLogger.Instance, null, null, null, null, null, null, null, null, null, null, null, null, null, null, new MockedCarrierModule(false));
-			result = service.CarryTo(10, 1,1);
+			result = service.CarryTo(10, 1,ResourceTypeIDs.Wood);
 			Assert.IsNotNull(result);
 			Assert.AreEqual(10, result.WorkerID);
 		}
@@ -700,7 +700,7 @@ namespace PIO.UnitTest.WebServiceLib
 			logger = new MemoryLogger(new DefaultLogFormatter());
 			service = new PIOService(logger, null, null, null, null, null, null, null, null, null, null, null, null, null,  null, new MockedCarrierModule(true));
 
-			Assert.ThrowsException<FaultException>(() => service.CarryTo(10, 1,1));
+			Assert.ThrowsException<FaultException>(() => service.CarryTo(10, 1, ResourceTypeIDs.Wood));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(service.ModuleName)));
 		}
 

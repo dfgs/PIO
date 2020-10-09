@@ -11,6 +11,6 @@ namespace PIO.Models.Modules
 	public interface IIngredientModule:IDatabaseModule
 	{
 		Ingredient GetIngredient(int IngredientID);
-		Ingredient[] GetIngredients(int FactoryTypeID);
+		Ingredient[] GetIngredients(FactoryTypeIDs FactoryTypeID);
 	}
 }

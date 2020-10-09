@@ -29,7 +29,7 @@ namespace PIO.UnitTest.WebServiceLib.Mocks
 			return Generate((t) => new Stack() { StackID = t,FactoryID=FactoryID });
 		}
 
-		public Stack InsertStack(int FactoryID, int ResourceTypeID, int Quantity)
+		public Stack InsertStack(int FactoryID, ResourceTypeIDs ResourceTypeID, int Quantity)
 		{
 			throw new NotImplementedException();
 		}

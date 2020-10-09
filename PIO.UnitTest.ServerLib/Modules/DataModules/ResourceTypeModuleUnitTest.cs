@@ -21,11 +21,11 @@ namespace PIO.UnitTest.ServerLib.Modules
 			ResourceTypeModule module;
 			ResourceType result;
 
-			database = new MockedDatabase<ResourceType>(false, 1, (t) => new ResourceType() { ResourceTypeID = t });
+			database = new MockedDatabase<ResourceType>(false, 1, (t) => new ResourceType() { ResourceTypeID = (ResourceTypeIDs)t });
 			module = new ResourceTypeModule(NullLogger.Instance, database);
-			result = module.GetResourceType(1);
+			result = module.GetResourceType(ResourceTypeIDs.Tree);
 			Assert.IsNotNull(result);
-			Assert.AreEqual(0, result.ResourceTypeID);
+			Assert.AreEqual(ResourceTypeIDs.Tree, result.ResourceTypeID);
 		}
 		[TestMethod]
 		public void ShouldGetResourceTypes()
@@ -34,7 +34,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			ResourceTypeModule module;
 			ResourceType[] results;
 
-			database = new MockedDatabase<ResourceType>(false, 3, (t) => new ResourceType() { ResourceTypeID = t });
+			database = new MockedDatabase<ResourceType>(false, 3, (t) => new ResourceType() { ResourceTypeID = (ResourceTypeIDs)t });
 			module = new ResourceTypeModule(NullLogger.Instance, database);
 			results = module.GetResourceTypes();
 			Assert.IsNotNull(results);
@@ -42,7 +42,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			for(int t=0;t<3;t++)
 			{
 				Assert.IsNotNull(results[t]);
-				Assert.AreEqual(t, results[t].ResourceTypeID);
+				Assert.AreEqual((ResourceTypeIDs)t, results[t].ResourceTypeID);
 			}
 		}
 		[TestMethod]
@@ -54,9 +54,9 @@ namespace PIO.UnitTest.ServerLib.Modules
 
 
 			logger = new MemoryLogger(new DefaultLogFormatter());
-			database = new MockedDatabase<ResourceType>(true,1, (t) => new ResourceType() { ResourceTypeID = t });
+			database = new MockedDatabase<ResourceType>(true,1, (t) => new ResourceType() { ResourceTypeID = (ResourceTypeIDs)t });
 			module = new ResourceTypeModule(logger, database);
-			Assert.ThrowsException<PIODataException>(() => module.GetResourceType(1));
+			Assert.ThrowsException<PIODataException>(() => module.GetResourceType(ResourceTypeIDs.Wood));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
 		}
 		[TestMethod]
@@ -68,7 +68,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 
 
 			logger = new MemoryLogger(new DefaultLogFormatter());
-			database = new MockedDatabase<ResourceType>(true, 3, (t) => new ResourceType() { ResourceTypeID = t });
+			database = new MockedDatabase<ResourceType>(true, 3, (t) => new ResourceType() { ResourceTypeID = (ResourceTypeIDs)t });
 			module = new ResourceTypeModule(logger, database);
 			Assert.ThrowsException<PIODataException>(() => module.GetResourceTypes());
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));

@@ -22,7 +22,7 @@ namespace PIO.ServerLib.Modules
 		{
 		}
 
-		public TaskType GetTaskType(int TaskTypeID)
+		public TaskType GetTaskType(TaskTypeIDs TaskTypeID)
 		{
 			ISelect<TaskTypeTable> query;
 			LogEnter();

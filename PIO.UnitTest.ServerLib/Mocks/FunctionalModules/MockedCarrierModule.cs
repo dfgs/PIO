@@ -11,7 +11,7 @@ namespace PIO.UnitTest.ServerLib.Mocks
 	{
 		public event TaskCreatedHandler TaskCreated;
 
-		public Task BeginCarryTo(int WorkerID, int TargetFactoryID, int ResourceTypeID)
+		public Task BeginCarryTo(int WorkerID, int TargetFactoryID, ResourceTypeIDs ResourceTypeID)
 		{
 			Task task = new Models.Task() { WorkerID = WorkerID,TargetFactoryID=TargetFactoryID,ResourceTypeID=ResourceTypeID };
 			TaskCreated(this, task);
@@ -19,7 +19,7 @@ namespace PIO.UnitTest.ServerLib.Mocks
 		}
 
 		
-		public void EndCarryTo(int WorkerID, int TargetFactoryID, int ResourceTypeID)
+		public void EndCarryTo(int WorkerID, int TargetFactoryID, ResourceTypeIDs ResourceTypeID)
 		{
 		}
 

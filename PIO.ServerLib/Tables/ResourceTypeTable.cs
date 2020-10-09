@@ -1,5 +1,5 @@
 ﻿using NetORMLib.Columns;
-
+using PIO.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +10,7 @@ namespace PIO.ServerLib.Tables
 	// No identity for enum tables
 	public class ResourceTypeTable
 	{
-		public static readonly Column<ResourceTypeTable, int> ResourceTypeID = new Column<ResourceTypeTable, int>() { IsPrimaryKey = true};
+		public static readonly Column<ResourceTypeTable, ResourceTypeIDs> ResourceTypeID = new Column<ResourceTypeTable, ResourceTypeIDs>() { IsPrimaryKey = true};
 		public static readonly Column<ResourceTypeTable, string> Name = new Column<ResourceTypeTable, string>() ;
 	}
 }

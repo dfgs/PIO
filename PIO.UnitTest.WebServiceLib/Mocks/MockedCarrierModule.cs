@@ -18,7 +18,7 @@ namespace PIO.UnitTest.WebServiceLib.Mocks
 		}
 
 
-		public Task BeginCarryTo(int WorkerID, int TargetFactoryID, int ResourceTypeID)
+		public Task BeginCarryTo(int WorkerID, int TargetFactoryID, ResourceTypeIDs ResourceTypeID)
 		{
 			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
 			Task task = new Task() { WorkerID = WorkerID, ETA = DateTime.Now,TargetFactoryID=TargetFactoryID,ResourceTypeID=ResourceTypeID };
@@ -28,7 +28,7 @@ namespace PIO.UnitTest.WebServiceLib.Mocks
 
 		
 
-		public void EndCarryTo(int WorkerID, int TargetFactoryID, int ResourceTypeID)
+		public void EndCarryTo(int WorkerID, int TargetFactoryID, ResourceTypeIDs ResourceTypeID)
 		{
 			throw new NotImplementedException();
 		}

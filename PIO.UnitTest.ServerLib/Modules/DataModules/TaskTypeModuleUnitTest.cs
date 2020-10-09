@@ -21,11 +21,11 @@ namespace PIO.UnitTest.ServerLib.Modules
 			TaskTypeModule module;
 			TaskType result;
 
-			database = new MockedDatabase<TaskType>(false, 1, (t) => new TaskType() { TaskTypeID = t });
+			database = new MockedDatabase<TaskType>(false, 1, (t) => new TaskType() { TaskTypeID = (TaskTypeIDs)t });
 			module = new TaskTypeModule(NullLogger.Instance, database);
-			result = module.GetTaskType(1);
+			result = module.GetTaskType(TaskTypeIDs.Produce);
 			Assert.IsNotNull(result);
-			Assert.AreEqual(0, result.TaskTypeID);
+			Assert.AreEqual(TaskTypeIDs.Produce, result.TaskTypeID);
 		}
 		[TestMethod]
 		public void ShouldGetTaskTypes()
@@ -34,7 +34,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			TaskTypeModule module;
 			TaskType[] results;
 
-			database = new MockedDatabase<TaskType>(false, 3, (t) => new TaskType() { TaskTypeID = t });
+			database = new MockedDatabase<TaskType>(false, 3, (t) => new TaskType() { TaskTypeID = (TaskTypeIDs)t });
 			module = new TaskTypeModule(NullLogger.Instance, database);
 			results = module.GetTaskTypes();
 			Assert.IsNotNull(results);
@@ -42,7 +42,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			for(int t=0;t<3;t++)
 			{
 				Assert.IsNotNull(results[t]);
-				Assert.AreEqual(t, results[t].TaskTypeID);
+				Assert.AreEqual((TaskTypeIDs)t, results[t].TaskTypeID);
 			}
 		}
 		[TestMethod]
@@ -54,9 +54,9 @@ namespace PIO.UnitTest.ServerLib.Modules
 
 
 			logger = new MemoryLogger(new DefaultLogFormatter());
-			database = new MockedDatabase<TaskType>(true,1, (t) => new TaskType() { TaskTypeID = t });
+			database = new MockedDatabase<TaskType>(true,1, (t) => new TaskType() { TaskTypeID = (TaskTypeIDs)t });
 			module = new TaskTypeModule(logger, database);
-			Assert.ThrowsException<PIODataException>(() => module.GetTaskType(1));
+			Assert.ThrowsException<PIODataException>(() => module.GetTaskType(TaskTypeIDs.MoveTo));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
 		}
 		[TestMethod]
@@ -68,7 +68,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 
 
 			logger = new MemoryLogger(new DefaultLogFormatter());
-			database = new MockedDatabase<TaskType>(true, 3, (t) => new TaskType() { TaskTypeID = t });
+			database = new MockedDatabase<TaskType>(true, 3, (t) => new TaskType() { TaskTypeID = (TaskTypeIDs)t });
 			module = new TaskTypeModule(logger, database);
 			Assert.ThrowsException<PIODataException>(() => module.GetTaskTypes());
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));

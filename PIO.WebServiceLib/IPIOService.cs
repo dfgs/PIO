@@ -30,29 +30,29 @@ namespace PIO.WebServiceLib
 		[OperationContract]
 		Stack[] GetStacks(int FactoryID);
 		[OperationContract]
-		ResourceType GetResourceType(int ResourceTypeID);
+		ResourceType GetResourceType(ResourceTypeIDs ResourceTypeID);
 		[OperationContract]
 		ResourceType[] GetResourceTypes();
 		[OperationContract]
-		FactoryType GetFactoryType(int FactoryTypeID);
+		FactoryType GetFactoryType(FactoryTypeIDs FactoryTypeID);
 		[OperationContract]
 		FactoryType[] GetFactoryTypes();
 		[OperationContract]
-		TaskType GetTaskType(int TaskTypeID);
+		TaskType GetTaskType(TaskTypeIDs TaskTypeID);
 		[OperationContract]
 		TaskType[] GetTaskTypes();
 		[OperationContract]
 		Material GetMaterial(int MaterialID);
 		[OperationContract]
-		Material[] GetMaterials(int FactoryTypeID);
+		Material[] GetMaterials(FactoryTypeIDs FactoryTypeID);
 		[OperationContract]
 		Ingredient GetIngredient(int IngredientID);
 		[OperationContract]
-		Ingredient[] GetIngredients(int FactoryTypeID);
+		Ingredient[] GetIngredients(FactoryTypeIDs FactoryTypeID);
 		[OperationContract]
 		Product GetProduct(int ProductID);
 		[OperationContract]
-		Product[] GetProducts(int FactoryTypeID);
+		Product[] GetProducts(FactoryTypeIDs FactoryTypeID);
 		[OperationContract]
 		Task GetTask(int TaskID);
 		[OperationContract]
@@ -69,7 +69,7 @@ namespace PIO.WebServiceLib
 		[OperationContract]
 		Task MoveTo(int WorkerID, int TargetFactoryID);
 		[OperationContract]
-		Task CarryTo(int WorkerID, int TargetFactoryID,int ResourceTypeID);
+		Task CarryTo(int WorkerID, int TargetFactoryID,ResourceTypeIDs ResourceTypeID);
 		#endregion
 
 	}

@@ -21,11 +21,11 @@ namespace PIO.UnitTest.ServerLib.Modules
 			FactoryTypeModule module;
 			FactoryType result;
 
-			database = new MockedDatabase<FactoryType>(false, 1, (t) => new FactoryType() { FactoryTypeID = t });
+			database = new MockedDatabase<FactoryType>(false, 1, (t) => new FactoryType() { FactoryTypeID = (FactoryTypeIDs)t });
 			module = new FactoryTypeModule(NullLogger.Instance, database);
-			result = module.GetFactoryType(1);
+			result = module.GetFactoryType(FactoryTypeIDs.Forest);
 			Assert.IsNotNull(result);
-			Assert.AreEqual(0, result.FactoryTypeID);
+			Assert.AreEqual(FactoryTypeIDs.Forest, result.FactoryTypeID);
 		}
 		[TestMethod]
 		public void ShouldGetFactoryTypes()
@@ -34,7 +34,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			FactoryTypeModule module;
 			FactoryType[] results;
 
-			database = new MockedDatabase<FactoryType>(false, 3, (t) => new FactoryType() { FactoryTypeID = t });
+			database = new MockedDatabase<FactoryType>(false, 3, (t) => new FactoryType() { FactoryTypeID = (FactoryTypeIDs)t });
 			module = new FactoryTypeModule(NullLogger.Instance, database);
 			results = module.GetFactoryTypes();
 			Assert.IsNotNull(results);
@@ -42,7 +42,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			for(int t=0;t<3;t++)
 			{
 				Assert.IsNotNull(results[t]);
-				Assert.AreEqual(t, results[t].FactoryTypeID);
+				Assert.AreEqual((FactoryTypeIDs)t, results[t].FactoryTypeID);
 			}
 		}
 		[TestMethod]
@@ -54,9 +54,9 @@ namespace PIO.UnitTest.ServerLib.Modules
 
 
 			logger = new MemoryLogger(new DefaultLogFormatter());
-			database = new MockedDatabase<FactoryType>(true,1, (t) => new FactoryType() { FactoryTypeID = t });
+			database = new MockedDatabase<FactoryType>(true,1, (t) => new FactoryType() { FactoryTypeID = (FactoryTypeIDs)t });
 			module = new FactoryTypeModule(logger, database);
-			Assert.ThrowsException<PIODataException>(() => module.GetFactoryType(1));
+			Assert.ThrowsException<PIODataException>(() => module.GetFactoryType(FactoryTypeIDs.Stockpile));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
 		}
 		[TestMethod]
@@ -68,7 +68,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 
 
 			logger = new MemoryLogger(new DefaultLogFormatter());
-			database = new MockedDatabase<FactoryType>(true, 3, (t) => new FactoryType() { FactoryTypeID = t });
+			database = new MockedDatabase<FactoryType>(true, 3, (t) => new FactoryType() { FactoryTypeID = (FactoryTypeIDs)t });
 			module = new FactoryTypeModule(logger, database);
 			Assert.ThrowsException<PIODataException>(() => module.GetFactoryTypes());
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));

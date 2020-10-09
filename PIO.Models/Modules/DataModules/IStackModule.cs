@@ -12,7 +12,7 @@ namespace PIO.Models.Modules
 	{
 		Stack GetStack(int StackID);
 		Stack[] GetStacks(int FactoryID);
-		Stack InsertStack(int FactoryID, int ResourceTypeID, int Quantity);
+		Stack InsertStack(int FactoryID, ResourceTypeIDs ResourceTypeID, int Quantity);
 		void UpdateStack(int StackID, int Quantity);
 	}
 }

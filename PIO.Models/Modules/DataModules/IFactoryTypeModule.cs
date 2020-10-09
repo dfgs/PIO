@@ -10,7 +10,7 @@ namespace PIO.Models.Modules
 {
 	public interface IFactoryTypeModule:IDatabaseModule
 	{
-		FactoryType GetFactoryType(int FactoryTypeID);
+		FactoryType GetFactoryType(FactoryTypeIDs FactoryTypeID);
 		FactoryType[] GetFactoryTypes();
 	}
 }

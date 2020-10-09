@@ -32,7 +32,7 @@ namespace PIO.ServerLib.Modules
 			return TrySelectFirst <MaterialTable,Material>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
-		public Material[] GetMaterials(int FactoryTypeID)
+		public Material[] GetMaterials(FactoryTypeIDs FactoryTypeID)
 		{
 			ISelect<MaterialTable> query;
 			LogEnter();

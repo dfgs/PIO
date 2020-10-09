@@ -32,7 +32,7 @@ namespace PIO.ServerLib.Modules
 			return TrySelectFirst <IngredientTable,Ingredient>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
-		public Ingredient[] GetIngredients(int FactoryTypeID)
+		public Ingredient[] GetIngredients(FactoryTypeIDs FactoryTypeID)
 		{
 			ISelect<IngredientTable> query;
 			LogEnter();

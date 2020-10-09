@@ -12,7 +12,7 @@ namespace PIO.Models
 	public class TaskType
 	{
 		[DataMember]
-		public int TaskTypeID { get; set; }
+		public TaskTypeIDs TaskTypeID { get; set; }
 		[DataMember]
 		public string Name { get; set; }
 		

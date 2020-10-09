@@ -48,52 +48,52 @@ namespace PIO.ServerLib
 					yield return new CreateRelation<PlanetTable, FactoryTable, int>(PlanetTable.PlanetID, FactoryTable.PlanetID);
 					yield return new CreateRelation<FactoryTable, WorkerTable, int>(FactoryTable.FactoryID, WorkerTable.FactoryID);
 					yield return new CreateRelation<FactoryTable, StackTable, int>(FactoryTable.FactoryID, StackTable.FactoryID);
-					yield return new CreateRelation<ResourceTypeTable, StackTable, int>(ResourceTypeTable.ResourceTypeID, StackTable.ResourceTypeID);
-					yield return new CreateRelation<FactoryTypeTable, MaterialTable, int>(FactoryTypeTable.FactoryTypeID, MaterialTable.FactoryTypeID);
-					yield return new CreateRelation<ResourceTypeTable, MaterialTable, int>(ResourceTypeTable.ResourceTypeID, MaterialTable.ResourceTypeID);
-					yield return new CreateRelation<FactoryTypeTable, FactoryTable, int>(FactoryTypeTable.FactoryTypeID, FactoryTable.FactoryTypeID);
-					yield return new CreateRelation<TaskTypeTable, TaskTable, int>(TaskTypeTable.TaskTypeID, TaskTable.TaskTypeID);
+					yield return new CreateRelation<ResourceTypeTable, StackTable, ResourceTypeIDs>(ResourceTypeTable.ResourceTypeID, StackTable.ResourceTypeID);
+					yield return new CreateRelation<FactoryTypeTable, MaterialTable, FactoryTypeIDs>(FactoryTypeTable.FactoryTypeID, MaterialTable.FactoryTypeID);
+					yield return new CreateRelation<ResourceTypeTable, MaterialTable, ResourceTypeIDs>(ResourceTypeTable.ResourceTypeID, MaterialTable.ResourceTypeID);
+					yield return new CreateRelation<FactoryTypeTable, FactoryTable, FactoryTypeIDs>(FactoryTypeTable.FactoryTypeID, FactoryTable.FactoryTypeID);
+					yield return new CreateRelation<TaskTypeTable, TaskTable, TaskTypeIDs>(TaskTypeTable.TaskTypeID, TaskTable.TaskTypeID);
 
 					yield return new CreateRelation<WorkerTable, TaskTable, int>(WorkerTable.WorkerID, TaskTable.WorkerID);
 					yield return new CreateRelation<FactoryTable, TaskTable, int>(FactoryTable.FactoryID, TaskTable.TargetFactoryID);
-					yield return new CreateRelation<ResourceTypeTable, TaskTable, int>(ResourceTypeTable.ResourceTypeID, TaskTable.ResourceTypeID);
+					yield return new CreateRelation<ResourceTypeTable, TaskTable, ResourceTypeIDs>(ResourceTypeTable.ResourceTypeID, TaskTable.ResourceTypeID);
 
-					yield return new CreateRelation<FactoryTypeTable, IngredientTable, int>(FactoryTypeTable.FactoryTypeID, IngredientTable.FactoryTypeID);
-					yield return new CreateRelation<ResourceTypeTable, IngredientTable, int>(ResourceTypeTable.ResourceTypeID, IngredientTable.ResourceTypeID);
-					yield return new CreateRelation<FactoryTypeTable, ProductTable, int>(FactoryTypeTable.FactoryTypeID, ProductTable.FactoryTypeID);
-					yield return new CreateRelation<ResourceTypeTable, ProductTable, int>(ResourceTypeTable.ResourceTypeID, ProductTable.ResourceTypeID);
+					yield return new CreateRelation<FactoryTypeTable, IngredientTable, FactoryTypeIDs>(FactoryTypeTable.FactoryTypeID, IngredientTable.FactoryTypeID);
+					yield return new CreateRelation<ResourceTypeTable, IngredientTable, ResourceTypeIDs>(ResourceTypeTable.ResourceTypeID, IngredientTable.ResourceTypeID);
+					yield return new CreateRelation<FactoryTypeTable, ProductTable, FactoryTypeIDs>(FactoryTypeTable.FactoryTypeID, ProductTable.FactoryTypeID);
+					yield return new CreateRelation<ResourceTypeTable, ProductTable, ResourceTypeIDs>(ResourceTypeTable.ResourceTypeID, ProductTable.ResourceTypeID);
 
 
 					break;
 				case 3:
 					#region create ResourceType
-					yield return new Insert<ResourceTypeTable>().Set(ResourceTypeTable.ResourceTypeID, (int)ResourceTypeIDs.Tree).Set(ResourceTypeTable.Name, "Tree");
-					yield return new Insert<ResourceTypeTable>().Set(ResourceTypeTable.ResourceTypeID, (int)ResourceTypeIDs.Wood).Set(ResourceTypeTable.Name, "Wood");
-					yield return new Insert<ResourceTypeTable>().Set(ResourceTypeTable.ResourceTypeID, (int)ResourceTypeIDs.Stone).Set(ResourceTypeTable.Name, "Stone");
-					yield return new Insert<ResourceTypeTable>().Set(ResourceTypeTable.ResourceTypeID, (int)ResourceTypeIDs.Coal).Set(ResourceTypeTable.Name, "Coal");
-					yield return new Insert<ResourceTypeTable>().Set(ResourceTypeTable.ResourceTypeID, (int)ResourceTypeIDs.Plank).Set(ResourceTypeTable.Name, "Plank");
+					yield return new Insert<ResourceTypeTable>().Set(ResourceTypeTable.ResourceTypeID, ResourceTypeIDs.Tree).Set(ResourceTypeTable.Name, "Tree");
+					yield return new Insert<ResourceTypeTable>().Set(ResourceTypeTable.ResourceTypeID, ResourceTypeIDs.Wood).Set(ResourceTypeTable.Name, "Wood");
+					yield return new Insert<ResourceTypeTable>().Set(ResourceTypeTable.ResourceTypeID, ResourceTypeIDs.Stone).Set(ResourceTypeTable.Name, "Stone");
+					yield return new Insert<ResourceTypeTable>().Set(ResourceTypeTable.ResourceTypeID, ResourceTypeIDs.Coal).Set(ResourceTypeTable.Name, "Coal");
+					yield return new Insert<ResourceTypeTable>().Set(ResourceTypeTable.ResourceTypeID, ResourceTypeIDs.Plank).Set(ResourceTypeTable.Name, "Plank");
 					#endregion
 
 					#region create FactoryType
-					yield return new Insert<FactoryTypeTable>().Set(FactoryTypeTable.FactoryTypeID, (int)FactoryTypeIDs.Forest).Set(FactoryTypeTable.Name, "Forest").Set(FactoryTypeTable.HealthPoints, 999);
-					yield return new Insert<FactoryTypeTable>().Set(FactoryTypeTable.FactoryTypeID, (int)FactoryTypeIDs.Stockpile).Set(FactoryTypeTable.Name, "Stockpile").Set(FactoryTypeTable.HealthPoints, 50);
-					yield return new Insert<FactoryTypeTable>().Set(FactoryTypeTable.FactoryTypeID, (int)FactoryTypeIDs.Sawmill).Set(FactoryTypeTable.Name, "Sawmill").Set(FactoryTypeTable.HealthPoints, 5);
+					yield return new Insert<FactoryTypeTable>().Set(FactoryTypeTable.FactoryTypeID, FactoryTypeIDs.Forest).Set(FactoryTypeTable.Name, "Forest").Set(FactoryTypeTable.HealthPoints, 999);
+					yield return new Insert<FactoryTypeTable>().Set(FactoryTypeTable.FactoryTypeID, FactoryTypeIDs.Stockpile).Set(FactoryTypeTable.Name, "Stockpile").Set(FactoryTypeTable.HealthPoints, 50);
+					yield return new Insert<FactoryTypeTable>().Set(FactoryTypeTable.FactoryTypeID, FactoryTypeIDs.Sawmill).Set(FactoryTypeTable.Name, "Sawmill").Set(FactoryTypeTable.HealthPoints, 5);
 					#endregion
 
 					#region create TaskType
-					yield return new Insert<TaskTypeTable>().Set(TaskTypeTable.TaskTypeID, (int)TaskTypeIDs.Produce).Set(TaskTypeTable.Name, "Produce");
-					yield return new Insert<TaskTypeTable>().Set(TaskTypeTable.TaskTypeID, (int)TaskTypeIDs.MoveTo).Set(TaskTypeTable.Name, "MoveTo");
-					yield return new Insert<TaskTypeTable>().Set(TaskTypeTable.TaskTypeID, (int)TaskTypeIDs.CarryTo).Set(TaskTypeTable.Name, "CarryTo");
+					yield return new Insert<TaskTypeTable>().Set(TaskTypeTable.TaskTypeID, TaskTypeIDs.Produce).Set(TaskTypeTable.Name, "Produce");
+					yield return new Insert<TaskTypeTable>().Set(TaskTypeTable.TaskTypeID, TaskTypeIDs.MoveTo).Set(TaskTypeTable.Name, "MoveTo");
+					yield return new Insert<TaskTypeTable>().Set(TaskTypeTable.TaskTypeID, TaskTypeIDs.CarryTo).Set(TaskTypeTable.Name, "CarryTo");
 					#endregion
 
 					#region create Ingredient
-					yield return new Insert<IngredientTable>().Set(IngredientTable.FactoryTypeID, (int)FactoryTypeIDs.Forest).Set(IngredientTable.ResourceTypeID, (int)ResourceTypeIDs.Tree).Set(IngredientTable.Quantity, 1);
-					yield return new Insert<IngredientTable>().Set(IngredientTable.FactoryTypeID, (int)FactoryTypeIDs.Sawmill).Set(IngredientTable.ResourceTypeID, (int)ResourceTypeIDs.Wood).Set(IngredientTable.Quantity, 1);
+					yield return new Insert<IngredientTable>().Set(IngredientTable.FactoryTypeID, FactoryTypeIDs.Forest).Set(IngredientTable.ResourceTypeID, ResourceTypeIDs.Tree).Set(IngredientTable.Quantity, 1);
+					yield return new Insert<IngredientTable>().Set(IngredientTable.FactoryTypeID, FactoryTypeIDs.Sawmill).Set(IngredientTable.ResourceTypeID, ResourceTypeIDs.Wood).Set(IngredientTable.Quantity, 1);
 					#endregion
 
 					#region create Product
-					yield return new Insert<ProductTable>().Set(ProductTable.FactoryTypeID, (int)FactoryTypeIDs.Forest).Set(ProductTable.ResourceTypeID, (int)ResourceTypeIDs.Wood).Set(ProductTable.Quantity, 2).Set(ProductTable.Duration, 60);
-					yield return new Insert<ProductTable>().Set(ProductTable.FactoryTypeID, (int)FactoryTypeIDs.Sawmill).Set(ProductTable.ResourceTypeID, (int)ResourceTypeIDs.Plank).Set(ProductTable.Quantity, 2).Set(ProductTable.Duration, 60);
+					yield return new Insert<ProductTable>().Set(ProductTable.FactoryTypeID, FactoryTypeIDs.Forest).Set(ProductTable.ResourceTypeID, ResourceTypeIDs.Wood).Set(ProductTable.Quantity, 2).Set(ProductTable.Duration, 60);
+					yield return new Insert<ProductTable>().Set(ProductTable.FactoryTypeID, FactoryTypeIDs.Sawmill).Set(ProductTable.ResourceTypeID, ResourceTypeIDs.Plank).Set(ProductTable.Quantity, 2).Set(ProductTable.Duration, 60);
 					#endregion
 
 					#region create startup Planet
@@ -108,8 +108,8 @@ namespace PIO.ServerLib
 					yield return new Insert<StackTable>().Set(StackTable.FactoryID, factoryID).Set(StackTable.ResourceTypeID, (int)ResourceTypeIDs.Tree).Set(StackTable.Quantity, 100);
 					#endregion
 
-					yield return new Insert<FactoryTable>().Set(FactoryTable.PlanetID, planetID).Set(FactoryTable.FactoryTypeID, (int)FactoryTypeIDs.Stockpile).Set(FactoryTable.HealthPoints, 999);
-					yield return new Insert<FactoryTable>().Set(FactoryTable.PlanetID, planetID).Set(FactoryTable.FactoryTypeID, (int)FactoryTypeIDs.Sawmill).Set(FactoryTable.HealthPoints, 999);
+					yield return new Insert<FactoryTable>().Set(FactoryTable.PlanetID, planetID).Set(FactoryTable.FactoryTypeID, FactoryTypeIDs.Stockpile).Set(FactoryTable.HealthPoints, 999);
+					yield return new Insert<FactoryTable>().Set(FactoryTable.PlanetID, planetID).Set(FactoryTable.FactoryTypeID, FactoryTypeIDs.Sawmill).Set(FactoryTable.HealthPoints, 999);
 
 					#endregion
 
@@ -125,10 +125,10 @@ namespace PIO.ServerLib
 					//yield return new Insert<TaskTable>().Set(TaskTable.WorkerID, factoryID).Set(TaskTable.ETA, DateTime.Now);
 
 
-					yield return new Insert<MaterialTable>().Set(MaterialTable.FactoryTypeID, 0).Set(MaterialTable.ResourceTypeID, (int)ResourceTypeIDs.Wood).Set(MaterialTable.Quantity, 1);
-					yield return new Insert<MaterialTable>().Set(MaterialTable.FactoryTypeID, 0).Set(MaterialTable.ResourceTypeID, (int)ResourceTypeIDs.Stone).Set(MaterialTable.Quantity, 2);
+					yield return new Insert<MaterialTable>().Set(MaterialTable.FactoryTypeID, FactoryTypeIDs.Forest).Set(MaterialTable.ResourceTypeID, ResourceTypeIDs.Wood).Set(MaterialTable.Quantity, 1);
+					yield return new Insert<MaterialTable>().Set(MaterialTable.FactoryTypeID, FactoryTypeIDs.Forest).Set(MaterialTable.ResourceTypeID, ResourceTypeIDs.Stone).Set(MaterialTable.Quantity, 2);
 
-					yield return new Insert<MaterialTable>().Set(MaterialTable.FactoryTypeID, 1).Set(MaterialTable.ResourceTypeID, (int)ResourceTypeIDs.Wood).Set(MaterialTable.Quantity, 1);
+					yield return new Insert<MaterialTable>().Set(MaterialTable.FactoryTypeID, FactoryTypeIDs.Stockpile).Set(MaterialTable.ResourceTypeID, ResourceTypeIDs.Wood).Set(MaterialTable.Quantity, 1);
 
 					break;
 				

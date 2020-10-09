@@ -12,7 +12,7 @@ namespace PIO.Models
 	public class FactoryType
 	{
 		[DataMember]
-		public int FactoryTypeID { get; set; }
+		public FactoryTypeIDs FactoryTypeID { get; set; }
 		[DataMember]
 		public string Name { get; set; }
 		[DataMember]

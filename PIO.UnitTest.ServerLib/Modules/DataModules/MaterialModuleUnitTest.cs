@@ -36,7 +36,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 
 			database = new MockedDatabase<Material>(false, 3, (t) => new Material() { MaterialID = t });
 			module = new MaterialModule(NullLogger.Instance, database);
-			results = module.GetMaterials(1);
+			results = module.GetMaterials(FactoryTypeIDs.Stockpile);
 			Assert.IsNotNull(results);
 			Assert.AreEqual(3, results.Length);
 			for(int t=0;t<3;t++)
@@ -70,7 +70,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			logger = new MemoryLogger(new DefaultLogFormatter());
 			database = new MockedDatabase<Material>(true, 3, (t) => new Material() { MaterialID = t });
 			module = new MaterialModule(logger, database);
-			Assert.ThrowsException<PIODataException>(() => module.GetMaterials(1));
+			Assert.ThrowsException<PIODataException>(() => module.GetMaterials(FactoryTypeIDs.Stockpile));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
 		}
 

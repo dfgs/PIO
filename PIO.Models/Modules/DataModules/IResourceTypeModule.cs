@@ -10,7 +10,7 @@ namespace PIO.Models.Modules
 {
 	public interface IResourceTypeModule:IDatabaseModule
 	{
-		ResourceType GetResourceType(int ResourceTypeID);
+		ResourceType GetResourceType(ResourceTypeIDs ResourceTypeID);
 		ResourceType[] GetResourceTypes();
 	}
 }

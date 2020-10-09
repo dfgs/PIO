@@ -116,10 +116,10 @@ namespace PIO.UnitTest.ServerLib.Modules
 			database = new MockedDatabase<Stack>(false, 1, (t) => new Stack() { StackID = t });
 			module = new StackModule(NullLogger.Instance, database);
 			eta = DateTime.Now;
-			result = module.InsertStack(0, 1, 2);
+			result = module.InsertStack(0, ResourceTypeIDs.Wood, 2);
 			Assert.IsNotNull(result);
 			Assert.AreEqual(0, result.FactoryID);
-			Assert.AreEqual(1, result.ResourceTypeID);
+			Assert.AreEqual(ResourceTypeIDs.Wood, result.ResourceTypeID);
 			Assert.AreEqual(2, result.Quantity);
 			Assert.AreEqual(1, database.InsertedCount);
 		}
@@ -135,7 +135,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			logger = new MemoryLogger(new DefaultLogFormatter());
 			database = new MockedDatabase<Stack>(true, 1, (t) => new Stack() { StackID = t });
 			module = new StackModule(logger, database);
-			Assert.ThrowsException<PIODataException>(() => module.InsertStack(0, 1, 2));
+			Assert.ThrowsException<PIODataException>(() => module.InsertStack(0,ResourceTypeIDs.Wood, 2));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
 		}
 

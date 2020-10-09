@@ -32,7 +32,7 @@ namespace PIO.ServerLib.Modules
 		}
 
 
-		public Task BeginCarryTo(int WorkerID, int TargetFactoryID, int ResourceTypeID)
+		public Task BeginCarryTo(int WorkerID, int TargetFactoryID, ResourceTypeIDs ResourceTypeID)
 		{
 			Factory factory,targetFactory;
 			Worker worker;
@@ -85,14 +85,14 @@ namespace PIO.ServerLib.Modules
 			
 			
 			Log(LogLevels.Information, $"Creating task (WorkerID={WorkerID})");
-			task=Try(() => taskModule.InsertTask((int)TaskTypeIDs.CarryTo, WorkerID, TargetFactoryID,ResourceTypeID, GetLastETA(WorkerID).AddSeconds(10))).OrThrow<PIOInternalErrorException>("Failed to create task");
+			task=Try(() => taskModule.InsertTask(TaskTypeIDs.CarryTo, WorkerID, TargetFactoryID,ResourceTypeID, GetLastETA(WorkerID).AddSeconds(10))).OrThrow<PIOInternalErrorException>("Failed to create task");
 
 			OnTaskCreated(task);
 
 			return task;
 		}
 
-		public void EndCarryTo(int WorkerID, int TargetFactoryID, int ResourceTypeID)
+		public void EndCarryTo(int WorkerID, int TargetFactoryID, ResourceTypeIDs ResourceTypeID)
 		{
 			Factory targetFactory;
 			Stack[] stacks;

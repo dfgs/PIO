@@ -33,7 +33,7 @@ namespace PIO.UnitTest.ServerLib.Mocks
 			return items.Where(item => item.FactoryID == FactoryID).ToArray();
 		}
 
-		public Stack InsertStack(int FactoryID, int ResourceTypeID, int Quantity)
+		public Stack InsertStack(int FactoryID, ResourceTypeIDs ResourceTypeID, int Quantity)
 		{
 			Stack item;
 			item = new Stack() {StackID=items.Count, FactoryID = FactoryID, ResourceTypeID = ResourceTypeID, Quantity = Quantity };

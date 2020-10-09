@@ -16,7 +16,7 @@ namespace PIO.Models
 		[DataMember]
 		public int PlanetID { get; set; }
 		[DataMember]
-		public int FactoryTypeID { get; set; }
+		public FactoryTypeIDs FactoryTypeID { get; set; }
 		[DataMember]
 		public int HealthPoints { get; set; }
 	

@@ -28,19 +28,19 @@ namespace PIO.UnitTest.ServerLib.Modules
 			MockedSchedulerModule schedulerModule;
 			Task result;
 
-			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 1, FactoryTypeID = 2, PlanetID = 3, HealthPoints = 100 }, new Factory() { FactoryID = 2, FactoryTypeID = 2, PlanetID = 3, HealthPoints = 100 });
+			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 1, FactoryTypeID = FactoryTypeIDs.Sawmill, PlanetID = 3, HealthPoints = 100 }, new Factory() { FactoryID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill, PlanetID = 3, HealthPoints = 100 });
 			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, FactoryID = 1 });
 			stackModule = new MockedStackModule(false,
-				new Stack() { StackID = 0, FactoryID = 1, ResourceTypeID = 5, Quantity = 10 },
-				new Stack() { StackID = 1, FactoryID = 1, ResourceTypeID = 1, Quantity = 10 },
-				new Stack() { StackID = 2, FactoryID = 1, ResourceTypeID = 2, Quantity = 10 },
-				new Stack() { StackID = 3, FactoryID = 1, ResourceTypeID = 3, Quantity = 10 }
+				new Stack() { StackID = 0, FactoryID = 1, ResourceTypeID = ResourceTypeIDs.Plank, Quantity = 10 },
+				new Stack() { StackID = 1, FactoryID = 1, ResourceTypeID = ResourceTypeIDs.Wood, Quantity = 10 },
+				new Stack() { StackID = 2, FactoryID = 1, ResourceTypeID = ResourceTypeIDs.Stone, Quantity = 10 },
+				new Stack() { StackID = 3, FactoryID = 1, ResourceTypeID = ResourceTypeIDs.Coal, Quantity = 10 }
 				);
 			taskModule = new MockedTaskModule(false);
 			module = new CarrierModule(NullLogger.Instance, taskModule, factoryModule,workerModule,stackModule);
 			schedulerModule = new MockedSchedulerModule(false,module);
 
-			result = module.BeginCarryTo(1,2,1);
+			result = module.BeginCarryTo(1,2, ResourceTypeIDs.Wood);
 
 			Assert.IsNotNull(result);
 			Assert.AreEqual(1, result.WorkerID);
@@ -58,24 +58,24 @@ namespace PIO.UnitTest.ServerLib.Modules
 			MockedSchedulerModule schedulerModule;
 			Task result,result2;
 
-			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 1, FactoryTypeID = 2, PlanetID = 3, HealthPoints = 100 }, new Factory() { FactoryID = 2, FactoryTypeID = 2, PlanetID = 3, HealthPoints = 100 });
+			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 1, FactoryTypeID = FactoryTypeIDs.Sawmill, PlanetID = 3, HealthPoints = 100 }, new Factory() { FactoryID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill, PlanetID = 3, HealthPoints = 100 });
 			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, FactoryID = 1 });
 			stackModule = new MockedStackModule(false,
-				new Stack() { StackID = 0, FactoryID = 1, ResourceTypeID = 5, Quantity = 20 },
-				new Stack() { StackID = 1, FactoryID = 1, ResourceTypeID = 1, Quantity = 20 },
-				new Stack() { StackID = 2, FactoryID = 1, ResourceTypeID = 2, Quantity = 20 },
-				new Stack() { StackID = 3, FactoryID = 1, ResourceTypeID = 3, Quantity = 20 }
+				new Stack() { StackID = 0, FactoryID = 1, ResourceTypeID = ResourceTypeIDs.Plank, Quantity = 20 },
+				new Stack() { StackID = 1, FactoryID = 1, ResourceTypeID = ResourceTypeIDs.Wood, Quantity = 20 },
+				new Stack() { StackID = 2, FactoryID = 1, ResourceTypeID = ResourceTypeIDs.Stone, Quantity = 20 },
+				new Stack() { StackID = 3, FactoryID = 1, ResourceTypeID = ResourceTypeIDs.Coal, Quantity = 20 }
 				);
 			taskModule = new MockedTaskModule(false);
 			module = new CarrierModule(NullLogger.Instance, taskModule, factoryModule, workerModule, stackModule);
 			schedulerModule = new MockedSchedulerModule(false, module);
 
-			result = module.BeginCarryTo(1, 2, 1);
+			result = module.BeginCarryTo(1, 2, ResourceTypeIDs.Wood);
 			Assert.IsNotNull(result);
 			Assert.AreEqual(1, result.WorkerID);
 			Assert.AreEqual(1, schedulerModule.Count);
 
-			result2 = module.BeginCarryTo(1, 2, 1);
+			result2 = module.BeginCarryTo(1, 2, ResourceTypeIDs.Wood);
 			Assert.IsNotNull(result);
 			Assert.AreEqual(1, result.WorkerID);
 			Assert.AreEqual(2, schedulerModule.Count);
@@ -96,16 +96,16 @@ namespace PIO.UnitTest.ServerLib.Modules
 			ITaskModule taskModule;
 			MockedSchedulerModule schedulerModule;
 
-			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 1, FactoryTypeID = 2, PlanetID = 3, HealthPoints = 100 });
+			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 1, FactoryTypeID = FactoryTypeIDs.Sawmill, PlanetID = 3, HealthPoints = 100 });
 			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, FactoryID = 1 });
-			stackModule = new MockedStackModule(false, new Stack() { StackID = 0, FactoryID = 1, ResourceTypeID = 5, Quantity = 10 });
+			stackModule = new MockedStackModule(false, new Stack() { StackID = 0, FactoryID = 1, ResourceTypeID = ResourceTypeIDs.Plank, Quantity = 10 });
 			taskModule = new MockedTaskModule(false);
 
 			logger = new MemoryLogger(new DefaultLogFormatter());
 			module = new CarrierModule(logger, taskModule, factoryModule, workerModule, stackModule);
 			schedulerModule = new MockedSchedulerModule(false, module);
 
-			Assert.ThrowsException<PIONotFoundException>(() => module.BeginCarryTo(1, 2, 1));
+			Assert.ThrowsException<PIONotFoundException>(() => module.BeginCarryTo(1, 2, ResourceTypeIDs.Wood));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Warning") && item.Contains(module.ModuleName)));
 			Assert.AreEqual(0, schedulerModule.Count);
 
@@ -122,37 +122,37 @@ namespace PIO.UnitTest.ServerLib.Modules
 			ITaskModule taskModule;
 			MockedSchedulerModule schedulerModule;
 
-			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 1, FactoryTypeID = 2, PlanetID = 3, HealthPoints = 100 }, new Factory() { FactoryID = 2, FactoryTypeID = 2, PlanetID = 3, HealthPoints = 100 });
+			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 1, FactoryTypeID = FactoryTypeIDs.Sawmill, PlanetID = 3, HealthPoints = 100 }, new Factory() { FactoryID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill, PlanetID = 3, HealthPoints = 100 });
 			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, FactoryID = 1 });
 			#region when all stacks exist
 			stackModule = new MockedStackModule(false,
-				new Stack() { StackID = 0, FactoryID = 1, ResourceTypeID = 5, Quantity = 10 },
-				new Stack() { StackID = 1, FactoryID = 1, ResourceTypeID = 1, Quantity = 10 },
-				new Stack() { StackID = 2, FactoryID = 1, ResourceTypeID = 2, Quantity = 0 },
-				new Stack() { StackID = 3, FactoryID = 1, ResourceTypeID = 3, Quantity = 10 }
+				new Stack() { StackID = 0, FactoryID = 1, ResourceTypeID = ResourceTypeIDs.Plank, Quantity = 10 },
+				new Stack() { StackID = 1, FactoryID = 1, ResourceTypeID = ResourceTypeIDs.Wood, Quantity = 10 },
+				new Stack() { StackID = 2, FactoryID = 1, ResourceTypeID = ResourceTypeIDs.Stone, Quantity = 0 },
+				new Stack() { StackID = 3, FactoryID = 1, ResourceTypeID = ResourceTypeIDs.Coal, Quantity = 10 }
 				);
 			taskModule = new MockedTaskModule(false);
 			logger = new MemoryLogger(new DefaultLogFormatter());
 			module = new CarrierModule(logger, taskModule, factoryModule,workerModule, stackModule);
 			schedulerModule = new MockedSchedulerModule(false,module);
 
-			Assert.ThrowsException<PIONoResourcesException>(() => module.BeginCarryTo(1,2,2));
+			Assert.ThrowsException<PIONoResourcesException>(() => module.BeginCarryTo(1,2, ResourceTypeIDs.Stone));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Warning") && item.Contains(module.ModuleName)));
 			Assert.AreEqual(0, schedulerModule.Count);
 			#endregion
 
 			#region when a stack is missing
 			stackModule = new MockedStackModule(false,
-				new Stack() { StackID = 0, FactoryID = 1, ResourceTypeID = 5, Quantity = 10 },
-				new Stack() { StackID = 1, FactoryID = 1, ResourceTypeID = 1, Quantity = 10 },
-				new Stack() { StackID = 3, FactoryID = 1, ResourceTypeID = 3, Quantity = 10 }
+				new Stack() { StackID = 0, FactoryID = 1, ResourceTypeID = ResourceTypeIDs.Plank, Quantity = 10 },
+				new Stack() { StackID = 1, FactoryID = 1, ResourceTypeID = ResourceTypeIDs.Wood, Quantity = 10 },
+				new Stack() { StackID = 3, FactoryID = 1, ResourceTypeID = ResourceTypeIDs.Coal, Quantity = 10 }
 				);
 			taskModule = new MockedTaskModule(false);
 			logger = new MemoryLogger(new DefaultLogFormatter());
 			module = new CarrierModule(logger, taskModule, factoryModule, workerModule, stackModule);
 			schedulerModule = new MockedSchedulerModule(false, module);
 
-			Assert.ThrowsException<PIONoResourcesException>(() => module.BeginCarryTo(1,2,2));
+			Assert.ThrowsException<PIONoResourcesException>(() => module.BeginCarryTo(1,2, ResourceTypeIDs.Stone));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Warning") && item.Contains(module.ModuleName)));
 			Assert.AreEqual(0, schedulerModule.Count);
 			#endregion
@@ -171,16 +171,16 @@ namespace PIO.UnitTest.ServerLib.Modules
 			ITaskModule taskModule;
 			MockedSchedulerModule schedulerModule;
 
-			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 1, FactoryTypeID = 2, PlanetID = 3, HealthPoints = 100 }, new Factory() { FactoryID = 2, FactoryTypeID = 2, PlanetID = 3, HealthPoints = 100 });
+			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 1, FactoryTypeID = FactoryTypeIDs.Sawmill, PlanetID = 3, HealthPoints = 100 }, new Factory() { FactoryID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill, PlanetID = 3, HealthPoints = 100 });
 			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, FactoryID = 1 });
-			stackModule = new MockedStackModule(false, new Stack() { StackID = 0, FactoryID = 1, ResourceTypeID = 5, Quantity = 10 });
+			stackModule = new MockedStackModule(false, new Stack() { StackID = 0, FactoryID = 1, ResourceTypeID = ResourceTypeIDs.Plank, Quantity = 10 });
 			taskModule = new MockedTaskModule(false);
 
 			logger = new MemoryLogger(new DefaultLogFormatter());
 			module = new CarrierModule(logger, taskModule, factoryModule,workerModule, stackModule);
 			schedulerModule = new MockedSchedulerModule(false,module);
 
-			Assert.ThrowsException<PIONotFoundException>(() => module.BeginCarryTo(2,2,1));
+			Assert.ThrowsException<PIONotFoundException>(() => module.BeginCarryTo(2,2,ResourceTypeIDs.Wood));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Warning") && item.Contains(module.ModuleName)));
 			Assert.AreEqual(0, schedulerModule.Count);
 
@@ -197,35 +197,35 @@ namespace PIO.UnitTest.ServerLib.Modules
 			MockedSchedulerModule schedulerModule;
 
 
-			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 1, FactoryTypeID = 2, PlanetID = 3, HealthPoints = 100 }, new Factory() { FactoryID = 2, FactoryTypeID = 2, PlanetID = 3, HealthPoints = 100 });
+			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 1, FactoryTypeID = FactoryTypeIDs.Sawmill, PlanetID = 3, HealthPoints = 100 }, new Factory() { FactoryID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill, PlanetID = 3, HealthPoints = 100 });
 
 			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, FactoryID = 1 });
-			stackModule = new MockedStackModule(true, new Stack() { StackID = 0, FactoryID = 1, ResourceTypeID = 1, Quantity = 10 });
+			stackModule = new MockedStackModule(true, new Stack() { StackID = 0, FactoryID = 1, ResourceTypeID = ResourceTypeIDs.Wood, Quantity = 10 });
 			taskModule = new MockedTaskModule(false);
 			logger = new MemoryLogger(new DefaultLogFormatter());
 			module = new CarrierModule(logger, taskModule, factoryModule, workerModule,stackModule);
 			schedulerModule = new MockedSchedulerModule(false, module);
-			Assert.ThrowsException<PIOInternalErrorException>(() => module.BeginCarryTo(1,2,1));
+			Assert.ThrowsException<PIOInternalErrorException>(() => module.BeginCarryTo(1,2, ResourceTypeIDs.Wood));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
 			Assert.AreEqual(0, schedulerModule.Count);
 
 			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, FactoryID = 1 });
-			stackModule = new MockedStackModule(false, new Stack() { StackID = 0, FactoryID = 1, ResourceTypeID = 1, Quantity = 10 });
+			stackModule = new MockedStackModule(false, new Stack() { StackID = 0, FactoryID = 1, ResourceTypeID = ResourceTypeIDs.Wood, Quantity = 10 });
 			taskModule = new MockedTaskModule(true);
 			logger = new MemoryLogger(new DefaultLogFormatter());
 			module = new CarrierModule(logger, taskModule, factoryModule, workerModule, stackModule);
 			schedulerModule = new MockedSchedulerModule(false, module);
-			Assert.ThrowsException<PIOInternalErrorException>(() => module.BeginCarryTo(1, 2, 1));
+			Assert.ThrowsException<PIOInternalErrorException>(() => module.BeginCarryTo(1, 2, ResourceTypeIDs.Wood));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
 			Assert.AreEqual(0, schedulerModule.Count);
 
 			workerModule = new MockedWorkerModule(true, new Worker() { WorkerID = 1, FactoryID = 1 });
-			stackModule = new MockedStackModule(false, new Stack() { StackID = 0, FactoryID = 1, ResourceTypeID = 1, Quantity = 10 });
+			stackModule = new MockedStackModule(false, new Stack() { StackID = 0, FactoryID = 1, ResourceTypeID = ResourceTypeIDs.Wood, Quantity = 10 });
 			taskModule = new MockedTaskModule(false);
 			logger = new MemoryLogger(new DefaultLogFormatter());
 			module = new CarrierModule(logger, taskModule, factoryModule, workerModule, stackModule);
 			schedulerModule = new MockedSchedulerModule(false, module);
-			Assert.ThrowsException<PIOInternalErrorException>(() => module.BeginCarryTo(1, 2, 1));
+			Assert.ThrowsException<PIOInternalErrorException>(() => module.BeginCarryTo(1, 2, ResourceTypeIDs.Wood));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
 			Assert.AreEqual(0, schedulerModule.Count);
 
@@ -244,19 +244,19 @@ namespace PIO.UnitTest.ServerLib.Modules
 			MockedSchedulerModule schedulerModule;
 			Stack stack;
 
-			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 1, FactoryTypeID = 2, PlanetID = 3, HealthPoints = 100 }, new Factory() { FactoryID = 2, FactoryTypeID = 2, PlanetID = 3, HealthPoints = 100 });
+			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 1, FactoryTypeID = FactoryTypeIDs.Sawmill, PlanetID = 3, HealthPoints = 100 }, new Factory() { FactoryID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill, PlanetID = 3, HealthPoints = 100 });
 			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, FactoryID = 1 });
 			stackModule = new MockedStackModule(false,
-				new Stack() { StackID = 0, FactoryID = 2, ResourceTypeID = 5, Quantity = 10 },
-				new Stack() { StackID = 1, FactoryID = 2, ResourceTypeID = 1, Quantity = 10 },
-				new Stack() { StackID = 2, FactoryID = 2, ResourceTypeID = 2, Quantity = 10 },
-				new Stack() { StackID = 3, FactoryID = 2, ResourceTypeID = 3, Quantity = 10 }
+				new Stack() { StackID = 0, FactoryID = 2, ResourceTypeID = ResourceTypeIDs.Plank, Quantity = 10 },
+				new Stack() { StackID = 1, FactoryID = 2, ResourceTypeID = ResourceTypeIDs.Wood, Quantity = 10 },
+				new Stack() { StackID = 2, FactoryID = 2, ResourceTypeID = ResourceTypeIDs.Stone, Quantity = 10 },
+				new Stack() { StackID = 3, FactoryID = 2, ResourceTypeID = ResourceTypeIDs.Coal, Quantity = 10 }
 				);
 			taskModule = new MockedTaskModule(false);
 			module = new CarrierModule(NullLogger.Instance, taskModule, factoryModule, workerModule, stackModule);
 			schedulerModule = new MockedSchedulerModule(false, module);
 
-			module.EndCarryTo(1,2,2);
+			module.EndCarryTo(1,2,ResourceTypeIDs.Stone);
 			stack = stackModule.GetStack(2);
 			Assert.AreEqual(11, stack.Quantity);
 			Assert.AreEqual(2, workerModule.GetWorker(1).FactoryID);
@@ -273,19 +273,19 @@ namespace PIO.UnitTest.ServerLib.Modules
 			MockedSchedulerModule schedulerModule;
 			Stack stack;
 
-			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 1, FactoryTypeID = 2, PlanetID = 3, HealthPoints = 100 }, new Factory() { FactoryID = 2, FactoryTypeID = 2, PlanetID = 3, HealthPoints = 100 });
+			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 1, FactoryTypeID = FactoryTypeIDs.Sawmill, PlanetID = 3, HealthPoints = 100 }, new Factory() { FactoryID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill, PlanetID = 3, HealthPoints = 100 });
 			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, FactoryID = 1 });
 			stackModule = new MockedStackModule(false,
-				new Stack() { StackID = 0, FactoryID = 2, ResourceTypeID = 5, Quantity = 10 },
-				new Stack() { StackID = 1, FactoryID = 2, ResourceTypeID = 1, Quantity = 10 },
-				new Stack() { StackID = 2, FactoryID = 2, ResourceTypeID = 2, Quantity = 10 },
-				new Stack() { StackID = 3, FactoryID = 2, ResourceTypeID = 3, Quantity = 10 }
+				new Stack() { StackID = 0, FactoryID = 2, ResourceTypeID = ResourceTypeIDs.Plank, Quantity = 10 },
+				new Stack() { StackID = 1, FactoryID = 2, ResourceTypeID = ResourceTypeIDs.Wood, Quantity = 10 },
+				new Stack() { StackID = 2, FactoryID = 2, ResourceTypeID = ResourceTypeIDs.Stone, Quantity = 10 },
+				new Stack() { StackID = 3, FactoryID = 2, ResourceTypeID = ResourceTypeIDs.Coal, Quantity = 10 }
 				);
 			taskModule = new MockedTaskModule(false);
 			module = new CarrierModule(NullLogger.Instance, taskModule, factoryModule, workerModule, stackModule);
 			schedulerModule = new MockedSchedulerModule(false, module);
 
-			module.EndCarryTo(1,2,4);
+			module.EndCarryTo(1,2,ResourceTypeIDs.Tree);
 			stack = stackModule.GetStack(4);
 			Assert.AreEqual(1, stack.Quantity);
 			Assert.AreEqual(2, workerModule.GetWorker(1).FactoryID);
@@ -307,7 +307,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			ITaskModule taskModule;
 			MockedSchedulerModule schedulerModule;
 
-			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 1, FactoryTypeID = 2, PlanetID = 3, HealthPoints = 100 }, new Factory() { FactoryID = 2, FactoryTypeID = 2, PlanetID = 3, HealthPoints = 100 });
+			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 1, FactoryTypeID = FactoryTypeIDs.Sawmill, PlanetID = 3, HealthPoints = 100 }, new Factory() { FactoryID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill, PlanetID = 3, HealthPoints = 100 });
 			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, FactoryID = 1 });
 			stackModule = new MockedStackModule(false);
 			taskModule = new MockedTaskModule(false);
@@ -316,7 +316,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			module = new CarrierModule(logger, taskModule, factoryModule, workerModule, stackModule);
 			schedulerModule = new MockedSchedulerModule(false, module);
 
-			Assert.ThrowsException<PIONotFoundException>(() => module.EndCarryTo(2,2,1));
+			Assert.ThrowsException<PIONotFoundException>(() => module.EndCarryTo(2,2,ResourceTypeIDs.Wood));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Warning") && item.Contains(module.ModuleName)));
 
 		}
@@ -332,7 +332,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			MockedSchedulerModule schedulerModule;
 
 
-			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 1, FactoryTypeID = 2, PlanetID = 3, HealthPoints = 100 }, new Factory() { FactoryID = 2, FactoryTypeID = 2, PlanetID = 3, HealthPoints = 100 });
+			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 1, FactoryTypeID = FactoryTypeIDs.Sawmill, PlanetID = 3, HealthPoints = 100 }, new Factory() { FactoryID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill, PlanetID = 3, HealthPoints = 100 });
 			
 			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, FactoryID = 1 });
 			stackModule = new MockedStackModule(true);
@@ -340,7 +340,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			logger = new MemoryLogger(new DefaultLogFormatter());
 			module = new CarrierModule(logger, taskModule, factoryModule, workerModule, stackModule);
 			schedulerModule = new MockedSchedulerModule(false, module);
-			Assert.ThrowsException<PIOInternalErrorException>(() => module.EndCarryTo(1,2,1));
+			Assert.ThrowsException<PIOInternalErrorException>(() => module.EndCarryTo(1,2, ResourceTypeIDs.Wood));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
 
 
@@ -350,7 +350,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			logger = new MemoryLogger(new DefaultLogFormatter());
 			module = new CarrierModule(logger, taskModule, factoryModule, workerModule, stackModule);
 			schedulerModule = new MockedSchedulerModule(false, module);
-			Assert.ThrowsException<PIOInternalErrorException>(() => module.EndCarryTo(1, 2, 1));
+			Assert.ThrowsException<PIOInternalErrorException>(() => module.EndCarryTo(1, 2, ResourceTypeIDs.Wood));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
 
 

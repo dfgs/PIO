@@ -22,7 +22,7 @@ namespace PIO.ServerLib.Modules
 		{
 		}
 
-		public FactoryType GetFactoryType(int FactoryTypeID)
+		public FactoryType GetFactoryType(FactoryTypeIDs FactoryTypeID)
 		{
 			ISelect<FactoryTypeTable> query;
 			LogEnter();
