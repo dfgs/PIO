@@ -24,21 +24,21 @@ namespace PIO.ServerLib.Modules
 
 		public TaskType GetTaskType(TaskTypeIDs TaskTypeID)
 		{
-			ISelect<TaskTypeTable> query;
+			ISelect query;
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying TaskType table (TaskTypeID={TaskTypeID})");
-			query = new Select<TaskTypeTable>(TaskTypeTable.TaskTypeID, TaskTypeTable.Name).Where(TaskTypeTable.TaskTypeID.IsEqualTo(TaskTypeID));
+			query = new Select(TaskTypeTable.TaskTypeID, TaskTypeTable.Name).From(PIODB.TaskTypeTable).Where(TaskTypeTable.TaskTypeID.IsEqualTo(TaskTypeID));
 			return TrySelectFirst<TaskTypeTable,TaskType>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
 		public TaskType[] GetTaskTypes()
 		{
-			ISelect<TaskTypeTable> query;
+			ISelect query;
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying TaskType table");
-			query = new Select<TaskTypeTable>(TaskTypeTable.TaskTypeID, TaskTypeTable.Name);
+			query = new Select(TaskTypeTable.TaskTypeID, TaskTypeTable.Name).From(PIODB.TaskTypeTable);
 			return TrySelectMany<TaskTypeTable,TaskType>(query).OrThrow<PIODataException>("Failed to query");
 		}
 

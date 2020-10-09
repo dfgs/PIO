@@ -1,4 +1,5 @@
 ﻿using NetORMLib.Columns;
+using NetORMLib.Tables;
 using PIO.Models;
 using System;
 using System.Collections.Generic;
@@ -7,12 +8,12 @@ using System.Text;
 
 namespace PIO.ServerLib.Tables
 {
-	public class ProductTable
+	public class ProductTable : Table
 	{
-		public static readonly Column<ProductTable, int> ProductID = new Column<ProductTable, int>() { IsIdentity=true, IsPrimaryKey = true };
-		public static readonly Column<ProductTable, FactoryTypeIDs> FactoryTypeID = new Column<ProductTable, FactoryTypeIDs>();
-		public static readonly Column<ProductTable, ResourceTypeIDs> ResourceTypeID = new Column<ProductTable, ResourceTypeIDs>();
-		public static readonly Column<ProductTable, int> Quantity = new Column<ProductTable, int>();
-		public static readonly Column<ProductTable, int> Duration = new Column<ProductTable, int>();
+		public static readonly Column<int> ProductID = new Column<int>() { IsIdentity=true, IsPrimaryKey = true };
+		public static readonly Column<FactoryTypeIDs> FactoryTypeID = new Column<FactoryTypeIDs>();
+		public static readonly Column<ResourceTypeIDs> ResourceTypeID = new Column<ResourceTypeIDs>();
+		public static readonly Column<int> Quantity = new Column<int>();
+		public static readonly Column<int> Duration = new Column<int>();
 	}
 }

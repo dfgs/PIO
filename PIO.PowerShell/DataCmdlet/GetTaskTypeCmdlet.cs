@@ -16,7 +16,7 @@ namespace PIO.PowerShell
 	public class GetTaskTypeCmdlet : PIOCmdLet
 	{
 		[Parameter(Position = 0, ValueFromPipeline =true,Mandatory =true)]
-		public int TaskTypeID { get; set; }
+		public TaskTypeIDs TaskTypeID { get; set; }
 
 
 		

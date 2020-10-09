@@ -1,4 +1,5 @@
 ﻿using NetORMLib.Columns;
+using NetORMLib.Tables;
 using PIO.Models;
 using System;
 using System.Collections.Generic;
@@ -7,13 +8,13 @@ using System.Text;
 
 namespace PIO.ServerLib.Tables
 {
-	public class TaskTable
+	public class TaskTable : Table
 	{
-		public static readonly Column<TaskTable, int> TaskID = new Column<TaskTable, int>() { IsIdentity = true, IsPrimaryKey = true };
-		public static readonly Column<TaskTable, TaskTypeIDs> TaskTypeID = new Column<TaskTable, TaskTypeIDs>() ;
-		public static readonly Column<TaskTable, int> WorkerID = new Column<TaskTable, int>();
-		public static readonly Column<TaskTable, int> TargetFactoryID = new Column<TaskTable, int>() { IsNullable = true };
-		public static readonly Column<TaskTable, ResourceTypeIDs> ResourceTypeID = new Column<TaskTable, ResourceTypeIDs>() { IsNullable = true };
-		public static readonly Column<TaskTable, DateTime> ETA = new Column<TaskTable, DateTime>() ;
+		public static readonly Column<int> TaskID = new Column<int>() { IsIdentity = true, IsPrimaryKey = true };
+		public static readonly Column<TaskTypeIDs> TaskTypeID = new Column<TaskTypeIDs>() ;
+		public static readonly Column<int> WorkerID = new Column<int>();
+		public static readonly Column<int> TargetFactoryID = new Column<int>() { IsNullable = true };
+		public static readonly Column<ResourceTypeIDs> ResourceTypeID = new Column<ResourceTypeIDs>() { IsNullable = true };
+		public static readonly Column<DateTime> ETA = new Column<DateTime>() ;
 	}
 }

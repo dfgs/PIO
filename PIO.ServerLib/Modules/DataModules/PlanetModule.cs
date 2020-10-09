@@ -24,21 +24,21 @@ namespace PIO.ServerLib.Modules
 
 		public Planet GetPlanet(int PlanetID)
 		{
-			ISelect<PlanetTable> query;
+			ISelect query;
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying Planet table (PlanetID={PlanetID})");
-			query = new Select<PlanetTable>(PlanetTable.PlanetID, PlanetTable.Name).Where(PlanetTable.PlanetID.IsEqualTo(PlanetID));
+			query = new Select(PlanetTable.PlanetID, PlanetTable.Name).From(PIODB.PlanetTable).Where(PlanetTable.PlanetID.IsEqualTo(PlanetID));
 			return TrySelectFirst<PlanetTable,Planet>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
 		public Planet[] GetPlanets()
 		{
-			ISelect<PlanetTable> query;
+			ISelect query;
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying Planet table");
-			query = new Select<PlanetTable>(PlanetTable.PlanetID, PlanetTable.Name);
+			query = new Select(PlanetTable.PlanetID, PlanetTable.Name).From(PIODB.PlanetTable);
 			return TrySelectMany<PlanetTable,Planet>(query).OrThrow<PIODataException>("Failed to query");
 		}
 

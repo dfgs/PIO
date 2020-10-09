@@ -24,32 +24,32 @@ namespace PIO.ServerLib.Modules
 
 		public Worker GetWorker(int WorkerID)
 		{
-			ISelect<WorkerTable> query;
+			ISelect query;
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying Worker table (WorkerID={WorkerID})");
-			query = new Select<WorkerTable>(WorkerTable.WorkerID,WorkerTable.FactoryID).Where(WorkerTable.WorkerID.IsEqualTo(WorkerID));
+			query = new Select(WorkerTable.WorkerID,WorkerTable.FactoryID).From(PIODB.WorkerTable).Where(WorkerTable.WorkerID.IsEqualTo(WorkerID));
 			return TrySelectFirst<WorkerTable,Worker>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
 		public Worker[] GetWorkers(int FactoryID)
 		{
-			ISelect<WorkerTable> query;
+			ISelect query;
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying Worker table (FactoryID={FactoryID})");
-			query = new Select<WorkerTable>( WorkerTable.WorkerID, WorkerTable.FactoryID).Where(WorkerTable.FactoryID.IsEqualTo(FactoryID));
+			query = new Select( WorkerTable.WorkerID, WorkerTable.FactoryID).From(PIODB.WorkerTable).Where(WorkerTable.FactoryID.IsEqualTo(FactoryID));
 			return TrySelectMany<WorkerTable, Worker>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
 		public void UpdateWorker(int WorkerID, int FactoryID)
 		{
-			IUpdate<WorkerTable> update;
+			IUpdate update;
 
 			LogEnter();
 
 			Log(LogLevels.Information, $"Updating Worker table (WorkerID={WorkerID}, FactoryID={FactoryID})");
-			update = new Update<WorkerTable>().Set(WorkerTable.FactoryID, FactoryID).Where(WorkerTable.WorkerID.IsEqualTo(WorkerID));
+			update = new Update(PIODB.WorkerTable).Set(WorkerTable.FactoryID, FactoryID).Where(WorkerTable.WorkerID.IsEqualTo(WorkerID));
 			Try(update).OrThrow<PIODataException>("Failed to update");
 		}
 

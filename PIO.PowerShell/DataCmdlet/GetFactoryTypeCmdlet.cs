@@ -16,7 +16,7 @@ namespace PIO.PowerShell
 	public class GetFactoryTypeCmdlet : PIOCmdLet
 	{
 		[Parameter(Position = 0, ValueFromPipeline =true,Mandatory =true)]
-		public int FactoryTypeID { get; set; }
+		public FactoryTypeIDs FactoryTypeID { get; set; }
 
 
 		

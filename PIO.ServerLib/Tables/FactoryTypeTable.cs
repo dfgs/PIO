@@ -1,4 +1,5 @@
 ﻿using NetORMLib.Columns;
+using NetORMLib.Tables;
 using PIO.Models;
 using System;
 using System.Collections.Generic;
@@ -8,10 +9,10 @@ using System.Text;
 namespace PIO.ServerLib.Tables
 {
 	// No identity for enum tables
-	public class FactoryTypeTable
+	public class FactoryTypeTable : Table
 	{
-		public static readonly Column<FactoryTypeTable, FactoryTypeIDs> FactoryTypeID = new Column<FactoryTypeTable, FactoryTypeIDs>() { IsPrimaryKey = true };
-		public static readonly Column<FactoryTypeTable, string> Name = new Column<FactoryTypeTable, string>();
-		public static readonly Column<FactoryTypeTable, int> HealthPoints = new Column<FactoryTypeTable, int>();
+		public static readonly Column<FactoryTypeIDs> FactoryTypeID = new Column<FactoryTypeIDs>() { IsPrimaryKey = true };
+		public new static readonly Column<string> Name = new Column<string>();
+		public static readonly Column<int> HealthPoints = new Column<int>();
 	}
 }

@@ -67,11 +67,11 @@
     <Compile Include="Modules\DataModules\StackModule.cs" />
     <Compile Include="Modules\DataModules\TaskModule.cs" />
     <Compile Include="Modules\PIOModule.cs" />
+    <Compile Include="PIODB.cs" />
     <Compile Include="Tables\TaskTypeTable.cs" />
     <Compile Include="Tables\ProductTable.cs" />
     <Compile Include="Tables\IngredientTable.cs" />
     <Compile Include="Tables\WorkerTable.cs" />
-    <Compile Include="Tables\EventTable.cs" />
     <Compile Include="Tables\FactoryTable.cs" />
     <Compile Include="Tables\PlanetTable.cs" />
     <Compile Include="Tables\ResourceTypeTable.cs" />

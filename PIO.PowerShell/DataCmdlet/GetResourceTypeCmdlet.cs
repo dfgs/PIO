@@ -16,7 +16,7 @@ namespace PIO.PowerShell
 	public class GetResourceTypeCmdlet : PIOCmdLet
 	{
 		[Parameter(Position = 0, ValueFromPipeline =true,Mandatory =true)]
-		public int ResourceTypeID { get; set; }
+		public ResourceTypeIDs ResourceTypeID { get; set; }
 
 
 		

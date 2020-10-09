@@ -25,55 +25,55 @@ namespace PIO.ServerLib.Modules
 
 		public Task GetTask(int TaskID)
 		{
-			ISelect<TaskTable> query;
+			ISelect query;
 			LogEnter();
 			
 			Log(LogLevels.Information, $"Querying Task table (TaskID={TaskID})");
-			query = new Select<TaskTable>(TaskTable.TaskID, TaskTable.TaskTypeID, TaskTable.WorkerID, TaskTable.TargetFactoryID, TaskTable.ResourceTypeID, TaskTable.ETA).Where(TaskTable.TaskID.IsEqualTo(TaskID));
+			query = new Select(TaskTable.TaskID, TaskTable.TaskTypeID, TaskTable.WorkerID, TaskTable.TargetFactoryID, TaskTable.ResourceTypeID, TaskTable.ETA).From(PIODB.TaskTable).Where(TaskTable.TaskID.IsEqualTo(TaskID));
 			return TrySelectFirst<TaskTable, Task>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
 		public Task GetLastTask(int WorkerID)
 		{
-			ISelect<TaskTable> query;
+			ISelect query;
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying Task table (WorkerID={WorkerID})");
-			query = new Select<TaskTable>(TaskTable.TaskID, TaskTable.TaskTypeID, TaskTable.WorkerID, TaskTable.TargetFactoryID, TaskTable.ResourceTypeID, TaskTable.ETA).Top(1).Where(TaskTable.WorkerID.IsEqualTo(WorkerID)).OrderBy(OrderModes.DESC, TaskTable.TaskID);
+			query = new Select(TaskTable.TaskID, TaskTable.TaskTypeID, TaskTable.WorkerID, TaskTable.TargetFactoryID, TaskTable.ResourceTypeID, TaskTable.ETA).Top(1).From(PIODB.TaskTable).Where(TaskTable.WorkerID.IsEqualTo(WorkerID)).OrderBy(OrderModes.DESC, TaskTable.TaskID);
 			return TrySelectFirst<TaskTable, Task>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
 		public Task[] GetTasks(int WorkerID)
 		{
-			ISelect<TaskTable> query;
+			ISelect query;
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying Task table (WorkerID={WorkerID})");
-			query = new Select<TaskTable>(TaskTable.TaskID, TaskTable.TaskTypeID, TaskTable.WorkerID, TaskTable.TargetFactoryID, TaskTable.ResourceTypeID, TaskTable.ETA).Where(TaskTable.WorkerID.IsEqualTo(WorkerID));
+			query = new Select(TaskTable.TaskID, TaskTable.TaskTypeID, TaskTable.WorkerID, TaskTable.TargetFactoryID, TaskTable.ResourceTypeID, TaskTable.ETA).From(PIODB.TaskTable).Where(TaskTable.WorkerID.IsEqualTo(WorkerID));
 			return TrySelectMany<TaskTable, Task>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
 		public Task[] GetTasks()
 		{
-			ISelect<TaskTable> query;
+			ISelect query;
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying Task table");
-			query = new Select<TaskTable>(TaskTable.TaskID, TaskTable.TaskTypeID, TaskTable.WorkerID, TaskTable.TargetFactoryID, TaskTable.ResourceTypeID, TaskTable.ETA);
+			query = new Select(TaskTable.TaskID, TaskTable.TaskTypeID, TaskTable.WorkerID, TaskTable.TargetFactoryID, TaskTable.ResourceTypeID, TaskTable.ETA).From(PIODB.TaskTable);
 			return TrySelectMany<TaskTable, Task>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
 
 		public Task InsertTask(TaskTypeIDs TaskTypeID, int WorkerID, int? TargetFactoryID, ResourceTypeIDs? ResourceTypeID, DateTime ETA)
 		{
-			IInsert<TaskTable> query;
+			IInsert query;
 			Task item;
 			object result;
 
 			LogEnter();
 			Log(LogLevels.Information, $"Inserting into Task table (TaskTypeID={TaskTypeID}, WorkerID={WorkerID}, ETA={ETA})");
 			item = new Task() { TaskTypeID=TaskTypeID, WorkerID=WorkerID, TargetFactoryID=TargetFactoryID, ResourceTypeID=ResourceTypeID, ETA=ETA };
-			query = new Insert<TaskTable>().Set(TaskTable.TaskTypeID,item.TaskTypeID).Set(TaskTable.WorkerID, item.WorkerID).Set(TaskTable.TargetFactoryID, item.TargetFactoryID).Set(TaskTable.ResourceTypeID, item.ResourceTypeID).Set(TaskTable.ETA,item.ETA);
+			query = new Insert().Into(PIODB.TaskTable).Set(TaskTable.TaskTypeID,item.TaskTypeID).Set(TaskTable.WorkerID, item.WorkerID).Set(TaskTable.TargetFactoryID, item.TargetFactoryID).Set(TaskTable.ResourceTypeID, item.ResourceTypeID).Set(TaskTable.ETA,item.ETA);
 			result=Try(query).OrThrow<PIODataException>("Failed to insert");
 			item.TaskID = Convert.ToInt32(result);
 			return item;
@@ -81,11 +81,11 @@ namespace PIO.ServerLib.Modules
 
 		public void DeleteTask(int TaskID)
 		{
-			IDelete<TaskTable> query;
+			IDelete query;
 
 			LogEnter();
 			Log(LogLevels.Information, $"Deleting from Task table (TaskID={TaskID})");
-			query = new Delete<TaskTable>().Where(TaskTable.TaskID.IsEqualTo(TaskID));
+			query = new Delete().From(PIODB.ProductTable).Where(TaskTable.TaskID.IsEqualTo(TaskID));
 			Try(query).OrThrow<PIODataException>("Failed to delete");
 		}
 

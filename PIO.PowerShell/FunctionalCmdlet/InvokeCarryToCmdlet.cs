@@ -19,7 +19,7 @@ namespace PIO.PowerShell
 		[Parameter(Position = 1, ValueFromPipeline = true, Mandatory = true)]
 		public int TargetFactoryID { get; set; }
 		[Parameter(Position = 2, ValueFromPipeline = true, Mandatory = true)]
-		public int ResourceTypeID { get; set; }
+		public ResourceTypeIDs ResourceTypeID { get; set; }
 
 
 

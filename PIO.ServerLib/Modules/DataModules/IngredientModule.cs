@@ -24,21 +24,21 @@ namespace PIO.ServerLib.Modules
 
 		public Ingredient GetIngredient(int IngredientID)
 		{
-			ISelect<IngredientTable> query;
+			ISelect query;
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying Ingredient table (IngredientID={IngredientID})");
-			query = new Select<IngredientTable>(IngredientTable.IngredientID, IngredientTable.FactoryTypeID, IngredientTable.ResourceTypeID, IngredientTable.Quantity).Where(IngredientTable.IngredientID.IsEqualTo(IngredientID));
+			query = new Select(IngredientTable.IngredientID, IngredientTable.FactoryTypeID, IngredientTable.ResourceTypeID, IngredientTable.Quantity).From(PIODB.IngredientTable).Where(IngredientTable.IngredientID.IsEqualTo(IngredientID));
 			return TrySelectFirst <IngredientTable,Ingredient>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
 		public Ingredient[] GetIngredients(FactoryTypeIDs FactoryTypeID)
 		{
-			ISelect<IngredientTable> query;
+			ISelect query;
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying Ingredient table (FactoryTypeID={FactoryTypeID})");
-			query = new Select<IngredientTable>(IngredientTable.IngredientID, IngredientTable.FactoryTypeID, IngredientTable.ResourceTypeID, IngredientTable.Quantity).Where(IngredientTable.FactoryTypeID.IsEqualTo(FactoryTypeID));
+			query = new Select(IngredientTable.IngredientID, IngredientTable.FactoryTypeID, IngredientTable.ResourceTypeID, IngredientTable.Quantity).From(PIODB.IngredientTable).Where(IngredientTable.FactoryTypeID.IsEqualTo(FactoryTypeID));
 			return TrySelectMany<IngredientTable,Ingredient>(query).OrThrow<PIODataException>("Failed to query");
 		}
 

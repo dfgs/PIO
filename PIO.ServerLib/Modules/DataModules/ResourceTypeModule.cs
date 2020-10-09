@@ -24,21 +24,21 @@ namespace PIO.ServerLib.Modules
 
 		public ResourceType GetResourceType(ResourceTypeIDs ResourceTypeID)
 		{
-			ISelect<ResourceTypeTable> query;
+			ISelect query;
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying ResourceType table (ResourceTypeID={ResourceTypeID})");
-			query = new Select<ResourceTypeTable>(ResourceTypeTable.ResourceTypeID, ResourceTypeTable.Name).Where(ResourceTypeTable.ResourceTypeID.IsEqualTo(ResourceTypeID));
+			query = new Select(ResourceTypeTable.ResourceTypeID, ResourceTypeTable.Name).From(PIODB.ResourceTypeTable).Where(ResourceTypeTable.ResourceTypeID.IsEqualTo(ResourceTypeID));
 			return TrySelectFirst<ResourceTypeTable,ResourceType>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
 		public ResourceType[] GetResourceTypes()
 		{
-			ISelect<ResourceTypeTable> query;
+			ISelect query;
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying ResourceType table");
-			query = new Select<ResourceTypeTable>(ResourceTypeTable.ResourceTypeID, ResourceTypeTable.Name);
+			query = new Select(ResourceTypeTable.ResourceTypeID, ResourceTypeTable.Name).From(PIODB.ResourceTypeTable);
 			return TrySelectMany<ResourceTypeTable,ResourceType>(query).OrThrow<PIODataException>("Failed to query");
 		}
 

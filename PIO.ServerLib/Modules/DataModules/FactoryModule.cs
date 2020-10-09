@@ -24,32 +24,32 @@ namespace PIO.ServerLib.Modules
 
 		public Factory GetFactory(int FactoryID)
 		{
-			ISelect<FactoryTable> query;
+			ISelect query;
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying Factory table (FactoryID={FactoryID})");
-			query = new Select<FactoryTable>(FactoryTable.PlanetID,FactoryTable.FactoryID, FactoryTable.FactoryTypeID,FactoryTable.HealthPoints).Where(FactoryTable.FactoryID.IsEqualTo(FactoryID));
+			query = new Select(FactoryTable.PlanetID,FactoryTable.FactoryID, FactoryTable.FactoryTypeID,FactoryTable.HealthPoints).From(PIODB.FactoryTable).Where(FactoryTable.FactoryID.IsEqualTo(FactoryID));
 			return TrySelectFirst<FactoryTable,Factory>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
 		public Factory[] GetFactories(int PlanetID)
 		{
-			ISelect<FactoryTable> query;
+			ISelect query;
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying Factory table (PlanetID={PlanetID})");
-			query = new Select<FactoryTable>(FactoryTable.PlanetID, FactoryTable.FactoryID, FactoryTable.FactoryTypeID, FactoryTable.HealthPoints).Where(FactoryTable.PlanetID.IsEqualTo(PlanetID));
+			query = new Select(FactoryTable.PlanetID, FactoryTable.FactoryID, FactoryTable.FactoryTypeID, FactoryTable.HealthPoints).From(PIODB.FactoryTable).Where(FactoryTable.PlanetID.IsEqualTo(PlanetID));
 			return TrySelectMany<FactoryTable, Factory>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
 		public void SetHealthPoints(int FactoryID,int HealthPoints)
 		{
-			IUpdate<FactoryTable> update;
+			IUpdate update;
 
 			LogEnter();
 
 			Log(LogLevels.Information, $"Updating Factory table (FactoryID={FactoryID}, HealthPoints={HealthPoints})");
-			update = new Update<FactoryTable>().Set(FactoryTable.HealthPoints, HealthPoints).Where(FactoryTable.FactoryID.IsEqualTo(FactoryID));
+			update = new Update(PIODB.FactoryTable).Set(FactoryTable.HealthPoints, HealthPoints).Where(FactoryTable.FactoryID.IsEqualTo(FactoryID));
 			Try(update).OrThrow<PIODataException>("Failed to update");
 		}
 

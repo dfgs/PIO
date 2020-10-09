@@ -43,7 +43,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Consts.cs" />
-    <Compile Include="Event.cs" />
     <Compile Include="Exceptions\DataExceptions\PIODataException.cs" />
     <Compile Include="Exceptions\EngineExceptions\PIOInternalErrorException.cs" />
     <Compile Include="Exceptions\EngineExceptions\PIOEngineException.cs" />

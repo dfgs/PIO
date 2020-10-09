@@ -24,21 +24,21 @@ namespace PIO.ServerLib.Modules
 
 		public FactoryType GetFactoryType(FactoryTypeIDs FactoryTypeID)
 		{
-			ISelect<FactoryTypeTable> query;
+			ISelect query;
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying FactoryType table (FactoryTypeID={FactoryTypeID})");
-			query = new Select<FactoryTypeTable>(FactoryTypeTable.FactoryTypeID, FactoryTypeTable.Name,FactoryTypeTable.HealthPoints).Where(FactoryTypeTable.FactoryTypeID.IsEqualTo(FactoryTypeID));
+			query = new Select(FactoryTypeTable.FactoryTypeID, FactoryTypeTable.Name,FactoryTypeTable.HealthPoints).From(PIODB.FactoryTypeTable).Where(FactoryTypeTable.FactoryTypeID.IsEqualTo(FactoryTypeID));
 			return TrySelectFirst<FactoryTypeTable,FactoryType>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
 		public FactoryType[] GetFactoryTypes()
 		{
-			ISelect<FactoryTypeTable> query;
+			ISelect query;
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying FactoryType table");
-			query = new Select<FactoryTypeTable>(FactoryTypeTable.FactoryTypeID, FactoryTypeTable.Name, FactoryTypeTable.HealthPoints);
+			query = new Select(FactoryTypeTable.FactoryTypeID, FactoryTypeTable.Name, FactoryTypeTable.HealthPoints).From(PIODB.FactoryTypeTable);
 			return TrySelectMany<FactoryTypeTable,FactoryType>(query).OrThrow<PIODataException>("Failed to query");
 		}
 

@@ -64,10 +64,10 @@ namespace PIO.PowerShell.PIOWebServiceReference {
         System.Threading.Tasks.Task<PIO.Models.Stack[]> GetStacksAsync(int FactoryID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetResourceType", ReplyAction="http://tempuri.org/IPIOService/GetResourceTypeResponse")]
-        PIO.Models.ResourceType GetResourceType(int ResourceTypeID);
+        PIO.Models.ResourceType GetResourceType(PIO.Models.ResourceTypeIDs ResourceTypeID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetResourceType", ReplyAction="http://tempuri.org/IPIOService/GetResourceTypeResponse")]
-        System.Threading.Tasks.Task<PIO.Models.ResourceType> GetResourceTypeAsync(int ResourceTypeID);
+        System.Threading.Tasks.Task<PIO.Models.ResourceType> GetResourceTypeAsync(PIO.Models.ResourceTypeIDs ResourceTypeID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetResourceTypes", ReplyAction="http://tempuri.org/IPIOService/GetResourceTypesResponse")]
         PIO.Models.ResourceType[] GetResourceTypes();
@@ -76,10 +76,10 @@ namespace PIO.PowerShell.PIOWebServiceReference {
         System.Threading.Tasks.Task<PIO.Models.ResourceType[]> GetResourceTypesAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetFactoryType", ReplyAction="http://tempuri.org/IPIOService/GetFactoryTypeResponse")]
-        PIO.Models.FactoryType GetFactoryType(int FactoryTypeID);
+        PIO.Models.FactoryType GetFactoryType(PIO.Models.FactoryTypeIDs FactoryTypeID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetFactoryType", ReplyAction="http://tempuri.org/IPIOService/GetFactoryTypeResponse")]
-        System.Threading.Tasks.Task<PIO.Models.FactoryType> GetFactoryTypeAsync(int FactoryTypeID);
+        System.Threading.Tasks.Task<PIO.Models.FactoryType> GetFactoryTypeAsync(PIO.Models.FactoryTypeIDs FactoryTypeID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetFactoryTypes", ReplyAction="http://tempuri.org/IPIOService/GetFactoryTypesResponse")]
         PIO.Models.FactoryType[] GetFactoryTypes();
@@ -88,10 +88,10 @@ namespace PIO.PowerShell.PIOWebServiceReference {
         System.Threading.Tasks.Task<PIO.Models.FactoryType[]> GetFactoryTypesAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetTaskType", ReplyAction="http://tempuri.org/IPIOService/GetTaskTypeResponse")]
-        PIO.Models.TaskType GetTaskType(int TaskTypeID);
+        PIO.Models.TaskType GetTaskType(PIO.Models.TaskTypeIDs TaskTypeID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetTaskType", ReplyAction="http://tempuri.org/IPIOService/GetTaskTypeResponse")]
-        System.Threading.Tasks.Task<PIO.Models.TaskType> GetTaskTypeAsync(int TaskTypeID);
+        System.Threading.Tasks.Task<PIO.Models.TaskType> GetTaskTypeAsync(PIO.Models.TaskTypeIDs TaskTypeID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetTaskTypes", ReplyAction="http://tempuri.org/IPIOService/GetTaskTypesResponse")]
         PIO.Models.TaskType[] GetTaskTypes();
@@ -106,10 +106,10 @@ namespace PIO.PowerShell.PIOWebServiceReference {
         System.Threading.Tasks.Task<PIO.Models.Material> GetMaterialAsync(int MaterialID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetMaterials", ReplyAction="http://tempuri.org/IPIOService/GetMaterialsResponse")]
-        PIO.Models.Material[] GetMaterials(int FactoryTypeID);
+        PIO.Models.Material[] GetMaterials(PIO.Models.FactoryTypeIDs FactoryTypeID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetMaterials", ReplyAction="http://tempuri.org/IPIOService/GetMaterialsResponse")]
-        System.Threading.Tasks.Task<PIO.Models.Material[]> GetMaterialsAsync(int FactoryTypeID);
+        System.Threading.Tasks.Task<PIO.Models.Material[]> GetMaterialsAsync(PIO.Models.FactoryTypeIDs FactoryTypeID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetIngredient", ReplyAction="http://tempuri.org/IPIOService/GetIngredientResponse")]
         PIO.Models.Ingredient GetIngredient(int IngredientID);
@@ -118,10 +118,10 @@ namespace PIO.PowerShell.PIOWebServiceReference {
         System.Threading.Tasks.Task<PIO.Models.Ingredient> GetIngredientAsync(int IngredientID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetIngredients", ReplyAction="http://tempuri.org/IPIOService/GetIngredientsResponse")]
-        PIO.Models.Ingredient[] GetIngredients(int FactoryTypeID);
+        PIO.Models.Ingredient[] GetIngredients(PIO.Models.FactoryTypeIDs FactoryTypeID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetIngredients", ReplyAction="http://tempuri.org/IPIOService/GetIngredientsResponse")]
-        System.Threading.Tasks.Task<PIO.Models.Ingredient[]> GetIngredientsAsync(int FactoryTypeID);
+        System.Threading.Tasks.Task<PIO.Models.Ingredient[]> GetIngredientsAsync(PIO.Models.FactoryTypeIDs FactoryTypeID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetProduct", ReplyAction="http://tempuri.org/IPIOService/GetProductResponse")]
         PIO.Models.Product GetProduct(int ProductID);
@@ -130,10 +130,10 @@ namespace PIO.PowerShell.PIOWebServiceReference {
         System.Threading.Tasks.Task<PIO.Models.Product> GetProductAsync(int ProductID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetProducts", ReplyAction="http://tempuri.org/IPIOService/GetProductsResponse")]
-        PIO.Models.Product[] GetProducts(int FactoryTypeID);
+        PIO.Models.Product[] GetProducts(PIO.Models.FactoryTypeIDs FactoryTypeID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetProducts", ReplyAction="http://tempuri.org/IPIOService/GetProductsResponse")]
-        System.Threading.Tasks.Task<PIO.Models.Product[]> GetProductsAsync(int FactoryTypeID);
+        System.Threading.Tasks.Task<PIO.Models.Product[]> GetProductsAsync(PIO.Models.FactoryTypeIDs FactoryTypeID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetTask", ReplyAction="http://tempuri.org/IPIOService/GetTaskResponse")]
         PIO.Models.Task GetTask(int TaskID);
@@ -172,10 +172,10 @@ namespace PIO.PowerShell.PIOWebServiceReference {
         System.Threading.Tasks.Task<PIO.Models.Task> MoveToAsync(int WorkerID, int TargetFactoryID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/CarryTo", ReplyAction="http://tempuri.org/IPIOService/CarryToResponse")]
-        PIO.Models.Task CarryTo(int WorkerID, int TargetFactoryID, int ResourceTypeID);
+        PIO.Models.Task CarryTo(int WorkerID, int TargetFactoryID, PIO.Models.ResourceTypeIDs ResourceTypeID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/CarryTo", ReplyAction="http://tempuri.org/IPIOService/CarryToResponse")]
-        System.Threading.Tasks.Task<PIO.Models.Task> CarryToAsync(int WorkerID, int TargetFactoryID, int ResourceTypeID);
+        System.Threading.Tasks.Task<PIO.Models.Task> CarryToAsync(int WorkerID, int TargetFactoryID, PIO.Models.ResourceTypeIDs ResourceTypeID);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -269,11 +269,11 @@ namespace PIO.PowerShell.PIOWebServiceReference {
             return base.Channel.GetStacksAsync(FactoryID);
         }
         
-        public PIO.Models.ResourceType GetResourceType(int ResourceTypeID) {
+        public PIO.Models.ResourceType GetResourceType(PIO.Models.ResourceTypeIDs ResourceTypeID) {
             return base.Channel.GetResourceType(ResourceTypeID);
         }
         
-        public System.Threading.Tasks.Task<PIO.Models.ResourceType> GetResourceTypeAsync(int ResourceTypeID) {
+        public System.Threading.Tasks.Task<PIO.Models.ResourceType> GetResourceTypeAsync(PIO.Models.ResourceTypeIDs ResourceTypeID) {
             return base.Channel.GetResourceTypeAsync(ResourceTypeID);
         }
         
@@ -285,11 +285,11 @@ namespace PIO.PowerShell.PIOWebServiceReference {
             return base.Channel.GetResourceTypesAsync();
         }
         
-        public PIO.Models.FactoryType GetFactoryType(int FactoryTypeID) {
+        public PIO.Models.FactoryType GetFactoryType(PIO.Models.FactoryTypeIDs FactoryTypeID) {
             return base.Channel.GetFactoryType(FactoryTypeID);
         }
         
-        public System.Threading.Tasks.Task<PIO.Models.FactoryType> GetFactoryTypeAsync(int FactoryTypeID) {
+        public System.Threading.Tasks.Task<PIO.Models.FactoryType> GetFactoryTypeAsync(PIO.Models.FactoryTypeIDs FactoryTypeID) {
             return base.Channel.GetFactoryTypeAsync(FactoryTypeID);
         }
         
@@ -301,11 +301,11 @@ namespace PIO.PowerShell.PIOWebServiceReference {
             return base.Channel.GetFactoryTypesAsync();
         }
         
-        public PIO.Models.TaskType GetTaskType(int TaskTypeID) {
+        public PIO.Models.TaskType GetTaskType(PIO.Models.TaskTypeIDs TaskTypeID) {
             return base.Channel.GetTaskType(TaskTypeID);
         }
         
-        public System.Threading.Tasks.Task<PIO.Models.TaskType> GetTaskTypeAsync(int TaskTypeID) {
+        public System.Threading.Tasks.Task<PIO.Models.TaskType> GetTaskTypeAsync(PIO.Models.TaskTypeIDs TaskTypeID) {
             return base.Channel.GetTaskTypeAsync(TaskTypeID);
         }
         
@@ -325,11 +325,11 @@ namespace PIO.PowerShell.PIOWebServiceReference {
             return base.Channel.GetMaterialAsync(MaterialID);
         }
         
-        public PIO.Models.Material[] GetMaterials(int FactoryTypeID) {
+        public PIO.Models.Material[] GetMaterials(PIO.Models.FactoryTypeIDs FactoryTypeID) {
             return base.Channel.GetMaterials(FactoryTypeID);
         }
         
-        public System.Threading.Tasks.Task<PIO.Models.Material[]> GetMaterialsAsync(int FactoryTypeID) {
+        public System.Threading.Tasks.Task<PIO.Models.Material[]> GetMaterialsAsync(PIO.Models.FactoryTypeIDs FactoryTypeID) {
             return base.Channel.GetMaterialsAsync(FactoryTypeID);
         }
         
@@ -341,11 +341,11 @@ namespace PIO.PowerShell.PIOWebServiceReference {
             return base.Channel.GetIngredientAsync(IngredientID);
         }
         
-        public PIO.Models.Ingredient[] GetIngredients(int FactoryTypeID) {
+        public PIO.Models.Ingredient[] GetIngredients(PIO.Models.FactoryTypeIDs FactoryTypeID) {
             return base.Channel.GetIngredients(FactoryTypeID);
         }
         
-        public System.Threading.Tasks.Task<PIO.Models.Ingredient[]> GetIngredientsAsync(int FactoryTypeID) {
+        public System.Threading.Tasks.Task<PIO.Models.Ingredient[]> GetIngredientsAsync(PIO.Models.FactoryTypeIDs FactoryTypeID) {
             return base.Channel.GetIngredientsAsync(FactoryTypeID);
         }
         
@@ -357,11 +357,11 @@ namespace PIO.PowerShell.PIOWebServiceReference {
             return base.Channel.GetProductAsync(ProductID);
         }
         
-        public PIO.Models.Product[] GetProducts(int FactoryTypeID) {
+        public PIO.Models.Product[] GetProducts(PIO.Models.FactoryTypeIDs FactoryTypeID) {
             return base.Channel.GetProducts(FactoryTypeID);
         }
         
-        public System.Threading.Tasks.Task<PIO.Models.Product[]> GetProductsAsync(int FactoryTypeID) {
+        public System.Threading.Tasks.Task<PIO.Models.Product[]> GetProductsAsync(PIO.Models.FactoryTypeIDs FactoryTypeID) {
             return base.Channel.GetProductsAsync(FactoryTypeID);
         }
         
@@ -413,11 +413,11 @@ namespace PIO.PowerShell.PIOWebServiceReference {
             return base.Channel.MoveToAsync(WorkerID, TargetFactoryID);
         }
         
-        public PIO.Models.Task CarryTo(int WorkerID, int TargetFactoryID, int ResourceTypeID) {
+        public PIO.Models.Task CarryTo(int WorkerID, int TargetFactoryID, PIO.Models.ResourceTypeIDs ResourceTypeID) {
             return base.Channel.CarryTo(WorkerID, TargetFactoryID, ResourceTypeID);
         }
         
-        public System.Threading.Tasks.Task<PIO.Models.Task> CarryToAsync(int WorkerID, int TargetFactoryID, int ResourceTypeID) {
+        public System.Threading.Tasks.Task<PIO.Models.Task> CarryToAsync(int WorkerID, int TargetFactoryID, PIO.Models.ResourceTypeIDs ResourceTypeID) {
             return base.Channel.CarryToAsync(WorkerID, TargetFactoryID, ResourceTypeID);
         }
     }

@@ -23,13 +23,13 @@ namespace PIO.ServerLib.Modules
 		}
 
 		// ToArray must be included in lambda expression in order to be evaluated and catched by Try
-		protected ITryFunction<TRow[]> TrySelectMany<TTable, TRow>(ISelect<TTable> Query, [CallerMemberName]string MethodName = null)
+		protected ITryFunction<TRow[]> TrySelectMany<TTable, TRow>(ISelect Query, [CallerMemberName]string MethodName = null)
 			where TRow : new()
 		{
 			return Try<TRow[]>(() => this.database.Execute<TRow>(Query).ToArray(), MethodName);
 		}
 		// FirstOrDefault must be included in lambda expression in order to be evaluated and catched by Try
-		protected ITryFunction<TRow> TrySelectFirst<TTable, TRow>(ISelect<TTable> Query, [CallerMemberName]string MethodName = null)
+		protected ITryFunction<TRow> TrySelectFirst<TTable, TRow>(ISelect Query, [CallerMemberName]string MethodName = null)
 			where TRow : new()
 		{
 			return Try<TRow>(() => this.database.Execute<TRow>(Query).FirstOrDefault(), MethodName);
@@ -46,11 +46,11 @@ namespace PIO.ServerLib.Modules
 			, MethodName) ;
 		}*/
 
-		protected ITryFunction<object> Try<TTable>(IInsert<TTable> Query, [CallerMemberName]string MethodName = null)
+		protected ITryFunction<object> Try(IInsert Query, [CallerMemberName]string MethodName = null)
 		{
 			return Try(() =>
 			{
-				return this.database.Execute(Query, new SelectIdentity<TTable>());
+				return this.database.Execute(Query, new SelectIdentity());
 			}	
 			, MethodName);
 		}
