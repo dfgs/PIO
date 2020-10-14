@@ -23,9 +23,9 @@ namespace PIO.UnitTest.ServerLib.Modules
 
 			database = new MockedDatabase<TaskType>(false, 1, (t) => new TaskType() { TaskTypeID = (TaskTypeIDs)t });
 			module = new TaskTypeModule(NullLogger.Instance, database);
-			result = module.GetTaskType(TaskTypeIDs.Produce);
+			result = module.GetTaskType(TaskTypeIDs.Idle);
 			Assert.IsNotNull(result);
-			Assert.AreEqual(TaskTypeIDs.Produce, result.TaskTypeID);
+			Assert.AreEqual(TaskTypeIDs.Idle, result.TaskTypeID);
 		}
 		[TestMethod]
 		public void ShouldGetTaskTypes()

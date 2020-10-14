@@ -65,6 +65,8 @@ namespace PIO.WebServiceLib
 		[OperationContract]
 		bool HasEnoughResourcesToProduce(int FactoryID);
 		[OperationContract]
+		Task Idle(int WorkerID,int Duration);
+		[OperationContract]
 		Task Produce(int WorkerID);
 		[OperationContract]
 		Task MoveTo(int WorkerID, int TargetFactoryID);

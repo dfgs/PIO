@@ -151,6 +151,12 @@
   <wsdl:message name="IPIOService_HasEnoughResourcesToProduce_OutputMessage">
     <wsdl:part name="parameters" element="tns:HasEnoughResourcesToProduceResponse" />
   </wsdl:message>
+  <wsdl:message name="IPIOService_Idle_InputMessage">
+    <wsdl:part name="parameters" element="tns:Idle" />
+  </wsdl:message>
+  <wsdl:message name="IPIOService_Idle_OutputMessage">
+    <wsdl:part name="parameters" element="tns:IdleResponse" />
+  </wsdl:message>
   <wsdl:message name="IPIOService_Produce_InputMessage">
     <wsdl:part name="parameters" element="tns:Produce" />
   </wsdl:message>
@@ -265,6 +271,10 @@
     <wsdl:operation name="HasEnoughResourcesToProduce">
       <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/HasEnoughResourcesToProduce" message="tns:IPIOService_HasEnoughResourcesToProduce_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/HasEnoughResourcesToProduceResponse" message="tns:IPIOService_HasEnoughResourcesToProduce_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Idle">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/Idle" message="tns:IPIOService_Idle_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/IdleResponse" message="tns:IPIOService_Idle_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="Produce">
       <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/Produce" message="tns:IPIOService_Produce_InputMessage" />
@@ -490,6 +500,15 @@
     </wsdl:operation>
     <wsdl:operation name="HasEnoughResourcesToProduce">
       <soap:operation soapAction="http://tempuri.org/IPIOService/HasEnoughResourcesToProduce" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Idle">
+      <soap:operation soapAction="http://tempuri.org/IPIOService/Idle" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

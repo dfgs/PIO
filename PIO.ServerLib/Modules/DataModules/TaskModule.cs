@@ -85,7 +85,7 @@ namespace PIO.ServerLib.Modules
 
 			LogEnter();
 			Log(LogLevels.Information, $"Deleting from Task table (TaskID={TaskID})");
-			query = new Delete().From(PIODB.ProductTable).Where(TaskTable.TaskID.IsEqualTo(TaskID));
+			query = new Delete().From(PIODB.TaskTable).Where(TaskTable.TaskID.IsEqualTo(TaskID));
 			Try(query).OrThrow<PIODataException>("Failed to delete");
 		}
 

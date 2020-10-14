@@ -159,6 +159,12 @@ namespace PIO.PowerShell.PIOWebServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/HasEnoughResourcesToProduce", ReplyAction="http://tempuri.org/IPIOService/HasEnoughResourcesToProduceResponse")]
         System.Threading.Tasks.Task<bool> HasEnoughResourcesToProduceAsync(int FactoryID);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/Idle", ReplyAction="http://tempuri.org/IPIOService/IdleResponse")]
+        PIO.Models.Task Idle(int WorkerID, int Duration);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/Idle", ReplyAction="http://tempuri.org/IPIOService/IdleResponse")]
+        System.Threading.Tasks.Task<PIO.Models.Task> IdleAsync(int WorkerID, int Duration);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/Produce", ReplyAction="http://tempuri.org/IPIOService/ProduceResponse")]
         PIO.Models.Task Produce(int WorkerID);
         
@@ -395,6 +401,14 @@ namespace PIO.PowerShell.PIOWebServiceReference {
         
         public System.Threading.Tasks.Task<bool> HasEnoughResourcesToProduceAsync(int FactoryID) {
             return base.Channel.HasEnoughResourcesToProduceAsync(FactoryID);
+        }
+        
+        public PIO.Models.Task Idle(int WorkerID, int Duration) {
+            return base.Channel.Idle(WorkerID, Duration);
+        }
+        
+        public System.Threading.Tasks.Task<PIO.Models.Task> IdleAsync(int WorkerID, int Duration) {
+            return base.Channel.IdleAsync(WorkerID, Duration);
         }
         
         public PIO.Models.Task Produce(int WorkerID) {

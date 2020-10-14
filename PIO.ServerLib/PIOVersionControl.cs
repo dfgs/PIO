@@ -80,6 +80,7 @@ namespace PIO.ServerLib
 					#endregion
 
 					#region create TaskType
+					yield return new Insert().Into(PIODB.TaskTypeTable).Set(TaskTypeTable.TaskTypeID, TaskTypeIDs.Idle).Set(TaskTypeTable.Name, "Idle");
 					yield return new Insert().Into(PIODB.TaskTypeTable).Set(TaskTypeTable.TaskTypeID, TaskTypeIDs.Produce).Set(TaskTypeTable.Name, "Produce");
 					yield return new Insert().Into(PIODB.TaskTypeTable).Set(TaskTypeTable.TaskTypeID, TaskTypeIDs.MoveTo).Set(TaskTypeTable.Name, "MoveTo");
 					yield return new Insert().Into(PIODB.TaskTypeTable).Set(TaskTypeTable.TaskTypeID, TaskTypeIDs.CarryTo).Set(TaskTypeTable.Name, "CarryTo");

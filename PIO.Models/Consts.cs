@@ -10,7 +10,7 @@ namespace PIO.Models
 
 	public enum ResourceTypeIDs : int { Tree = 0, Wood = 1, Stone = 2, Coal = 3, Plank = 4 };
 	public enum FactoryTypeIDs : int { Forest = 0, Stockpile = 1, Sawmill = 2 };
-	public enum TaskTypeIDs : int { Produce = 0, MoveTo = 1, CarryTo = 2 };
+	public enum TaskTypeIDs : int { Idle=0, Produce = 1, MoveTo = 2, CarryTo = 3 };
 
 
 

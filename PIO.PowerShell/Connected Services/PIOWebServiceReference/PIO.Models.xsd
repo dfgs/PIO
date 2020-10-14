@@ -103,6 +103,7 @@
   <xs:element name="ArrayOfFactoryType" nillable="true" type="tns:ArrayOfFactoryType" />
   <xs:simpleType name="TaskTypeIDs">
     <xs:restriction base="xs:string">
+      <xs:enumeration value="Idle" />
       <xs:enumeration value="Produce" />
       <xs:enumeration value="MoveTo" />
       <xs:enumeration value="CarryTo" />

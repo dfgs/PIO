@@ -27,14 +27,16 @@ namespace PIO.ServerLib.Modules
 	public class SchedulerModule : AtModule<Task>,ISchedulerModule
 	{
 		private ITaskModule taskModule;
+		private IIdlerModule idlerModule;
 		private IProducerModule producerModule;
 		private IMoverModule moverModule;
 		private ICarrierModule carrierModule;
 
-		public SchedulerModule(ILogger Logger,ITaskModule TaskModule,IProducerModule ProducerModule,IMoverModule MoverModule, ICarrierModule CarrierModule) : base(Logger, ThreadPriority.Normal)
+		public SchedulerModule(ILogger Logger,ITaskModule TaskModule, IIdlerModule IdlerModule, IProducerModule ProducerModule,IMoverModule MoverModule, ICarrierModule CarrierModule) : base(Logger, ThreadPriority.Normal)
 		{
-			this.taskModule = TaskModule;this.producerModule = ProducerModule;this.moverModule = MoverModule;this.carrierModule = CarrierModule;
+			this.taskModule = TaskModule;this.idlerModule = IdlerModule; this.producerModule = ProducerModule;this.moverModule = MoverModule;this.carrierModule = CarrierModule;
 
+			idlerModule.TaskCreated += TaskGeneratorModule_TaskCreated;
 			producerModule.TaskCreated += TaskGeneratorModule_TaskCreated;
 			moverModule.TaskCreated += TaskGeneratorModule_TaskCreated;
 			carrierModule.TaskCreated += TaskGeneratorModule_TaskCreated;
@@ -79,6 +81,9 @@ namespace PIO.ServerLib.Modules
 			Log(LogLevels.Information, $"Terminating task (TaskID={Task.TaskID})");
 			switch (Task.TaskTypeID)
 			{
+				case TaskTypeIDs.Idle:
+					Try(() => idlerModule.EndIdle(Task.WorkerID)).OrAlert($"Failed to terminate task (TaskID={Task.TaskID})");
+					break;
 				case TaskTypeIDs.Produce:
 					Try(() => producerModule.EndProduce(Task.WorkerID)).OrAlert($"Failed to terminate task (TaskID={Task.TaskID})");
 					break;

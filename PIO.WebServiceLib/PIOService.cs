@@ -29,6 +29,7 @@ namespace PIO.WebServiceLib
 		private IProductModule productModule;
 		private ITaskModule taskModule;
 
+		private IIdlerModule idlerModule;
 		private IResourceCheckerModule resourceCheckerModule;
 		private IProducerModule producerModule;
 		private IMoverModule moverModule;
@@ -43,7 +44,7 @@ namespace PIO.WebServiceLib
 			IIngredientModule IngredientModule, IProductModule ProductModule, 
 			ITaskModule TaskModule,
 
-			IResourceCheckerModule ResourceCheckerModule,IProducerModule ProducerModule,IMoverModule MoverModule,ICarrierModule CarrierModule
+			IResourceCheckerModule ResourceCheckerModule, IIdlerModule IdlerModule, IProducerModule ProducerModule,IMoverModule MoverModule,ICarrierModule CarrierModule
 		) :base(Logger)
 		{
 			LogEnter();
@@ -60,6 +61,7 @@ namespace PIO.WebServiceLib
 			this.taskModule = TaskModule;
 
 			this.resourceCheckerModule = ResourceCheckerModule;
+			this.idlerModule = IdlerModule;
 			this.producerModule = ProducerModule;
 			this.moverModule = MoverModule;
 			this.carrierModule = CarrierModule;
@@ -209,6 +211,12 @@ namespace PIO.WebServiceLib
 			return Try(() => resourceCheckerModule.HasEnoughResourcesToProduce(FactoryID)).OrThrow(GenerateFaultException);
 		}
 
+		public Task Idle(int WorkerID,int Duration)
+		{
+			LogEnter();
+
+			return Try(() => idlerModule.BeginIdle(WorkerID,Duration)).OrThrow(GenerateFaultException);
+		}
 		public Task Produce(int WorkerID)
 		{
 			LogEnter();

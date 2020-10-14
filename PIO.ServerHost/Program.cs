@@ -50,6 +50,7 @@ namespace PIO.ServerHost
 			IProductModule productModule;
 			ITaskModule taskModule;
 
+			IIdlerModule idlerModule;
 			IResourceCheckerModule resourceCheckerModule;
 			IProducerModule producerModule;
 			IMoverModule moverModule;
@@ -87,18 +88,19 @@ namespace PIO.ServerHost
 
 
 			factoryBuilderModule = new FactoryBuilderModule(logger, factoryModule, factoryTypeModule);
+			idlerModule = new IdlerModule(logger,taskModule, workerModule);
 			resourceCheckerModule = new ResourceCheckerModule(logger, factoryModule, stackModule, ingredientModule);
 			producerModule = new ProducerModule(logger, taskModule, factoryModule, workerModule, stackModule, ingredientModule, productModule);
 			moverModule = new MoverModule(logger, taskModule, factoryModule, workerModule);
 			carrierModule = new CarrierModule(logger, taskModule, factoryModule, workerModule, stackModule);
 
-			schedulerModule = new SchedulerModule(logger, taskModule,producerModule,moverModule,carrierModule);
+			schedulerModule = new SchedulerModule(logger, taskModule, idlerModule, producerModule,moverModule,carrierModule);
 			schedulerModule.Start();
 			
 
 			service = new PIOService(
 				logger,planetModule,factoryModule,workerModule,stackModule,resourceTypeModule,factoryTypeModule,taskTypeModule,materialModule,ingredientModule,productModule,taskModule, 
-				resourceCheckerModule,producerModule,moverModule,carrierModule);
+				resourceCheckerModule, idlerModule,producerModule,moverModule,carrierModule);
 
 			serviceHostModule = new ServiceHostModule(logger,service);
 			serviceHostModule.Start();
