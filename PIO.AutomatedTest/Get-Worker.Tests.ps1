@@ -16,7 +16,7 @@ Describe 'Test Worker module'{
         It 'Given WorkerID, it returns 1 Worker' {
             $result = Get-Worker 1
             $result | Should -Not -BeNullOrEmpty
-            $element.FactoryID | Should -Not -Be 0
+            $result.FactoryID | Should -Not -Be 0
         }
         It 'Given incorrect WorkerID, it returns 0 Worker' {
             $result = Get-Worker 999

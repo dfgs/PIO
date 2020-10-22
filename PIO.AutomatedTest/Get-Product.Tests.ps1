@@ -18,8 +18,8 @@ Describe 'Test Product module'{
         It 'Given ProductID, it returns 1 Product' {
             $result = Get-Product 1
             $result | Should -Not -BeNullOrEmpty
-            $element.Duration | Should -Not -Be 0
-            $element.Quantity | Should -Not -Be 0
+            $result.Duration | Should -Not -Be 0
+            $result.Quantity | Should -Not -Be 0
         }
         It 'Given incorrect ProductID, it returns 0 Product' {
             $result = Get-Product 999

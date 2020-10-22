@@ -17,7 +17,7 @@ Describe 'Test Material module'{
         It 'Given MaterialID, it returns 1 Material' {
             $result = Get-Material 1
             $result | Should -Not -BeNullOrEmpty
-            $element.Quantity | Should -Not -Be 0
+            $result.Quantity | Should -Not -Be 0
         }
         It 'Given incorrect MaterialID, it returns 0 Material' {
             $result = Get-Material 999

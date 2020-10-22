@@ -19,8 +19,8 @@ Describe 'Test Stack module'{
         It 'Given StackID, it returns 1 Stack' {
             $result = Get-Stack 1
             $result | Should -Not -BeNullOrEmpty
-            $element.FactoryID | Should -Not -Be 0
-            $element.Quantity | Should -Not -Be 0
+            $result.FactoryID | Should -Not -Be 0
+            $result.Quantity | Should -Not -Be 0
         }
         It 'Given incorrect StackID, it returns 0 Stack' {
             $result = Get-Stack 999

@@ -17,7 +17,7 @@ Describe 'Test Ingredient module'{
         It 'Given IngredientID, it returns 1 Ingredient' {
             $result = Get-Ingredient 1
             $result | Should -Not -BeNullOrEmpty
-            $element.Quantity | Should -Not -Be 0
+            $result.Quantity | Should -Not -Be 0
         }
         It 'Given incorrect IngredientID, it returns 0 Ingredient' {
             $result = Get-Ingredient 999

@@ -49,8 +49,22 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="AfterAll.ps1" />
     <None Include="app.config" />
     <None Include="AutomatedTest.ps1" />
+    <None Include="BeforeAll.ps1" />
+    <None Include="Get-Factory.Tests.ps1" />
+    <None Include="Get-FactoryTypes.Tests.ps1" />
+    <None Include="Get-Ingredient.Tests.ps1" />
+    <None Include="Get-Material.Tests.ps1" />
+    <None Include="Get-Planet.Tests.ps1" />
+    <None Include="Get-Product.Tests.ps1" />
+    <None Include="Get-ResourceTypes.Tests.ps1" />
+    <None Include="Get-Stack.Tests.ps1" />
+    <None Include="Get-Task.Tests.ps1" />
+    <None Include="Get-TaskTypes.Tests.ps1" />
+    <None Include="Get-Worker.Tests.ps1" />
+    <None Include="Invoke-MoveTo.Tests.ps1" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />
