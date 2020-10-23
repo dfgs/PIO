@@ -14,5 +14,7 @@ namespace PIO.Models.Modules
 		Stack[] GetStacks(int FactoryID);
 		Stack InsertStack(int FactoryID, ResourceTypeIDs ResourceTypeID, int Quantity);
 		void UpdateStack(int StackID, int Quantity);
+
+		int GetStackQuantity(int FactoryID, ResourceTypeIDs ResourceTypeID);
 	}
 }

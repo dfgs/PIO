@@ -116,6 +116,11 @@ namespace PIO.WebServiceLib
 			LogEnter();
 			return Try(() => stackModule.GetStacks(FactoryID)).OrThrow(GenerateFaultException);
 		}
+		public int GetStackQuantity(int FactoryID, ResourceTypeIDs ResourceTypeID)
+		{
+			LogEnter();
+			return Try(() => stackModule.GetStackQuantity(FactoryID,ResourceTypeID)).OrThrow(GenerateFaultException);
+		}
 
 		public ResourceType GetResourceType(ResourceTypeIDs ResourceTypeID)
 		{

@@ -30,6 +30,8 @@ namespace PIO.WebServiceLib
 		[OperationContract]
 		Stack[] GetStacks(int FactoryID);
 		[OperationContract]
+		int GetStackQuantity(int FactoryID,ResourceTypeIDs ResourceTypeID);
+		[OperationContract]
 		ResourceType GetResourceType(ResourceTypeIDs ResourceTypeID);
 		[OperationContract]
 		ResourceType[] GetResourceTypes();

@@ -33,6 +33,8 @@ namespace PIO.ServerLib.Modules
 			return TrySelectFirst <StackTable,Stack>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
+		
+
 		public Stack[] GetStacks(int FactoryID)
 		{
 			ISelect query;
@@ -68,7 +70,19 @@ namespace PIO.ServerLib.Modules
 			update = new Update(PIODB.StackTable).Set(StackTable.Quantity, Quantity).Where(StackTable.StackID.IsEqualTo(StackID));
 			Try(update).OrThrow<PIODataException>("Failed to update");
 		}
+		public int GetStackQuantity(int FactoryID, ResourceTypeIDs ResourceTypeID)
+		{
+			ISelect query;
+			Stack stack;
 
+			LogEnter();
+
+			Log(LogLevels.Information, $"Querying Stack table (FactoryID={FactoryID}, ResourceTypeID={ResourceTypeID})");
+			query = new Select(StackTable.StackID, StackTable.FactoryID, StackTable.ResourceTypeID, StackTable.Quantity).From(PIODB.StackTable).Where( new AndFilter( StackTable.FactoryID.IsEqualTo(FactoryID), StackTable.ResourceTypeID.IsEqualTo(ResourceTypeID)));
+			stack=TrySelectFirst<StackTable, Stack>(query).OrThrow<PIODataException>("Failed to query");
+			if (stack == null) return 0;
+			else return stack.Quantity;
+		}
 
 	}
 }

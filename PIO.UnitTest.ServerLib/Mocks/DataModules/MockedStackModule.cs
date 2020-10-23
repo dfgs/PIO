@@ -26,7 +26,12 @@ namespace PIO.UnitTest.ServerLib.Mocks
 			if (throwException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
 			return items.FirstOrDefault(item => item.StackID == StackID);
 		}
-		
+
+		public int GetStackQuantity(int FactoryID, ResourceTypeIDs ResourceTypeID)
+		{
+			throw new NotImplementedException();
+		}
+
 		public Stack[] GetStacks(int FactoryID)
 		{
 			if (throwException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");

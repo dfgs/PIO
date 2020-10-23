@@ -4,15 +4,15 @@ Describe 'Test MoveTo module'{
 
     Context 'Invoke-MoveTo' {
         
-        It 'Given invalid Worker, it returns not task' {
+        It 'Given invalid WorkerID, it returns not task' {
             {Invoke-MoveTo 999 1}  | Should -Throw -ExceptionType ([System.ServiceModel.FaultException])
         }
 
-        It 'Given invalid TargetFactory, it returns not task' {
+        It 'Given invalid TargetFactoryID, it returns not task' {
             {Invoke-MoveTo 1 999}  | Should -Throw -ExceptionType ([System.ServiceModel.FaultException])
         }
         
-        It 'Given Worker, it moves to new location' {
+        It 'Given WorkerID, it moves to new location' {
             $worker=Get-Worker 1
             $target = ((Get-Factories 1) | Where-Object FactoryID -ne $worker.FactoryID)[0]
             

@@ -55,6 +55,12 @@
   <wsdl:message name="IPIOService_GetStacks_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetStacksResponse" />
   </wsdl:message>
+  <wsdl:message name="IPIOService_GetStackQuantity_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetStackQuantity" />
+  </wsdl:message>
+  <wsdl:message name="IPIOService_GetStackQuantity_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetStackQuantityResponse" />
+  </wsdl:message>
   <wsdl:message name="IPIOService_GetResourceType_InputMessage">
     <wsdl:part name="parameters" element="tns:GetResourceType" />
   </wsdl:message>
@@ -208,6 +214,10 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetStacks" message="tns:IPIOService_GetStacks_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/GetStacksResponse" message="tns:IPIOService_GetStacks_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="GetStackQuantity">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetStackQuantity" message="tns:IPIOService_GetStackQuantity_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/GetStackQuantityResponse" message="tns:IPIOService_GetStackQuantity_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="GetResourceType">
       <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetResourceType" message="tns:IPIOService_GetResourceType_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/GetResourceTypeResponse" message="tns:IPIOService_GetResourceType_OutputMessage" />
@@ -356,6 +366,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetStacks">
       <soap:operation soapAction="http://tempuri.org/IPIOService/GetStacks" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetStackQuantity">
+      <soap:operation soapAction="http://tempuri.org/IPIOService/GetStackQuantity" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

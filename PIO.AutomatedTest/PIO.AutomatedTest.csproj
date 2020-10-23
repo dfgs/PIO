@@ -65,6 +65,7 @@
     <None Include="Get-TaskTypes.Tests.ps1" />
     <None Include="Get-Worker.Tests.ps1" />
     <None Include="Invoke-MoveTo.Tests.ps1" />
+    <None Include="Invoke-Produce.ps1" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />

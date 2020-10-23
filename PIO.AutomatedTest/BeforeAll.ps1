@@ -5,7 +5,7 @@ BeforeAll {
         $start = Get-Date
         $duration = New-TimeSpan -Start $start -End $end
         Write-Host -ForegroundColor Yellow "Waiting for $duration seconds..."
-        Start-Sleep -Seconds $duration.TotalSeconds;
+        Start-Sleep -Seconds ($duration.TotalSeconds+1);
     }
     
     $global:process = Get-Process PIO.ServerHost -ErrorAction SilentlyContinue

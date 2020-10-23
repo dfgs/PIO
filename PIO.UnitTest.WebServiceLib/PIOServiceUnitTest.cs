@@ -182,11 +182,21 @@ namespace PIO.UnitTest.WebServiceLib
 			PIOService service;
 			Stack[] result;
 
-			service = new PIOService(NullLogger.Instance, null, null, null,  new MockedStackModule(3, false), null, null, null, null, null, null, null, null, null, null, null, null);
+			service = new PIOService(NullLogger.Instance, null, null, null, new MockedStackModule(3, false), null, null, null, null, null, null, null, null, null, null, null, null);
 			result = service.GetStacks(1);
 			Assert.IsNotNull(result);
 			Assert.AreEqual(3, result.Length);
 			Assert.IsTrue(result.All((item) => item != null));
+		}
+		[TestMethod]
+		public void ShouldGetStackQuantity()
+		{
+			PIOService service;
+			int result;
+
+			service = new PIOService(NullLogger.Instance, null, null, null, new MockedStackModule(3, false), null, null, null, null, null, null, null, null, null, null, null, null);
+			result = service.GetStackQuantity(1,ResourceTypeIDs.Coal);
+			Assert.AreEqual(3, result);
 		}
 
 		[TestMethod]
@@ -211,6 +221,18 @@ namespace PIO.UnitTest.WebServiceLib
 			service = new PIOService(logger, null, null, null, new MockedStackModule(3, true), null, null, null, null, null, null, null, null, null, null, null, null);
 
 			Assert.ThrowsException<FaultException>(() => service.GetStacks(1));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(service.ModuleName)));
+		}
+		[TestMethod]
+		public void ShouldNotGetStackQuantityAndLogError()
+		{
+			PIOService service;
+			MemoryLogger logger;
+
+			logger = new MemoryLogger(new DefaultLogFormatter());
+			service = new PIOService(logger, null, null, null, new MockedStackModule(3, true), null, null, null, null, null, null, null, null, null, null, null, null);
+
+			Assert.ThrowsException<FaultException>(() => service.GetStackQuantity(1,ResourceTypeIDs.Coal));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(service.ModuleName)));
 		}
 

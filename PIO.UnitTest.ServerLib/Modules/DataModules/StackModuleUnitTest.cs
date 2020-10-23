@@ -139,7 +139,23 @@ namespace PIO.UnitTest.ServerLib.Modules
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
 		}
 
+		[TestMethod]
+		public void ShouldGetStackQuantity()
+		{
+			MockedDatabase<Stack> database;
+			StackModule module;
+			int result;
 
+			database = new MockedDatabase<Stack>(false, 1, (t) => new Stack() { StackID = t, FactoryID=1, ResourceTypeID=ResourceTypeIDs.Coal,Quantity=10 });
+			module = new StackModule(NullLogger.Instance, database);
+			result = module.GetStackQuantity(1, ResourceTypeIDs.Coal);
+			Assert.AreEqual(10, result);
+
+			database = new MockedDatabase<Stack>(false, 0, (t) => new Stack() { StackID = t, FactoryID = 1, ResourceTypeID = ResourceTypeIDs.Coal, Quantity = 10 });
+			module = new StackModule(NullLogger.Instance, database);
+			result = module.GetStackQuantity(1, ResourceTypeIDs.Coal);
+			Assert.AreEqual(0, result);
+		}
 
 	}
 }

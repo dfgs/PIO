@@ -63,6 +63,12 @@ namespace PIO.PowerShell.PIOWebServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetStacks", ReplyAction="http://tempuri.org/IPIOService/GetStacksResponse")]
         System.Threading.Tasks.Task<PIO.Models.Stack[]> GetStacksAsync(int FactoryID);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetStackQuantity", ReplyAction="http://tempuri.org/IPIOService/GetStackQuantityResponse")]
+        int GetStackQuantity(int FactoryID, PIO.Models.ResourceTypeIDs ResourceTypeID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetStackQuantity", ReplyAction="http://tempuri.org/IPIOService/GetStackQuantityResponse")]
+        System.Threading.Tasks.Task<int> GetStackQuantityAsync(int FactoryID, PIO.Models.ResourceTypeIDs ResourceTypeID);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetResourceType", ReplyAction="http://tempuri.org/IPIOService/GetResourceTypeResponse")]
         PIO.Models.ResourceType GetResourceType(PIO.Models.ResourceTypeIDs ResourceTypeID);
         
@@ -273,6 +279,14 @@ namespace PIO.PowerShell.PIOWebServiceReference {
         
         public System.Threading.Tasks.Task<PIO.Models.Stack[]> GetStacksAsync(int FactoryID) {
             return base.Channel.GetStacksAsync(FactoryID);
+        }
+        
+        public int GetStackQuantity(int FactoryID, PIO.Models.ResourceTypeIDs ResourceTypeID) {
+            return base.Channel.GetStackQuantity(FactoryID, ResourceTypeID);
+        }
+        
+        public System.Threading.Tasks.Task<int> GetStackQuantityAsync(int FactoryID, PIO.Models.ResourceTypeIDs ResourceTypeID) {
+            return base.Channel.GetStackQuantityAsync(FactoryID, ResourceTypeID);
         }
         
         public PIO.Models.ResourceType GetResourceType(PIO.Models.ResourceTypeIDs ResourceTypeID) {
