@@ -53,6 +53,7 @@
     <None Include="app.config" />
     <None Include="AutomatedTest.ps1" />
     <None Include="BeforeAll.ps1" />
+    <None Include="Get-BuildingTypes.Tests.ps1" />
     <None Include="Get-Factory.Tests.ps1" />
     <None Include="Get-FactoryTypes.Tests.ps1" />
     <None Include="Get-Ingredient.Tests.ps1" />

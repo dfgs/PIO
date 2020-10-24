@@ -81,6 +81,18 @@ namespace PIO.PowerShell.PIOWebServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetResourceTypes", ReplyAction="http://tempuri.org/IPIOService/GetResourceTypesResponse")]
         System.Threading.Tasks.Task<PIO.Models.ResourceType[]> GetResourceTypesAsync();
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetBuildingType", ReplyAction="http://tempuri.org/IPIOService/GetBuildingTypeResponse")]
+        PIO.Models.BuildingType GetBuildingType(PIO.Models.BuildingTypeIDs BuildingTypeID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetBuildingType", ReplyAction="http://tempuri.org/IPIOService/GetBuildingTypeResponse")]
+        System.Threading.Tasks.Task<PIO.Models.BuildingType> GetBuildingTypeAsync(PIO.Models.BuildingTypeIDs BuildingTypeID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetBuildingTypes", ReplyAction="http://tempuri.org/IPIOService/GetBuildingTypesResponse")]
+        PIO.Models.BuildingType[] GetBuildingTypes();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetBuildingTypes", ReplyAction="http://tempuri.org/IPIOService/GetBuildingTypesResponse")]
+        System.Threading.Tasks.Task<PIO.Models.BuildingType[]> GetBuildingTypesAsync();
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetFactoryType", ReplyAction="http://tempuri.org/IPIOService/GetFactoryTypeResponse")]
         PIO.Models.FactoryType GetFactoryType(PIO.Models.FactoryTypeIDs FactoryTypeID);
         
@@ -303,6 +315,22 @@ namespace PIO.PowerShell.PIOWebServiceReference {
         
         public System.Threading.Tasks.Task<PIO.Models.ResourceType[]> GetResourceTypesAsync() {
             return base.Channel.GetResourceTypesAsync();
+        }
+        
+        public PIO.Models.BuildingType GetBuildingType(PIO.Models.BuildingTypeIDs BuildingTypeID) {
+            return base.Channel.GetBuildingType(BuildingTypeID);
+        }
+        
+        public System.Threading.Tasks.Task<PIO.Models.BuildingType> GetBuildingTypeAsync(PIO.Models.BuildingTypeIDs BuildingTypeID) {
+            return base.Channel.GetBuildingTypeAsync(BuildingTypeID);
+        }
+        
+        public PIO.Models.BuildingType[] GetBuildingTypes() {
+            return base.Channel.GetBuildingTypes();
+        }
+        
+        public System.Threading.Tasks.Task<PIO.Models.BuildingType[]> GetBuildingTypesAsync() {
+            return base.Channel.GetBuildingTypesAsync();
         }
         
         public PIO.Models.FactoryType GetFactoryType(PIO.Models.FactoryTypeIDs FactoryTypeID) {

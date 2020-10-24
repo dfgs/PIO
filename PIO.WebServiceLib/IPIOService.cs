@@ -36,6 +36,10 @@ namespace PIO.WebServiceLib
 		[OperationContract]
 		ResourceType[] GetResourceTypes();
 		[OperationContract]
+		BuildingType GetBuildingType(BuildingTypeIDs BuildingTypeID);
+		[OperationContract]
+		BuildingType[] GetBuildingTypes();
+		[OperationContract]
 		FactoryType GetFactoryType(FactoryTypeIDs FactoryTypeID);
 		[OperationContract]
 		FactoryType[] GetFactoryTypes();

@@ -51,6 +51,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="DataCmdlet\GetBuildingTypeCmdlet.cs" />
+    <Compile Include="DataCmdlet\GetBuildingTypesCmdlet.cs" />
     <Compile Include="DataCmdlet\GetStackQuantityCmdlet.cs" />
     <Compile Include="DataCmdlet\GetTestCmdlet.cs" />
     <Compile Include="DataCmdlet\GetLastTaskCmdlet.cs" />
@@ -97,6 +99,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\PIO.Models.BuildingType.datasource" />
     <None Include="Properties\DataSources\PIO.Models.Factory.datasource" />
     <None Include="Properties\DataSources\PIO.Models.FactoryType.datasource" />
     <None Include="Properties\DataSources\PIO.Models.Ingredient.datasource" />

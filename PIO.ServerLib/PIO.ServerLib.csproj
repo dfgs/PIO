@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Modules\DataModules\BuildingTypeModule.cs" />
     <Compile Include="Modules\DataModules\TaskTypeModule.cs" />
     <Compile Include="Modules\DataModules\ProductModule.cs" />
     <Compile Include="Modules\DataModules\IngredientModule.cs" />
@@ -70,6 +71,7 @@
     <Compile Include="Modules\PIOModule.cs" />
     <Compile Include="PIODB.cs" />
     <Compile Include="Tables\BuildingTable.cs" />
+    <Compile Include="Tables\BuildingTypeTable.cs" />
     <Compile Include="Tables\TaskTypeTable.cs" />
     <Compile Include="Tables\ProductTable.cs" />
     <Compile Include="Tables\IngredientTable.cs" />

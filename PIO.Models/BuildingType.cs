@@ -9,17 +9,13 @@ using System.Text;
 namespace PIO.Models
 {
 	[DataContract]
-	public class Building
+	public class BuildingType
 	{
-		[DataMember]
-		public int BuildingID { get; set; }
-		[DataMember]
-		public int PlanetID { get; set; }
 		[DataMember]
 		public BuildingTypeIDs BuildingTypeID { get; set; }
 		[DataMember]
-		public int HealthPoints { get; set; }
-
+		public string Name { get; set; }
+		
 
 	}
 }

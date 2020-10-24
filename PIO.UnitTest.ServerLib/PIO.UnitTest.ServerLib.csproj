@@ -62,6 +62,7 @@
     <Compile Include="Mocks\FunctionalModules\MockedMoverModule.cs" />
     <Compile Include="Mocks\FunctionalModules\MockedIdlerModule.cs" />
     <Compile Include="Mocks\FunctionalModules\MockedProducerModule.cs" />
+    <Compile Include="Modules\DataModules\BuildingTypeModuleUnitTest.cs" />
     <Compile Include="Modules\DataModules\TaskTypeModuleUnitTest.cs" />
     <Compile Include="Modules\DataModules\ProductModuleUnitTest.cs" />
     <Compile Include="Modules\DataModules\IngredientModuleUnitTest.cs" />

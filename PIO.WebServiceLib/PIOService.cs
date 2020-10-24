@@ -22,6 +22,7 @@ namespace PIO.WebServiceLib
 		private IWorkerModule workerModule;
 		private IStackModule stackModule;
 		private IResourceTypeModule resourceTypeModule;
+		private IBuildingTypeModule buildingTypeModule;
 		private IFactoryTypeModule factoryTypeModule;
 		private ITaskTypeModule taskTypeModule;
 		private IMaterialModule materialModule;
@@ -39,6 +40,7 @@ namespace PIO.WebServiceLib
 			IPlanetModule PlanetModule, IFactoryModule FactoryModule,
 			IWorkerModule WorkerModule,
 			IStackModule StackModule,IResourceTypeModule ResourceTypeModule,
+			IBuildingTypeModule BuildingTypeModule,
 			IFactoryTypeModule FactoryTypeModule,ITaskTypeModule TaskTypeModule,
 			IMaterialModule MaterialModule,
 			IIngredientModule IngredientModule, IProductModule ProductModule, 
@@ -53,6 +55,8 @@ namespace PIO.WebServiceLib
 			this.workerModule = WorkerModule;
 			this.stackModule = StackModule;
 			this.resourceTypeModule = ResourceTypeModule;
+			this.taskTypeModule = TaskTypeModule;
+			this.buildingTypeModule = BuildingTypeModule;
 			this.factoryTypeModule = FactoryTypeModule;
 			this.taskTypeModule = TaskTypeModule;
 			this.materialModule = MaterialModule;
@@ -133,6 +137,16 @@ namespace PIO.WebServiceLib
 			return Try(() => resourceTypeModule.GetResourceTypes()).OrThrow(GenerateFaultException);
 		}
 
+		public BuildingType GetBuildingType(BuildingTypeIDs BuildingTypeID)
+		{
+			LogEnter();
+			return Try(() => buildingTypeModule.GetBuildingType(BuildingTypeID)).OrThrow(GenerateFaultException);
+		}
+		public BuildingType[] GetBuildingTypes()
+		{
+			LogEnter();
+			return Try(() => buildingTypeModule.GetBuildingTypes()).OrThrow(GenerateFaultException);
+		}
 		public FactoryType GetFactoryType(FactoryTypeIDs FactoryTypeID)
 		{
 			LogEnter();

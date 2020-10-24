@@ -12,7 +12,7 @@ namespace PIO.ServerLib.Tables
 	{
 		public static readonly Column<int> BuildingID = new Column<int>() { IsPrimaryKey = true, IsIdentity = true };
 		public static readonly Column<int> PlanetID = new Column<int>();
-		//public static readonly Column<BuildingTypeIDs> BuildingTypeID = new Column<BuildingTypeIDs>();
+		public static readonly Column<BuildingTypeIDs> BuildingTypeID = new Column<BuildingTypeIDs>();
 		public static readonly Column<int> HealthPoints = new Column<int>();
 
 

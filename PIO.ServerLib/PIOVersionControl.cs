@@ -35,8 +35,9 @@ namespace PIO.ServerLib
 					yield return new CreateTable(PIODB.PlanetTable, PlanetTable.PlanetID, PlanetTable.Name);
 					yield return new CreateTable(PIODB.ResourceTypeTable, ResourceTypeTable.ResourceTypeID, ResourceTypeTable.Name);
 					yield return new CreateTable(PIODB.FactoryTypeTable, FactoryTypeTable.FactoryTypeID, FactoryTypeTable.Name, FactoryTypeTable.HealthPoints);
+					yield return new CreateTable(PIODB.BuildingTypeTable, BuildingTypeTable.BuildingTypeID, BuildingTypeTable.Name);
 					yield return new CreateTable(PIODB.TaskTypeTable, TaskTypeTable.TaskTypeID, TaskTypeTable.Name);
-					yield return new CreateTable(PIODB.BuildingTable, BuildingTable.BuildingID, BuildingTable.PlanetID,  BuildingTable.HealthPoints);
+					yield return new CreateTable(PIODB.BuildingTable, BuildingTable.BuildingID, BuildingTable.PlanetID, BuildingTable.BuildingTypeID, BuildingTable.HealthPoints);
 					yield return new CreateTable(PIODB.FactoryTable, FactoryTable.FactoryID, FactoryTable.BuildingID, FactoryTable.FactoryTypeID);
 					yield return new CreateTable(PIODB.WorkerTable, WorkerTable.WorkerID, WorkerTable.FactoryID);
 					yield return new CreateTable(PIODB.StackTable, StackTable.StackID, StackTable.FactoryID, StackTable.ResourceTypeID, StackTable.Quantity);
@@ -53,6 +54,7 @@ namespace PIO.ServerLib
 					yield return new CreateRelation<FactoryTypeIDs>(PIODB.MaterialTable, FactoryTypeTable.FactoryTypeID, MaterialTable.FactoryTypeID);
 					yield return new CreateRelation<ResourceTypeIDs>(PIODB.MaterialTable, ResourceTypeTable.ResourceTypeID, MaterialTable.ResourceTypeID);
 					yield return new CreateRelation<FactoryTypeIDs>(PIODB.FactoryTable, FactoryTypeTable.FactoryTypeID, FactoryTable.FactoryTypeID);
+					yield return new CreateRelation<BuildingTypeIDs>(PIODB.BuildingTable, BuildingTypeTable.BuildingTypeID, BuildingTable.BuildingTypeID);
 					yield return new CreateRelation<int>(PIODB.FactoryTable, BuildingTable.BuildingID, FactoryTable.BuildingID);
 					yield return new CreateRelation<int>(PIODB.BuildingTable, PlanetTable.PlanetID, BuildingTable.PlanetID);
 
@@ -76,6 +78,10 @@ namespace PIO.ServerLib
 					yield return new Insert().Into(PIODB.ResourceTypeTable).Set(ResourceTypeTable.ResourceTypeID, ResourceTypeIDs.Stone).Set(ResourceTypeTable.Name, "Stone");
 					yield return new Insert().Into(PIODB.ResourceTypeTable).Set(ResourceTypeTable.ResourceTypeID, ResourceTypeIDs.Coal).Set(ResourceTypeTable.Name, "Coal");
 					yield return new Insert().Into(PIODB.ResourceTypeTable).Set(ResourceTypeTable.ResourceTypeID, ResourceTypeIDs.Plank).Set(ResourceTypeTable.Name, "Plank");
+					#endregion
+
+					#region create BuildingType
+					yield return new Insert().Into(PIODB.BuildingTypeTable).Set(BuildingTypeTable.BuildingTypeID, BuildingTypeIDs.Factory).Set(BuildingTypeTable.Name, "Forest");
 					#endregion
 
 					#region create FactoryType
@@ -107,7 +113,7 @@ namespace PIO.ServerLib
 					#endregion
 
 					#region create startup Factories
-					yield return new Insert().Into(PIODB.BuildingTable).Set(BuildingTable.PlanetID, planetID).Set(BuildingTable.HealthPoints, 999);
+					yield return new Insert().Into(PIODB.BuildingTable).Set(BuildingTable.PlanetID, planetID).Set(BuildingTable.BuildingTypeID,BuildingTypeIDs.Factory).Set(BuildingTable.HealthPoints, 999);
 					yield return new SelectIdentity((result) => buildingID = Convert.ToInt32(result));
 					yield return new Insert().Into(PIODB.FactoryTable).Set(FactoryTable.BuildingID, buildingID).Set(FactoryTable.FactoryTypeID, FactoryTypeIDs.Forest);
 					yield return new SelectIdentity((result) => factoryID = Convert.ToInt32(result));
@@ -115,11 +121,11 @@ namespace PIO.ServerLib
 					yield return new Insert().Into(PIODB.StackTable).Set(StackTable.FactoryID, factoryID).Set(StackTable.ResourceTypeID, (int)ResourceTypeIDs.Tree).Set(StackTable.Quantity, 100);
 					#endregion
 
-					yield return new Insert().Into(PIODB.BuildingTable).Set(BuildingTable.PlanetID, planetID).Set(BuildingTable.HealthPoints, 999);
+					yield return new Insert().Into(PIODB.BuildingTable).Set(BuildingTable.PlanetID, planetID).Set(BuildingTable.BuildingTypeID, BuildingTypeIDs.Factory).Set(BuildingTable.HealthPoints, 999);
 					yield return new SelectIdentity((result) => buildingID = Convert.ToInt32(result));
 					yield return new Insert().Into(PIODB.FactoryTable).Set(FactoryTable.BuildingID, buildingID).Set(FactoryTable.FactoryTypeID, FactoryTypeIDs.Stockpile);
 
-					yield return new Insert().Into(PIODB.BuildingTable).Set(BuildingTable.PlanetID, planetID).Set(BuildingTable.HealthPoints, 999);
+					yield return new Insert().Into(PIODB.BuildingTable).Set(BuildingTable.PlanetID, planetID).Set(BuildingTable.BuildingTypeID, BuildingTypeIDs.Factory).Set(BuildingTable.HealthPoints, 999);
 					yield return new SelectIdentity((result) => buildingID = Convert.ToInt32(result));
 					yield return new Insert().Into(PIODB.FactoryTable).Set(FactoryTable.BuildingID, buildingID).Set(FactoryTable.FactoryTypeID, FactoryTypeIDs.Sawmill);
 

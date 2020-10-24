@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Mocks\MockedCarrierModule.cs" />
+    <Compile Include="Mocks\MockedBuildingTypeModule.cs" />
     <Compile Include="Mocks\MockedMoverModule.cs" />
     <Compile Include="Mocks\MockedIdlerModule.cs" />
     <Compile Include="Mocks\MockedTaskTypeModule.cs" />
