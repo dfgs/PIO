@@ -18,6 +18,10 @@ namespace PIO.WebServiceLib
 		[OperationContract]
 		Planet[] GetPlanets();
 		[OperationContract]
+		Building GetBuilding(int BuildingID);
+		[OperationContract]
+		Building[] GetBuildings(int PlanetID);
+		[OperationContract]
 		Factory GetFactory(int FactoryID);
 		[OperationContract]
 		Factory[] GetFactories(int PlanetID);

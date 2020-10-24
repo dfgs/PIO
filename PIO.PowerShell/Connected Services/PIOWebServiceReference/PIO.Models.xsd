@@ -14,6 +14,35 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfPlanet" nillable="true" type="tns:ArrayOfPlanet" />
+  <xs:complexType name="Building">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BuildingID" type="xs:int" />
+      <xs:element minOccurs="0" name="BuildingTypeID" type="tns:BuildingTypeIDs" />
+      <xs:element minOccurs="0" name="HealthPoints" type="xs:int" />
+      <xs:element minOccurs="0" name="PlanetID" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Building" nillable="true" type="tns:Building" />
+  <xs:simpleType name="BuildingTypeIDs">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Factory" />
+      <xs:enumeration value="Reserved1" />
+      <xs:enumeration value="Reserved2">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="BuildingTypeIDs" nillable="true" type="tns:BuildingTypeIDs" />
+  <xs:complexType name="ArrayOfBuilding">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Building" nillable="true" type="tns:Building" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfBuilding" nillable="true" type="tns:ArrayOfBuilding" />
   <xs:complexType name="Factory">
     <xs:sequence>
       <xs:element minOccurs="0" name="BuildingID" type="xs:int" />
@@ -87,20 +116,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfResourceType" nillable="true" type="tns:ArrayOfResourceType" />
-  <xs:simpleType name="BuildingTypeIDs">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="Factory" />
-      <xs:enumeration value="Reserved1" />
-      <xs:enumeration value="Reserved2">
-        <xs:annotation>
-          <xs:appinfo>
-            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:enumeration>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:element name="BuildingTypeIDs" nillable="true" type="tns:BuildingTypeIDs" />
   <xs:complexType name="BuildingType">
     <xs:sequence>
       <xs:element minOccurs="0" name="BuildingTypeID" type="tns:BuildingTypeIDs" />

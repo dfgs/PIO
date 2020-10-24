@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Modules\DataModules\BuildingTypeModule.cs" />
+    <Compile Include="Modules\DataModules\BuildingModule.cs" />
     <Compile Include="Modules\DataModules\TaskTypeModule.cs" />
     <Compile Include="Modules\DataModules\ProductModule.cs" />
     <Compile Include="Modules\DataModules\IngredientModule.cs" />

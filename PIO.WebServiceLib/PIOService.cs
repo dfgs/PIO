@@ -18,6 +18,7 @@ namespace PIO.WebServiceLib
 	public class PIOService : Module, IPIOService
 	{
 		private IPlanetModule planetModule;
+		private IBuildingModule buildingModule;
 		private IFactoryModule factoryModule;
 		private IWorkerModule workerModule;
 		private IStackModule stackModule;
@@ -37,7 +38,7 @@ namespace PIO.WebServiceLib
 		private ICarrierModule carrierModule;
 
 		public PIOService(ILogger Logger,
-			IPlanetModule PlanetModule, IFactoryModule FactoryModule,
+			IPlanetModule PlanetModule,IBuildingModule BuildingModule,  IFactoryModule FactoryModule,
 			IWorkerModule WorkerModule,
 			IStackModule StackModule,IResourceTypeModule ResourceTypeModule,
 			IBuildingTypeModule BuildingTypeModule,
@@ -51,6 +52,7 @@ namespace PIO.WebServiceLib
 		{
 			LogEnter();
 			this.planetModule = PlanetModule;
+			this.buildingModule = BuildingModule;
 			this.factoryModule = FactoryModule;
 			this.workerModule = WorkerModule;
 			this.stackModule = StackModule;
@@ -97,6 +99,16 @@ namespace PIO.WebServiceLib
 		{
 			LogEnter();
 			return Try(() => workerModule.GetWorkers(FactoryID)).OrThrow(GenerateFaultException);
+		}
+		public Building GetBuilding(int BuildingID)
+		{
+			LogEnter();
+			return Try(() => buildingModule.GetBuilding(BuildingID)).OrThrow(GenerateFaultException);
+		}
+		public Building[] GetBuildings(int PlanetID)
+		{
+			LogEnter();
+			return Try(() => buildingModule.GetBuildings(PlanetID)).OrThrow(GenerateFaultException);
 		}
 		public Factory GetFactory(int FactoryID)
 		{

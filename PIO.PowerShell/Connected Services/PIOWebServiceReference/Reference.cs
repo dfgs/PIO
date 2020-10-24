@@ -27,6 +27,18 @@ namespace PIO.PowerShell.PIOWebServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetPlanets", ReplyAction="http://tempuri.org/IPIOService/GetPlanetsResponse")]
         System.Threading.Tasks.Task<PIO.Models.Planet[]> GetPlanetsAsync();
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetBuilding", ReplyAction="http://tempuri.org/IPIOService/GetBuildingResponse")]
+        PIO.Models.Building GetBuilding(int BuildingID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetBuilding", ReplyAction="http://tempuri.org/IPIOService/GetBuildingResponse")]
+        System.Threading.Tasks.Task<PIO.Models.Building> GetBuildingAsync(int BuildingID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetBuildings", ReplyAction="http://tempuri.org/IPIOService/GetBuildingsResponse")]
+        PIO.Models.Building[] GetBuildings(int PlanetID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetBuildings", ReplyAction="http://tempuri.org/IPIOService/GetBuildingsResponse")]
+        System.Threading.Tasks.Task<PIO.Models.Building[]> GetBuildingsAsync(int PlanetID);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetFactory", ReplyAction="http://tempuri.org/IPIOService/GetFactoryResponse")]
         PIO.Models.Factory GetFactory(int FactoryID);
         
@@ -243,6 +255,22 @@ namespace PIO.PowerShell.PIOWebServiceReference {
         
         public System.Threading.Tasks.Task<PIO.Models.Planet[]> GetPlanetsAsync() {
             return base.Channel.GetPlanetsAsync();
+        }
+        
+        public PIO.Models.Building GetBuilding(int BuildingID) {
+            return base.Channel.GetBuilding(BuildingID);
+        }
+        
+        public System.Threading.Tasks.Task<PIO.Models.Building> GetBuildingAsync(int BuildingID) {
+            return base.Channel.GetBuildingAsync(BuildingID);
+        }
+        
+        public PIO.Models.Building[] GetBuildings(int PlanetID) {
+            return base.Channel.GetBuildings(PlanetID);
+        }
+        
+        public System.Threading.Tasks.Task<PIO.Models.Building[]> GetBuildingsAsync(int PlanetID) {
+            return base.Channel.GetBuildingsAsync(PlanetID);
         }
         
         public PIO.Models.Factory GetFactory(int FactoryID) {

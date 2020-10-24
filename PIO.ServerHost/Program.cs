@@ -38,6 +38,7 @@ namespace PIO.ServerHost
 			IDatabaseCreator databaseCreator;
 
 			IPlanetModule planetModule;
+			IBuildingModule buildingModule;
 			IFactoryModule factoryModule;
 			IWorkerModule workerModule;
 			IFactoryBuilderModule factoryBuilderModule;
@@ -76,6 +77,7 @@ namespace PIO.ServerHost
 
 
 			planetModule = new PlanetModule(logger, database);
+			buildingModule = new BuildingModule(logger, database);
 			factoryModule = new FactoryModule(logger, database);
 			workerModule = new WorkerModule(logger, database);
 			stackModule = new StackModule(logger, database);
@@ -101,7 +103,8 @@ namespace PIO.ServerHost
 			
 
 			service = new PIOService(
-				logger,planetModule,factoryModule,workerModule,stackModule,resourceTypeModule,
+				logger,planetModule,buildingModule,factoryModule,workerModule,
+				stackModule,resourceTypeModule,
 				buildingTypeModule,factoryTypeModule,taskTypeModule,materialModule,ingredientModule,productModule,taskModule, 
 				resourceCheckerModule, idlerModule,producerModule,moverModule,carrierModule);
 
