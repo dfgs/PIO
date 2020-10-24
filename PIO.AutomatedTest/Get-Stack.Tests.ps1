@@ -27,6 +27,20 @@ Describe 'Test Stack module'{
             $result | Should -BeNullOrEmpty
         }
     }
+    Context 'Get-StackQuantity' {
+        It 'Given StackID and ResourceTypeID, it returns a quantity' {
+            $result = Get-StackQuantity 1 Tree
+            $result.Quantity | Should -Not -Be 0
+        }
+        It 'Given incorrect StackID, it returns 0 ' {
+            $result = Get-StackQuantity 999 Tree
+            $result | Should -Be 0
+        }
+        It 'Given incorrect ResourceType, it returns 0 ' {
+            $result = Get-StackQuantity 1 Coal
+            $result | Should -Be 0
+        }
+    }
 
     .\AfterAll.ps1
 
