@@ -28,7 +28,10 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying Factory table (FactoryID={FactoryID})");
-			query = new Select(FactoryTable.PlanetID,FactoryTable.FactoryID, FactoryTable.FactoryTypeID,FactoryTable.HealthPoints).From(PIODB.FactoryTable).Where(FactoryTable.FactoryID.IsEqualTo(FactoryID));
+			query = new Select(FactoryTable.BuildingID,FactoryTable.FactoryID, FactoryTable.FactoryTypeID)
+				.From(PIODB.FactoryTable.Join(PIODB.BuildingTable.On(FactoryTable.BuildingID,BuildingTable.BuildingID)) )
+				.Where(FactoryTable.FactoryID.IsEqualTo(FactoryID));
+
 			return TrySelectFirst<FactoryTable,Factory>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
@@ -38,11 +41,13 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying Factory table (PlanetID={PlanetID})");
-			query = new Select(FactoryTable.PlanetID, FactoryTable.FactoryID, FactoryTable.FactoryTypeID, FactoryTable.HealthPoints).From(PIODB.FactoryTable).Where(FactoryTable.PlanetID.IsEqualTo(PlanetID));
+			query = new Select(FactoryTable.BuildingID, FactoryTable.FactoryID, FactoryTable.FactoryTypeID)
+				.From(PIODB.FactoryTable.Join(PIODB.BuildingTable.On(FactoryTable.BuildingID, BuildingTable.BuildingID)))
+				.Where(BuildingTable.PlanetID.IsEqualTo(PlanetID));
 			return TrySelectMany<FactoryTable, Factory>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
-		public void SetHealthPoints(int FactoryID,int HealthPoints)
+		/*public void SetHealthPoints(int FactoryID,int HealthPoints)
 		{
 			IUpdate update;
 
@@ -51,7 +56,7 @@ namespace PIO.ServerLib.Modules
 			Log(LogLevels.Information, $"Updating Factory table (FactoryID={FactoryID}, HealthPoints={HealthPoints})");
 			update = new Update(PIODB.FactoryTable).Set(FactoryTable.HealthPoints, HealthPoints).Where(FactoryTable.FactoryID.IsEqualTo(FactoryID));
 			Try(update).OrThrow<PIODataException>("Failed to update");
-		}
+		}*/
 
 
 	}

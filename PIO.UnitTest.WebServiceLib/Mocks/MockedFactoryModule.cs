@@ -30,7 +30,7 @@ namespace PIO.UnitTest.WebServiceLib.Mocks
 		public Factory[] GetFactories(int PlanetID)
 		{
 			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
-			return Generate((t) => new Factory() { FactoryID = t,PlanetID=PlanetID });
+			return Generate((t) => new Factory() { FactoryID = t,BuildingID=PlanetID });
 		}
 
 		public void SetHealthPoints(int FactoryID, int HealthPoints)

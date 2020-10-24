@@ -69,6 +69,7 @@
     <Compile Include="Modules\DataModules\TaskModule.cs" />
     <Compile Include="Modules\PIOModule.cs" />
     <Compile Include="PIODB.cs" />
+    <Compile Include="Tables\BuildingTable.cs" />
     <Compile Include="Tables\TaskTypeTable.cs" />
     <Compile Include="Tables\ProductTable.cs" />
     <Compile Include="Tables\IngredientTable.cs" />

@@ -19,7 +19,7 @@ namespace PIO.UnitTest.ServerLib.Mocks
 		public Factory[] GetFactories(int PlanetID)
 		{
 			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
-			return items.Where(item => item.PlanetID == PlanetID).ToArray();
+			return items.Where(item => item.BuildingID == PlanetID).ToArray();
 		}
 
 		public Factory GetFactory(int FactoryID)
@@ -28,7 +28,7 @@ namespace PIO.UnitTest.ServerLib.Mocks
 			return items.FirstOrDefault(item => item.FactoryID == FactoryID);
 		}
 
-		public void SetHealthPoints(int FactoryID, int HealthPoints)
+		/*public void SetHealthPoints(int FactoryID, int HealthPoints)
 		{
 			Factory factory;
 
@@ -37,7 +37,7 @@ namespace PIO.UnitTest.ServerLib.Mocks
 			factory = GetFactory(FactoryID);
 			if (factory == null) return;
 			factory.HealthPoints+=HealthPoints;
-		}
+		}*/
 
 
 	}

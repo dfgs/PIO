@@ -28,7 +28,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			MockedSchedulerModule schedulerModule;
 			Task result;
 
-			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 1, FactoryTypeID = FactoryTypeIDs.Sawmill, PlanetID = 3, HealthPoints = 100 }, new Factory() { FactoryID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill, PlanetID = 3, HealthPoints = 100 });
+			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 1, FactoryTypeID = FactoryTypeIDs.Sawmill, BuildingID = 3 }, new Factory() { FactoryID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill, BuildingID = 3 });
 			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, FactoryID = 1 });
 			stackModule = new MockedStackModule(false,
 				new Stack() { StackID = 0, FactoryID = 1, ResourceTypeID = ResourceTypeIDs.Plank, Quantity = 10 },
@@ -58,7 +58,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			MockedSchedulerModule schedulerModule;
 			Task result,result2;
 
-			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 1, FactoryTypeID = FactoryTypeIDs.Sawmill, PlanetID = 3, HealthPoints = 100 }, new Factory() { FactoryID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill, PlanetID = 3, HealthPoints = 100 });
+			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 1, FactoryTypeID = FactoryTypeIDs.Sawmill, BuildingID = 3 }, new Factory() { FactoryID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill, BuildingID = 3 });
 			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, FactoryID = 1 });
 			stackModule = new MockedStackModule(false,
 				new Stack() { StackID = 0, FactoryID = 1, ResourceTypeID = ResourceTypeIDs.Plank, Quantity = 20 },
@@ -96,7 +96,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			ITaskModule taskModule;
 			MockedSchedulerModule schedulerModule;
 
-			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 1, FactoryTypeID = FactoryTypeIDs.Sawmill, PlanetID = 3, HealthPoints = 100 });
+			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 1, FactoryTypeID = FactoryTypeIDs.Sawmill, BuildingID = 3 });
 			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, FactoryID = 1 });
 			stackModule = new MockedStackModule(false, new Stack() { StackID = 0, FactoryID = 1, ResourceTypeID = ResourceTypeIDs.Plank, Quantity = 10 });
 			taskModule = new MockedTaskModule(false);
@@ -122,7 +122,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			ITaskModule taskModule;
 			MockedSchedulerModule schedulerModule;
 
-			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 1, FactoryTypeID = FactoryTypeIDs.Sawmill, PlanetID = 3, HealthPoints = 100 }, new Factory() { FactoryID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill, PlanetID = 3, HealthPoints = 100 });
+			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 1, FactoryTypeID = FactoryTypeIDs.Sawmill, BuildingID = 3 }, new Factory() { FactoryID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill, BuildingID = 3 });
 			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, FactoryID = 1 });
 			#region when all stacks exist
 			stackModule = new MockedStackModule(false,
@@ -171,7 +171,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			ITaskModule taskModule;
 			MockedSchedulerModule schedulerModule;
 
-			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 1, FactoryTypeID = FactoryTypeIDs.Sawmill, PlanetID = 3, HealthPoints = 100 }, new Factory() { FactoryID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill, PlanetID = 3, HealthPoints = 100 });
+			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 1, FactoryTypeID = FactoryTypeIDs.Sawmill, BuildingID = 3 }, new Factory() { FactoryID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill, BuildingID = 3 });
 			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, FactoryID = 1 });
 			stackModule = new MockedStackModule(false, new Stack() { StackID = 0, FactoryID = 1, ResourceTypeID = ResourceTypeIDs.Plank, Quantity = 10 });
 			taskModule = new MockedTaskModule(false);
@@ -197,7 +197,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			MockedSchedulerModule schedulerModule;
 
 
-			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 1, FactoryTypeID = FactoryTypeIDs.Sawmill, PlanetID = 3, HealthPoints = 100 }, new Factory() { FactoryID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill, PlanetID = 3, HealthPoints = 100 });
+			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 1, FactoryTypeID = FactoryTypeIDs.Sawmill, BuildingID = 3 }, new Factory() { FactoryID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill, BuildingID = 3 });
 
 			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, FactoryID = 1 });
 			stackModule = new MockedStackModule(true, new Stack() { StackID = 0, FactoryID = 1, ResourceTypeID = ResourceTypeIDs.Wood, Quantity = 10 });
@@ -244,7 +244,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			MockedSchedulerModule schedulerModule;
 			Stack stack;
 
-			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 1, FactoryTypeID = FactoryTypeIDs.Sawmill, PlanetID = 3, HealthPoints = 100 }, new Factory() { FactoryID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill, PlanetID = 3, HealthPoints = 100 });
+			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 1, FactoryTypeID = FactoryTypeIDs.Sawmill, BuildingID = 3 }, new Factory() { FactoryID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill, BuildingID = 3 });
 			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, FactoryID = 1 });
 			stackModule = new MockedStackModule(false,
 				new Stack() { StackID = 0, FactoryID = 2, ResourceTypeID = ResourceTypeIDs.Plank, Quantity = 10 },
@@ -273,7 +273,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			MockedSchedulerModule schedulerModule;
 			Stack stack;
 
-			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 1, FactoryTypeID = FactoryTypeIDs.Sawmill, PlanetID = 3, HealthPoints = 100 }, new Factory() { FactoryID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill, PlanetID = 3, HealthPoints = 100 });
+			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 1, FactoryTypeID = FactoryTypeIDs.Sawmill, BuildingID = 3 }, new Factory() { FactoryID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill, BuildingID = 3 });
 			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, FactoryID = 1 });
 			stackModule = new MockedStackModule(false,
 				new Stack() { StackID = 0, FactoryID = 2, ResourceTypeID = ResourceTypeIDs.Plank, Quantity = 10 },
@@ -307,7 +307,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			ITaskModule taskModule;
 			MockedSchedulerModule schedulerModule;
 
-			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 1, FactoryTypeID = FactoryTypeIDs.Sawmill, PlanetID = 3, HealthPoints = 100 }, new Factory() { FactoryID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill, PlanetID = 3, HealthPoints = 100 });
+			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 1, FactoryTypeID = FactoryTypeIDs.Sawmill, BuildingID = 3 }, new Factory() { FactoryID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill, BuildingID = 3 });
 			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, FactoryID = 1 });
 			stackModule = new MockedStackModule(false);
 			taskModule = new MockedTaskModule(false);
@@ -332,7 +332,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			MockedSchedulerModule schedulerModule;
 
 
-			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 1, FactoryTypeID = FactoryTypeIDs.Sawmill, PlanetID = 3, HealthPoints = 100 }, new Factory() { FactoryID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill, PlanetID = 3, HealthPoints = 100 });
+			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 1, FactoryTypeID = FactoryTypeIDs.Sawmill, BuildingID = 3 }, new Factory() { FactoryID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill, BuildingID = 3 });
 			
 			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, FactoryID = 1 });
 			stackModule = new MockedStackModule(true);

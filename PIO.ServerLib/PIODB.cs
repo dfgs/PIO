@@ -11,11 +11,12 @@ namespace PIO.ServerLib
 {
 	public static class PIODB
 	{
+		public static PlanetTable PlanetTable = new PlanetTable();
+		public static BuildingTable BuildingTable = new BuildingTable();
 		public static FactoryTable FactoryTable = new FactoryTable();
 		public static FactoryTypeTable FactoryTypeTable = new FactoryTypeTable();
 		public static IngredientTable IngredientTable = new IngredientTable();
 		public static MaterialTable MaterialTable = new MaterialTable();
-		public static PlanetTable PlanetTable = new PlanetTable();
 		public static ProductTable ProductTable = new ProductTable();
 		public static ResourceTypeTable ResourceTypeTable = new ResourceTypeTable();
 		public static StackTable StackTable = new StackTable();

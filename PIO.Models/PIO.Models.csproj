@@ -50,6 +50,7 @@
     <Compile Include="Exceptions\FunctionalExceptions\PIONotFoundException.cs" />
     <Compile Include="Exceptions\PIOException.cs" />
     <Compile Include="Exceptions\FunctionalExceptions\PIOFunctionalException.cs" />
+    <Compile Include="Building.cs" />
     <Compile Include="Modules\DataModules\ITaskTypeModule.cs" />
     <Compile Include="Modules\FunctionalModules\IIdlerModule.cs" />
     <Compile Include="Modules\FunctionalModules\IMoverModule.cs" />

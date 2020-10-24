@@ -33,7 +33,7 @@ namespace PIO.ServerLib.Modules
 
 			LogEnter();
 
-			Log(LogLevels.Information, $"Building Factory (FactoryID={FactoryID})");
+			/*Log(LogLevels.Information, $"Building Factory (FactoryID={FactoryID})");
 			factory = Try(() => factoryModule.GetFactory(FactoryID)).OrThrow("Failed to build");
 			if (factory == null)
 			{
@@ -53,7 +53,7 @@ namespace PIO.ServerLib.Modules
 				throw new InvalidOperationException($"HealthPoints are maximum value (FactoryID={FactoryID})");
 			}
 
-			Try(() => factoryModule.SetHealthPoints(FactoryID,factory.HealthPoints+1)).OrThrow("Failed to build");
+			Try(() => factoryModule.SetHealthPoints(FactoryID,factory.HealthPoints+1)).OrThrow("Failed to build");*/
 		}
 
 

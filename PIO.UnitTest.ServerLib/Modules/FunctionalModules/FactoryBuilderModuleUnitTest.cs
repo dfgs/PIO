@@ -27,9 +27,10 @@ namespace PIO.UnitTest.ServerLib.Modules
 			factoryTypeModule = new MockedFactoryTypeModule(false, new FactoryType() { HealthPoints=10 } );
 			module = new FactoryBuilderModule(NullLogger.Instance,factoryModule,factoryTypeModule);
 
-			Assert.AreEqual(0, factoryModule.GetFactory(0).HealthPoints);
+			Assert.Fail();
+			/*Assert.AreEqual(0, factoryModule.GetFactory(0).HealthPoints);
 			module.Build(0);
-			Assert.AreEqual(1, factoryModule.GetFactory(0).HealthPoints);
+			Assert.AreEqual(1, factoryModule.GetFactory(0).HealthPoints);*/
 		}
 
 		[TestMethod]
@@ -64,8 +65,8 @@ namespace PIO.UnitTest.ServerLib.Modules
 			MemoryLogger logger;
 			IFactoryModule factoryModule;
 			IFactoryTypeModule factoryTypeModule;
-
-			factoryModule = new MockedFactoryModule(false, new Factory() { HealthPoints=10 });
+			Assert.Fail();
+			factoryModule = new MockedFactoryModule(false, new Factory() {  });
 			factoryTypeModule = new MockedFactoryTypeModule(false, new FactoryType() { HealthPoints = 10 });
 
 			logger = new MemoryLogger(new DefaultLogFormatter());
