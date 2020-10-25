@@ -11,6 +11,7 @@ namespace PIO.Models.Modules
 	public interface IStackModule:IDatabaseModule
 	{
 		Stack GetStack(int StackID);
+		Stack GetStack(int FactoryID, ResourceTypeIDs ResourceTypeID);
 		Stack[] GetStacks(int FactoryID);
 		Stack InsertStack(int FactoryID, ResourceTypeIDs ResourceTypeID, int Quantity);
 		void UpdateStack(int StackID, int Quantity);

@@ -29,13 +29,20 @@ namespace PIO.UnitTest.ServerLib.Mocks
 
 		public int GetStackQuantity(int FactoryID, ResourceTypeIDs ResourceTypeID)
 		{
-			throw new NotImplementedException();
+			if (throwException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
+			return items.FirstOrDefault(item => (item.FactoryID == FactoryID) && (item.ResourceTypeID==ResourceTypeID))?.Quantity??0;
 		}
 
 		public Stack[] GetStacks(int FactoryID)
 		{
 			if (throwException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
 			return items.Where(item => item.FactoryID == FactoryID).ToArray();
+		}
+
+		public Stack GetStack(int FactoryID,ResourceTypeIDs ResourceTypeID)
+		{
+			if (throwException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
+			return items.FirstOrDefault(item => (item.FactoryID == FactoryID) && (item.ResourceTypeID==ResourceTypeID));
 		}
 
 		public Stack InsertStack(int FactoryID, ResourceTypeIDs ResourceTypeID, int Quantity)

@@ -37,51 +37,32 @@ namespace PIO.ServerLib.Modules
 			Worker worker;
 			Ingredient[] ingredients;
 			Product[] products;
-			Stack[] stacks;
-			Stack stack;
 			Task task;
+			Stack stack;
+			int quantity;
 
 			LogEnter();
 
-			Log(LogLevels.Information, $"Get worker (WorkerID={WorkerID})");
-			worker = Try(() => workerModule.GetWorker(WorkerID)).OrThrow<PIOInternalErrorException>("Failed to get worker");
-
-			if (worker == null)
-			{
-				Log(LogLevels.Warning, $"Worker doesn't exist (WorkerID={WorkerID})");
-				throw new PIONotFoundException($"Worker doesn't exist (WorkerID={WorkerID})", null, ID, ModuleName, "BeginProduce");
-			}
-
-			Log(LogLevels.Information, $"Get factory (X={worker.X}, Y={worker.Y})");
-			factory = Try(() => factoryModule.GetFactory(worker.X,worker.Y)).OrThrow<PIOInternalErrorException>("Failed to get factory");
-			if (factory == null)
-			{
-				Log(LogLevels.Warning, $"No factory on current location (X={worker.X}, Y={worker.Y})");
-				throw new PIONotFoundException($"No factory on current location (X={worker.X}, Y={worker.Y})", null, ID, ModuleName, "BeginProduce");
-			}
+			worker = AssertExists(() => workerModule.GetWorker(WorkerID), $"WorkerID = {WorkerID}");
+			factory = AssertExists(() => factoryModule.GetFactory(worker.X, worker.Y), $"X = {worker.X}, Y = {worker.Y}");
 			
-
 
 			Log(LogLevels.Information, $"Get ingredients (FactoryTypeID={factory.FactoryTypeID})");
 			ingredients = Try(() => ingredientModule.GetIngredients(factory.FactoryTypeID)).OrThrow<PIOInternalErrorException>("Failed to get ingredients");
-
+			
 			Log(LogLevels.Information, $"Get products (FactoryTypeID={factory.FactoryTypeID})");
 			products = Try(() => productModule.GetProducts(factory.FactoryTypeID)).OrThrow<PIOInternalErrorException>("Failed to get products");
-			if (products.Length==0)
+			if (products.Length == 0)
 			{
 				Log(LogLevels.Warning, $"This factory has no product (FactoryTypeID={factory.FactoryTypeID})");
 				return null;
 			}
 
-			Log(LogLevels.Information, $"Get stacks (FactoryID={factory.FactoryID})");
-			stacks = Try(() => stackModule.GetStacks(factory.FactoryID)).OrThrow<PIOInternalErrorException>("Failed to get stacks");
-
-
 			foreach (Ingredient ingredient in ingredients)
 			{
 				Log(LogLevels.Information, $"Check stack quantity (ResourceTypeID={ingredient.ResourceTypeID}, Quantity={ingredient.Quantity})");
-				stack = stacks.FirstOrDefault(item => item.ResourceTypeID == ingredient.ResourceTypeID);
-				if ((stack == null) || (stack.Quantity < ingredient.Quantity))
+				quantity = Try(()=> stackModule.GetStackQuantity(factory.FactoryID, ingredient.ResourceTypeID)).OrThrow<PIOInternalErrorException>("Failed to check stack quantity");
+				if (quantity < ingredient.Quantity)
 				{
 					Log(LogLevels.Warning, $"Not enough resources (FactoryID={factory.FactoryID}, ResourceTypeID={ingredient.ResourceTypeID})");
 					throw new PIONoResourcesException($"Not enough resources (FactoryID={factory.FactoryID}, ResourceTypeID={ingredient.ResourceTypeID})", null, ID, ModuleName, "BeginProduce");
@@ -91,7 +72,7 @@ namespace PIO.ServerLib.Modules
 			foreach (Ingredient ingredient in ingredients)
 			{
 				Log(LogLevels.Information, $"Consuming ingredient (ResourceTypeID={ingredient.ResourceTypeID}, Quantity={ingredient.Quantity})");
-				stack = stacks.FirstOrDefault(item => item.ResourceTypeID == ingredient.ResourceTypeID);
+				stack = Try(() => stackModule.GetStack(factory.FactoryID, ingredient.ResourceTypeID)).OrThrow<PIOInternalErrorException>("Failed to consume ingredient");
 				stack.Quantity -= ingredient.Quantity;
 
 				Try(() => stackModule.UpdateStack(stack.StackID, stack.Quantity)).OrThrow<PIOInternalErrorException>("Failed to update stack");
@@ -117,23 +98,10 @@ namespace PIO.ServerLib.Modules
 
 			LogEnter();
 
-			Log(LogLevels.Information, $"Get worker (WorkerID={WorkerID})");
-			worker = Try(() => workerModule.GetWorker(WorkerID)).OrThrow<PIOInternalErrorException>("Failed to get worker");
-
-			if (worker == null)
-			{
-				Log(LogLevels.Warning, $"Worker doesn't exist (WorkerID={WorkerID})");
-				throw new PIONotFoundException($"Worker doesn't exist (WorkerID={WorkerID})", null, ID, ModuleName, "BeginProduce");
-			}
+			worker = AssertExists(() => workerModule.GetWorker(WorkerID), $"WorkerID = {WorkerID}");
 
 
-			Log(LogLevels.Information, $"Get factory (X={worker.X}, Y={worker.Y})");
-			factory = Try(() => factoryModule.GetFactory(worker.X, worker.Y)).OrThrow<PIOInternalErrorException>("Failed to get factory");
-			if (factory == null)
-			{
-				Log(LogLevels.Warning, $"No factory on current location (X={worker.X}, Y={worker.Y})");
-				throw new PIONotFoundException($"No factory on current location (X={worker.X}, Y={worker.Y})", null, ID, ModuleName, "BeginProduce");
-			}
+			factory = AssertExists(() => factoryModule.GetFactory(worker.X, worker.Y), $"X = {worker.X}, Y = {worker.Y}");
 
 			Log(LogLevels.Information, $"Get stacks (FactoryID={factory.FactoryID})");
 			stacks = Try(() => stackModule.GetStacks(factory.FactoryID)).OrThrow<PIOInternalErrorException>("Failed to get stacks");

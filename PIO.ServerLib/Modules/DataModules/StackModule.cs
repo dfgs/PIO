@@ -45,6 +45,17 @@ namespace PIO.ServerLib.Modules
 			return TrySelectMany<StackTable,Stack>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
+		public Stack GetStack(int FactoryID, ResourceTypeIDs ResourceTypeID)
+		{
+			ISelect query;
+
+			LogEnter();
+
+			Log(LogLevels.Information, $"Querying Stack table (FactoryID={FactoryID}, ResourceTypeID={ResourceTypeID})");
+			query = new Select(StackTable.StackID, StackTable.FactoryID, StackTable.ResourceTypeID, StackTable.Quantity).From(PIODB.StackTable).Where(new AndFilter(StackTable.FactoryID.IsEqualTo(FactoryID), StackTable.ResourceTypeID.IsEqualTo(ResourceTypeID)));
+			return TrySelectFirst<StackTable, Stack>(query).OrThrow<PIODataException>("Failed to query");
+		}
+
 		public Stack InsertStack(int FactoryID, ResourceTypeIDs ResourceTypeID, int Quantity)
 		{
 			IInsert query;

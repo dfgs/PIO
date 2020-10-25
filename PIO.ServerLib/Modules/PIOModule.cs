@@ -1,9 +1,11 @@
 ﻿using LogLib;
 using ModuleLib;
+using PIO.Models.Exceptions;
 using PIO.Models.Modules;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,5 +16,27 @@ namespace PIO.ServerLib
 		public PIOModule(ILogger Logger) : base(Logger)
 		{
 		}
+
+		protected T AssertExists<T>(Func<T> Function, string ParameterList, [CallerMemberName]string MethodName=null)
+			where T:class
+		{
+			T item;
+			string itemName;
+
+			itemName = typeof(T).Name;
+
+			Log(LogLevels.Information, $"Get item {itemName} ({ParameterList})");
+			item = Try(() => Function()).OrThrow<PIOInternalErrorException>($"Failed to get item {itemName}");
+			if (item == null)
+			{
+				Log(LogLevels.Warning, $"{itemName} doesn't exist ({ParameterList})");
+				throw new PIONotFoundException($"{itemName} doesn't exist ({ParameterList})", null, ID, ModuleName, MethodName);
+			}
+
+			return item;
+		}
+
+
+
 	}
 }

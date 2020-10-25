@@ -34,21 +34,8 @@ namespace PIO.ServerLib.Modules
 
 			LogEnter();
 
-			Log(LogLevels.Information, $"Get worker (WorkerID={WorkerID})");
-			worker = Try(() => workerModule.GetWorker(WorkerID)).OrThrow<PIOInternalErrorException>("Failed to get worker");
-			if (worker == null)
-			{
-				Log(LogLevels.Warning, $"Worker doesn't exist (WorkerID={WorkerID})");
-				throw new PIONotFoundException($"Worker doesn't exist (WorkerID={WorkerID})", null, ID, ModuleName, "BeginCreateBuilding");
-			}
-			
-			factoryType = Try(() => factoryTypeModule.GetFactoryType(FactoryTypeID)).OrThrow<PIOInternalErrorException>("Failed to get factory type");
-			if (factoryType == null)
-			{
-				Log(LogLevels.Warning, $"Factory type doesn't exist (FactoryTypeID={FactoryTypeID})");
-				throw new PIONotFoundException($"Factory type doesn't exist (FactoryTypeID={FactoryTypeID})", null, ID, ModuleName, "BeginCreateBuilding");
-			}
-
+			worker = AssertExists(() => workerModule.GetWorker(WorkerID), $"WorkerID = {WorkerID}");
+			factoryType = AssertExists(() => factoryTypeModule.GetFactoryType(FactoryTypeID), $"FactoryTypeID = {FactoryTypeID}");
 
 			Log(LogLevels.Information, $"Creating task (WorkerID={WorkerID})");
 			task = Try(() => taskModule.CreateTask(TaskTypeIDs.CreateBuilding, WorkerID, null, null, null, null, FactoryTypeID, GetLastETA(WorkerID).AddSeconds(10))).OrThrow<PIOInternalErrorException>("Failed to create task");
@@ -68,22 +55,9 @@ namespace PIO.ServerLib.Modules
 
 			Log(LogLevels.Information, $"End create building (FactoryTypeID={FactoryTypeID})");
 
-			Log(LogLevels.Information, $"Get worker (WorkerID={WorkerID})");
-			worker = Try(() => workerModule.GetWorker(WorkerID)).OrThrow<PIOInternalErrorException>("Failed to get worker");
-			if (worker == null)
-			{
-				Log(LogLevels.Warning, $"Worker doesn't exist (WorkerID={WorkerID})");
-				throw new PIONotFoundException($"Worker doesn't exist (WorkerID={WorkerID})", null, ID, ModuleName, "EndCreateBuilding");
-			}
+			worker = AssertExists(() => workerModule.GetWorker(WorkerID), $"WorkerID = {WorkerID}");
+			factoryType = AssertExists(() => factoryTypeModule.GetFactoryType(FactoryTypeID), $"FactoryTypeID = {FactoryTypeID}");
 
-			factoryType = Try(() => factoryTypeModule.GetFactoryType(FactoryTypeID)).OrThrow<PIOInternalErrorException>("Failed to get factory type");
-			if (factoryType == null)
-			{
-				Log(LogLevels.Warning, $"Factory type doesn't exist (FactoryTypeID={FactoryTypeID})");
-				throw new PIONotFoundException($"Factory type doesn't exist (FactoryTypeID={FactoryTypeID})", null, ID, ModuleName, "EndCreateBuilding");
-			}
-
-		
 			Log(LogLevels.Information, $"Creating building (BuildingTypeID={BuildingTypeIDs.Factory})");
 			building = Try(() => buildingModule.CreateBuilding(worker.PlanetID, worker.X,worker.Y, BuildingTypeIDs.Factory, factoryType.BuildSteps)).OrThrow<PIOInternalErrorException>("Failed to create building");
 

@@ -272,7 +272,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 1, FactoryTypeID = FactoryTypeIDs.Sawmill, BuildingID = 3 });
 			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, PlanetID = 1 });
 			stackModule = new MockedStackModule(true);
-			ingredientModule = new MockedIngredientModule(false);
+			ingredientModule = new MockedIngredientModule(false,new Ingredient() { IngredientID = 0, FactoryTypeID = FactoryTypeIDs.Sawmill, ResourceTypeID = ResourceTypeIDs.Wood, Quantity = 0 }); 
 			productModule = new MockedProductModule(false, new Product() { ProductID = 1, FactoryTypeID = FactoryTypeIDs.Sawmill, Duration = 4, Quantity = 2 });
 			taskModule = new MockedTaskModule(false);
 			logger = new MemoryLogger(new DefaultLogFormatter());
@@ -293,21 +293,9 @@ namespace PIO.UnitTest.ServerLib.Modules
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
 			Assert.AreEqual(0, schedulerModule.Count);
 
-			stackModule = new MockedStackModule(false);
-			ingredientModule = new MockedIngredientModule(false);
-			productModule = new MockedProductModule(true, new Product() { ProductID = 1, FactoryTypeID = FactoryTypeIDs.Sawmill, Duration = 4, Quantity = 2 });
-			taskModule = new MockedTaskModule(false);
-			logger = new MemoryLogger(new DefaultLogFormatter());
-			module = new ProducerModule(logger, taskModule, workerModule, factoryModule, stackModule, ingredientModule, productModule);
-			schedulerModule = new MockedSchedulerModule(false, module);
-			Assert.ThrowsException<PIOInternalErrorException>(() => module.BeginProduce(1));
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
-			Assert.AreEqual(0, schedulerModule.Count);
 
-
-			stackModule = new MockedStackModule(false);
-			ingredientModule = new MockedIngredientModule(false);
-			productModule = new MockedProductModule(false, new Product() { ProductID = 1, FactoryTypeID = FactoryTypeIDs.Sawmill, Duration = 4, Quantity = 2 });
+			stackModule = new MockedStackModule(false , new Stack() { StackID = 0, FactoryID = 1, ResourceTypeID = ResourceTypeIDs.Wood, Quantity = 10 });
+			ingredientModule = new MockedIngredientModule(false, new Ingredient() { IngredientID = 0, FactoryTypeID = FactoryTypeIDs.Sawmill, ResourceTypeID = ResourceTypeIDs.Wood, Quantity = 0 });
 			taskModule = new MockedTaskModule(true);
 			logger = new MemoryLogger(new DefaultLogFormatter());
 			module = new ProducerModule(logger, taskModule,  workerModule, factoryModule, stackModule, ingredientModule, productModule);

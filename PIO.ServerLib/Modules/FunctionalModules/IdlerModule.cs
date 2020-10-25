@@ -32,14 +32,9 @@ namespace PIO.ServerLib.Modules
 			Worker worker;
 
 			LogEnter();
-			Log(LogLevels.Information, $"Get worker (WorkerID={WorkerID})");
-			worker = Try(() => workerModule.GetWorker(WorkerID)).OrThrow<PIOInternalErrorException>("Failed to get worker");
-			if (worker == null)
-			{
-				Log(LogLevels.Warning, $"Worker doesn't exist (WorkerID={WorkerID})");
-				throw new PIONotFoundException($"Worker doesn't exist (WorkerID={WorkerID})", null, ID, ModuleName, "BeginMoveTo");
-			}
 
+			worker = AssertExists(()=>workerModule.GetWorker(WorkerID), $"WorkerID = {WorkerID}");
+			
 			Log(LogLevels.Information, $"Creating task (WorkerID={WorkerID})");
 			task = Try(() => taskModule.CreateTask(TaskTypeIDs.Idle, WorkerID, null,null, null, null, null, GetLastETA(WorkerID).AddSeconds(Duration))).OrThrow<PIOInternalErrorException>("Failed to create task");
 
@@ -54,13 +49,7 @@ namespace PIO.ServerLib.Modules
 
 			LogEnter();
 
-			Log(LogLevels.Information, $"Get worker (WorkerID={WorkerID})");
-			worker = Try(() => workerModule.GetWorker(WorkerID)).OrThrow<PIOInternalErrorException>("Failed to get worker");
-			if (worker == null)
-			{
-				Log(LogLevels.Warning, $"Worker doesn't exist (WorkerID={WorkerID})");
-				throw new PIONotFoundException($"Worker doesn't exist (WorkerID={WorkerID})", null, ID, ModuleName, "EndIdleTo");
-			}
+			worker = AssertExists(() => workerModule.GetWorker(WorkerID), $"WorkerID = {WorkerID}");
 
 		}
 

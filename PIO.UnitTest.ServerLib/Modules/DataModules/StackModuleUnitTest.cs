@@ -26,6 +26,12 @@ namespace PIO.UnitTest.ServerLib.Modules
 			result = module.GetStack(1);
 			Assert.IsNotNull(result);
 			Assert.AreEqual(0, result.StackID);
+
+			database = new MockedDatabase<Stack>(false, 1, (t) => new Stack() { StackID = t });
+			module = new StackModule(NullLogger.Instance, database);
+			result = module.GetStack(1,ResourceTypeIDs.Coal);
+			Assert.IsNotNull(result);
+			Assert.AreEqual(0, result.StackID);
 		}
 		[TestMethod]
 		public void ShouldGetStacks()
@@ -57,6 +63,13 @@ namespace PIO.UnitTest.ServerLib.Modules
 			database = new MockedDatabase<Stack>(true,1, (t) => new Stack() { StackID = t });
 			module = new StackModule(logger, database);
 			Assert.ThrowsException<PIODataException>(() => module.GetStack(1));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
+
+
+			logger = new MemoryLogger(new DefaultLogFormatter());
+			database = new MockedDatabase<Stack>(true, 1, (t) => new Stack() { StackID = t });
+			module = new StackModule(logger, database);
+			Assert.ThrowsException<PIODataException>(() => module.GetStack(1,ResourceTypeIDs.Coal));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
 		}
 		[TestMethod]
