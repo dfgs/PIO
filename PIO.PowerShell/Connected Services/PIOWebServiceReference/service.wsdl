@@ -25,6 +25,12 @@
   <wsdl:message name="IPIOService_GetBuilding_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetBuildingResponse" />
   </wsdl:message>
+  <wsdl:message name="IPIOService_GetBuildingAtPos_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetBuildingAtPos" />
+  </wsdl:message>
+  <wsdl:message name="IPIOService_GetBuildingAtPos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetBuildingAtPosResponse" />
+  </wsdl:message>
   <wsdl:message name="IPIOService_GetBuildings_InputMessage">
     <wsdl:part name="parameters" element="tns:GetBuildings" />
   </wsdl:message>
@@ -36,6 +42,12 @@
   </wsdl:message>
   <wsdl:message name="IPIOService_GetFactory_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetFactoryResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPIOService_GetFactoryAtPos_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetFactoryAtPos" />
+  </wsdl:message>
+  <wsdl:message name="IPIOService_GetFactoryAtPos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetFactoryAtPosResponse" />
   </wsdl:message>
   <wsdl:message name="IPIOService_GetFactories_InputMessage">
     <wsdl:part name="parameters" element="tns:GetFactories" />
@@ -224,6 +236,10 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetBuilding" message="tns:IPIOService_GetBuilding_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/GetBuildingResponse" message="tns:IPIOService_GetBuilding_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="GetBuildingAtPos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetBuildingAtPos" message="tns:IPIOService_GetBuildingAtPos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/GetBuildingAtPosResponse" message="tns:IPIOService_GetBuildingAtPos_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="GetBuildings">
       <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetBuildings" message="tns:IPIOService_GetBuildings_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/GetBuildingsResponse" message="tns:IPIOService_GetBuildings_OutputMessage" />
@@ -231,6 +247,10 @@
     <wsdl:operation name="GetFactory">
       <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetFactory" message="tns:IPIOService_GetFactory_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/GetFactoryResponse" message="tns:IPIOService_GetFactory_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetFactoryAtPos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetFactoryAtPos" message="tns:IPIOService_GetFactoryAtPos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/GetFactoryAtPosResponse" message="tns:IPIOService_GetFactoryAtPos_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetFactories">
       <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetFactories" message="tns:IPIOService_GetFactories_InputMessage" />
@@ -378,6 +398,15 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="GetBuildingAtPos">
+      <soap:operation soapAction="http://tempuri.org/IPIOService/GetBuildingAtPos" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="GetBuildings">
       <soap:operation soapAction="http://tempuri.org/IPIOService/GetBuildings" style="document" />
       <wsdl:input>
@@ -389,6 +418,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetFactory">
       <soap:operation soapAction="http://tempuri.org/IPIOService/GetFactory" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFactoryAtPos">
+      <soap:operation soapAction="http://tempuri.org/IPIOService/GetFactoryAtPos" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

@@ -70,10 +70,21 @@ namespace PIO.UnitTest.WebServiceLib
 			PIOService service;
 			Building result;
 
-			service = new PIOService(NullLogger.Instance, null,  new MockedBuildingModule(3, false), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+			service = new PIOService(NullLogger.Instance, null, new MockedBuildingModule(3, false), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 			result = service.GetBuilding(1);
 			Assert.IsNotNull(result);
 			Assert.AreEqual(1, result.BuildingID);
+		}
+		[TestMethod]
+		public void ShouldGetBuildingUsingCoordinate()
+		{
+			PIOService service;
+			Building result;
+
+			service = new PIOService(NullLogger.Instance, null, new MockedBuildingModule(3, false), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+			result = service.GetBuildingAtPos(1,1);
+			Assert.IsNotNull(result);
+			Assert.AreEqual(0, result.BuildingID);
 		}
 		[TestMethod]
 		public void ShouldGetBuildings()
@@ -101,6 +112,18 @@ namespace PIO.UnitTest.WebServiceLib
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(service.ModuleName)));
 		}
 		[TestMethod]
+		public void ShouldNotGetBuildingUsingCoordinateAndLogError()
+		{
+			PIOService service;
+			MemoryLogger logger;
+
+			logger = new MemoryLogger(new DefaultLogFormatter());
+			service = new PIOService(logger, null, new MockedBuildingModule(3, true), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+
+			Assert.ThrowsException<FaultException>(() => service.GetBuildingAtPos(1,1));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(service.ModuleName)));
+		}
+		[TestMethod]
 		public void ShouldNotGetBuildingsAndLogError()
 		{
 			PIOService service;
@@ -120,10 +143,21 @@ namespace PIO.UnitTest.WebServiceLib
 			PIOService service;
 			Factory result;
 
-			service = new PIOService(NullLogger.Instance, null, null, new MockedFactoryModule(3, false),  null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+			service = new PIOService(NullLogger.Instance, null, null, new MockedFactoryModule(3, false), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 			result = service.GetFactory(1);
 			Assert.IsNotNull(result);
 			Assert.AreEqual(1, result.FactoryID);
+		}
+		[TestMethod]
+		public void ShouldGetFactoryUsingCoordinate()
+		{
+			PIOService service;
+			Factory result;
+
+			service = new PIOService(NullLogger.Instance, null, null, new MockedFactoryModule(3, false), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+			result = service.GetFactoryAtPos(1,1);
+			Assert.IsNotNull(result);
+			Assert.AreEqual(0, result.FactoryID);
 		}
 		[TestMethod]
 		public void ShouldGetFactories()
@@ -145,9 +179,21 @@ namespace PIO.UnitTest.WebServiceLib
 			MemoryLogger logger;
 
 			logger = new MemoryLogger(new DefaultLogFormatter());
-			service = new PIOService(logger,null, null, new MockedFactoryModule(3, true),   null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+			service = new PIOService(logger, null, null, new MockedFactoryModule(3, true), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 
 			Assert.ThrowsException<FaultException>(() => service.GetFactory(1));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(service.ModuleName)));
+		}
+		[TestMethod]
+		public void ShouldNotGetFactoryUsingCoordindateAndLogError()
+		{
+			PIOService service;
+			MemoryLogger logger;
+
+			logger = new MemoryLogger(new DefaultLogFormatter());
+			service = new PIOService(logger, null, null, new MockedFactoryModule(3, true), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+
+			Assert.ThrowsException<FaultException>(() => service.GetFactoryAtPos(1,1));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(service.ModuleName)));
 		}
 		[TestMethod]

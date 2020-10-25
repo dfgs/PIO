@@ -108,6 +108,11 @@ namespace PIO.WebServiceLib
 			LogEnter();
 			return Try(() => buildingModule.GetBuilding(BuildingID)).OrThrow(GenerateFaultException);
 		}
+		public Building GetBuildingAtPos(int X,int Y)
+		{
+			LogEnter();
+			return Try(() => buildingModule.GetBuilding(X,Y)).OrThrow(GenerateFaultException);
+		}
 		public Building[] GetBuildings(int PlanetID)
 		{
 			LogEnter();
@@ -117,6 +122,11 @@ namespace PIO.WebServiceLib
 		{
 			LogEnter();
 			return Try(() => factoryModule.GetFactory(FactoryID)).OrThrow(GenerateFaultException);
+		}
+		public Factory GetFactoryAtPos(int X, int Y)
+		{
+			LogEnter();
+			return Try(() => factoryModule.GetFactory(X,Y)).OrThrow(GenerateFaultException);
 		}
 		public Factory[] GetFactories(int PlanetID)
 		{

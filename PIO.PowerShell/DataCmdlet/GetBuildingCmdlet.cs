@@ -11,21 +11,38 @@ using System.Threading.Tasks;
 
 namespace PIO.PowerShell
 {
-	[Cmdlet(VerbsCommon.Get, "Building")]
+	[Cmdlet(VerbsCommon.Get, "Building",DefaultParameterSetName ="FromID")]
 	[OutputType(typeof(Building))]
 	public class GetBuildingCmdlet : PIOCmdLet
 	{
-		[Parameter(Position = 0, ValueFromPipeline =true,Mandatory =true)]
+		[Parameter(Position = 0, ValueFromPipeline =true,Mandatory =true,ParameterSetName ="FromID")]
 		public int BuildingID { get; set; }
 
 
-		
+		[Parameter(Position = 0, ValueFromPipeline = true, Mandatory = true, ParameterSetName = "FromPosition")]
+		public int X { get; set; }
+		[Parameter(Position = 1, ValueFromPipeline = true, Mandatory = true, ParameterSetName = "FromPosition")]
+		public int Y { get; set; }
+
+
 
 		protected override void ProcessRecord()
 		{
 			Building result;
+			
+			switch (this.ParameterSetName)
+			{
+				case "FromID":
+					result = Try(() => client.GetBuilding(BuildingID));
+					break;
+				case "FromPosition":
+					result = Try(() => client.GetBuildingAtPos(X,Y));
+					break;
+				default:
+					throw new ArgumentException("Invalid parameter set.");
+			}
 
-			result = Try(() => client.GetBuilding(BuildingID));
+			
 
 			WriteObject(result);
 		}

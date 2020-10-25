@@ -17,6 +17,10 @@ Describe 'Test Building module'{
             $result = Get-Building 1
             $result | Should -Not -BeNullOrEmpty
         }
+        It 'Given X and Y, it returns 1 Building' {
+            $result = Get-Building -X 0 -Y 0
+            $result | Should -Not -BeNullOrEmpty
+        }
         It 'Given incorrect BuildingID, it returns 0 Building' {
             $result = Get-Building 999
             $result | Should -BeNullOrEmpty

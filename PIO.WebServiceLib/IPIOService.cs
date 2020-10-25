@@ -20,9 +20,13 @@ namespace PIO.WebServiceLib
 		[OperationContract]
 		Building GetBuilding(int BuildingID);
 		[OperationContract]
+		Building GetBuildingAtPos(int X, int Y);
+		[OperationContract]
 		Building[] GetBuildings(int PlanetID);
 		[OperationContract]
 		Factory GetFactory(int FactoryID);
+		[OperationContract]
+		Factory GetFactoryAtPos(int X,int Y);
 		[OperationContract]
 		Factory[] GetFactories(int PlanetID);
 		[OperationContract]

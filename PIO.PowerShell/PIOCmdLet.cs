@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace PIO.PowerShell
 {
-	public class PIOCmdLet:Cmdlet
+	public class PIOCmdLet:PSCmdlet
 	{
 		[Parameter(ValueFromPipeline = false, Mandatory = false)]
 		public string Server { get; set; } = "127.0.0.1";

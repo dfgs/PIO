@@ -11,21 +11,34 @@ using System.Threading.Tasks;
 
 namespace PIO.PowerShell
 {
-	[Cmdlet(VerbsCommon.Get, "Factory")]
+	[Cmdlet(VerbsCommon.Get, "Factory", DefaultParameterSetName = "FromID")]
 	[OutputType(typeof(Factory))]
 	public class GetFactoryCmdlet : PIOCmdLet
 	{
-		[Parameter(Position = 0, ValueFromPipeline =true,Mandatory =true)]
+		[Parameter(Position = 0, ValueFromPipeline =true,Mandatory =true, ParameterSetName = "FromID")]
 		public int FactoryID { get; set; }
 
 
-		
+		[Parameter(Position = 0, ValueFromPipeline = true, Mandatory = true, ParameterSetName = "FromPosition")]
+		public int X { get; set; }
+		[Parameter(Position = 1, ValueFromPipeline = true, Mandatory = true, ParameterSetName = "FromPosition")]
+		public int Y { get; set; }
 
 		protected override void ProcessRecord()
 		{
 			Factory result;
 
-			result = Try(() => client.GetFactory(FactoryID));
+			switch (this.ParameterSetName)
+			{
+				case "FromID":
+					result = Try(() => client.GetFactory(FactoryID));
+					break;
+				case "FromPosition":
+					result = Try(() => client.GetFactoryAtPos(X,Y));
+					break;
+				default:
+					throw new ArgumentException("Invalid parameter set.");
+			}
 
 			WriteObject(result);
 		}
