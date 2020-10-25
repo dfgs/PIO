@@ -28,7 +28,7 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying FactoryType table (FactoryTypeID={FactoryTypeID})");
-			query = new Select(FactoryTypeTable.FactoryTypeID, FactoryTypeTable.Name,FactoryTypeTable.HealthPoints).From(PIODB.FactoryTypeTable).Where(FactoryTypeTable.FactoryTypeID.IsEqualTo(FactoryTypeID));
+			query = new Select(FactoryTypeTable.FactoryTypeID, FactoryTypeTable.Name,FactoryTypeTable.HealthPoints,FactoryTypeTable.BuildSteps).From(PIODB.FactoryTypeTable).Where(FactoryTypeTable.FactoryTypeID.IsEqualTo(FactoryTypeID));
 			return TrySelectFirst<FactoryTypeTable,FactoryType>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
@@ -38,7 +38,7 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying FactoryType table");
-			query = new Select(FactoryTypeTable.FactoryTypeID, FactoryTypeTable.Name, FactoryTypeTable.HealthPoints).From(PIODB.FactoryTypeTable);
+			query = new Select(FactoryTypeTable.FactoryTypeID, FactoryTypeTable.Name, FactoryTypeTable.HealthPoints, FactoryTypeTable.BuildSteps).From(PIODB.FactoryTypeTable);
 			return TrySelectMany<FactoryTypeTable,FactoryType>(query).OrThrow<PIODataException>("Failed to query");
 		}
 

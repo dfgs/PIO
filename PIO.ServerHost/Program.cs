@@ -91,14 +91,14 @@ namespace PIO.ServerHost
 			taskModule = new TaskModule(logger, database);
 
 
-			factoryBuilderModule = new FactoryBuilderModule(logger, factoryModule, factoryTypeModule);
+			factoryBuilderModule = new FactoryBuilderModule(logger,taskModule,workerModule,planetModule, buildingModule, factoryModule, factoryTypeModule);
 			idlerModule = new IdlerModule(logger,taskModule, workerModule);
 			resourceCheckerModule = new ResourceCheckerModule(logger, factoryModule, stackModule, ingredientModule);
-			producerModule = new ProducerModule(logger, taskModule, factoryModule, workerModule, stackModule, ingredientModule, productModule);
-			moverModule = new MoverModule(logger, taskModule, factoryModule, workerModule);
-			carrierModule = new CarrierModule(logger, taskModule, factoryModule, workerModule, stackModule);
+			producerModule = new ProducerModule(logger, taskModule, workerModule, factoryModule,  stackModule, ingredientModule, productModule);
+			moverModule = new MoverModule(logger, taskModule, workerModule, factoryModule);
+			carrierModule = new CarrierModule(logger, taskModule, workerModule, factoryModule, stackModule);
 
-			schedulerModule = new SchedulerModule(logger, taskModule, idlerModule, producerModule,moverModule,carrierModule);
+			schedulerModule = new SchedulerModule(logger, taskModule, idlerModule, producerModule,moverModule,carrierModule, factoryBuilderModule);
 			schedulerModule.Start();
 			
 

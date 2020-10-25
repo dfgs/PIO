@@ -19,16 +19,15 @@ namespace PIO.ServerLib.Modules
 	{
 
 		private IFactoryModule factoryModule;
-		private IWorkerModule workerModule;
 		private IStackModule stackModule;
 		private IIngredientModule ingredientModule;
 		private IProductModule productModule;
 
 
 
-		public ProducerModule(ILogger Logger, ITaskModule TaskModule,IFactoryModule FactoryModule,IWorkerModule WorkerModule, IStackModule StackModule, IIngredientModule IngredientModule, IProductModule ProductModule) : base(Logger,TaskModule)
+		public ProducerModule(ILogger Logger, ITaskModule TaskModule, IWorkerModule WorkerModule, IFactoryModule FactoryModule, IStackModule StackModule, IIngredientModule IngredientModule, IProductModule ProductModule) : base(Logger,TaskModule,WorkerModule)
 		{
-			 this.factoryModule = FactoryModule; this.workerModule = WorkerModule; this.stackModule = StackModule; this.ingredientModule = IngredientModule;this.productModule = ProductModule; 
+			 this.factoryModule = FactoryModule;  this.stackModule = StackModule; this.ingredientModule = IngredientModule;this.productModule = ProductModule; 
 		}
 
 
@@ -101,7 +100,7 @@ namespace PIO.ServerLib.Modules
 			
 			
 			Log(LogLevels.Information, $"Creating task (WorkerID={WorkerID})");
-			task=Try(() => taskModule.InsertTask(TaskTypeIDs.Produce, WorkerID, null, null,GetLastETA(WorkerID).AddSeconds(products[0].Duration))).OrThrow<PIOInternalErrorException>("Failed to create task");
+			task=Try(() => taskModule.CreateTask(TaskTypeIDs.Produce, WorkerID, null, null, null, null, GetLastETA(WorkerID).AddSeconds(products[0].Duration))).OrThrow<PIOInternalErrorException>("Failed to create task");
 
 			OnTaskCreated(task);
 

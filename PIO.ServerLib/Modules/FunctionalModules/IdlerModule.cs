@@ -18,11 +18,10 @@ namespace PIO.ServerLib.Modules
 	public class IdlerModule : TaskGeneratorModule, IIdlerModule
 	{
 
-		private IWorkerModule workerModule;
 
 
 
-		public IdlerModule(ILogger Logger, ITaskModule TaskModule, IWorkerModule WorkerModule) : base(Logger,TaskModule)
+		public IdlerModule(ILogger Logger, ITaskModule TaskModule, IWorkerModule WorkerModule) : base(Logger,TaskModule,WorkerModule)
 		{
 			this.workerModule = WorkerModule;
 		}
@@ -42,7 +41,7 @@ namespace PIO.ServerLib.Modules
 			}
 
 			Log(LogLevels.Information, $"Creating task (WorkerID={WorkerID})");
-			task = Try(() => taskModule.InsertTask(TaskTypeIDs.Idle, WorkerID,null, null,GetLastETA(WorkerID).AddSeconds(Duration))).OrThrow<PIOInternalErrorException>("Failed to create task");
+			task = Try(() => taskModule.CreateTask(TaskTypeIDs.Idle, WorkerID, null, null, null, null, GetLastETA(WorkerID).AddSeconds(Duration))).OrThrow<PIOInternalErrorException>("Failed to create task");
 
 			OnTaskCreated(task);
 

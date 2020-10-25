@@ -13,6 +13,8 @@ namespace PIO.Models.Modules
 		Building GetBuilding(int BuildingID);
 		Building[] GetBuildings(int PlanetID);
 
+		Building CreateBuilding(int PlanetID,BuildingTypeIDs BuildingTypeID, int RemainingBuildSteps);
+
 		//void SetHealthPoints(int BuildingID,int HealthPoints);
 		/*int CreateBuilding(int PlanetID,int BuildingTypeID,int StateID);
 		void SetState(int BuildingID, int StateID);*/

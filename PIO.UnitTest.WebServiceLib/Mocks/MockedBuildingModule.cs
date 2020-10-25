@@ -15,6 +15,11 @@ namespace PIO.UnitTest.WebServiceLib.Mocks
 		{
 		}
 
+		public Building CreateBuilding(int PlanetID, BuildingTypeIDs BuildingTypeID, int RemainingBuildingSteps)
+		{
+			throw new NotImplementedException();
+		}
+
 		public Building GetBuilding(int BuildingID)
 		{
 			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");

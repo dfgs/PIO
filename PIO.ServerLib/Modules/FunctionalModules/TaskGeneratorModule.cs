@@ -14,10 +14,10 @@ namespace PIO.ServerLib.Modules
 	{
 		public event TaskCreatedHandler TaskCreated;
 		protected ITaskModule taskModule;
-
-		protected TaskGeneratorModule(ILogger Logger,ITaskModule TaskModule) : base(Logger)
+		protected IWorkerModule workerModule;
+		protected TaskGeneratorModule(ILogger Logger,ITaskModule TaskModule,IWorkerModule WorkerModule) : base(Logger)
 		{
-			this.taskModule = TaskModule;
+			this.taskModule = TaskModule;this.workerModule = WorkerModule;
 		}
 
 		protected DateTime GetLastETA(int WorkerID)

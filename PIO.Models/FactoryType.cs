@@ -17,6 +17,8 @@ namespace PIO.Models
 		public string Name { get; set; }
 		[DataMember]
 		public int HealthPoints { get; set; }
+		[DataMember]
+		public int BuildSteps { get; set; }
 
 	}
 }

@@ -14,5 +14,6 @@ namespace PIO.ServerLib.Tables
 		public static readonly Column<FactoryTypeIDs> FactoryTypeID = new Column<FactoryTypeIDs>() { IsPrimaryKey = true };
 		public new static readonly Column<string> Name = new Column<string>();
 		public static readonly Column<int> HealthPoints = new Column<int>();
+		public static readonly Column<int> BuildSteps = new Column<int>();
 	}
 }

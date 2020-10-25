@@ -20,9 +20,13 @@ namespace PIO.Models
 		[DataMember]
 		public DateTime ETA { get; set; }
 		[DataMember]
+		public int? PlanetID { get; set; }
+		[DataMember]
 		public int? TargetFactoryID { get; set; }
 		[DataMember]
 		public ResourceTypeIDs? ResourceTypeID { get; set; }
+		[DataMember]
+		public FactoryTypeIDs? FactoryTypeID { get; set; }
 
 
 	}

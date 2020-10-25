@@ -73,6 +73,42 @@ namespace PIO.UnitTest.ServerLib.Modules
 			Assert.ThrowsException<PIODataException>(() => module.GetBuildings(1));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
 		}
+
+
+		[TestMethod]
+		public void ShouldCreateBuilding()
+		{
+			MockedDatabase<Building> database;
+			BuildingModule module;
+			Building result;
+
+			database = new MockedDatabase<Building>(false, 1, (t) => new Building() { BuildingID = t });
+			module = new BuildingModule(NullLogger.Instance, database);
+			result = module.CreateBuilding(1, BuildingTypeIDs.Factory,5);
+			Assert.IsNotNull(result);
+			Assert.AreEqual(1, result.PlanetID);
+			Assert.AreEqual(BuildingTypeIDs.Factory, result.BuildingTypeID);
+			Assert.AreEqual(5, result.RemainingBuildSteps);
+			Assert.AreEqual(0, result.HealthPoints);
+
+			Assert.AreEqual(1, database.InsertedCount);
+		}
+
+		[TestMethod]
+		public void ShouldNotCreateBuildingAndLogError()
+		{
+			MockedDatabase<Building> database;
+			BuildingModule module;
+			MemoryLogger logger;
+
+
+			logger = new MemoryLogger(new DefaultLogFormatter());
+			database = new MockedDatabase<Building>(true, 1, (t) => new Building() { BuildingID = t });
+			module = new BuildingModule(logger, database);
+			Assert.ThrowsException<PIODataException>(() => module.CreateBuilding(1, BuildingTypeIDs.Factory, 5));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
+		}
+
 		/*[TestMethod]
 		public void ShouldSetHealthPoints()
 		{

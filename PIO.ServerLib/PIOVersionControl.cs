@@ -34,15 +34,15 @@ namespace PIO.ServerLib
 				case 1:
 					yield return new CreateTable(PIODB.PlanetTable, PlanetTable.PlanetID, PlanetTable.Name);
 					yield return new CreateTable(PIODB.ResourceTypeTable, ResourceTypeTable.ResourceTypeID, ResourceTypeTable.Name);
-					yield return new CreateTable(PIODB.FactoryTypeTable, FactoryTypeTable.FactoryTypeID, FactoryTypeTable.Name, FactoryTypeTable.HealthPoints);
+					yield return new CreateTable(PIODB.FactoryTypeTable, FactoryTypeTable.FactoryTypeID, FactoryTypeTable.Name, FactoryTypeTable.HealthPoints,FactoryTypeTable.BuildSteps);
 					yield return new CreateTable(PIODB.BuildingTypeTable, BuildingTypeTable.BuildingTypeID, BuildingTypeTable.Name);
 					yield return new CreateTable(PIODB.TaskTypeTable, TaskTypeTable.TaskTypeID, TaskTypeTable.Name);
-					yield return new CreateTable(PIODB.BuildingTable, BuildingTable.BuildingID, BuildingTable.PlanetID, BuildingTable.BuildingTypeID, BuildingTable.HealthPoints);
+					yield return new CreateTable(PIODB.BuildingTable, BuildingTable.BuildingID, BuildingTable.PlanetID, BuildingTable.BuildingTypeID, BuildingTable.HealthPoints,BuildingTable.RemainingBuildSteps);
 					yield return new CreateTable(PIODB.FactoryTable, FactoryTable.FactoryID, FactoryTable.BuildingID, FactoryTable.FactoryTypeID);
 					yield return new CreateTable(PIODB.WorkerTable, WorkerTable.WorkerID, WorkerTable.FactoryID);
 					yield return new CreateTable(PIODB.StackTable, StackTable.StackID, StackTable.FactoryID, StackTable.ResourceTypeID, StackTable.Quantity);
 					yield return new CreateTable(PIODB.MaterialTable, MaterialTable.MaterialID, MaterialTable.FactoryTypeID, MaterialTable.ResourceTypeID, MaterialTable.Quantity);
-					yield return new CreateTable(PIODB.TaskTable, TaskTable.TaskID,TaskTable.TaskTypeID, TaskTable.WorkerID, TaskTable.TargetFactoryID,TaskTable.ResourceTypeID,  TaskTable.ETA);
+					yield return new CreateTable(PIODB.TaskTable, TaskTable.TaskID,TaskTable.TaskTypeID, TaskTable.WorkerID,TaskTable.PlanetID, TaskTable.TargetFactoryID,TaskTable.ResourceTypeID,TaskTable.FactoryTypeID,  TaskTable.ETA);
 
 					yield return new CreateTable(PIODB.IngredientTable, IngredientTable.IngredientID, IngredientTable.FactoryTypeID, IngredientTable.ResourceTypeID, IngredientTable.Quantity);
 					yield return new CreateTable(PIODB.ProductTable, ProductTable.ProductID, ProductTable.FactoryTypeID, ProductTable.ResourceTypeID, ProductTable.Quantity, ProductTable.Duration);
@@ -61,8 +61,10 @@ namespace PIO.ServerLib
 					yield return new CreateRelation<TaskTypeIDs>(PIODB.TaskTable, TaskTypeTable.TaskTypeID, TaskTable.TaskTypeID);
 
 					yield return new CreateRelation<int>(PIODB.TaskTable, WorkerTable.WorkerID, TaskTable.WorkerID);
+					yield return new CreateRelation<int>(PIODB.TaskTable, PlanetTable.PlanetID, TaskTable.PlanetID);
 					yield return new CreateRelation<int>(PIODB.TaskTable, FactoryTable.FactoryID, TaskTable.TargetFactoryID);
 					yield return new CreateRelation<ResourceTypeIDs>(PIODB.TaskTable, ResourceTypeTable.ResourceTypeID, TaskTable.ResourceTypeID);
+					yield return new CreateRelation<FactoryTypeIDs>(PIODB.TaskTable, FactoryTypeTable.FactoryTypeID, TaskTable.FactoryTypeID);
 
 					yield return new CreateRelation<FactoryTypeIDs>(PIODB.IngredientTable, FactoryTypeTable.FactoryTypeID, IngredientTable.FactoryTypeID);
 					yield return new CreateRelation<ResourceTypeIDs>(PIODB.IngredientTable, ResourceTypeTable.ResourceTypeID, IngredientTable.ResourceTypeID);
@@ -85,9 +87,9 @@ namespace PIO.ServerLib
 					#endregion
 
 					#region create FactoryType
-					yield return new Insert().Into(PIODB.FactoryTypeTable).Set(FactoryTypeTable.FactoryTypeID, FactoryTypeIDs.Forest).Set(FactoryTypeTable.Name, "Forest").Set(FactoryTypeTable.HealthPoints, 999);
-					yield return new Insert().Into(PIODB.FactoryTypeTable).Set(FactoryTypeTable.FactoryTypeID, FactoryTypeIDs.Stockpile).Set(FactoryTypeTable.Name, "Stockpile").Set(FactoryTypeTable.HealthPoints, 50);
-					yield return new Insert().Into(PIODB.FactoryTypeTable).Set(FactoryTypeTable.FactoryTypeID, FactoryTypeIDs.Sawmill).Set(FactoryTypeTable.Name, "Sawmill").Set(FactoryTypeTable.HealthPoints, 5);
+					yield return new Insert().Into(PIODB.FactoryTypeTable).Set(FactoryTypeTable.FactoryTypeID, FactoryTypeIDs.Forest).Set(FactoryTypeTable.Name, "Forest").Set(FactoryTypeTable.HealthPoints, 10).Set(FactoryTypeTable.BuildSteps,10);
+					yield return new Insert().Into(PIODB.FactoryTypeTable).Set(FactoryTypeTable.FactoryTypeID, FactoryTypeIDs.Stockpile).Set(FactoryTypeTable.Name, "Stockpile").Set(FactoryTypeTable.HealthPoints, 10).Set(FactoryTypeTable.BuildSteps, 10);
+					yield return new Insert().Into(PIODB.FactoryTypeTable).Set(FactoryTypeTable.FactoryTypeID, FactoryTypeIDs.Sawmill).Set(FactoryTypeTable.Name, "Sawmill").Set(FactoryTypeTable.HealthPoints, 10).Set(FactoryTypeTable.BuildSteps, 10);
 					#endregion
 
 					#region create TaskType
@@ -95,6 +97,10 @@ namespace PIO.ServerLib
 					yield return new Insert().Into(PIODB.TaskTypeTable).Set(TaskTypeTable.TaskTypeID, TaskTypeIDs.Produce).Set(TaskTypeTable.Name, "Produce");
 					yield return new Insert().Into(PIODB.TaskTypeTable).Set(TaskTypeTable.TaskTypeID, TaskTypeIDs.MoveTo).Set(TaskTypeTable.Name, "MoveTo");
 					yield return new Insert().Into(PIODB.TaskTypeTable).Set(TaskTypeTable.TaskTypeID, TaskTypeIDs.CarryTo).Set(TaskTypeTable.Name, "CarryTo");
+					#endregion
+
+					#region create Material
+					yield return new Insert().Into(PIODB.MaterialTable).Set(MaterialTable.FactoryTypeID, FactoryTypeIDs.Sawmill).Set(MaterialTable.ResourceTypeID, ResourceTypeIDs.Wood).Set(MaterialTable.Quantity, 1);
 					#endregion
 
 					#region create Ingredient
@@ -113,7 +119,7 @@ namespace PIO.ServerLib
 					#endregion
 
 					#region create startup Factories
-					yield return new Insert().Into(PIODB.BuildingTable).Set(BuildingTable.PlanetID, planetID).Set(BuildingTable.BuildingTypeID,BuildingTypeIDs.Factory).Set(BuildingTable.HealthPoints, 999);
+					yield return new Insert().Into(PIODB.BuildingTable).Set(BuildingTable.PlanetID, planetID).Set(BuildingTable.BuildingTypeID,BuildingTypeIDs.Factory).Set(BuildingTable.HealthPoints, 10).Set(BuildingTable.RemainingBuildSteps,0);
 					yield return new SelectIdentity((result) => buildingID = Convert.ToInt32(result));
 					yield return new Insert().Into(PIODB.FactoryTable).Set(FactoryTable.BuildingID, buildingID).Set(FactoryTable.FactoryTypeID, FactoryTypeIDs.Forest);
 					yield return new SelectIdentity((result) => factoryID = Convert.ToInt32(result));
@@ -121,11 +127,11 @@ namespace PIO.ServerLib
 					yield return new Insert().Into(PIODB.StackTable).Set(StackTable.FactoryID, factoryID).Set(StackTable.ResourceTypeID, (int)ResourceTypeIDs.Tree).Set(StackTable.Quantity, 100);
 					#endregion
 
-					yield return new Insert().Into(PIODB.BuildingTable).Set(BuildingTable.PlanetID, planetID).Set(BuildingTable.BuildingTypeID, BuildingTypeIDs.Factory).Set(BuildingTable.HealthPoints, 999);
+					yield return new Insert().Into(PIODB.BuildingTable).Set(BuildingTable.PlanetID, planetID).Set(BuildingTable.BuildingTypeID, BuildingTypeIDs.Factory).Set(BuildingTable.HealthPoints, 10).Set(BuildingTable.RemainingBuildSteps, 0);
 					yield return new SelectIdentity((result) => buildingID = Convert.ToInt32(result));
 					yield return new Insert().Into(PIODB.FactoryTable).Set(FactoryTable.BuildingID, buildingID).Set(FactoryTable.FactoryTypeID, FactoryTypeIDs.Stockpile);
 
-					yield return new Insert().Into(PIODB.BuildingTable).Set(BuildingTable.PlanetID, planetID).Set(BuildingTable.BuildingTypeID, BuildingTypeIDs.Factory).Set(BuildingTable.HealthPoints, 999);
+					yield return new Insert().Into(PIODB.BuildingTable).Set(BuildingTable.PlanetID, planetID).Set(BuildingTable.BuildingTypeID, BuildingTypeIDs.Factory).Set(BuildingTable.HealthPoints, 10).Set(BuildingTable.RemainingBuildSteps, 0);
 					yield return new SelectIdentity((result) => buildingID = Convert.ToInt32(result));
 					yield return new Insert().Into(PIODB.FactoryTable).Set(FactoryTable.BuildingID, buildingID).Set(FactoryTable.FactoryTypeID, FactoryTypeIDs.Sawmill);
 

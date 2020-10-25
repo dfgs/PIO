@@ -8,9 +8,11 @@ using System.Threading.Tasks;
 
 namespace PIO.Models.Modules
 {
-	public interface IFactoryBuilderModule : IFunctionalModule
+	public interface IFactoryBuilderModule : ITaskGeneratorModule
 	{
 
+		Task BeginCreateBuilding(int WorkerID, int PlanetID, FactoryTypeIDs FactoryTypeID);
+		void EndCreateBuilding(int PlanetID, FactoryTypeIDs FactoryTypeID);
 		void Build(int FactoryID);
 	}
 }

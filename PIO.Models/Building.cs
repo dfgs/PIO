@@ -19,6 +19,8 @@ namespace PIO.Models
 		public BuildingTypeIDs BuildingTypeID { get; set; }
 		[DataMember]
 		public int HealthPoints { get; set; }
+		[DataMember]
+		public int RemainingBuildSteps { get; set; }
 
 
 	}

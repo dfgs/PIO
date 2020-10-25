@@ -30,7 +30,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 1, FactoryTypeID = FactoryTypeIDs.Sawmill, BuildingID = 3,  }, new Factory() { FactoryID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill, BuildingID = 3,  });
 			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, FactoryID = 1 });
 			taskModule = new MockedTaskModule(false);
-			module = new MoverModule(NullLogger.Instance, taskModule, factoryModule, workerModule);
+			module = new MoverModule(NullLogger.Instance, taskModule, workerModule, factoryModule);
 			schedulerModule = new MockedSchedulerModule(false, module);
 
 			result = module.BeginMoveTo(1, 2);
@@ -52,7 +52,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 1, FactoryTypeID = FactoryTypeIDs.Sawmill, BuildingID = 3,  }, new Factory() { FactoryID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill, BuildingID = 3,  });
 			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, FactoryID = 1 });
 			taskModule = new MockedTaskModule(false);
-			module = new MoverModule(NullLogger.Instance, taskModule, factoryModule, workerModule);
+			module = new MoverModule(NullLogger.Instance, taskModule, workerModule, factoryModule);
 			schedulerModule = new MockedSchedulerModule(false, module);
 
 			result = module.BeginMoveTo(1, 2);
@@ -84,7 +84,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			taskModule = new MockedTaskModule(false);
 
 			logger = new MemoryLogger(new DefaultLogFormatter());
-			module = new MoverModule(logger, taskModule, factoryModule, workerModule);
+			module = new MoverModule(logger, taskModule, workerModule, factoryModule);
 
 			Assert.ThrowsException<PIONotFoundException>(() => module.BeginMoveTo(1, 3));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Warning") && item.Contains(module.ModuleName)));
@@ -103,7 +103,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			taskModule = new MockedTaskModule(false);
 
 			logger = new MemoryLogger(new DefaultLogFormatter());
-			module = new MoverModule(logger, taskModule, factoryModule, workerModule);
+			module = new MoverModule(logger, taskModule, workerModule, factoryModule);
 
 			Assert.ThrowsException<PIONotFoundException>(() => module.BeginMoveTo(2, 2));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Warning") && item.Contains(module.ModuleName)));
@@ -121,7 +121,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, FactoryID = 1 });
 			taskModule = new MockedTaskModule(true);
 			logger = new MemoryLogger(new DefaultLogFormatter());
-			module = new MoverModule(logger, taskModule, factoryModule, workerModule);
+			module = new MoverModule(logger, taskModule, workerModule, factoryModule);
 			Assert.ThrowsException<PIOInternalErrorException>(() => module.BeginMoveTo(1, 2));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
 
@@ -129,7 +129,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, FactoryID = 1 });
 			taskModule = new MockedTaskModule(false);
 			logger = new MemoryLogger(new DefaultLogFormatter());
-			module = new MoverModule(logger, taskModule, factoryModule, workerModule);
+			module = new MoverModule(logger, taskModule, workerModule, factoryModule);
 			Assert.ThrowsException<PIOInternalErrorException>(() => module.BeginMoveTo(1, 2));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
 
@@ -137,7 +137,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			workerModule = new MockedWorkerModule(true, new Worker() { WorkerID = 1, FactoryID = 1 });
 			taskModule = new MockedTaskModule(false);
 			logger = new MemoryLogger(new DefaultLogFormatter());
-			module = new MoverModule(logger, taskModule, factoryModule, workerModule);
+			module = new MoverModule(logger, taskModule, workerModule, factoryModule);
 			Assert.ThrowsException<PIOInternalErrorException>(() => module.BeginMoveTo(1, 2));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
 
@@ -156,7 +156,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 1, FactoryTypeID = FactoryTypeIDs.Sawmill, BuildingID = 3,  }, new Factory() { FactoryID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill, BuildingID = 3,  });
 			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, FactoryID = 1 });
 			taskModule = new MockedTaskModule(false);
-			module = new MoverModule(NullLogger.Instance, taskModule, factoryModule, workerModule);
+			module = new MoverModule(NullLogger.Instance, taskModule, workerModule, factoryModule);
 
 			module.EndMoveTo(1, 2);
 			Assert.AreEqual(2, workerModule.GetWorker(1).FactoryID);
@@ -175,7 +175,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 1, FactoryTypeID = FactoryTypeIDs.Sawmill, BuildingID = 3,  }, new Factory() { FactoryID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill, BuildingID = 3,  });
 			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, FactoryID = 1 });
 			taskModule = new MockedTaskModule(false);
-			module = new MoverModule(logger, taskModule, factoryModule, workerModule);
+			module = new MoverModule(logger, taskModule, workerModule, factoryModule);
 
 			Assert.ThrowsException<PIONotFoundException>(() => module.BeginMoveTo(2, 2));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Warning") && item.Contains(module.ModuleName)));
@@ -194,7 +194,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 1, FactoryTypeID = FactoryTypeIDs.Sawmill, BuildingID = 3,  }, new Factory() { FactoryID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill, BuildingID = 3,  });
 			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, FactoryID = 1 });
 			taskModule = new MockedTaskModule(false);
-			module = new MoverModule(logger, taskModule, factoryModule, workerModule);
+			module = new MoverModule(logger, taskModule, workerModule, factoryModule);
 
 			Assert.ThrowsException<PIONotFoundException>(() => module.BeginMoveTo(1, 3));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Warning") && item.Contains(module.ModuleName)));
@@ -213,7 +213,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			factoryModule = new MockedFactoryModule(true, new Factory() { FactoryID = 1, FactoryTypeID = FactoryTypeIDs.Sawmill, BuildingID = 3  }, new Factory() { FactoryID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill, BuildingID = 3,  });
 			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, FactoryID = 1 });
 			taskModule = new MockedTaskModule(false);
-			module = new MoverModule(logger, taskModule, factoryModule, workerModule);
+			module = new MoverModule(logger, taskModule, workerModule, factoryModule);
 
 			Assert.ThrowsException<PIOInternalErrorException>(() => module.BeginMoveTo(1, 2));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
@@ -223,7 +223,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 1, FactoryTypeID = FactoryTypeIDs.Sawmill, BuildingID = 3  }, new Factory() { FactoryID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill, BuildingID = 3,  });
 			workerModule = new MockedWorkerModule(true, new Worker() { WorkerID = 1, FactoryID = 1 });
 			taskModule = new MockedTaskModule(false);
-			module = new MoverModule(logger, taskModule, factoryModule, workerModule);
+			module = new MoverModule(logger, taskModule, workerModule, factoryModule);
 
 			Assert.ThrowsException<PIOInternalErrorException>(() => module.BeginMoveTo(1, 2));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));

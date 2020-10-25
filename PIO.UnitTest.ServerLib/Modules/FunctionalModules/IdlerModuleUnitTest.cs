@@ -57,8 +57,8 @@ namespace PIO.UnitTest.ServerLib.Modules
 			Assert.AreEqual(1, schedulerModule.Count);
 			
 			result2 = module.BeginIdle(1, 10);
-			Assert.IsNotNull(result);
-			Assert.AreEqual(1, result.WorkerID);
+			Assert.IsNotNull(result2);
+			Assert.AreEqual(1, result2.WorkerID);
 			Assert.AreEqual(2, schedulerModule.Count);
 
 			Assert.IsTrue((result2.ETA - result.ETA).TotalSeconds >= 4);

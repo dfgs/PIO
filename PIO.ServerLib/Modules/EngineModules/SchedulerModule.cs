@@ -31,15 +31,18 @@ namespace PIO.ServerLib.Modules
 		private IProducerModule producerModule;
 		private IMoverModule moverModule;
 		private ICarrierModule carrierModule;
+		private IFactoryBuilderModule factoryBuilderModule;
 
-		public SchedulerModule(ILogger Logger,ITaskModule TaskModule, IIdlerModule IdlerModule, IProducerModule ProducerModule,IMoverModule MoverModule, ICarrierModule CarrierModule) : base(Logger, ThreadPriority.Normal)
+		public SchedulerModule(ILogger Logger,ITaskModule TaskModule, IIdlerModule IdlerModule, IProducerModule ProducerModule,IMoverModule MoverModule, ICarrierModule CarrierModule, IFactoryBuilderModule FactoryBuilderModule) : base(Logger, ThreadPriority.Normal)
 		{
 			this.taskModule = TaskModule;this.idlerModule = IdlerModule; this.producerModule = ProducerModule;this.moverModule = MoverModule;this.carrierModule = CarrierModule;
+			this.factoryBuilderModule = FactoryBuilderModule;
 
 			idlerModule.TaskCreated += TaskGeneratorModule_TaskCreated;
 			producerModule.TaskCreated += TaskGeneratorModule_TaskCreated;
 			moverModule.TaskCreated += TaskGeneratorModule_TaskCreated;
 			carrierModule.TaskCreated += TaskGeneratorModule_TaskCreated;
+			factoryBuilderModule.TaskCreated += TaskGeneratorModule_TaskCreated;
 		}
 
 		private void TaskGeneratorModule_TaskCreated(ITaskGeneratorModule Module, Task Task)
@@ -91,7 +94,10 @@ namespace PIO.ServerLib.Modules
 					Try(() => moverModule.EndMoveTo(Task.WorkerID, Task.TargetFactoryID.Value)).OrAlert($"Failed to terminate task (TaskID={Task.TaskID})");
 					break;
 				case TaskTypeIDs.CarryTo:
-					Try(() => carrierModule.EndCarryTo(Task.WorkerID, Task.TargetFactoryID.Value,Task.ResourceTypeID.Value)).OrAlert($"Failed to terminate task (TaskID={Task.TaskID})");
+					Try(() => carrierModule.EndCarryTo(Task.WorkerID, Task.TargetFactoryID.Value, Task.ResourceTypeID.Value)).OrAlert($"Failed to terminate task (TaskID={Task.TaskID})");
+					break;
+				case TaskTypeIDs.CreateBuilding:
+					Try(() => factoryBuilderModule.EndCreateBuilding(Task.PlanetID.Value,Task.FactoryTypeID.Value)).OrAlert($"Failed to terminate task (TaskID={Task.TaskID})");
 					break;
 				default:
 					Log(LogLevels.Warning, $"Unhandled task type (TaskTypeID={Task.TaskTypeID})");

@@ -21,14 +21,13 @@ namespace PIO.ServerLib.Modules
 		private static int quantity = 1;
 
 		private IFactoryModule factoryModule;
-		private IWorkerModule workerModule;
 		private IStackModule stackModule;
 
 
 
-		public CarrierModule(ILogger Logger, ITaskModule TaskModule,IFactoryModule FactoryModule,IWorkerModule WorkerModule, IStackModule StackModule) : base(Logger,TaskModule)
+		public CarrierModule(ILogger Logger, ITaskModule TaskModule, IWorkerModule WorkerModule, IFactoryModule FactoryModule, IStackModule StackModule) : base(Logger,TaskModule,WorkerModule)
 		{
-			 this.factoryModule = FactoryModule; this.workerModule = WorkerModule; this.stackModule = StackModule;  
+			 this.factoryModule = FactoryModule;  this.stackModule = StackModule;  
 		}
 
 
@@ -85,7 +84,7 @@ namespace PIO.ServerLib.Modules
 			
 			
 			Log(LogLevels.Information, $"Creating task (WorkerID={WorkerID})");
-			task=Try(() => taskModule.InsertTask(TaskTypeIDs.CarryTo, WorkerID, TargetFactoryID,ResourceTypeID, GetLastETA(WorkerID).AddSeconds(10))).OrThrow<PIOInternalErrorException>("Failed to create task");
+			task=Try(() => taskModule.CreateTask(TaskTypeIDs.CarryTo, WorkerID,null, TargetFactoryID,ResourceTypeID,null, GetLastETA(WorkerID).AddSeconds(10))).OrThrow<PIOInternalErrorException>("Failed to create task");
 
 			OnTaskCreated(task);
 
@@ -107,7 +106,7 @@ namespace PIO.ServerLib.Modules
 			if (worker == null)
 			{
 				Log(LogLevels.Warning, $"Worker doesn't exist (WorkerID={WorkerID})");
-				throw new PIONotFoundException($"Worker doesn't exist (WorkerID={WorkerID})", null, ID, ModuleName, "BeginProduce");
+				throw new PIONotFoundException($"Worker doesn't exist (WorkerID={WorkerID})", null, ID, ModuleName, "EndCarryTo");
 			}
 
 
@@ -116,7 +115,7 @@ namespace PIO.ServerLib.Modules
 			if (targetFactory == null)
 			{
 				Log(LogLevels.Warning, $"Factory doesn't exist (FactoryID={TargetFactoryID})");
-				throw new PIONotFoundException($"Factory doesn't exist (FactoryID={TargetFactoryID})", null, ID, ModuleName, "EndMoveTo");
+				throw new PIONotFoundException($"Factory doesn't exist (FactoryID={TargetFactoryID})", null, ID, ModuleName, "EndCarryTo");
 			}
 
 			Log(LogLevels.Information, $"Get stacks (FactoryID={TargetFactoryID})");
