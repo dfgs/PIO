@@ -10,7 +10,9 @@ namespace PIO.ServerLib.Tables
 	public class WorkerTable:Table
 	{
 		public static readonly Column<int> WorkerID = new Column<int>() { IsPrimaryKey = true, IsIdentity = true };
-		public static readonly Column<int> FactoryID = new Column<int>();
+		public static readonly Column<int> PlanetID = new Column<int>();
+		public static readonly Column<int> X = new Column<int>();
+		public static readonly Column<int> Y = new Column<int>();
 
 
 	}

@@ -27,13 +27,18 @@ namespace PIO.UnitTest.ServerLib.Mocks
 			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
 			return items.FirstOrDefault(item => item.BuildingID == BuildingID);
 		}
+		public Building GetBuilding(int X,int Y)
+		{
+			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
+			return items.FirstOrDefault(item => (item.X == X) && (item.Y == Y));
+		}
 
-		public Building CreateBuilding(int PlanetID, BuildingTypeIDs BuildingTypeID, int RemainingBuildSteps)
+		public Building CreateBuilding(int PlanetID,int X,int Y, BuildingTypeIDs BuildingTypeID, int RemainingBuildSteps)
 		{
 			Building result;
 
 			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
-			result = new Building() { BuildingID = items.Count };
+			result = new Building() { BuildingID = items.Count, PlanetID = PlanetID, X = X,Y=Y };
 			items.Add(result);
 			return result;
 		}

@@ -11,7 +11,7 @@ namespace PIO.UnitTest.ServerLib.Mocks
 	{
 		public event TaskCreatedHandler TaskCreated;
 
-		public Task BeginCreateBuilding(int WorkerID, int PlanetID, FactoryTypeIDs FactoryTypeID)
+		public Task BeginCreateBuilding(int WorkerID,  FactoryTypeIDs FactoryTypeID)
 		{
 			Task task = new Models.Task() { WorkerID = WorkerID ,FactoryTypeID=FactoryTypeID};
 			TaskCreated(this, task);

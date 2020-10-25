@@ -26,7 +26,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			MockedSchedulerModule schedulerModule;
 			Task result;
 
-			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, FactoryID = 1 });
+			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, PlanetID = 1 });
 			taskModule = new MockedTaskModule(false);
 			module = new IdlerModule(NullLogger.Instance, taskModule, workerModule);
 			schedulerModule = new MockedSchedulerModule(false, module);
@@ -46,7 +46,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			MockedSchedulerModule schedulerModule;
 			Task result,result2;
 
-			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, FactoryID = 1 });
+			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, PlanetID = 1 });
 			taskModule = new MockedTaskModule(false);
 			module = new IdlerModule(NullLogger.Instance, taskModule,  workerModule);
 			schedulerModule = new MockedSchedulerModule(false, module);
@@ -75,7 +75,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			IWorkerModule workerModule;
 			ITaskModule taskModule;
 
-			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, FactoryID = 1 });
+			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, PlanetID = 1 });
 			taskModule = new MockedTaskModule(false);
 
 			logger = new MemoryLogger(new DefaultLogFormatter());
@@ -92,7 +92,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			IWorkerModule workerModule;
 			ITaskModule taskModule;
 
-			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, FactoryID = 1 });
+			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, PlanetID = 1 });
 			taskModule = new MockedTaskModule(true);
 			logger = new MemoryLogger(new DefaultLogFormatter());
 			module = new IdlerModule(logger, taskModule,  workerModule);
@@ -100,7 +100,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
 
 
-			workerModule = new MockedWorkerModule(true, new Worker() { WorkerID = 1, FactoryID = 1 });
+			workerModule = new MockedWorkerModule(true, new Worker() { WorkerID = 1, PlanetID = 1 });
 			taskModule = new MockedTaskModule(false);
 			logger = new MemoryLogger(new DefaultLogFormatter());
 			module = new IdlerModule(logger, taskModule,  workerModule);
@@ -118,7 +118,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			IWorkerModule workerModule;
 			ITaskModule taskModule;
 
-			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, FactoryID = 1 });
+			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, PlanetID = 1 });
 			taskModule = new MockedTaskModule(false);
 			module = new IdlerModule(NullLogger.Instance, taskModule,  workerModule);
 
@@ -135,7 +135,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			ITaskModule taskModule;
 
 			logger = new MemoryLogger(new DefaultLogFormatter());
-			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, FactoryID = 1 });
+			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, PlanetID = 1 });
 			taskModule = new MockedTaskModule(false);
 			module = new IdlerModule(logger, taskModule,  workerModule);
 
@@ -155,7 +155,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 		
 			
 			logger = new MemoryLogger(new DefaultLogFormatter());
-			workerModule = new MockedWorkerModule(true, new Worker() { WorkerID = 1, FactoryID = 1 });
+			workerModule = new MockedWorkerModule(true, new Worker() { WorkerID = 1, PlanetID = 1 });
 			taskModule = new MockedTaskModule(false);
 			module = new IdlerModule(logger, taskModule, workerModule);
 

@@ -11,6 +11,7 @@ namespace PIO.Models.Modules
 	public interface IFactoryModule : IDatabaseModule
 	{
 		Factory GetFactory(int FactoryID);
+		Factory GetFactory(int X, int Y);
 		Factory[] GetFactories(int PlanetID);
 
 		//void SetHealthPoints(int FactoryID,int HealthPoints);

@@ -18,7 +18,7 @@ namespace PIO.UnitTest.WebServiceLib.Mocks
 
 		public event TaskCreatedHandler TaskCreated;
 
-		public Task BeginMoveTo(int WorkerID,int TargetFactoryID)
+		public Task BeginMoveTo(int WorkerID,int X,int Y)
 		{
 			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
 			Task task= new Task() { WorkerID = WorkerID, ETA = DateTime.Now };
@@ -26,7 +26,7 @@ namespace PIO.UnitTest.WebServiceLib.Mocks
 			return task;
 		}
 
-		public void EndMoveTo(int WorkerID,int TargetFactoryID)
+		public void EndMoveTo(int WorkerID,int X,int Y)
 		{
 			throw new NotImplementedException();
 		}

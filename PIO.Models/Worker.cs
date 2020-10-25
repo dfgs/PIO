@@ -14,7 +14,11 @@ namespace PIO.Models
 		[DataMember]
 		public int WorkerID { get; set; }
 		[DataMember]
-		public int FactoryID { get; set; }
+		public int PlanetID { get; set; }
+		[DataMember]
+		public int X { get; set; }
+		[DataMember]
+		public int Y { get; set; }
 
 
 

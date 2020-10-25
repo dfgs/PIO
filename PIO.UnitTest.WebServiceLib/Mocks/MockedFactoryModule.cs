@@ -20,6 +20,11 @@ namespace PIO.UnitTest.WebServiceLib.Mocks
 			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
 			return new Factory() { FactoryID = FactoryID };
 		}
+		public Factory GetFactory(int X,int Y)
+		{
+			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
+			return new Factory() ;
+		}
 
 		/*public Factory[] GetFactories()
 		{

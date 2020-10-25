@@ -79,11 +79,11 @@ namespace PIO.WebServiceLib
 		[OperationContract]
 		Task Produce(int WorkerID);
 		[OperationContract]
-		Task MoveTo(int WorkerID, int TargetFactoryID);
+		Task MoveTo(int WorkerID, int X, int Y);
 		[OperationContract]
 		Task CarryTo(int WorkerID, int TargetFactoryID, ResourceTypeIDs ResourceTypeID);
 		[OperationContract]
-		Task CreateBuilding(int WorkerID, int PlanetID,FactoryTypeIDs FactoryTypeID );
+		Task CreateBuilding(int WorkerID, FactoryTypeIDs FactoryTypeID );
 		#endregion
 
 	}

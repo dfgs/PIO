@@ -11,8 +11,8 @@ namespace PIO.Models.Modules
 	public interface IWorkerModule : IDatabaseModule
 	{
 		Worker GetWorker(int WorkerID);
-		Worker[] GetWorkers(int FactoryID);
+		Worker[] GetWorkers(int PlanetID);
 
-		void UpdateWorker(int WorkerID, int FactoryID);
+		void UpdateWorker(int WorkerID, int X,int Y);
 	}
 }

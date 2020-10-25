@@ -48,7 +48,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 
 			taskModule = new MockedMoverModule();
 			module = new SchedulerModule(NullLogger.Instance, null, new MockedIdlerModule(), new MockedProducerModule(), taskModule, new MockedCarrierModule(), new MockedFactoryBuilderModule());
-			taskModule.BeginMoveTo(1,2);
+			taskModule.BeginMoveTo(1,2,5);
 			Assert.AreEqual(1, module.Count);
 		}
 
@@ -72,7 +72,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 
 			taskModule = new MockedFactoryBuilderModule();
 			module = new SchedulerModule(NullLogger.Instance, null, new MockedIdlerModule(), new MockedProducerModule(), new MockedMoverModule(), new MockedCarrierModule(), taskModule);
-			taskModule.BeginCreateBuilding(1, 1, FactoryTypeIDs.Stockpile);
+			taskModule.BeginCreateBuilding(1, FactoryTypeIDs.Stockpile);
 			Assert.AreEqual(1, module.Count);
 		}
 	}

@@ -20,14 +20,15 @@ namespace PIO.ServerLib.Modules
 
 		private static int quantity = 1;
 
+		private IBuildingModule buildingModule;
 		private IFactoryModule factoryModule;
 		private IStackModule stackModule;
 
 
 
-		public CarrierModule(ILogger Logger, ITaskModule TaskModule, IWorkerModule WorkerModule, IFactoryModule FactoryModule, IStackModule StackModule) : base(Logger,TaskModule,WorkerModule)
+		public CarrierModule(ILogger Logger, ITaskModule TaskModule, IWorkerModule WorkerModule, IBuildingModule BuildingModule,  IFactoryModule FactoryModule, IStackModule StackModule) : base(Logger,TaskModule,WorkerModule)
 		{
-			 this.factoryModule = FactoryModule;  this.stackModule = StackModule;  
+			this.buildingModule = BuildingModule; this.factoryModule = FactoryModule;  this.stackModule = StackModule;  
 		}
 
 
@@ -47,26 +48,24 @@ namespace PIO.ServerLib.Modules
 			if (worker == null)
 			{
 				Log(LogLevels.Warning, $"Worker doesn't exist (WorkerID={WorkerID})");
-				throw new PIONotFoundException($"Worker doesn't exist (WorkerID={WorkerID})", null, ID, ModuleName, "BeginCarry");
+				throw new PIONotFoundException($"Worker doesn't exist (WorkerID={WorkerID})", null, ID, ModuleName, "BeginCarryTo");
 			}
 
-			Log(LogLevels.Information, $"Get factory (FactoryID={worker.FactoryID})");
-			factory = Try(() => factoryModule.GetFactory(worker.FactoryID)).OrThrow<PIOInternalErrorException>("Failed to get factory");
-
-			/*if (factory == null)
+			Log(LogLevels.Information, $"Get factory (X={worker.X}, Y={worker.Y})");
+			factory = Try(() => factoryModule.GetFactory(worker.X,worker.Y)).OrThrow<PIOInternalErrorException>("Failed to get factory");
+			if (factory == null)
 			{
-				Log(LogLevels.Warning, $"Factory doesn't exist (FactoryID={worker.FactoryID})");
-				throw new PIONotFoundException($"Factory doesn't exist (FactoryID={worker.FactoryID})", null, ID, ModuleName, "BeginProduce");
-			}*/
+				Log(LogLevels.Warning, $"No factory on current location (X={worker.X}, Y={worker.Y})");
+				throw new PIONotFoundException($"No factory on current location (X={worker.X}, Y={worker.Y})", null, ID, ModuleName, "BeginCarryTo");
+			}
 
 			Log(LogLevels.Information, $"Get target factory (FactoryID={TargetFactoryID})");
 			targetFactory = Try(() => factoryModule.GetFactory(TargetFactoryID)).OrThrow<PIOInternalErrorException>("Failed to get target factory");
 			if (targetFactory == null)
 			{
 				Log(LogLevels.Warning, $"Factory doesn't exist (FactoryID={TargetFactoryID})");
-				throw new PIONotFoundException($"Factory doesn't exist (FactoryID={TargetFactoryID})", null, ID, ModuleName, "BeginCarry");
+				throw new PIONotFoundException($"Factory doesn't exist (FactoryID={TargetFactoryID})", null, ID, ModuleName, "BeginCarryTo");
 			}
-
 
 			Log(LogLevels.Information, $"Get stacks (FactoryID={factory.FactoryID})");
 			stacks = Try(() => stackModule.GetStacks(factory.FactoryID)).OrThrow<PIOInternalErrorException>("Failed to get stacks");
@@ -84,7 +83,7 @@ namespace PIO.ServerLib.Modules
 			
 			
 			Log(LogLevels.Information, $"Creating task (WorkerID={WorkerID})");
-			task=Try(() => taskModule.CreateTask(TaskTypeIDs.CarryTo, WorkerID,null, TargetFactoryID,ResourceTypeID,null, GetLastETA(WorkerID).AddSeconds(10))).OrThrow<PIOInternalErrorException>("Failed to create task");
+			task=Try(() => taskModule.CreateTask(TaskTypeIDs.CarryTo, WorkerID,null,null, TargetFactoryID,ResourceTypeID,null, GetLastETA(WorkerID).AddSeconds(10))).OrThrow<PIOInternalErrorException>("Failed to create task");
 
 			OnTaskCreated(task);
 
@@ -93,6 +92,7 @@ namespace PIO.ServerLib.Modules
 
 		public void EndCarryTo(int WorkerID, int TargetFactoryID, ResourceTypeIDs ResourceTypeID)
 		{
+			Building targetBuilding;
 			Factory targetFactory;
 			Stack[] stacks;
 			Stack stack;
@@ -102,7 +102,6 @@ namespace PIO.ServerLib.Modules
 
 			Log(LogLevels.Information, $"Get worker (WorkerID={WorkerID})");
 			worker = Try(() => workerModule.GetWorker(WorkerID)).OrThrow<PIOInternalErrorException>("Failed to get worker");
-
 			if (worker == null)
 			{
 				Log(LogLevels.Warning, $"Worker doesn't exist (WorkerID={WorkerID})");
@@ -117,6 +116,15 @@ namespace PIO.ServerLib.Modules
 				Log(LogLevels.Warning, $"Factory doesn't exist (FactoryID={TargetFactoryID})");
 				throw new PIONotFoundException($"Factory doesn't exist (FactoryID={TargetFactoryID})", null, ID, ModuleName, "EndCarryTo");
 			}
+
+			Log(LogLevels.Information, $"Get target building (BuildingID={targetFactory.BuildingID})");
+			targetBuilding = Try(() => buildingModule.GetBuilding(targetFactory.BuildingID)).OrThrow<PIOInternalErrorException>("Failed to get target building");
+			if (targetBuilding == null)
+			{
+				Log(LogLevels.Warning, $"Building doesn't exist (BuildingID={targetFactory.BuildingID})");
+				throw new PIONotFoundException($"Building doesn't exist (BuildingID={targetFactory.BuildingID})", null, ID, ModuleName, "EndCarryTo");
+			}
+
 
 			Log(LogLevels.Information, $"Get stacks (FactoryID={TargetFactoryID})");
 			stacks = Try(() => stackModule.GetStacks(TargetFactoryID)).OrThrow<PIOInternalErrorException>("Failed to get stacks");
@@ -135,7 +143,7 @@ namespace PIO.ServerLib.Modules
 			}
 
 			Log(LogLevels.Information, $"Updating worker (WorkerID={WorkerID})");
-			Try(() => workerModule.UpdateWorker(WorkerID, TargetFactoryID)).OrThrow<PIOInternalErrorException>("Failed to update worker");
+			Try(() => workerModule.UpdateWorker(WorkerID, targetBuilding.X, targetBuilding.Y)).OrThrow<PIOInternalErrorException>("Failed to update worker");
 
 
 		}

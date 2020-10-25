@@ -28,6 +28,31 @@ namespace PIO.UnitTest.ServerLib.Modules
 			Assert.AreEqual(0, result.FactoryID);
 		}
 		[TestMethod]
+		public void ShouldGetFactoryUsingCoordinate()
+		{
+			MockedDatabase<Factory> database;
+			FactoryModule module;
+			Factory result;
+
+			database = new MockedDatabase<Factory>(false, 1, (t) => new Factory() { FactoryID = t });
+			module = new FactoryModule(NullLogger.Instance, database);
+			result = module.GetFactory(3,4);
+			Assert.IsNotNull(result);
+			Assert.AreEqual(0, result.FactoryID);
+		}
+		[TestMethod]
+		public void ShouldNotGetFactoryUsingCoordinate()
+		{
+			MockedDatabase<Factory> database;
+			FactoryModule module;
+			Factory result;
+
+			database = new MockedDatabase<Factory>(false, 0, (t) => new Factory() { FactoryID = t });
+			module = new FactoryModule(NullLogger.Instance, database);
+			result = module.GetFactory(3,4);
+			Assert.IsNull(result);
+		}
+		[TestMethod]
 		public void ShouldGetFactories()
 		{
 			MockedDatabase<Factory> database;
@@ -57,6 +82,19 @@ namespace PIO.UnitTest.ServerLib.Modules
 			database = new MockedDatabase<Factory>(true,1, (t) => new Factory() { FactoryID = t });
 			module = new FactoryModule(logger, database);
 			Assert.ThrowsException<PIODataException>(() => module.GetFactory(1));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
+		}
+		[TestMethod]
+		public void ShouldNotGetFactoryUsingCoordinateAndLogError()
+		{
+			MockedDatabase<Factory> database;
+			FactoryModule module;
+			MemoryLogger logger;
+
+			logger = new MemoryLogger(new DefaultLogFormatter());
+			database = new MockedDatabase<Factory>(true, 1, (t) => new Factory() { FactoryID = t });
+			module = new FactoryModule(logger, database);
+			Assert.ThrowsException<PIODataException>(() => module.GetFactory(3,4));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
 		}
 		[TestMethod]

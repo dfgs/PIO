@@ -27,6 +27,11 @@ namespace PIO.UnitTest.ServerLib.Mocks
 			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
 			return items.FirstOrDefault(item => item.FactoryID == FactoryID);
 		}
+		public Factory GetFactory(int X,int Y)
+		{
+			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
+			return items.FirstOrDefault();
+		}
 
 		/*public void SetHealthPoints(int FactoryID, int HealthPoints)
 		{

@@ -258,11 +258,11 @@ namespace PIO.WebServiceLib
 			return Try(() => producerModule.BeginProduce(WorkerID)).OrThrow(GenerateFaultException);
 		}
 
-		public Task MoveTo(int WorkerID, int TargetFactoryID)
+		public Task MoveTo(int WorkerID, int X, int Y)
 		{
 			LogEnter();
 
-			return Try(() => moverModule.BeginMoveTo(WorkerID, TargetFactoryID)).OrThrow(GenerateFaultException);
+			return Try(() => moverModule.BeginMoveTo(WorkerID, X,Y)).OrThrow(GenerateFaultException);
 		}
 
 		public Task CarryTo(int WorkerID, int TargetFactoryID, ResourceTypeIDs ResourceTypeID)
@@ -271,11 +271,11 @@ namespace PIO.WebServiceLib
 
 			return Try(() => carrierModule.BeginCarryTo(WorkerID, TargetFactoryID, ResourceTypeID)).OrThrow(GenerateFaultException);
 		}
-		public Task CreateBuilding(int WorkerID, int PlanetID,FactoryTypeIDs FactoryTypeID)
+		public Task CreateBuilding(int WorkerID, FactoryTypeIDs FactoryTypeID)
 		{
 			LogEnter();
 
-			return Try(() => factoryBuilderModule.BeginCreateBuilding(WorkerID,PlanetID,FactoryTypeID) ).OrThrow(GenerateFaultException);
+			return Try(() => factoryBuilderModule.BeginCreateBuilding(WorkerID,FactoryTypeID) ).OrThrow(GenerateFaultException);
 		}
 
 		#endregion

@@ -28,6 +28,33 @@ namespace PIO.UnitTest.ServerLib.Modules
 			Assert.AreEqual(0, result.BuildingID);
 		}
 		[TestMethod]
+		public void ShouldGetBuildingUsingCoordinates()
+		{
+			MockedDatabase<Building> database;
+			BuildingModule module;
+			Building result;
+
+			database = new MockedDatabase<Building>(false, 1, (t) => new Building() { BuildingID = t, X = 3, Y = 4 });
+			module = new BuildingModule(NullLogger.Instance, database);
+			result = module.GetBuilding(3,4);
+			Assert.IsNotNull(result);
+			Assert.AreEqual(0, result.BuildingID);
+			Assert.AreEqual(3, result.X);
+			Assert.AreEqual(4, result.Y);
+		}
+		[TestMethod]
+		public void ShouldNotGetBuildingUsingCoordinates()
+		{
+			MockedDatabase<Building> database;
+			BuildingModule module;
+			Building result;
+
+			database = new MockedDatabase<Building>(false, 0, (t) => new Building() { BuildingID = t, X = 3, Y = 4 });
+			module = new BuildingModule(NullLogger.Instance, database);
+			result = module.GetBuilding(4,3);
+			Assert.IsNull(result);
+		}
+		[TestMethod]
 		public void ShouldGetBuildings()
 		{
 			MockedDatabase<Building> database;
@@ -60,6 +87,19 @@ namespace PIO.UnitTest.ServerLib.Modules
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
 		}
 		[TestMethod]
+		public void ShouldNotGetBuildingUsingCoordinateAndLogError()
+		{
+			MockedDatabase<Building> database;
+			BuildingModule module;
+			MemoryLogger logger;
+
+			logger = new MemoryLogger(new DefaultLogFormatter());
+			database = new MockedDatabase<Building>(true, 1, (t) => new Building() { BuildingID = t });
+			module = new BuildingModule(logger, database);
+			Assert.ThrowsException<PIODataException>(() => module.GetBuilding(3,4));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
+		}
+		[TestMethod]
 		public void ShouldNotGetBuildingsAndLogError()
 		{
 			MockedDatabase<Building> database;
@@ -84,11 +124,13 @@ namespace PIO.UnitTest.ServerLib.Modules
 
 			database = new MockedDatabase<Building>(false, 1, (t) => new Building() { BuildingID = t });
 			module = new BuildingModule(NullLogger.Instance, database);
-			result = module.CreateBuilding(1, BuildingTypeIDs.Factory,5);
+			result = module.CreateBuilding(1,7,9, BuildingTypeIDs.Factory,5);
 			Assert.IsNotNull(result);
 			Assert.AreEqual(1, result.PlanetID);
 			Assert.AreEqual(BuildingTypeIDs.Factory, result.BuildingTypeID);
 			Assert.AreEqual(5, result.RemainingBuildSteps);
+			Assert.AreEqual(7, result.X);
+			Assert.AreEqual(9, result.Y);
 			Assert.AreEqual(0, result.HealthPoints);
 
 			Assert.AreEqual(1, database.InsertedCount);
@@ -105,7 +147,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			logger = new MemoryLogger(new DefaultLogFormatter());
 			database = new MockedDatabase<Building>(true, 1, (t) => new Building() { BuildingID = t });
 			module = new BuildingModule(logger, database);
-			Assert.ThrowsException<PIODataException>(() => module.CreateBuilding(1, BuildingTypeIDs.Factory, 5));
+			Assert.ThrowsException<PIODataException>(() => module.CreateBuilding(1,7,9, BuildingTypeIDs.Factory, 5));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
 		}
 

@@ -16,10 +16,10 @@ namespace PIO.UnitTest.ServerLib.Mocks
 		{
 		}
 
-		public Worker[] GetWorkers(int FactoryID)
+		public Worker[] GetWorkers(int PlanetID)
 		{
 			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
-			return items.Where(item => item.FactoryID == FactoryID).ToArray();
+			return items.Where(item => item.PlanetID == PlanetID).ToArray();
 		}
 
 		public Worker GetWorker(int WorkerID)
@@ -28,12 +28,13 @@ namespace PIO.UnitTest.ServerLib.Mocks
 			return items.FirstOrDefault(item => item.WorkerID == WorkerID);
 		}
 
-		public void UpdateWorker(int WorkerID, int FactoryID)
+		public void UpdateWorker(int WorkerID, int X,int Y)
 		{
 			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
 			Worker item;
 			item = GetWorker(WorkerID);
-			item.FactoryID = FactoryID;
+			item.X = X;
+			item.Y = Y;
 		}
 	}
 }

@@ -28,28 +28,28 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying Worker table (WorkerID={WorkerID})");
-			query = new Select(WorkerTable.WorkerID,WorkerTable.FactoryID).From(PIODB.WorkerTable).Where(WorkerTable.WorkerID.IsEqualTo(WorkerID));
+			query = new Select(WorkerTable.WorkerID,WorkerTable.PlanetID,WorkerTable.X,WorkerTable.Y).From(PIODB.WorkerTable).Where(WorkerTable.WorkerID.IsEqualTo(WorkerID));
 			return TrySelectFirst<WorkerTable,Worker>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
-		public Worker[] GetWorkers(int FactoryID)
+		public Worker[] GetWorkers(int PlanetID)
 		{
 			ISelect query;
 			LogEnter();
 
-			Log(LogLevels.Information, $"Querying Worker table (FactoryID={FactoryID})");
-			query = new Select( WorkerTable.WorkerID, WorkerTable.FactoryID).From(PIODB.WorkerTable).Where(WorkerTable.FactoryID.IsEqualTo(FactoryID));
+			Log(LogLevels.Information, $"Querying Worker table (PlanetID={PlanetID})");
+			query = new Select( WorkerTable.WorkerID, WorkerTable.PlanetID,WorkerTable.X,WorkerTable.Y).From(PIODB.WorkerTable).Where(WorkerTable.PlanetID.IsEqualTo(PlanetID));
 			return TrySelectMany<WorkerTable, Worker>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
-		public void UpdateWorker(int WorkerID, int FactoryID)
+		public void UpdateWorker(int WorkerID, int X,int Y)
 		{
 			IUpdate update;
 
 			LogEnter();
 
-			Log(LogLevels.Information, $"Updating Worker table (WorkerID={WorkerID}, FactoryID={FactoryID})");
-			update = new Update(PIODB.WorkerTable).Set(WorkerTable.FactoryID, FactoryID).Where(WorkerTable.WorkerID.IsEqualTo(WorkerID));
+			Log(LogLevels.Information, $"Updating Worker table (WorkerID={WorkerID}, X={X}, Y={Y})");
+			update = new Update(PIODB.WorkerTable).Set(WorkerTable.X, X).Set(WorkerTable.Y,Y).Where(WorkerTable.WorkerID.IsEqualTo(WorkerID));
 			Try(update).OrThrow<PIODataException>("Failed to update");
 		}
 

@@ -34,7 +34,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			WorkerModule module;
 			Worker[] results;
 
-			database = new MockedDatabase<Worker>(false, 3, (t) => new Worker() { WorkerID = t,FactoryID=2 });
+			database = new MockedDatabase<Worker>(false, 3, (t) => new Worker() { WorkerID = t,PlanetID=2 });
 			module = new WorkerModule(NullLogger.Instance, database);
 			results = module.GetWorkers(2);
 			Assert.IsNotNull(results);
@@ -83,9 +83,9 @@ namespace PIO.UnitTest.ServerLib.Modules
 			MockedDatabase<Worker> database;
 			WorkerModule module;
 
-			database = new MockedDatabase<Worker>(false, 1, (t) => new Worker() { WorkerID = t, FactoryID = 0 });
+			database = new MockedDatabase<Worker>(false, 1, (t) => new Worker() { WorkerID = t, PlanetID = 0 });
 			module = new WorkerModule(NullLogger.Instance, database);
-			module.UpdateWorker(1, 2);
+			module.UpdateWorker(1, 2,2);
 			Assert.AreEqual(1, database.UpdatedCount);
 
 		}
@@ -98,9 +98,9 @@ namespace PIO.UnitTest.ServerLib.Modules
 
 
 			logger = new MemoryLogger(new DefaultLogFormatter());
-			database = new MockedDatabase<Worker>(true, 1, (t) => new Worker() { WorkerID = t, FactoryID = 0 });
+			database = new MockedDatabase<Worker>(true, 1, (t) => new Worker() { WorkerID = t, PlanetID = 0 });
 			module = new WorkerModule(logger, database);
-			Assert.ThrowsException<PIODataException>(() => module.UpdateWorker(0, 10));
+			Assert.ThrowsException<PIODataException>(() => module.UpdateWorker(0, 10,10));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
 		}
 		

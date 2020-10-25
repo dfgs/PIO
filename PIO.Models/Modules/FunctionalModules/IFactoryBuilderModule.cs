@@ -11,8 +11,8 @@ namespace PIO.Models.Modules
 	public interface IFactoryBuilderModule : ITaskGeneratorModule
 	{
 
-		Task BeginCreateBuilding(int WorkerID, int PlanetID, FactoryTypeIDs FactoryTypeID);
-		void EndCreateBuilding(int PlanetID, FactoryTypeIDs FactoryTypeID);
+		Task BeginCreateBuilding(int WorkerID,  FactoryTypeIDs FactoryTypeID);
+		void EndCreateBuilding(int WorkerID, FactoryTypeIDs FactoryTypeID);
 		void Build(int FactoryID);
 	}
 }

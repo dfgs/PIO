@@ -28,11 +28,23 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying Factory table (FactoryID={FactoryID})");
-			query = new Select(FactoryTable.BuildingID,FactoryTable.FactoryID, FactoryTable.FactoryTypeID)
-				.From(PIODB.FactoryTable.Join(PIODB.BuildingTable.On(FactoryTable.BuildingID,BuildingTable.BuildingID)) )
+			query = new Select(FactoryTable.BuildingID, FactoryTable.FactoryID, FactoryTable.FactoryTypeID)
+				.From(PIODB.FactoryTable.Join(PIODB.BuildingTable.On(FactoryTable.BuildingID, BuildingTable.BuildingID)))
 				.Where(FactoryTable.FactoryID.IsEqualTo(FactoryID));
 
-			return TrySelectFirst<FactoryTable,Factory>(query).OrThrow<PIODataException>("Failed to query");
+			return TrySelectFirst<FactoryTable, Factory>(query).OrThrow<PIODataException>("Failed to query");
+		}
+		public Factory GetFactory(int X,int Y)
+		{
+			ISelect query;
+			LogEnter();
+
+			Log(LogLevels.Information, $"Querying Factory table (X={X}, Y={Y})");
+			query = new Select(FactoryTable.BuildingID, FactoryTable.FactoryID, FactoryTable.FactoryTypeID)
+				.From(PIODB.FactoryTable.Join(PIODB.BuildingTable.On(FactoryTable.BuildingID, BuildingTable.BuildingID)))
+				.Where(BuildingTable.X.IsEqualTo(X).And(BuildingTable.Y.IsEqualTo(Y)));
+
+			return TrySelectFirst<FactoryTable, Factory>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
 		public Factory[] GetFactories(int PlanetID)

@@ -19,19 +19,17 @@ namespace PIO.ServerLib.Modules
 		private IFactoryModule factoryModule;
 		private IBuildingModule buildingModule;
 		private IFactoryTypeModule factoryTypeModule;
-		private IPlanetModule planetModule;
 
-		public FactoryBuilderModule(ILogger Logger, ITaskModule TaskModule, IWorkerModule WorkerModule, IPlanetModule PlanetModule, IBuildingModule BuildingModule, IFactoryModule FactoryModule, IFactoryTypeModule FactoryTypeModule) : base(Logger,TaskModule,WorkerModule)
+		public FactoryBuilderModule(ILogger Logger, ITaskModule TaskModule, IWorkerModule WorkerModule,  IBuildingModule BuildingModule, IFactoryModule FactoryModule, IFactoryTypeModule FactoryTypeModule) : base(Logger,TaskModule,WorkerModule)
 		{
-			this.planetModule = PlanetModule;	this.factoryModule = FactoryModule;this.buildingModule = BuildingModule; this.factoryTypeModule = FactoryTypeModule;
+			this.factoryModule = FactoryModule;this.buildingModule = BuildingModule; this.factoryTypeModule = FactoryTypeModule;
 
 		}
 
-		public Task BeginCreateBuilding(int WorkerID, int PlanetID,FactoryTypeIDs FactoryTypeID)
+		public Task BeginCreateBuilding(int WorkerID, FactoryTypeIDs FactoryTypeID)
 		{
 			FactoryType factoryType;
 			Worker worker;
-			Planet planet;
 			Task task;
 
 			LogEnter();
@@ -41,7 +39,7 @@ namespace PIO.ServerLib.Modules
 			if (worker == null)
 			{
 				Log(LogLevels.Warning, $"Worker doesn't exist (WorkerID={WorkerID})");
-				throw new PIONotFoundException($"Worker doesn't exist (WorkerID={WorkerID})", null, ID, ModuleName, "BeginCarry");
+				throw new PIONotFoundException($"Worker doesn't exist (WorkerID={WorkerID})", null, ID, ModuleName, "BeginCreateBuilding");
 			}
 			
 			factoryType = Try(() => factoryTypeModule.GetFactoryType(FactoryTypeID)).OrThrow<PIOInternalErrorException>("Failed to get factory type");
@@ -51,30 +49,32 @@ namespace PIO.ServerLib.Modules
 				throw new PIONotFoundException($"Factory type doesn't exist (FactoryTypeID={FactoryTypeID})", null, ID, ModuleName, "BeginCreateBuilding");
 			}
 
-			planet = Try(() => planetModule.GetPlanet(PlanetID)).OrThrow<PIOInternalErrorException>("Failed to get planet");
-			if (planet == null)
-			{
-				Log(LogLevels.Warning, $"Planet doesn't exist (PlanetID={PlanetID})");
-				throw new PIONotFoundException($"Planet doesn't exist (PlanetID={PlanetID})", null, ID, ModuleName, "BeginCreateBuilding");
-			}
 
 			Log(LogLevels.Information, $"Creating task (WorkerID={WorkerID})");
-			task = Try(() => taskModule.CreateTask(TaskTypeIDs.CreateBuilding, WorkerID, PlanetID, null, null, FactoryTypeID, GetLastETA(WorkerID).AddSeconds(10))).OrThrow<PIOInternalErrorException>("Failed to create task");
+			task = Try(() => taskModule.CreateTask(TaskTypeIDs.CreateBuilding, WorkerID, null, null, null, null, FactoryTypeID, GetLastETA(WorkerID).AddSeconds(10))).OrThrow<PIOInternalErrorException>("Failed to create task");
 
 			OnTaskCreated(task);
 
 			return task;
 		}
 
-		public void EndCreateBuilding(int PlanetID, FactoryTypeIDs FactoryTypeID)
+		public void EndCreateBuilding(int WorkerID, FactoryTypeIDs FactoryTypeID)
 		{
 			FactoryType factoryType;
 			Building building;
-			Planet planet;
+			Worker worker;
 
 			LogEnter();
 
 			Log(LogLevels.Information, $"End create building (FactoryTypeID={FactoryTypeID})");
+
+			Log(LogLevels.Information, $"Get worker (WorkerID={WorkerID})");
+			worker = Try(() => workerModule.GetWorker(WorkerID)).OrThrow<PIOInternalErrorException>("Failed to get worker");
+			if (worker == null)
+			{
+				Log(LogLevels.Warning, $"Worker doesn't exist (WorkerID={WorkerID})");
+				throw new PIONotFoundException($"Worker doesn't exist (WorkerID={WorkerID})", null, ID, ModuleName, "EndCreateBuilding");
+			}
 
 			factoryType = Try(() => factoryTypeModule.GetFactoryType(FactoryTypeID)).OrThrow<PIOInternalErrorException>("Failed to get factory type");
 			if (factoryType == null)
@@ -83,16 +83,9 @@ namespace PIO.ServerLib.Modules
 				throw new PIONotFoundException($"Factory type doesn't exist (FactoryTypeID={FactoryTypeID})", null, ID, ModuleName, "EndCreateBuilding");
 			}
 
-			planet = Try(() => planetModule.GetPlanet(PlanetID)).OrThrow<PIOInternalErrorException>("Failed to get planet");
-			if (planet == null)
-			{
-				Log(LogLevels.Warning, $"Planet doesn't exist (PlanetID={PlanetID})");
-				throw new PIONotFoundException($"Planet doesn't exist (PlanetID={PlanetID})", null, ID, ModuleName, "BeginCreateBuilding");
-			}
-
-
+		
 			Log(LogLevels.Information, $"Creating building (BuildingTypeID={BuildingTypeIDs.Factory})");
-			building = Try(() => buildingModule.CreateBuilding(PlanetID, BuildingTypeIDs.Factory, factoryType.BuildSteps)).OrThrow<PIOInternalErrorException>("Failed to create building");
+			building = Try(() => buildingModule.CreateBuilding(worker.PlanetID, worker.X,worker.Y, BuildingTypeIDs.Factory, factoryType.BuildSteps)).OrThrow<PIOInternalErrorException>("Failed to create building");
 
 		}
 

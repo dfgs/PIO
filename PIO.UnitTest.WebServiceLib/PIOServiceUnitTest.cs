@@ -806,7 +806,7 @@ namespace PIO.UnitTest.WebServiceLib
 			Task result;
 
 			service = new PIOService(NullLogger.Instance, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, new MockedMoverModule(false), null, null);
-			result = service.MoveTo(10,1);
+			result = service.MoveTo(10,1,1);
 			Assert.IsNotNull(result);
 			Assert.AreEqual(10, result.WorkerID);
 		}
@@ -821,7 +821,7 @@ namespace PIO.UnitTest.WebServiceLib
 			logger = new MemoryLogger(new DefaultLogFormatter());
 			service = new PIOService(logger, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,  new MockedMoverModule(true), null, null);
 
-			Assert.ThrowsException<FaultException>(() => service.MoveTo(10,1));
+			Assert.ThrowsException<FaultException>(() => service.MoveTo(10,1,1));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(service.ModuleName)));
 		}
 
@@ -859,10 +859,9 @@ namespace PIO.UnitTest.WebServiceLib
 			Task result;
 
 			service = new PIOService(NullLogger.Instance, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, new MockedFactoryBuilderModule(false));
-			result = service.CreateBuilding(10, 1, FactoryTypeIDs.Sawmill);
+			result = service.CreateBuilding(10,  FactoryTypeIDs.Sawmill);
 			Assert.IsNotNull(result);
 			Assert.AreEqual(10, result.WorkerID);
-			Assert.AreEqual(1, result.PlanetID);
 			Assert.AreEqual(FactoryTypeIDs.Sawmill, result.FactoryTypeID);
 		}
 
@@ -876,7 +875,7 @@ namespace PIO.UnitTest.WebServiceLib
 			logger = new MemoryLogger(new DefaultLogFormatter());
 			service = new PIOService(logger, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,null, new MockedFactoryBuilderModule(true));
 
-			Assert.ThrowsException<FaultException>(() => service.CreateBuilding(10, 1, FactoryTypeIDs.Sawmill));
+			Assert.ThrowsException<FaultException>(() => service.CreateBuilding(10,  FactoryTypeIDs.Sawmill));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(service.ModuleName)));
 		}
 	}
