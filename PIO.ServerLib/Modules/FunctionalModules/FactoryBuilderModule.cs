@@ -43,7 +43,7 @@ namespace PIO.ServerLib.Modules
 				Log(LogLevels.Warning, $"Worker doesn't exist (WorkerID={WorkerID})");
 				throw new PIONotFoundException($"Worker doesn't exist (WorkerID={WorkerID})", null, ID, ModuleName, "BeginCarry");
 			}
-
+			
 			factoryType = Try(() => factoryTypeModule.GetFactoryType(FactoryTypeID)).OrThrow<PIOInternalErrorException>("Failed to get factory type");
 			if (factoryType == null)
 			{

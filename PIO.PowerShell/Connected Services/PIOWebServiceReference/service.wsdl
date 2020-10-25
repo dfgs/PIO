@@ -205,6 +205,12 @@
   <wsdl:message name="IPIOService_CarryTo_OutputMessage">
     <wsdl:part name="parameters" element="tns:CarryToResponse" />
   </wsdl:message>
+  <wsdl:message name="IPIOService_CreateBuilding_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateBuilding" />
+  </wsdl:message>
+  <wsdl:message name="IPIOService_CreateBuilding_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateBuildingResponse" />
+  </wsdl:message>
   <wsdl:portType name="IPIOService">
     <wsdl:operation name="GetPlanet">
       <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetPlanet" message="tns:IPIOService_GetPlanet_InputMessage" />
@@ -337,6 +343,10 @@
     <wsdl:operation name="CarryTo">
       <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/CarryTo" message="tns:IPIOService_CarryTo_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/CarryToResponse" message="tns:IPIOService_CarryTo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CreateBuilding">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/CreateBuilding" message="tns:IPIOService_CreateBuilding_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/CreateBuildingResponse" message="tns:IPIOService_CreateBuilding_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IPIOService" type="tns:IPIOService">
@@ -631,6 +641,15 @@
     </wsdl:operation>
     <wsdl:operation name="CarryTo">
       <soap:operation soapAction="http://tempuri.org/IPIOService/CarryTo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateBuilding">
+      <soap:operation soapAction="http://tempuri.org/IPIOService/CreateBuilding" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

@@ -106,7 +106,7 @@ namespace PIO.ServerHost
 				logger,planetModule,buildingModule,factoryModule,workerModule,
 				stackModule,resourceTypeModule,
 				buildingTypeModule,factoryTypeModule,taskTypeModule,materialModule,ingredientModule,productModule,taskModule, 
-				resourceCheckerModule, idlerModule,producerModule,moverModule,carrierModule);
+				resourceCheckerModule, idlerModule,producerModule,moverModule,carrierModule,factoryBuilderModule);
 
 			serviceHostModule = new ServiceHostModule(logger,service);
 			serviceHostModule.Start();

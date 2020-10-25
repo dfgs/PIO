@@ -36,6 +36,7 @@ namespace PIO.WebServiceLib
 		private IProducerModule producerModule;
 		private IMoverModule moverModule;
 		private ICarrierModule carrierModule;
+		private IFactoryBuilderModule factoryBuilderModule;
 
 		public PIOService(ILogger Logger,
 			IPlanetModule PlanetModule,IBuildingModule BuildingModule,  IFactoryModule FactoryModule,
@@ -47,7 +48,8 @@ namespace PIO.WebServiceLib
 			IIngredientModule IngredientModule, IProductModule ProductModule, 
 			ITaskModule TaskModule,
 
-			IResourceCheckerModule ResourceCheckerModule, IIdlerModule IdlerModule, IProducerModule ProducerModule,IMoverModule MoverModule,ICarrierModule CarrierModule
+			IResourceCheckerModule ResourceCheckerModule, IIdlerModule IdlerModule, IProducerModule ProducerModule,
+			IMoverModule MoverModule,ICarrierModule CarrierModule,IFactoryBuilderModule FactoryBuilderModule
 		) :base(Logger)
 		{
 			LogEnter();
@@ -71,6 +73,7 @@ namespace PIO.WebServiceLib
 			this.producerModule = ProducerModule;
 			this.moverModule = MoverModule;
 			this.carrierModule = CarrierModule;
+			this.factoryBuilderModule = FactoryBuilderModule;
 		}
 
 		private FaultException GenerateFaultException(Exception InnerException, int ComponentID, string ComponentName, string MethodName)
@@ -262,11 +265,17 @@ namespace PIO.WebServiceLib
 			return Try(() => moverModule.BeginMoveTo(WorkerID, TargetFactoryID)).OrThrow(GenerateFaultException);
 		}
 
-		public Task CarryTo(int WorkerID, int TargetFactoryID,ResourceTypeIDs ResourceTypeID)
+		public Task CarryTo(int WorkerID, int TargetFactoryID, ResourceTypeIDs ResourceTypeID)
 		{
 			LogEnter();
 
-			return Try(() => carrierModule.BeginCarryTo(WorkerID, TargetFactoryID,ResourceTypeID)).OrThrow(GenerateFaultException);
+			return Try(() => carrierModule.BeginCarryTo(WorkerID, TargetFactoryID, ResourceTypeID)).OrThrow(GenerateFaultException);
+		}
+		public Task CreateBuilding(int WorkerID, int PlanetID,FactoryTypeIDs FactoryTypeID)
+		{
+			LogEnter();
+
+			return Try(() => factoryBuilderModule.BeginCreateBuilding(WorkerID,PlanetID,FactoryTypeID) ).OrThrow(GenerateFaultException);
 		}
 
 		#endregion

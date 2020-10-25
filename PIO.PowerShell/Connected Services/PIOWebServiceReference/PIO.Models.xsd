@@ -20,6 +20,7 @@
       <xs:element minOccurs="0" name="BuildingTypeID" type="tns:BuildingTypeIDs" />
       <xs:element minOccurs="0" name="HealthPoints" type="xs:int" />
       <xs:element minOccurs="0" name="PlanetID" type="xs:int" />
+      <xs:element minOccurs="0" name="RemainingBuildSteps" type="xs:int" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Building" nillable="true" type="tns:Building" />
@@ -131,6 +132,7 @@
   <xs:element name="ArrayOfBuildingType" nillable="true" type="tns:ArrayOfBuildingType" />
   <xs:complexType name="FactoryType">
     <xs:sequence>
+      <xs:element minOccurs="0" name="BuildSteps" type="xs:int" />
       <xs:element minOccurs="0" name="FactoryTypeID" type="tns:FactoryTypeIDs" />
       <xs:element minOccurs="0" name="HealthPoints" type="xs:int" />
       <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
@@ -149,6 +151,7 @@
       <xs:enumeration value="Produce" />
       <xs:enumeration value="MoveTo" />
       <xs:enumeration value="CarryTo" />
+      <xs:enumeration value="CreateBuilding" />
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="TaskTypeIDs" nillable="true" type="tns:TaskTypeIDs" />
@@ -214,6 +217,8 @@
   <xs:complexType name="Task">
     <xs:sequence>
       <xs:element minOccurs="0" name="ETA" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="FactoryTypeID" nillable="true" type="tns:FactoryTypeIDs" />
+      <xs:element minOccurs="0" name="PlanetID" nillable="true" type="xs:int" />
       <xs:element minOccurs="0" name="ResourceTypeID" nillable="true" type="tns:ResourceTypeIDs" />
       <xs:element minOccurs="0" name="TargetFactoryID" nillable="true" type="xs:int" />
       <xs:element minOccurs="0" name="TaskID" type="xs:int" />

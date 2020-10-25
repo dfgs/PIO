@@ -50,6 +50,7 @@
     <Reference Include="System.ServiceModel" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Mocks\MockedFactoryBuilderModule.cs" />
     <Compile Include="Mocks\MockedCarrierModule.cs" />
     <Compile Include="Mocks\MockedBuildingTypeModule.cs" />
     <Compile Include="Mocks\MockedBuildingModule.cs" />

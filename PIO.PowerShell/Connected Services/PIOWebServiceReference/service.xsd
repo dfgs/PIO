@@ -458,4 +458,20 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="CreateBuilding">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="WorkerID" type="xs:int" />
+        <xs:element minOccurs="0" name="PlanetID" type="xs:int" />
+        <xs:element xmlns:q41="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="FactoryTypeID" type="q41:FactoryTypeIDs" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CreateBuildingResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q42="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="CreateBuildingResult" nillable="true" type="q42:Task" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>
