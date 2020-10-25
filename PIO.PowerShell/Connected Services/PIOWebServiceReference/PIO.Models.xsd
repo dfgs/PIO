@@ -21,6 +21,8 @@
       <xs:element minOccurs="0" name="HealthPoints" type="xs:int" />
       <xs:element minOccurs="0" name="PlanetID" type="xs:int" />
       <xs:element minOccurs="0" name="RemainingBuildSteps" type="xs:int" />
+      <xs:element minOccurs="0" name="X" type="xs:int" />
+      <xs:element minOccurs="0" name="Y" type="xs:int" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Building" nillable="true" type="tns:Building" />
@@ -68,8 +70,10 @@
   <xs:element name="ArrayOfFactory" nillable="true" type="tns:ArrayOfFactory" />
   <xs:complexType name="Worker">
     <xs:sequence>
-      <xs:element minOccurs="0" name="FactoryID" type="xs:int" />
+      <xs:element minOccurs="0" name="PlanetID" type="xs:int" />
       <xs:element minOccurs="0" name="WorkerID" type="xs:int" />
+      <xs:element minOccurs="0" name="X" type="xs:int" />
+      <xs:element minOccurs="0" name="Y" type="xs:int" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Worker" nillable="true" type="tns:Worker" />
@@ -218,12 +222,13 @@
     <xs:sequence>
       <xs:element minOccurs="0" name="ETA" type="xs:dateTime" />
       <xs:element minOccurs="0" name="FactoryTypeID" nillable="true" type="tns:FactoryTypeIDs" />
-      <xs:element minOccurs="0" name="PlanetID" nillable="true" type="xs:int" />
       <xs:element minOccurs="0" name="ResourceTypeID" nillable="true" type="tns:ResourceTypeIDs" />
       <xs:element minOccurs="0" name="TargetFactoryID" nillable="true" type="xs:int" />
       <xs:element minOccurs="0" name="TaskID" type="xs:int" />
       <xs:element minOccurs="0" name="TaskTypeID" type="tns:TaskTypeIDs" />
       <xs:element minOccurs="0" name="WorkerID" type="xs:int" />
+      <xs:element minOccurs="0" name="X" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="Y" nillable="true" type="xs:int" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Task" nillable="true" type="tns:Task" />

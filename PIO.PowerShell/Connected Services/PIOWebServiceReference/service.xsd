@@ -431,7 +431,8 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="WorkerID" type="xs:int" />
-        <xs:element minOccurs="0" name="TargetFactoryID" type="xs:int" />
+        <xs:element minOccurs="0" name="X" type="xs:int" />
+        <xs:element minOccurs="0" name="Y" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -462,7 +463,6 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="WorkerID" type="xs:int" />
-        <xs:element minOccurs="0" name="PlanetID" type="xs:int" />
         <xs:element xmlns:q41="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="FactoryTypeID" type="q41:FactoryTypeIDs" />
       </xs:sequence>
     </xs:complexType>

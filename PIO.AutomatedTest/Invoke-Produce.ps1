@@ -8,11 +8,19 @@ Describe 'Test Produce module'{
             {Invoke-Produce 999 }  | Should -Throw -ExceptionType ([System.ServiceModel.FaultException])
         }
 
+        It 'Given invalid worker position, it returns not task' {
+            $task=Invoke-MoveTo 1 -1 -1
+            Wait-ETA $task.ETA
+
+            {Invoke-Produce 1 }  | Should -Throw -ExceptionType ([System.ServiceModel.FaultException])
+        }
+
         It 'Given WorkerID, it produces wood' {
             $worker=Get-Worker 1
             $target = ((Get-Factories 1) | Where-Object FactoryTypeID -eq Forest)[0]
-            
-            $task=Invoke-MoveTo $worker.WorkerID $target.FactoryID
+            $building= Get-Building $target.BuildingID
+
+            $task=Invoke-MoveTo $worker.WorkerID $building.X $building.Y
             Wait-ETA $task.ETA
 
             $initialTreeStackQuantity=Get-StackQuantity $target.FactoryID Tree

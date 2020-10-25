@@ -202,10 +202,10 @@ namespace PIO.PowerShell.PIOWebServiceReference {
         System.Threading.Tasks.Task<PIO.Models.Task> ProduceAsync(int WorkerID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/MoveTo", ReplyAction="http://tempuri.org/IPIOService/MoveToResponse")]
-        PIO.Models.Task MoveTo(int WorkerID, int TargetFactoryID);
+        PIO.Models.Task MoveTo(int WorkerID, int X, int Y);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/MoveTo", ReplyAction="http://tempuri.org/IPIOService/MoveToResponse")]
-        System.Threading.Tasks.Task<PIO.Models.Task> MoveToAsync(int WorkerID, int TargetFactoryID);
+        System.Threading.Tasks.Task<PIO.Models.Task> MoveToAsync(int WorkerID, int X, int Y);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/CarryTo", ReplyAction="http://tempuri.org/IPIOService/CarryToResponse")]
         PIO.Models.Task CarryTo(int WorkerID, int TargetFactoryID, PIO.Models.ResourceTypeIDs ResourceTypeID);
@@ -214,10 +214,10 @@ namespace PIO.PowerShell.PIOWebServiceReference {
         System.Threading.Tasks.Task<PIO.Models.Task> CarryToAsync(int WorkerID, int TargetFactoryID, PIO.Models.ResourceTypeIDs ResourceTypeID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/CreateBuilding", ReplyAction="http://tempuri.org/IPIOService/CreateBuildingResponse")]
-        PIO.Models.Task CreateBuilding(int WorkerID, int PlanetID, PIO.Models.FactoryTypeIDs FactoryTypeID);
+        PIO.Models.Task CreateBuilding(int WorkerID, PIO.Models.FactoryTypeIDs FactoryTypeID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/CreateBuilding", ReplyAction="http://tempuri.org/IPIOService/CreateBuildingResponse")]
-        System.Threading.Tasks.Task<PIO.Models.Task> CreateBuildingAsync(int WorkerID, int PlanetID, PIO.Models.FactoryTypeIDs FactoryTypeID);
+        System.Threading.Tasks.Task<PIO.Models.Task> CreateBuildingAsync(int WorkerID, PIO.Models.FactoryTypeIDs FactoryTypeID);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -495,12 +495,12 @@ namespace PIO.PowerShell.PIOWebServiceReference {
             return base.Channel.ProduceAsync(WorkerID);
         }
         
-        public PIO.Models.Task MoveTo(int WorkerID, int TargetFactoryID) {
-            return base.Channel.MoveTo(WorkerID, TargetFactoryID);
+        public PIO.Models.Task MoveTo(int WorkerID, int X, int Y) {
+            return base.Channel.MoveTo(WorkerID, X, Y);
         }
         
-        public System.Threading.Tasks.Task<PIO.Models.Task> MoveToAsync(int WorkerID, int TargetFactoryID) {
-            return base.Channel.MoveToAsync(WorkerID, TargetFactoryID);
+        public System.Threading.Tasks.Task<PIO.Models.Task> MoveToAsync(int WorkerID, int X, int Y) {
+            return base.Channel.MoveToAsync(WorkerID, X, Y);
         }
         
         public PIO.Models.Task CarryTo(int WorkerID, int TargetFactoryID, PIO.Models.ResourceTypeIDs ResourceTypeID) {
@@ -511,12 +511,12 @@ namespace PIO.PowerShell.PIOWebServiceReference {
             return base.Channel.CarryToAsync(WorkerID, TargetFactoryID, ResourceTypeID);
         }
         
-        public PIO.Models.Task CreateBuilding(int WorkerID, int PlanetID, PIO.Models.FactoryTypeIDs FactoryTypeID) {
-            return base.Channel.CreateBuilding(WorkerID, PlanetID, FactoryTypeID);
+        public PIO.Models.Task CreateBuilding(int WorkerID, PIO.Models.FactoryTypeIDs FactoryTypeID) {
+            return base.Channel.CreateBuilding(WorkerID, FactoryTypeID);
         }
         
-        public System.Threading.Tasks.Task<PIO.Models.Task> CreateBuildingAsync(int WorkerID, int PlanetID, PIO.Models.FactoryTypeIDs FactoryTypeID) {
-            return base.Channel.CreateBuildingAsync(WorkerID, PlanetID, FactoryTypeID);
+        public System.Threading.Tasks.Task<PIO.Models.Task> CreateBuildingAsync(int WorkerID, PIO.Models.FactoryTypeIDs FactoryTypeID) {
+            return base.Channel.CreateBuildingAsync(WorkerID, FactoryTypeID);
         }
     }
 }

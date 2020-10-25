@@ -17,10 +17,8 @@ namespace PIO.PowerShell
 		[Parameter(Position = 0, ValueFromPipeline = true, Mandatory = true)]
 		public int WorkerID { get; set; }
 		
-		[Parameter(Position = 1, ValueFromPipeline = true, Mandatory = true)]
-		public int PlanetID { get; set; }
 		
-		[Parameter(Position = 2, ValueFromPipeline = true, Mandatory = true)]
+		[Parameter(Position = 1, ValueFromPipeline = true, Mandatory = true)]
 		public FactoryTypeIDs FactoryTypeID { get; set; }
 		
 	
@@ -30,7 +28,7 @@ namespace PIO.PowerShell
 		{
 			Task result;
 
-			result = Try(()=>client.CreateBuilding(WorkerID,PlanetID,FactoryTypeID));
+			result = Try(()=>client.CreateBuilding(WorkerID,FactoryTypeID));
 			
 			WriteObject(result);
 		}

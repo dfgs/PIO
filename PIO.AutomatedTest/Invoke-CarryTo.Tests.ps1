@@ -11,13 +11,22 @@ Describe 'Test CarryTo module'{
         It 'Given invalid TargetFactoryID, it returns not task' {
             {Invoke-CarryTo 1 999 Tree}  | Should -Throw -ExceptionType ([System.ServiceModel.FaultException])
         }
+
+        It 'Given invalid worker position, it returns not task' {
+            $task=Invoke-MoveTo 1 -1 -1
+            Wait-ETA $task.ETA
+            {Invoke-CarryTo 1 999 Tree}  | Should -Throw -ExceptionType ([System.ServiceModel.FaultException])
+        }
         
         It 'Given WorkerID, TargetFactoryID and ResourceTypeID it carries to new location' {
             $worker=Get-Worker 1
+
             $source = ((Get-Factories 1) | Where-Object FactoryTypeID -eq Forest)[0]
+            $sourceBuilding = Get-Building $source.BuildingID
             $target = ((Get-Factories 1) | Where-Object FactoryTypeID -eq StockPile)[0]
-            
-            $task=Invoke-MoveTo $worker.WorkerID $source.FactoryID
+            $targetBuilding = Get-Building $target.BuildingID
+
+            $task=Invoke-MoveTo $worker.WorkerID $sourceBuilding.X $sourceBuilding.Y
             Wait-ETA $task.ETA
 
             $sourceQuantity=Get-StackQuantity $source.FactoryID Tree
@@ -31,7 +40,8 @@ Describe 'Test CarryTo module'{
             $result | Should -BeNullOrEmpty
       
             $result=Get-Worker 1
-            $result.FactoryID | Should -Be $target.FactoryID
+            $result.X | Should -Be $targetBuilding.X
+            $result.Y | Should -Be $targetBuilding.Y
  
             $sourceNewQuantity=Get-StackQuantity $source.FactoryID Tree
             $targetNewQuantity=Get-StackQuantity $target.FactoryID Tree
