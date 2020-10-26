@@ -144,10 +144,11 @@ namespace PIO.UnitTest.ServerLib.Modules
 			database = new MockedDatabase<Task>(false, 1, (t) => new Task() { TaskID = t });
 			module = new TaskModule(NullLogger.Instance, database);
 			eta = DateTime.Now;
-			result = module.CreateTask(TaskTypeIDs.Idle,1, 3,4,2, ResourceTypeIDs.Coal, null, eta);
+			result = module.CreateTask(TaskTypeIDs.Idle,1, 3,4,5,2, ResourceTypeIDs.Coal, null, eta);
 			Assert.IsNotNull(result);
 			Assert.AreEqual(1, result.WorkerID);
-			Assert.AreEqual(2, result.TargetFactoryID);
+			Assert.AreEqual(5, result.BuildingID);
+			Assert.AreEqual(2, result.FactoryID);
 			Assert.AreEqual(3, result.X);
 			Assert.AreEqual(4, result.Y);
 			Assert.AreEqual(ResourceTypeIDs.Coal, result.ResourceTypeID);
@@ -167,7 +168,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			logger = new MemoryLogger(new DefaultLogFormatter());
 			database = new MockedDatabase<Task>(true, 1, (t) => new Task() { TaskID = t });
 			module = new TaskModule(logger, database);
-			Assert.ThrowsException<PIODataException>(() => module.CreateTask(TaskTypeIDs.Idle, 1, 3, 4, null, ResourceTypeIDs.Coal, null, DateTime.Now));
+			Assert.ThrowsException<PIODataException>(() => module.CreateTask(TaskTypeIDs.Idle, 1, 3, 4,5, null, ResourceTypeIDs.Coal, null, DateTime.Now));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
 		}
 

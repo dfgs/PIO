@@ -24,7 +24,9 @@ namespace PIO.Models
 		[DataMember]
 		public int? Y { get; set; }
 		[DataMember]
-		public int? TargetFactoryID { get; set; }
+		public int? BuildingID { get; set; }
+		[DataMember]
+		public int? FactoryID { get; set; }
 		[DataMember]
 		public ResourceTypeIDs? ResourceTypeID { get; set; }
 		[DataMember]

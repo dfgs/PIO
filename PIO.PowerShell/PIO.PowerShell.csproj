@@ -80,6 +80,7 @@
     <Compile Include="DataCmdlet\GetFactoriesCmdlet.cs" />
     <Compile Include="DataCmdlet\GetPlanetsCmdlet.cs" />
     <Compile Include="DataCmdlet\GetPlanetCmdlet.cs" />
+    <Compile Include="FunctionalCmdlet\InvokeBuildFactory.cs" />
     <Compile Include="FunctionalCmdlet\InvokeCreateBuilding.cs" />
     <Compile Include="FunctionalCmdlet\InvokeCarryToCmdlet.cs" />
     <Compile Include="FunctionalCmdlet\InvokeMoveToCmdlet.cs" />

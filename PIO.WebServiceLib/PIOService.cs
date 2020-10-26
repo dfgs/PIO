@@ -285,7 +285,14 @@ namespace PIO.WebServiceLib
 		{
 			LogEnter();
 
-			return Try(() => factoryBuilderModule.BeginCreateBuilding(WorkerID,FactoryTypeID) ).OrThrow(GenerateFaultException);
+			return Try(() => factoryBuilderModule.BeginCreateBuilding(WorkerID, FactoryTypeID)).OrThrow(GenerateFaultException);
+		}
+
+		public Task BuildFactory(int WorkerID, int FactoryID)
+		{
+			LogEnter();
+
+			return Try(() => factoryBuilderModule.BeginBuild(WorkerID, FactoryID)).OrThrow(GenerateFaultException);
 		}
 
 		#endregion

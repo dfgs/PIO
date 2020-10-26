@@ -76,17 +76,17 @@ namespace PIO.ServerLib.Modules
 			return item;
 		}
 
-		
-		/*public void SetHealthPoints(int BuildingID,int HealthPoints)
+
+		public void UpdateBuilding(int BuildingID, int RemainingBuildSteps)
 		{
 			IUpdate update;
 
 			LogEnter();
 
-			Log(LogLevels.Information, $"Updating Building table (BuildingID={BuildingID}, HealthPoints={HealthPoints})");
-			update = new Update(PIODB.BuildingTable).Set(BuildingTable.HealthPoints, HealthPoints).Where(BuildingTable.BuildingID.IsEqualTo(BuildingID));
+			Log(LogLevels.Information, $"Updating Building table (StackID={BuildingID}, RemainingBuildSteps={RemainingBuildSteps})");
+			update = new Update(PIODB.BuildingTable).Set(BuildingTable.RemainingBuildSteps, RemainingBuildSteps).Where(BuildingTable.BuildingID.IsEqualTo(BuildingID));
 			Try(update).OrThrow<PIODataException>("Failed to update");
-		}*/
+		}
 
 
 	}

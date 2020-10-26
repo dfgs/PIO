@@ -15,7 +15,7 @@ namespace PIO.Models.Modules
 		Task[] GetTasks(int WorkerID);
 		Task GetLastTask(int WorkerID);
 
-		Task CreateTask(TaskTypeIDs TaskTypeID, int WorkerID, int? X, int? Y, int? TargetFactoryID, ResourceTypeIDs? ResourceTypeID, FactoryTypeIDs? FactoryTypeID, DateTime ETA);
+		Task CreateTask(TaskTypeIDs TaskTypeID, int WorkerID, int? X, int? Y,int? BuildingID, int? FactoryID, ResourceTypeIDs? ResourceTypeID, FactoryTypeIDs? FactoryTypeID, DateTime ETA);
 		void DeleteTask(int TaskID);
 	}
 }

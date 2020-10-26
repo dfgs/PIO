@@ -230,6 +230,12 @@ namespace PIO.PowerShell.PIOWebServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/CreateBuilding", ReplyAction="http://tempuri.org/IPIOService/CreateBuildingResponse")]
         System.Threading.Tasks.Task<PIO.Models.Task> CreateBuildingAsync(int WorkerID, PIO.Models.FactoryTypeIDs FactoryTypeID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/BuildFactory", ReplyAction="http://tempuri.org/IPIOService/BuildFactoryResponse")]
+        PIO.Models.Task BuildFactory(int WorkerID, int FactoryID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/BuildFactory", ReplyAction="http://tempuri.org/IPIOService/BuildFactoryResponse")]
+        System.Threading.Tasks.Task<PIO.Models.Task> BuildFactoryAsync(int WorkerID, int FactoryID);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -545,6 +551,14 @@ namespace PIO.PowerShell.PIOWebServiceReference {
         
         public System.Threading.Tasks.Task<PIO.Models.Task> CreateBuildingAsync(int WorkerID, PIO.Models.FactoryTypeIDs FactoryTypeID) {
             return base.Channel.CreateBuildingAsync(WorkerID, FactoryTypeID);
+        }
+        
+        public PIO.Models.Task BuildFactory(int WorkerID, int FactoryID) {
+            return base.Channel.BuildFactory(WorkerID, FactoryID);
+        }
+        
+        public System.Threading.Tasks.Task<PIO.Models.Task> BuildFactoryAsync(int WorkerID, int FactoryID) {
+            return base.Channel.BuildFactoryAsync(WorkerID, FactoryID);
         }
     }
 }

@@ -13,6 +13,7 @@ namespace PIO.Models.Modules
 
 		Task BeginCreateBuilding(int WorkerID,  FactoryTypeIDs FactoryTypeID);
 		void EndCreateBuilding(int WorkerID, FactoryTypeIDs FactoryTypeID);
-		void Build(int FactoryID);
+		Task BeginBuild(int WorkerID, int FactoryID);
+		void EndBuild(int WorkerID, int FactoryID);
 	}
 }

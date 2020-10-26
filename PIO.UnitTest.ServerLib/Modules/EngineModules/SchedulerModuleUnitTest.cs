@@ -74,6 +74,9 @@ namespace PIO.UnitTest.ServerLib.Modules
 			module = new SchedulerModule(NullLogger.Instance, null, new MockedIdlerModule(), new MockedProducerModule(), new MockedMoverModule(), new MockedCarrierModule(), taskModule);
 			taskModule.BeginCreateBuilding(1, FactoryTypeIDs.Stockpile);
 			Assert.AreEqual(1, module.Count);
+
+			taskModule.BeginBuild(1, 1);
+			Assert.AreEqual(2, module.Count);
 		}
 	}
 }

@@ -43,9 +43,10 @@ namespace PIO.UnitTest.WebServiceLib.Mocks
 			return Generate((t) => new Building() { BuildingID = t,PlanetID=PlanetID });
 		}
 
-		public void SetHealthPoints(int BuildingID, int HealthPoints)
+		public void UpdateBuilding(int BuildingID, int RemainingBuildSteps)
 		{
-			throw new NotImplementedException();
+			throw (new NotImplementedException());
 		}
+
 	}
 }

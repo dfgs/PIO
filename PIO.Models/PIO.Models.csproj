@@ -47,6 +47,7 @@
     <Compile Include="Exceptions\EngineExceptions\PIOInternalErrorException.cs" />
     <Compile Include="Exceptions\EngineExceptions\PIOEngineException.cs" />
     <Compile Include="Exceptions\FunctionalExceptions\PIONoResourcesException.cs" />
+    <Compile Include="Exceptions\FunctionalExceptions\PIOInvalidOperationException.cs" />
     <Compile Include="Exceptions\FunctionalExceptions\PIONotFoundException.cs" />
     <Compile Include="Exceptions\PIOException.cs" />
     <Compile Include="Exceptions\FunctionalExceptions\PIOFunctionalException.cs" />

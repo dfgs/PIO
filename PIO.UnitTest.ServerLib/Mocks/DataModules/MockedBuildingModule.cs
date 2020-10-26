@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace PIO.UnitTest.ServerLib.Mocks
 {
-	public class MockedBuildingModule :MockedDatabaseModule<Building>, IBuildingModule
+	public class MockedBuildingModule : MockedDatabaseModule<Building>, IBuildingModule
 	{
 
-		public MockedBuildingModule(bool ThrowException, params Building[] Items):base(ThrowException,Items)
+		public MockedBuildingModule(bool ThrowException, params Building[] Items) : base(ThrowException, Items)
 		{
 		}
 
@@ -27,22 +27,27 @@ namespace PIO.UnitTest.ServerLib.Mocks
 			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
 			return items.FirstOrDefault(item => item.BuildingID == BuildingID);
 		}
-		public Building GetBuilding(int X,int Y)
+		public Building GetBuilding(int X, int Y)
 		{
 			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
 			return items.FirstOrDefault(item => (item.X == X) && (item.Y == Y));
 		}
 
-		public Building CreateBuilding(int PlanetID,int X,int Y, BuildingTypeIDs BuildingTypeID, int RemainingBuildSteps)
+		public Building CreateBuilding(int PlanetID, int X, int Y, BuildingTypeIDs BuildingTypeID, int RemainingBuildSteps)
 		{
 			Building result;
 
 			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
-			result = new Building() { BuildingID = items.Count, PlanetID = PlanetID, X = X,Y=Y };
+			result = new Building() { BuildingID = items.Count, PlanetID = PlanetID, X = X, Y = Y };
 			items.Add(result);
 			return result;
 		}
 
+		public void UpdateBuilding(int BuildingID, int RemainingBuildSteps)
+		{
+			items.FirstOrDefault(item => item.BuildingID == BuildingID).RemainingBuildSteps = RemainingBuildSteps;
+		}
 
 	}
+
 }

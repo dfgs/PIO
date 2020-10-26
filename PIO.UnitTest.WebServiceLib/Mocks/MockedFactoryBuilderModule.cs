@@ -32,9 +32,18 @@ namespace PIO.UnitTest.WebServiceLib.Mocks
 			throw new NotImplementedException();
 		}
 
-		public void Build(int FactoryID)
+		public Task BeginBuild(int WorkerID, int FactoryID)
+		{
+			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
+			Task task = new Task() { WorkerID = WorkerID, ETA = DateTime.Now, FactoryID = FactoryID };
+			TaskCreated?.Invoke(this, task);
+			return task;
+		}
+
+		public void EndBuild(int WorkerID, int BuildingID)
 		{
 			throw new NotImplementedException();
 		}
+
 	}
 }

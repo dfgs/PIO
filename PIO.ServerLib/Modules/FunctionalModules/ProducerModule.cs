@@ -45,13 +45,8 @@ namespace PIO.ServerLib.Modules
 
 			worker = AssertExists(() => workerModule.GetWorker(WorkerID), $"WorkerID = {WorkerID}");
 			factory = AssertExists(() => factoryModule.GetFactory(worker.X, worker.Y), $"X = {worker.X}, Y = {worker.Y}");
-			
-
-			Log(LogLevels.Information, $"Get ingredients (FactoryTypeID={factory.FactoryTypeID})");
-			ingredients = Try(() => ingredientModule.GetIngredients(factory.FactoryTypeID)).OrThrow<PIOInternalErrorException>("Failed to get ingredients");
-			
-			Log(LogLevels.Information, $"Get products (FactoryTypeID={factory.FactoryTypeID})");
-			products = Try(() => productModule.GetProducts(factory.FactoryTypeID)).OrThrow<PIOInternalErrorException>("Failed to get products");
+			ingredients = AssertExists(() => ingredientModule.GetIngredients(factory.FactoryTypeID), $"FactoryTypeID = {factory.FactoryTypeID}");
+			products = AssertExists(() => productModule.GetProducts(factory.FactoryTypeID), $"FactoryTypeID = {factory.FactoryTypeID}");
 			if (products.Length == 0)
 			{
 				Log(LogLevels.Warning, $"This factory has no product (FactoryTypeID={factory.FactoryTypeID})");
@@ -81,7 +76,7 @@ namespace PIO.ServerLib.Modules
 			
 			
 			Log(LogLevels.Information, $"Creating task (WorkerID={WorkerID})");
-			task=Try(() => taskModule.CreateTask(TaskTypeIDs.Produce, WorkerID, null,null, null, null, null, GetLastETA(WorkerID).AddSeconds(products[0].Duration))).OrThrow<PIOInternalErrorException>("Failed to create task");
+			task=Try(() => taskModule.CreateTask(TaskTypeIDs.Produce, WorkerID, null, null,null, null, null, null, GetLastETA(WorkerID).AddSeconds(products[0].Duration))).OrThrow<PIOInternalErrorException>("Failed to create task");
 
 			OnTaskCreated(task);
 

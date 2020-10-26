@@ -156,6 +156,7 @@
       <xs:enumeration value="MoveTo" />
       <xs:enumeration value="CarryTo" />
       <xs:enumeration value="CreateBuilding" />
+      <xs:enumeration value="Build" />
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="TaskTypeIDs" nillable="true" type="tns:TaskTypeIDs" />
@@ -220,10 +221,11 @@
   <xs:element name="ArrayOfProduct" nillable="true" type="tns:ArrayOfProduct" />
   <xs:complexType name="Task">
     <xs:sequence>
+      <xs:element minOccurs="0" name="BuildingID" nillable="true" type="xs:int" />
       <xs:element minOccurs="0" name="ETA" type="xs:dateTime" />
+      <xs:element minOccurs="0" name="FactoryID" nillable="true" type="xs:int" />
       <xs:element minOccurs="0" name="FactoryTypeID" nillable="true" type="tns:FactoryTypeIDs" />
       <xs:element minOccurs="0" name="ResourceTypeID" nillable="true" type="tns:ResourceTypeIDs" />
-      <xs:element minOccurs="0" name="TargetFactoryID" nillable="true" type="xs:int" />
       <xs:element minOccurs="0" name="TaskID" type="xs:int" />
       <xs:element minOccurs="0" name="TaskTypeID" type="tns:TaskTypeIDs" />
       <xs:element minOccurs="0" name="WorkerID" type="xs:int" />

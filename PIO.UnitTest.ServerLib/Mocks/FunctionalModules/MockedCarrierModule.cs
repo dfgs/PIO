@@ -13,7 +13,7 @@ namespace PIO.UnitTest.ServerLib.Mocks
 
 		public Task BeginCarryTo(int WorkerID, int TargetFactoryID, ResourceTypeIDs ResourceTypeID)
 		{
-			Task task = new Models.Task() { WorkerID = WorkerID,TargetFactoryID=TargetFactoryID,ResourceTypeID=ResourceTypeID };
+			Task task = new Models.Task() { WorkerID = WorkerID,FactoryID=TargetFactoryID,ResourceTypeID=ResourceTypeID };
 			TaskCreated(this, task);
 			return task;
 		}
