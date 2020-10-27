@@ -111,8 +111,8 @@ namespace PIO.ServerLib
 					#endregion
 
 					#region create Product
-					yield return new Insert().Into(PIODB.ProductTable).Set(ProductTable.FactoryTypeID, FactoryTypeIDs.Forest).Set(ProductTable.ResourceTypeID, ResourceTypeIDs.Wood).Set(ProductTable.Quantity, 2).Set(ProductTable.Duration, 60);
-					yield return new Insert().Into(PIODB.ProductTable).Set(ProductTable.FactoryTypeID, FactoryTypeIDs.Sawmill).Set(ProductTable.ResourceTypeID, ResourceTypeIDs.Plank).Set(ProductTable.Quantity, 2).Set(ProductTable.Duration, 60);
+					yield return new Insert().Into(PIODB.ProductTable).Set(ProductTable.FactoryTypeID, FactoryTypeIDs.Forest).Set(ProductTable.ResourceTypeID, ResourceTypeIDs.Wood).Set(ProductTable.Quantity, 2).Set(ProductTable.Duration, 6);
+					yield return new Insert().Into(PIODB.ProductTable).Set(ProductTable.FactoryTypeID, FactoryTypeIDs.Sawmill).Set(ProductTable.ResourceTypeID, ResourceTypeIDs.Plank).Set(ProductTable.Quantity, 2).Set(ProductTable.Duration, 6);
 					#endregion
 
 					#region create startup Planet
