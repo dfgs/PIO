@@ -25,14 +25,14 @@ namespace PIO.UnitTest.ServerLib.Mocks
 		{
 		}
 
-		public Task BeginBuild(int WorkerID, int BuildingID)
+		public Task BeginBuild(int WorkerID)
 		{
-			Task task = new Models.Task() { WorkerID = WorkerID, BuildingID = BuildingID};
+			Task task = new Models.Task() { WorkerID = WorkerID};
 			TaskCreated(this, task);
 			return task;
 		}
 
-		public void EndBuild(int WorkerID, int BuildingID)
+		public void EndBuild(int WorkerID)
 		{
 			throw new NotImplementedException();
 		}

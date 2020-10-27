@@ -75,7 +75,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			taskModule.BeginCreateBuilding(1, FactoryTypeIDs.Stockpile);
 			Assert.AreEqual(1, module.Count);
 
-			taskModule.BeginBuild(1, 1);
+			taskModule.BeginBuild(1);
 			Assert.AreEqual(2, module.Count);
 		}
 	}

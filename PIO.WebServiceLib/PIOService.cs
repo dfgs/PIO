@@ -108,10 +108,10 @@ namespace PIO.WebServiceLib
 			LogEnter();
 			return Try(() => buildingModule.GetBuilding(BuildingID)).OrThrow(GenerateFaultException);
 		}
-		public Building GetBuildingAtPos(int X,int Y)
+		public Building GetBuildingAtPos(int PlanetID, int X,int Y)
 		{
 			LogEnter();
-			return Try(() => buildingModule.GetBuilding(X,Y)).OrThrow(GenerateFaultException);
+			return Try(() => buildingModule.GetBuilding(PlanetID, X,Y)).OrThrow(GenerateFaultException);
 		}
 		public Building[] GetBuildings(int PlanetID)
 		{
@@ -123,10 +123,10 @@ namespace PIO.WebServiceLib
 			LogEnter();
 			return Try(() => factoryModule.GetFactory(FactoryID)).OrThrow(GenerateFaultException);
 		}
-		public Factory GetFactoryAtPos(int X, int Y)
+		public Factory GetFactoryAtPos(int PlanetID, int X, int Y)
 		{
 			LogEnter();
-			return Try(() => factoryModule.GetFactory(X,Y)).OrThrow(GenerateFaultException);
+			return Try(() => factoryModule.GetFactory(PlanetID, X,Y)).OrThrow(GenerateFaultException);
 		}
 		public Factory[] GetFactories(int PlanetID)
 		{
@@ -288,11 +288,11 @@ namespace PIO.WebServiceLib
 			return Try(() => factoryBuilderModule.BeginCreateBuilding(WorkerID, FactoryTypeID)).OrThrow(GenerateFaultException);
 		}
 
-		public Task BuildFactory(int WorkerID, int FactoryID)
+		public Task BuildFactory(int WorkerID)
 		{
 			LogEnter();
 
-			return Try(() => factoryBuilderModule.BeginBuild(WorkerID, FactoryID)).OrThrow(GenerateFaultException);
+			return Try(() => factoryBuilderModule.BeginBuild(WorkerID)).OrThrow(GenerateFaultException);
 		}
 
 		#endregion

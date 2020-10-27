@@ -9,6 +9,10 @@ namespace PIO.UnitTest.ServerLib.Mocks
 	public class MockedDatabaseModule<T>
 	{
 		protected List<T> items;
+		public int Count
+		{
+			get { return items.Count; }
+		}
 		public bool ThrowException
 		{
 			get;

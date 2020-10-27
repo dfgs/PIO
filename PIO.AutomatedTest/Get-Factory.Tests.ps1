@@ -18,7 +18,7 @@ Describe 'Test Factory module'{
             $result | Should -Not -BeNullOrEmpty
         }
         It 'Given X and Y, it returns 1 Factory' {
-            $result = Get-Factory -X 0 -Y 0
+            $result = Get-Factory -PlanetID 1 -X 0 -Y 0
             $result | Should -Not -BeNullOrEmpty
         }
         It 'Given incorrect FactoryID, it returns 0 Factory' {

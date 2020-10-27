@@ -85,6 +85,7 @@
     <Compile Include="FunctionalCmdlet\InvokeCarryToCmdlet.cs" />
     <Compile Include="FunctionalCmdlet\InvokeMoveToCmdlet.cs" />
     <Compile Include="FunctionalCmdlet\InvokeIdleCmdlet.cs" />
+    <Compile Include="FunctionalCmdlet\WaitTaskCmdlet.cs" />
     <Compile Include="FunctionalCmdlet\InvokeProduceCmdlet.cs" />
     <Compile Include="FunctionalCmdlet\AssertHasEnoughResourcesToProduceCmdlet.cs" />
     <Compile Include="PIOCmdLet.cs" />

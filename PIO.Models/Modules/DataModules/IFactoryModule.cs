@@ -11,11 +11,11 @@ namespace PIO.Models.Modules
 	public interface IFactoryModule : IDatabaseModule
 	{
 		Factory GetFactory(int FactoryID);
-		Factory GetFactory(int X, int Y);
+		Factory GetFactory(int PlanetID, int X, int Y);
 		Factory[] GetFactories(int PlanetID);
 
 		//void SetHealthPoints(int FactoryID,int HealthPoints);
-		/*int CreateFactory(int PlanetID,int FactoryTypeID,int StateID);
-		void SetState(int FactoryID, int StateID);*/
+		Factory CreateFactory(int BuildingID, FactoryTypeIDs FactoryTypeID);
+
 	}
 }

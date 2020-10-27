@@ -44,7 +44,7 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 
 			worker = AssertExists(() => workerModule.GetWorker(WorkerID), $"WorkerID = {WorkerID}");
-			factory = AssertExists(() => factoryModule.GetFactory(worker.X, worker.Y), $"X = {worker.X}, Y = {worker.Y}");
+			factory = AssertExists(() => factoryModule.GetFactory(worker.PlanetID,worker.X, worker.Y), $"X = {worker.X}, Y = {worker.Y}");
 			ingredients = AssertExists(() => ingredientModule.GetIngredients(factory.FactoryTypeID), $"FactoryTypeID = {factory.FactoryTypeID}");
 			products = AssertExists(() => productModule.GetProducts(factory.FactoryTypeID), $"FactoryTypeID = {factory.FactoryTypeID}");
 			if (products.Length == 0)
@@ -96,7 +96,7 @@ namespace PIO.ServerLib.Modules
 			worker = AssertExists(() => workerModule.GetWorker(WorkerID), $"WorkerID = {WorkerID}");
 
 
-			factory = AssertExists(() => factoryModule.GetFactory(worker.X, worker.Y), $"X = {worker.X}, Y = {worker.Y}");
+			factory = AssertExists(() => factoryModule.GetFactory(worker.PlanetID, worker.X, worker.Y), $"X = {worker.X}, Y = {worker.Y}");
 
 			Log(LogLevels.Information, $"Get stacks (FactoryID={factory.FactoryID})");
 			stacks = Try(() => stackModule.GetStacks(factory.FactoryID)).OrThrow<PIOInternalErrorException>("Failed to get stacks");

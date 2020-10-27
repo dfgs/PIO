@@ -36,6 +36,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			result = module.BeginMoveTo(1, 2,2);
 
 			Assert.IsNotNull(result);
+			Assert.AreEqual(TaskTypeIDs.MoveTo, result.TaskTypeID);
 			Assert.AreEqual(1, result.WorkerID);
 			Assert.AreEqual(1, schedulerModule.Count);
 		}
@@ -57,11 +58,13 @@ namespace PIO.UnitTest.ServerLib.Modules
 
 			result = module.BeginMoveTo(1, 2, 2);
 			Assert.IsNotNull(result);
+			Assert.AreEqual(TaskTypeIDs.MoveTo, result.TaskTypeID);
 			Assert.AreEqual(1, result.WorkerID);
 			Assert.AreEqual(1, schedulerModule.Count);
 			
 			result2 = module.BeginMoveTo(1, 2, 2);
 			Assert.IsNotNull(result);
+			Assert.AreEqual(TaskTypeIDs.MoveTo, result2.TaskTypeID);
 			Assert.AreEqual(1, result.WorkerID);
 			Assert.AreEqual(2, schedulerModule.Count);
 

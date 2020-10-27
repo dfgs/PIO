@@ -11,6 +11,7 @@ namespace PIO.UnitTest.ServerLib.Mocks
 {
 	public class MockedBuildingModule : MockedDatabaseModule<Building>, IBuildingModule
 	{
+	
 
 		public MockedBuildingModule(bool ThrowException, params Building[] Items) : base(ThrowException, Items)
 		{
@@ -27,7 +28,7 @@ namespace PIO.UnitTest.ServerLib.Mocks
 			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
 			return items.FirstOrDefault(item => item.BuildingID == BuildingID);
 		}
-		public Building GetBuilding(int X, int Y)
+		public Building GetBuilding(int PlanetID, int X, int Y)
 		{
 			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
 			return items.FirstOrDefault(item => (item.X == X) && (item.Y == Y));

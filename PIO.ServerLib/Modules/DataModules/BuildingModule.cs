@@ -35,7 +35,7 @@ namespace PIO.ServerLib.Modules
 
 			return TrySelectFirst<BuildingTable, Building>(query).OrThrow<PIODataException>("Failed to query");
 		}
-		public Building GetBuilding(int X,int Y)
+		public Building GetBuilding(int PlanetID, int X,int Y)
 		{
 			ISelect query;
 			LogEnter();
@@ -43,7 +43,7 @@ namespace PIO.ServerLib.Modules
 			Log(LogLevels.Information, $"Querying Building table (X={X}, Y={Y})");
 			query = new Select(BuildingTable.BuildingID, BuildingTable.PlanetID, BuildingTable.X, BuildingTable.Y, BuildingTable.BuildingTypeID, BuildingTable.HealthPoints, BuildingTable.RemainingBuildSteps)
 				.From(PIODB.BuildingTable)
-				.Where(BuildingTable.X.IsEqualTo(X).And(BuildingTable.Y.IsEqualTo(Y)));
+				.Where(BuildingTable.X.IsEqualTo(X).And(BuildingTable.Y.IsEqualTo(Y)).And(BuildingTable.PlanetID.IsEqualTo(PlanetID)));
 
 			return TrySelectFirst<BuildingTable, Building>(query).OrThrow<PIODataException>("Failed to query");
 		}

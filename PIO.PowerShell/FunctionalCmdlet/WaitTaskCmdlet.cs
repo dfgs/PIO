@@ -7,28 +7,26 @@ using System.Management.Automation;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.Text;
+using System.Threading;
 
 namespace PIO.PowerShell
 {
-	[Cmdlet(VerbsLifecycle.Invoke, "BuildFactory")]
+	[Cmdlet(VerbsLifecycle.Wait, "Task")]
 	[OutputType(typeof(Task))]
-	public class InvokeBuildFactoryCmdlet : PIOCmdLet
+	public class WaitTaskCmdlet : PIOCmdLet
 	{
 		[Parameter(Position = 0, ValueFromPipeline = true, Mandatory = true)]
-		public int WorkerID { get; set; }
-		
-		
-		
+		public Task Task { get; set; }
 	
+
+
 
 
 		protected override void ProcessRecord()
 		{
-			Task result;
-
-			result = Try(()=>client.BuildFactory(WorkerID));
+			if (Task!=null) Thread.Sleep((int)(Task.ETA - DateTime.Now).TotalMilliseconds+1000);
 			
-			WriteObject(result);
+			WriteObject(Task);
 		}
 
 	

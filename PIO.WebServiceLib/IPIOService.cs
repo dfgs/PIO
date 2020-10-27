@@ -20,13 +20,13 @@ namespace PIO.WebServiceLib
 		[OperationContract]
 		Building GetBuilding(int BuildingID);
 		[OperationContract]
-		Building GetBuildingAtPos(int X, int Y);
+		Building GetBuildingAtPos(int PlanetID, int X, int Y);
 		[OperationContract]
 		Building[] GetBuildings(int PlanetID);
 		[OperationContract]
 		Factory GetFactory(int FactoryID);
 		[OperationContract]
-		Factory GetFactoryAtPos(int X,int Y);
+		Factory GetFactoryAtPos(int PlanetID, int X,int Y);
 		[OperationContract]
 		Factory[] GetFactories(int PlanetID);
 		[OperationContract]
@@ -89,7 +89,7 @@ namespace PIO.WebServiceLib
 		[OperationContract]
 		Task CreateBuilding(int WorkerID, FactoryTypeIDs FactoryTypeID);
 		[OperationContract]
-		Task BuildFactory(int WorkerID, int FactoryID);
+		Task BuildFactory(int WorkerID);
 		#endregion
 
 	}

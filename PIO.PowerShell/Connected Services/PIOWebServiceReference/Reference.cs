@@ -34,10 +34,10 @@ namespace PIO.PowerShell.PIOWebServiceReference {
         System.Threading.Tasks.Task<PIO.Models.Building> GetBuildingAsync(int BuildingID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetBuildingAtPos", ReplyAction="http://tempuri.org/IPIOService/GetBuildingAtPosResponse")]
-        PIO.Models.Building GetBuildingAtPos(int X, int Y);
+        PIO.Models.Building GetBuildingAtPos(int PlanetID, int X, int Y);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetBuildingAtPos", ReplyAction="http://tempuri.org/IPIOService/GetBuildingAtPosResponse")]
-        System.Threading.Tasks.Task<PIO.Models.Building> GetBuildingAtPosAsync(int X, int Y);
+        System.Threading.Tasks.Task<PIO.Models.Building> GetBuildingAtPosAsync(int PlanetID, int X, int Y);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetBuildings", ReplyAction="http://tempuri.org/IPIOService/GetBuildingsResponse")]
         PIO.Models.Building[] GetBuildings(int PlanetID);
@@ -52,10 +52,10 @@ namespace PIO.PowerShell.PIOWebServiceReference {
         System.Threading.Tasks.Task<PIO.Models.Factory> GetFactoryAsync(int FactoryID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetFactoryAtPos", ReplyAction="http://tempuri.org/IPIOService/GetFactoryAtPosResponse")]
-        PIO.Models.Factory GetFactoryAtPos(int X, int Y);
+        PIO.Models.Factory GetFactoryAtPos(int PlanetID, int X, int Y);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetFactoryAtPos", ReplyAction="http://tempuri.org/IPIOService/GetFactoryAtPosResponse")]
-        System.Threading.Tasks.Task<PIO.Models.Factory> GetFactoryAtPosAsync(int X, int Y);
+        System.Threading.Tasks.Task<PIO.Models.Factory> GetFactoryAtPosAsync(int PlanetID, int X, int Y);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetFactories", ReplyAction="http://tempuri.org/IPIOService/GetFactoriesResponse")]
         PIO.Models.Factory[] GetFactories(int PlanetID);
@@ -232,10 +232,10 @@ namespace PIO.PowerShell.PIOWebServiceReference {
         System.Threading.Tasks.Task<PIO.Models.Task> CreateBuildingAsync(int WorkerID, PIO.Models.FactoryTypeIDs FactoryTypeID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/BuildFactory", ReplyAction="http://tempuri.org/IPIOService/BuildFactoryResponse")]
-        PIO.Models.Task BuildFactory(int WorkerID, int FactoryID);
+        PIO.Models.Task BuildFactory(int WorkerID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/BuildFactory", ReplyAction="http://tempuri.org/IPIOService/BuildFactoryResponse")]
-        System.Threading.Tasks.Task<PIO.Models.Task> BuildFactoryAsync(int WorkerID, int FactoryID);
+        System.Threading.Tasks.Task<PIO.Models.Task> BuildFactoryAsync(int WorkerID);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -289,12 +289,12 @@ namespace PIO.PowerShell.PIOWebServiceReference {
             return base.Channel.GetBuildingAsync(BuildingID);
         }
         
-        public PIO.Models.Building GetBuildingAtPos(int X, int Y) {
-            return base.Channel.GetBuildingAtPos(X, Y);
+        public PIO.Models.Building GetBuildingAtPos(int PlanetID, int X, int Y) {
+            return base.Channel.GetBuildingAtPos(PlanetID, X, Y);
         }
         
-        public System.Threading.Tasks.Task<PIO.Models.Building> GetBuildingAtPosAsync(int X, int Y) {
-            return base.Channel.GetBuildingAtPosAsync(X, Y);
+        public System.Threading.Tasks.Task<PIO.Models.Building> GetBuildingAtPosAsync(int PlanetID, int X, int Y) {
+            return base.Channel.GetBuildingAtPosAsync(PlanetID, X, Y);
         }
         
         public PIO.Models.Building[] GetBuildings(int PlanetID) {
@@ -313,12 +313,12 @@ namespace PIO.PowerShell.PIOWebServiceReference {
             return base.Channel.GetFactoryAsync(FactoryID);
         }
         
-        public PIO.Models.Factory GetFactoryAtPos(int X, int Y) {
-            return base.Channel.GetFactoryAtPos(X, Y);
+        public PIO.Models.Factory GetFactoryAtPos(int PlanetID, int X, int Y) {
+            return base.Channel.GetFactoryAtPos(PlanetID, X, Y);
         }
         
-        public System.Threading.Tasks.Task<PIO.Models.Factory> GetFactoryAtPosAsync(int X, int Y) {
-            return base.Channel.GetFactoryAtPosAsync(X, Y);
+        public System.Threading.Tasks.Task<PIO.Models.Factory> GetFactoryAtPosAsync(int PlanetID, int X, int Y) {
+            return base.Channel.GetFactoryAtPosAsync(PlanetID, X, Y);
         }
         
         public PIO.Models.Factory[] GetFactories(int PlanetID) {
@@ -553,12 +553,12 @@ namespace PIO.PowerShell.PIOWebServiceReference {
             return base.Channel.CreateBuildingAsync(WorkerID, FactoryTypeID);
         }
         
-        public PIO.Models.Task BuildFactory(int WorkerID, int FactoryID) {
-            return base.Channel.BuildFactory(WorkerID, FactoryID);
+        public PIO.Models.Task BuildFactory(int WorkerID) {
+            return base.Channel.BuildFactory(WorkerID);
         }
         
-        public System.Threading.Tasks.Task<PIO.Models.Task> BuildFactoryAsync(int WorkerID, int FactoryID) {
-            return base.Channel.BuildFactoryAsync(WorkerID, FactoryID);
+        public System.Threading.Tasks.Task<PIO.Models.Task> BuildFactoryAsync(int WorkerID) {
+            return base.Channel.BuildFactoryAsync(WorkerID);
         }
     }
 }

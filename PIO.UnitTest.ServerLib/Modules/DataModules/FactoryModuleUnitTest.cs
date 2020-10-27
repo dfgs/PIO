@@ -36,7 +36,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 
 			database = new MockedDatabase<Factory>(false, 1, (t) => new Factory() { FactoryID = t });
 			module = new FactoryModule(NullLogger.Instance, database);
-			result = module.GetFactory(3,4);
+			result = module.GetFactory(1, 3,4);
 			Assert.IsNotNull(result);
 			Assert.AreEqual(0, result.FactoryID);
 		}
@@ -49,7 +49,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 
 			database = new MockedDatabase<Factory>(false, 0, (t) => new Factory() { FactoryID = t });
 			module = new FactoryModule(NullLogger.Instance, database);
-			result = module.GetFactory(3,4);
+			result = module.GetFactory(1, 3,4);
 			Assert.IsNull(result);
 		}
 		[TestMethod]
@@ -94,7 +94,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			logger = new MemoryLogger(new DefaultLogFormatter());
 			database = new MockedDatabase<Factory>(true, 1, (t) => new Factory() { FactoryID = t });
 			module = new FactoryModule(logger, database);
-			Assert.ThrowsException<PIODataException>(() => module.GetFactory(3,4));
+			Assert.ThrowsException<PIODataException>(() => module.GetFactory(1, 3,4));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
 		}
 		[TestMethod]
@@ -111,29 +111,36 @@ namespace PIO.UnitTest.ServerLib.Modules
 			Assert.ThrowsException<PIODataException>(() => module.GetFactories(1));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
 		}
-		/*[TestMethod]
-		public void ShouldSetHealthPoints()
+		[TestMethod]
+		public void ShouldCreateFactory()
 		{
 			MockedDatabase<Factory> database;
 			FactoryModule module;
+			Factory result;
 
-			database = new MockedDatabase<Factory>(false, 1, (t) => new Factory() { FactoryID = t});
+			database = new MockedDatabase<Factory>(false, 1, (t) => new Factory() { FactoryID = t });
 			module = new FactoryModule(NullLogger.Instance, database);
-			module.SetHealthPoints(0,10);
-			Assert.AreEqual(1, database.UpdatedCount);
+			result = module.CreateFactory(1,  FactoryTypeIDs.Sawmill);
+			Assert.IsNotNull(result);
+			Assert.AreEqual(1, result.BuildingID);
+			Assert.AreEqual(FactoryTypeIDs.Sawmill, result.FactoryTypeID);
+			
+			Assert.AreEqual(1, database.InsertedCount);
 		}
+
 		[TestMethod]
-		public void ShouldNotSetHealthPointsAndLogError()
+		public void ShouldNotCreateFactoryAndLogError()
 		{
 			MockedDatabase<Factory> database;
 			FactoryModule module;
 			MemoryLogger logger;
 
+
 			logger = new MemoryLogger(new DefaultLogFormatter());
-			database = new MockedDatabase<Factory>(true, 3, (t) => new Factory() { FactoryID = t });
+			database = new MockedDatabase<Factory>(true, 1, (t) => new Factory() { FactoryID = t });
 			module = new FactoryModule(logger, database);
-			Assert.ThrowsException<PIODataException>(() => module.SetHealthPoints(0,1));
+			Assert.ThrowsException<PIODataException>(() => module.CreateFactory(1, FactoryTypeIDs.Sawmill));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
-		}*/
+		}
 	}
 }

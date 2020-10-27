@@ -25,7 +25,7 @@ namespace PIO.UnitTest.WebServiceLib.Mocks
 			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
 			return new Building() { BuildingID = BuildingID };
 		}
-		public Building GetBuilding(int X,int Y)
+		public Building GetBuilding(int PlanetID, int X,int Y)
 		{
 			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
 			return new Building() { X=X,Y=Y };

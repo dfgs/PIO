@@ -82,7 +82,7 @@ namespace PIO.UnitTest.WebServiceLib
 			Building result;
 
 			service = new PIOService(NullLogger.Instance, null, new MockedBuildingModule(3, false), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-			result = service.GetBuildingAtPos(1,1);
+			result = service.GetBuildingAtPos(1,1,1);
 			Assert.IsNotNull(result);
 			Assert.AreEqual(0, result.BuildingID);
 		}
@@ -120,7 +120,7 @@ namespace PIO.UnitTest.WebServiceLib
 			logger = new MemoryLogger(new DefaultLogFormatter());
 			service = new PIOService(logger, null, new MockedBuildingModule(3, true), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 
-			Assert.ThrowsException<FaultException>(() => service.GetBuildingAtPos(1,1));
+			Assert.ThrowsException<FaultException>(() => service.GetBuildingAtPos(1, 1,1));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(service.ModuleName)));
 		}
 		[TestMethod]
@@ -155,7 +155,7 @@ namespace PIO.UnitTest.WebServiceLib
 			Factory result;
 
 			service = new PIOService(NullLogger.Instance, null, null, new MockedFactoryModule(3, false), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-			result = service.GetFactoryAtPos(1,1);
+			result = service.GetFactoryAtPos(1,1,1);
 			Assert.IsNotNull(result);
 			Assert.AreEqual(0, result.FactoryID);
 		}
@@ -193,7 +193,7 @@ namespace PIO.UnitTest.WebServiceLib
 			logger = new MemoryLogger(new DefaultLogFormatter());
 			service = new PIOService(logger, null, null, new MockedFactoryModule(3, true), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 
-			Assert.ThrowsException<FaultException>(() => service.GetFactoryAtPos(1,1));
+			Assert.ThrowsException<FaultException>(() => service.GetFactoryAtPos(1,1,1));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(service.ModuleName)));
 		}
 		[TestMethod]
@@ -934,10 +934,9 @@ namespace PIO.UnitTest.WebServiceLib
 			Task result;
 
 			service = new PIOService(NullLogger.Instance, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, new MockedFactoryBuilderModule(false));
-			result = service.BuildFactory(10, 2);
+			result = service.BuildFactory(10);
 			Assert.IsNotNull(result);
 			Assert.AreEqual(10, result.WorkerID);
-			Assert.AreEqual(2, result.FactoryID);
 		}
 
 
@@ -950,7 +949,7 @@ namespace PIO.UnitTest.WebServiceLib
 			logger = new MemoryLogger(new DefaultLogFormatter());
 			service = new PIOService(logger, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, new MockedFactoryBuilderModule(true));
 
-			Assert.ThrowsException<FaultException>(() => service.BuildFactory(10,2));
+			Assert.ThrowsException<FaultException>(() => service.BuildFactory(10));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(service.ModuleName)));
 		}
 

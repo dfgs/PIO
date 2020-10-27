@@ -36,7 +36,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 
 			database = new MockedDatabase<Building>(false, 1, (t) => new Building() { BuildingID = t, X = 3, Y = 4 });
 			module = new BuildingModule(NullLogger.Instance, database);
-			result = module.GetBuilding(3,4);
+			result = module.GetBuilding(1,3,4);
 			Assert.IsNotNull(result);
 			Assert.AreEqual(0, result.BuildingID);
 			Assert.AreEqual(3, result.X);
@@ -51,7 +51,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 
 			database = new MockedDatabase<Building>(false, 0, (t) => new Building() { BuildingID = t, X = 3, Y = 4 });
 			module = new BuildingModule(NullLogger.Instance, database);
-			result = module.GetBuilding(4,3);
+			result = module.GetBuilding(1, 4,3);
 			Assert.IsNull(result);
 		}
 		[TestMethod]
@@ -96,7 +96,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			logger = new MemoryLogger(new DefaultLogFormatter());
 			database = new MockedDatabase<Building>(true, 1, (t) => new Building() { BuildingID = t });
 			module = new BuildingModule(logger, database);
-			Assert.ThrowsException<PIODataException>(() => module.GetBuilding(3,4));
+			Assert.ThrowsException<PIODataException>(() => module.GetBuilding(1, 3,4));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
 		}
 		[TestMethod]

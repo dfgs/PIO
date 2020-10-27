@@ -100,7 +100,7 @@ namespace PIO.ServerLib.Modules
 					Try(() => factoryBuilderModule.EndCreateBuilding(Task.WorkerID, Task.FactoryTypeID.Value)).OrAlert($"Failed to terminate task (TaskID={Task.TaskID})");
 					break;
 				case TaskTypeIDs.Build:
-					Try(() => factoryBuilderModule.EndBuild(Task.WorkerID, Task.FactoryID.Value)).OrAlert($"Failed to terminate task (TaskID={Task.TaskID})");
+					Try(() => factoryBuilderModule.EndBuild(Task.WorkerID)).OrAlert($"Failed to terminate task (TaskID={Task.TaskID})");
 					break;
 				default:
 					Log(LogLevels.Warning, $"Unhandled task type (TaskTypeID={Task.TaskTypeID})");

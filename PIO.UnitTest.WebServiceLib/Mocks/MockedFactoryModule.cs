@@ -20,17 +20,13 @@ namespace PIO.UnitTest.WebServiceLib.Mocks
 			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
 			return new Factory() { FactoryID = FactoryID };
 		}
-		public Factory GetFactory(int X,int Y)
+		public Factory GetFactory(int PlanetID, int X,int Y)
 		{
 			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
 			return new Factory() ;
 		}
 
-		/*public Factory[] GetFactories()
-		{
-			if (ThrowException) throw new Exception("Mocked exception");
-			return Generate((t) => new Factory() { FactoryID = t });
-		}*/
+		
 
 		public Factory[] GetFactories(int PlanetID)
 		{
@@ -42,5 +38,11 @@ namespace PIO.UnitTest.WebServiceLib.Mocks
 		{
 			throw new NotImplementedException();
 		}
+
+		public Factory CreateFactory(int BuildingID, FactoryTypeIDs FactoryTypeID)
+		{
+			throw new NotImplementedException();
+		}
+
 	}
 }

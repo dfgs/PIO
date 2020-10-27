@@ -34,7 +34,7 @@ namespace PIO.ServerLib.Modules
 
 			return TrySelectFirst<FactoryTable, Factory>(query).OrThrow<PIODataException>("Failed to query");
 		}
-		public Factory GetFactory(int X,int Y)
+		public Factory GetFactory(int PlanetID, int X,int Y)
 		{
 			ISelect query;
 			LogEnter();
@@ -42,7 +42,7 @@ namespace PIO.ServerLib.Modules
 			Log(LogLevels.Information, $"Querying Factory table (X={X}, Y={Y})");
 			query = new Select(FactoryTable.BuildingID, FactoryTable.FactoryID, FactoryTable.FactoryTypeID)
 				.From(PIODB.FactoryTable.Join(PIODB.BuildingTable.On(FactoryTable.BuildingID, BuildingTable.BuildingID)))
-				.Where(BuildingTable.X.IsEqualTo(X).And(BuildingTable.Y.IsEqualTo(Y)));
+				.Where(BuildingTable.X.IsEqualTo(X).And(BuildingTable.Y.IsEqualTo(Y)).And(BuildingTable.PlanetID.IsEqualTo(PlanetID)));
 
 			return TrySelectFirst<FactoryTable, Factory>(query).OrThrow<PIODataException>("Failed to query");
 		}
@@ -59,16 +59,22 @@ namespace PIO.ServerLib.Modules
 			return TrySelectMany<FactoryTable, Factory>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
-		/*public void SetHealthPoints(int FactoryID,int HealthPoints)
+		public Factory CreateFactory(int BuildingID, FactoryTypeIDs FactoryTypeID)
 		{
-			IUpdate update;
+			IInsert query;
+			Factory item;
+			object result;
 
 			LogEnter();
 
-			Log(LogLevels.Information, $"Updating Factory table (FactoryID={FactoryID}, HealthPoints={HealthPoints})");
-			update = new Update(PIODB.FactoryTable).Set(FactoryTable.HealthPoints, HealthPoints).Where(FactoryTable.FactoryID.IsEqualTo(FactoryID));
-			Try(update).OrThrow<PIODataException>("Failed to update");
-		}*/
+			Log(LogLevels.Information, $"Inserting into Factory table (BuildingID={BuildingID}, FactoryTypeID={FactoryTypeID})");
+			item = new Factory() { BuildingID = BuildingID,  FactoryTypeID = FactoryTypeID, };
+			query = new Insert().Into(PIODB.FactoryTable).Set(FactoryTable.BuildingID, item.BuildingID).Set(FactoryTable.FactoryTypeID, item.FactoryTypeID);
+			result = Try(query).OrThrow<PIODataException>("Failed to insert");
+			item.FactoryID = Convert.ToInt32(result);
+			return item;
+		}
+
 
 
 	}

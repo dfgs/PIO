@@ -7,9 +7,14 @@ Describe 'Test CreateBuilding module'{
         It 'Given invalid WorkerID, it returns not task' {
             {Invoke-CreateBuilding 999 Sawmill}  | Should -Throw -ExceptionType ([System.ServiceModel.FaultException])
         }
+        It 'Given occupied pôsition, it returns not task' {
+            (Invoke-MoveTo 1 0 0) | Wait-Task
+            {Invoke-CreateBuilding 1 Sawmill}  | Should -Throw -ExceptionType ([System.ServiceModel.FaultException])
+        }
 
         
         It 'Given WorkerID and FactoryTypeID it creates building' {
+            (Invoke-MoveTo 1 5 5) | Wait-Task
            
             $buildingCount= (Get-Buildings 1).Count
 
@@ -17,7 +22,7 @@ Describe 'Test CreateBuilding module'{
 
             $result = Get-Task $task.TaskID
             $result | Should -Not -BeNullOrEmpty
-            Wait-ETA $task.ETA
+            $task | Wait-Task
             $result = Get-Task $task.TaskID
             $result | Should -BeNullOrEmpty
 

@@ -20,9 +20,12 @@ namespace PIO.PowerShell
 
 
 		[Parameter(Position = 0, ValueFromPipeline = true, Mandatory = true, ParameterSetName = "FromPosition")]
-		public int X { get; set; }
+		public int PlanetID { get; set; }
 		[Parameter(Position = 1, ValueFromPipeline = true, Mandatory = true, ParameterSetName = "FromPosition")]
+		public int X { get; set; }
+		[Parameter(Position = 2, ValueFromPipeline = true, Mandatory = true, ParameterSetName = "FromPosition")]
 		public int Y { get; set; }
+
 
 		protected override void ProcessRecord()
 		{
@@ -34,7 +37,7 @@ namespace PIO.PowerShell
 					result = Try(() => client.GetFactory(FactoryID));
 					break;
 				case "FromPosition":
-					result = Try(() => client.GetFactoryAtPos(X,Y));
+					result = Try(() => client.GetFactoryAtPos(PlanetID,X,Y));
 					break;
 				default:
 					throw new ArgumentException("Invalid parameter set.");

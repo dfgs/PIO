@@ -11,7 +11,7 @@ namespace PIO.Models.Modules
 	public interface IBuildingModule : IDatabaseModule
 	{
 		Building GetBuilding(int BuildingID);
-		Building GetBuilding(int X,int Y);
+		Building GetBuilding(int PlanetID, int X,int Y);
 		Building[] GetBuildings(int PlanetID);
 
 		Building CreateBuilding(int PlanetID, int X, int Y, BuildingTypeIDs BuildingTypeID, int RemainingBuildSteps);

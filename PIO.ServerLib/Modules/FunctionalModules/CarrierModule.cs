@@ -43,7 +43,7 @@ namespace PIO.ServerLib.Modules
 
 			worker = AssertExists(() => workerModule.GetWorker(WorkerID), $"WorkerID = {WorkerID}");
 
-			factory = AssertExists(() => factoryModule.GetFactory(worker.X, worker.Y), $"X={worker.X}, Y={worker.Y}");
+			factory = AssertExists(() => factoryModule.GetFactory(worker.PlanetID, worker.X, worker.Y), $"X={worker.X}, Y={worker.Y}");
 
 			targetFactory = AssertExists(() => factoryModule.GetFactory(TargetFactoryID), $"FactoryID={TargetFactoryID}");
 

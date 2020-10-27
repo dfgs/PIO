@@ -16,7 +16,7 @@ Describe 'Test MoveTo module'{
 
             $result = Get-Task $task.TaskID
             $result | Should -Not -BeNullOrEmpty
-            Wait-ETA $task.ETA
+            $task | Wait-Task
             $result = Get-Task $task.TaskID
             $result | Should -BeNullOrEmpty
       

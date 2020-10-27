@@ -44,7 +44,7 @@ namespace PIO.ServerLib.Modules
 			worker = AssertExists(() => workerModule.GetWorker(WorkerID), $"WorkerID = {WorkerID}");
 
 			Log(LogLevels.Information, $"Checking if position is free (X={worker.X}, Y={worker.Y})");
-			building = Try(() => buildingModule.GetBuilding(worker.X, worker.Y)).OrThrow<PIOInternalErrorException>("Failed to get building at position");
+			building = Try(() => buildingModule.GetBuilding(worker.PlanetID,worker.X, worker.Y)).OrThrow<PIOInternalErrorException>("Failed to get building at position");
 			if (building!=null)
 			{
 				Log(LogLevels.Warning, $"Current position is not free (X={worker.X}, Y={worker.Y})");
@@ -64,6 +64,7 @@ namespace PIO.ServerLib.Modules
 		{
 			FactoryType factoryType;
 			Building building;
+			Factory factory;
 			Worker worker;
 
 			LogEnter();
@@ -74,11 +75,14 @@ namespace PIO.ServerLib.Modules
 			factoryType = AssertExists(() => factoryTypeModule.GetFactoryType(FactoryTypeID), $"FactoryTypeID = {FactoryTypeID}");
 
 			Log(LogLevels.Information, $"Creating building (BuildingTypeID={BuildingTypeIDs.Factory})");
-			building = Try(() => buildingModule.CreateBuilding(worker.PlanetID, worker.X,worker.Y, BuildingTypeIDs.Factory, factoryType.BuildSteps)).OrThrow<PIOInternalErrorException>("Failed to create building");
+			building = Try(() => buildingModule.CreateBuilding(worker.PlanetID, worker.X, worker.Y, BuildingTypeIDs.Factory, factoryType.BuildSteps)).OrThrow<PIOInternalErrorException>("Failed to create building");
+			
+			Log(LogLevels.Information, $"Creating factory (BuildingID={building.BuildingID}, FactoryTypeID={FactoryTypeID})");
+			factory = Try(() => factoryModule.CreateFactory(building.BuildingID, FactoryTypeID)).OrThrow<PIOInternalErrorException>("Failed to create factory");
 
 		}
 
-		public Task BeginBuild(int WorkerID, int FactoryID)
+		public Task BeginBuild(int WorkerID)
 		{
 			Building building;
 			Factory factory;
@@ -91,7 +95,7 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 
 			worker = AssertExists(() => workerModule.GetWorker(WorkerID), $"WorkerID = {WorkerID}");
-			factory = AssertExists(() => factoryModule.GetFactory(FactoryID), $"FactoryID = {FactoryID}");
+			factory = AssertExists(() => factoryModule.GetFactory(worker.PlanetID, worker.X,worker.Y), $"X = {worker.X}, Y = {worker.Y}");
 			building = AssertExists(() => buildingModule.GetBuilding(factory.BuildingID), $"BuildingID = {factory.BuildingID}");
 			if (building.RemainingBuildSteps==0)
 			{
@@ -122,14 +126,14 @@ namespace PIO.ServerLib.Modules
 			}
 
 			Log(LogLevels.Information, $"Creating task (WorkerID={WorkerID})");
-			task = Try(() => taskModule.CreateTask(TaskTypeIDs.CreateBuilding, WorkerID, null, null, null, FactoryID, null, null, GetLastETA(WorkerID).AddSeconds(10))).OrThrow<PIOInternalErrorException>("Failed to create task");
+			task = Try(() => taskModule.CreateTask(TaskTypeIDs.Build, WorkerID, null, null, null, null, null, null, GetLastETA(WorkerID).AddSeconds(10))).OrThrow<PIOInternalErrorException>("Failed to create task");
 
 			OnTaskCreated(task);
 
 			return task;
 		}
 
-		public void EndBuild(int WorkerID, int FactoryID)
+		public void EndBuild(int WorkerID)
 		{
 			Building building;
 			Factory factory;
@@ -138,7 +142,7 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 
 			worker = AssertExists(() => workerModule.GetWorker(WorkerID), $"WorkerID = {WorkerID}");
-			factory = AssertExists(() => factoryModule.GetFactory(FactoryID), $"FactoryID = {FactoryID}");
+			factory = AssertExists(() => factoryModule.GetFactory(worker.PlanetID, worker.X, worker.Y), $"X = {worker.X}, Y = {worker.Y}");
 			building = AssertExists(() => buildingModule.GetBuilding(factory.BuildingID), $"BuildingID = {factory.BuildingID}");
 
 			building.RemainingBuildSteps -= 1;
