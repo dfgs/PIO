@@ -1,4 +1,5 @@
-﻿using NetORMLib.Databases;
+﻿using NetORMLib;
+using NetORMLib.Databases;
 
 using NetORMLib.Queries;
 using NetORMLib.VersionControl;
@@ -71,6 +72,7 @@ namespace PIO.ServerLib
 					yield return new CreateRelation<FactoryTypeIDs>(PIODB.ProductTable, FactoryTypeTable.FactoryTypeID, ProductTable.FactoryTypeID);
 					yield return new CreateRelation<ResourceTypeIDs>(PIODB.ProductTable, ResourceTypeTable.ResourceTypeID, ProductTable.ResourceTypeID);
 
+					yield return new CreateConstraint(PIODB.BuildingTable, ColumnConstraints.Unique, BuildingTable.X, BuildingTable.Y);
 
 					break;
 				case 3:

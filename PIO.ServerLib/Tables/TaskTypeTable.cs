@@ -11,7 +11,7 @@ namespace PIO.ServerLib.Tables
 	// No identity for enum tables
 	public class TaskTypeTable : Table
 	{
-		public static readonly Column<TaskTypeIDs> TaskTypeID = new Column<TaskTypeIDs>() { IsPrimaryKey = true };
+		public static readonly Column<TaskTypeIDs> TaskTypeID = new Column<TaskTypeIDs>() { Constraint = NetORMLib.ColumnConstraints.PrimaryKey};
 		public new static readonly Column<string> Name = new Column<string>();
 	}
 }

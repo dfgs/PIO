@@ -11,7 +11,7 @@ namespace PIO.ServerLib.Tables
 	// No identity for enum tables
 	public class BuildingTypeTable : Table
 	{
-		public static readonly Column<BuildingTypeIDs> BuildingTypeID = new Column<BuildingTypeIDs>() { IsPrimaryKey = true };
+		public static readonly Column<BuildingTypeIDs> BuildingTypeID = new Column<BuildingTypeIDs>() { Constraint = NetORMLib.ColumnConstraints.PrimaryKey };
 		public new static readonly Column<string> Name = new Column<string>();
 	}
 }

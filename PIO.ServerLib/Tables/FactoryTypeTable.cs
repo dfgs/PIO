@@ -11,7 +11,7 @@ namespace PIO.ServerLib.Tables
 	// No identity for enum tables
 	public class FactoryTypeTable : Table
 	{
-		public static readonly Column<FactoryTypeIDs> FactoryTypeID = new Column<FactoryTypeIDs>() { IsPrimaryKey = true };
+		public static readonly Column<FactoryTypeIDs> FactoryTypeID = new Column<FactoryTypeIDs>() { Constraint = NetORMLib.ColumnConstraints.PrimaryKey };
 		public new static readonly Column<string> Name = new Column<string>();
 		public static readonly Column<int> HealthPoints = new Column<int>();
 		public static readonly Column<int> BuildSteps = new Column<int>();

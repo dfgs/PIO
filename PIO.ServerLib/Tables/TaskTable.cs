@@ -10,7 +10,7 @@ namespace PIO.ServerLib.Tables
 {
 	public class TaskTable : Table
 	{
-		public static readonly Column<int> TaskID = new Column<int>() { IsIdentity = true, IsPrimaryKey = true };
+		public static readonly Column<int> TaskID = new Column<int>() { IsIdentity = true, Constraint = NetORMLib.ColumnConstraints.PrimaryKey };
 		public static readonly Column<TaskTypeIDs> TaskTypeID = new Column<TaskTypeIDs>() ;
 		public static readonly Column<int> WorkerID = new Column<int>();
 		public static readonly Column<int> X = new Column<int>() { IsNullable = true };
