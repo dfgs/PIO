@@ -17,7 +17,7 @@ namespace PIO.ServerLib.Modules
 {
 	public class ProducerModule : TaskGeneratorModule, IProducerModule
 	{
-
+		private IBuildingModule buildingModule;
 		private IFactoryModule factoryModule;
 		private IStackModule stackModule;
 		private IIngredientModule ingredientModule;
@@ -25,14 +25,15 @@ namespace PIO.ServerLib.Modules
 
 
 
-		public ProducerModule(ILogger Logger, ITaskModule TaskModule, IWorkerModule WorkerModule, IFactoryModule FactoryModule, IStackModule StackModule, IIngredientModule IngredientModule, IProductModule ProductModule) : base(Logger,TaskModule,WorkerModule)
+		public ProducerModule(ILogger Logger, ITaskModule TaskModule, IWorkerModule WorkerModule, IBuildingModule BuildingModule, IFactoryModule FactoryModule, IStackModule StackModule, IIngredientModule IngredientModule, IProductModule ProductModule) : base(Logger,TaskModule,WorkerModule)
 		{
-			 this.factoryModule = FactoryModule;  this.stackModule = StackModule; this.ingredientModule = IngredientModule;this.productModule = ProductModule; 
+			this.buildingModule = BuildingModule; this.factoryModule = FactoryModule;  this.stackModule = StackModule; this.ingredientModule = IngredientModule;this.productModule = ProductModule; 
 		}
 
 
 		public Task BeginProduce(int WorkerID)
 		{
+			Building building;
 			Factory factory;
 			Worker worker;
 			Ingredient[] ingredients;
@@ -44,7 +45,15 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 
 			worker = AssertExists(() => workerModule.GetWorker(WorkerID), $"WorkerID = {WorkerID}");
-			factory = AssertExists(() => factoryModule.GetFactory(worker.PlanetID,worker.X, worker.Y), $"X = {worker.X}, Y = {worker.Y}");
+			factory = AssertExists(() => factoryModule.GetFactory(worker.PlanetID, worker.X, worker.Y), $"X = {worker.X}, Y = {worker.Y}");
+			building = AssertExists(() => buildingModule.GetBuilding(factory.BuildingID), $"BuildingID = {factory.BuildingID}");
+			if (building.RemainingBuildSteps>0)
+			{
+				Log(LogLevels.Warning, $"Factory is building (FactoryID={factory.FactoryID})");
+				throw new PIOInvalidOperationException($"Factory is building (FactoryID={factory.FactoryID})", null, ID, ModuleName, "BeginProduce");
+			}
+
+
 			ingredients = AssertExists(() => ingredientModule.GetIngredients(factory.FactoryTypeID), $"FactoryTypeID = {factory.FactoryTypeID}");
 			products = AssertExists(() => productModule.GetProducts(factory.FactoryTypeID), $"FactoryTypeID = {factory.FactoryTypeID}");
 			if (products.Length == 0)

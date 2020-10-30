@@ -94,7 +94,7 @@ namespace PIO.ServerHost
 			factoryBuilderModule = new FactoryBuilderModule(logger,taskModule,workerModule,buildingModule, factoryModule, factoryTypeModule, stackModule,materialModule);
 			idlerModule = new IdlerModule(logger,taskModule, workerModule);
 			resourceCheckerModule = new ResourceCheckerModule(logger, factoryModule, stackModule, ingredientModule);
-			producerModule = new ProducerModule(logger, taskModule, workerModule, factoryModule,  stackModule, ingredientModule, productModule);
+			producerModule = new ProducerModule(logger, taskModule, workerModule,buildingModule, factoryModule,  stackModule, ingredientModule, productModule);
 			moverModule = new MoverModule(logger, taskModule, workerModule, factoryModule);
 			carrierModule = new CarrierModule(logger, taskModule, workerModule,buildingModule, factoryModule, stackModule);
 
