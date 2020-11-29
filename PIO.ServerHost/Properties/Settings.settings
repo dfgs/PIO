@@ -11,5 +11,8 @@
     <Setting Name="DatabaseName" Type="System.String" Scope="User">
       <Value Profile="(Default)">PIO</Value>
     </Setting>
+    <Setting Name="UnicastPort" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">2021</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
