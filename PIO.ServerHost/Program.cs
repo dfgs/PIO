@@ -12,6 +12,7 @@ using PIO.WebServiceLib;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.ServiceModel;
 using System.ServiceModel.Description;
 using System.Text;
@@ -61,7 +62,8 @@ namespace PIO.ServerHost
 			quitEvent = new AutoResetEvent(false);
 			Console.CancelKeyPress += new ConsoleCancelEventHandler(Console_CancelKeyPress);
 
-			logger = new ConsoleLogger(new DefaultLogFormatter());
+			//logger = new ConsoleLogger(new DefaultLogFormatter());
+			logger = new UnicastLogger(IPAddress.Loopback, Properties.Settings.Default.UnicastPort);
 
 			databaseCreator = new SqlDatabaseCreator(Properties.Settings.Default.Server, Properties.Settings.Default.DatabaseName);
 			connectionFactory = new SqlConnectionFactory(Properties.Settings.Default.Server, Properties.Settings.Default.DatabaseName);

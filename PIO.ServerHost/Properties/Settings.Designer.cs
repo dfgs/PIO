@@ -58,5 +58,17 @@ namespace PIO.ServerHost.Properties {
                 this["DatabaseName"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2021")]
+        public int UnicastPort {
+            get {
+                return ((int)(this["UnicastPort"]));
+            }
+            set {
+                this["UnicastPort"] = value;
+            }
+        }
     }
 }
