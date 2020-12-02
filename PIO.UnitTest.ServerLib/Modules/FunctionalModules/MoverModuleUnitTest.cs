@@ -87,11 +87,11 @@ namespace PIO.UnitTest.ServerLib.Modules
 			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, PlanetID = 1 });
 			taskModule = new MockedTaskModule(false);
 
-			logger = new MemoryLogger(new DefaultLogFormatter());
+			logger = new MemoryLogger();
 			module = new MoverModule(logger, taskModule, workerModule, factoryModule);
 
 			Assert.ThrowsException<PIONotFoundException>(() => module.BeginMoveTo(2, 2, 2));
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Warning") && item.Contains(module.ModuleName)));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level ==LogLevels.Warning) && (item.ComponentName==module.ModuleName)));
 		}
 		[TestMethod]
 		public void ShouldThrowExceptionAndLogErrorWhenSubModuleFails()
@@ -105,18 +105,18 @@ namespace PIO.UnitTest.ServerLib.Modules
 			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 1, FactoryTypeID = FactoryTypeIDs.Sawmill, BuildingID = 3,  }, new Factory() { FactoryID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill, BuildingID = 3,  });
 			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, PlanetID = 1 });
 			taskModule = new MockedTaskModule(true);
-			logger = new MemoryLogger(new DefaultLogFormatter());
+			logger = new MemoryLogger();
 			module = new MoverModule(logger, taskModule, workerModule, factoryModule);
 			Assert.ThrowsException<PIOInternalErrorException>(() => module.BeginMoveTo(1, 2, 2));
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
 
 			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 1, FactoryTypeID = FactoryTypeIDs.Sawmill, BuildingID = 3,  }, new Factory() { FactoryID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill, BuildingID = 3,  });
 			workerModule = new MockedWorkerModule(true, new Worker() { WorkerID = 1, PlanetID = 1 });
 			taskModule = new MockedTaskModule(false);
-			logger = new MemoryLogger(new DefaultLogFormatter());
+			logger = new MemoryLogger();
 			module = new MoverModule(logger, taskModule, workerModule, factoryModule);
 			Assert.ThrowsException<PIOInternalErrorException>(() => module.BeginMoveTo(1, 2, 2));
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
 
 		}
 
@@ -149,14 +149,14 @@ namespace PIO.UnitTest.ServerLib.Modules
 			IWorkerModule workerModule;
 			ITaskModule taskModule;
 
-			logger = new MemoryLogger(new DefaultLogFormatter());
+			logger = new MemoryLogger();
 			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 1, FactoryTypeID = FactoryTypeIDs.Sawmill, BuildingID = 3,  }, new Factory() { FactoryID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill, BuildingID = 3,  });
 			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, PlanetID = 1 });
 			taskModule = new MockedTaskModule(false);
 			module = new MoverModule(logger, taskModule, workerModule, factoryModule);
 
 			Assert.ThrowsException<PIONotFoundException>(() => module.BeginMoveTo(2, 2, 2));
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Warning") && item.Contains(module.ModuleName)));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level ==LogLevels.Warning) && (item.ComponentName==module.ModuleName)));
 
 		}
 		
@@ -169,24 +169,24 @@ namespace PIO.UnitTest.ServerLib.Modules
 			IWorkerModule workerModule;
 			ITaskModule taskModule;
 
-			logger = new MemoryLogger(new DefaultLogFormatter());
+			logger = new MemoryLogger();
 			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 1, FactoryTypeID = FactoryTypeIDs.Sawmill, BuildingID = 3  }, new Factory() { FactoryID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill, BuildingID = 3,  });
 			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, PlanetID = 1 });
 			taskModule = new MockedTaskModule(true);
 			module = new MoverModule(logger, taskModule, workerModule, factoryModule);
 
 			Assert.ThrowsException<PIOInternalErrorException>(() => module.BeginMoveTo(1, 2, 2));
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
 			
 			
-			logger = new MemoryLogger(new DefaultLogFormatter());
+			logger = new MemoryLogger();
 			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 1, FactoryTypeID = FactoryTypeIDs.Sawmill, BuildingID = 3  }, new Factory() { FactoryID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill, BuildingID = 3,  });
 			workerModule = new MockedWorkerModule(true, new Worker() { WorkerID = 1, PlanetID = 1 });
 			taskModule = new MockedTaskModule(false);
 			module = new MoverModule(logger, taskModule, workerModule, factoryModule);
 
 			Assert.ThrowsException<PIOInternalErrorException>(() => module.BeginMoveTo(1, 2, 2));
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
 
 
 		}

@@ -107,12 +107,12 @@ namespace PIO.UnitTest.ServerLib.Modules
 			stackModule = new MockedStackModule(false, new Stack() { StackID = 0, FactoryID = 1, ResourceTypeID = ResourceTypeIDs.Plank, Quantity = 10 });
 			taskModule = new MockedTaskModule(false);
 
-			logger = new MemoryLogger(new DefaultLogFormatter());
+			logger = new MemoryLogger();
 			module = new CarrierModule(logger, taskModule, workerModule, buildingModule, factoryModule, stackModule);
 			schedulerModule = new MockedSchedulerModule(false, module);
 
 			Assert.ThrowsException<PIONotFoundException>(() => module.BeginCarryTo(1, 2, ResourceTypeIDs.Wood));
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Warning") && item.Contains(module.ModuleName)));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level ==LogLevels.Warning) && (item.ComponentName==module.ModuleName)));
 			Assert.AreEqual(0, schedulerModule.Count);
 
 		}
@@ -140,12 +140,12 @@ namespace PIO.UnitTest.ServerLib.Modules
 				new Stack() { StackID = 3, FactoryID = 1, ResourceTypeID = ResourceTypeIDs.Coal, Quantity = 10 }
 				);
 			taskModule = new MockedTaskModule(false);
-			logger = new MemoryLogger(new DefaultLogFormatter());
+			logger = new MemoryLogger();
 			module = new CarrierModule(logger, taskModule, workerModule, buildingModule, factoryModule, stackModule);
 			schedulerModule = new MockedSchedulerModule(false,module);
 
 			Assert.ThrowsException<PIONoResourcesException>(() => module.BeginCarryTo(1,2, ResourceTypeIDs.Stone));
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Warning") && item.Contains(module.ModuleName)));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level ==LogLevels.Warning) && (item.ComponentName==module.ModuleName)));
 			Assert.AreEqual(0, schedulerModule.Count);
 			#endregion
 
@@ -156,12 +156,12 @@ namespace PIO.UnitTest.ServerLib.Modules
 				new Stack() { StackID = 3, FactoryID = 1, ResourceTypeID = ResourceTypeIDs.Coal, Quantity = 10 }
 				);
 			taskModule = new MockedTaskModule(false);
-			logger = new MemoryLogger(new DefaultLogFormatter());
+			logger = new MemoryLogger();
 			module = new CarrierModule(logger, taskModule, workerModule, buildingModule, factoryModule, stackModule);
 			schedulerModule = new MockedSchedulerModule(false, module);
 
 			Assert.ThrowsException<PIONoResourcesException>(() => module.BeginCarryTo(1,2, ResourceTypeIDs.Stone));
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Warning") && item.Contains(module.ModuleName)));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level ==LogLevels.Warning) && (item.ComponentName==module.ModuleName)));
 			Assert.AreEqual(0, schedulerModule.Count);
 			#endregion
 
@@ -186,12 +186,12 @@ namespace PIO.UnitTest.ServerLib.Modules
 			stackModule = new MockedStackModule(false, new Stack() { StackID = 0, FactoryID = 1, ResourceTypeID = ResourceTypeIDs.Plank, Quantity = 10 });
 			taskModule = new MockedTaskModule(false);
 
-			logger = new MemoryLogger(new DefaultLogFormatter());
+			logger = new MemoryLogger();
 			module = new CarrierModule(logger, taskModule, workerModule, buildingModule, factoryModule, stackModule);
 			schedulerModule = new MockedSchedulerModule(false,module);
 
 			Assert.ThrowsException<PIONotFoundException>(() => module.BeginCarryTo(2,2,ResourceTypeIDs.Wood));
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Warning") && item.Contains(module.ModuleName)));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level ==LogLevels.Warning) && (item.ComponentName==module.ModuleName)));
 			Assert.AreEqual(0, schedulerModule.Count);
 
 		}
@@ -214,31 +214,31 @@ namespace PIO.UnitTest.ServerLib.Modules
 			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, PlanetID = 1 });
 			stackModule = new MockedStackModule(true, new Stack() { StackID = 0, FactoryID = 1, ResourceTypeID = ResourceTypeIDs.Wood, Quantity = 10 });
 			taskModule = new MockedTaskModule(false);
-			logger = new MemoryLogger(new DefaultLogFormatter());
+			logger = new MemoryLogger();
 			module = new CarrierModule(logger, taskModule, workerModule, buildingModule, factoryModule,stackModule);
 			schedulerModule = new MockedSchedulerModule(false, module);
 			Assert.ThrowsException<PIOInternalErrorException>(() => module.BeginCarryTo(1,2, ResourceTypeIDs.Wood));
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
 			Assert.AreEqual(0, schedulerModule.Count);
 
 			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, PlanetID = 1 });
 			stackModule = new MockedStackModule(false, new Stack() { StackID = 0, FactoryID = 1, ResourceTypeID = ResourceTypeIDs.Wood, Quantity = 10 });
 			taskModule = new MockedTaskModule(true);
-			logger = new MemoryLogger(new DefaultLogFormatter());
+			logger = new MemoryLogger();
 			module = new CarrierModule(logger, taskModule, workerModule, buildingModule, factoryModule, stackModule);
 			schedulerModule = new MockedSchedulerModule(false, module);
 			Assert.ThrowsException<PIOInternalErrorException>(() => module.BeginCarryTo(1, 2, ResourceTypeIDs.Wood));
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
 			Assert.AreEqual(0, schedulerModule.Count);
 
 			workerModule = new MockedWorkerModule(true, new Worker() { WorkerID = 1, PlanetID = 1 });
 			stackModule = new MockedStackModule(false, new Stack() { StackID = 0, FactoryID = 1, ResourceTypeID = ResourceTypeIDs.Wood, Quantity = 10 });
 			taskModule = new MockedTaskModule(false);
-			logger = new MemoryLogger(new DefaultLogFormatter());
+			logger = new MemoryLogger();
 			module = new CarrierModule(logger, taskModule, workerModule, buildingModule, factoryModule, stackModule);
 			schedulerModule = new MockedSchedulerModule(false, module);
 			Assert.ThrowsException<PIOInternalErrorException>(() => module.BeginCarryTo(1, 2, ResourceTypeIDs.Wood));
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
 			Assert.AreEqual(0, schedulerModule.Count);
 
 		}
@@ -330,12 +330,12 @@ namespace PIO.UnitTest.ServerLib.Modules
 			stackModule = new MockedStackModule(false);
 			taskModule = new MockedTaskModule(false);
 
-			logger = new MemoryLogger(new DefaultLogFormatter());
+			logger = new MemoryLogger();
 			module = new CarrierModule(logger, taskModule, workerModule, buildingModule, factoryModule, stackModule);
 			schedulerModule = new MockedSchedulerModule(false, module);
 
 			Assert.ThrowsException<PIONotFoundException>(() => module.EndCarryTo(2,2,ResourceTypeIDs.Wood));
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Warning") && item.Contains(module.ModuleName)));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level ==LogLevels.Warning) && (item.ComponentName==module.ModuleName)));
 
 		}
 		[TestMethod]
@@ -357,21 +357,21 @@ namespace PIO.UnitTest.ServerLib.Modules
 			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, PlanetID = 1 });
 			stackModule = new MockedStackModule(true);
 			taskModule = new MockedTaskModule(false);
-			logger = new MemoryLogger(new DefaultLogFormatter());
+			logger = new MemoryLogger();
 			module = new CarrierModule(logger, taskModule, workerModule, buildingModule, factoryModule, stackModule);
 			schedulerModule = new MockedSchedulerModule(false, module);
 			Assert.ThrowsException<PIOInternalErrorException>(() => module.EndCarryTo(1,2, ResourceTypeIDs.Wood));
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
 
 
 			workerModule = new MockedWorkerModule(true, new Worker() { WorkerID = 1, PlanetID = 1 });
 			stackModule = new MockedStackModule(false);
 			taskModule = new MockedTaskModule(false);
-			logger = new MemoryLogger(new DefaultLogFormatter());
+			logger = new MemoryLogger();
 			module = new CarrierModule(logger, taskModule, workerModule, buildingModule, factoryModule, stackModule);
 			schedulerModule = new MockedSchedulerModule(false, module);
 			Assert.ThrowsException<PIOInternalErrorException>(() => module.EndCarryTo(1, 2, ResourceTypeIDs.Wood));
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
 
 
 

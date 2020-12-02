@@ -103,10 +103,10 @@ namespace PIO.UnitTest.ServerLib.Modules
 			stackModule = new MockedStackModule(false);
 			ingredientModule = new MockedIngredientModule(false);
 
-			logger = new MemoryLogger(new DefaultLogFormatter());
+			logger = new MemoryLogger();
 			module = new ResourceCheckerModule(logger, factoryModule, stackModule, ingredientModule);
 			Assert.ThrowsException< PIONotFoundException>(()=>module.HasEnoughResourcesToProduce(2));
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Warning") && item.Contains(module.ModuleName)));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level ==LogLevels.Warning) && (item.ComponentName==module.ModuleName)));
 		}
 
 		[TestMethod]
@@ -123,20 +123,20 @@ namespace PIO.UnitTest.ServerLib.Modules
 
 			stackModule = new MockedStackModule(true);
 			ingredientModule = new MockedIngredientModule(false);
-			logger = new MemoryLogger(new DefaultLogFormatter());
+			logger = new MemoryLogger();
 			module = new ResourceCheckerModule(logger, factoryModule, stackModule, ingredientModule);
 			Assert.ThrowsException<PIOInternalErrorException>(() => module.HasEnoughResourcesToProduce(1));
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
 
 
 
 
 			stackModule = new MockedStackModule(false);
 			ingredientModule = new MockedIngredientModule(true);
-			logger = new MemoryLogger(new DefaultLogFormatter());
+			logger = new MemoryLogger();
 			module = new ResourceCheckerModule(logger, factoryModule, stackModule, ingredientModule);
 			Assert.ThrowsException<PIOInternalErrorException>(() => module.HasEnoughResourcesToProduce(1));
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
 		}
 
 	}

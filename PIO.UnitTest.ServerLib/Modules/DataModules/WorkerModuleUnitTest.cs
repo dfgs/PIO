@@ -53,11 +53,11 @@ namespace PIO.UnitTest.ServerLib.Modules
 			MemoryLogger logger;
 
 
-			logger = new MemoryLogger(new DefaultLogFormatter());
+			logger = new MemoryLogger();
 			database = new MockedDatabase<Worker>(true,1, (t) => new Worker() { WorkerID = t });
 			module = new WorkerModule(logger, database);
 			Assert.ThrowsException<PIODataException>(() => module.GetWorker(1));
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
 		}
 		[TestMethod]
 		public void ShouldNotGetWorkersAndLogError()
@@ -67,11 +67,11 @@ namespace PIO.UnitTest.ServerLib.Modules
 			MemoryLogger logger;
 
 
-			logger = new MemoryLogger(new DefaultLogFormatter());
+			logger = new MemoryLogger();
 			database = new MockedDatabase<Worker>(true, 3, (t) => new Worker() { WorkerID = t });
 			module = new WorkerModule(logger, database);
 			Assert.ThrowsException<PIODataException>(() => module.GetWorkers(1));
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
 		}
 
 
@@ -97,11 +97,11 @@ namespace PIO.UnitTest.ServerLib.Modules
 			MemoryLogger logger;
 
 
-			logger = new MemoryLogger(new DefaultLogFormatter());
+			logger = new MemoryLogger();
 			database = new MockedDatabase<Worker>(true, 1, (t) => new Worker() { WorkerID = t, PlanetID = 0 });
 			module = new WorkerModule(logger, database);
 			Assert.ThrowsException<PIODataException>(() => module.UpdateWorker(0, 10,10));
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
 		}
 		
 

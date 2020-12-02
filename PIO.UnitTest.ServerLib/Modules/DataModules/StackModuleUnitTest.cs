@@ -59,18 +59,18 @@ namespace PIO.UnitTest.ServerLib.Modules
 			MemoryLogger logger;
 
 
-			logger = new MemoryLogger(new DefaultLogFormatter());
+			logger = new MemoryLogger();
 			database = new MockedDatabase<Stack>(true,1, (t) => new Stack() { StackID = t });
 			module = new StackModule(logger, database);
 			Assert.ThrowsException<PIODataException>(() => module.GetStack(1));
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
 
 
-			logger = new MemoryLogger(new DefaultLogFormatter());
+			logger = new MemoryLogger();
 			database = new MockedDatabase<Stack>(true, 1, (t) => new Stack() { StackID = t });
 			module = new StackModule(logger, database);
 			Assert.ThrowsException<PIODataException>(() => module.GetStack(1,ResourceTypeIDs.Coal));
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
 		}
 		[TestMethod]
 		public void ShouldNotGetStacksAndLogError()
@@ -80,11 +80,11 @@ namespace PIO.UnitTest.ServerLib.Modules
 			MemoryLogger logger;
 
 
-			logger = new MemoryLogger(new DefaultLogFormatter());
+			logger = new MemoryLogger();
 			database = new MockedDatabase<Stack>(true, 3, (t) => new Stack() { StackID = t });
 			module = new StackModule(logger, database);
 			Assert.ThrowsException<PIODataException>(() => module.GetStacks(1));
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
 		}
 
 
@@ -110,11 +110,11 @@ namespace PIO.UnitTest.ServerLib.Modules
 			MemoryLogger logger;
 
 
-			logger = new MemoryLogger(new DefaultLogFormatter());
+			logger = new MemoryLogger();
 			database = new MockedDatabase<Stack>(true, 1, (t) => new Stack() { StackID = t, FactoryID = 0, ResourceTypeID = 0, Quantity = 5 });
 			module = new StackModule(logger, database);
 			Assert.ThrowsException<PIODataException>(() => module.UpdateStack(0,10));
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
 		}
 
 
@@ -145,11 +145,11 @@ namespace PIO.UnitTest.ServerLib.Modules
 			MemoryLogger logger;
 
 
-			logger = new MemoryLogger(new DefaultLogFormatter());
+			logger = new MemoryLogger();
 			database = new MockedDatabase<Stack>(true, 1, (t) => new Stack() { StackID = t });
 			module = new StackModule(logger, database);
 			Assert.ThrowsException<PIODataException>(() => module.InsertStack(0,ResourceTypeIDs.Wood, 2));
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
 		}
 
 		[TestMethod]

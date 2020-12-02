@@ -84,11 +84,11 @@ namespace PIO.UnitTest.ServerLib.Modules
 			MemoryLogger logger;
 
 
-			logger = new MemoryLogger(new DefaultLogFormatter());
+			logger = new MemoryLogger();
 			database = new MockedDatabase<Task>(true,1, (t) => new Task() { TaskID = t });
 			module = new TaskModule(logger, database);
 			Assert.ThrowsException<PIODataException>(() => module.GetTask(1));
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
 		}
 		[TestMethod]
 		public void ShouldNotGetTasksAndLogError()
@@ -98,11 +98,11 @@ namespace PIO.UnitTest.ServerLib.Modules
 			MemoryLogger logger;
 
 
-			logger = new MemoryLogger(new DefaultLogFormatter());
+			logger = new MemoryLogger();
 			database = new MockedDatabase<Task>(true, 3, (t) => new Task() { TaskID = t });
 			module = new TaskModule(logger, database);
 			Assert.ThrowsException<PIODataException>(() => module.GetTasks(1));
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
 		}
 		[TestMethod]
 		public void ShouldNotGetAllTasksAndLogError()
@@ -112,11 +112,11 @@ namespace PIO.UnitTest.ServerLib.Modules
 			MemoryLogger logger;
 
 
-			logger = new MemoryLogger(new DefaultLogFormatter());
+			logger = new MemoryLogger();
 			database = new MockedDatabase<Task>(true, 3, (t) => new Task() { TaskID = t });
 			module = new TaskModule(logger, database);
 			Assert.ThrowsException<PIODataException>(() => module.GetTasks());
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
 		}
 		[TestMethod]
 		public void ShouldNotGetLastTaskAndLogError()
@@ -126,11 +126,11 @@ namespace PIO.UnitTest.ServerLib.Modules
 			MemoryLogger logger;
 
 
-			logger = new MemoryLogger(new DefaultLogFormatter());
+			logger = new MemoryLogger();
 			database = new MockedDatabase<Task>(true, 1, (t) => new Task() { TaskID = t });
 			module = new TaskModule(logger, database);
 			Assert.ThrowsException<PIODataException>(() => module.GetLastTask(1));
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
 		}
 
 		[TestMethod]
@@ -165,11 +165,11 @@ namespace PIO.UnitTest.ServerLib.Modules
 			MemoryLogger logger;
 
 
-			logger = new MemoryLogger(new DefaultLogFormatter());
+			logger = new MemoryLogger();
 			database = new MockedDatabase<Task>(true, 1, (t) => new Task() { TaskID = t });
 			module = new TaskModule(logger, database);
 			Assert.ThrowsException<PIODataException>(() => module.CreateTask(TaskTypeIDs.Idle, 1, 3, 4,5, null, ResourceTypeIDs.Coal, null, DateTime.Now));
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
 		}
 
 
@@ -194,11 +194,11 @@ namespace PIO.UnitTest.ServerLib.Modules
 			MemoryLogger logger;
 
 
-			logger = new MemoryLogger(new DefaultLogFormatter());
+			logger = new MemoryLogger();
 			database = new MockedDatabase<Task>(true, 1, (t) => new Task() { TaskID = t });
 			module = new TaskModule(logger, database);
 			Assert.ThrowsException<PIODataException>(() => module.DeleteTask(1));
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
 		}
 
 

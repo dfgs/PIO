@@ -53,11 +53,11 @@ namespace PIO.UnitTest.ServerLib.Modules
 			MemoryLogger logger;
 
 
-			logger = new MemoryLogger(new DefaultLogFormatter());
+			logger = new MemoryLogger();
 			database = new MockedDatabase<TaskType>(true,1, (t) => new TaskType() { TaskTypeID = (TaskTypeIDs)t });
 			module = new TaskTypeModule(logger, database);
 			Assert.ThrowsException<PIODataException>(() => module.GetTaskType(TaskTypeIDs.MoveTo));
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
 		}
 		[TestMethod]
 		public void ShouldNotGetTaskTypesAndLogError()
@@ -67,11 +67,11 @@ namespace PIO.UnitTest.ServerLib.Modules
 			MemoryLogger logger;
 
 
-			logger = new MemoryLogger(new DefaultLogFormatter());
+			logger = new MemoryLogger();
 			database = new MockedDatabase<TaskType>(true, 3, (t) => new TaskType() { TaskTypeID = (TaskTypeIDs)t });
 			module = new TaskTypeModule(logger, database);
 			Assert.ThrowsException<PIODataException>(() => module.GetTaskTypes());
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
 		}
 
 

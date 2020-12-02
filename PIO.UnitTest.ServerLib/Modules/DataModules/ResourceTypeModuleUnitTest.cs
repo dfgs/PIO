@@ -53,11 +53,11 @@ namespace PIO.UnitTest.ServerLib.Modules
 			MemoryLogger logger;
 
 
-			logger = new MemoryLogger(new DefaultLogFormatter());
+			logger = new MemoryLogger();
 			database = new MockedDatabase<ResourceType>(true,1, (t) => new ResourceType() { ResourceTypeID = (ResourceTypeIDs)t });
 			module = new ResourceTypeModule(logger, database);
 			Assert.ThrowsException<PIODataException>(() => module.GetResourceType(ResourceTypeIDs.Wood));
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
 		}
 		[TestMethod]
 		public void ShouldNotGetResourceTypesAndLogError()
@@ -67,11 +67,11 @@ namespace PIO.UnitTest.ServerLib.Modules
 			MemoryLogger logger;
 
 
-			logger = new MemoryLogger(new DefaultLogFormatter());
+			logger = new MemoryLogger();
 			database = new MockedDatabase<ResourceType>(true, 3, (t) => new ResourceType() { ResourceTypeID = (ResourceTypeIDs)t });
 			module = new ResourceTypeModule(logger, database);
 			Assert.ThrowsException<PIODataException>(() => module.GetResourceTypes());
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
 		}
 
 

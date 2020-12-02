@@ -177,12 +177,12 @@ namespace PIO.UnitTest.ServerLib.Modules
 				);
 			productModule = new MockedProductModule(false, new Product() { ProductID = 1, FactoryTypeID = FactoryTypeIDs.Sawmill, Duration = 4, Quantity = 2 });
 			taskModule = new MockedTaskModule(false);
-			logger = new MemoryLogger(new DefaultLogFormatter());
+			logger = new MemoryLogger();
 			module = new ProducerModule(logger, taskModule, workerModule, buildingModule, factoryModule, stackModule, ingredientModule, productModule);
 			schedulerModule = new MockedSchedulerModule(false,module);
 
 			Assert.ThrowsException<PIONoResourcesException>(() => module.BeginProduce(1));
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Warning") && item.Contains(module.ModuleName)));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level ==LogLevels.Warning) && (item.ComponentName==module.ModuleName)));
 			Assert.AreEqual(0, schedulerModule.Count);
 			#endregion
 
@@ -199,12 +199,12 @@ namespace PIO.UnitTest.ServerLib.Modules
 				);
 			productModule = new MockedProductModule(false, new Product() { ProductID = 1, FactoryTypeID = FactoryTypeIDs.Sawmill, Duration = 4, Quantity = 2 });
 			taskModule = new MockedTaskModule(false);
-			logger = new MemoryLogger(new DefaultLogFormatter());
+			logger = new MemoryLogger();
 			module = new ProducerModule(logger, taskModule, workerModule, buildingModule, factoryModule, stackModule, ingredientModule,productModule);
 			schedulerModule = new MockedSchedulerModule(false, module);
 
 			Assert.ThrowsException<PIONoResourcesException>(() => module.BeginProduce(1));
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Warning") && item.Contains(module.ModuleName)));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level ==LogLevels.Warning) && (item.ComponentName==module.ModuleName)));
 			Assert.AreEqual(0, schedulerModule.Count);
 			#endregion
 
@@ -233,12 +233,12 @@ namespace PIO.UnitTest.ServerLib.Modules
 			productModule = new MockedProductModule(false, new Product() { ProductID = 1, FactoryTypeID = FactoryTypeIDs.Sawmill, Duration = 4, Quantity = 2 });
 			taskModule = new MockedTaskModule(false);
 
-			logger = new MemoryLogger(new DefaultLogFormatter());
+			logger = new MemoryLogger();
 			module = new ProducerModule(logger, taskModule, workerModule, buildingModule, factoryModule, stackModule, ingredientModule, productModule);
 			schedulerModule = new MockedSchedulerModule(false,module);
 
 			Assert.ThrowsException<PIONotFoundException>(() => module.BeginProduce(2));
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Warning") && item.Contains(module.ModuleName)));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level ==LogLevels.Warning) && (item.ComponentName==module.ModuleName)));
 			Assert.AreEqual(0, schedulerModule.Count);
 
 		}
@@ -264,12 +264,12 @@ namespace PIO.UnitTest.ServerLib.Modules
 			productModule = new MockedProductModule(false, new Product() { ProductID = 1, FactoryTypeID = FactoryTypeIDs.Sawmill, Duration = 4, Quantity = 2 });
 			taskModule = new MockedTaskModule(false);
 
-			logger = new MemoryLogger(new DefaultLogFormatter());
+			logger = new MemoryLogger();
 			module = new ProducerModule(logger, taskModule, workerModule, buildingModule, factoryModule, stackModule, ingredientModule, productModule);
 			schedulerModule = new MockedSchedulerModule(false, module);
 
 			Assert.ThrowsException<PIOInvalidOperationException>(() => module.BeginProduce(1));
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Warning") && item.Contains(module.ModuleName)));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level ==LogLevels.Warning) && (item.ComponentName==module.ModuleName)));
 			Assert.AreEqual(0, schedulerModule.Count);
 
 		}
@@ -295,33 +295,33 @@ namespace PIO.UnitTest.ServerLib.Modules
 			ingredientModule = new MockedIngredientModule(false,new Ingredient() { IngredientID = 0, FactoryTypeID = FactoryTypeIDs.Sawmill, ResourceTypeID = ResourceTypeIDs.Wood, Quantity = 0 }); 
 			productModule = new MockedProductModule(false, new Product() { ProductID = 1, FactoryTypeID = FactoryTypeIDs.Sawmill, Duration = 4, Quantity = 2 });
 			taskModule = new MockedTaskModule(false);
-			logger = new MemoryLogger(new DefaultLogFormatter());
+			logger = new MemoryLogger();
 			module = new ProducerModule(logger, taskModule, workerModule, buildingModule, factoryModule,stackModule, ingredientModule, productModule);
 			schedulerModule = new MockedSchedulerModule(false, module);
 			Assert.ThrowsException<PIOInternalErrorException>(() => module.BeginProduce(1));
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
 			Assert.AreEqual(0, schedulerModule.Count);
 
 			stackModule = new MockedStackModule(false);
 			ingredientModule = new MockedIngredientModule(true);
 			productModule = new MockedProductModule(false, new Product() { ProductID = 1, FactoryTypeID = FactoryTypeIDs.Sawmill, Duration = 4, Quantity = 2 });
 			taskModule = new MockedTaskModule(false);
-			logger = new MemoryLogger(new DefaultLogFormatter());
+			logger = new MemoryLogger();
 			module = new ProducerModule(logger, taskModule, workerModule, buildingModule, factoryModule, stackModule, ingredientModule, productModule);
 			schedulerModule = new MockedSchedulerModule(false, module);
 			Assert.ThrowsException<PIOInternalErrorException>(() => module.BeginProduce(1));
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
 			Assert.AreEqual(0, schedulerModule.Count);
 
 
 			stackModule = new MockedStackModule(false , new Stack() { StackID = 0, FactoryID = 1, ResourceTypeID = ResourceTypeIDs.Wood, Quantity = 10 });
 			ingredientModule = new MockedIngredientModule(false, new Ingredient() { IngredientID = 0, FactoryTypeID = FactoryTypeIDs.Sawmill, ResourceTypeID = ResourceTypeIDs.Wood, Quantity = 0 });
 			taskModule = new MockedTaskModule(true);
-			logger = new MemoryLogger(new DefaultLogFormatter());
+			logger = new MemoryLogger();
 			module = new ProducerModule(logger, taskModule,  workerModule, buildingModule, factoryModule, stackModule, ingredientModule, productModule);
 			schedulerModule = new MockedSchedulerModule(false, module);
 			Assert.ThrowsException<PIOInternalErrorException>(() => module.BeginProduce(1));
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
 			Assert.AreEqual(0, schedulerModule.Count);
 
 		}
@@ -464,12 +464,12 @@ namespace PIO.UnitTest.ServerLib.Modules
 			productModule = new MockedProductModule(false, new Product() { ProductID = 1, FactoryTypeID = FactoryTypeIDs.Sawmill, Duration = 4, Quantity = 2 });
 			taskModule = new MockedTaskModule(false);
 
-			logger = new MemoryLogger(new DefaultLogFormatter());
+			logger = new MemoryLogger();
 			module = new ProducerModule(logger, taskModule, workerModule, buildingModule, factoryModule, stackModule, ingredientModule, productModule);
 			schedulerModule = new MockedSchedulerModule(false, module);
 
 			Assert.ThrowsException<PIONotFoundException>(() => module.EndProduce(2));
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Warning") && item.Contains(module.ModuleName)));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level ==LogLevels.Warning) && (item.ComponentName==module.ModuleName)));
 
 		}
 		[TestMethod]
@@ -494,21 +494,21 @@ namespace PIO.UnitTest.ServerLib.Modules
 			ingredientModule = new MockedIngredientModule(false);
 			productModule = new MockedProductModule(false, new Product() { ProductID = 1, FactoryTypeID = FactoryTypeIDs.Sawmill, Duration = 4, Quantity = 2 });
 			taskModule = new MockedTaskModule(false);
-			logger = new MemoryLogger(new DefaultLogFormatter());
+			logger = new MemoryLogger();
 			module = new ProducerModule(logger, taskModule, workerModule, buildingModule, factoryModule, stackModule, ingredientModule, productModule);
 			schedulerModule = new MockedSchedulerModule(false, module);
 			Assert.ThrowsException<PIOInternalErrorException>(() => module.EndProduce(1));
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
 
 			stackModule = new MockedStackModule(false);
 			ingredientModule = new MockedIngredientModule(false);
 			productModule = new MockedProductModule(true, new Product() { ProductID = 1, FactoryTypeID = FactoryTypeIDs.Sawmill, Duration = 4, Quantity = 2 });
 			taskModule = new MockedTaskModule(false);
-			logger = new MemoryLogger(new DefaultLogFormatter());
+			logger = new MemoryLogger();
 			module = new ProducerModule(logger, taskModule, workerModule, buildingModule, factoryModule, stackModule, ingredientModule, productModule);
 			schedulerModule = new MockedSchedulerModule(false, module);
 			Assert.ThrowsException<PIOInternalErrorException>(() => module.EndProduce(1));
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
 
 
 

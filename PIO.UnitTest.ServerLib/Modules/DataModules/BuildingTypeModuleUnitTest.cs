@@ -53,11 +53,11 @@ namespace PIO.UnitTest.ServerLib.Modules
 			MemoryLogger logger;
 
 
-			logger = new MemoryLogger(new DefaultLogFormatter());
+			logger = new MemoryLogger();
 			database = new MockedDatabase<BuildingType>(true,1, (t) => new BuildingType() { BuildingTypeID = (BuildingTypeIDs)t });
 			module = new BuildingTypeModule(logger, database);
 			Assert.ThrowsException<PIODataException>(() => module.GetBuildingType(BuildingTypeIDs.Factory));
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
 		}
 		[TestMethod]
 		public void ShouldNotGetBuildingTypesAndLogError()
@@ -67,11 +67,11 @@ namespace PIO.UnitTest.ServerLib.Modules
 			MemoryLogger logger;
 
 
-			logger = new MemoryLogger(new DefaultLogFormatter());
+			logger = new MemoryLogger();
 			database = new MockedDatabase<BuildingType>(true, 3, (t) => new BuildingType() { BuildingTypeID = (BuildingTypeIDs)t });
 			module = new BuildingTypeModule(logger, database);
 			Assert.ThrowsException<PIODataException>(() => module.GetBuildingTypes());
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
 		}
 
 

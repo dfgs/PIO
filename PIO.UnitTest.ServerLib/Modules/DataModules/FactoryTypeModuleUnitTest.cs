@@ -53,11 +53,11 @@ namespace PIO.UnitTest.ServerLib.Modules
 			MemoryLogger logger;
 
 
-			logger = new MemoryLogger(new DefaultLogFormatter());
+			logger = new MemoryLogger();
 			database = new MockedDatabase<FactoryType>(true,1, (t) => new FactoryType() { FactoryTypeID = (FactoryTypeIDs)t });
 			module = new FactoryTypeModule(logger, database);
 			Assert.ThrowsException<PIODataException>(() => module.GetFactoryType(FactoryTypeIDs.Stockpile));
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
 		}
 		[TestMethod]
 		public void ShouldNotGetFactoryTypesAndLogError()
@@ -67,11 +67,11 @@ namespace PIO.UnitTest.ServerLib.Modules
 			MemoryLogger logger;
 
 
-			logger = new MemoryLogger(new DefaultLogFormatter());
+			logger = new MemoryLogger();
 			database = new MockedDatabase<FactoryType>(true, 3, (t) => new FactoryType() { FactoryTypeID = (FactoryTypeIDs)t });
 			module = new FactoryTypeModule(logger, database);
 			Assert.ThrowsException<PIODataException>(() => module.GetFactoryTypes());
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
 		}
 
 

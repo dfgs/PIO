@@ -81,11 +81,11 @@ namespace PIO.UnitTest.ServerLib.Modules
 			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, PlanetID = 1 });
 			taskModule = new MockedTaskModule(false);
 
-			logger = new MemoryLogger(new DefaultLogFormatter());
+			logger = new MemoryLogger();
 			module = new IdlerModule(logger, taskModule, workerModule);
 
 			Assert.ThrowsException<PIONotFoundException>(() => module.BeginIdle(2, 10));
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Warning") && item.Contains(module.ModuleName)));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level ==LogLevels.Warning) && (item.ComponentName==module.ModuleName)));
 		}
 		[TestMethod]
 		public void ShouldThrowExceptionAndLogErrorWhenSubModuleFails()
@@ -97,18 +97,18 @@ namespace PIO.UnitTest.ServerLib.Modules
 
 			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, PlanetID = 1 });
 			taskModule = new MockedTaskModule(true);
-			logger = new MemoryLogger(new DefaultLogFormatter());
+			logger = new MemoryLogger();
 			module = new IdlerModule(logger, taskModule,  workerModule);
 			Assert.ThrowsException<PIOInternalErrorException>(() => module.BeginIdle(1, 10));
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
 
 
 			workerModule = new MockedWorkerModule(true, new Worker() { WorkerID = 1, PlanetID = 1 });
 			taskModule = new MockedTaskModule(false);
-			logger = new MemoryLogger(new DefaultLogFormatter());
+			logger = new MemoryLogger();
 			module = new IdlerModule(logger, taskModule,  workerModule);
 			Assert.ThrowsException<PIOInternalErrorException>(() => module.BeginIdle(1, 10));
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
 
 		}
 
@@ -137,13 +137,13 @@ namespace PIO.UnitTest.ServerLib.Modules
 			IWorkerModule workerModule;
 			ITaskModule taskModule;
 
-			logger = new MemoryLogger(new DefaultLogFormatter());
+			logger = new MemoryLogger();
 			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, PlanetID = 1 });
 			taskModule = new MockedTaskModule(false);
 			module = new IdlerModule(logger, taskModule,  workerModule);
 
 			Assert.ThrowsException<PIONotFoundException>(() => module.BeginIdle(2, 10));
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Warning") && item.Contains(module.ModuleName)));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level ==LogLevels.Warning) && (item.ComponentName==module.ModuleName)));
 
 		}
 		
@@ -157,13 +157,13 @@ namespace PIO.UnitTest.ServerLib.Modules
 
 		
 			
-			logger = new MemoryLogger(new DefaultLogFormatter());
+			logger = new MemoryLogger();
 			workerModule = new MockedWorkerModule(true, new Worker() { WorkerID = 1, PlanetID = 1 });
 			taskModule = new MockedTaskModule(false);
 			module = new IdlerModule(logger, taskModule, workerModule);
 
 			Assert.ThrowsException<PIOInternalErrorException>(() => module.BeginIdle(1, 10));
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
 
 
 		}

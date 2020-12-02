@@ -78,11 +78,11 @@ namespace PIO.UnitTest.ServerLib.Modules
 			MemoryLogger logger;
 
 
-			logger = new MemoryLogger(new DefaultLogFormatter());
+			logger = new MemoryLogger();
 			database = new MockedDatabase<Factory>(true,1, (t) => new Factory() { FactoryID = t });
 			module = new FactoryModule(logger, database);
 			Assert.ThrowsException<PIODataException>(() => module.GetFactory(1));
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
 		}
 		[TestMethod]
 		public void ShouldNotGetFactoryUsingCoordinateAndLogError()
@@ -91,11 +91,11 @@ namespace PIO.UnitTest.ServerLib.Modules
 			FactoryModule module;
 			MemoryLogger logger;
 
-			logger = new MemoryLogger(new DefaultLogFormatter());
+			logger = new MemoryLogger();
 			database = new MockedDatabase<Factory>(true, 1, (t) => new Factory() { FactoryID = t });
 			module = new FactoryModule(logger, database);
 			Assert.ThrowsException<PIODataException>(() => module.GetFactory(1, 3,4));
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
 		}
 		[TestMethod]
 		public void ShouldNotGetFactoriesAndLogError()
@@ -105,11 +105,11 @@ namespace PIO.UnitTest.ServerLib.Modules
 			MemoryLogger logger;
 
 
-			logger = new MemoryLogger(new DefaultLogFormatter());
+			logger = new MemoryLogger();
 			database = new MockedDatabase<Factory>(true, 3, (t) => new Factory() { FactoryID = t });
 			module = new FactoryModule(logger, database);
 			Assert.ThrowsException<PIODataException>(() => module.GetFactories(1));
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
 		}
 		[TestMethod]
 		public void ShouldCreateFactory()
@@ -136,11 +136,11 @@ namespace PIO.UnitTest.ServerLib.Modules
 			MemoryLogger logger;
 
 
-			logger = new MemoryLogger(new DefaultLogFormatter());
+			logger = new MemoryLogger();
 			database = new MockedDatabase<Factory>(true, 1, (t) => new Factory() { FactoryID = t });
 			module = new FactoryModule(logger, database);
 			Assert.ThrowsException<PIODataException>(() => module.CreateFactory(1, FactoryTypeIDs.Sawmill));
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => item.Contains("Error") && item.Contains(module.ModuleName)));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
 		}
 	}
 }
