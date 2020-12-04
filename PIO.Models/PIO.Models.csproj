@@ -34,6 +34,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -53,6 +54,7 @@
     <Compile Include="Exceptions\FunctionalExceptions\PIOFunctionalException.cs" />
     <Compile Include="Building.cs" />
     <Compile Include="BuildingType.cs" />
+    <Compile Include="IPIOService.cs" />
     <Compile Include="Modules\DataModules\IBuildingTypeModule.cs" />
     <Compile Include="Modules\DataModules\IBuildingModule.cs" />
     <Compile Include="Modules\DataModules\ITaskTypeModule.cs" />

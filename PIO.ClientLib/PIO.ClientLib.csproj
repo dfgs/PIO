@@ -57,9 +57,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadata Include="Connected Services\" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="app.config" />
     <None Include="Connected Services\PIOServiceReference\PIO.Models.xsd">
       <SubType>Designer</SubType>
@@ -84,6 +81,9 @@
     <None Include="Properties\DataSources\PIO.Models.Task.datasource" />
     <None Include="Properties\DataSources\PIO.Models.TaskType.datasource" />
     <None Include="Properties\DataSources\PIO.Models.Worker.datasource" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Connected Services\PIOServiceReference\" />

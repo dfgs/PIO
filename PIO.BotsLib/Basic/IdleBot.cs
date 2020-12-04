@@ -18,7 +18,7 @@ namespace PIO.BotsLib.Basic
 			private set;
 		}
 
-		public IdleBot(ILogger Logger, PIOServiceClient Client, int WorkerID, int IdleDuration, ThreadPriority Priority = ThreadPriority.Normal, int StopTimeout = 5000) : base(Logger, Client, WorkerID, Priority, StopTimeout)
+		public IdleBot(ILogger Logger, IPIOService Client, int WorkerID, int IdleDuration, ThreadPriority Priority = ThreadPriority.Normal, int StopTimeout = 5000) : base(Logger, Client, WorkerID, Priority, StopTimeout)
 		{
 			this.IdleDuration = IdleDuration;
 		}
@@ -28,6 +28,7 @@ namespace PIO.BotsLib.Basic
 			Models.Task task;
 			bool result;
 
+		
 			Log(LogLevels.Information, $"Trying to run task idle (WorkerID={WorkerID})");
 			result=Try(()=>Client.Idle(WorkerID, IdleDuration)).OrAlert(out task,$"Failed to run task idle (WorkerID={WorkerID})");
 

@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="11bf3d9b-43e5-44b0-b913-bf4007e3a5d4" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="f2a4b361-1f0d-4dff-b84a-4510a44e5405" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
-    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
     <EnableDataBinding>true</EnableDataBinding>
     <ExcludedTypes />
     <ImportXmlTypes>false</ImportXmlTypes>
@@ -22,10 +21,10 @@
     <MetadataSource Address="http://localhost:8733/Design_Time_Addresses/PIO.WebService/mex" Protocol="mex" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="e8659b13-ea1c-4c1a-b2d4-de9c073a0554" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/PIO.WebService/mex" />
-    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="0d7ce00e-6034-410e-8e39-7504c070b5a7" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/PIO.WebService/mex" />
-    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="78bb3d22-2449-4482-be91-6cf0df187d55" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/PIO.WebService/mex" />
-    <MetadataFile FileName="PIO.Models.xsd" MetadataType="Schema" ID="fdb3ca88-400f-471f-b46d-ef1028586403" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/PIO.WebService/mex" />
+    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="ef7fb3b7-dc42-45e8-a033-8768e3cc75f0" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/PIO.WebService/mex" />
+    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="adb8be1a-4096-4b72-9eb8-a14ce02651ff" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/PIO.WebService/mex" />
+    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="b93c5a78-0469-4498-bc6a-a9884cd3ad17" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/PIO.WebService/mex" />
+    <MetadataFile FileName="PIO.Models.xsd" MetadataType="Schema" ID="16daf695-ec79-46b1-a3c1-9b32878ca0e8" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/PIO.WebService/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

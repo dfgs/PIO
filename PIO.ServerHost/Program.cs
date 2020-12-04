@@ -5,6 +5,7 @@ using NetORMLib.Databases;
 using NetORMLib.Sql.CommandBuilders;
 using NetORMLib.Sql.ConnectionFactories;
 using NetORMLib.Sql.Databases;
+using PIO.Models;
 using PIO.Models.Modules;
 using PIO.ServerLib;
 using PIO.ServerLib.Modules;

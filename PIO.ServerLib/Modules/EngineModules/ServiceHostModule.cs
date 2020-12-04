@@ -1,5 +1,6 @@
 ﻿using LogLib;
 using ModuleLib;
+using PIO.Models;
 using PIO.WebServiceLib;
 using System;
 using System.Collections.Generic;

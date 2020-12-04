@@ -7,7 +7,7 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
 
-namespace PIO.WebServiceLib
+namespace PIO.Models
 {
 	[ServiceContract]
 	public interface IPIOService
