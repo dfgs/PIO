@@ -44,7 +44,8 @@ namespace PIO.ServerLib.Modules
 
 			LogEnter();
 
-			worker = AssertExists(() => workerModule.GetWorker(WorkerID), $"WorkerID = {WorkerID}");
+			worker = AssertWorkerIsIdle(WorkerID);
+
 			factory = AssertExists(() => factoryModule.GetFactory(worker.PlanetID, worker.X, worker.Y), $"X = {worker.X}, Y = {worker.Y}");
 			building = AssertExists(() => buildingModule.GetBuilding(factory.BuildingID), $"BuildingID = {factory.BuildingID}");
 			if (building.RemainingBuildSteps>0)
@@ -85,7 +86,7 @@ namespace PIO.ServerLib.Modules
 			
 			
 			Log(LogLevels.Information, $"Creating task (WorkerID={WorkerID})");
-			task=Try(() => taskModule.CreateTask(TaskTypeIDs.Produce, WorkerID, null, null,null, null, null, null, GetLastETA(WorkerID).AddSeconds(products[0].Duration))).OrThrow<PIOInternalErrorException>("Failed to create task");
+			task=Try(() => taskModule.CreateTask(TaskTypeIDs.Produce, WorkerID, null, null,null, null, null, null, DateTime.Now.AddSeconds(products[0].Duration))).OrThrow<PIOInternalErrorException>("Failed to create task");
 
 			OnTaskCreated(task);
 

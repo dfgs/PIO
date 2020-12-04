@@ -73,6 +73,7 @@ namespace PIO.ServerLib
 					yield return new CreateRelation<ResourceTypeIDs>(PIODB.ProductTable, ResourceTypeTable.ResourceTypeID, ProductTable.ResourceTypeID);
 
 					yield return new CreateConstraint(PIODB.BuildingTable, ColumnConstraints.Unique, BuildingTable.X, BuildingTable.Y);
+					yield return new CreateConstraint(PIODB.TaskTable, ColumnConstraints.Unique, TaskTable.WorkerID);
 
 					break;
 				case 3:

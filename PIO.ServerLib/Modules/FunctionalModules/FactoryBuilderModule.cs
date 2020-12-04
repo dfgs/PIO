@@ -43,6 +43,14 @@ namespace PIO.ServerLib.Modules
 
 			worker = AssertExists(() => workerModule.GetWorker(WorkerID), $"WorkerID = {WorkerID}");
 
+			Log(LogLevels.Information, $"Checking if worker is idle (WorkerID={WorkerID})");
+			task=Try(() => taskModule.GetLastTask(WorkerID)).OrThrow<PIOInternalErrorException>("Failed to get last task");
+			if (task != null)
+			{
+				Log(LogLevels.Warning, $"Worker is not free (WorkerID={WorkerID})");
+				throw new PIOInvalidOperationException($"Worker is not free (WorkerID={WorkerID})", null, ID, ModuleName, "BeginCreateBuilding");
+			}
+
 			Log(LogLevels.Information, $"Checking if position is free (X={worker.X}, Y={worker.Y})");
 			building = Try(() => buildingModule.GetBuilding(worker.PlanetID,worker.X, worker.Y)).OrThrow<PIOInternalErrorException>("Failed to get building at position");
 			if (building!=null)
@@ -53,7 +61,7 @@ namespace PIO.ServerLib.Modules
 			factoryType = AssertExists(() => factoryTypeModule.GetFactoryType(FactoryTypeID), $"FactoryTypeID = {FactoryTypeID}");
 
 			Log(LogLevels.Information, $"Creating task (WorkerID={WorkerID})");
-			task = Try(() => taskModule.CreateTask(TaskTypeIDs.CreateBuilding, WorkerID, null, null, null, null, null, FactoryTypeID, GetLastETA(WorkerID).AddSeconds(10))).OrThrow<PIOInternalErrorException>("Failed to create task");
+			task = Try(() => taskModule.CreateTask(TaskTypeIDs.CreateBuilding, WorkerID, null, null, null, null, null, FactoryTypeID, DateTime.Now.AddSeconds(10))).OrThrow<PIOInternalErrorException>("Failed to create task");
 
 			OnTaskCreated(task);
 
@@ -94,7 +102,10 @@ namespace PIO.ServerLib.Modules
 
 			LogEnter();
 
-			worker = AssertExists(() => workerModule.GetWorker(WorkerID), $"WorkerID = {WorkerID}");
+			worker = AssertWorkerIsIdle(WorkerID);
+
+
+
 			factory = AssertExists(() => factoryModule.GetFactory(worker.PlanetID, worker.X,worker.Y), $"X = {worker.X}, Y = {worker.Y}");
 			building = AssertExists(() => buildingModule.GetBuilding(factory.BuildingID), $"BuildingID = {factory.BuildingID}");
 			if (building.RemainingBuildSteps==0)
@@ -126,7 +137,7 @@ namespace PIO.ServerLib.Modules
 			}
 
 			Log(LogLevels.Information, $"Creating task (WorkerID={WorkerID})");
-			task = Try(() => taskModule.CreateTask(TaskTypeIDs.Build, WorkerID, null, null, null, null, null, null, GetLastETA(WorkerID).AddSeconds(10))).OrThrow<PIOInternalErrorException>("Failed to create task");
+			task = Try(() => taskModule.CreateTask(TaskTypeIDs.Build, WorkerID, null, null, null, null, null, null, DateTime.Now.AddSeconds(10))).OrThrow<PIOInternalErrorException>("Failed to create task");
 
 			OnTaskCreated(task);
 

@@ -59,53 +59,21 @@ namespace PIO.UnitTest.ServerLib.Modules
 		}
 
 		[TestMethod]
-		public void ShouldEnqueueTaskWithCorrectETA()
+		public void ShouldNotProduceWhenWorkerIsAlreadyWorking()
 		{
+			MemoryLogger logger;
 			ProducerModule module;
-			IBuildingModule buildingModule;
-			IFactoryModule factoryModule;
 			IWorkerModule workerModule;
-			IStackModule stackModule;
-			IIngredientModule ingredientModule;
-			IProductModule productModule;
 			ITaskModule taskModule;
-			MockedSchedulerModule schedulerModule;
-			Task result,result2;
 
-			buildingModule = new MockedBuildingModule(false, new Building() { BuildingID = 3 });
-			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 1, FactoryTypeID = FactoryTypeIDs.Sawmill, BuildingID = 3 });
 			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, PlanetID = 1 });
-			stackModule = new MockedStackModule(false,
-				new Stack() { StackID = 0, FactoryID = 1, ResourceTypeID = ResourceTypeIDs.Plank, Quantity = 20 },
-				new Stack() { StackID = 1, FactoryID = 1, ResourceTypeID = ResourceTypeIDs.Wood, Quantity = 20 },
-				new Stack() { StackID = 2, FactoryID = 1, ResourceTypeID = ResourceTypeIDs.Stone, Quantity = 20 },
-				new Stack() { StackID = 3, FactoryID = 1, ResourceTypeID = ResourceTypeIDs.Coal, Quantity = 20 }
-				);
-			ingredientModule = new MockedIngredientModule(false,
-				new Ingredient() { IngredientID = 0, FactoryTypeID = FactoryTypeIDs.Sawmill, ResourceTypeID = ResourceTypeIDs.Wood, Quantity = 5 },
-				new Ingredient() { IngredientID = 1, FactoryTypeID = FactoryTypeIDs.Sawmill, ResourceTypeID = ResourceTypeIDs.Stone, Quantity = 10 },
-				new Ingredient() { IngredientID = 3, FactoryTypeID = FactoryTypeIDs.Sawmill, ResourceTypeID = ResourceTypeIDs.Coal, Quantity = 6 }
-				);
-			productModule = new MockedProductModule(false, new Product() { ProductID = 1, FactoryTypeID = FactoryTypeIDs.Sawmill, Duration = 4, Quantity = 2 });
-			taskModule = new MockedTaskModule(false);
-			module = new ProducerModule(NullLogger.Instance, taskModule, workerModule, buildingModule, factoryModule, stackModule, ingredientModule, productModule);
-			schedulerModule = new MockedSchedulerModule(false, module);
+			taskModule = new MockedTaskModule(false, new Task() { WorkerID = 1 });
 
-			result = module.BeginProduce(1);
-			Assert.IsNotNull(result);
-			Assert.AreEqual(TaskTypeIDs.Produce, result.TaskTypeID);
-			Assert.AreEqual(1, result.WorkerID);
-			Assert.AreEqual(1, schedulerModule.Count);
+			logger = new MemoryLogger();
+			module = new ProducerModule(logger, taskModule, workerModule,null,null,null,null,null);
 
-			result2 = module.BeginProduce(1);
-			Assert.AreEqual(TaskTypeIDs.Produce, result2.TaskTypeID);
-			Assert.IsNotNull(result);
-			Assert.AreEqual(1, result.WorkerID);
-			Assert.AreEqual(2, schedulerModule.Count);
-
-			Assert.IsTrue((result2.ETA - result.ETA).TotalSeconds >= 4);
-
-
+			Assert.ThrowsException<PIOInvalidOperationException>(() => module.BeginProduce(1));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Warning) && (item.ComponentName == module.ModuleName)));
 		}
 
 		[TestMethod]

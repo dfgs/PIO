@@ -41,7 +41,8 @@ namespace PIO.ServerLib.Modules
 	
 			LogEnter();
 
-			worker = AssertExists(() => workerModule.GetWorker(WorkerID), $"WorkerID = {WorkerID}");
+			worker = AssertWorkerIsIdle(WorkerID);
+
 
 			factory = AssertExists(() => factoryModule.GetFactory(worker.PlanetID, worker.X, worker.Y), $"X={worker.X}, Y={worker.Y}");
 
@@ -61,7 +62,7 @@ namespace PIO.ServerLib.Modules
 			
 			
 			Log(LogLevels.Information, $"Creating task (WorkerID={WorkerID})");
-			task=Try(() => taskModule.CreateTask(TaskTypeIDs.CarryTo, WorkerID, null, null,null, TargetFactoryID,ResourceTypeID,null, GetLastETA(WorkerID).AddSeconds(10))).OrThrow<PIOInternalErrorException>("Failed to create task");
+			task=Try(() => taskModule.CreateTask(TaskTypeIDs.CarryTo, WorkerID, null, null,null, TargetFactoryID,ResourceTypeID,null, DateTime.Now.AddSeconds(10))).OrThrow<PIOInternalErrorException>("Failed to create task");
 
 			OnTaskCreated(task);
 

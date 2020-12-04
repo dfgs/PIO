@@ -40,7 +40,7 @@ namespace PIO.BotsConsole
 			client.Open();
 
 
-			bot = new IdleBot(logger, client, 1, 120);
+			bot = new IdleBot(logger, client, 1, 10);
 			bot.Start();
 
 			WaitHandle.WaitAny(new WaitHandle[] { quitEvent }, -1);

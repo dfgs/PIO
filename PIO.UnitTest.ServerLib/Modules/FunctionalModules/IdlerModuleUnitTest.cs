@@ -39,37 +39,26 @@ namespace PIO.UnitTest.ServerLib.Modules
 			Assert.AreEqual(1, schedulerModule.Count);
 		}
 		[TestMethod]
-		public void ShouldEnqueueTaskWithCorrectETA()
+		public void ShouldNotIdleWhenWorkerIsAlreadyWorking()
 		{
+			MemoryLogger logger;
 			IdlerModule module;
 			IWorkerModule workerModule;
 			ITaskModule taskModule;
-			MockedSchedulerModule schedulerModule;
-			Task result,result2;
 
 			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, PlanetID = 1 });
-			taskModule = new MockedTaskModule(false);
-			module = new IdlerModule(NullLogger.Instance, taskModule,  workerModule);
-			schedulerModule = new MockedSchedulerModule(false, module);
+			taskModule = new MockedTaskModule(false, new Task() { WorkerID=1}) ;
 
-			result = module.BeginIdle(1, 10);
-			Assert.IsNotNull(result);
-			Assert.AreEqual(TaskTypeIDs.Idle, result.TaskTypeID);
-			Assert.AreEqual(1, result.WorkerID);
-			Assert.AreEqual(1, schedulerModule.Count);
-			
-			result2 = module.BeginIdle(1, 10);
-			Assert.IsNotNull(result2);
-			Assert.AreEqual(TaskTypeIDs.Idle, result2.TaskTypeID);
-			Assert.AreEqual(1, result2.WorkerID);
-			Assert.AreEqual(2, schedulerModule.Count);
+			logger = new MemoryLogger();
+			module = new IdlerModule(logger, taskModule,  workerModule);
 
-			Assert.IsTrue((result2.ETA - result.ETA).TotalSeconds >= 4);
+			Assert.ThrowsException<PIOInvalidOperationException>(() => module.BeginIdle(1, 10));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Warning) && (item.ComponentName == module.ModuleName)));
 		}
 
 
 
-		
+
 		[TestMethod]
 		public void ShouldNotIdleWhenWorkerDoesntExists()
 		{

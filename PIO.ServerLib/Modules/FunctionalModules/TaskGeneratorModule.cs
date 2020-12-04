@@ -20,16 +20,27 @@ namespace PIO.ServerLib.Modules
 			this.taskModule = TaskModule;this.workerModule = WorkerModule;
 		}
 
-		protected DateTime GetLastETA(int WorkerID)
+		protected Worker AssertWorkerIsIdle(int WorkerID,[CallerMemberName] string MethodName = null)
 		{
+			Worker worker;
 			Task task;
 
-			LogEnter();
-			
-			Log(LogLevels.Information, $"Getting last task (WorkerID={WorkerID})");
-			task=Try(() => taskModule.GetLastTask(WorkerID)).OrThrow<PIOInternalErrorException>("Failed to get last task");
-			if (task == null) return DateTime.Now;
-			return task.ETA;
+			Log(LogLevels.Information, $"Checking if worker exists and is idle (WorkerID={WorkerID})");
+			worker = Try(() => workerModule.GetWorker(WorkerID) ).OrThrow<PIOInternalErrorException>($"Failed to get worker");
+			if (worker == null)
+			{
+				Log(LogLevels.Warning, $"Worker doesn't exist (WorkerID={WorkerID})");
+				throw new PIONotFoundException($"Worker doesn't exist (WorkerID={WorkerID})", null, ID, ModuleName, MethodName);
+			}
+
+			task = Try(() => taskModule.GetLastTask(WorkerID)).OrThrow<PIOInternalErrorException>("Failed to get last worker task");
+			if (task != null)
+			{
+				Log(LogLevels.Warning, $"Worker is not free (WorkerID={WorkerID})");
+				throw new PIOInvalidOperationException($"Worker is not free (WorkerID={WorkerID})", null, ID, ModuleName, MethodName);
+			}
+
+			return worker;
 		}
 
 		protected virtual void OnTaskCreated(Task Task)

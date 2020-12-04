@@ -41,39 +41,26 @@ namespace PIO.UnitTest.ServerLib.Modules
 			Assert.AreEqual(1, schedulerModule.Count);
 		}
 		[TestMethod]
-		public void ShouldEnqueueTaskWithCorrectETA()
+		public void ShouldNotMoveWhenWorkerIsAlreadyWorking()
 		{
+			MemoryLogger logger;
 			MoverModule module;
-			IFactoryModule factoryModule;
 			IWorkerModule workerModule;
 			ITaskModule taskModule;
-			MockedSchedulerModule schedulerModule;
-			Task result,result2;
 
-			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 1, FactoryTypeID = FactoryTypeIDs.Sawmill, BuildingID = 3,  }, new Factory() { FactoryID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill, BuildingID = 3,  });
 			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, PlanetID = 1 });
-			taskModule = new MockedTaskModule(false);
-			module = new MoverModule(NullLogger.Instance, taskModule, workerModule, factoryModule);
-			schedulerModule = new MockedSchedulerModule(false, module);
+			taskModule = new MockedTaskModule(false, new Task() { WorkerID = 1 });
 
-			result = module.BeginMoveTo(1, 2, 2);
-			Assert.IsNotNull(result);
-			Assert.AreEqual(TaskTypeIDs.MoveTo, result.TaskTypeID);
-			Assert.AreEqual(1, result.WorkerID);
-			Assert.AreEqual(1, schedulerModule.Count);
-			
-			result2 = module.BeginMoveTo(1, 2, 2);
-			Assert.IsNotNull(result);
-			Assert.AreEqual(TaskTypeIDs.MoveTo, result2.TaskTypeID);
-			Assert.AreEqual(1, result.WorkerID);
-			Assert.AreEqual(2, schedulerModule.Count);
+			logger = new MemoryLogger();
+			module = new MoverModule(logger, taskModule, workerModule,null);
 
-			Assert.IsTrue((result2.ETA - result.ETA).TotalSeconds >= 4);
+			Assert.ThrowsException<PIOInvalidOperationException>(() => module.BeginMoveTo(1, 1,1));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Warning) && (item.ComponentName == module.ModuleName)));
 		}
 
 
 
-		
+
 		[TestMethod]
 		public void ShouldNotMoveWhenWorkerDoesntExists()
 		{

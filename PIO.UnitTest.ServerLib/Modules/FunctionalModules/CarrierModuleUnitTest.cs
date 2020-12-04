@@ -50,43 +50,21 @@ namespace PIO.UnitTest.ServerLib.Modules
 		}
 
 		[TestMethod]
-		public void ShouldEnqueueTaskWithCorrectETA()
+		public void ShouldNotCarryWhenWorkerIsAlreadyWorking()
 		{
+			MemoryLogger logger;
 			CarrierModule module;
-			IBuildingModule buildingModule;
-			IFactoryModule factoryModule;
 			IWorkerModule workerModule;
-			IStackModule stackModule;
 			ITaskModule taskModule;
-			MockedSchedulerModule schedulerModule;
-			Task result,result2;
 
-			buildingModule = new MockedBuildingModule(false, new Building() { X = 10, Y = 10 });
-			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID=1,  FactoryTypeID = FactoryTypeIDs.Sawmill, BuildingID = 3 }, new Factory() { FactoryID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill, BuildingID = 3 });
 			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, PlanetID = 1 });
-			stackModule = new MockedStackModule(false,
-				new Stack() { StackID = 0, FactoryID = 1, ResourceTypeID = ResourceTypeIDs.Plank, Quantity = 20 },
-				new Stack() { StackID = 1, FactoryID = 1, ResourceTypeID = ResourceTypeIDs.Wood, Quantity = 20 },
-				new Stack() { StackID = 2, FactoryID = 1, ResourceTypeID = ResourceTypeIDs.Stone, Quantity = 20 },
-				new Stack() { StackID = 3, FactoryID = 1, ResourceTypeID = ResourceTypeIDs.Coal, Quantity = 20 }
-				);
-			taskModule = new MockedTaskModule(false);
-			module = new CarrierModule(NullLogger.Instance, taskModule, workerModule, buildingModule, factoryModule, stackModule);
-			schedulerModule = new MockedSchedulerModule(false, module);
+			taskModule = new MockedTaskModule(false, new Task() { WorkerID = 1 });
 
-			result = module.BeginCarryTo(1, 2, ResourceTypeIDs.Wood);
-			Assert.IsNotNull(result);
-			Assert.AreEqual(1, result.WorkerID);
-			Assert.AreEqual(1, schedulerModule.Count);
+			logger = new MemoryLogger();
+			module = new CarrierModule(logger, taskModule, workerModule,null,null,null);
 
-			result2 = module.BeginCarryTo(1, 2, ResourceTypeIDs.Wood);
-			Assert.IsNotNull(result2);
-			Assert.AreEqual(1, result2.WorkerID);
-			Assert.AreEqual(2, schedulerModule.Count);
-
-			Assert.IsTrue((result2.ETA - result.ETA).TotalSeconds >= 1);
-
-
+			Assert.ThrowsException<PIOInvalidOperationException>(() => module.BeginCarryTo(1, 1,ResourceTypeIDs.Coal));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Warning) && (item.ComponentName == module.ModuleName)));
 		}
 
 		[TestMethod]

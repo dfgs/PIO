@@ -34,10 +34,11 @@ namespace PIO.ServerLib.Modules
 
 			LogEnter();
 
-			worker = AssertExists(() => workerModule.GetWorker(WorkerID), $"WorkerID = {WorkerID}");
+			worker = AssertWorkerIsIdle(WorkerID);
+
 
 			Log(LogLevels.Information, $"Creating task (WorkerID={WorkerID})");
-			task = Try(() => taskModule.CreateTask(TaskTypeIDs.MoveTo, WorkerID, X,Y, null, null, null, null, GetLastETA(WorkerID).AddSeconds(10))).OrThrow<PIOInternalErrorException>("Failed to create task");
+			task = Try(() => taskModule.CreateTask(TaskTypeIDs.MoveTo, WorkerID, X,Y, null, null, null, null, DateTime.Now.AddSeconds(10))).OrThrow<PIOInternalErrorException>("Failed to create task");
 
 			OnTaskCreated(task);
 

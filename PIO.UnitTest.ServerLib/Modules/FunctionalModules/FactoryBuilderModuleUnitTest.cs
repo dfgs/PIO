@@ -50,45 +50,21 @@ namespace PIO.UnitTest.ServerLib.Modules
 			Assert.AreEqual(1, schedulerModule.Count);
 		}
 		[TestMethod]
-		public void ShouldEnqueueCreateBuildingTaskWithCorrectETA()
+		public void ShouldNotCreateBuildingWhenWorkerIsAlreadyWorking()
 		{
+			MemoryLogger logger;
 			FactoryBuilderModule module;
 			IWorkerModule workerModule;
 			ITaskModule taskModule;
-			MockedSchedulerModule schedulerModule;
-			IBuildingModule buildingModule;
-			IFactoryModule factoryModule;
-			IStackModule stackModule;
-			IMaterialModule materialModule;
-			IFactoryTypeModule factoryTypeModule;
-			
-			Task result, result2;
 
 			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, PlanetID = 1 });
-			taskModule = new MockedTaskModule(false);
-			buildingModule = new MockedBuildingModule(false);
-			factoryModule = new MockedFactoryModule(false);
-			factoryTypeModule = new MockedFactoryTypeModule(false, new FactoryType() { FactoryTypeID = FactoryTypeIDs.Sawmill });
-			stackModule = new MockedStackModule(false, new Stack() { Quantity = 10, ResourceTypeID = ResourceTypeIDs.Wood, StackID = 1 }, new Stack() { Quantity = 10, ResourceTypeID = ResourceTypeIDs.Stone, StackID = 1 });
-			materialModule = new MockedMaterialModule(false, new Material() { Quantity = 1, ResourceTypeID = ResourceTypeIDs.Wood, FactoryTypeID = FactoryTypeIDs.Sawmill }, new Material() { Quantity = 2, ResourceTypeID = ResourceTypeIDs.Stone, FactoryTypeID = FactoryTypeIDs.Sawmill });
-			module = new FactoryBuilderModule(NullLogger.Instance, taskModule, workerModule, buildingModule, factoryModule, factoryTypeModule, stackModule, materialModule);
-			schedulerModule = new MockedSchedulerModule(false, module);
+			taskModule = new MockedTaskModule(false, new Task() { WorkerID = 1 });
 
-			result = module.BeginCreateBuilding(1, FactoryTypeIDs.Sawmill);
-			Assert.IsNotNull(result);
-			Assert.AreEqual(TaskTypeIDs.CreateBuilding, result.TaskTypeID);
-			Assert.AreEqual(1, result.WorkerID);
-			Assert.AreEqual(FactoryTypeIDs.Sawmill, result.FactoryTypeID);
-			Assert.AreEqual(1, schedulerModule.Count);
+			logger = new MemoryLogger();
+			module = new FactoryBuilderModule(logger, taskModule, workerModule,null,null,null,null,null);
 
-			result2 = module.BeginCreateBuilding(1,  FactoryTypeIDs.Sawmill);
-			Assert.IsNotNull(result2);
-			Assert.AreEqual(TaskTypeIDs.CreateBuilding, result2.TaskTypeID);
-			Assert.AreEqual(1, result2.WorkerID);
-			Assert.AreEqual(FactoryTypeIDs.Sawmill, result2.FactoryTypeID);
-			Assert.AreEqual(2, schedulerModule.Count);
-
-			Assert.IsTrue((result2.ETA - result.ETA).TotalSeconds >= 4);
+			Assert.ThrowsException<PIOInvalidOperationException>(() => module.BeginCreateBuilding(1, FactoryTypeIDs.Forest));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Warning) && (item.ComponentName == module.ModuleName)));
 		}
 
 
@@ -378,43 +354,21 @@ namespace PIO.UnitTest.ServerLib.Modules
 			Assert.AreEqual(1, schedulerModule.Count);
 		}
 		[TestMethod]
-		public void ShouldEnqueueBuildTaskWithCorrectETA()
+		public void ShouldNotBuildWhenWorkerIsAlreadyWorking()
 		{
+			MemoryLogger logger;
 			FactoryBuilderModule module;
 			IWorkerModule workerModule;
 			ITaskModule taskModule;
-			MockedSchedulerModule schedulerModule;
-			IBuildingModule buildingModule;
-			IFactoryModule factoryModule;
-			IStackModule stackModule;
-			IMaterialModule materialModule;
-			IFactoryTypeModule factoryTypeModule;
-
-			Task result, result2;
 
 			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, PlanetID = 1 });
-			taskModule = new MockedTaskModule(false);
-			buildingModule = new MockedBuildingModule(false, new Building() { BuildingID = 2, RemainingBuildSteps = 5 });
-			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 2, BuildingID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill });
-			factoryTypeModule = new MockedFactoryTypeModule(false, new FactoryType() { FactoryTypeID = FactoryTypeIDs.Sawmill });
-			stackModule = new MockedStackModule(false, new Stack() { FactoryID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Wood, StackID = 1 }, new Stack() { FactoryID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Stone, StackID = 1 });
-			materialModule = new MockedMaterialModule(false, new Material() { Quantity = 1, ResourceTypeID = ResourceTypeIDs.Wood, FactoryTypeID = FactoryTypeIDs.Sawmill }, new Material() { Quantity = 2, ResourceTypeID = ResourceTypeIDs.Stone, FactoryTypeID = FactoryTypeIDs.Sawmill });
-			module = new FactoryBuilderModule(NullLogger.Instance, taskModule, workerModule, buildingModule, factoryModule, factoryTypeModule, stackModule, materialModule);
-			schedulerModule = new MockedSchedulerModule(false, module);
+			taskModule = new MockedTaskModule(false, new Task() { WorkerID = 1 });
 
-			result = module.BeginBuild(1);
-			Assert.IsNotNull(result);
-			Assert.AreEqual(TaskTypeIDs.Build, result.TaskTypeID);
-			Assert.AreEqual(1, result.WorkerID);
-			Assert.AreEqual(1, schedulerModule.Count);
+			logger = new MemoryLogger();
+			module = new FactoryBuilderModule(logger, taskModule, workerModule, null, null, null, null, null);
 
-			result2 = module.BeginBuild(1);
-			Assert.IsNotNull(result2);
-			Assert.AreEqual(TaskTypeIDs.Build, result2.TaskTypeID);
-			Assert.AreEqual(1, result2.WorkerID);
-			Assert.AreEqual(2, schedulerModule.Count);
-
-			Assert.IsTrue((result2.ETA - result.ETA).TotalSeconds >= 4);
+			Assert.ThrowsException<PIOInvalidOperationException>(() => module.BeginBuild(1));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Warning) && (item.ComponentName == module.ModuleName)));
 		}
 
 
