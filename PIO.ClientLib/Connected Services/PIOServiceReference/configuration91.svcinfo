@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="LBQLdY85MI0h9q0Kj0c3NmgsY6ip9EXTtjcu93XqMC0=">
+<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="Rf9huC7YH78uoXSbQhv95xakBAAzCffLgLi4jsOUygs=">
   <bindingConfigurations>
     <bindingConfiguration bindingType="basicHttpBinding" name="BasicHttpBinding_IPIOService">
       <properties>
@@ -112,7 +112,7 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="BasicHttpBinding_IPIOService" contract="PIOWebServiceReference.IPIOService" bindingType="basicHttpBinding" address="http://localhost:8733/Design_Time_Addresses/PIO.WebService/" bindingConfiguration="BasicHttpBinding_IPIOService">
+    <endpoint name="BasicHttpBinding_IPIOService" contract="PIOServiceReference.IPIOService" bindingType="basicHttpBinding" address="http://localhost:8733/Design_Time_Addresses/PIO.WebService/" bindingConfiguration="BasicHttpBinding_IPIOService">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue>http://localhost:8733/Design_Time_Addresses/PIO.WebService/</serializedValue>
@@ -127,7 +127,7 @@
           <serializedValue>BasicHttpBinding_IPIOService</serializedValue>
         </property>
         <property path="/contract" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>PIOWebServiceReference.IPIOService</serializedValue>
+          <serializedValue>PIOServiceReference.IPIOService</serializedValue>
         </property>
         <property path="/headers" isComplexType="true" isExplicitlyDefined="false" clrType="System.ServiceModel.Configuration.AddressHeaderCollectionElement, System.ServiceModel, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue>System.ServiceModel.Configuration.AddressHeaderCollectionElement</serializedValue>

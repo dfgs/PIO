@@ -8,11 +8,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace PIO.PowerShell.PIOWebServiceReference {
+namespace PIO.ClientLib.PIOServiceReference {
     
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="PIOWebServiceReference.IPIOService")]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="PIOServiceReference.IPIOService")]
     public interface IPIOService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetPlanet", ReplyAction="http://tempuri.org/IPIOService/GetPlanetResponse")]
@@ -239,12 +239,12 @@ namespace PIO.PowerShell.PIOWebServiceReference {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IPIOServiceChannel : PIO.PowerShell.PIOWebServiceReference.IPIOService, System.ServiceModel.IClientChannel {
+    public interface IPIOServiceChannel : PIO.ClientLib.PIOServiceReference.IPIOService, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class PIOServiceClient : System.ServiceModel.ClientBase<PIO.PowerShell.PIOWebServiceReference.IPIOService>, PIO.PowerShell.PIOWebServiceReference.IPIOService {
+    public partial class PIOServiceClient : System.ServiceModel.ClientBase<PIO.ClientLib.PIOServiceReference.IPIOService>, PIO.ClientLib.PIOServiceReference.IPIOService {
         
         public PIOServiceClient() {
         }

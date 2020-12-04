@@ -1,4 +1,4 @@
-﻿using PIO.PowerShell.PIOWebServiceReference;
+﻿using PIO.ClientLib.PIOServiceReference;
 using System;
 using System.Collections.Generic;
 using System.Linq;
