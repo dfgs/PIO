@@ -29,8 +29,8 @@ namespace PIO.BotsLib.Basic
 			bool result;
 
 		
-			Log(LogLevels.Information, $"Trying to run task idle (WorkerID={WorkerID})");
-			result=Try(()=>Client.Idle(WorkerID, IdleDuration)).OrAlert(out task,$"Failed to run task idle (WorkerID={WorkerID})");
+			Log(LogLevels.Information, $"Trying to run task Idle (WorkerID={WorkerID})");
+			result=Try(()=>Client.Idle(WorkerID, IdleDuration)).OrAlert(out task,$"Failed to run task Idle (WorkerID={WorkerID})");
 
 			return task;
 		}

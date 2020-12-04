@@ -1,4 +1,5 @@
 ﻿using LogLib;
+using PIO.BotsLib;
 using PIO.BotsLib.Basic;
 using PIO.ClientLib.PIOServiceReference;
 using System;
@@ -25,7 +26,7 @@ namespace PIO.BotsConsole
 			Binding binding;
 			EndpointAddress remoteAddress;
 
-			IdleBot bot;
+			IBot bot;
 
 			quitEvent = new AutoResetEvent(false);
 			Console.CancelKeyPress += new ConsoleCancelEventHandler(Console_CancelKeyPress);
@@ -40,7 +41,7 @@ namespace PIO.BotsConsole
 			client.Open();
 
 
-			bot = new IdleBot(logger, client, 1, 10);
+			bot = new ProducerBot(logger, client, 1, 3);
 			bot.Start();
 
 			WaitHandle.WaitAny(new WaitHandle[] { quitEvent }, -1);
