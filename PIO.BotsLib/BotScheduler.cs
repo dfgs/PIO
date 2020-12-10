@@ -19,7 +19,7 @@ namespace PIO.BotsLib
 
 		public void Add(IBot Bot)
 		{
-			Add(DateTime.Now, new BotEvent(Bot));
+			Add(DateTime.Now, new BotEvent(Bot,0));
 		}
 		
 		protected override void OnTriggerEvent(BotEvent Event)
@@ -32,7 +32,7 @@ namespace PIO.BotsLib
 			#region check if worker is idle
 			Log(LogLevels.Information, $"Checking if worker is idle (WorkerID={Event.Bot.WorkerID})");
 
-			result = Try(() => Event.Bot.GetCurrentTask() ).OrAlert(out task,$"Failed to get worker tasks, waiting for {retryDelay}s before retry");
+			result = Try(() => Event.Bot.GetCurrentTask()).OrAlert(out task, $"Failed to get worker tasks, waiting for {retryDelay}s before retry");
 			if (!result)
 			{
 				Add(DateTime.Now.AddSeconds(retryDelay), Event);
@@ -45,18 +45,19 @@ namespace PIO.BotsLib
 				return;
 			}
 			#endregion
+			
 
 			#region enqueue new task
 			Log(LogLevels.Information, $"Running new task (WorkerID={Event.Bot.WorkerID})");
 			result = Try(() => Event.Bot.RunTask()).OrAlert(out task, $"Failed to run new task (WorkerID={Event.Bot.WorkerID})");
 			if ((result) && (task != null))
 			{
-				Add(task.ETA, Event);
+				Add(task.ETA, new BotEvent(Event.Bot,task.TaskID));
 			}
 			else
 			{
 				Log(LogLevels.Warning, $"No task returned, waiting for {retryDelay}s before retry");
-				Add(DateTime.Now.AddSeconds(retryDelay), Event);
+				Add(DateTime.Now.AddSeconds(retryDelay), new BotEvent(Event.Bot,0));
 				return;
 			}
 			#endregion

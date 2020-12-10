@@ -78,9 +78,6 @@ namespace PIO.ServerLib.Modules
 		{
 			Log(LogLevels.Information, $"Task finished (TaskID={Task.TaskID}, TaskTypeID={Task.TaskTypeID})");
 
-			Log(LogLevels.Information, $"Deleting task (TaskID={Task.TaskID})");
-			Try(() => taskModule.DeleteTask(Task.TaskID)).OrAlert("Failed to delete task");
-
 			Log(LogLevels.Information, $"Terminating task (TaskID={Task.TaskID})");
 			switch (Task.TaskTypeID)
 			{
@@ -106,6 +103,9 @@ namespace PIO.ServerLib.Modules
 					Log(LogLevels.Warning, $"Unhandled task type (TaskTypeID={Task.TaskTypeID})");
 					break;
 			}
+
+			Log(LogLevels.Information, $"Deleting task (TaskID={Task.TaskID})");
+			Try(() => taskModule.DeleteTask(Task.TaskID)).OrAlert("Failed to delete task");
 
 
 		}

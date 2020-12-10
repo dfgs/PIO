@@ -22,8 +22,8 @@ namespace PIO.UnitTest.BotsLib
 			Assert.IsTrue(scheduler.Start());
 			scheduler.Add(bot);
 			Thread.Sleep(2000);
-			Assert.IsTrue(bot.TaskCreated > 0);
 			Assert.IsTrue(scheduler.Stop());
+			Assert.IsTrue(bot.TaskCreated > 0);
 		}
 
 		[TestMethod]
@@ -37,8 +37,8 @@ namespace PIO.UnitTest.BotsLib
 			Assert.IsTrue(scheduler.Start());
 			scheduler.Add(bot);
 			Thread.Sleep(2000);
-			Assert.AreEqual(0,bot.TaskCreated);
 			Assert.IsTrue(scheduler.Stop());
+			Assert.AreEqual(0,bot.TaskCreated);
 		}
 		[TestMethod]
 		public void ShouldNotCreateTaskIfFailstoCheckIdleState()
@@ -53,9 +53,9 @@ namespace PIO.UnitTest.BotsLib
 			Assert.IsTrue(scheduler.Start());
 			scheduler.Add(bot);
 			Thread.Sleep(2000);
+			Assert.IsTrue(scheduler.Stop());
 			Assert.AreEqual(0, bot.TaskCreated);
 			Assert.IsTrue( logger.Logs.Where(item => (item.Level == LogLevels.Error) && (item.Message.Contains("GetCurrentTask ERROR"))  ).Count()>0);
-			Assert.IsTrue(scheduler.Stop());
 		}
 		[TestMethod]
 		public void ShouldNotCreateTaskIfFailstoRunTask()
@@ -70,9 +70,9 @@ namespace PIO.UnitTest.BotsLib
 			Assert.IsTrue(scheduler.Start());
 			scheduler.Add(bot);
 			Thread.Sleep(2000);
+			Assert.IsTrue(scheduler.Stop());
 			Assert.AreEqual(0, bot.TaskCreated);
 			Assert.IsTrue(logger.Logs.Where(item => (item.Level == LogLevels.Error) && (item.Message.Contains("RunTask ERROR"))).Count() > 0);
-			Assert.IsTrue(scheduler.Stop());
 		}
 
 

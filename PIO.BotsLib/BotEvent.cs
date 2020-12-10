@@ -13,10 +13,15 @@ namespace PIO.BotsLib
 			get;
 			private set;
 		}
-
-		public BotEvent(IBot Bot)
+		public int TaskID
 		{
-			this.Bot = Bot;
+			get;
+			private set;
+		}
+
+		public BotEvent(IBot Bot,int TaskID)
+		{
+			this.Bot = Bot;this.TaskID = TaskID;
 
 		}
 

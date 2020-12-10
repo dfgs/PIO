@@ -27,6 +27,7 @@ namespace PIO.BotsConsole
 			EndpointAddress remoteAddress;
 
 			IBot bot;
+			BotScheduler botSheduler;
 
 			quitEvent = new AutoResetEvent(false);
 			Console.CancelKeyPress += new ConsoleCancelEventHandler(Console_CancelKeyPress);
@@ -43,7 +44,13 @@ namespace PIO.BotsConsole
 
 			bot = new ProducerBot(logger, client, 1, 3);
 
+			botSheduler = new BotScheduler(logger, 5);
+			botSheduler.Start();
+			botSheduler.Add(bot);
+
 			WaitHandle.WaitAny(new WaitHandle[] { quitEvent }, -1);
+
+			botSheduler.Stop();
 
 			client.Close();
 			logger.Dispose();
