@@ -5,97 +5,76 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PIO.BotsLib.Basic;
 using PIO.UnitTest.BotsLib.Mocks;
 using System.Linq;
+using PIO.Models;
+using PIO.BotsLib;
 
 namespace PIO.UnitTest.BotsLib.Basics
 {
 	[TestClass]
 	public class IdleBotUnitTest
 	{
+
 		[TestMethod]
-		public void ShouldLogErrorsWhenFailsToFindIfWorkerIsIdle()
+		public void ShouldGetCurrentTask()
+		{
+			MockedPIOClient client;
+			IdleBot bot;
+			Task task;
+
+			client = new MockedPIOClient(false);
+			bot = new IdleBot(NullLogger.Instance, client, 1, 1);
+
+			task=bot.GetCurrentTask();
+			Assert.IsNotNull(task);
+
+		}
+
+		[TestMethod]
+		public void ShouldNotGetCurrentTask()
 		{
 			MemoryLogger logger;
 			MockedPIOClient client;
 			IdleBot bot;
 
-			client = new MockedPIOClient(true,false,false);
+
+			client = new MockedPIOClient(true);
 			logger = new MemoryLogger();
 			bot = new IdleBot(logger, client, 1, 1);
 
-			Assert.IsTrue(bot.Start());
-			Thread.Sleep(2000);
-			Assert.IsTrue(bot.Stop());
+			Assert.ThrowsException<BotException>(()=> bot.GetCurrentTask());
+		}
 
-			Assert.IsTrue(logger.Logs.Where(item => (item.Level == LogLevels.Error) && (item.Message.Contains("GETLASTTASK ERROR"))).Count()>0  );
-			Assert.AreEqual(0, logger.Logs.Where(item => (item.Level == LogLevels.Warning) && (item.Message.Contains("Worker is not idle"))).Count());
-			Assert.AreEqual(0,logger.Logs.Where(item => (item.Level == LogLevels.Information) && (item.Message.Contains("Running new task"))).Count());
+		[TestMethod]
+		public void ShouldCreateTask()
+		{
+			MockedPIOClient client;
+			IdleBot bot;
+			Task task;
 
+			client = new MockedPIOClient(false);
+			bot = new IdleBot(NullLogger.Instance, client, 1, 1);
+
+			task = bot.RunTask();
+			Assert.IsNotNull(task);
 
 		}
 
 		[TestMethod]
-		public void ShouldWaitExistingTaskToFinish()
+		public void ShouldNotCreateTask()
 		{
 			MemoryLogger logger;
 			MockedPIOClient client;
 			IdleBot bot;
 
-			client = new MockedPIOClient(false,true, false);
+
+			client = new MockedPIOClient(true);
 			logger = new MemoryLogger();
 			bot = new IdleBot(logger, client, 1, 1);
 
-			Assert.IsTrue(bot.Start());
-			Thread.Sleep(2000);
-			Assert.IsTrue(bot.Stop());
-
-			Assert.AreEqual(0,logger.Logs.Where(item => (item.Level == LogLevels.Error) && (item.Message.Contains("GETLASTTASK ERROR"))).Count());
-			Assert.AreEqual(1,logger.Logs.Where(item => (item.Level == LogLevels.Warning) && (item.Message.Contains("Worker is not idle"))).Count() );
-
-
-		}
-
-		[TestMethod]
-		public void ShouldNotWaitExistingTaskAndGenerateTasks()
-		{
-			MemoryLogger logger;
-			MockedPIOClient client;
-			IdleBot bot;
-
-			client = new MockedPIOClient(false,false, false);
-			logger = new MemoryLogger();
-			bot = new IdleBot(logger, client, 1, 1);
-
-			Assert.IsTrue(bot.Start());
-			Thread.Sleep(2000);
-			Assert.IsTrue(bot.Stop());
-
-			Assert.AreEqual(0, logger.Logs.Where(item => (item.Level == LogLevels.Error) && (item.Message.Contains("GETLASTTASK ERROR"))).Count());
-			Assert.AreEqual(0,logger.Logs.Where(item => (item.Level == LogLevels.Warning) && (item.Message.Contains("Worker is not idle"))).Count() );
-			Assert.IsTrue(logger.Logs.Where(item => (item.Level == LogLevels.Information) && (item.Message.Contains("Running new task"))).Count() != 0);
-	
+			Assert.ThrowsException<BotException>(() => bot.RunTask());
 		}
 
 
-		[TestMethod]
-		public void ShouldLogErrorWhenFailsToGenerateTasks()
-		{
-			MemoryLogger logger;
-			MockedPIOClient client;
-			IdleBot bot;
-
-			client = new MockedPIOClient(false, false,true);
-			logger = new MemoryLogger();
-			bot = new IdleBot(logger, client, 1, 1);
-
-			Assert.IsTrue(bot.Start());
-			Thread.Sleep(2000);
-			Assert.IsTrue(bot.Stop());
-
-			Assert.IsTrue(logger.Logs.Where(item => (item.Level == LogLevels.Error) && (item.Message.Contains("IDLE ERROR"))).Count() > 0);
-			Assert.AreEqual(0, logger.Logs.Where(item => (item.Level == LogLevels.Error) && (item.Message.Contains("GETLASTTASK ERROR"))).Count());
-			Assert.AreEqual(0, logger.Logs.Where(item => (item.Level == LogLevels.Warning) && (item.Message.Contains("Worker is not idle"))).Count());
-
-		}
 
 
 	}

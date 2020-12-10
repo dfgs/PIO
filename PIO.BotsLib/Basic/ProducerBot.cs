@@ -18,13 +18,13 @@ namespace PIO.BotsLib.Basic
 			private set;
 		}
 
-		public ProducerBot(ILogger Logger, ClientLib.PIOServiceReference.IPIOService Client, int WorkerID,int FactoryID, ThreadPriority Priority = ThreadPriority.Normal, int StopTimeout = 5000) : base(Logger, Client, WorkerID, Priority, StopTimeout)
+		public ProducerBot(ILogger Logger, ClientLib.PIOServiceReference.IPIOService Client, int WorkerID,int FactoryID) : base(Logger, Client, WorkerID)
 		{
 			this.FactoryID = FactoryID;
 			
 		}
 
-		protected override Models.Task OnRunTask()
+		public override Models.Task RunTask()
 		{
 			Factory factory;
 			Building building;

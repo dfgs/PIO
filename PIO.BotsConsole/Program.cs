@@ -42,11 +42,9 @@ namespace PIO.BotsConsole
 
 
 			bot = new ProducerBot(logger, client, 1, 3);
-			bot.Start();
 
 			WaitHandle.WaitAny(new WaitHandle[] { quitEvent }, -1);
 
-			bot.Stop();
 			client.Close();
 			logger.Dispose();
 

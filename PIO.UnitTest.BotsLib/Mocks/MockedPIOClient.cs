@@ -12,13 +12,11 @@ namespace PIO.UnitTest.BotsLib.Mocks
 {
 	public class MockedPIOClient : IPIOService
 	{
-		private bool throwExceptionOnGetLastTask;
-		private bool throwExceptionOnGeneratingTask;
-		private bool existingTask;
+		private bool throwException;
 
-		public MockedPIOClient(bool ThrowExceptionOnGetLastTask,bool ExistingTask,bool ThrowExceptionOnGeneratingTask)
+		public MockedPIOClient(bool ThrowException)
 		{
-			this.throwExceptionOnGetLastTask = ThrowExceptionOnGetLastTask;this.existingTask = ExistingTask;this.throwExceptionOnGeneratingTask = ThrowExceptionOnGeneratingTask;
+			this.throwException = ThrowException;
 		}
 		
 		public Models.Task BuildFactory(int WorkerID)
@@ -98,8 +96,7 @@ namespace PIO.UnitTest.BotsLib.Mocks
 
 		public Models.Task GetLastTask(int WorkerID)
 		{
-			if (throwExceptionOnGetLastTask) throw new InvalidOperationException("GETLASTTASK ERROR");
-			if (!existingTask) return null;
+			if (throwException) throw new InvalidOperationException("CLIENT ERROR");
 			return new Models.Task() { WorkerID = WorkerID, ETA = DateTime.Now.AddSeconds(1) };
 		}
 
@@ -195,7 +192,7 @@ namespace PIO.UnitTest.BotsLib.Mocks
 
 		public Models.Task Idle(int WorkerID, int Duration)
 		{
-			if (throwExceptionOnGeneratingTask) throw new NotImplementedException("IDLE ERROR");
+			if (throwException) throw new InvalidOperationException("CLIENT ERROR");
 			return new Models.Task() { WorkerID = WorkerID, ETA = DateTime.Now.AddSeconds(1) };
 		}
 

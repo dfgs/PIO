@@ -18,19 +18,17 @@ namespace PIO.BotsLib.Basic
 			private set;
 		}
 
-		public IdleBot(ILogger Logger, IPIOService Client, int WorkerID, int IdleDuration, ThreadPriority Priority = ThreadPriority.Normal, int StopTimeout = 5000) : base(Logger, Client, WorkerID, Priority, StopTimeout)
+		public IdleBot(ILogger Logger, IPIOService Client, int WorkerID, int IdleDuration) : base(Logger, Client, WorkerID)
 		{
 			this.IdleDuration = IdleDuration;
 		}
 
-		protected override Models.Task OnRunTask()
+		public override Models.Task RunTask()
 		{
 			Models.Task task;
-			bool result;
-
 		
 			Log(LogLevels.Information, $"Trying to run task Idle (WorkerID={WorkerID})");
-			result=Try(()=>Client.Idle(WorkerID, IdleDuration)).OrAlert(out task,$"Failed to run task Idle (WorkerID={WorkerID})");
+			task=Try(()=>Client.Idle(WorkerID, IdleDuration)).OrThrow<BotException>($"Failed to run task Idle (WorkerID={WorkerID})");
 
 			return task;
 		}

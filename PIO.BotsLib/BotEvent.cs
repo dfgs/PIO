@@ -1,5 +1,4 @@
-﻿using ModuleLib;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,14 +6,20 @@ using System.Threading.Tasks;
 
 namespace PIO.BotsLib
 {
-	public interface IBot
+	public class BotEvent
 	{
-		int WorkerID
+		public IBot Bot
 		{
 			get;
+			private set;
 		}
-		PIO.Models.Task RunTask();
-		PIO.Models.Task GetCurrentTask();
+
+		public BotEvent(IBot Bot)
+		{
+			this.Bot = Bot;
+
+		}
+
 
 	}
 }

@@ -46,7 +46,11 @@
     <Compile Include="BaseBot.cs" />
     <Compile Include="Basic\IdleBot.cs" />
     <Compile Include="Basic\ProducerBot.cs" />
+    <Compile Include="BotEvent.cs" />
+    <Compile Include="BotException.cs" />
+    <Compile Include="BotScheduler.cs" />
     <Compile Include="IBot.cs" />
+    <Compile Include="IBotScheduler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

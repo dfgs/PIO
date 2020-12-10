@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace PIO.BotsLib
 {
-	public abstract class BaseBot : ThreadModule, IBot
+	public abstract class BaseBot : Module, IBot
     {
 		public int WorkerID
 		{
@@ -25,15 +25,25 @@ namespace PIO.BotsLib
 			private set;
 		}
 
-        public BaseBot(ILogger Logger, IPIOService Client, int WorkerID, ThreadPriority Priority = ThreadPriority.Normal, int StopTimeout = 5000) :base(Logger,Priority,StopTimeout)
+        public BaseBot(ILogger Logger, IPIOService Client, int WorkerID) :base(Logger)
 		{
 			this.Client = Client;
 			this.WorkerID = WorkerID;
 		}
 
-		protected abstract PIO.Models.Task OnRunTask();
+		public abstract PIO.Models.Task RunTask();
 
-		private void WaitETA(DateTime DateTime)
+		public PIO.Models.Task GetCurrentTask()
+		{
+			PIO.Models.Task task;
+
+			LogEnter();
+
+			task = Try(() => Client.GetLastTask(WorkerID)).OrThrow<BotException>( "Failed to get worker tasks");
+			return task;
+		}
+
+		/*private void WaitETA(DateTime DateTime)
 		{
 			TimeSpan delay;
 			LogEnter();
@@ -41,51 +51,8 @@ namespace PIO.BotsLib
 			delay = DateTime - DateTime.Now;
 			Log(LogLevels.Information, $"Waiting for task to finish");
 			if (delay.TotalMilliseconds>0) WaitHandles((int)(delay.TotalMilliseconds), QuitEvent);
-		}
+		}*/
 
-		protected override void ThreadLoop()
-		{
-
-			PIO.Models.Task task;
-			bool result;
-
-			LogEnter();
-
-			#region if task is already running, wait...
-			result = false; task = null;
-			while ((!result) && (State == ModuleStates.Started))
-			{
-				Log(LogLevels.Information, $"Checking if worker is idle (WorkerID={WorkerID})");
-				result = Try(() => Client.GetLastTask(WorkerID)).OrAlert(out task, "Failed to get worker tasks, waiting for 5s before retry");
-				if (!result) WaitHandles(5000, QuitEvent);
-				else if (task != null)
-				{
-					Log(LogLevels.Warning, $"Worker is not idle (WorkerID={WorkerID})");
-					WaitETA(task.ETA);
-				}
-			}
-			#endregion
-
-			while (State == ModuleStates.Started)
-			{
-				Log(LogLevels.Information, $"Running new task (WorkerID={WorkerID})");
-				task = OnRunTask();
-				if (task == null)
-				{
-					Log(LogLevels.Warning, $"No task returned, waiting for 5s before retry");
-					WaitHandles(5000, QuitEvent);
-				}
-				else
-				{
-					WaitETA(task.ETA);
-				}
-			} 
-
-			
-
-
-
-		}
 
 	}
 }
