@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 
 namespace PIO.Bots.ServerLib
 {
-	public class PIOVersionControl : VersionControl
+	public class BotsVersionControl : VersionControl
 	{
-		public PIOVersionControl(IDatabase Database) : base(Database)
+		public BotsVersionControl(IDatabase Database) : base(Database)
 		{
 		}
 

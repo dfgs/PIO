@@ -37,8 +37,15 @@ namespace PIO.BaseModulesLib.Modules.EngineModules
 			if (DropDatabase)
 			{
 				Log(LogLevels.Information, "Dropping database if exists");
-				//databaseCreator.DatabaseExists
-				if (!Try(databaseCreator.DropDatabase).OrAlert("Failed to drop database")) return false;
+				if (!Try(()=>databaseCreator.DatabaseExists()).OrAlert(out result,"Failed to check if database exists")) return false;
+				if (!result)
+				{
+					Log(LogLevels.Information, "Database doesn't exist");
+				}
+				else
+				{
+					if (!Try(databaseCreator.DropDatabase).OrAlert("Failed to drop database")) return false;
+				}
 			}
 
 			#region database initialisation

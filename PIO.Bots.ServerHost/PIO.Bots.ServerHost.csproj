@@ -68,6 +68,26 @@
       <Project>{F89B06C7-43CC-4589-9859-3A4656AAA4A6}</Project>
       <Name>ModuleLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\NetORMLib\NetORMLib.Sql\NetORMLib.Sql.csproj">
+      <Project>{D0D3E5A2-440C-4B0A-9B01-4633F2A74BDF}</Project>
+      <Name>NetORMLib.Sql</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\NetORMLib\NetORMLib.VersionControl\NetORMLib.VersionControl.csproj">
+      <Project>{54987791-5D6C-4F07-8355-C3C909C0632A}</Project>
+      <Name>NetORMLib.VersionControl</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\NetORMLib\NetORMLib\NetORMLib.csproj">
+      <Project>{C94B7BF1-BF85-4483-B032-1582F9EC6423}</Project>
+      <Name>NetORMLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PIO.BaseModulesLib\PIO.BaseModulesLib.csproj">
+      <Project>{43E748AC-E4ED-4352-B091-5DFECFEEFA88}</Project>
+      <Name>PIO.BaseModulesLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PIO.Bots.ServerLib\PIO.Bots.ServerLib.csproj">
+      <Project>{469C395F-6F24-4188-AF74-72735A9BFDDD}</Project>
+      <Name>PIO.Bots.ServerLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PIO.BotsLib\PIO.BotsLib.csproj">
       <Project>{78375324-208D-4ECB-84AD-079CA8939C51}</Project>
       <Name>PIO.BotsLib</Name>
