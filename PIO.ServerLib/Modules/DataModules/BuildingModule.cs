@@ -11,7 +11,8 @@ using System.Text;
 using System.Threading.Tasks;
 using PIO.ServerLib.Tables;
 using PIO.Models.Modules;
-using PIO.Models.Exceptions;
+using PIO.BaseModulesLib.Modules.DataModules;
+using PIO.ModulesLib.Exceptions;
 
 namespace PIO.ServerLib.Modules
 {

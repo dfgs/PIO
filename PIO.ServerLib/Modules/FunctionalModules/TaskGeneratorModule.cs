@@ -1,12 +1,13 @@
 ﻿using LogLib;
 using PIO.Models.Modules;
-using PIO.Models.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using PIO.Models;
+using PIO.ModulesLib.Exceptions;
+using PIOBaseModulesLib.Modules.FunctionalModules;
 
 namespace PIO.ServerLib.Modules
 {

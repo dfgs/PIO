@@ -4,7 +4,7 @@ using System.ServiceModel;
 using LogLib;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PIO.Models;
-using PIO.Models.Exceptions;
+
 using PIO.UnitTest.WebServiceLib.Mocks;
 using PIO.WebServiceLib;
 

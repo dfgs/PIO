@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using PIO.ServerLib.Tables;
 using PIO.Models.Modules;
-using PIO.Models.Exceptions;
+using PIO.ModulesLib.Exceptions;
 
 namespace PIO.ServerLib.Modules
 {

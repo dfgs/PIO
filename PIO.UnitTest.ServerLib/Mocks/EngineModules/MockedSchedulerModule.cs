@@ -1,5 +1,6 @@
-﻿using PIO.Models.Exceptions;
+﻿
 using PIO.Models.Modules;
+using PIO.ModulesLib.Exceptions;
 using PIO.ServerLib.Modules;
 using System;
 using System.Collections.Generic;

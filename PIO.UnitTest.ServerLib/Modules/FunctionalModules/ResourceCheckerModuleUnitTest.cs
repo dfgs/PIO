@@ -6,7 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetORMLib.Databases;
 using PIO.Models;
 using PIO.Models.Modules;
-using PIO.Models.Exceptions;
+using PIO.ModulesLib.Exceptions;
 using PIO.ServerLib.Modules;
 using PIO.UnitTest.ServerLib.Mocks;
 

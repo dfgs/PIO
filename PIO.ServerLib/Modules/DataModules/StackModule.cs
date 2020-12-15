@@ -12,7 +12,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NetORMLib.Filters;
-using PIO.Models.Exceptions;
+using PIO.BaseModulesLib.Modules.DataModules;
+using PIO.ModulesLib.Exceptions;
 
 namespace PIO.ServerLib.Modules
 {

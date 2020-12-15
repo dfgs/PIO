@@ -9,7 +9,7 @@ using NetORMLib.Sql.ConnectionFactories;
 using NetORMLib.Sql.Databases;
 using NetORMLib.VersionControl;
 using PIO.Models;
-using PIO.Models.Exceptions;
+
 using PIO.Models.Modules;
 using PIO.ServerLib.Modules;
 

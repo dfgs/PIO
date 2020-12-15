@@ -44,14 +44,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Consts.cs" />
-    <Compile Include="Exceptions\DataExceptions\PIODataException.cs" />
-    <Compile Include="Exceptions\EngineExceptions\PIOInternalErrorException.cs" />
-    <Compile Include="Exceptions\EngineExceptions\PIOEngineException.cs" />
-    <Compile Include="Exceptions\FunctionalExceptions\PIONoResourcesException.cs" />
-    <Compile Include="Exceptions\FunctionalExceptions\PIOInvalidOperationException.cs" />
-    <Compile Include="Exceptions\FunctionalExceptions\PIONotFoundException.cs" />
-    <Compile Include="Exceptions\PIOException.cs" />
-    <Compile Include="Exceptions\FunctionalExceptions\PIOFunctionalException.cs" />
     <Compile Include="Building.cs" />
     <Compile Include="BuildingType.cs" />
     <Compile Include="IPIOService.cs" />
@@ -68,15 +60,10 @@
     <Compile Include="Modules\FunctionalModules\IResourceCheckerModule.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="Ingredient.cs" />
-    <Compile Include="Modules\DataModules\IDataModule.cs" />
     <Compile Include="Modules\DataModules\IIngredientModule.cs" />
-    <Compile Include="Modules\EngineModules\IEngineModule.cs" />
-    <Compile Include="Modules\FunctionalModules\IFunctionalModule.cs" />
     <Compile Include="Worker.cs" />
     <Compile Include="Factory.cs" />
     <Compile Include="Modules\DataModules\IWorkerModule.cs" />
-    <Compile Include="Modules\IPIOModule.cs" />
-    <Compile Include="Modules\DataModules\IDatabaseModule.cs" />
     <Compile Include="Modules\FunctionalModules\IFactoryBuilderModule.cs" />
     <Compile Include="Modules\DataModules\IFactoryModule.cs" />
     <Compile Include="Modules\DataModules\IFactoryTypeModule.cs" />
@@ -106,6 +93,13 @@
       <Project>{C94B7BF1-BF85-4483-B032-1582F9EC6423}</Project>
       <Name>NetORMLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PIO.ModulesLib\PIO.ModulesLib.csproj">
+      <Project>{83f02fcd-3ebd-4d90-911a-9a1f684d343c}</Project>
+      <Name>PIO.ModulesLib</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Modules\EngineModules\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

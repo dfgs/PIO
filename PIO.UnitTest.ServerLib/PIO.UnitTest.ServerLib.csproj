@@ -105,9 +105,17 @@
       <Project>{C94B7BF1-BF85-4483-B032-1582F9EC6423}</Project>
       <Name>NetORMLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PIO.BaseModulesLib\PIO.BaseModulesLib.csproj">
+      <Project>{43E748AC-E4ED-4352-B091-5DFECFEEFA88}</Project>
+      <Name>PIO.BaseModulesLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PIO.Models\PIO.Models.csproj">
       <Project>{7883D2F9-F04E-467A-A0A6-61158DCA5956}</Project>
       <Name>PIO.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PIO.ModulesLib\PIO.ModulesLib.csproj">
+      <Project>{83F02FCD-3EBD-4D90-911A-9A1F684D343C}</Project>
+      <Name>PIO.ModulesLib</Name>
     </ProjectReference>
     <ProjectReference Include="..\PIO.ServerLib\PIO.ServerLib.csproj">
       <Project>{bcd967fa-4da8-47ad-a1f5-a66ea4575617}</Project>

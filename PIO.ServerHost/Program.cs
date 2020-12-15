@@ -5,6 +5,7 @@ using NetORMLib.Databases;
 using NetORMLib.Sql.CommandBuilders;
 using NetORMLib.Sql.ConnectionFactories;
 using NetORMLib.Sql.Databases;
+using PIO.BaseModulesLib.Modules.EngineModules;
 using PIO.Models;
 using PIO.Models.Modules;
 using PIO.ServerLib;
@@ -71,7 +72,7 @@ namespace PIO.ServerHost
 			commandBuilder = new SqlCommandBuilder();
 			database = new Database(connectionFactory, commandBuilder);
 
-			versionControlModule = new VersionControlModule(logger,databaseCreator,database);
+			versionControlModule = new VersionControlModule(logger,databaseCreator,new PIOVersionControl(database));
 			if (!versionControlModule.InitializeDatabase(Properties.Settings.Default.DropDatabase))
 			{
 				Console.ReadLine();

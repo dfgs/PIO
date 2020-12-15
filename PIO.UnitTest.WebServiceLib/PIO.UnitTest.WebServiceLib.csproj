@@ -90,6 +90,10 @@
       <Project>{7883D2F9-F04E-467A-A0A6-61158DCA5956}</Project>
       <Name>PIO.Models</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PIO.ModulesLib\PIO.ModulesLib.csproj">
+      <Project>{83F02FCD-3EBD-4D90-911A-9A1F684D343C}</Project>
+      <Name>PIO.ModulesLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PIO.WebServiceLib\PIO.WebServiceLib.csproj">
       <Project>{e8437e04-b58f-40a7-a811-485645ff6137}</Project>
       <Name>PIO.WebServiceLib</Name>

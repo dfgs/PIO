@@ -9,8 +9,8 @@ using System.Text;
 using LogLib;
 using ModuleLib;
 using PIO.Models;
-using PIO.Models.Exceptions;
 using PIO.Models.Modules;
+using PIO.ModulesLib.Exceptions;
 
 namespace PIO.WebServiceLib
 {
