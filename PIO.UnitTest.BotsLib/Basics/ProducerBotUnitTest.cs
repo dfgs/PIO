@@ -11,18 +11,18 @@ using PIO.BotsLib;
 namespace PIO.UnitTest.BotsLib.Basics
 {
 	[TestClass]
-	public class IdleBotUnitTest
+	public class ProducerBotUnitTest
 	{
 
 		[TestMethod]
 		public void ShouldGetCurrentTask()
 		{
 			MockedPIOClient client;
-			IdleBot bot;
+			ProducerBot bot;
 			Task task;
 
 			client = new MockedPIOClient(false);
-			bot = new IdleBot(NullLogger.Instance, client, 1, 1);
+			bot = new ProducerBot(NullLogger.Instance, client, 1, 1);
 
 			task=bot.GetCurrentTask();
 			Assert.IsNotNull(task);
@@ -34,12 +34,12 @@ namespace PIO.UnitTest.BotsLib.Basics
 		{
 			MemoryLogger logger;
 			MockedPIOClient client;
-			IdleBot bot;
+			ProducerBot bot;
 
 
 			client = new MockedPIOClient(true);
 			logger = new MemoryLogger();
-			bot = new IdleBot(logger, client, 1, 1);
+			bot = new ProducerBot(logger, client, 1, 1);
 
 			Assert.ThrowsException<BotException>(()=> bot.GetCurrentTask());
 		}
@@ -48,15 +48,16 @@ namespace PIO.UnitTest.BotsLib.Basics
 		public void ShouldCreateTask()
 		{
 			MockedPIOClient client;
-			IdleBot bot;
+			ProducerBot bot;
 			Task task;
 
 			client = new MockedPIOClient(false);
-			bot = new IdleBot(NullLogger.Instance, client, 1, 1);
+			bot = new ProducerBot(NullLogger.Instance, client, 1, 1);
 
 			task = bot.RunTask();
 			Assert.IsNotNull(task);
-			Assert.IsTrue(client.IdleCount > 0);
+			Assert.IsTrue(client.ProduceCount > 0);
+
 		}
 
 		[TestMethod]
@@ -64,15 +65,15 @@ namespace PIO.UnitTest.BotsLib.Basics
 		{
 			MemoryLogger logger;
 			MockedPIOClient client;
-			IdleBot bot;
+			ProducerBot bot;
 
 
 			client = new MockedPIOClient(true);
 			logger = new MemoryLogger();
-			bot = new IdleBot(logger, client, 1, 1);
+			bot = new ProducerBot(logger, client, 1, 1);
 
 			Assert.ThrowsException<BotException>(() => bot.RunTask());
-			Assert.AreEqual(0,client.IdleCount);
+			Assert.AreEqual(0, client.ProduceCount);
 		}
 
 

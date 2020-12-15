@@ -14,6 +14,25 @@ namespace PIO.UnitTest.BotsLib.Mocks
 	{
 		private bool throwException;
 
+		public int IdleCount
+		{
+			get;
+			private set;
+		}
+
+		public int MoveCount
+		{
+			get;
+			private set;
+		}
+
+		public int ProduceCount
+		{
+			get;
+			private set;
+		}
+
+
 		public MockedPIOClient(bool ThrowException)
 		{
 			this.throwException = ThrowException;
@@ -36,12 +55,12 @@ namespace PIO.UnitTest.BotsLib.Mocks
 
 		public Building GetBuilding(int BuildingID)
 		{
-			throw new NotImplementedException();
+			return new Building() { BuildingID = BuildingID };
 		}
 
 		public Building GetBuildingAtPos(int PlanetID, int X, int Y)
 		{
-			throw new NotImplementedException();
+			return new Building() { BuildingID = 1,X=X,Y=Y };
 		}
 
 		public Building[] GetBuildings(int PlanetID)
@@ -66,7 +85,7 @@ namespace PIO.UnitTest.BotsLib.Mocks
 
 		public Factory GetFactory(int FactoryID)
 		{
-			throw new NotImplementedException();
+			return new Factory() { FactoryID = FactoryID,BuildingID=FactoryID };
 		}
 
 		public Factory GetFactoryAtPos(int PlanetID, int X, int Y)
@@ -177,7 +196,7 @@ namespace PIO.UnitTest.BotsLib.Mocks
 
 		public Worker GetWorker(int WorkerID)
 		{
-			throw new NotImplementedException();
+			return new Worker() { WorkerID = WorkerID };
 		}
 
 		public Worker[] GetWorkers(int FactoryID)
@@ -187,23 +206,28 @@ namespace PIO.UnitTest.BotsLib.Mocks
 
 		public bool HasEnoughResourcesToProduce(int FactoryID)
 		{
-			throw new NotImplementedException();
+			return true;
 		}
 
 		public Models.Task Idle(int WorkerID, int Duration)
 		{
 			if (throwException) throw new InvalidOperationException("CLIENT ERROR");
+			IdleCount++;
 			return new Models.Task() { WorkerID = WorkerID, ETA = DateTime.Now.AddSeconds(1) };
 		}
 
 		public Models.Task MoveTo(int WorkerID, int X, int Y)
 		{
-			throw new NotImplementedException();
+			if (throwException) throw new InvalidOperationException("CLIENT ERROR");
+			MoveCount++;
+			return new Models.Task() { WorkerID = WorkerID, ETA = DateTime.Now.AddSeconds(1) };
 		}
 
 		public Models.Task Produce(int WorkerID)
 		{
-			throw new NotImplementedException();
+			if (throwException) throw new InvalidOperationException("CLIENT ERROR");
+			ProduceCount++;
+			return new Models.Task() { WorkerID = WorkerID, ETA = DateTime.Now.AddSeconds(1) };
 		}
 	}
 }

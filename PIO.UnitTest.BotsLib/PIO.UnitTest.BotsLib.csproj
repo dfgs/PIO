@@ -49,6 +49,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Basics\ProducerBotUnitTest.cs" />
     <Compile Include="Basics\IdleBotUnitTest.cs" />
     <Compile Include="Mocks\MockedBot.cs" />
     <Compile Include="Mocks\MockedPIOClient.cs" />
