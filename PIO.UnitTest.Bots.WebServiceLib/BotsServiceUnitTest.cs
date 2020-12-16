@@ -20,7 +20,7 @@ namespace PIO.UnitTest.Bots.WebServiceLib
 			BotsService service;
 			Order result;
 
-			service = new BotsService(NullLogger.Instance, new MockedOrderModule(3, false));
+			service = new BotsService(NullLogger.Instance, new MockedOrderModule(3, false),null);
 			result = service.GetOrder(1);
 			Assert.IsNotNull(result);
 			Assert.AreEqual(1, result.OrderID);
@@ -31,14 +31,39 @@ namespace PIO.UnitTest.Bots.WebServiceLib
 			BotsService service;
 			Order[] result;
 
-			service = new BotsService(NullLogger.Instance, new MockedOrderModule(3, false));
+			service = new BotsService(NullLogger.Instance, new MockedOrderModule(3, false), null);
 			result = service.GetOrders();
 			Assert.IsNotNull(result);
 			Assert.AreEqual(3, result.Length);
 			Assert.IsTrue(result.All((item) => item!=null));
 		}
 
-		
+
+		[TestMethod]
+		public void ShouldGetProduceOrder()
+		{
+			BotsService service;
+			ProduceOrder result;
+
+			service = new BotsService(NullLogger.Instance,null, new MockedProduceOrderModule(3, false));
+			result = service.GetProduceOrder(1);
+			Assert.IsNotNull(result);
+			Assert.AreEqual(1, result.ProduceOrderID);
+		}
+		[TestMethod]
+		public void ShouldGetProduceOrders()
+		{
+			BotsService service;
+			ProduceOrder[] result;
+
+			service = new BotsService(NullLogger.Instance, null, new MockedProduceOrderModule(3, false));
+			result = service.GetProduceOrders();
+			Assert.IsNotNull(result);
+			Assert.AreEqual(3, result.Length);
+			Assert.IsTrue(result.All((item) => item != null));
+		}
+
+
 
 
 	}

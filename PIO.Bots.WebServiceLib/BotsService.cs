@@ -16,14 +16,15 @@ namespace PIO.Bots.WebServiceLib
 	public class BotsService : Module, IBotsService
 	{
 		private IOrderModule orderModule;
-		
+		private IProduceOrderModule produceOrderModule;
+
 
 		public BotsService(ILogger Logger,
-			IOrderModule OrderModule
+			IOrderModule OrderModule, IProduceOrderModule ProduceOrderModule
 		) : base(Logger)
 		{
 			LogEnter();
-			this.orderModule = OrderModule;
+			this.orderModule = OrderModule;this.produceOrderModule = ProduceOrderModule;
 		}
 
 		private FaultException GenerateFaultException(Exception InnerException, int ComponentID, string ComponentName, string MethodName)
@@ -41,6 +42,16 @@ namespace PIO.Bots.WebServiceLib
 		{
 			LogEnter();
 			return Try(() => orderModule.GetOrders()).OrThrow(GenerateFaultException);
+		}
+		public ProduceOrder GetProduceOrder(int ProduceOrderID)
+		{
+			LogEnter();
+			return Try(() => produceOrderModule.GetProduceOrder(ProduceOrderID)).OrThrow(GenerateFaultException);
+		}
+		public ProduceOrder[] GetProduceOrders()
+		{
+			LogEnter();
+			return Try(() => produceOrderModule.GetProduceOrders()).OrThrow(GenerateFaultException);
 		}
 		#endregion
 

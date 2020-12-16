@@ -14,9 +14,12 @@ namespace PIO.Bots.Models
 		#region data
 		[OperationContract]
 		Order GetOrder(int OrderID);
-	
 		[OperationContract]
 		Order[] GetOrders();
+		[OperationContract]
+		ProduceOrder GetProduceOrder(int ProduceOrderID);
+		[OperationContract]
+		ProduceOrder[] GetProduceOrders();
 		#endregion
 
 

@@ -12,4 +12,18 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfOrder" nillable="true" type="tns:ArrayOfOrder" />
+  <xs:complexType name="ProduceOrder">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="FactoryID" type="xs:int" />
+      <xs:element minOccurs="0" name="OrderID" type="xs:int" />
+      <xs:element minOccurs="0" name="ProduceOrderID" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ProduceOrder" nillable="true" type="tns:ProduceOrder" />
+  <xs:complexType name="ArrayOfProduceOrder">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ProduceOrder" nillable="true" type="tns:ProduceOrder" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfProduceOrder" nillable="true" type="tns:ArrayOfProduceOrder" />
 </xs:schema>

@@ -18,7 +18,7 @@ namespace PIO.Bots.ServerLib
 
 		public override int GetTargetRevision()
 		{
-			return 1;
+			return 2;
 		}
 
 		protected override IEnumerable<IQuery> OnUpgradeTo(int Version)
@@ -32,36 +32,12 @@ namespace PIO.Bots.ServerLib
 			{
 				case 1:
 					yield return new CreateTable(BotsDB.OrderTable, OrderTable.OrderID);
+					yield return new CreateTable(BotsDB.ProduceOrderTable, ProduceOrderTable.ProduceOrderID, ProduceOrderTable.OrderID, ProduceOrderTable.FactoryID);
 					break;
-				/*case 2:
-					yield return new CreateRelation<int>(PIODB.WorkerTable, PlanetTable.PlanetID, WorkerTable.PlanetID);
-					yield return new CreateRelation<int>(PIODB.StackTable, FactoryTable.FactoryID, StackTable.FactoryID);
-					yield return new CreateRelation<ResourceTypeIDs>(PIODB.StackTable, ResourceTypeTable.ResourceTypeID, StackTable.ResourceTypeID);
-					yield return new CreateRelation<FactoryTypeIDs>(PIODB.MaterialTable, FactoryTypeTable.FactoryTypeID, MaterialTable.FactoryTypeID);
-					yield return new CreateRelation<ResourceTypeIDs>(PIODB.MaterialTable, ResourceTypeTable.ResourceTypeID, MaterialTable.ResourceTypeID);
-					yield return new CreateRelation<FactoryTypeIDs>(PIODB.FactoryTable, FactoryTypeTable.FactoryTypeID, FactoryTable.FactoryTypeID);
-					yield return new CreateRelation<BuildingTypeIDs>(PIODB.BuildingTable, BuildingTypeTable.BuildingTypeID, BuildingTable.BuildingTypeID);
-					yield return new CreateRelation<int>(PIODB.FactoryTable, BuildingTable.BuildingID, FactoryTable.BuildingID);
-					yield return new CreateRelation<int>(PIODB.BuildingTable, PlanetTable.PlanetID, BuildingTable.PlanetID);
-
-					yield return new CreateRelation<TaskTypeIDs>(PIODB.TaskTable, TaskTypeTable.TaskTypeID, TaskTable.TaskTypeID);
-
-					yield return new CreateRelation<int>(PIODB.TaskTable, WorkerTable.WorkerID, TaskTable.WorkerID);
-					yield return new CreateRelation<int>(PIODB.TaskTable, BuildingTable.BuildingID, TaskTable.BuildingID);
-					yield return new CreateRelation<int>(PIODB.TaskTable, FactoryTable.FactoryID, TaskTable.FactoryID);
-					yield return new CreateRelation<ResourceTypeIDs>(PIODB.TaskTable, ResourceTypeTable.ResourceTypeID, TaskTable.ResourceTypeID);
-					yield return new CreateRelation<FactoryTypeIDs>(PIODB.TaskTable, FactoryTypeTable.FactoryTypeID, TaskTable.FactoryTypeID);
-
-					yield return new CreateRelation<FactoryTypeIDs>(PIODB.IngredientTable, FactoryTypeTable.FactoryTypeID, IngredientTable.FactoryTypeID);
-					yield return new CreateRelation<ResourceTypeIDs>(PIODB.IngredientTable, ResourceTypeTable.ResourceTypeID, IngredientTable.ResourceTypeID);
-					yield return new CreateRelation<FactoryTypeIDs>(PIODB.ProductTable, FactoryTypeTable.FactoryTypeID, ProductTable.FactoryTypeID);
-					yield return new CreateRelation<ResourceTypeIDs>(PIODB.ProductTable, ResourceTypeTable.ResourceTypeID, ProductTable.ResourceTypeID);
-
-					yield return new CreateConstraint(PIODB.BuildingTable, ColumnConstraints.Unique, BuildingTable.X, BuildingTable.Y);
-					yield return new CreateConstraint(PIODB.TaskTable, ColumnConstraints.Unique, TaskTable.WorkerID);
-
+				case 2:
+					yield return new CreateRelation<int>(BotsDB.OrderTable, OrderTable.OrderID, ProduceOrderTable.OrderID);
 					break;
-				case 3:
+				/*case 3:
 					#region create ResourceType
 					yield return new Insert().Into(PIODB.ResourceTypeTable).Set(ResourceTypeTable.ResourceTypeID, ResourceTypeIDs.Tree).Set(ResourceTypeTable.Name, "Tree");
 					yield return new Insert().Into(PIODB.ResourceTypeTable).Set(ResourceTypeTable.ResourceTypeID, ResourceTypeIDs.Wood).Set(ResourceTypeTable.Name, "Wood");

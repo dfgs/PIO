@@ -43,8 +43,10 @@
   <ItemGroup>
     <Compile Include="BotsDB.cs" />
     <Compile Include="BotsVersionControl.cs" />
+    <Compile Include="Modules\DataModules\ProduceOrderModule.cs" />
     <Compile Include="Modules\DataModules\OrderModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tables\ProduceOrderTable.cs" />
     <Compile Include="Tables\OrderTable.cs" />
   </ItemGroup>
   <ItemGroup>

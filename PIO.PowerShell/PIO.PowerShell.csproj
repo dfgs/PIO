@@ -46,7 +46,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bots\DataCmdlet\GetProduceOrderCmdlet.cs" />
     <Compile Include="Bots\DataCmdlet\GetOrderCmdlet.cs" />
+    <Compile Include="Bots\DataCmdlet\GetProduceOrdersCmdlet.cs" />
     <Compile Include="Bots\DataCmdlet\GetOrdersCmdlet.cs" />
     <Compile Include="PIO\DataCmdlet\GetBuildingTypeCmdlet.cs" />
     <Compile Include="PIO\DataCmdlet\GetBuildingTypesCmdlet.cs" />

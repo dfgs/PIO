@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="BotsServiceUnitTest.cs" />
     <Compile Include="Mocks\MockedDatabaseModule.cs" />
+    <Compile Include="Mocks\MockedProduceOrderModule.cs" />
     <Compile Include="Mocks\MockedOrderModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

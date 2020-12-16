@@ -19,6 +19,18 @@
   <wsdl:message name="IBotsService_GetOrders_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetOrdersResponse" />
   </wsdl:message>
+  <wsdl:message name="IBotsService_GetProduceOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetProduceOrder" />
+  </wsdl:message>
+  <wsdl:message name="IBotsService_GetProduceOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetProduceOrderResponse" />
+  </wsdl:message>
+  <wsdl:message name="IBotsService_GetProduceOrders_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetProduceOrders" />
+  </wsdl:message>
+  <wsdl:message name="IBotsService_GetProduceOrders_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetProduceOrdersResponse" />
+  </wsdl:message>
   <wsdl:portType name="IBotsService">
     <wsdl:operation name="GetOrder">
       <wsdl:input wsaw:Action="http://tempuri.org/IBotsService/GetOrder" message="tns:IBotsService_GetOrder_InputMessage" />
@@ -27,6 +39,14 @@
     <wsdl:operation name="GetOrders">
       <wsdl:input wsaw:Action="http://tempuri.org/IBotsService/GetOrders" message="tns:IBotsService_GetOrders_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IBotsService/GetOrdersResponse" message="tns:IBotsService_GetOrders_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetProduceOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IBotsService/GetProduceOrder" message="tns:IBotsService_GetProduceOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IBotsService/GetProduceOrderResponse" message="tns:IBotsService_GetProduceOrder_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetProduceOrders">
+      <wsdl:input wsaw:Action="http://tempuri.org/IBotsService/GetProduceOrders" message="tns:IBotsService_GetProduceOrders_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IBotsService/GetProduceOrdersResponse" message="tns:IBotsService_GetProduceOrders_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IBotsService" type="tns:IBotsService">
@@ -42,6 +62,24 @@
     </wsdl:operation>
     <wsdl:operation name="GetOrders">
       <soap:operation soapAction="http://tempuri.org/IBotsService/GetOrders" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetProduceOrder">
+      <soap:operation soapAction="http://tempuri.org/IBotsService/GetProduceOrder" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetProduceOrders">
+      <soap:operation soapAction="http://tempuri.org/IBotsService/GetProduceOrders" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
