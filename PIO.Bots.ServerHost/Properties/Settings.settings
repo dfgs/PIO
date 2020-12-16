@@ -5,7 +5,7 @@
     <Setting Name="UnicastPort" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">2021</Value>
     </Setting>
-    <Setting Name="PIOServerAddress" Type="System.String" Scope="User">
+    <Setting Name="BotsServerAddress" Type="System.String" Scope="User">
       <Value Profile="(Default)">127.0.0.1</Value>
     </Setting>
     <Setting Name="Server" Type="System.String" Scope="User">

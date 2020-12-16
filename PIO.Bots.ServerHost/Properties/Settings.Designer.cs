@@ -38,12 +38,12 @@ namespace PIO.Bots.ServerHost.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("127.0.0.1")]
-        public string PIOServerAddress {
+        public string BotsServerAddress {
             get {
-                return ((string)(this["PIOServerAddress"]));
+                return ((string)(this["BotsServerAddress"]));
             }
             set {
-                this["PIOServerAddress"] = value;
+                this["BotsServerAddress"] = value;
             }
         }
         

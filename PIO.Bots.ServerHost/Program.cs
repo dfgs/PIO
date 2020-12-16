@@ -6,7 +6,11 @@ using NetORMLib.Sql.CommandBuilders;
 using NetORMLib.Sql.ConnectionFactories;
 using NetORMLib.Sql.Databases;
 using PIO.BaseModulesLib.Modules.EngineModules;
+using PIO.Bots.Models;
+using PIO.Bots.Models.Modules;
 using PIO.Bots.ServerLib;
+using PIO.Bots.ServerLib.Modules;
+using PIO.Bots.WebServiceLib;
 using PIO.BotsLib;
 using PIO.BotsLib.Basic;
 using PIO.ClientLib.PIOServiceReference;
@@ -30,11 +34,16 @@ namespace PIO.Bots.ServerHost
 		{
 			ILogger logger;
 			VersionControlModule versionControlModule;
+			ServiceHostModule serviceHostModule;
+			IBotsService service;
+
+
 			IDatabase database;
 			IConnectionFactory connectionFactory;
 			ICommandBuilder commandBuilder;
 			IDatabaseCreator databaseCreator;
 
+			IOrderModule orderModule;
 
 			PIOServiceClient client;
 			Binding binding;
@@ -61,8 +70,16 @@ namespace PIO.Bots.ServerHost
 				return;
 			}
 
+			orderModule = new OrderModule(logger, database);
+
+			service = new BotsService(logger, orderModule);
+
+			serviceHostModule = new ServiceHostModule(logger, service);
+			serviceHostModule.Start();
+
+
 			binding = new BasicHttpBinding();
-			remoteAddress = new EndpointAddress($@"http://{Properties.Settings.Default.PIOServerAddress}:8733/Design_Time_Addresses/PIO.WebService/");
+			remoteAddress = new EndpointAddress($@"http://{Properties.Settings.Default.BotsServerAddress}:8733/Design_Time_Addresses/PIO.WebService/");
 			client = new PIOServiceClient(binding, remoteAddress);
 			client.Open();
 
@@ -75,6 +92,7 @@ namespace PIO.Bots.ServerHost
 
 			WaitHandle.WaitAny(new WaitHandle[] { quitEvent }, -1);
 
+			serviceHostModule.Stop();
 			botSheduler.Stop();
 
 			client.Close();

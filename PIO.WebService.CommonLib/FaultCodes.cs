@@ -5,7 +5,7 @@ using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PIO.WebServiceLib
+namespace PIO.WebService.CommonLib
 {
 	public static class FaultCodes 
 	{

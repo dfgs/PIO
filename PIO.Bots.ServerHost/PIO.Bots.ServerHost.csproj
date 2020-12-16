@@ -84,9 +84,17 @@
       <Project>{43E748AC-E4ED-4352-B091-5DFECFEEFA88}</Project>
       <Name>PIO.BaseModulesLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PIO.Bots.Models\PIO.Bots.Models.csproj">
+      <Project>{FDF52966-F697-4E48-A055-3175A8E8BB6B}</Project>
+      <Name>PIO.Bots.Models</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PIO.Bots.ServerLib\PIO.Bots.ServerLib.csproj">
       <Project>{469C395F-6F24-4188-AF74-72735A9BFDDD}</Project>
       <Name>PIO.Bots.ServerLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PIO.Bots.WebServiceLib\PIO.Bots.WebServiceLib.csproj">
+      <Project>{384BF8A9-3D83-4455-9D84-9F79F290110E}</Project>
+      <Name>PIO.Bots.WebServiceLib</Name>
     </ProjectReference>
     <ProjectReference Include="..\PIO.BotsLib\PIO.BotsLib.csproj">
       <Project>{78375324-208D-4ECB-84AD-079CA8939C51}</Project>
@@ -95,6 +103,10 @@
     <ProjectReference Include="..\PIO.ClientLib\PIO.ClientLib.csproj">
       <Project>{F9A386F1-D923-4A58-9B0D-EF8F5411C11B}</Project>
       <Name>PIO.ClientLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PIO.ModulesLib\PIO.ModulesLib.csproj">
+      <Project>{83F02FCD-3EBD-4D90-911A-9A1F684D343C}</Project>
+      <Name>PIO.ModulesLib</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

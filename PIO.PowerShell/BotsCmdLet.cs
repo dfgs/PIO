@@ -1,4 +1,5 @@
-﻿using PIO.ClientLib.PIOServiceReference;
+﻿using PIO.Bots.ClientLib.BotsServiceReference;
+using PIO.ClientLib.PIOServiceReference;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,17 +11,17 @@ using System.Threading.Tasks;
 
 namespace PIO.PowerShell
 {
-	public class PIOCmdLet: BaseCmdLet<PIOServiceClient>
+	public class BotsCmdLet: BaseCmdLet<BotsServiceClient>
 	{
-		protected override PIOServiceClient OnCreateClient()
+		protected override BotsServiceClient OnCreateClient()
 		{
 			Binding binding;
 			EndpointAddress remoteAddress;
-			PIOServiceClient client;
+			BotsServiceClient client;
 
 			binding = new BasicHttpBinding();
-			remoteAddress = new EndpointAddress($@"http://{Server}:8733/Design_Time_Addresses/PIO.WebService/");
-			client = new PIOServiceClient(binding, remoteAddress);
+			remoteAddress = new EndpointAddress($@"http://{Server}:8734/Design_Time_Addresses/PIO.Bots.WebService/");
+			client = new BotsServiceClient(binding, remoteAddress);
 			client.Open();
 
 			return client;
