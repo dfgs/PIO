@@ -12,6 +12,8 @@ namespace PIO.Bots.Models
 	{
 		[DataMember]
 		public int OrderID { get; set; }
+		[DataMember]
+		public DateTime CreationDate { get; set; }
 	}
 
 }

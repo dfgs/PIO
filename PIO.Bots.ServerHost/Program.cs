@@ -45,6 +45,7 @@ namespace PIO.Bots.ServerHost
 
 			IOrderModule orderModule;
 			IProduceOrderModule produceOrderModule;
+			IOrderManagerModule orderManagerModule;
 
 			PIOServiceClient client;
 			Binding binding;
@@ -74,7 +75,10 @@ namespace PIO.Bots.ServerHost
 			orderModule = new OrderModule(logger, database);
 			produceOrderModule = new ProduceOrderModule(logger, database);
 
-			service = new BotsService(logger, orderModule,produceOrderModule);
+
+			orderManagerModule = new OrderManagerModule(logger, orderModule, produceOrderModule);
+
+			service = new BotsService(logger, orderModule,produceOrderModule, orderManagerModule);
 
 			serviceHostModule = new ServiceHostModule(logger, service);
 			serviceHostModule.Start();

@@ -47,7 +47,22 @@ namespace PIO.Bots.ServerLib.Modules
 			return TrySelectMany<ProduceOrderTable, ProduceOrder>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
+		public ProduceOrder CreateProduceOrder(int OrderID,int FactoryID)
+		{
+			IInsert query;
+			ProduceOrder item;
+			object result;
 
-		
+			LogEnter();
+			Log(LogLevels.Information, $"Inserting into ProduceOrder table (OrderID={OrderID}, FactoryID={FactoryID})");
+			item = new ProduceOrder() {OrderID=OrderID,FactoryID=FactoryID };
+			query = new Insert().Into(BotsDB.ProduceOrderTable)
+					.Set(ProduceOrderTable.OrderID, item.OrderID)
+					.Set(ProduceOrderTable.FactoryID, item.FactoryID) ;
+			result = Try(query).OrThrow<PIODataException>("Failed to insert");
+			item.ProduceOrderID = Convert.ToInt32(result);
+			return item;
+		}
+
 	}
 }

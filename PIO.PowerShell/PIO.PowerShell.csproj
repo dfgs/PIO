@@ -50,6 +50,7 @@
     <Compile Include="Bots\DataCmdlet\GetOrderCmdlet.cs" />
     <Compile Include="Bots\DataCmdlet\GetProduceOrdersCmdlet.cs" />
     <Compile Include="Bots\DataCmdlet\GetOrdersCmdlet.cs" />
+    <Compile Include="Bots\FunctionalCmdlet\InvokeCreateProduceOrder.cs" />
     <Compile Include="PIO\DataCmdlet\GetBuildingTypeCmdlet.cs" />
     <Compile Include="PIO\DataCmdlet\GetBuildingTypesCmdlet.cs" />
     <Compile Include="PIO\DataCmdlet\GetBuildingCmdlet.cs" />
@@ -128,8 +129,6 @@
       <Name>PIO.Models</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Bots\FunctionalCmdlet\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -80,9 +80,39 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			Assert.ThrowsException<PIODataException>(() => module.GetProduceOrders());
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
 		}
-		
 
 
+		[TestMethod]
+		public void ShouldCreateProduceOrder()
+		{
+			MockedDatabase<ProduceOrder> database;
+			ProduceOrderModule module;
+			ProduceOrder result;
+
+			database = new MockedDatabase<ProduceOrder>(false, 1, (t) => new ProduceOrder() { ProduceOrderID = t });
+			module = new ProduceOrderModule(NullLogger.Instance, database);
+			result = module.CreateProduceOrder(3,4);
+			Assert.IsNotNull(result);
+			Assert.AreEqual(3, result.OrderID);
+			Assert.AreEqual(4, result.FactoryID);
+			
+			Assert.AreEqual(1, database.InsertedCount);
+		}
+
+		[TestMethod]
+		public void ShouldNotCreateProduceOrderAndLogError()
+		{
+			MockedDatabase<ProduceOrder> database;
+			ProduceOrderModule module;
+			MemoryLogger logger;
+
+
+			logger = new MemoryLogger();
+			database = new MockedDatabase<ProduceOrder>(true, 1, (t) => new ProduceOrder() { ProduceOrderID = t });
+			module = new ProduceOrderModule(logger, database);
+			Assert.ThrowsException<PIODataException>(() => module.CreateProduceOrder(3,4));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName == module.ModuleName)));
+		}
 
 
 

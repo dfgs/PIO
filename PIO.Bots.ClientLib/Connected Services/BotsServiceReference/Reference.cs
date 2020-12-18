@@ -26,6 +26,9 @@ namespace PIO.Bots.ClientLib.BotsServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/GetProduceOrders", ReplyAction="http://tempuri.org/IBotsService/GetProduceOrdersResponse")]
         PIO.Bots.Models.ProduceOrder[] GetProduceOrders();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/CreateProduceOrder", ReplyAction="http://tempuri.org/IBotsService/CreateProduceOrderResponse")]
+        PIO.Bots.Models.ProduceOrder CreateProduceOrder(int FactoryID);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -69,6 +72,10 @@ namespace PIO.Bots.ClientLib.BotsServiceReference {
         
         public PIO.Bots.Models.ProduceOrder[] GetProduceOrders() {
             return base.Channel.GetProduceOrders();
+        }
+        
+        public PIO.Bots.Models.ProduceOrder CreateProduceOrder(int FactoryID) {
+            return base.Channel.CreateProduceOrder(FactoryID);
         }
     }
 }

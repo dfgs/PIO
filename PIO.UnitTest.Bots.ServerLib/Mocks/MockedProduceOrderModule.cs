@@ -1,5 +1,4 @@
 ﻿using PIO.Bots.Models;
-
 using PIO.Bots.Models.Modules;
 using PIO.ModulesLib.Exceptions;
 using System;
@@ -15,10 +14,7 @@ namespace PIO.UnitTest.Bots.WebServiceLib.Mocks
 		{
 		}
 
-		public ProduceOrder CreateProduceOrder(int OrderID, int FactoryID)
-		{
-			throw new NotImplementedException();
-		}
+		
 
 		public ProduceOrder GetProduceOrder(int ProduceOrderID)
 		{
@@ -26,13 +22,21 @@ namespace PIO.UnitTest.Bots.WebServiceLib.Mocks
 			return new ProduceOrder() { ProduceOrderID = ProduceOrderID };
 		}
 
-		
+	
 		public ProduceOrder[] GetProduceOrders()
 		{
 			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
 			return Generate((t) => new ProduceOrder() { ProduceOrderID = t });
 		}
 		
+		public ProduceOrder CreateProduceOrder(int OrderID,int FactoryID)
+		{
+			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
+			return new ProduceOrder() { OrderID=OrderID,FactoryID=FactoryID, ProduceOrderID = Count };
+		}
+
+
+
 
 	}
 }

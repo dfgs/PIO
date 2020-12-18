@@ -46,6 +46,7 @@
     <Compile Include="IBotsService.cs" />
     <Compile Include="Modules\DataModules\IProduceOrderModule.cs" />
     <Compile Include="Modules\DataModules\IOrderModule.cs" />
+    <Compile Include="Modules\FunctionalModules\IOrderManagerModule.cs" />
     <Compile Include="ProduceOrder.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -58,7 +59,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Modules\EngineModules\" />
-    <Folder Include="Modules\FunctionalModules\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

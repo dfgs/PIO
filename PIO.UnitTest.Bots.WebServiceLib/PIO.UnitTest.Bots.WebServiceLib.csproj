@@ -47,10 +47,13 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.ServiceModel" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BotsServiceUnitTest.cs" />
     <Compile Include="Mocks\MockedDatabaseModule.cs" />
+    <Compile Include="Mocks\MockedFunctionalModule.cs" />
+    <Compile Include="Mocks\MockedOrderManagerModule.cs" />
     <Compile Include="Mocks\MockedProduceOrderModule.cs" />
     <Compile Include="Mocks\MockedOrderModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

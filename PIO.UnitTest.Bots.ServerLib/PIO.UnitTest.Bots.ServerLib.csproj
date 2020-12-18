@@ -50,8 +50,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Mocks\MockedDatabase.cs" />
+    <Compile Include="Mocks\MockedDatabaseModule.cs" />
+    <Compile Include="Mocks\MockedProduceOrderModule.cs" />
+    <Compile Include="Mocks\MockedOrderModule.cs" />
     <Compile Include="Modules\DataModules\ProduceOrderModuleUnitTest.cs" />
     <Compile Include="Modules\DataModules\OrderModuleUnitTest.cs" />
+    <Compile Include="Modules\FunctionalModules\OrderManagerModuleUnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -59,7 +63,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Modules\EngineModules\" />
-    <Folder Include="Modules\FunctionalModules\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\LogLib\LogLib\LogLib.csproj">

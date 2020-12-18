@@ -76,8 +76,38 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			Assert.ThrowsException<PIODataException>(() => module.GetOrders());
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
 		}
-		
 
+
+
+		[TestMethod]
+		public void ShouldCreateOrder()
+		{
+			MockedDatabase<Order> database;
+			OrderModule module;
+			Order result;
+
+			database = new MockedDatabase<Order>(false, 1, (t) => new Order() { OrderID = t });
+			module = new OrderModule(NullLogger.Instance, database);
+
+			result = module.CreateOrder();
+			Assert.IsNotNull(result);
+			Assert.AreEqual(1, database.InsertedCount);
+		}
+
+		[TestMethod]
+		public void ShouldNotCreateOrderAndLogError()
+		{
+			MockedDatabase<Order> database;
+			OrderModule module;
+			MemoryLogger logger;
+
+
+			logger = new MemoryLogger();
+			database = new MockedDatabase<Order>(true, 1, (t) => new Order() { OrderID = t });
+			module = new OrderModule(logger, database);
+			Assert.ThrowsException<PIODataException>(() => module.CreateOrder());
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName == module.ModuleName)));
+		}
 
 
 

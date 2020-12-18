@@ -32,7 +32,7 @@ namespace PIO.Bots.ServerLib.Modules
 			LogEnter();
 			
 			Log(LogLevels.Information, $"Querying Order table (OrderID={OrderID})");
-			query = new Select(OrderTable.OrderID).From(BotsDB.OrderTable).Where(OrderTable.OrderID.IsEqualTo(OrderID));
+			query = new Select(OrderTable.OrderID,OrderTable.CreationDate).From(BotsDB.OrderTable).Where(OrderTable.OrderID.IsEqualTo(OrderID));
 			return TrySelectFirst<OrderTable, Order>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
@@ -53,29 +53,31 @@ namespace PIO.Bots.ServerLib.Modules
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying Order table");
-			query = new Select(OrderTable.OrderID).From(BotsDB.OrderTable);
+			query = new Select(OrderTable.OrderID, OrderTable.CreationDate).From(BotsDB.OrderTable);
 			return TrySelectMany<OrderTable, Order>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
 
-		/*public Order CreateOrder(OrderTypeIDs OrderTypeID, int WorkerID, int? X, int? Y,int? BuildingID, int? TargetFactoryID, ResourceTypeIDs? ResourceTypeID, FactoryTypeIDs? FactoryTypeID, DateTime ETA)
+		public Order CreateOrder()
 		{
 			IInsert query;
 			Order item;
 			object result;
+			DateTime date;
+
 
 			LogEnter();
-			Log(LogLevels.Information, $"Inserting into Order table (OrderTypeID={OrderTypeID}, WorkerID={WorkerID}, ETA={ETA})");
-			item = new Order() { OrderTypeID=OrderTypeID, WorkerID=WorkerID, X=X,Y=Y,BuildingID=BuildingID, FactoryID =TargetFactoryID, ResourceTypeID=ResourceTypeID, FactoryTypeID=FactoryTypeID, ETA=ETA };
-			query = new Insert().Into(BotsDB.OrderTable).Set(OrderTable.OrderTypeID,item.OrderTypeID).Set(OrderTable.WorkerID, item.WorkerID)
-				.Set(OrderTable.X,item.X).Set(OrderTable.Y,item.Y)
-				.Set(OrderTable.BuildingID, item.BuildingID).Set(OrderTable.FactoryID, item.FactoryID)
-				.Set(OrderTable.ResourceTypeID, item.ResourceTypeID).Set(OrderTable.FactoryTypeID,item.FactoryTypeID).Set(OrderTable.ETA,item.ETA);
+
+			date = DateTime.Now;
+			Log(LogLevels.Information, $"Inserting into Order table (CreationDate={date})");
+			item = new Order() {CreationDate=date } ;
+			query = new Insert().Into(BotsDB.OrderTable)
+				.Set(OrderTable.CreationDate,item.CreationDate);
 			result=Try(query).OrThrow<PIODataException>("Failed to insert");
 			item.OrderID = Convert.ToInt32(result);
 			return item;
 		}
-
+/*
 		public void DeleteOrder(int OrderID)
 		{
 			IDelete query;
