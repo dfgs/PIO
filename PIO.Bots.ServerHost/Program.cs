@@ -47,12 +47,12 @@ namespace PIO.Bots.ServerHost
 			IProduceOrderModule produceOrderModule;
 			IOrderManagerModule orderManagerModule;
 
+			IWorkerScheduler workerScheduler;
+
 			PIOServiceClient client;
 			Binding binding;
 			EndpointAddress remoteAddress;
 
-			IBot bot;
-			BotScheduler botSheduler;
 
 			quitEvent = new AutoResetEvent(false);
 			Console.CancelKeyPress += new ConsoleCancelEventHandler(Console_CancelKeyPress);
@@ -90,16 +90,15 @@ namespace PIO.Bots.ServerHost
 			client.Open();
 
 
-			bot = new ProducerBot(logger, client, 1, 3);
 
-			botSheduler = new BotScheduler(logger, 5);
-			botSheduler.Start();
-			botSheduler.Add(bot);
+			workerScheduler = new WorkerScheduler(logger, client, orderManagerModule, 5);
+			workerScheduler.Start();
+			workerScheduler.Add(1);
 
 			WaitHandle.WaitAny(new WaitHandle[] { quitEvent }, -1);
 
 			serviceHostModule.Stop();
-			botSheduler.Stop();
+			workerScheduler.Stop();
 
 			client.Close();
 			logger.Dispose();

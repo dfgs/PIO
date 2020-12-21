@@ -60,7 +60,7 @@ namespace PIO.UnitTest.BotsLib.Basics
 
 		}
 
-		[TestMethod]
+		/*[TestMethod]
 		public void ShouldNotCreateTask()
 		{
 			MemoryLogger logger;
@@ -74,7 +74,7 @@ namespace PIO.UnitTest.BotsLib.Basics
 
 			Assert.ThrowsException<BotException>(() => bot.RunTask());
 			Assert.AreEqual(0, client.ProduceCount);
-		}
+		}*/
 
 
 

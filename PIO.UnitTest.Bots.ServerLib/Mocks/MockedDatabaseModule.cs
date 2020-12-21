@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using PIO.ModulesLib.Exceptions;
 using PIO.ModulesLib.Modules.DataModules;
 
-namespace PIO.UnitTest.Bots.WebServiceLib.Mocks
+namespace PIO.UnitTest.Bots.ServiceLib.Mocks
 {
 	public abstract class MockedDatabaseModule:IDatabaseModule
 	{

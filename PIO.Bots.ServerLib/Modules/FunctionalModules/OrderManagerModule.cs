@@ -54,9 +54,10 @@ namespace PIO.Bots.ServerLib.Modules
 			return produceOrder;
 		}
 
-
-
-
+		public Task CreateTask(int WorkerID)
+		{
+			throw new NotImplementedException();
+		}
 
 
 	}

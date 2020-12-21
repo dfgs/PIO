@@ -7,7 +7,7 @@ using NetORMLib.Databases;
 using PIO.Bots.Models;
 using PIO.Bots.ServerLib.Modules;
 using PIO.ModulesLib.Exceptions;
-using PIO.UnitTest.Bots.ServerLib.Mocks;
+using PIO.UnitTest.Bots.ServiceLib.Mocks;
 
 namespace PIO.UnitTest.Bots.ServerLib.Modules
 {

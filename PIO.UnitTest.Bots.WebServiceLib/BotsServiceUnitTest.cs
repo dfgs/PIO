@@ -119,7 +119,7 @@ namespace PIO.UnitTest.Bots.WebServiceLib
 
 			service = new BotsService(NullLogger.Instance, null, null, new MockedOrderManagerModule(false));
 			result=service.CreateProduceOrder(1);
-			Assert.IsNull(result);
+			Assert.IsNotNull(result);
 			Assert.AreEqual(1, result.FactoryID);
 		}
 

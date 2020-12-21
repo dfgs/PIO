@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PIO.UnitTest.Bots.ServerLib.Mocks
+namespace PIO.UnitTest.Bots.ServiceLib.Mocks
 {
 	public delegate T RowFactoryDelegate<T>(int Index);
 

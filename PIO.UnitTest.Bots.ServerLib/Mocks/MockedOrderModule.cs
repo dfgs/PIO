@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace PIO.UnitTest.Bots.WebServiceLib.Mocks
+namespace PIO.UnitTest.Bots.ServiceLib.Mocks
 {
 	public class MockedOrderModule : MockedDatabaseModule, IOrderModule
 	{

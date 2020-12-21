@@ -26,7 +26,9 @@ namespace PIO.UnitTest.Bots.WebServiceLib.Mocks
 			return new ProduceOrder() { FactoryID = FactoryID };
 		}
 
-
-
+		public Models.Task CreateTask(int WorkerID)
+		{
+			throw new NotImplementedException();
+		}
 	}
 }

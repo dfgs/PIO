@@ -6,9 +6,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NetORMLib.Databases;
 using PIO.Bots.Models;
 using PIO.Bots.ServerLib.Modules;
+using PIO.Models;
 using PIO.ModulesLib.Exceptions;
-using PIO.UnitTest.Bots.ServerLib.Mocks;
-using PIO.UnitTest.Bots.WebServiceLib.Mocks;
+using PIO.UnitTest.Bots.ServiceLib.Mocks;
 
 namespace PIO.UnitTest.Bots.ServerLib.Modules
 {
@@ -28,12 +28,12 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			module = new OrderManagerModule(NullLogger.Instance, orderModule,produceOrderModule);
 			result = module.CreateProduceOrder(1);
 			Assert.AreEqual(1, module.ProduceOrderCount);
-			Assert.IsNull(result);
+			Assert.IsNotNull(result);
 			Assert.AreEqual(1, result.FactoryID);
 
 			result = module.CreateProduceOrder(1);
 			Assert.AreEqual(2, module.ProduceOrderCount);
-			Assert.IsNull(result);
+			Assert.IsNotNull(result);
 			Assert.AreEqual(1, result.FactoryID);
 
 		}
@@ -70,7 +70,23 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 
 
 
+		[TestMethod]
+		public void ShouldReturnIdleTaskIfNoOrderArePresent()
+		{
+			MockedOrderModule orderModule;
+			MockedProduceOrderModule produceOrderModule;
+			OrderManagerModule module;
+			Task result;
 
+			orderModule = new MockedOrderModule(0, false);
+			produceOrderModule = new MockedProduceOrderModule(0, false);
+			module = new OrderManagerModule(NullLogger.Instance, orderModule, produceOrderModule);
+			result = module.CreateTask(1);
+			Assert.IsNotNull(result);
+			Assert.AreEqual(1, result.WorkerID);
+			Assert.AreEqual(TaskTypeIDs.Idle, result.TaskTypeID);
+
+		}
 
 
 

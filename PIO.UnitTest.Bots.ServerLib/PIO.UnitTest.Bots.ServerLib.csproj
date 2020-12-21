@@ -51,19 +51,20 @@
   <ItemGroup>
     <Compile Include="Mocks\MockedDatabase.cs" />
     <Compile Include="Mocks\MockedDatabaseModule.cs" />
+    <Compile Include="Mocks\MockedOrderManagerModule.cs" />
+    <Compile Include="Mocks\MockedPIOService.cs" />
     <Compile Include="Mocks\MockedProduceOrderModule.cs" />
     <Compile Include="Mocks\MockedOrderModule.cs" />
     <Compile Include="Modules\DataModules\ProduceOrderModuleUnitTest.cs" />
     <Compile Include="Modules\DataModules\OrderModuleUnitTest.cs" />
+    <Compile Include="Modules\EngineModules\WorkerSchedulerUnitTest.cs" />
     <Compile Include="Modules\FunctionalModules\OrderManagerModuleUnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Modules\EngineModules\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\..\LogLib\LogLib\LogLib.csproj">
       <Project>{ef4b0001-2859-4a09-8f95-3e5bef4a5272}</Project>
@@ -88,6 +89,14 @@
     <ProjectReference Include="..\PIO.Bots.ServerLib\PIO.Bots.ServerLib.csproj">
       <Project>{469C395F-6F24-4188-AF74-72735A9BFDDD}</Project>
       <Name>PIO.Bots.ServerLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PIO.ClientLib\PIO.ClientLib.csproj">
+      <Project>{F9A386F1-D923-4A58-9B0D-EF8F5411C11B}</Project>
+      <Name>PIO.ClientLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PIO.Models\PIO.Models.csproj">
+      <Project>{7883D2F9-F04E-467A-A0A6-61158DCA5956}</Project>
+      <Name>PIO.Models</Name>
     </ProjectReference>
     <ProjectReference Include="..\PIO.ModulesLib\PIO.ModulesLib.csproj">
       <Project>{83f02fcd-3ebd-4d90-911a-9a1f684d343c}</Project>
