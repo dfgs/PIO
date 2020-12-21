@@ -56,6 +56,7 @@
     <Compile Include="Mocks\MockedBuildingModule.cs" />
     <Compile Include="Mocks\MockedMoverModule.cs" />
     <Compile Include="Mocks\MockedIdlerModule.cs" />
+    <Compile Include="Mocks\MockedLocationCheckerModule.cs" />
     <Compile Include="Mocks\MockedTaskTypeModule.cs" />
     <Compile Include="Mocks\MockedFunctionalModule.cs" />
     <Compile Include="Mocks\MockedDatabaseModule.cs" />

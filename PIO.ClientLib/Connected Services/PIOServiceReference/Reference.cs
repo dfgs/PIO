@@ -108,6 +108,12 @@ namespace PIO.ClientLib.PIOServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/HasEnoughResourcesToProduce", ReplyAction="http://tempuri.org/IPIOService/HasEnoughResourcesToProduceResponse")]
         bool HasEnoughResourcesToProduce(int FactoryID);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/WorkerIsInFactory", ReplyAction="http://tempuri.org/IPIOService/WorkerIsInFactoryResponse")]
+        bool WorkerIsInFactory(int WorkerID, int FactoryID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/WorkerIsInBuilding", ReplyAction="http://tempuri.org/IPIOService/WorkerIsInBuildingResponse")]
+        bool WorkerIsInBuilding(int WorkerID, int BuildingID);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/Idle", ReplyAction="http://tempuri.org/IPIOService/IdleResponse")]
         PIO.Models.Task Idle(int WorkerID, int Duration);
         
@@ -276,6 +282,14 @@ namespace PIO.ClientLib.PIOServiceReference {
         
         public bool HasEnoughResourcesToProduce(int FactoryID) {
             return base.Channel.HasEnoughResourcesToProduce(FactoryID);
+        }
+        
+        public bool WorkerIsInFactory(int WorkerID, int FactoryID) {
+            return base.Channel.WorkerIsInFactory(WorkerID, FactoryID);
+        }
+        
+        public bool WorkerIsInBuilding(int WorkerID, int BuildingID) {
+            return base.Channel.WorkerIsInBuilding(WorkerID, BuildingID);
         }
         
         public PIO.Models.Task Idle(int WorkerID, int Duration) {

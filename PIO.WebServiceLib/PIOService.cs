@@ -33,6 +33,7 @@ namespace PIO.WebServiceLib
 
 		private IIdlerModule idlerModule;
 		private IResourceCheckerModule resourceCheckerModule;
+		private ILocationCheckerModule locationCheckerModule;
 		private IProducerModule producerModule;
 		private IMoverModule moverModule;
 		private ICarrierModule carrierModule;
@@ -48,7 +49,8 @@ namespace PIO.WebServiceLib
 			IIngredientModule IngredientModule, IProductModule ProductModule, 
 			ITaskModule TaskModule,
 
-			IResourceCheckerModule ResourceCheckerModule, IIdlerModule IdlerModule, IProducerModule ProducerModule,
+			IResourceCheckerModule ResourceCheckerModule,ILocationCheckerModule LocationCheckerModule,
+			IIdlerModule IdlerModule, IProducerModule ProducerModule,
 			IMoverModule MoverModule,ICarrierModule CarrierModule,IFactoryBuilderModule FactoryBuilderModule
 		) :base(Logger)
 		{
@@ -58,6 +60,7 @@ namespace PIO.WebServiceLib
 			this.factoryModule = FactoryModule;
 			this.workerModule = WorkerModule;
 			this.stackModule = StackModule;
+			this.locationCheckerModule = LocationCheckerModule;
 			this.resourceTypeModule = ResourceTypeModule;
 			this.taskTypeModule = TaskTypeModule;
 			this.buildingTypeModule = BuildingTypeModule;
@@ -253,6 +256,20 @@ namespace PIO.WebServiceLib
 			LogEnter();
 
 			return Try(() => resourceCheckerModule.HasEnoughResourcesToProduce(FactoryID)).OrThrow(GenerateFaultException);
+		}
+
+		public bool WorkerIsInFactory(int WorkerID, int FactoryID)
+		{
+			LogEnter();
+
+			return Try(() => locationCheckerModule.WorkerIsInFactory(WorkerID, FactoryID)).OrThrow(GenerateFaultException);
+		}
+
+		public bool WorkerIsInBuilding(int WorkerID, int BuildingID)
+		{
+			LogEnter();
+
+			return Try(() => locationCheckerModule.WorkerIsInBuilding(WorkerID, BuildingID)).OrThrow(GenerateFaultException);
 		}
 
 		public Task Idle(int WorkerID,int Duration)

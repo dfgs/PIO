@@ -53,6 +53,7 @@
     <Compile Include="Modules\FunctionalModules\IdlerModule.cs" />
     <Compile Include="Modules\FunctionalModules\MoverModule.cs" />
     <Compile Include="Modules\FunctionalModules\CarrierModule.cs" />
+    <Compile Include="Modules\FunctionalModules\LocationCheckerModule.cs" />
     <Compile Include="Modules\FunctionalModules\TaskGeneratorModule.cs" />
     <Compile Include="Modules\FunctionalModules\ProducerModule.cs" />
     <Compile Include="Modules\FunctionalModules\ResourceCheckerModule.cs" />

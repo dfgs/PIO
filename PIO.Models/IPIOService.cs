@@ -79,6 +79,10 @@ namespace PIO.Models
 		[OperationContract]
 		bool HasEnoughResourcesToProduce(int FactoryID);
 		[OperationContract]
+		bool WorkerIsInFactory(int WorkerID, int FactoryID);
+		[OperationContract]
+		bool WorkerIsInBuilding(int WorkerID, int BuildingID);
+		[OperationContract]
 		Task Idle(int WorkerID,int Duration);
 		[OperationContract]
 		Task Produce(int WorkerID);

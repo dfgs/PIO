@@ -72,24 +72,22 @@ namespace PIO.Bots.ServerHost
 				return;
 			}
 
-			orderModule = new OrderModule(logger, database);
-			produceOrderModule = new ProduceOrderModule(logger, database);
-
-
-			orderManagerModule = new OrderManagerModule(logger, orderModule, produceOrderModule);
-
-			service = new BotsService(logger, orderModule,produceOrderModule, orderManagerModule);
-
-			serviceHostModule = new ServiceHostModule(logger, service);
-			serviceHostModule.Start();
-
-
 			binding = new BasicHttpBinding();
 			remoteAddress = new EndpointAddress($@"http://{Properties.Settings.Default.BotsServerAddress}:8733/Design_Time_Addresses/PIO.WebService/");
 			client = new PIOServiceClient(binding, remoteAddress);
 			client.Open();
 
 
+
+			orderModule = new OrderModule(logger, database);
+			produceOrderModule = new ProduceOrderModule(logger, database);
+
+			orderManagerModule = new OrderManagerModule(logger,client, orderModule, produceOrderModule,10);
+
+			service = new BotsService(logger, orderModule,produceOrderModule, orderManagerModule);
+
+			serviceHostModule = new ServiceHostModule(logger, service);
+			serviceHostModule.Start();
 
 			workerScheduler = new WorkerScheduler(logger, client, orderManagerModule, 5);
 			workerScheduler.Start();

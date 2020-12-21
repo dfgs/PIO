@@ -430,6 +430,36 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="WorkerIsInFactory">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="WorkerID" type="xs:int" />
+        <xs:element minOccurs="0" name="FactoryID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="WorkerIsInFactoryResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="WorkerIsInFactoryResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="WorkerIsInBuilding">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="WorkerID" type="xs:int" />
+        <xs:element minOccurs="0" name="BuildingID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="WorkerIsInBuildingResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="WorkerIsInBuildingResult" type="xs:boolean" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="Idle">
     <xs:complexType>
       <xs:sequence>

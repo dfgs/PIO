@@ -23,6 +23,12 @@ namespace PIO.UnitTest.Bots.ServiceLib.Mocks
 			return lastTask;
 		}
 
+		public Models.Task Idle(int WorkerID, int Duration)
+		{
+			if (throwException) throw new Exception("Idle ERROR");
+			return new Task() { WorkerID = WorkerID, TaskTypeID = TaskTypeIDs.Idle };
+		}
+
 		public Models.Task BuildFactory(int WorkerID)
 		{
 			throw new NotImplementedException();
@@ -190,10 +196,7 @@ namespace PIO.UnitTest.Bots.ServiceLib.Mocks
 			throw new NotImplementedException();
 		}
 
-		public Models.Task Idle(int WorkerID, int Duration)
-		{
-			throw new NotImplementedException();
-		}
+		
 
 		public Models.Task MoveTo(int WorkerID, int X, int Y)
 		{

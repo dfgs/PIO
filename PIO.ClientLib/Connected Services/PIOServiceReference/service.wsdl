@@ -193,6 +193,18 @@
   <wsdl:message name="IPIOService_HasEnoughResourcesToProduce_OutputMessage">
     <wsdl:part name="parameters" element="tns:HasEnoughResourcesToProduceResponse" />
   </wsdl:message>
+  <wsdl:message name="IPIOService_WorkerIsInFactory_InputMessage">
+    <wsdl:part name="parameters" element="tns:WorkerIsInFactory" />
+  </wsdl:message>
+  <wsdl:message name="IPIOService_WorkerIsInFactory_OutputMessage">
+    <wsdl:part name="parameters" element="tns:WorkerIsInFactoryResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPIOService_WorkerIsInBuilding_InputMessage">
+    <wsdl:part name="parameters" element="tns:WorkerIsInBuilding" />
+  </wsdl:message>
+  <wsdl:message name="IPIOService_WorkerIsInBuilding_OutputMessage">
+    <wsdl:part name="parameters" element="tns:WorkerIsInBuildingResponse" />
+  </wsdl:message>
   <wsdl:message name="IPIOService_Idle_InputMessage">
     <wsdl:part name="parameters" element="tns:Idle" />
   </wsdl:message>
@@ -353,6 +365,14 @@
     <wsdl:operation name="HasEnoughResourcesToProduce">
       <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/HasEnoughResourcesToProduce" message="tns:IPIOService_HasEnoughResourcesToProduce_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/HasEnoughResourcesToProduceResponse" message="tns:IPIOService_HasEnoughResourcesToProduce_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="WorkerIsInFactory">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/WorkerIsInFactory" message="tns:IPIOService_WorkerIsInFactory_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/WorkerIsInFactoryResponse" message="tns:IPIOService_WorkerIsInFactory_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="WorkerIsInBuilding">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/WorkerIsInBuilding" message="tns:IPIOService_WorkerIsInBuilding_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/WorkerIsInBuildingResponse" message="tns:IPIOService_WorkerIsInBuilding_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="Idle">
       <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/Idle" message="tns:IPIOService_Idle_InputMessage" />
@@ -653,6 +673,24 @@
     </wsdl:operation>
     <wsdl:operation name="HasEnoughResourcesToProduce">
       <soap:operation soapAction="http://tempuri.org/IPIOService/HasEnoughResourcesToProduce" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="WorkerIsInFactory">
+      <soap:operation soapAction="http://tempuri.org/IPIOService/WorkerIsInFactory" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="WorkerIsInBuilding">
+      <soap:operation soapAction="http://tempuri.org/IPIOService/WorkerIsInBuilding" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

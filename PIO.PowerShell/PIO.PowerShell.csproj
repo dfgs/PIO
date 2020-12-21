@@ -80,6 +80,8 @@
     <Compile Include="PIO\DataCmdlet\GetFactoriesCmdlet.cs" />
     <Compile Include="PIO\DataCmdlet\GetPlanetsCmdlet.cs" />
     <Compile Include="PIO\DataCmdlet\GetPlanetCmdlet.cs" />
+    <Compile Include="PIO\FunctionalCmdlet\AssertWorkerIsInBuildingCmdlet.cs" />
+    <Compile Include="PIO\FunctionalCmdlet\AssertWorkerIsInFactoryCmdlet.cs" />
     <Compile Include="PIO\FunctionalCmdlet\InvokeBuildFactory.cs" />
     <Compile Include="PIO\FunctionalCmdlet\InvokeCreateBuilding.cs" />
     <Compile Include="PIO\FunctionalCmdlet\InvokeCarryToCmdlet.cs" />

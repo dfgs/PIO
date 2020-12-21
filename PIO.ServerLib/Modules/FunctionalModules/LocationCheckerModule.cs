@@ -1,0 +1,88 @@
+﻿using LogLib;
+using ModuleLib;
+using NetORMLib;
+using NetORMLib.Databases;
+using NetORMLib.Queries;
+using PIO.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using PIO.ServerLib.Tables;
+using PIO.Models.Modules;
+using PIO.ModulesLib.Exceptions;
+using PIOBaseModulesLib.Modules.FunctionalModules;
+
+
+namespace PIO.ServerLib.Modules
+{
+	public class LocationCheckerModule : FunctionalModule, ILocationCheckerModule
+	{
+		private IWorkerModule workerModule;
+		private IFactoryModule factoryModule;
+		private IBuildingModule buildingModule;
+
+		public LocationCheckerModule(ILogger Logger,IWorkerModule WorkerModule, IBuildingModule BuildingModule, IFactoryModule FactoryModule ) : base(Logger)
+		{
+			this.workerModule = WorkerModule; this.buildingModule =BuildingModule ; this.factoryModule = FactoryModule;
+		}
+
+		public bool WorkerIsInBuilding(int WorkerID, int BuildingID)
+		{
+			Building building;
+			Worker worker;
+
+			LogEnter();
+
+			worker = AssertExists(() => workerModule.GetWorker(WorkerID), $"WorkerID = {WorkerID}");
+			building = AssertExists(() => buildingModule.GetBuilding(BuildingID), $"BuildingID = {BuildingID}");
+
+
+			Log(LogLevels.Information, "Checking is worker is in building");
+			if (worker.PlanetID != building.PlanetID)
+			{
+				Log(LogLevels.Information, "Worker and Building are not in same Planet");
+				return false;
+			}
+			if ((worker.X != building.X) || (worker.Y != building.Y))
+			{
+				Log(LogLevels.Information, "Worker is not in factory");
+				return false;
+			}
+
+			Log(LogLevels.Information, "Worker is in factory");
+			return true;
+		}
+
+		public bool WorkerIsInFactory(int WorkerID, int FactoryID)
+		{
+			Building building;
+			Factory factory;
+			Worker worker;
+
+			LogEnter();
+
+			worker = AssertExists(() => workerModule.GetWorker(WorkerID), $"WorkerID = {WorkerID}");
+			factory = AssertExists(() => factoryModule.GetFactory(FactoryID), $"FactoryID = {FactoryID}");
+			building = AssertExists(() => buildingModule.GetBuilding(factory.BuildingID), $"BuildingID = {factory.BuildingID}");
+
+
+			Log(LogLevels.Information, "Checking is worker is in factory");
+			if (worker.PlanetID!=building.PlanetID)
+			{
+				Log(LogLevels.Information, "Worker and Building are not in same Planet");
+				return false;
+			}
+			if ((worker.X!=building.X) || (worker.Y != building.Y))
+			{
+				Log(LogLevels.Information, "Worker is not in factory");
+				return false;
+			}
+
+			Log(LogLevels.Information, "Worker is in factory");
+			return true;
+
+		}
+	}
+}

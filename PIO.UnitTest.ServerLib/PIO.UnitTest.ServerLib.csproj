@@ -77,6 +77,7 @@
     <Compile Include="Modules\FunctionalModules\MoverModuleUnitTest.cs" />
     <Compile Include="Modules\FunctionalModules\CarrierModuleUnitTest.cs" />
     <Compile Include="Modules\FunctionalModules\ProducerModuleUnitTest.cs" />
+    <Compile Include="Modules\FunctionalModules\LocationCheckerModuleUnitTest.cs" />
     <Compile Include="Modules\FunctionalModules\ResourceCheckerModuleUnitTest.cs" />
     <Compile Include="Modules\FunctionalModules\FactoryBuilderModuleUnitTest.cs" />
     <Compile Include="Modules\DataModules\WorkerModuleUnitTest.cs" />

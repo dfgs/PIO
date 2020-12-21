@@ -25,7 +25,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 
 			orderModule = new MockedOrderModule(0, false);
 			produceOrderModule = new MockedProduceOrderModule(0, false);
-			module = new OrderManagerModule(NullLogger.Instance, orderModule,produceOrderModule);
+			module = new OrderManagerModule(NullLogger.Instance,null, orderModule,produceOrderModule,10);
 			result = module.CreateProduceOrder(1);
 			Assert.AreEqual(1, module.ProduceOrderCount);
 			Assert.IsNotNull(result);
@@ -52,7 +52,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			logger = new MemoryLogger();
 			orderModule = new MockedOrderModule(0, true);
 			produceOrderModule = new MockedProduceOrderModule(0, false);
-			module = new OrderManagerModule(logger, orderModule, produceOrderModule);
+			module = new OrderManagerModule(logger, null, orderModule, produceOrderModule, 10);
 			Assert.ThrowsException<PIOInternalErrorException>(() => module.CreateProduceOrder(1));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
 			Assert.AreEqual(0, module.ProduceOrderCount);
@@ -61,7 +61,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			logger = new MemoryLogger();
 			orderModule = new MockedOrderModule(0, false);
 			produceOrderModule = new MockedProduceOrderModule(0, true);
-			module = new OrderManagerModule(logger, orderModule, produceOrderModule);
+			module = new OrderManagerModule(logger, null, orderModule, produceOrderModule, 10);
 			Assert.ThrowsException<PIOInternalErrorException>(() => module.CreateProduceOrder(1));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName == module.ModuleName)));
 			Assert.AreEqual(0, module.ProduceOrderCount);
@@ -75,18 +75,64 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 		{
 			MockedOrderModule orderModule;
 			MockedProduceOrderModule produceOrderModule;
+			ClientLib.PIOServiceReference.IPIOService client;
+
 			OrderManagerModule module;
 			Task result;
 
+			client = new MockedPIOService(false, null);
 			orderModule = new MockedOrderModule(0, false);
 			produceOrderModule = new MockedProduceOrderModule(0, false);
-			module = new OrderManagerModule(NullLogger.Instance, orderModule, produceOrderModule);
+			module = new OrderManagerModule(NullLogger.Instance,client, orderModule, produceOrderModule,10);
 			result = module.CreateTask(1);
 			Assert.IsNotNull(result);
 			Assert.AreEqual(1, result.WorkerID);
 			Assert.AreEqual(TaskTypeIDs.Idle, result.TaskTypeID);
+		}
+
+		[TestMethod]
+		public void ShouldNotReturnIdleTaskIfNoOrderArePresent()
+		{
+			MockedOrderModule orderModule;
+			MockedProduceOrderModule produceOrderModule;
+			ClientLib.PIOServiceReference.IPIOService client;
+			MemoryLogger logger;
+
+			OrderManagerModule module;
+
+			client = new MockedPIOService(true, null);
+			logger = new MemoryLogger();
+
+			orderModule = new MockedOrderModule(0, false);
+			produceOrderModule = new MockedProduceOrderModule(0, false);
+			module = new OrderManagerModule(logger, client, orderModule, produceOrderModule, 10);
+			Assert.ThrowsException<PIOInternalErrorException>(() => module.CreateTask(1));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName == module.ModuleName)));
 
 		}
+
+
+
+		[TestMethod]
+		public void ShouldReturnProduceTask()
+		{
+			MockedOrderModule orderModule;
+			MockedProduceOrderModule produceOrderModule;
+			ClientLib.PIOServiceReference.IPIOService client;
+
+			OrderManagerModule module;
+			Task result;
+
+			client = new MockedPIOService(false, null);
+			orderModule = new MockedOrderModule(0, false);
+			produceOrderModule = new MockedProduceOrderModule(0, false);
+			module = new OrderManagerModule(NullLogger.Instance, client, orderModule, produceOrderModule, 10);
+			result = module.CreateTask(1);
+			Assert.IsNotNull(result);
+			Assert.AreEqual(1, result.WorkerID);
+			Assert.AreEqual(TaskTypeIDs.Produce, result.TaskTypeID);
+		}
+
 
 
 
