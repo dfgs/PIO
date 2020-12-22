@@ -19,7 +19,7 @@ namespace PIO.PowerShell
 			PIOServiceClient client;
 
 			binding = new BasicHttpBinding();
-			remoteAddress = new EndpointAddress($@"http://{Server}:8733/Design_Time_Addresses/PIO.WebService/");
+			remoteAddress = new EndpointAddress($@"http://{Server}:8733/PIO/Service/");
 			client = new PIOServiceClient(binding, remoteAddress);
 			client.Open();
 

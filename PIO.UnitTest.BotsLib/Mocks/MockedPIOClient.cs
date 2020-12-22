@@ -229,5 +229,15 @@ namespace PIO.UnitTest.BotsLib.Mocks
 			ProduceCount++;
 			return new Models.Task() { WorkerID = WorkerID, ETA = DateTime.Now.AddSeconds(1) };
 		}
+
+		public bool WorkerIsInFactory(int WorkerID, int FactoryID)
+		{
+			throw new NotImplementedException();
+		}
+
+		public bool WorkerIsInBuilding(int WorkerID, int BuildingID)
+		{
+			throw new NotImplementedException();
+		}
 	}
 }

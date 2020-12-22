@@ -19,7 +19,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			MockedOrderManagerModule orderManagerModule;
 			WorkerScheduler scheduler;
 
-			client = new MockedPIOService(false,null);
+			client = new MockedPIOService(false,null, false, false);
 			orderManagerModule = new MockedOrderManagerModule(false);
 
 			scheduler = new WorkerScheduler(NullLogger.Instance,client,orderManagerModule, 1);
@@ -37,7 +37,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			MockedOrderManagerModule orderManagerModule;
 			WorkerScheduler scheduler;
 
-			client = new MockedPIOService(false,new Models.Task());
+			client = new MockedPIOService(false,new Models.Task(), false, false);
 			orderManagerModule = new MockedOrderManagerModule(false);
 
 			scheduler = new WorkerScheduler(NullLogger.Instance, client, orderManagerModule, 1);
@@ -56,7 +56,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			MemoryLogger logger;
 
 			logger = new MemoryLogger();
-			client = new MockedPIOService(true,null);
+			client = new MockedPIOService(true,null, false, false);
 			orderManagerModule = new MockedOrderManagerModule(false);
 
 			scheduler = new WorkerScheduler(logger, client, orderManagerModule, 1);
@@ -76,7 +76,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			MemoryLogger logger;
 
 			logger = new MemoryLogger();
-			client = new MockedPIOService(false,null);
+			client = new MockedPIOService(false,null, false, false);
 			orderManagerModule = new MockedOrderManagerModule(true);
 
 			scheduler = new WorkerScheduler(logger, client, orderManagerModule, 1);

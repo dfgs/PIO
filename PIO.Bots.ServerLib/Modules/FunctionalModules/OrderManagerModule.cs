@@ -68,9 +68,7 @@ namespace PIO.Bots.ServerLib.Modules
 			ProduceOrder prioritaryOrder;
 			bool result;
 			Task task;
-			Worker worker;
-			Factory factory;
-			Building building;
+			
 
 			LogEnter();
 			Log(LogLevels.Information, $"Getting Orders");
@@ -90,11 +88,18 @@ namespace PIO.Bots.ServerLib.Modules
 			result = Try(()=>client.HasEnoughResourcesToProduce(prioritaryOrder.FactoryID)).OrThrow<PIOInternalErrorException>("Failed to check resources");
 			if (result)
 			{
-				Log(LogLevels.Information, $"Checking if worker is on site (WorkerID={WorkerID})");
-				worker = Try(() => client.GetWorker(WorkerID)).OrThrow<PIOInternalErrorException>("Failed to check worker's location");
-				factory = Try(() => client.GetFactory(prioritaryOrder.FactoryID)).OrThrow<PIOInternalErrorException>("Failed to check worker's location");
-				building = Try(() => client.GetBuilding(factory.BuildingID)).OrThrow<PIOInternalErrorException>("Failed to check worker's location");
-				//if (worker.X)
+				Log(LogLevels.Information, $"Checking if worker is on site (WorkerID={WorkerID}, FactoryID={prioritaryOrder.FactoryID})");
+				result = Try(() => client.WorkerIsInFactory(WorkerID, prioritaryOrder.FactoryID)).OrThrow<PIOInternalErrorException>("Failed to check worker location");
+				if (result)
+				{
+					task = Try(() => client.Produce(1)).OrThrow<PIOInternalErrorException>("Failed to create task");
+				}
+				else
+				{
+					task = null;
+					//task = Try(() => client.MoveTo(1, idleDuration)).OrThrow<PIOInternalErrorException>("Failed to create task");
+				}
+				return task;
 			}
 			else
 			{

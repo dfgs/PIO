@@ -3,8 +3,10 @@ using System.Linq;
 using System.ServiceModel;
 using LogLib;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NSubstitute;
 using PIO.Models;
-
+using PIO.Models.Modules;
+using PIO.ModulesLib.Exceptions;
 using PIO.UnitTest.WebServiceLib.Mocks;
 using PIO.WebServiceLib;
 
@@ -19,8 +21,12 @@ namespace PIO.UnitTest.WebServiceLib
 		{
 			PIOService service;
 			Planet result;
+			IPlanetModule subModule;
 
-			service = new PIOService(NullLogger.Instance, new MockedPlanetModule(3, false), null, null,null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+			subModule = Substitute.For<IPlanetModule>();
+			subModule.GetPlanet(Arg.Any<int>()).Returns( new Planet() {PlanetID=1 });
+
+			service = new PIOService(NullLogger.Instance, subModule, null, null,null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 			result = service.GetPlanet(1);
 			Assert.IsNotNull(result);
 			Assert.AreEqual(1, result.PlanetID);
@@ -30,8 +36,12 @@ namespace PIO.UnitTest.WebServiceLib
 		{
 			PIOService service;
 			Planet[] result;
+			IPlanetModule subModule;
 
-			service = new PIOService(NullLogger.Instance, new MockedPlanetModule(3, false), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+			subModule = Substitute.For<IPlanetModule>();
+			subModule.GetPlanets().Returns(new Planet[] { new Planet() { PlanetID = 1 }, new Planet() { PlanetID = 2 }, new Planet() { PlanetID = 3 } });
+
+			service = new PIOService(NullLogger.Instance, subModule, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 			result = service.GetPlanets();
 			Assert.IsNotNull(result);
 			Assert.AreEqual(3, result.Length);
@@ -43,9 +53,14 @@ namespace PIO.UnitTest.WebServiceLib
 		{
 			PIOService service;
 			MemoryLogger logger;
+			IPlanetModule subModule;
 
 			logger = new MemoryLogger();
-			service = new PIOService(logger,new MockedPlanetModule(3, true), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+
+			subModule = Substitute.For<IPlanetModule>();
+			subModule.GetPlanet(Arg.Any<int>()).Returns((id) => { throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest"); });
+
+			service = new PIOService(logger, subModule, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 
 			Assert.ThrowsException<FaultException>(() => service.GetPlanet(1));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level ==LogLevels.Error) && (item.ComponentName==service.ModuleName)));
@@ -55,9 +70,14 @@ namespace PIO.UnitTest.WebServiceLib
 		{
 			PIOService service;
 			MemoryLogger logger;
+			IPlanetModule subModule;
 
 			logger = new MemoryLogger();
-			service = new PIOService(logger, new MockedPlanetModule(3, true), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+
+			subModule = Substitute.For<IPlanetModule>();
+			subModule.GetPlanets().Returns((id) => { throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest"); });
+
+			service = new PIOService(logger, subModule, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 
 			Assert.ThrowsException<FaultException>(() => service.GetPlanets());
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level ==LogLevels.Error) && (item.ComponentName==service.ModuleName)));
@@ -69,8 +89,12 @@ namespace PIO.UnitTest.WebServiceLib
 		{
 			PIOService service;
 			Building result;
+			IBuildingModule subModule;
 
-			service = new PIOService(NullLogger.Instance, null, new MockedBuildingModule(3, false), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+			subModule = Substitute.For<IBuildingModule>();
+			subModule.GetBuilding(Arg.Any<int>()).Returns(new Building() { BuildingID = 1 });
+
+			service = new PIOService(NullLogger.Instance, null, subModule, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 			result = service.GetBuilding(1);
 			Assert.IsNotNull(result);
 			Assert.AreEqual(1, result.BuildingID);
@@ -80,11 +104,16 @@ namespace PIO.UnitTest.WebServiceLib
 		{
 			PIOService service;
 			Building result;
+			IBuildingModule subModule;
 
-			service = new PIOService(NullLogger.Instance, null, new MockedBuildingModule(3, false), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+			subModule = Substitute.For<IBuildingModule>();
+			subModule.GetBuilding(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<int>()).Returns(new Building() { BuildingID = 1 });
+
+
+			service = new PIOService(NullLogger.Instance, null, subModule, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 			result = service.GetBuildingAtPos(1,1,1);
 			Assert.IsNotNull(result);
-			Assert.AreEqual(0, result.BuildingID);
+			Assert.AreEqual(1, result.BuildingID);
 		}
 		[TestMethod]
 		public void ShouldGetBuildings()
@@ -92,7 +121,12 @@ namespace PIO.UnitTest.WebServiceLib
 			PIOService service;
 			Building[] result;
 
-			service = new PIOService(NullLogger.Instance, null,  new MockedBuildingModule(3, false), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+			IBuildingModule subModule;
+
+			subModule = Substitute.For<IBuildingModule>();
+			subModule.GetBuildings(Arg.Any<int>()).Returns(new Building[] { new Building() { BuildingID = 1 }, new Building() { BuildingID = 2 }, new Building() { BuildingID = 3 } });
+
+			service = new PIOService(NullLogger.Instance, null, subModule, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 			result = service.GetBuildings(1);
 			Assert.IsNotNull(result);
 			Assert.AreEqual(3, result.Length);
@@ -104,9 +138,13 @@ namespace PIO.UnitTest.WebServiceLib
 		{
 			PIOService service;
 			MemoryLogger logger;
+			IBuildingModule subModule;
+
+			subModule = Substitute.For<IBuildingModule>();
+			subModule.GetBuilding(Arg.Any<int>()).Returns((id) => { throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest"); });
 
 			logger = new MemoryLogger();
-			service = new PIOService(logger, null, new MockedBuildingModule(3, true), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+			service = new PIOService(logger, null,subModule, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 
 			Assert.ThrowsException<FaultException>(() => service.GetBuilding(1));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level ==LogLevels.Error) && (item.ComponentName==service.ModuleName)));
@@ -116,9 +154,13 @@ namespace PIO.UnitTest.WebServiceLib
 		{
 			PIOService service;
 			MemoryLogger logger;
+			IBuildingModule subModule;
+
+			subModule = Substitute.For<IBuildingModule>();
+			subModule.GetBuilding(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<int>()).Returns((id) => { throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest"); });
 
 			logger = new MemoryLogger();
-			service = new PIOService(logger, null, new MockedBuildingModule(3, true), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+			service = new PIOService(logger, null, subModule, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 
 			Assert.ThrowsException<FaultException>(() => service.GetBuildingAtPos(1, 1,1));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level ==LogLevels.Error) && (item.ComponentName==service.ModuleName)));
@@ -128,9 +170,13 @@ namespace PIO.UnitTest.WebServiceLib
 		{
 			PIOService service;
 			MemoryLogger logger;
+			IBuildingModule subModule;
+
+			subModule = Substitute.For<IBuildingModule>();
+			subModule.GetBuildings(Arg.Any<int>()).Returns((id) => { throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest"); });
 
 			logger = new MemoryLogger();
-			service = new PIOService(logger, null,  new MockedBuildingModule(3, true), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+			service = new PIOService(logger, null,  subModule, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
 
 			Assert.ThrowsException<FaultException>(() => service.GetBuildings(1));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level ==LogLevels.Error) && (item.ComponentName==service.ModuleName)));

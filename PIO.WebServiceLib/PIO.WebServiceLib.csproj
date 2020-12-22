@@ -60,9 +60,6 @@
     <Compile Include="PIOService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\LogLib\LogLib\LogLib.csproj">
       <Project>{EF4B0001-2859-4A09-8F95-3E5BEF4A5272}</Project>
       <Name>LogLib</Name>

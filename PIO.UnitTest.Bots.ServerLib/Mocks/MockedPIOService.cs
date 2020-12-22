@@ -11,10 +11,14 @@ namespace PIO.UnitTest.Bots.ServiceLib.Mocks
 	{
 		private bool throwException;
 		private Task lastTask;
+		private bool hasEnoughResources;
+		private bool inFactory;
 
-		public MockedPIOService(bool ThrowException,Task LastTask)
+		public MockedPIOService(bool ThrowException,Task LastTask,bool HasEnoughResources,bool InFactory)
 		{
 			this.throwException = ThrowException;this.lastTask = LastTask;
+			this.hasEnoughResources = HasEnoughResources;
+			this.inFactory = InFactory;
 		}
 
 		public Models.Task GetLastTask(int WorkerID)
@@ -28,6 +32,29 @@ namespace PIO.UnitTest.Bots.ServiceLib.Mocks
 			if (throwException) throw new Exception("Idle ERROR");
 			return new Task() { WorkerID = WorkerID, TaskTypeID = TaskTypeIDs.Idle };
 		}
+		public Models.Task Produce(int WorkerID)
+		{
+			if (throwException) throw new Exception("Produce ERROR");
+			return new Task() { WorkerID = WorkerID, TaskTypeID = TaskTypeIDs.Produce };
+		}
+
+		public bool HasEnoughResourcesToProduce(int FactoryID)
+		{
+			if (throwException) throw new Exception("HasEnoughResources ERROR");
+			return hasEnoughResources;
+		}
+
+		public bool WorkerIsInFactory(int WorkerID, int FactoryID)
+		{
+			if (throwException) throw new Exception("WorkerLocation ERROR");
+			return inFactory;
+		}
+
+		public bool WorkerIsInBuilding(int WorkerID, int BuildingID)
+		{
+			throw new NotImplementedException();
+		}
+
 
 		public Models.Task BuildFactory(int WorkerID)
 		{
@@ -191,11 +218,7 @@ namespace PIO.UnitTest.Bots.ServiceLib.Mocks
 			throw new NotImplementedException();
 		}
 
-		public bool HasEnoughResourcesToProduce(int FactoryID)
-		{
-			throw new NotImplementedException();
-		}
-
+		
 		
 
 		public Models.Task MoveTo(int WorkerID, int X, int Y)
@@ -203,9 +226,8 @@ namespace PIO.UnitTest.Bots.ServiceLib.Mocks
 			throw new NotImplementedException();
 		}
 
-		public Models.Task Produce(int WorkerID)
-		{
-			throw new NotImplementedException();
-		}
+		
+
+		
 	}
 }

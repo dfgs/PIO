@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="tuz+fVH6CQVeWBLrnXd3j5/HHVm7S5Qg0zRSVQ6ME5s=">
+<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="mFSpjAEP/R5zaVZDuSHqy7JVckPonZ6XJR6CvB/0kqk=">
   <bindingConfigurations>
     <bindingConfiguration bindingType="basicHttpBinding" name="BasicHttpBinding_IBotsService">
       <properties>
@@ -112,10 +112,10 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="BasicHttpBinding_IBotsService" contract="BotsServiceReference.IBotsService" bindingType="basicHttpBinding" address="http://localhost:8734/Design_Time_Addresses/PIO.Bots.WebService/" bindingConfiguration="BasicHttpBinding_IBotsService">
+    <endpoint name="BasicHttpBinding_IBotsService" contract="BotsServiceReference.IBotsService" bindingType="basicHttpBinding" address="http://localhost:8734/PIO/Bots/Service" bindingConfiguration="BasicHttpBinding_IBotsService">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>http://localhost:8734/Design_Time_Addresses/PIO.Bots.WebService/</serializedValue>
+          <serializedValue>http://localhost:8734/PIO/Bots/Service</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />

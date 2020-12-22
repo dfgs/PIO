@@ -109,7 +109,7 @@
   </wsdl:binding>
   <wsdl:service name="BotsService">
     <wsdl:port name="BasicHttpBinding_IBotsService" binding="tns:BasicHttpBinding_IBotsService">
-      <soap:address location="http://localhost:8734/Design_Time_Addresses/PIO.Bots.WebService/" />
+      <soap:address location="http://localhost:8734/PIO/Bots/Service" />
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

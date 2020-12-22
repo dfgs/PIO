@@ -50,8 +50,6 @@ namespace PIO.Bots.ServerHost
 			IWorkerScheduler workerScheduler;
 
 			PIOServiceClient client;
-			Binding binding;
-			EndpointAddress remoteAddress;
 
 
 			quitEvent = new AutoResetEvent(false);
@@ -72,9 +70,7 @@ namespace PIO.Bots.ServerHost
 				return;
 			}
 
-			binding = new BasicHttpBinding();
-			remoteAddress = new EndpointAddress($@"http://{Properties.Settings.Default.BotsServerAddress}:8733/Design_Time_Addresses/PIO.WebService/");
-			client = new PIOServiceClient(binding, remoteAddress);
+			client = new PIOServiceClient();
 			client.Open();
 
 

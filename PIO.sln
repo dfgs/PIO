@@ -76,6 +76,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PIO.Bots.ClientLib", "PIO.B
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PIO.UnitTest.Bots.WebServiceLib", "PIO.UnitTest.Bots.WebServiceLib\PIO.UnitTest.Bots.WebServiceLib.csproj", "{BC1B167F-8F08-43B9-89CD-9814EF59AB96}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PIO.UnitTest.Mocks", "PIO.UnitTest.Mocks\PIO.UnitTest.Mocks.csproj", "{9B66FD3A-ACAB-4F86-9778-1052F291FCBC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -190,6 +192,10 @@ Global
 		{BC1B167F-8F08-43B9-89CD-9814EF59AB96}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BC1B167F-8F08-43B9-89CD-9814EF59AB96}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BC1B167F-8F08-43B9-89CD-9814EF59AB96}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B66FD3A-ACAB-4F86-9778-1052F291FCBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B66FD3A-ACAB-4F86-9778-1052F291FCBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B66FD3A-ACAB-4F86-9778-1052F291FCBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B66FD3A-ACAB-4F86-9778-1052F291FCBC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -224,6 +230,7 @@ Global
 		{9328D573-1290-4317-8264-EAACF16C1AA6} = {85886261-9C67-4A52-8D0F-8728003759BE}
 		{74510CE8-BBEB-4611-8DE2-BFA7D6C05F7C} = {D8359DBA-464D-4F42-9BBF-6E66657852C9}
 		{BC1B167F-8F08-43B9-89CD-9814EF59AB96} = {736F39AE-769D-4740-9784-9EE07F7E51C1}
+		{9B66FD3A-ACAB-4F86-9778-1052F291FCBC} = {736F39AE-769D-4740-9784-9EE07F7E51C1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {4F0C26F7-82D7-4512-B713-2E82E6E18496}
