@@ -22,7 +22,6 @@ namespace PIO.ServerLib.Modules
 		{
 		}
 
-		
 
 		public Task GetTask(int TaskID)
 		{
@@ -30,7 +29,7 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 			
 			Log(LogLevels.Information, $"Querying Task table (TaskID={TaskID})");
-			query = new Select(TaskTable.TaskID, TaskTable.TaskTypeID, TaskTable.WorkerID, TaskTable.BuildingID, TaskTable.FactoryID, TaskTable.ResourceTypeID, TaskTable.FactoryTypeID, TaskTable.ETA).From(PIODB.TaskTable).Where(TaskTable.TaskID.IsEqualTo(TaskID));
+			query = new Select(TaskTable.TaskID, TaskTable.TaskTypeID, TaskTable.WorkerID, TaskTable.X, TaskTable.Y, TaskTable.BuildingID, TaskTable.FactoryID, TaskTable.ResourceTypeID, TaskTable.FactoryTypeID, TaskTable.ETA).From(PIODB.TaskTable).Where(TaskTable.TaskID.IsEqualTo(TaskID));
 			return TrySelectFirst<TaskTable, Task>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
@@ -40,7 +39,7 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying Task table (WorkerID={WorkerID})");
-			query = new Select(TaskTable.TaskID, TaskTable.TaskTypeID, TaskTable.WorkerID, TaskTable.BuildingID, TaskTable.FactoryID, TaskTable.ResourceTypeID, TaskTable.FactoryTypeID, TaskTable.ETA).Top(1).From(PIODB.TaskTable).Where(TaskTable.WorkerID.IsEqualTo(WorkerID)).OrderBy(OrderModes.DESC, TaskTable.TaskID);
+			query = new Select(TaskTable.TaskID, TaskTable.TaskTypeID, TaskTable.WorkerID, TaskTable.X, TaskTable.Y, TaskTable.BuildingID, TaskTable.FactoryID, TaskTable.ResourceTypeID, TaskTable.FactoryTypeID, TaskTable.ETA).Top(1).From(PIODB.TaskTable).Where(TaskTable.WorkerID.IsEqualTo(WorkerID)).OrderBy(OrderModes.DESC, TaskTable.TaskID);
 			return TrySelectFirst<TaskTable, Task>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
@@ -50,7 +49,7 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying Task table (WorkerID={WorkerID})");
-			query = new Select(TaskTable.TaskID, TaskTable.TaskTypeID, TaskTable.WorkerID, TaskTable.BuildingID, TaskTable.FactoryID, TaskTable.ResourceTypeID, TaskTable.FactoryTypeID, TaskTable.ETA).From(PIODB.TaskTable).Where(TaskTable.WorkerID.IsEqualTo(WorkerID));
+			query = new Select(TaskTable.TaskID, TaskTable.TaskTypeID, TaskTable.WorkerID, TaskTable.X, TaskTable.Y, TaskTable.BuildingID, TaskTable.FactoryID, TaskTable.ResourceTypeID, TaskTable.FactoryTypeID, TaskTable.ETA).From(PIODB.TaskTable).Where(TaskTable.WorkerID.IsEqualTo(WorkerID));
 			return TrySelectMany<TaskTable, Task>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
@@ -60,7 +59,7 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying Task table");
-			query = new Select(TaskTable.TaskID, TaskTable.TaskTypeID, TaskTable.WorkerID, TaskTable.BuildingID, TaskTable.FactoryID, TaskTable.ResourceTypeID, TaskTable.FactoryTypeID, TaskTable.ETA).From(PIODB.TaskTable);
+			query = new Select(TaskTable.TaskID, TaskTable.TaskTypeID, TaskTable.WorkerID, TaskTable.X, TaskTable.Y, TaskTable.BuildingID, TaskTable.FactoryID, TaskTable.ResourceTypeID, TaskTable.FactoryTypeID, TaskTable.ETA).From(PIODB.TaskTable);
 			return TrySelectMany<TaskTable, Task>(query).OrThrow<PIODataException>("Failed to query");
 		}
 

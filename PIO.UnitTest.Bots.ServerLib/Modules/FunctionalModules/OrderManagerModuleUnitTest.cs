@@ -106,7 +106,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 		}
 
 		[TestMethod]
-		public void ShouldNotReturnIdleTaskIfNoOrderArePresent()
+		public void ShouldNotReturnIdleTaskIfNoOrderArePresentAndLogError()
 		{
 			IOrderModule orderModule;
 			IProduceOrderModule produceOrderModule;
@@ -132,7 +132,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 
 
 		[TestMethod]
-		public void ShouldReturnProduceTask()
+		public void ShouldReturnProduceTaskIfHaveEnoughResourcesToProduce()
 		{
 			IOrderModule orderModule;
 			IProduceOrderModule produceOrderModule;
@@ -155,6 +155,56 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			Assert.IsNotNull(result);
 			Assert.AreEqual(1, result.WorkerID);
 			Assert.AreEqual(TaskTypeIDs.Produce, result.TaskTypeID);
+		}
+		[TestMethod]
+		public void ShouldReturnMoveToTaskIfWorkerIsNotInFactory()
+		{
+			IOrderModule orderModule;
+			IProduceOrderModule produceOrderModule;
+			ClientLib.PIOServiceReference.IPIOService client;
+			OrderManagerModule module;
+			Task result;
+
+			client = Substitute.For<PIO.ClientLib.PIOServiceReference.IPIOService>();
+			client.MoveToFactory(Arg.Any<int>(),Arg.Any<int>()).Returns(new Task() { TaskTypeID = TaskTypeIDs.MoveTo, WorkerID = 1 });
+			client.HasEnoughResourcesToProduce(Arg.Any<int>()).Returns(true);
+			client.WorkerIsInFactory(Arg.Any<int>(), Arg.Any<int>()).Returns(false);
+
+			orderModule = Substitute.For<IOrderModule>();
+			orderModule.CreateOrder().Returns(new Order() { OrderID = 1 });
+			produceOrderModule = Substitute.For<IProduceOrderModule>();
+			produceOrderModule.GetProduceOrders().Returns(new ProduceOrder[] { new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, FactoryID = 1 } });
+
+			module = new OrderManagerModule(NullLogger.Instance, client, orderModule, produceOrderModule, 10);
+			result = module.CreateTask(1);
+			Assert.IsNotNull(result);
+			Assert.AreEqual(1, result.WorkerID);
+			Assert.AreEqual(TaskTypeIDs.MoveTo, result.TaskTypeID);
+		}
+		[TestMethod]
+		public void ShouldReturnMoveToTaskIfDontHaveEnoughResourcesToProduce()
+		{
+			IOrderModule orderModule;
+			IProduceOrderModule produceOrderModule;
+			ClientLib.PIOServiceReference.IPIOService client;
+			OrderManagerModule module;
+			Task result;
+
+			client = Substitute.For<PIO.ClientLib.PIOServiceReference.IPIOService>();
+			client.Produce(Arg.Any<int>()).Returns(new Task() { TaskTypeID = TaskTypeIDs.Produce, WorkerID = 1 });
+			client.HasEnoughResourcesToProduce(Arg.Any<int>()).Returns(false);
+			client.WorkerIsInFactory(Arg.Any<int>(), Arg.Any<int>()).Returns(true);
+
+			orderModule = Substitute.For<IOrderModule>();
+			orderModule.CreateOrder().Returns(new Order() { OrderID = 1 });
+			produceOrderModule = Substitute.For<IProduceOrderModule>();
+			produceOrderModule.GetProduceOrders().Returns(new ProduceOrder[] { new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, FactoryID = 1 } });
+
+			module = new OrderManagerModule(NullLogger.Instance, client, orderModule, produceOrderModule, 10);
+			result = module.CreateTask(1);
+			Assert.IsNotNull(result);
+			Assert.AreEqual(1, result.WorkerID);
+			Assert.AreEqual(TaskTypeIDs.MoveTo, result.TaskTypeID);
 		}
 
 		/*[TestMethod]

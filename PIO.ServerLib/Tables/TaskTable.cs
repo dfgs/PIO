@@ -21,4 +21,9 @@ namespace PIO.ServerLib.Tables
 		public static readonly Column<FactoryTypeIDs> FactoryTypeID = new Column<FactoryTypeIDs>() { IsNullable = true };
 		public static readonly Column<DateTime> ETA = new Column<DateTime>() ;
 	}
+
+
+	
+
+
 }

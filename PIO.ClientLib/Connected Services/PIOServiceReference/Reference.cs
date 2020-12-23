@@ -123,6 +123,9 @@ namespace PIO.ClientLib.PIOServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/MoveTo", ReplyAction="http://tempuri.org/IPIOService/MoveToResponse")]
         PIO.Models.Task MoveTo(int WorkerID, int X, int Y);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/MoveToFactory", ReplyAction="http://tempuri.org/IPIOService/MoveToFactoryResponse")]
+        PIO.Models.Task MoveToFactory(int WorkerID, int FactoryID);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/CarryTo", ReplyAction="http://tempuri.org/IPIOService/CarryToResponse")]
         PIO.Models.Task CarryTo(int WorkerID, int TargetFactoryID, PIO.Models.ResourceTypeIDs ResourceTypeID);
         
@@ -302,6 +305,10 @@ namespace PIO.ClientLib.PIOServiceReference {
         
         public PIO.Models.Task MoveTo(int WorkerID, int X, int Y) {
             return base.Channel.MoveTo(WorkerID, X, Y);
+        }
+        
+        public PIO.Models.Task MoveToFactory(int WorkerID, int FactoryID) {
+            return base.Channel.MoveToFactory(WorkerID, FactoryID);
         }
         
         public PIO.Models.Task CarryTo(int WorkerID, int TargetFactoryID, PIO.Models.ResourceTypeIDs ResourceTypeID) {

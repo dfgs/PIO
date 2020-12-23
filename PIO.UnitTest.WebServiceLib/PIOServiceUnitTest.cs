@@ -979,6 +979,33 @@ namespace PIO.UnitTest.WebServiceLib
 		}
 
 		[TestMethod]
+		public void ShouldMoveToFactory()
+		{
+			PIOService service;
+			Task result;
+
+			service = new PIOService(NullLogger.Instance, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, new MockedMoverModule(false), null, null);
+			result = service.MoveToFactory(10, 1);
+			Assert.IsNotNull(result);
+			Assert.AreEqual(10, result.WorkerID);
+		}
+
+
+		[TestMethod]
+		public void ShouldNotMoveAndLogErrorToFactory()
+		{
+			PIOService service;
+			MemoryLogger logger;
+
+			logger = new MemoryLogger();
+			service = new PIOService(logger, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, new MockedMoverModule(true), null, null);
+
+			Assert.ThrowsException<FaultException>(() => service.MoveToFactory(10, 1));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName == service.ModuleName)));
+		}
+
+
+		[TestMethod]
 		public void ShouldCarry()
 		{
 			PIOService service;

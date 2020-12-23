@@ -16,10 +16,12 @@ namespace PIO.PowerShell
 	{
 		[Parameter(Position = 0, ValueFromPipeline = true, Mandatory = true)]
 		public int WorkerID { get; set; }
-		[Parameter(Position = 1, ValueFromPipeline = true, Mandatory = true)]
+		[Parameter(Position = 1, ValueFromPipeline = true, Mandatory = true, ParameterSetName = "ToPosition")]
 		public int X { get; set; }
-		[Parameter(Position = 2, ValueFromPipeline = true, Mandatory = true)]
+		[Parameter(Position = 2, ValueFromPipeline = true, Mandatory = true, ParameterSetName = "ToPosition")]
 		public int Y { get; set; }
+		[Parameter(Position = 1, ValueFromPipeline = true, Mandatory = true, ParameterSetName = "ToFactoryID")]
+		public int FactoryID { get; set; }
 
 
 
@@ -28,8 +30,18 @@ namespace PIO.PowerShell
 		protected override void ProcessRecord()
 		{
 			Task result;
-
-			result = Try(()=>client.MoveTo(WorkerID,X,Y));
+			switch (this.ParameterSetName)
+			{
+				case "ToPosition":
+					result = Try(() => client.MoveTo(WorkerID, X, Y));
+					break;
+				case "ToFactoryID":
+					result = Try(() => client.MoveToFactory(WorkerID, FactoryID));
+					break;
+				default:
+					throw new ArgumentException("Invalid parameter set.");
+			}
+			
 			
 			WriteObject(result);
 		}

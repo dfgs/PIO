@@ -92,12 +92,11 @@ namespace PIO.Bots.ServerLib.Modules
 				result = Try(() => client.WorkerIsInFactory(WorkerID, prioritaryOrder.FactoryID)).OrThrow<PIOInternalErrorException>("Failed to check worker location");
 				if (result)
 				{
-					task = Try(() => client.Produce(1)).OrThrow<PIOInternalErrorException>("Failed to create task");
+					task = Try(() => client.Produce(WorkerID)).OrThrow<PIOInternalErrorException>("Failed to create task");
 				}
 				else
 				{
-					task = null;
-					//task = Try(() => client.MoveTo(1, idleDuration)).OrThrow<PIOInternalErrorException>("Failed to create task");
+					task = Try(() => client.MoveToFactory(WorkerID,prioritaryOrder.FactoryID)).OrThrow<PIOInternalErrorException>("Failed to create task");
 				}
 				return task;
 			}

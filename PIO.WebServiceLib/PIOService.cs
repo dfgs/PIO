@@ -289,7 +289,13 @@ namespace PIO.WebServiceLib
 		{
 			LogEnter();
 
-			return Try(() => moverModule.BeginMoveTo(WorkerID, X,Y)).OrThrow(GenerateFaultException);
+			return Try(() => moverModule.BeginMoveTo(WorkerID, X, Y)).OrThrow(GenerateFaultException);
+		}
+		public Task MoveToFactory(int WorkerID, int FactoryID)
+		{
+			LogEnter();
+
+			return Try(() => moverModule.BeginMoveTo(WorkerID, FactoryID)).OrThrow(GenerateFaultException);
 		}
 
 		public Task CarryTo(int WorkerID, int TargetFactoryID, ResourceTypeIDs ResourceTypeID)

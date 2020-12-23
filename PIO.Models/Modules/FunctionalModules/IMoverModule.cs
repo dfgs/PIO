@@ -11,7 +11,8 @@ namespace PIO.Models.Modules
 	public interface IMoverModule : ITaskGeneratorModule
 	{
 
-		Task BeginMoveTo(int WorkerID,int X,int Y);
+		Task BeginMoveTo(int WorkerID, int FactoryID);
+		Task BeginMoveTo(int WorkerID, int X, int Y);
 		void EndMoveTo(int WorkerID, int X, int Y);
 	}
 }

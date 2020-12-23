@@ -26,7 +26,13 @@ namespace PIO.UnitTest.WebServiceLib.Mocks
 			TaskCreated?.Invoke(this, task);
 			return task;
 		}
-
+		public Task BeginMoveTo(int WorkerID, int FactoryID)
+		{
+			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
+			Task task = new Task() { WorkerID = WorkerID, ETA = DateTime.Now };
+			TaskCreated?.Invoke(this, task);
+			return task;
+		}
 		public void EndMoveTo(int WorkerID,int X,int Y)
 		{
 			throw new NotImplementedException();
