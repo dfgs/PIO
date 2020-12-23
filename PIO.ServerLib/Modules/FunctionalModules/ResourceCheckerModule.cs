@@ -37,14 +37,7 @@ namespace PIO.ServerLib.Modules
 
 			LogEnter();
 
-			Log(LogLevels.Information, $"Get factory (FactoryID={FactoryID})");
-			factory = Try(() => factoryModule.GetFactory(FactoryID)).OrThrow<PIOInternalErrorException>("Failed to get factory");
-
-			if (factory == null)
-			{
-				Log(LogLevels.Warning, $"Factory doesn't exist (FactoryID={FactoryID})");
-				throw new PIONotFoundException($"Factory doesn't exist (FactoryID={FactoryID})", null, ID, ModuleName, "HasEnoughResourcesToProduce");
-			}
+			factory = AssertExists(() => factoryModule.GetFactory(FactoryID), $"FactoryID={FactoryID}");
 
 			Log(LogLevels.Information, $"Get ingredients (FactoryTypeID={factory.FactoryTypeID})");
 			ingredients= Try(() => ingredientModule.GetIngredients(factory.FactoryTypeID)).OrThrow<PIOInternalErrorException>("Failed to get ingredients");
@@ -72,7 +65,48 @@ namespace PIO.ServerLib.Modules
 
 			return true;
 		}
+		public ResourceTypeIDs[] GetMissingResourcesToProduce(int FactoryID)
+		{
+			Factory factory;
+			Ingredient[] ingredients;
+			Stack[] stacks;
+			Stack stack;
+			List<ResourceTypeIDs> missingResources;
 
+			LogEnter();
+
+
+			factory = AssertExists(() => factoryModule.GetFactory(FactoryID), $"FactoryID={FactoryID}");
+
+			Log(LogLevels.Information, $"Get ingredients (FactoryTypeID={factory.FactoryTypeID})");
+			ingredients = Try(() => ingredientModule.GetIngredients(factory.FactoryTypeID)).OrThrow<PIOInternalErrorException>("Failed to get ingredients");
+
+			Log(LogLevels.Information, $"Get stacks (FactoryID={factory.FactoryID})");
+			stacks = Try(() => stackModule.GetStacks(factory.FactoryID)).OrThrow<PIOInternalErrorException>("Failed to get stacks");
+
+			missingResources = new List<ResourceTypeIDs>();
+
+			foreach (Ingredient ingredient in ingredients)
+			{
+				Log(LogLevels.Information, $"Check stack quantity (ResourceTypeID={ingredient.ResourceTypeID}, Quantity={ingredient.Quantity})");
+				stack = stacks.FirstOrDefault(item => item.ResourceTypeID == ingredient.ResourceTypeID);
+				if (stack == null)
+				{
+					Log(LogLevels.Information, $"Resource not found in stacks");
+					missingResources.Add(ingredient.ResourceTypeID);
+					continue;
+				}
+
+				if (stack.Quantity < ingredient.Quantity)
+				{
+					Log(LogLevels.Information, $"Not enough quantity in stack (Quantity={stack.Quantity})");
+					missingResources.Add(ingredient.ResourceTypeID);
+					continue;
+				}
+			}
+
+			return missingResources.ToArray();
+		}
 
 
 	}

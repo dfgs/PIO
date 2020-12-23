@@ -838,6 +838,39 @@ namespace PIO.UnitTest.WebServiceLib
 
 
 		[TestMethod]
+		public void ShouldGetMissingResourcesToProduce()
+		{
+			PIOService service;
+			ResourceTypeIDs[] result;
+
+			service = new PIOService(NullLogger.Instance, null, null, null, null, null, null, null, null, null, null, null, null, null, new MockedResourceCheckerModule(false, true), null, null, null, null, null, null);
+			result = service.GetMissingResourcesToProduce(1);
+			Assert.IsNotNull(result);
+			Assert.AreEqual(1, result.Length);
+
+			service = new PIOService(NullLogger.Instance, null, null, null, null, null, null, null, null, null, null, null, null, null, new MockedResourceCheckerModule(false, false), null, null, null, null, null, null);
+			result = service.GetMissingResourcesToProduce(1);
+			Assert.IsNotNull(result);
+			Assert.AreEqual(0, result.Length);
+
+		}
+
+
+		[TestMethod]
+		public void ShouldNotGetMissingResourcesToProduceAndLogError()
+		{
+			PIOService service;
+			MemoryLogger logger;
+
+			logger = new MemoryLogger();
+			service = new PIOService(logger, null, null, null, null, null, null, null, null, null, null, null, null, null, new MockedResourceCheckerModule(true, true), null, null, null, null, null, null);
+
+			Assert.ThrowsException<FaultException>(() => service.GetMissingResourcesToProduce(1));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName == service.ModuleName)));
+		}
+
+
+		[TestMethod]
 		public void ShouldGetWorkerIsInFactory()
 		{
 			PIOService service;

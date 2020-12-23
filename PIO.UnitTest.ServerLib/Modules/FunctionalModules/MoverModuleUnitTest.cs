@@ -206,11 +206,31 @@ namespace PIO.UnitTest.ServerLib.Modules
 			logger = new MemoryLogger();
 			module = new MoverModule(logger, taskModule, workerModule, factoryModule, buildingModule);
 
+			Assert.ThrowsException<PIONotFoundException>(() => module.BeginMoveTo(1, 10));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Warning) && (item.ComponentName == module.ModuleName)));
+		}
+
+		[TestMethod]
+		public void ShouldNotMoveToFactoryWhenBuildingDoesntExists()
+		{
+			MemoryLogger logger;
+			MoverModule module;
+			IFactoryModule factoryModule;
+			IBuildingModule buildingModule;
+			IWorkerModule workerModule;
+			ITaskModule taskModule;
+
+			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 1, FactoryTypeID = FactoryTypeIDs.Sawmill, BuildingID = 3, }, new Factory() { FactoryID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill, BuildingID = 30, });
+			buildingModule = new MockedBuildingModule(false, new Building() { BuildingID = 3, X = 1, Y = 1 });
+			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, PlanetID = 1 });
+			taskModule = new MockedTaskModule(false);
+
+			logger = new MemoryLogger();
+			module = new MoverModule(logger, taskModule, workerModule, factoryModule, buildingModule);
+
 			Assert.ThrowsException<PIONotFoundException>(() => module.BeginMoveTo(1, 2));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Warning) && (item.ComponentName == module.ModuleName)));
 		}
-		
-
 
 
 

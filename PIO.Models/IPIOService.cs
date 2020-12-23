@@ -79,6 +79,8 @@ namespace PIO.Models
 		[OperationContract]
 		bool HasEnoughResourcesToProduce(int FactoryID);
 		[OperationContract]
+		ResourceTypeIDs[] GetMissingResourcesToProduce(int FactoryID);
+		[OperationContract]
 		bool WorkerIsInFactory(int WorkerID, int FactoryID);
 		[OperationContract]
 		bool WorkerIsInBuilding(int WorkerID, int BuildingID);
