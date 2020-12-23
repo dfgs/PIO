@@ -319,6 +319,17 @@ namespace PIO.UnitTest.WebServiceLib
 			Assert.AreEqual(1, result.StackID);
 		}
 		[TestMethod]
+		public void ShouldFindStack()
+		{
+			PIOService service;
+			Stack result;
+
+			service = new PIOService(NullLogger.Instance, null, null, null, null, new MockedStackModule(3, false), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+			result = service.FindStack(1, ResourceTypeIDs.Coal);
+			Assert.IsNotNull(result);
+			Assert.AreEqual(1, result.StackID);
+		}
+		[TestMethod]
 		public void ShouldGetStacks()
 		{
 			PIOService service;
@@ -352,6 +363,18 @@ namespace PIO.UnitTest.WebServiceLib
 
 			Assert.ThrowsException<FaultException>(() => service.GetStack(1));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level ==LogLevels.Error) && (item.ComponentName==service.ModuleName)));
+		}
+		[TestMethod]
+		public void ShouldNotFindStackAndLogError()
+		{
+			PIOService service;
+			MemoryLogger logger;
+
+			logger = new MemoryLogger();
+			service = new PIOService(logger, null, null, null, null, new MockedStackModule(3, true), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+
+			Assert.ThrowsException<FaultException>(() => service.FindStack(1,ResourceTypeIDs.Coal));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName == service.ModuleName)));
 		}
 		[TestMethod]
 		public void ShouldNotGetStacksAndLogError()

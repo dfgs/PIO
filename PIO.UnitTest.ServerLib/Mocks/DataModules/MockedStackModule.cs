@@ -27,6 +27,11 @@ namespace PIO.UnitTest.ServerLib.Mocks
 			if (throwException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
 			return items.FirstOrDefault(item => item.StackID == StackID);
 		}
+		public Stack FindStack(int PlanetID,ResourceTypeIDs ResourceTypeID)
+		{
+			if (throwException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
+			return items.FirstOrDefault(item => item.ResourceTypeID == ResourceTypeID);
+		}
 
 		public int GetStackQuantity(int FactoryID, ResourceTypeIDs ResourceTypeID)
 		{

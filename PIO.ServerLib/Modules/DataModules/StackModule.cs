@@ -56,6 +56,21 @@ namespace PIO.ServerLib.Modules
 			query = new Select(StackTable.StackID, StackTable.FactoryID, StackTable.ResourceTypeID, StackTable.Quantity).From(PIODB.StackTable).Where(new AndFilter(StackTable.FactoryID.IsEqualTo(FactoryID), StackTable.ResourceTypeID.IsEqualTo(ResourceTypeID)));
 			return TrySelectFirst<StackTable, Stack>(query).OrThrow<PIODataException>("Failed to query");
 		}
+		public Stack FindStack(int PlanetID, ResourceTypeIDs ResourceTypeID)
+		{
+			ISelect query;
+
+			LogEnter();
+
+			Log(LogLevels.Information, $"Querying Stack table (PlanetID={PlanetID}, ResourceTypeID={ResourceTypeID}), Quantity>0");
+			query = new Select(StackTable.StackID, StackTable.FactoryID, StackTable.ResourceTypeID, StackTable.Quantity)
+				.From(
+					PIODB.StackTable.Join(PIODB.FactoryTable.On(StackTable.FactoryID,FactoryTable.FactoryID))
+					.Join(PIODB.BuildingTable.On(FactoryTable.BuildingID,BuildingTable.BuildingID))
+				)
+				.Where(new AndFilter(BuildingTable.PlanetID.IsEqualTo(PlanetID), StackTable.ResourceTypeID.IsEqualTo(ResourceTypeID), StackTable.Quantity.IsGreaterThan(0)));
+			return TrySelectFirst<StackTable, Stack>(query).OrThrow<PIODataException>("Failed to query");
+		}
 
 		public Stack InsertStack(int FactoryID, ResourceTypeIDs ResourceTypeID, int Quantity)
 		{

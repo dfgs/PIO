@@ -14,6 +14,8 @@ namespace PIO.Models.Modules
 		Stack GetStack(int StackID);
 		Stack GetStack(int FactoryID, ResourceTypeIDs ResourceTypeID);
 		Stack[] GetStacks(int FactoryID);
+		Stack FindStack(int PlanetID, ResourceTypeIDs ResourceTypeID);
+
 		Stack InsertStack(int FactoryID, ResourceTypeIDs ResourceTypeID, int Quantity);
 		void UpdateStack(int StackID, int Quantity);
 

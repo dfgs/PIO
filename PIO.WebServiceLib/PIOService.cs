@@ -142,6 +142,11 @@ namespace PIO.WebServiceLib
 			LogEnter();
 			return Try(() => stackModule.GetStack(StackID)).OrThrow(GenerateFaultException);
 		}
+		public Stack FindStack(int PlanetID, ResourceTypeIDs ResourceTypeID)
+		{
+			LogEnter();
+			return Try(() => stackModule.FindStack(PlanetID,ResourceTypeID)).OrThrow(GenerateFaultException);
+		}
 
 		public Stack[] GetStacks(int FactoryID)
 		{

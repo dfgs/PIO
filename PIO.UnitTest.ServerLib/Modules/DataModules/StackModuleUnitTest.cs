@@ -34,6 +34,20 @@ namespace PIO.UnitTest.ServerLib.Modules
 			Assert.AreEqual(0, result.StackID);
 		}
 		[TestMethod]
+		public void ShouldFindStack()
+		{
+			MockedDatabase<Stack> database;
+			StackModule module;
+			Stack result;
+
+			database = new MockedDatabase<Stack>(false, 1, (t) => new Stack() { StackID = t });
+			module = new StackModule(NullLogger.Instance, database);
+			result = module.FindStack(1,ResourceTypeIDs.Coal);
+			Assert.IsNotNull(result);
+			Assert.AreEqual(0, result.StackID);
+						
+		}
+		[TestMethod]
 		public void ShouldGetStacks()
 		{
 			MockedDatabase<Stack> database;
@@ -71,6 +85,22 @@ namespace PIO.UnitTest.ServerLib.Modules
 			module = new StackModule(logger, database);
 			Assert.ThrowsException<PIODataException>(() => module.GetStack(1,ResourceTypeIDs.Coal));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
+		}
+		[TestMethod]
+		public void ShouldNotFindStackAndLogError()
+		{
+			MockedDatabase<Stack> database;
+			StackModule module;
+			MemoryLogger logger;
+
+
+			logger = new MemoryLogger();
+			database = new MockedDatabase<Stack>(true, 1, (t) => new Stack() { StackID = t });
+			module = new StackModule(logger, database);
+			Assert.ThrowsException<PIODataException>(() => module.FindStack(1,ResourceTypeIDs.Coal));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName == module.ModuleName)));
+
+
 		}
 		[TestMethod]
 		public void ShouldNotGetStacksAndLogError()

@@ -36,6 +36,9 @@ namespace PIO.Models
 		[OperationContract]
 		Stack GetStack(int StackID);
 		[OperationContract]
+		Stack FindStack(int PlanetID, ResourceTypeIDs ResourceTypeID);
+
+		[OperationContract]
 		Stack[] GetStacks(int FactoryID);
 		[OperationContract]
 		int GetStackQuantity(int FactoryID,ResourceTypeIDs ResourceTypeID);
