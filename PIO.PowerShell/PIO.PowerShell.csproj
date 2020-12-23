@@ -55,6 +55,7 @@
     <Compile Include="PIO\DataCmdlet\GetBuildingTypesCmdlet.cs" />
     <Compile Include="PIO\DataCmdlet\GetBuildingCmdlet.cs" />
     <Compile Include="PIO\DataCmdlet\GetBuildingsCmdlet.cs" />
+    <Compile Include="PIO\DataCmdlet\FindStackCmdlet.cs" />
     <Compile Include="PIO\DataCmdlet\GetStackQuantityCmdlet.cs" />
     <Compile Include="PIO\DataCmdlet\GetTestCmdlet.cs" />
     <Compile Include="PIO\DataCmdlet\GetLastTaskCmdlet.cs" />
@@ -80,6 +81,7 @@
     <Compile Include="PIO\DataCmdlet\GetFactoriesCmdlet.cs" />
     <Compile Include="PIO\DataCmdlet\GetPlanetsCmdlet.cs" />
     <Compile Include="PIO\DataCmdlet\GetPlanetCmdlet.cs" />
+    <Compile Include="PIO\FunctionalCmdlet\GetMissingResourcesToProduceCmdlet.cs" />
     <Compile Include="PIO\FunctionalCmdlet\AssertWorkerIsInBuildingCmdlet.cs" />
     <Compile Include="PIO\FunctionalCmdlet\AssertWorkerIsInFactoryCmdlet.cs" />
     <Compile Include="PIO\FunctionalCmdlet\InvokeBuildFactory.cs" />

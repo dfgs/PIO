@@ -163,6 +163,10 @@ namespace PIO.UnitTest.BotsLib.Mocks
 		{
 			throw new NotImplementedException();
 		}
+		public Stack FindStack(int PlanetID,ResourceTypeIDs ResourceTypeID)
+		{
+			throw new NotImplementedException();
+		}
 
 		public int GetStackQuantity(int FactoryID, ResourceTypeIDs ResourceTypeID)
 		{
@@ -207,6 +211,10 @@ namespace PIO.UnitTest.BotsLib.Mocks
 		public bool HasEnoughResourcesToProduce(int FactoryID)
 		{
 			return true;
+		}
+		public ResourceTypeIDs[] GetMissingResourcesToProduce(int FactoryID)
+		{
+			return new ResourceTypeIDs[] { };
 		}
 
 		public Models.Task Idle(int WorkerID, int Duration)

@@ -26,7 +26,7 @@ namespace PIO.UnitTest.WebServiceLib.Mocks
 		public Stack FindStack(int PlanetID, ResourceTypeIDs ResourceTypeID)
 		{
 			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
-			return new Stack() { StackID = 0,ResourceTypeID=ResourceTypeID};
+			return new Stack() { StackID = 1,ResourceTypeID=ResourceTypeID};
 		}
 		public int GetStackQuantity(int FactoryID, ResourceTypeIDs ResourceTypeID)
 		{

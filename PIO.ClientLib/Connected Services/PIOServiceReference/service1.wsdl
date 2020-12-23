@@ -73,6 +73,12 @@
   <wsdl:message name="IPIOService_GetStack_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetStackResponse" />
   </wsdl:message>
+  <wsdl:message name="IPIOService_FindStack_InputMessage">
+    <wsdl:part name="parameters" element="tns:FindStack" />
+  </wsdl:message>
+  <wsdl:message name="IPIOService_FindStack_OutputMessage">
+    <wsdl:part name="parameters" element="tns:FindStackResponse" />
+  </wsdl:message>
   <wsdl:message name="IPIOService_GetStacks_InputMessage">
     <wsdl:part name="parameters" element="tns:GetStacks" />
   </wsdl:message>
@@ -193,6 +199,12 @@
   <wsdl:message name="IPIOService_HasEnoughResourcesToProduce_OutputMessage">
     <wsdl:part name="parameters" element="tns:HasEnoughResourcesToProduceResponse" />
   </wsdl:message>
+  <wsdl:message name="IPIOService_GetMissingResourcesToProduce_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetMissingResourcesToProduce" />
+  </wsdl:message>
+  <wsdl:message name="IPIOService_GetMissingResourcesToProduce_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetMissingResourcesToProduceResponse" />
+  </wsdl:message>
   <wsdl:message name="IPIOService_WorkerIsInFactory_InputMessage">
     <wsdl:part name="parameters" element="tns:WorkerIsInFactory" />
   </wsdl:message>
@@ -292,6 +304,10 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetStack" message="tns:IPIOService_GetStack_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/GetStackResponse" message="tns:IPIOService_GetStack_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="FindStack">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/FindStack" message="tns:IPIOService_FindStack_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/FindStackResponse" message="tns:IPIOService_FindStack_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="GetStacks">
       <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetStacks" message="tns:IPIOService_GetStacks_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/GetStacksResponse" message="tns:IPIOService_GetStacks_OutputMessage" />
@@ -371,6 +387,10 @@
     <wsdl:operation name="HasEnoughResourcesToProduce">
       <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/HasEnoughResourcesToProduce" message="tns:IPIOService_HasEnoughResourcesToProduce_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/HasEnoughResourcesToProduceResponse" message="tns:IPIOService_HasEnoughResourcesToProduce_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMissingResourcesToProduce">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetMissingResourcesToProduce" message="tns:IPIOService_GetMissingResourcesToProduce_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/GetMissingResourcesToProduceResponse" message="tns:IPIOService_GetMissingResourcesToProduce_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="WorkerIsInFactory">
       <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/WorkerIsInFactory" message="tns:IPIOService_WorkerIsInFactory_InputMessage" />
@@ -503,6 +523,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetStack">
       <soap:operation soapAction="http://tempuri.org/IPIOService/GetStack" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="FindStack">
+      <soap:operation soapAction="http://tempuri.org/IPIOService/FindStack" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -683,6 +712,15 @@
     </wsdl:operation>
     <wsdl:operation name="HasEnoughResourcesToProduce">
       <soap:operation soapAction="http://tempuri.org/IPIOService/HasEnoughResourcesToProduce" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMissingResourcesToProduce">
+      <soap:operation soapAction="http://tempuri.org/IPIOService/GetMissingResourcesToProduce" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

@@ -240,4 +240,10 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfTask" nillable="true" type="tns:ArrayOfTask" />
+  <xs:complexType name="ArrayOfResourceTypeIDs">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ResourceTypeIDs" type="tns:ResourceTypeIDs" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfResourceTypeIDs" nillable="true" type="tns:ArrayOfResourceTypeIDs" />
 </xs:schema>

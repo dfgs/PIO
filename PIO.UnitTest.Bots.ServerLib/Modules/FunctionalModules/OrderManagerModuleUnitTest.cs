@@ -93,6 +93,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			Task result;
 
 			client = Substitute.For<PIO.ClientLib.PIOServiceReference.IPIOService>();
+			client.GetWorker(Arg.Any<int>()).Returns(new Worker() { PlanetID = 1 });
 			client.Idle(Arg.Any<int>(), Arg.Any<int>()).Returns(new Task() {TaskTypeID=TaskTypeIDs.Idle ,WorkerID=1});
 			orderModule = Substitute.For<IOrderModule>();
 			produceOrderModule = Substitute.For<IProduceOrderModule>();
@@ -117,6 +118,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			logger = new MemoryLogger();
 
 			client = Substitute.For<PIO.ClientLib.PIOServiceReference.IPIOService>();
+			client.GetWorker(Arg.Any<int>()).Returns(new Worker() { PlanetID = 1 });
 			client.Idle(Arg.Any<int>(), Arg.Any<int>()).Returns((x) => { throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest"); });
 
 			orderModule = Substitute.For<IOrderModule>();
@@ -141,8 +143,9 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			Task result;
 
 			client = Substitute.For<PIO.ClientLib.PIOServiceReference.IPIOService>();
+			client.GetWorker(Arg.Any<int>()).Returns(new Worker() { PlanetID = 1 });
 			client.Produce(Arg.Any<int>()).Returns(new Task() { TaskTypeID = TaskTypeIDs.Produce, WorkerID = 1 });
-			client.HasEnoughResourcesToProduce(Arg.Any<int>()).Returns(true);
+			client.GetMissingResourcesToProduce(Arg.Any<int>()).Returns(new ResourceTypeIDs[] { });
 			client.WorkerIsInFactory(Arg.Any<int>(), Arg.Any<int>()).Returns(true);
 
 			orderModule = Substitute.For<IOrderModule>();
@@ -166,8 +169,9 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			Task result;
 
 			client = Substitute.For<PIO.ClientLib.PIOServiceReference.IPIOService>();
+			client.GetWorker(Arg.Any<int>()).Returns(new Worker() { PlanetID = 1 });
 			client.MoveToFactory(Arg.Any<int>(),Arg.Any<int>()).Returns(new Task() { TaskTypeID = TaskTypeIDs.MoveTo, WorkerID = 1 });
-			client.HasEnoughResourcesToProduce(Arg.Any<int>()).Returns(true);
+			client.GetMissingResourcesToProduce(Arg.Any<int>()).Returns(new ResourceTypeIDs[] { });
 			client.WorkerIsInFactory(Arg.Any<int>(), Arg.Any<int>()).Returns(false);
 
 			orderModule = Substitute.For<IOrderModule>();
@@ -182,7 +186,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			Assert.AreEqual(TaskTypeIDs.MoveTo, result.TaskTypeID);
 		}
 		[TestMethod]
-		public void ShouldReturnMoveToTaskIfDontHaveEnoughResourcesToProduce()
+		public void ShouldReturnIdleTaskIfDontHaveEnoughResourcesToProduceAndMissingResourceNotFound()
 		{
 			IOrderModule orderModule;
 			IProduceOrderModule produceOrderModule;
@@ -191,9 +195,66 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			Task result;
 
 			client = Substitute.For<PIO.ClientLib.PIOServiceReference.IPIOService>();
+			client.Idle(Arg.Any<int>(), Arg.Any<int>()).Returns(new Task() { TaskTypeID = TaskTypeIDs.Idle, WorkerID = 1 });
+			client.GetWorker(Arg.Any<int>()).Returns(new Worker() { PlanetID = 1 });
 			client.Produce(Arg.Any<int>()).Returns(new Task() { TaskTypeID = TaskTypeIDs.Produce, WorkerID = 1 });
-			client.HasEnoughResourcesToProduce(Arg.Any<int>()).Returns(false);
+			client.GetMissingResourcesToProduce(Arg.Any<int>()).Returns(new ResourceTypeIDs[] { ResourceTypeIDs.Wood });
+			client.FindStack(Arg.Any<int>(), Arg.Any<ResourceTypeIDs>()).Returns((Stack)null);
 			client.WorkerIsInFactory(Arg.Any<int>(), Arg.Any<int>()).Returns(true);
+
+			orderModule = Substitute.For<IOrderModule>();
+			orderModule.CreateOrder().Returns(new Order() { OrderID = 1 });
+			produceOrderModule = Substitute.For<IProduceOrderModule>();
+			produceOrderModule.GetProduceOrders().Returns(new ProduceOrder[] { new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, FactoryID = 1 } });
+
+			module = new OrderManagerModule(NullLogger.Instance, client, orderModule, produceOrderModule, 10);
+			result = module.CreateTask(1);
+			Assert.IsNotNull(result);
+			Assert.AreEqual(1, result.WorkerID);
+			Assert.AreEqual(TaskTypeIDs.Idle, result.TaskTypeID);
+		}
+		[TestMethod]
+		public void ShouldReturnCarryToTaskIfDontHaveEnoughResourcesToProduceAndMissingResourceFoundLocally()
+		{
+			IOrderModule orderModule;
+			IProduceOrderModule produceOrderModule;
+			ClientLib.PIOServiceReference.IPIOService client;
+			OrderManagerModule module;
+			Task result;
+
+			client = Substitute.For<PIO.ClientLib.PIOServiceReference.IPIOService>();
+			client.CarryTo(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<ResourceTypeIDs>()).Returns(new Task() { TaskTypeID = TaskTypeIDs.CarryTo, WorkerID = 1 });
+			client.GetWorker(Arg.Any<int>()).Returns(new Worker() { PlanetID = 1 });
+			client.GetMissingResourcesToProduce(Arg.Any<int>()).Returns(new ResourceTypeIDs[] { ResourceTypeIDs.Wood });
+			client.FindStack(Arg.Any<int>(), Arg.Any<ResourceTypeIDs>()).Returns(new Stack() { FactoryID=10,ResourceTypeID=ResourceTypeIDs.Wood,Quantity=10 });
+			client.WorkerIsInFactory(Arg.Any<int>(), Arg.Any<int>()).Returns(true);
+
+			orderModule = Substitute.For<IOrderModule>();
+			orderModule.CreateOrder().Returns(new Order() { OrderID = 1 });
+			produceOrderModule = Substitute.For<IProduceOrderModule>();
+			produceOrderModule.GetProduceOrders().Returns(new ProduceOrder[] { new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, FactoryID = 1 } });
+
+			module = new OrderManagerModule(NullLogger.Instance, client, orderModule, produceOrderModule, 10);
+			result = module.CreateTask(1);
+			Assert.IsNotNull(result);
+			Assert.AreEqual(1, result.WorkerID);
+			Assert.AreEqual(TaskTypeIDs.CarryTo, result.TaskTypeID);
+		}
+		[TestMethod]
+		public void ShouldReturnMoveToTaskIfDontHaveEnoughResourcesToProduceAndMissingResourceFoundInRemoteLocation()
+		{
+			IOrderModule orderModule;
+			IProduceOrderModule produceOrderModule;
+			ClientLib.PIOServiceReference.IPIOService client;
+			OrderManagerModule module;
+			Task result;
+
+			client = Substitute.For<PIO.ClientLib.PIOServiceReference.IPIOService>();
+			client.MoveToFactory(Arg.Any<int>(), Arg.Any<int>()).Returns(new Task() { TaskTypeID = TaskTypeIDs.MoveTo, WorkerID = 1 });
+			client.GetWorker(Arg.Any<int>()).Returns(new Worker() { PlanetID = 1 });
+			client.GetMissingResourcesToProduce(Arg.Any<int>()).Returns(new ResourceTypeIDs[] {ResourceTypeIDs.Wood });
+			client.FindStack(Arg.Any<int>(), Arg.Any<ResourceTypeIDs>()).Returns(new Stack() { FactoryID = 10, ResourceTypeID = ResourceTypeIDs.Wood, Quantity = 10 });
+			client.WorkerIsInFactory(Arg.Any<int>(), Arg.Any<int>()).Returns(false);
 
 			orderModule = Substitute.For<IOrderModule>();
 			orderModule.CreateOrder().Returns(new Order() { OrderID = 1 });

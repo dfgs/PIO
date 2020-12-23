@@ -48,6 +48,9 @@ namespace PIO.ClientLib.PIOServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetStack", ReplyAction="http://tempuri.org/IPIOService/GetStackResponse")]
         PIO.Models.Stack GetStack(int StackID);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/FindStack", ReplyAction="http://tempuri.org/IPIOService/FindStackResponse")]
+        PIO.Models.Stack FindStack(int PlanetID, PIO.Models.ResourceTypeIDs ResourceTypeID);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetStacks", ReplyAction="http://tempuri.org/IPIOService/GetStacksResponse")]
         PIO.Models.Stack[] GetStacks(int FactoryID);
         
@@ -107,6 +110,9 @@ namespace PIO.ClientLib.PIOServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/HasEnoughResourcesToProduce", ReplyAction="http://tempuri.org/IPIOService/HasEnoughResourcesToProduceResponse")]
         bool HasEnoughResourcesToProduce(int FactoryID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetMissingResourcesToProduce", ReplyAction="http://tempuri.org/IPIOService/GetMissingResourcesToProduceResponse")]
+        PIO.Models.ResourceTypeIDs[] GetMissingResourcesToProduce(int FactoryID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/WorkerIsInFactory", ReplyAction="http://tempuri.org/IPIOService/WorkerIsInFactoryResponse")]
         bool WorkerIsInFactory(int WorkerID, int FactoryID);
@@ -207,6 +213,10 @@ namespace PIO.ClientLib.PIOServiceReference {
             return base.Channel.GetStack(StackID);
         }
         
+        public PIO.Models.Stack FindStack(int PlanetID, PIO.Models.ResourceTypeIDs ResourceTypeID) {
+            return base.Channel.FindStack(PlanetID, ResourceTypeID);
+        }
+        
         public PIO.Models.Stack[] GetStacks(int FactoryID) {
             return base.Channel.GetStacks(FactoryID);
         }
@@ -285,6 +295,10 @@ namespace PIO.ClientLib.PIOServiceReference {
         
         public bool HasEnoughResourcesToProduce(int FactoryID) {
             return base.Channel.HasEnoughResourcesToProduce(FactoryID);
+        }
+        
+        public PIO.Models.ResourceTypeIDs[] GetMissingResourcesToProduce(int FactoryID) {
+            return base.Channel.GetMissingResourcesToProduce(FactoryID);
         }
         
         public bool WorkerIsInFactory(int WorkerID, int FactoryID) {
