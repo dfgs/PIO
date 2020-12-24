@@ -61,17 +61,70 @@ namespace PIO.Bots.ServerLib.Modules
 		}
 
 		
+		public Task CreateTaskFromProduceOrder(Worker Worker, ProduceOrder ProduceOrder)
+		{
+			bool result;
+			ResourceTypeIDs[] missingResourceTypeID;
+			Factory factory;
+			Stack stack;
+			Task task;
+
+			factory = AssertExists<Factory>(() => client.GetFactory(ProduceOrder.FactoryID), $"FactoryID={ProduceOrder.FactoryID}");
+
+			Log(LogLevels.Information, $"Checking if factory as enough resources to produce (FactoryID={ProduceOrder.FactoryID})");
+			missingResourceTypeID = Try(() => client.GetMissingResourcesToProduce(ProduceOrder.FactoryID)).OrThrow<PIOInternalErrorException>("Failed to check resources");
+			if ((missingResourceTypeID == null) || (missingResourceTypeID.Length == 0))
+			{
+				Log(LogLevels.Information, $"Checking if worker is on site (WorkerID={Worker.WorkerID}, FactoryID={ProduceOrder.FactoryID})");
+				result = Try(() => client.WorkerIsInBuilding(Worker.WorkerID, factory.BuildingID)).OrThrow<PIOInternalErrorException>("Failed to check worker location");
+				if (result)
+				{
+					Log(LogLevels.Information, $"Worker is on site, creating produce task");
+					task = Try(() => client.Produce(Worker.WorkerID)).OrThrow<PIOInternalErrorException>("Failed to create task");
+				}
+				else
+				{
+					Log(LogLevels.Information, $"Worker is not on site, creating moveto task");
+					task = Try(() => client.MoveToBuilding(Worker.WorkerID, factory.BuildingID)).OrThrow<PIOInternalErrorException>("Failed to create task");
+				}
+				return task;
+			}
+			else
+			{
+				Log(LogLevels.Information, $"Trying to find missing resource (PlanetID={Worker.PlanetID}, ResourceTypeID={missingResourceTypeID[0]})");
+				stack = Try(() => client.FindStack(Worker.PlanetID, missingResourceTypeID[0])).OrThrow("Failed to find missing resource");
+				if (stack == null)
+				{
+					Log(LogLevels.Information, $"Missing resource not found, cannot create task");
+					return null;
+				}
+				else
+				{
+					Log(LogLevels.Information, $"Missing resource found, checking if worker can carry to");
+					result = Try(() => client.WorkerIsInBuilding(Worker.WorkerID, stack.BuildingID)).OrThrow<PIOInternalErrorException>("Failed to check worker location");
+					if (result)
+					{
+						Log(LogLevels.Information, $"Worker can access resource, creating carryto task");
+						task = Try(() => client.CarryTo(Worker.WorkerID, factory.BuildingID, missingResourceTypeID[0])).OrThrow<PIOInternalErrorException>("Failed to create task");
+						return task;
+					}
+					else
+					{
+						Log(LogLevels.Information, $"Missing resource found, creating moveto task");
+						task = Try(() => client.MoveToBuilding(Worker.WorkerID, stack.BuildingID)).OrThrow<PIOInternalErrorException>("Failed to create task");
+						return task;
+					}
+				}
+			}
+
+
+		}
 
 		public Task CreateTask(int WorkerID)
 		{
 			ProduceOrder[] produceOrders;
-			ProduceOrder prioritaryOrder;
-			bool result;
 			Task task;
-			ResourceTypeIDs[] missingResourceTypeID;
 			Worker worker;
-			Factory factory;
-			Stack stack;
 
 			LogEnter();
 
@@ -86,59 +139,17 @@ namespace PIO.Bots.ServerLib.Modules
 				task= Try(()=>client.Idle(WorkerID, idleDuration)).OrThrow<PIOInternalErrorException>("Failed to create task");
 				return task;
 			}
-						
-			prioritaryOrder = produceOrders[0];
-			factory = AssertExists<Factory>(() => client.GetFactory(prioritaryOrder.FactoryID), $"FactoryID={prioritaryOrder.FactoryID}");
 
-
-			Log(LogLevels.Information, $"Checking if factory as enough resources to produce (FactoryID={prioritaryOrder.FactoryID})");
-			missingResourceTypeID=Try(()=>client.GetMissingResourcesToProduce(prioritaryOrder.FactoryID)).OrThrow<PIOInternalErrorException>("Failed to check resources");
-			if ((missingResourceTypeID==null) || (missingResourceTypeID.Length==0))
+			foreach (ProduceOrder order in produceOrders)
 			{
-				Log(LogLevels.Information, $"Checking if worker is on site (WorkerID={WorkerID}, FactoryID={prioritaryOrder.FactoryID})");
-				result=Try(() => client.WorkerIsInBuilding(WorkerID, factory.BuildingID)).OrThrow<PIOInternalErrorException>("Failed to check worker location");
-				if (result)
-				{
-					Log(LogLevels.Information, $"Worker is on site, creating produce task");
-					task=Try(() => client.Produce(WorkerID)).OrThrow<PIOInternalErrorException>("Failed to create task");
-				}
-				else
-				{
-					Log(LogLevels.Information, $"Worker is not on site, creating moveto task");
-					task=Try(() => client.MoveToBuilding(WorkerID,factory.BuildingID)).OrThrow<PIOInternalErrorException>("Failed to create task");
-				}
-				return task;
+				task = CreateTaskFromProduceOrder(worker, order);
+				if (task != null) return task;
 			}
-			else
-			{
-				Log(LogLevels.Information, $"Trying to find missing resource (PlanetID={worker.PlanetID}, ResourceTypeID={missingResourceTypeID[0]})");
-				stack=Try(() => client.FindStack(worker.PlanetID, missingResourceTypeID[0])).OrThrow("Failed to find missing resource");
-				if (stack==null)
-				{
-					Log(LogLevels.Information, $"Missing resource not found, creating idle task");
-					task=Try(() => client.Idle(WorkerID, idleDuration)).OrThrow<PIOInternalErrorException>("Failed to create task");
-					return task;
-				}
-				else
-				{
-					Log(LogLevels.Information, $"Missing resource found, checking if worker can carry to");
-					result=Try(() => client.WorkerIsInBuilding(WorkerID, stack.BuildingID)).OrThrow<PIOInternalErrorException>("Failed to check worker location");
-					if (result)
-					{
-						Log(LogLevels.Information, $"Worker can access resource, creating carryto task");
-						task=Try(() => client.CarryTo(WorkerID, prioritaryOrder.FactoryID,missingResourceTypeID[0])).OrThrow<PIOInternalErrorException>("Failed to create task");
-						return task;
-					}
-					else
-					{
-						Log(LogLevels.Information, $"Missing resource found, creating moveto task");
-						task=Try(() => client.MoveToBuilding(WorkerID, stack.BuildingID)).OrThrow<PIOInternalErrorException>("Failed to create task");
-						return task;
-					}
-				}
 
-			}
-			
+			Log(LogLevels.Information, $"Cannot create any task from orders, returning idle task");
+			task = Try(() => client.Idle(WorkerID, idleDuration)).OrThrow<PIOInternalErrorException>("Failed to create task");
+			return task;
+
 
 		}
 

@@ -17,6 +17,8 @@ namespace PIO.Bots.Models.Modules
 		
 		Task CreateTask(int WorkerID);
 
+		Task CreateTaskFromProduceOrder(Worker Worker, ProduceOrder ProduceOrder);
+
 		ProduceOrder CreateProduceOrder(int FactoryID);
 		
 	}

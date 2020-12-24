@@ -130,11 +130,8 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName == module.ModuleName)));
 
 		}
-
-
-
 		[TestMethod]
-		public void ShouldReturnProduceTaskIfHaveEnoughResourcesToProduce()
+		public void ShouldNotReturnIdleTaskIfAllOrderFailToCreateTask()
 		{
 			IOrderModule orderModule;
 			IProduceOrderModule produceOrderModule;
@@ -143,63 +140,9 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			Task result;
 
 			client = Substitute.For<PIO.ClientLib.PIOServiceReference.IPIOService>();
-			client.GetFactory(Arg.Any<int>()).Returns(new Factory() { FactoryID=1});
-			client.GetWorker(Arg.Any<int>()).Returns(new Worker() { PlanetID = 1 });
-			client.Produce(Arg.Any<int>()).Returns(new Task() { TaskTypeID = TaskTypeIDs.Produce, WorkerID = 1 });
-			client.GetMissingResourcesToProduce(Arg.Any<int>()).Returns(new ResourceTypeIDs[] { });
-			client.WorkerIsInBuilding(Arg.Any<int>(), Arg.Any<int>()).Returns(true);
-
-			orderModule = Substitute.For<IOrderModule>();
-			orderModule.CreateOrder().Returns(new Order() { OrderID = 1 });
-			produceOrderModule = Substitute.For<IProduceOrderModule>();
-			produceOrderModule.GetProduceOrders().Returns(new ProduceOrder[] { new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, FactoryID = 1 } });
-
-			module = new OrderManagerModule(NullLogger.Instance, client, orderModule, produceOrderModule, 10);
-			result = module.CreateTask(1);
-			Assert.IsNotNull(result);
-			Assert.AreEqual(1, result.WorkerID);
-			Assert.AreEqual(TaskTypeIDs.Produce, result.TaskTypeID);
-		}
-		[TestMethod]
-		public void ShouldReturnMoveToTaskIfWorkerIsNotInFactory()
-		{
-			IOrderModule orderModule;
-			IProduceOrderModule produceOrderModule;
-			ClientLib.PIOServiceReference.IPIOService client;
-			OrderManagerModule module;
-			Task result;
-
-			client = Substitute.For<PIO.ClientLib.PIOServiceReference.IPIOService>();
-			client.GetFactory(Arg.Any<int>()).Returns(new Factory() { FactoryID = 1 });
-			client.GetWorker(Arg.Any<int>()).Returns(new Worker() { PlanetID = 1 });
-			client.MoveToBuilding(Arg.Any<int>(),Arg.Any<int>()).Returns(new Task() { TaskTypeID = TaskTypeIDs.MoveTo, WorkerID = 1 });
-			client.GetMissingResourcesToProduce(Arg.Any<int>()).Returns(new ResourceTypeIDs[] { });
-			client.WorkerIsInBuilding(Arg.Any<int>(), Arg.Any<int>()).Returns(false);
-
-			orderModule = Substitute.For<IOrderModule>();
-			orderModule.CreateOrder().Returns(new Order() { OrderID = 1 });
-			produceOrderModule = Substitute.For<IProduceOrderModule>();
-			produceOrderModule.GetProduceOrders().Returns(new ProduceOrder[] { new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, FactoryID = 1 } });
-
-			module = new OrderManagerModule(NullLogger.Instance, client, orderModule, produceOrderModule, 10);
-			result = module.CreateTask(1);
-			Assert.IsNotNull(result);
-			Assert.AreEqual(1, result.WorkerID);
-			Assert.AreEqual(TaskTypeIDs.MoveTo, result.TaskTypeID);
-		}
-		[TestMethod]
-		public void ShouldReturnIdleTaskIfDontHaveEnoughResourcesToProduceAndMissingResourceNotFound()
-		{
-			IOrderModule orderModule;
-			IProduceOrderModule produceOrderModule;
-			ClientLib.PIOServiceReference.IPIOService client;
-			OrderManagerModule module;
-			Task result;
-
-			client = Substitute.For<PIO.ClientLib.PIOServiceReference.IPIOService>();
+			client.GetWorker(Arg.Any<int>()).Returns(new Worker());
 			client.Idle(Arg.Any<int>(), Arg.Any<int>()).Returns(new Task() { TaskTypeID = TaskTypeIDs.Idle, WorkerID = 1 });
 			client.GetFactory(Arg.Any<int>()).Returns(new Factory() { FactoryID = 1 });
-			client.GetWorker(Arg.Any<int>()).Returns(new Worker() { PlanetID = 1 });
 			client.Produce(Arg.Any<int>()).Returns(new Task() { TaskTypeID = TaskTypeIDs.Produce, WorkerID = 1 });
 			client.GetMissingResourcesToProduce(Arg.Any<int>()).Returns(new ResourceTypeIDs[] { ResourceTypeIDs.Wood });
 			client.FindStack(Arg.Any<int>(), Arg.Any<ResourceTypeIDs>()).Returns((Stack)null);
@@ -215,9 +158,94 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			Assert.IsNotNull(result);
 			Assert.AreEqual(1, result.WorkerID);
 			Assert.AreEqual(TaskTypeIDs.Idle, result.TaskTypeID);
+
+		}
+
+
+
+
+
+
+		[TestMethod]
+		public void CreateTaskFromProduceOrderShouldReturnProduceTaskIfHaveEnoughResourcesToProduce()
+		{
+			IOrderModule orderModule;
+			IProduceOrderModule produceOrderModule;
+			ClientLib.PIOServiceReference.IPIOService client;
+			OrderManagerModule module;
+			Task result;
+
+			client = Substitute.For<PIO.ClientLib.PIOServiceReference.IPIOService>();
+			client.GetFactory(Arg.Any<int>()).Returns(new Factory() { FactoryID=1});
+			client.Produce(Arg.Any<int>()).Returns(new Task() { TaskTypeID = TaskTypeIDs.Produce, WorkerID = 1 });
+			client.GetMissingResourcesToProduce(Arg.Any<int>()).Returns(new ResourceTypeIDs[] { });
+			client.WorkerIsInBuilding(Arg.Any<int>(), Arg.Any<int>()).Returns(true);
+
+			orderModule = Substitute.For<IOrderModule>();
+			orderModule.CreateOrder().Returns(new Order() { OrderID = 1 });
+			produceOrderModule = Substitute.For<IProduceOrderModule>();
+			produceOrderModule.GetProduceOrders().Returns(new ProduceOrder[] { new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, FactoryID = 1 } });
+
+			module = new OrderManagerModule(NullLogger.Instance, client, orderModule, produceOrderModule, 10);
+			result = module.CreateTaskFromProduceOrder(new Worker() { PlanetID = 1 }, new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, FactoryID = 1 });
+			Assert.IsNotNull(result);
+			Assert.AreEqual(1, result.WorkerID);
+			Assert.AreEqual(TaskTypeIDs.Produce, result.TaskTypeID);
 		}
 		[TestMethod]
-		public void ShouldReturnCarryToTaskIfDontHaveEnoughResourcesToProduceAndMissingResourceFoundLocally()
+		public void CreateTaskFromProduceOrderShouldReturnMoveToTaskIfWorkerIsNotInFactory()
+		{
+			IOrderModule orderModule;
+			IProduceOrderModule produceOrderModule;
+			ClientLib.PIOServiceReference.IPIOService client;
+			OrderManagerModule module;
+			Task result;
+
+			client = Substitute.For<PIO.ClientLib.PIOServiceReference.IPIOService>();
+			client.GetFactory(Arg.Any<int>()).Returns(new Factory() { FactoryID = 1 });
+			client.MoveToBuilding(Arg.Any<int>(),Arg.Any<int>()).Returns(new Task() { TaskTypeID = TaskTypeIDs.MoveTo, WorkerID = 1 });
+			client.GetMissingResourcesToProduce(Arg.Any<int>()).Returns(new ResourceTypeIDs[] { });
+			client.WorkerIsInBuilding(Arg.Any<int>(), Arg.Any<int>()).Returns(false);
+
+			orderModule = Substitute.For<IOrderModule>();
+			orderModule.CreateOrder().Returns(new Order() { OrderID = 1 });
+			produceOrderModule = Substitute.For<IProduceOrderModule>();
+			produceOrderModule.GetProduceOrders().Returns(new ProduceOrder[] { new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, FactoryID = 1 } });
+
+			module = new OrderManagerModule(NullLogger.Instance, client, orderModule, produceOrderModule, 10);
+			result = module.CreateTaskFromProduceOrder(new Worker() { PlanetID = 1 }, new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, FactoryID = 1 });
+			Assert.IsNotNull(result);
+			Assert.AreEqual(1, result.WorkerID);
+			Assert.AreEqual(TaskTypeIDs.MoveTo, result.TaskTypeID);
+		}
+		[TestMethod]
+		public void CreateTaskFromProduceOrderShouldReturnNullkIfDontHaveEnoughResourcesToProduceAndMissingResourceNotFound()
+		{
+			IOrderModule orderModule;
+			IProduceOrderModule produceOrderModule;
+			ClientLib.PIOServiceReference.IPIOService client;
+			OrderManagerModule module;
+			Task result;
+
+			client = Substitute.For<PIO.ClientLib.PIOServiceReference.IPIOService>();
+			client.Idle(Arg.Any<int>(), Arg.Any<int>()).Returns(new Task() { TaskTypeID = TaskTypeIDs.Idle, WorkerID = 1 });
+			client.GetFactory(Arg.Any<int>()).Returns(new Factory() { FactoryID = 1 });
+			client.Produce(Arg.Any<int>()).Returns(new Task() { TaskTypeID = TaskTypeIDs.Produce, WorkerID = 1 });
+			client.GetMissingResourcesToProduce(Arg.Any<int>()).Returns(new ResourceTypeIDs[] { ResourceTypeIDs.Wood });
+			client.FindStack(Arg.Any<int>(), Arg.Any<ResourceTypeIDs>()).Returns((Stack)null);
+			client.WorkerIsInBuilding(Arg.Any<int>(), Arg.Any<int>()).Returns(true);
+
+			orderModule = Substitute.For<IOrderModule>();
+			orderModule.CreateOrder().Returns(new Order() { OrderID = 1 });
+			produceOrderModule = Substitute.For<IProduceOrderModule>();
+			produceOrderModule.GetProduceOrders().Returns(new ProduceOrder[] { new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, FactoryID = 1 } });
+
+			module = new OrderManagerModule(NullLogger.Instance, client, orderModule, produceOrderModule, 10);
+			result = module.CreateTaskFromProduceOrder(new Worker() { PlanetID = 1 }, new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, FactoryID = 1 });
+			Assert.IsNull(result);
+		}
+		[TestMethod]
+		public void CreateTaskFromProduceOrderShouldReturnCarryToTaskIfDontHaveEnoughResourcesToProduceAndMissingResourceFoundLocally()
 		{
 			IOrderModule orderModule;
 			IProduceOrderModule produceOrderModule;
@@ -228,7 +256,6 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			client = Substitute.For<PIO.ClientLib.PIOServiceReference.IPIOService>();
 			client.CarryTo(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<ResourceTypeIDs>()).Returns(new Task() { TaskTypeID = TaskTypeIDs.CarryTo, WorkerID = 1 });
 			client.GetFactory(Arg.Any<int>()).Returns(new Factory() { FactoryID = 1 });
-			client.GetWorker(Arg.Any<int>()).Returns(new Worker() { PlanetID = 1 });
 			client.GetMissingResourcesToProduce(Arg.Any<int>()).Returns(new ResourceTypeIDs[] { ResourceTypeIDs.Wood });
 			client.FindStack(Arg.Any<int>(), Arg.Any<ResourceTypeIDs>()).Returns(new Stack() { BuildingID=10,ResourceTypeID=ResourceTypeIDs.Wood,Quantity=10 });
 			client.WorkerIsInBuilding(Arg.Any<int>(), Arg.Any<int>()).Returns(true);
@@ -239,13 +266,13 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			produceOrderModule.GetProduceOrders().Returns(new ProduceOrder[] { new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, FactoryID = 1 } });
 
 			module = new OrderManagerModule(NullLogger.Instance, client, orderModule, produceOrderModule, 10);
-			result = module.CreateTask(1);
+			result = module.CreateTaskFromProduceOrder(new Worker() { PlanetID = 1 }, new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, FactoryID = 1 });
 			Assert.IsNotNull(result);
 			Assert.AreEqual(1, result.WorkerID);
 			Assert.AreEqual(TaskTypeIDs.CarryTo, result.TaskTypeID);
 		}
 		[TestMethod]
-		public void ShouldReturnMoveToTaskIfDontHaveEnoughResourcesToProduceAndMissingResourceFoundInRemoteLocation()
+		public void CreateTaskFromProduceOrderShouldReturnMoveToTaskIfDontHaveEnoughResourcesToProduceAndMissingResourceFoundInRemoteLocation()
 		{
 			IOrderModule orderModule;
 			IProduceOrderModule produceOrderModule;
@@ -256,7 +283,6 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			client = Substitute.For<PIO.ClientLib.PIOServiceReference.IPIOService>();
 			client.MoveToBuilding(Arg.Any<int>(), Arg.Any<int>()).Returns(new Task() { TaskTypeID = TaskTypeIDs.MoveTo, WorkerID = 1 });
 			client.GetFactory(Arg.Any<int>()).Returns(new Factory() { FactoryID = 1 });
-			client.GetWorker(Arg.Any<int>()).Returns(new Worker() { PlanetID = 1 });
 			client.GetMissingResourcesToProduce(Arg.Any<int>()).Returns(new ResourceTypeIDs[] {ResourceTypeIDs.Wood });
 			client.FindStack(Arg.Any<int>(), Arg.Any<ResourceTypeIDs>()).Returns(new Stack() { BuildingID = 10, ResourceTypeID = ResourceTypeIDs.Wood, Quantity = 10 });
 			client.WorkerIsInBuilding(Arg.Any<int>(), Arg.Any<int>()).Returns(false);
@@ -267,7 +293,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			produceOrderModule.GetProduceOrders().Returns(new ProduceOrder[] { new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, FactoryID = 1 } });
 
 			module = new OrderManagerModule(NullLogger.Instance, client, orderModule, produceOrderModule, 10);
-			result = module.CreateTask(1);
+			result = module.CreateTaskFromProduceOrder(new Worker() { PlanetID = 1 }, new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, FactoryID = 1 });
 			Assert.IsNotNull(result);
 			Assert.AreEqual(1, result.WorkerID);
 			Assert.AreEqual(TaskTypeIDs.MoveTo, result.TaskTypeID);
