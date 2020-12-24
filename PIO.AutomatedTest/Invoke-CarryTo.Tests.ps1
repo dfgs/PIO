@@ -13,7 +13,7 @@ Describe 'Test CarryTo module'{
         }
 
         It 'Given invalid worker position, it returns not task' {
-            $task=(Invoke-MoveTo 1 -1 -1) | Wait-Task
+            $task=(Invoke-MoveTo -WorkerID 1 -X -1 -Y -1) | Wait-Task
             
             {Invoke-CarryTo 1 999 Tree}  | Should -Throw -ExceptionType ([System.ServiceModel.FaultException])
         }
@@ -26,7 +26,7 @@ Describe 'Test CarryTo module'{
             $target = ((Get-Factories 1) | Where-Object FactoryTypeID -eq StockPile)[0]
             $targetBuilding = Get-Building $target.BuildingID
 
-            $task=(Invoke-MoveTo $worker.WorkerID $sourceBuilding.X $sourceBuilding.Y) | Wait-Task
+            $task=(Invoke-MoveTo -WorkerID $worker.WorkerID -X $sourceBuilding.X -Y $sourceBuilding.Y) | Wait-Task
             
             $sourceQuantity=Get-StackQuantity $source.FactoryID Tree
             $targetQuantity=Get-StackQuantity $target.FactoryID Tree

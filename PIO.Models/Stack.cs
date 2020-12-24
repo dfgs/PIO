@@ -14,7 +14,7 @@ namespace PIO.Models
 		[DataMember]
 		public int StackID { get; set; }
 		[DataMember]
-		public int FactoryID { get; set; }
+		public int BuildingID { get; set; }
 		[DataMember]
 		public ResourceTypeIDs ResourceTypeID { get; set; }
 		[DataMember]

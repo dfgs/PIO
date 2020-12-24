@@ -33,28 +33,28 @@ namespace PIO.UnitTest.ServerLib.Mocks
 			return items.FirstOrDefault(item => item.ResourceTypeID == ResourceTypeID);
 		}
 
-		public int GetStackQuantity(int FactoryID, ResourceTypeIDs ResourceTypeID)
+		public int GetStackQuantity(int BuildingID, ResourceTypeIDs ResourceTypeID)
 		{
 			if (throwException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
-			return items.FirstOrDefault(item => (item.FactoryID == FactoryID) && (item.ResourceTypeID==ResourceTypeID))?.Quantity??0;
+			return items.FirstOrDefault(item => (item.BuildingID == BuildingID) && (item.ResourceTypeID==ResourceTypeID))?.Quantity??0;
 		}
 
-		public Stack[] GetStacks(int FactoryID)
+		public Stack[] GetStacks(int BuildingID)
 		{
 			if (throwException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
-			return items.Where(item => item.FactoryID == FactoryID).ToArray();
+			return items.Where(item => item.BuildingID == BuildingID).ToArray();
 		}
 
-		public Stack GetStack(int FactoryID,ResourceTypeIDs ResourceTypeID)
+		public Stack GetStack(int BuildingID, ResourceTypeIDs ResourceTypeID)
 		{
 			if (throwException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
-			return items.FirstOrDefault(item => (item.FactoryID == FactoryID) && (item.ResourceTypeID==ResourceTypeID));
+			return items.FirstOrDefault(item => (item.BuildingID == BuildingID) && (item.ResourceTypeID==ResourceTypeID));
 		}
 
-		public Stack InsertStack(int FactoryID, ResourceTypeIDs ResourceTypeID, int Quantity)
+		public Stack InsertStack(int BuildingID, ResourceTypeIDs ResourceTypeID, int Quantity)
 		{
 			Stack item;
-			item = new Stack() {StackID=items.Count, FactoryID = FactoryID, ResourceTypeID = ResourceTypeID, Quantity = Quantity };
+			item = new Stack() {StackID=items.Count, BuildingID = BuildingID, ResourceTypeID = ResourceTypeID, Quantity = Quantity };
 			items.Add(item);
 			return item;
 		}

@@ -28,23 +28,23 @@ namespace PIO.UnitTest.WebServiceLib.Mocks
 			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
 			return new Stack() { StackID = 1,ResourceTypeID=ResourceTypeID};
 		}
-		public int GetStackQuantity(int FactoryID, ResourceTypeIDs ResourceTypeID)
+		public int GetStackQuantity(int BuildingID, ResourceTypeIDs ResourceTypeID)
 		{
 			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
 			return 3;
 		}
-		public Stack GetStack(int FactoryID, ResourceTypeIDs ResourceTypeID)
+		public Stack GetStack(int BuildingID, ResourceTypeIDs ResourceTypeID)
 		{
 			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
 			return new Stack() { StackID = 1,ResourceTypeID=ResourceTypeID };
 		}
-		public Stack[] GetStacks(int FactoryID)
+		public Stack[] GetStacks(int BuildingID)
 		{
 			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
-			return Generate((t) => new Stack() { StackID = t,FactoryID=FactoryID });
+			return Generate((t) => new Stack() { StackID = t, BuildingID = BuildingID });
 		}
 
-		public Stack InsertStack(int FactoryID, ResourceTypeIDs ResourceTypeID, int Quantity)
+		public Stack InsertStack(int BuildingID, ResourceTypeIDs ResourceTypeID, int Quantity)
 		{
 			throw new NotImplementedException();
 		}

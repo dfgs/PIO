@@ -126,7 +126,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			MockedDatabase<Stack> database;
 			StackModule module;
 
-			database = new MockedDatabase<Stack>(false, 1, (t) => new Stack() { StackID = t,FactoryID=0,ResourceTypeID=0, Quantity=5 });
+			database = new MockedDatabase<Stack>(false, 1, (t) => new Stack() { StackID = t, BuildingID = 0,ResourceTypeID=0, Quantity=5 });
 			module = new StackModule(NullLogger.Instance, database);
 			module.UpdateStack(1,2);
 			Assert.AreEqual(1, database.UpdatedCount);
@@ -141,7 +141,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 
 
 			logger = new MemoryLogger();
-			database = new MockedDatabase<Stack>(true, 1, (t) => new Stack() { StackID = t, FactoryID = 0, ResourceTypeID = 0, Quantity = 5 });
+			database = new MockedDatabase<Stack>(true, 1, (t) => new Stack() { StackID = t, BuildingID = 0, ResourceTypeID = 0, Quantity = 5 });
 			module = new StackModule(logger, database);
 			Assert.ThrowsException<PIODataException>(() => module.UpdateStack(0,10));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
@@ -161,7 +161,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			eta = DateTime.Now;
 			result = module.InsertStack(0, ResourceTypeIDs.Wood, 2);
 			Assert.IsNotNull(result);
-			Assert.AreEqual(0, result.FactoryID);
+			Assert.AreEqual(0, result.BuildingID);
 			Assert.AreEqual(ResourceTypeIDs.Wood, result.ResourceTypeID);
 			Assert.AreEqual(2, result.Quantity);
 			Assert.AreEqual(1, database.InsertedCount);
@@ -189,12 +189,12 @@ namespace PIO.UnitTest.ServerLib.Modules
 			StackModule module;
 			int result;
 
-			database = new MockedDatabase<Stack>(false, 1, (t) => new Stack() { StackID = t, FactoryID=1, ResourceTypeID=ResourceTypeIDs.Coal,Quantity=10 });
+			database = new MockedDatabase<Stack>(false, 1, (t) => new Stack() { StackID = t, BuildingID = 1, ResourceTypeID=ResourceTypeIDs.Coal,Quantity=10 });
 			module = new StackModule(NullLogger.Instance, database);
 			result = module.GetStackQuantity(1, ResourceTypeIDs.Coal);
 			Assert.AreEqual(10, result);
 
-			database = new MockedDatabase<Stack>(false, 0, (t) => new Stack() { StackID = t, FactoryID = 1, ResourceTypeID = ResourceTypeIDs.Coal, Quantity = 10 });
+			database = new MockedDatabase<Stack>(false, 0, (t) => new Stack() { StackID = t, BuildingID = 1, ResourceTypeID = ResourceTypeIDs.Coal, Quantity = 10 });
 			module = new StackModule(NullLogger.Instance, database);
 			result = module.GetStackQuantity(1, ResourceTypeIDs.Coal);
 			Assert.AreEqual(0, result);

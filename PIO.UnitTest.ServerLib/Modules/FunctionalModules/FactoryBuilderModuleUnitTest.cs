@@ -342,7 +342,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			buildingModule = new MockedBuildingModule(false,new Building() { BuildingID=2, RemainingBuildSteps=5});
 			factoryModule = new MockedFactoryModule(false,new Factory() {FactoryID=2,BuildingID=2, FactoryTypeID=FactoryTypeIDs.Sawmill }) ;
 			factoryTypeModule = new MockedFactoryTypeModule(false, new FactoryType() { FactoryTypeID = FactoryTypeIDs.Sawmill });
-			stackModule = new MockedStackModule(false, new Stack() { FactoryID=2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Wood, StackID = 1 }, new Stack() { FactoryID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Stone, StackID = 1 });
+			stackModule = new MockedStackModule(false, new Stack() { BuildingID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Wood, StackID = 1 }, new Stack() { BuildingID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Stone, StackID = 1 });
 			materialModule = new MockedMaterialModule(false, new Material() { Quantity = 1, ResourceTypeID = ResourceTypeIDs.Wood, FactoryTypeID = FactoryTypeIDs.Sawmill }, new Material() { Quantity = 2, ResourceTypeID = ResourceTypeIDs.Stone, FactoryTypeID = FactoryTypeIDs.Sawmill });
 			module = new FactoryBuilderModule(NullLogger.Instance, taskModule, workerModule, buildingModule, factoryModule, factoryTypeModule, stackModule, materialModule);
 			schedulerModule = new MockedSchedulerModule(false, module);
@@ -392,7 +392,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			buildingModule = new MockedBuildingModule(false, new Building() { BuildingID = 2, RemainingBuildSteps = 5 });
 			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 2, BuildingID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill });
 			factoryTypeModule = new MockedFactoryTypeModule(false, new FactoryType() { FactoryTypeID = FactoryTypeIDs.Sawmill });
-			stackModule = new MockedStackModule(false, new Stack() { FactoryID = 2, Quantity = 0, ResourceTypeID = ResourceTypeIDs.Wood, StackID = 1 }, new Stack() { FactoryID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Stone, StackID = 1 });
+			stackModule = new MockedStackModule(false, new Stack() { BuildingID = 2, Quantity = 0, ResourceTypeID = ResourceTypeIDs.Wood, StackID = 1 }, new Stack() { BuildingID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Stone, StackID = 1 });
 			materialModule = new MockedMaterialModule(false, new Material() { Quantity = 1, ResourceTypeID = ResourceTypeIDs.Wood, FactoryTypeID = FactoryTypeIDs.Sawmill }, new Material() { Quantity = 2, ResourceTypeID = ResourceTypeIDs.Stone, FactoryTypeID = FactoryTypeIDs.Sawmill });
 
 			logger = new MemoryLogger();
@@ -422,7 +422,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			buildingModule = new MockedBuildingModule(false, new Building() { BuildingID = 2, RemainingBuildSteps = 0 });
 			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 2, BuildingID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill });
 			factoryTypeModule = new MockedFactoryTypeModule(false, new FactoryType() { FactoryTypeID = FactoryTypeIDs.Sawmill });
-			stackModule = new MockedStackModule(false, new Stack() { FactoryID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Wood, StackID = 1 }, new Stack() { FactoryID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Stone, StackID = 1 });
+			stackModule = new MockedStackModule(false, new Stack() { BuildingID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Wood, StackID = 1 }, new Stack() { BuildingID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Stone, StackID = 1 });
 			materialModule = new MockedMaterialModule(false, new Material() { Quantity = 1, ResourceTypeID = ResourceTypeIDs.Wood, FactoryTypeID = FactoryTypeIDs.Sawmill }, new Material() { Quantity = 2, ResourceTypeID = ResourceTypeIDs.Stone, FactoryTypeID = FactoryTypeIDs.Sawmill });
 
 			logger = new MemoryLogger();
@@ -450,7 +450,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			buildingModule = new MockedBuildingModule(false, new Building() { BuildingID = 2, RemainingBuildSteps = 5 });
 			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 2, BuildingID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill });
 			factoryTypeModule = new MockedFactoryTypeModule(false, new FactoryType() { FactoryTypeID = FactoryTypeIDs.Sawmill });
-			stackModule = new MockedStackModule(false, new Stack() { FactoryID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Wood, StackID = 1 }, new Stack() { FactoryID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Stone, StackID = 1 });
+			stackModule = new MockedStackModule(false, new Stack() { BuildingID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Wood, StackID = 1 }, new Stack() { BuildingID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Stone, StackID = 1 });
 			materialModule = new MockedMaterialModule(false, new Material() { Quantity = 1, ResourceTypeID = ResourceTypeIDs.Wood, FactoryTypeID = FactoryTypeIDs.Sawmill }, new Material() { Quantity = 2, ResourceTypeID = ResourceTypeIDs.Stone, FactoryTypeID = FactoryTypeIDs.Sawmill });
 
 			logger = new MemoryLogger();
@@ -478,7 +478,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			buildingModule = new MockedBuildingModule(false, new Building() { BuildingID = 2, RemainingBuildSteps = 5 });
 			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 2, BuildingID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill });
 			factoryTypeModule = new MockedFactoryTypeModule(false, new FactoryType() { FactoryTypeID = FactoryTypeIDs.Sawmill });
-			stackModule = new MockedStackModule(false, new Stack() { FactoryID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Wood, StackID = 1 }, new Stack() { FactoryID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Stone, StackID = 1 });
+			stackModule = new MockedStackModule(false, new Stack() { BuildingID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Wood, StackID = 1 }, new Stack() { BuildingID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Stone, StackID = 1 });
 			materialModule = new MockedMaterialModule(false, new Material() { Quantity = 1, ResourceTypeID = ResourceTypeIDs.Wood, FactoryTypeID = FactoryTypeIDs.Sawmill }, new Material() { Quantity = 2, ResourceTypeID = ResourceTypeIDs.Stone, FactoryTypeID = FactoryTypeIDs.Sawmill });
 
 			logger = new MemoryLogger();
@@ -507,7 +507,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			buildingModule = new MockedBuildingModule(false, new Building() { BuildingID = 2, RemainingBuildSteps = 5 });
 			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 2, BuildingID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill });
 			factoryTypeModule = new MockedFactoryTypeModule(false, new FactoryType() { FactoryTypeID = FactoryTypeIDs.Sawmill });
-			stackModule = new MockedStackModule(false, new Stack() { FactoryID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Wood, StackID = 1 }, new Stack() { FactoryID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Stone, StackID = 1 });
+			stackModule = new MockedStackModule(false, new Stack() { BuildingID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Wood, StackID = 1 }, new Stack() { BuildingID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Stone, StackID = 1 });
 			materialModule = new MockedMaterialModule(false, new Material() { Quantity = 1, ResourceTypeID = ResourceTypeIDs.Wood, FactoryTypeID = FactoryTypeIDs.Sawmill }, new Material() { Quantity = 2, ResourceTypeID = ResourceTypeIDs.Stone, FactoryTypeID = FactoryTypeIDs.Sawmill });
 
 			logger = new MemoryLogger();
@@ -521,7 +521,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			buildingModule = new MockedBuildingModule(false, new Building() { BuildingID = 2, RemainingBuildSteps = 5 });
 			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 2, BuildingID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill });
 			factoryTypeModule = new MockedFactoryTypeModule(false, new FactoryType() { FactoryTypeID = FactoryTypeIDs.Sawmill });
-			stackModule = new MockedStackModule(false, new Stack() { FactoryID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Wood, StackID = 1 }, new Stack() { FactoryID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Stone, StackID = 1 });
+			stackModule = new MockedStackModule(false, new Stack() { BuildingID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Wood, StackID = 1 }, new Stack() { BuildingID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Stone, StackID = 1 });
 			materialModule = new MockedMaterialModule(false, new Material() { Quantity = 1, ResourceTypeID = ResourceTypeIDs.Wood, FactoryTypeID = FactoryTypeIDs.Sawmill }, new Material() { Quantity = 2, ResourceTypeID = ResourceTypeIDs.Stone, FactoryTypeID = FactoryTypeIDs.Sawmill });
 
 			logger = new MemoryLogger();
@@ -534,7 +534,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			buildingModule = new MockedBuildingModule(false, new Building() { BuildingID = 2, RemainingBuildSteps = 5 });
 			factoryModule = new MockedFactoryModule(true, new Factory() { FactoryID = 2, BuildingID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill });
 			factoryTypeModule = new MockedFactoryTypeModule(true, new FactoryType() { FactoryTypeID = FactoryTypeIDs.Sawmill });
-			stackModule = new MockedStackModule(false, new Stack() { FactoryID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Wood, StackID = 1 }, new Stack() { FactoryID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Stone, StackID = 1 });
+			stackModule = new MockedStackModule(false, new Stack() { BuildingID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Wood, StackID = 1 }, new Stack() { BuildingID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Stone, StackID = 1 });
 			materialModule = new MockedMaterialModule(false, new Material() { Quantity = 1, ResourceTypeID = ResourceTypeIDs.Wood, FactoryTypeID = FactoryTypeIDs.Sawmill }, new Material() { Quantity = 2, ResourceTypeID = ResourceTypeIDs.Stone, FactoryTypeID = FactoryTypeIDs.Sawmill });
 
 			logger = new MemoryLogger();
@@ -547,7 +547,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			buildingModule = new MockedBuildingModule(false, new Building() { BuildingID = 2, RemainingBuildSteps = 5 });
 			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 2, BuildingID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill });
 			factoryTypeModule = new MockedFactoryTypeModule(false, new FactoryType() { FactoryTypeID = FactoryTypeIDs.Sawmill });
-			stackModule = new MockedStackModule(true, new Stack() { FactoryID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Wood, StackID = 1 }, new Stack() { FactoryID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Stone, StackID = 1 });
+			stackModule = new MockedStackModule(true, new Stack() { BuildingID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Wood, StackID = 1 }, new Stack() { BuildingID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Stone, StackID = 1 });
 			materialModule = new MockedMaterialModule(false, new Material() { Quantity = 1, ResourceTypeID = ResourceTypeIDs.Wood, FactoryTypeID = FactoryTypeIDs.Sawmill }, new Material() { Quantity = 2, ResourceTypeID = ResourceTypeIDs.Stone, FactoryTypeID = FactoryTypeIDs.Sawmill });
 
 			logger = new MemoryLogger();
@@ -560,7 +560,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			buildingModule = new MockedBuildingModule(false, new Building() { BuildingID = 2, RemainingBuildSteps = 5 });
 			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 2, BuildingID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill });
 			factoryTypeModule = new MockedFactoryTypeModule(false, new FactoryType() { FactoryTypeID = FactoryTypeIDs.Sawmill });
-			stackModule = new MockedStackModule(false, new Stack() { FactoryID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Wood, StackID = 1 }, new Stack() { FactoryID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Stone, StackID = 1 });
+			stackModule = new MockedStackModule(false, new Stack() { BuildingID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Wood, StackID = 1 }, new Stack() { BuildingID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Stone, StackID = 1 });
 			materialModule = new MockedMaterialModule(true, new Material() { Quantity = 1, ResourceTypeID = ResourceTypeIDs.Wood, FactoryTypeID = FactoryTypeIDs.Sawmill }, new Material() { Quantity = 2, ResourceTypeID = ResourceTypeIDs.Stone, FactoryTypeID = FactoryTypeIDs.Sawmill });
 
 			logger = new MemoryLogger();
@@ -592,7 +592,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			buildingModule = new MockedBuildingModule(false, new Building() { BuildingID = 2, RemainingBuildSteps = 5 });
 			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 2, BuildingID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill });
 			factoryTypeModule = new MockedFactoryTypeModule(false, new FactoryType() { FactoryTypeID = FactoryTypeIDs.Sawmill });
-			stackModule = new MockedStackModule(false, new Stack() { FactoryID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Wood, StackID = 1 }, new Stack() { FactoryID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Stone, StackID = 1 });
+			stackModule = new MockedStackModule(false, new Stack() { BuildingID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Wood, StackID = 1 }, new Stack() { BuildingID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Stone, StackID = 1 });
 			materialModule = new MockedMaterialModule(false, new Material() { Quantity = 1, ResourceTypeID = ResourceTypeIDs.Wood, FactoryTypeID = FactoryTypeIDs.Sawmill }, new Material() { Quantity = 2, ResourceTypeID = ResourceTypeIDs.Stone, FactoryTypeID = FactoryTypeIDs.Sawmill });
 			module = new FactoryBuilderModule(NullLogger.Instance, taskModule, workerModule, buildingModule, factoryModule, factoryTypeModule, stackModule, materialModule);
 	
@@ -620,7 +620,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			buildingModule = new MockedBuildingModule(false, new Building() { BuildingID = 2, RemainingBuildSteps = 5 });
 			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 2, BuildingID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill });
 			factoryTypeModule = new MockedFactoryTypeModule(false, new FactoryType() { FactoryTypeID = FactoryTypeIDs.Sawmill });
-			stackModule = new MockedStackModule(false, new Stack() { FactoryID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Wood, StackID = 1 }, new Stack() { FactoryID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Stone, StackID = 1 });
+			stackModule = new MockedStackModule(false, new Stack() { BuildingID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Wood, StackID = 1 }, new Stack() { BuildingID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Stone, StackID = 1 });
 			materialModule = new MockedMaterialModule(false, new Material() { Quantity = 1, ResourceTypeID = ResourceTypeIDs.Wood, FactoryTypeID = FactoryTypeIDs.Sawmill }, new Material() { Quantity = 2, ResourceTypeID = ResourceTypeIDs.Stone, FactoryTypeID = FactoryTypeIDs.Sawmill });
 			module = new FactoryBuilderModule(logger, taskModule, workerModule, buildingModule, factoryModule, factoryTypeModule, stackModule, materialModule);
 
@@ -648,7 +648,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			buildingModule = new MockedBuildingModule(false, new Building() { BuildingID = 2, RemainingBuildSteps = 5 });
 			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 2, BuildingID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill });
 			factoryTypeModule = new MockedFactoryTypeModule(false, new FactoryType() { FactoryTypeID = FactoryTypeIDs.Sawmill });
-			stackModule = new MockedStackModule(false, new Stack() { FactoryID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Wood, StackID = 1 }, new Stack() { FactoryID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Stone, StackID = 1 });
+			stackModule = new MockedStackModule(false, new Stack() { BuildingID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Wood, StackID = 1 }, new Stack() { BuildingID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Stone, StackID = 1 });
 			materialModule = new MockedMaterialModule(false, new Material() { Quantity = 1, ResourceTypeID = ResourceTypeIDs.Wood, FactoryTypeID = FactoryTypeIDs.Sawmill }, new Material() { Quantity = 2, ResourceTypeID = ResourceTypeIDs.Stone, FactoryTypeID = FactoryTypeIDs.Sawmill });
 			module = new FactoryBuilderModule(logger, taskModule, workerModule, buildingModule, factoryModule, factoryTypeModule, stackModule, materialModule);
 
@@ -678,7 +678,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			buildingModule = new MockedBuildingModule(false, new Building() { BuildingID = 2, RemainingBuildSteps = 5 });
 			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 2, BuildingID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill });
 			factoryTypeModule = new MockedFactoryTypeModule(false, new FactoryType() { FactoryTypeID = FactoryTypeIDs.Sawmill });
-			stackModule = new MockedStackModule(false, new Stack() { FactoryID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Wood, StackID = 1 }, new Stack() { FactoryID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Stone, StackID = 1 });
+			stackModule = new MockedStackModule(false, new Stack() { BuildingID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Wood, StackID = 1 }, new Stack() { BuildingID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Stone, StackID = 1 });
 			materialModule = new MockedMaterialModule(false, new Material() { Quantity = 1, ResourceTypeID = ResourceTypeIDs.Wood, FactoryTypeID = FactoryTypeIDs.Sawmill }, new Material() { Quantity = 2, ResourceTypeID = ResourceTypeIDs.Stone, FactoryTypeID = FactoryTypeIDs.Sawmill });
 			module = new FactoryBuilderModule(logger, taskModule, workerModule, buildingModule, factoryModule, factoryTypeModule, stackModule, materialModule);
 
@@ -694,7 +694,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			buildingModule = new MockedBuildingModule(true, new Building() { BuildingID = 2, RemainingBuildSteps = 5 });
 			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 2, BuildingID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill });
 			factoryTypeModule = new MockedFactoryTypeModule(false, new FactoryType() { FactoryTypeID = FactoryTypeIDs.Sawmill });
-			stackModule = new MockedStackModule(false, new Stack() { FactoryID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Wood, StackID = 1 }, new Stack() { FactoryID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Stone, StackID = 1 });
+			stackModule = new MockedStackModule(false, new Stack() { BuildingID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Wood, StackID = 1 }, new Stack() { BuildingID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Stone, StackID = 1 });
 			materialModule = new MockedMaterialModule(false, new Material() { Quantity = 1, ResourceTypeID = ResourceTypeIDs.Wood, FactoryTypeID = FactoryTypeIDs.Sawmill }, new Material() { Quantity = 2, ResourceTypeID = ResourceTypeIDs.Stone, FactoryTypeID = FactoryTypeIDs.Sawmill });
 			module = new FactoryBuilderModule(logger, taskModule, workerModule, buildingModule, factoryModule, factoryTypeModule, stackModule, materialModule);
 
@@ -710,7 +710,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			buildingModule = new MockedBuildingModule(false, new Building() { BuildingID = 2, RemainingBuildSteps = 5 });
 			factoryModule = new MockedFactoryModule(true, new Factory() { FactoryID = 2, BuildingID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill });
 			factoryTypeModule = new MockedFactoryTypeModule(false, new FactoryType() { FactoryTypeID = FactoryTypeIDs.Sawmill });
-			stackModule = new MockedStackModule(false, new Stack() { FactoryID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Wood, StackID = 1 }, new Stack() { FactoryID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Stone, StackID = 1 });
+			stackModule = new MockedStackModule(false, new Stack() { BuildingID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Wood, StackID = 1 }, new Stack() { BuildingID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Stone, StackID = 1 });
 			materialModule = new MockedMaterialModule(false, new Material() { Quantity = 1, ResourceTypeID = ResourceTypeIDs.Wood, FactoryTypeID = FactoryTypeIDs.Sawmill }, new Material() { Quantity = 2, ResourceTypeID = ResourceTypeIDs.Stone, FactoryTypeID = FactoryTypeIDs.Sawmill });
 			module = new FactoryBuilderModule(logger, taskModule, workerModule, buildingModule, factoryModule, factoryTypeModule, stackModule, materialModule);
 

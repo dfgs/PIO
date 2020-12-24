@@ -148,15 +148,15 @@ namespace PIO.WebServiceLib
 			return Try(() => stackModule.FindStack(PlanetID,ResourceTypeID)).OrThrow(GenerateFaultException);
 		}
 
-		public Stack[] GetStacks(int FactoryID)
+		public Stack[] GetStacks(int BuildingID)
 		{
 			LogEnter();
-			return Try(() => stackModule.GetStacks(FactoryID)).OrThrow(GenerateFaultException);
+			return Try(() => stackModule.GetStacks(BuildingID)).OrThrow(GenerateFaultException);
 		}
-		public int GetStackQuantity(int FactoryID, ResourceTypeIDs ResourceTypeID)
+		public int GetStackQuantity(int BuildingID, ResourceTypeIDs ResourceTypeID)
 		{
 			LogEnter();
-			return Try(() => stackModule.GetStackQuantity(FactoryID,ResourceTypeID)).OrThrow(GenerateFaultException);
+			return Try(() => stackModule.GetStackQuantity(BuildingID, ResourceTypeID)).OrThrow(GenerateFaultException);
 		}
 
 		public ResourceType GetResourceType(ResourceTypeIDs ResourceTypeID)

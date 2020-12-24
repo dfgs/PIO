@@ -52,10 +52,10 @@ namespace PIO.ClientLib.PIOServiceReference {
         PIO.Models.Stack FindStack(int PlanetID, PIO.Models.ResourceTypeIDs ResourceTypeID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetStacks", ReplyAction="http://tempuri.org/IPIOService/GetStacksResponse")]
-        PIO.Models.Stack[] GetStacks(int FactoryID);
+        PIO.Models.Stack[] GetStacks(int BuildingID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetStackQuantity", ReplyAction="http://tempuri.org/IPIOService/GetStackQuantityResponse")]
-        int GetStackQuantity(int FactoryID, PIO.Models.ResourceTypeIDs ResourceTypeID);
+        int GetStackQuantity(int BuildingID, PIO.Models.ResourceTypeIDs ResourceTypeID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetResourceType", ReplyAction="http://tempuri.org/IPIOService/GetResourceTypeResponse")]
         PIO.Models.ResourceType GetResourceType(PIO.Models.ResourceTypeIDs ResourceTypeID);
@@ -217,12 +217,12 @@ namespace PIO.ClientLib.PIOServiceReference {
             return base.Channel.FindStack(PlanetID, ResourceTypeID);
         }
         
-        public PIO.Models.Stack[] GetStacks(int FactoryID) {
-            return base.Channel.GetStacks(FactoryID);
+        public PIO.Models.Stack[] GetStacks(int BuildingID) {
+            return base.Channel.GetStacks(BuildingID);
         }
         
-        public int GetStackQuantity(int FactoryID, PIO.Models.ResourceTypeIDs ResourceTypeID) {
-            return base.Channel.GetStackQuantity(FactoryID, ResourceTypeID);
+        public int GetStackQuantity(int BuildingID, PIO.Models.ResourceTypeIDs ResourceTypeID) {
+            return base.Channel.GetStackQuantity(BuildingID, ResourceTypeID);
         }
         
         public PIO.Models.ResourceType GetResourceType(PIO.Models.ResourceTypeIDs ResourceTypeID) {

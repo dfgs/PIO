@@ -8,13 +8,13 @@ Describe 'Test CreateBuilding module'{
             {Invoke-CreateBuilding 999 Sawmill}  | Should -Throw -ExceptionType ([System.ServiceModel.FaultException])
         }
         It 'Given occupied pôsition, it returns not task' {
-            (Invoke-MoveTo 1 0 0) | Wait-Task
+            (Invoke-MoveTo -WorkerID 1 -X 0 -Y 0) | Wait-Task
             {Invoke-CreateBuilding 1 Sawmill}  | Should -Throw -ExceptionType ([System.ServiceModel.FaultException])
         }
 
         
         It 'Given WorkerID and FactoryTypeID it creates building' {
-            (Invoke-MoveTo 1 5 5) | Wait-Task
+            (Invoke-MoveTo -WorkerID 1 -X 5 -Y 5) | Wait-Task
            
             $buildingCount= (Get-Buildings 1).Count
 

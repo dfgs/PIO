@@ -17,7 +17,7 @@ namespace PIO.PowerShell
 	{
 
 		[Parameter(Position = 0, ValueFromPipeline = true, Mandatory = true)]
-		public int FactoryID { get; set; }
+		public int BuildingID { get; set; }
 		[Parameter(Position = 1, ValueFromPipeline = true, Mandatory = true)]
 		public ResourceTypeIDs ResourceTypeID { get; set; }
 
@@ -25,7 +25,7 @@ namespace PIO.PowerShell
 		{
 			int result;
 
-			result = Try(() => client.GetStackQuantity(FactoryID,ResourceTypeID));
+			result = Try(() => client.GetStackQuantity(BuildingID, ResourceTypeID));
 
 			WriteObject(result);
 		}

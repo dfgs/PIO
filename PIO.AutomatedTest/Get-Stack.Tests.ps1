@@ -5,12 +5,12 @@ Describe 'Test Stack module'{
     Context 'Get-Stacks' {
         $script:factory = ((Get-Factories 1) | Where-Object FactoryTypeID -eq Forest)[0]
         
-        It 'Given FactoryID, it lists all Stack' {
-            $result = Get-Stacks $script:factory.FactoryID
+        It 'Given BuildingID, it lists all Stack' {
+            $result = Get-Stacks $script:factory.BuildingID
             $result.Count | Should -Not -Be 0
             Foreach($element in $collection) 
             { 
-                $element.FactoryID | Should -Be $script:factory.FactoryID
+                $element.BuildingID | Should -Be $script:factory.BuildingID
                 $element.Quantity | Should -Not -Be 0
             }
         }
@@ -19,7 +19,7 @@ Describe 'Test Stack module'{
         It 'Given StackID, it returns 1 Stack' {
             $result = Get-Stack 1
             $result | Should -Not -BeNullOrEmpty
-            $result.FactoryID | Should -Not -Be 0
+            $result.BuildingID | Should -Not -Be 0
             $result.Quantity | Should -Not -Be 0
         }
         It 'Given incorrect StackID, it returns 0 Stack' {

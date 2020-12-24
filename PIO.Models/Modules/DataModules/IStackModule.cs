@@ -12,13 +12,13 @@ namespace PIO.Models.Modules
 	public interface IStackModule:IDatabaseModule
 	{
 		Stack GetStack(int StackID);
-		Stack GetStack(int FactoryID, ResourceTypeIDs ResourceTypeID);
-		Stack[] GetStacks(int FactoryID);
+		Stack GetStack(int BuildingID, ResourceTypeIDs ResourceTypeID);
+		Stack[] GetStacks(int BuildingID);
 		Stack FindStack(int PlanetID, ResourceTypeIDs ResourceTypeID);
 
-		Stack InsertStack(int FactoryID, ResourceTypeIDs ResourceTypeID, int Quantity);
+		Stack InsertStack(int BuildingID, ResourceTypeIDs ResourceTypeID, int Quantity);
 		void UpdateStack(int StackID, int Quantity);
 
-		int GetStackQuantity(int FactoryID, ResourceTypeIDs ResourceTypeID);
+		int GetStackQuantity(int BuildingID, ResourceTypeIDs ResourceTypeID);
 	}
 }

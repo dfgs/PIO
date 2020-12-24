@@ -85,7 +85,7 @@
   <xs:element name="ArrayOfWorker" nillable="true" type="tns:ArrayOfWorker" />
   <xs:complexType name="Stack">
     <xs:sequence>
-      <xs:element minOccurs="0" name="FactoryID" type="xs:int" />
+      <xs:element minOccurs="0" name="BuildingID" type="xs:int" />
       <xs:element minOccurs="0" name="Quantity" type="xs:int" />
       <xs:element minOccurs="0" name="ResourceTypeID" type="tns:ResourceTypeIDs" />
       <xs:element minOccurs="0" name="StackID" type="xs:int" />

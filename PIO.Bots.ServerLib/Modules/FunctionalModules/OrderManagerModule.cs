@@ -119,7 +119,7 @@ namespace PIO.Bots.ServerLib.Modules
 				else
 				{
 					Log(LogLevels.Information, $"Missing resource found, checking if worker can carry to");
-					result = Try(() => client.WorkerIsInFactory(WorkerID, stack.FactoryID)).OrThrow<PIOInternalErrorException>("Failed to check worker location");
+					result = Try(() => client.WorkerIsInBuilding(WorkerID, stack.BuildingID)).OrThrow<PIOInternalErrorException>("Failed to check worker location");
 					if (result)
 					{
 						Log(LogLevels.Information, $"Worker can access resource, creating carryto task");
@@ -129,7 +129,8 @@ namespace PIO.Bots.ServerLib.Modules
 					else
 					{
 						Log(LogLevels.Information, $"Missing resource found, creating moveto task");
-						task = Try(() => client.MoveToFactory(WorkerID, stack.FactoryID)).OrThrow<PIOInternalErrorException>("Failed to create task");
+						throw new NotImplementedException();
+						//task = Try(() => client.MoveToFactory(WorkerID, stack.BuildingID)).OrThrow<PIOInternalErrorException>("Failed to create task");
 						return task;
 					}
 				}

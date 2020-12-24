@@ -226,7 +226,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			client.CarryTo(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<ResourceTypeIDs>()).Returns(new Task() { TaskTypeID = TaskTypeIDs.CarryTo, WorkerID = 1 });
 			client.GetWorker(Arg.Any<int>()).Returns(new Worker() { PlanetID = 1 });
 			client.GetMissingResourcesToProduce(Arg.Any<int>()).Returns(new ResourceTypeIDs[] { ResourceTypeIDs.Wood });
-			client.FindStack(Arg.Any<int>(), Arg.Any<ResourceTypeIDs>()).Returns(new Stack() { FactoryID=10,ResourceTypeID=ResourceTypeIDs.Wood,Quantity=10 });
+			client.FindStack(Arg.Any<int>(), Arg.Any<ResourceTypeIDs>()).Returns(new Stack() { BuildingID=10,ResourceTypeID=ResourceTypeIDs.Wood,Quantity=10 });
 			client.WorkerIsInFactory(Arg.Any<int>(), Arg.Any<int>()).Returns(true);
 
 			orderModule = Substitute.For<IOrderModule>();
@@ -253,7 +253,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			client.MoveToFactory(Arg.Any<int>(), Arg.Any<int>()).Returns(new Task() { TaskTypeID = TaskTypeIDs.MoveTo, WorkerID = 1 });
 			client.GetWorker(Arg.Any<int>()).Returns(new Worker() { PlanetID = 1 });
 			client.GetMissingResourcesToProduce(Arg.Any<int>()).Returns(new ResourceTypeIDs[] {ResourceTypeIDs.Wood });
-			client.FindStack(Arg.Any<int>(), Arg.Any<ResourceTypeIDs>()).Returns(new Stack() { FactoryID = 10, ResourceTypeID = ResourceTypeIDs.Wood, Quantity = 10 });
+			client.FindStack(Arg.Any<int>(), Arg.Any<ResourceTypeIDs>()).Returns(new Stack() { BuildingID = 10, ResourceTypeID = ResourceTypeIDs.Wood, Quantity = 10 });
 			client.WorkerIsInFactory(Arg.Any<int>(), Arg.Any<int>()).Returns(false);
 
 			orderModule = Substitute.For<IOrderModule>();

@@ -33,10 +33,10 @@ namespace PIO.UnitTest.ServerLib.Modules
 			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID=1,  FactoryTypeID = FactoryTypeIDs.Sawmill, BuildingID = 3 }, new Factory() {  FactoryID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill, BuildingID = 3 });
 			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, PlanetID = 1 });
 			stackModule = new MockedStackModule(false,
-				new Stack() { StackID = 0, FactoryID = 1, ResourceTypeID = ResourceTypeIDs.Plank, Quantity = 10 },
-				new Stack() { StackID = 1, FactoryID = 1, ResourceTypeID = ResourceTypeIDs.Wood, Quantity = 10 },
-				new Stack() { StackID = 2, FactoryID = 1, ResourceTypeID = ResourceTypeIDs.Stone, Quantity = 10 },
-				new Stack() { StackID = 3, FactoryID = 1, ResourceTypeID = ResourceTypeIDs.Coal, Quantity = 10 }
+				new Stack() { StackID = 0, BuildingID = 1, ResourceTypeID = ResourceTypeIDs.Plank, Quantity = 10 },
+				new Stack() { StackID = 1, BuildingID = 1, ResourceTypeID = ResourceTypeIDs.Wood, Quantity = 10 },
+				new Stack() { StackID = 2, BuildingID = 1, ResourceTypeID = ResourceTypeIDs.Stone, Quantity = 10 },
+				new Stack() { StackID = 3, BuildingID = 1, ResourceTypeID = ResourceTypeIDs.Coal, Quantity = 10 }
 				);
 			taskModule = new MockedTaskModule(false);
 			module = new CarrierModule(NullLogger.Instance, taskModule, workerModule, buildingModule, factoryModule,stackModule);
@@ -82,7 +82,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			buildingModule = new MockedBuildingModule(false, new Building() { X = 10, Y = 10 });
 			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID=1,  FactoryTypeID = FactoryTypeIDs.Sawmill, BuildingID = 3 });
 			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, PlanetID = 1 });
-			stackModule = new MockedStackModule(false, new Stack() { StackID = 0, FactoryID = 1, ResourceTypeID = ResourceTypeIDs.Plank, Quantity = 10 });
+			stackModule = new MockedStackModule(false, new Stack() { StackID = 0, BuildingID = 1, ResourceTypeID = ResourceTypeIDs.Plank, Quantity = 10 });
 			taskModule = new MockedTaskModule(false);
 
 			logger = new MemoryLogger();
@@ -112,10 +112,10 @@ namespace PIO.UnitTest.ServerLib.Modules
 			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, PlanetID = 1 });
 			#region when all stacks exist
 			stackModule = new MockedStackModule(false,
-				new Stack() { StackID = 0, FactoryID = 1, ResourceTypeID = ResourceTypeIDs.Plank, Quantity = 10 },
-				new Stack() { StackID = 1, FactoryID = 1, ResourceTypeID = ResourceTypeIDs.Wood, Quantity = 10 },
-				new Stack() { StackID = 2, FactoryID = 1, ResourceTypeID = ResourceTypeIDs.Stone, Quantity = 0 },
-				new Stack() { StackID = 3, FactoryID = 1, ResourceTypeID = ResourceTypeIDs.Coal, Quantity = 10 }
+				new Stack() { StackID = 0, BuildingID = 1, ResourceTypeID = ResourceTypeIDs.Plank, Quantity = 10 },
+				new Stack() { StackID = 1, BuildingID = 1, ResourceTypeID = ResourceTypeIDs.Wood, Quantity = 10 },
+				new Stack() { StackID = 2, BuildingID = 1, ResourceTypeID = ResourceTypeIDs.Stone, Quantity = 0 },
+				new Stack() { StackID = 3, BuildingID = 1, ResourceTypeID = ResourceTypeIDs.Coal, Quantity = 10 }
 				);
 			taskModule = new MockedTaskModule(false);
 			logger = new MemoryLogger();
@@ -129,9 +129,9 @@ namespace PIO.UnitTest.ServerLib.Modules
 
 			#region when a stack is missing
 			stackModule = new MockedStackModule(false,
-				new Stack() { StackID = 0, FactoryID = 1, ResourceTypeID = ResourceTypeIDs.Plank, Quantity = 10 },
-				new Stack() { StackID = 1, FactoryID = 1, ResourceTypeID = ResourceTypeIDs.Wood, Quantity = 10 },
-				new Stack() { StackID = 3, FactoryID = 1, ResourceTypeID = ResourceTypeIDs.Coal, Quantity = 10 }
+				new Stack() { StackID = 0, BuildingID = 1, ResourceTypeID = ResourceTypeIDs.Plank, Quantity = 10 },
+				new Stack() { StackID = 1, BuildingID = 1, ResourceTypeID = ResourceTypeIDs.Wood, Quantity = 10 },
+				new Stack() { StackID = 3, BuildingID = 1, ResourceTypeID = ResourceTypeIDs.Coal, Quantity = 10 }
 				);
 			taskModule = new MockedTaskModule(false);
 			logger = new MemoryLogger();
@@ -161,7 +161,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			buildingModule = new MockedBuildingModule(false, new Building() { X = 10, Y = 10 });
 			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID=1,  FactoryTypeID = FactoryTypeIDs.Sawmill, BuildingID = 3 }, new Factory() {  FactoryID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill, BuildingID = 3 });
 			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, PlanetID = 1 });
-			stackModule = new MockedStackModule(false, new Stack() { StackID = 0, FactoryID = 1, ResourceTypeID = ResourceTypeIDs.Plank, Quantity = 10 });
+			stackModule = new MockedStackModule(false, new Stack() { StackID = 0, BuildingID = 1, ResourceTypeID = ResourceTypeIDs.Plank, Quantity = 10 });
 			taskModule = new MockedTaskModule(false);
 
 			logger = new MemoryLogger();
@@ -190,7 +190,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID=1,  FactoryTypeID = FactoryTypeIDs.Sawmill, BuildingID = 3 }, new Factory() {  FactoryID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill, BuildingID = 3 });
 
 			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, PlanetID = 1 });
-			stackModule = new MockedStackModule(true, new Stack() { StackID = 0, FactoryID = 1, ResourceTypeID = ResourceTypeIDs.Wood, Quantity = 10 });
+			stackModule = new MockedStackModule(true, new Stack() { StackID = 0, BuildingID = 1, ResourceTypeID = ResourceTypeIDs.Wood, Quantity = 10 });
 			taskModule = new MockedTaskModule(false);
 			logger = new MemoryLogger();
 			module = new CarrierModule(logger, taskModule, workerModule, buildingModule, factoryModule,stackModule);
@@ -200,7 +200,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			Assert.AreEqual(0, schedulerModule.Count);
 
 			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, PlanetID = 1 });
-			stackModule = new MockedStackModule(false, new Stack() { StackID = 0, FactoryID = 1, ResourceTypeID = ResourceTypeIDs.Wood, Quantity = 10 });
+			stackModule = new MockedStackModule(false, new Stack() { StackID = 0, BuildingID = 1, ResourceTypeID = ResourceTypeIDs.Wood, Quantity = 10 });
 			taskModule = new MockedTaskModule(true);
 			logger = new MemoryLogger();
 			module = new CarrierModule(logger, taskModule, workerModule, buildingModule, factoryModule, stackModule);
@@ -210,7 +210,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			Assert.AreEqual(0, schedulerModule.Count);
 
 			workerModule = new MockedWorkerModule(true, new Worker() { WorkerID = 1, PlanetID = 1 });
-			stackModule = new MockedStackModule(false, new Stack() { StackID = 0, FactoryID = 1, ResourceTypeID = ResourceTypeIDs.Wood, Quantity = 10 });
+			stackModule = new MockedStackModule(false, new Stack() { StackID = 0, BuildingID = 1, ResourceTypeID = ResourceTypeIDs.Wood, Quantity = 10 });
 			taskModule = new MockedTaskModule(false);
 			logger = new MemoryLogger();
 			module = new CarrierModule(logger, taskModule, workerModule, buildingModule, factoryModule, stackModule);
@@ -239,10 +239,10 @@ namespace PIO.UnitTest.ServerLib.Modules
 			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID=1,  FactoryTypeID = FactoryTypeIDs.Sawmill, BuildingID = 3 }, new Factory() {  FactoryID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill, BuildingID = 3 });
 			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, PlanetID = 1 });
 			stackModule = new MockedStackModule(false,
-				new Stack() { StackID = 0, FactoryID = 2, ResourceTypeID = ResourceTypeIDs.Plank, Quantity = 10 },
-				new Stack() { StackID = 1, FactoryID = 2, ResourceTypeID = ResourceTypeIDs.Wood, Quantity = 10 },
-				new Stack() { StackID = 2, FactoryID = 2, ResourceTypeID = ResourceTypeIDs.Stone, Quantity = 10 },
-				new Stack() { StackID = 3, FactoryID = 2, ResourceTypeID = ResourceTypeIDs.Coal, Quantity = 10 }
+				new Stack() { StackID = 0, BuildingID = 2, ResourceTypeID = ResourceTypeIDs.Plank, Quantity = 10 },
+				new Stack() { StackID = 1, BuildingID = 2, ResourceTypeID = ResourceTypeIDs.Wood, Quantity = 10 },
+				new Stack() { StackID = 2, BuildingID = 2, ResourceTypeID = ResourceTypeIDs.Stone, Quantity = 10 },
+				new Stack() { StackID = 3, BuildingID = 2, ResourceTypeID = ResourceTypeIDs.Coal, Quantity = 10 }
 				);
 			taskModule = new MockedTaskModule(false);
 			module = new CarrierModule(NullLogger.Instance, taskModule, workerModule, buildingModule, factoryModule, stackModule);
@@ -270,10 +270,10 @@ namespace PIO.UnitTest.ServerLib.Modules
 			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID=1,  FactoryTypeID = FactoryTypeIDs.Sawmill, BuildingID = 3 }, new Factory() { FactoryID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill, BuildingID = 3 });
 			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, PlanetID = 1 });
 			stackModule = new MockedStackModule(false,
-				new Stack() { StackID = 0, FactoryID = 2, ResourceTypeID = ResourceTypeIDs.Plank, Quantity = 10 },
-				new Stack() { StackID = 1, FactoryID = 2, ResourceTypeID = ResourceTypeIDs.Wood, Quantity = 10 },
-				new Stack() { StackID = 2, FactoryID = 2, ResourceTypeID = ResourceTypeIDs.Stone, Quantity = 10 },
-				new Stack() { StackID = 3, FactoryID = 2, ResourceTypeID = ResourceTypeIDs.Coal, Quantity = 10 }
+				new Stack() { StackID = 0, BuildingID = 2, ResourceTypeID = ResourceTypeIDs.Plank, Quantity = 10 },
+				new Stack() { StackID = 1, BuildingID = 2, ResourceTypeID = ResourceTypeIDs.Wood, Quantity = 10 },
+				new Stack() { StackID = 2, BuildingID = 2, ResourceTypeID = ResourceTypeIDs.Stone, Quantity = 10 },
+				new Stack() { StackID = 3, BuildingID = 2, ResourceTypeID = ResourceTypeIDs.Coal, Quantity = 10 }
 				);
 			taskModule = new MockedTaskModule(false);
 			module = new CarrierModule(NullLogger.Instance, taskModule, workerModule, buildingModule, factoryModule, stackModule);
