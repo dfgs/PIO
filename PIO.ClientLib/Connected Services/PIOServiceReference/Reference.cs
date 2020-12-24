@@ -22,9 +22,11 @@ namespace PIO.ClientLib.PIOServiceReference {
         PIO.Models.Planet[] GetPlanets();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetBuilding", ReplyAction="http://tempuri.org/IPIOService/GetBuildingResponse")]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(PIO.Models.Factory))]
         PIO.Models.Building GetBuilding(int BuildingID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetBuildingAtPos", ReplyAction="http://tempuri.org/IPIOService/GetBuildingAtPosResponse")]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(PIO.Models.Factory))]
         PIO.Models.Building GetBuildingAtPos(int PlanetID, int X, int Y);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetBuildings", ReplyAction="http://tempuri.org/IPIOService/GetBuildingsResponse")]
@@ -62,12 +64,6 @@ namespace PIO.ClientLib.PIOServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetResourceTypes", ReplyAction="http://tempuri.org/IPIOService/GetResourceTypesResponse")]
         PIO.Models.ResourceType[] GetResourceTypes();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetBuildingType", ReplyAction="http://tempuri.org/IPIOService/GetBuildingTypeResponse")]
-        PIO.Models.BuildingType GetBuildingType(PIO.Models.BuildingTypeIDs BuildingTypeID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetBuildingTypes", ReplyAction="http://tempuri.org/IPIOService/GetBuildingTypesResponse")]
-        PIO.Models.BuildingType[] GetBuildingTypes();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetFactoryType", ReplyAction="http://tempuri.org/IPIOService/GetFactoryTypeResponse")]
         PIO.Models.FactoryType GetFactoryType(PIO.Models.FactoryTypeIDs FactoryTypeID);
@@ -231,14 +227,6 @@ namespace PIO.ClientLib.PIOServiceReference {
         
         public PIO.Models.ResourceType[] GetResourceTypes() {
             return base.Channel.GetResourceTypes();
-        }
-        
-        public PIO.Models.BuildingType GetBuildingType(PIO.Models.BuildingTypeIDs BuildingTypeID) {
-            return base.Channel.GetBuildingType(BuildingTypeID);
-        }
-        
-        public PIO.Models.BuildingType[] GetBuildingTypes() {
-            return base.Channel.GetBuildingTypes();
         }
         
         public PIO.Models.FactoryType GetFactoryType(PIO.Models.FactoryTypeIDs FactoryTypeID) {

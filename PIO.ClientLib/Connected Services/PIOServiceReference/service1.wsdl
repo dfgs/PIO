@@ -103,18 +103,6 @@
   <wsdl:message name="IPIOService_GetResourceTypes_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetResourceTypesResponse" />
   </wsdl:message>
-  <wsdl:message name="IPIOService_GetBuildingType_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetBuildingType" />
-  </wsdl:message>
-  <wsdl:message name="IPIOService_GetBuildingType_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetBuildingTypeResponse" />
-  </wsdl:message>
-  <wsdl:message name="IPIOService_GetBuildingTypes_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetBuildingTypes" />
-  </wsdl:message>
-  <wsdl:message name="IPIOService_GetBuildingTypes_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetBuildingTypesResponse" />
-  </wsdl:message>
   <wsdl:message name="IPIOService_GetFactoryType_InputMessage">
     <wsdl:part name="parameters" element="tns:GetFactoryType" />
   </wsdl:message>
@@ -323,14 +311,6 @@
     <wsdl:operation name="GetResourceTypes">
       <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetResourceTypes" message="tns:IPIOService_GetResourceTypes_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/GetResourceTypesResponse" message="tns:IPIOService_GetResourceTypes_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="GetBuildingType">
-      <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetBuildingType" message="tns:IPIOService_GetBuildingType_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/GetBuildingTypeResponse" message="tns:IPIOService_GetBuildingType_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="GetBuildingTypes">
-      <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetBuildingTypes" message="tns:IPIOService_GetBuildingTypes_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/GetBuildingTypesResponse" message="tns:IPIOService_GetBuildingTypes_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetFactoryType">
       <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetFactoryType" message="tns:IPIOService_GetFactoryType_InputMessage" />
@@ -568,24 +548,6 @@
     </wsdl:operation>
     <wsdl:operation name="GetResourceTypes">
       <soap:operation soapAction="http://tempuri.org/IPIOService/GetResourceTypes" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetBuildingType">
-      <soap:operation soapAction="http://tempuri.org/IPIOService/GetBuildingType" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetBuildingTypes">
-      <soap:operation soapAction="http://tempuri.org/IPIOService/GetBuildingTypes" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

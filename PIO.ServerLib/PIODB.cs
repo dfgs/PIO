@@ -13,7 +13,6 @@ namespace PIO.ServerLib
 	{
 		public static PlanetTable PlanetTable = new PlanetTable();
 		public static BuildingTable BuildingTable = new BuildingTable();
-		public static BuildingTypeTable BuildingTypeTable = new BuildingTypeTable();
 		public static FactoryTable FactoryTable = new FactoryTable();
 		public static FactoryTypeTable FactoryTypeTable = new FactoryTypeTable();
 		public static IngredientTable IngredientTable = new IngredientTable();

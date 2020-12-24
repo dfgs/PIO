@@ -46,10 +46,7 @@ namespace PIO.Models
 		ResourceType GetResourceType(ResourceTypeIDs ResourceTypeID);
 		[OperationContract]
 		ResourceType[] GetResourceTypes();
-		[OperationContract]
-		BuildingType GetBuildingType(BuildingTypeIDs BuildingTypeID);
-		[OperationContract]
-		BuildingType[] GetBuildingTypes();
+		
 		[OperationContract]
 		FactoryType GetFactoryType(FactoryTypeIDs FactoryTypeID);
 		[OperationContract]

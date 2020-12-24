@@ -1,6 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/PIO.Models" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/PIO.Models" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
   <xs:complexType name="Planet">
     <xs:sequence>
       <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
@@ -17,7 +16,6 @@
   <xs:complexType name="Building">
     <xs:sequence>
       <xs:element minOccurs="0" name="BuildingID" type="xs:int" />
-      <xs:element minOccurs="0" name="BuildingTypeID" type="tns:BuildingTypeIDs" />
       <xs:element minOccurs="0" name="HealthPoints" type="xs:int" />
       <xs:element minOccurs="0" name="PlanetID" type="xs:int" />
       <xs:element minOccurs="0" name="RemainingBuildSteps" type="xs:int" />
@@ -26,20 +24,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Building" nillable="true" type="tns:Building" />
-  <xs:simpleType name="BuildingTypeIDs">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="Factory" />
-      <xs:enumeration value="Reserved1" />
-      <xs:enumeration value="Reserved2">
-        <xs:annotation>
-          <xs:appinfo>
-            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
-          </xs:appinfo>
-        </xs:annotation>
-      </xs:enumeration>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:element name="BuildingTypeIDs" nillable="true" type="tns:BuildingTypeIDs" />
   <xs:complexType name="ArrayOfBuilding">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="Building" nillable="true" type="tns:Building" />
@@ -47,11 +31,14 @@
   </xs:complexType>
   <xs:element name="ArrayOfBuilding" nillable="true" type="tns:ArrayOfBuilding" />
   <xs:complexType name="Factory">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="BuildingID" type="xs:int" />
-      <xs:element minOccurs="0" name="FactoryID" type="xs:int" />
-      <xs:element minOccurs="0" name="FactoryTypeID" type="tns:FactoryTypeIDs" />
-    </xs:sequence>
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Building">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="FactoryID" type="xs:int" />
+          <xs:element minOccurs="0" name="FactoryTypeID" type="tns:FactoryTypeIDs" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
   </xs:complexType>
   <xs:element name="Factory" nillable="true" type="tns:Factory" />
   <xs:simpleType name="FactoryTypeIDs">
@@ -121,19 +108,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfResourceType" nillable="true" type="tns:ArrayOfResourceType" />
-  <xs:complexType name="BuildingType">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="BuildingTypeID" type="tns:BuildingTypeIDs" />
-      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="BuildingType" nillable="true" type="tns:BuildingType" />
-  <xs:complexType name="ArrayOfBuildingType">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="BuildingType" nillable="true" type="tns:BuildingType" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfBuildingType" nillable="true" type="tns:ArrayOfBuildingType" />
   <xs:complexType name="FactoryType">
     <xs:sequence>
       <xs:element minOccurs="0" name="BuildSteps" type="xs:int" />

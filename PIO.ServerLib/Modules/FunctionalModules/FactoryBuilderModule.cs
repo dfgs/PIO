@@ -82,8 +82,8 @@ namespace PIO.ServerLib.Modules
 			worker = AssertExists(() => workerModule.GetWorker(WorkerID), $"WorkerID = {WorkerID}");
 			factoryType = AssertExists(() => factoryTypeModule.GetFactoryType(FactoryTypeID), $"FactoryTypeID = {FactoryTypeID}");
 
-			Log(LogLevels.Information, $"Creating building (BuildingTypeID={BuildingTypeIDs.Factory})");
-			building = Try(() => buildingModule.CreateBuilding(worker.PlanetID, worker.X, worker.Y, BuildingTypeIDs.Factory, factoryType.BuildSteps)).OrThrow<PIOInternalErrorException>("Failed to create building");
+			Log(LogLevels.Information, $"Creating building");
+			building = Try(() => buildingModule.CreateBuilding(worker.PlanetID, worker.X, worker.Y,  factoryType.BuildSteps)).OrThrow<PIOInternalErrorException>("Failed to create building");
 			
 			Log(LogLevels.Information, $"Creating factory (BuildingID={building.BuildingID}, FactoryTypeID={FactoryTypeID})");
 			factory = Try(() => factoryModule.CreateFactory(building.BuildingID, FactoryTypeID)).OrThrow<PIOInternalErrorException>("Failed to create factory");

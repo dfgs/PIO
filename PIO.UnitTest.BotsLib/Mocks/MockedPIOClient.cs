@@ -68,15 +68,7 @@ namespace PIO.UnitTest.BotsLib.Mocks
 			throw new NotImplementedException();
 		}
 
-		public BuildingType GetBuildingType(BuildingTypeIDs BuildingTypeID)
-		{
-			throw new NotImplementedException();
-		}
-
-		public BuildingType[] GetBuildingTypes()
-		{
-			throw new NotImplementedException();
-		}
+		
 
 		public Factory[] GetFactories(int PlanetID)
 		{

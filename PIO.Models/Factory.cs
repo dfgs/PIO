@@ -9,13 +9,11 @@ using System.Text;
 namespace PIO.Models
 {
 	[DataContract]
-	public class Factory
+	public class Factory:Building
 	{
 		[DataMember]
 		public int FactoryID { get; set; }
-		[DataMember]
-		public int BuildingID { get; set; }
-
+		
 		[DataMember]
 		public FactoryTypeIDs FactoryTypeID { get; set; }
 		

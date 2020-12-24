@@ -35,7 +35,7 @@ namespace PIO.UnitTest.ServerLib.Mocks
 			return items.FirstOrDefault(item => (item.X == X) && (item.Y == Y));
 		}
 
-		public Building CreateBuilding(int PlanetID, int X, int Y, BuildingTypeIDs BuildingTypeID, int RemainingBuildSteps)
+		public Building CreateBuilding(int PlanetID, int X, int Y,  int RemainingBuildSteps)
 		{
 			Building result;
 

@@ -51,8 +51,6 @@
     <Compile Include="Bots\DataCmdlet\GetProduceOrdersCmdlet.cs" />
     <Compile Include="Bots\DataCmdlet\GetOrdersCmdlet.cs" />
     <Compile Include="Bots\FunctionalCmdlet\InvokeCreateProduceOrder.cs" />
-    <Compile Include="PIO\DataCmdlet\GetBuildingTypeCmdlet.cs" />
-    <Compile Include="PIO\DataCmdlet\GetBuildingTypesCmdlet.cs" />
     <Compile Include="PIO\DataCmdlet\GetBuildingCmdlet.cs" />
     <Compile Include="PIO\DataCmdlet\GetBuildingsCmdlet.cs" />
     <Compile Include="PIO\DataCmdlet\FindStackCmdlet.cs" />

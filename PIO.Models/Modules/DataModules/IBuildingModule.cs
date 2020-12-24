@@ -15,7 +15,7 @@ namespace PIO.Models.Modules
 		Building GetBuilding(int PlanetID, int X,int Y);
 		Building[] GetBuildings(int PlanetID);
 
-		Building CreateBuilding(int PlanetID, int X, int Y, BuildingTypeIDs BuildingTypeID, int RemainingBuildSteps);
+		Building CreateBuilding(int PlanetID, int X, int Y,int RemainingBuildSteps);
 
 		void UpdateBuilding(int BuildingID, int RemainingBuildSteps);
 

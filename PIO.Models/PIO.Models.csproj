@@ -45,9 +45,7 @@
   <ItemGroup>
     <Compile Include="Consts.cs" />
     <Compile Include="Building.cs" />
-    <Compile Include="BuildingType.cs" />
     <Compile Include="IPIOService.cs" />
-    <Compile Include="Modules\DataModules\IBuildingTypeModule.cs" />
     <Compile Include="Modules\DataModules\IBuildingModule.cs" />
     <Compile Include="Modules\DataModules\ITaskTypeModule.cs" />
     <Compile Include="Modules\FunctionalModules\IIdlerModule.cs" />
