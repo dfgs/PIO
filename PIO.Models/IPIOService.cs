@@ -18,12 +18,6 @@ namespace PIO.Models
 		[OperationContract]
 		Planet[] GetPlanets();
 		[OperationContract]
-		Building GetBuilding(int BuildingID);
-		[OperationContract]
-		Building GetBuildingAtPos(int PlanetID, int X, int Y);
-		[OperationContract]
-		Building[] GetBuildings(int PlanetID);
-		[OperationContract]
 		Factory GetFactory(int FactoryID);
 		[OperationContract]
 		Factory GetFactoryAtPos(int PlanetID, int X,int Y);
@@ -81,8 +75,6 @@ namespace PIO.Models
 		[OperationContract]
 		ResourceTypeIDs[] GetMissingResourcesToProduce(int FactoryID);
 		[OperationContract]
-		bool WorkerIsInFactory(int WorkerID, int FactoryID);
-		[OperationContract]
 		bool WorkerIsInBuilding(int WorkerID, int BuildingID);
 		[OperationContract]
 		Task Idle(int WorkerID,int Duration);
@@ -91,9 +83,9 @@ namespace PIO.Models
 		[OperationContract]
 		Task MoveTo(int WorkerID, int X, int Y);
 		[OperationContract]
-		Task MoveToFactory(int WorkerID, int FactoryID);
+		Task MoveToBuilding(int WorkerID, int BuildingID);
 		[OperationContract]
-		Task CarryTo(int WorkerID, int TargetFactoryID, ResourceTypeIDs ResourceTypeID);
+		Task CarryTo(int WorkerID, int TargetBuildingID, ResourceTypeIDs ResourceTypeID);
 		[OperationContract]
 		Task CreateBuilding(int WorkerID, FactoryTypeIDs FactoryTypeID);
 		[OperationContract]

@@ -83,8 +83,6 @@ namespace PIO.ServerLib
 					yield return new Insert().Into(PIODB.ResourceTypeTable).Set(ResourceTypeTable.ResourceTypeID, ResourceTypeIDs.Plank).Set(ResourceTypeTable.Name, "Plank");
 					#endregion
 
-					
-
 					#region create FactoryType
 					yield return new Insert().Into(PIODB.FactoryTypeTable).Set(FactoryTypeTable.FactoryTypeID, FactoryTypeIDs.Forest).Set(FactoryTypeTable.Name, "Forest").Set(FactoryTypeTable.HealthPoints, 10).Set(FactoryTypeTable.BuildSteps,10);
 					yield return new Insert().Into(PIODB.FactoryTypeTable).Set(FactoryTypeTable.FactoryTypeID, FactoryTypeIDs.Stockpile).Set(FactoryTypeTable.Name, "Stockpile").Set(FactoryTypeTable.HealthPoints, 10).Set(FactoryTypeTable.BuildSteps, 10);

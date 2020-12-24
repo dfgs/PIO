@@ -118,14 +118,13 @@ namespace PIO.UnitTest.ServerLib.Modules
 			FactoryModule module;
 			Factory result;
 
-			database = new MockedDatabase<Factory>(false, 1, (t) => new Factory() { FactoryID = t });
+			database = new MockedDatabase<Factory>(false, 1, (t) => new Factory() { FactoryID = t,BuildingID=1,X=10,Y=10,RemainingBuildSteps=100,FactoryTypeID=FactoryTypeIDs.Sawmill });
 			module = new FactoryModule(NullLogger.Instance, database);
-			result = module.CreateFactory(1,  FactoryTypeIDs.Sawmill);
+			result = module.CreateFactory(1,10,10,100,  FactoryTypeIDs.Sawmill);
 			Assert.IsNotNull(result);
-			Assert.AreEqual(1, result.BuildingID);
-			Assert.AreEqual(FactoryTypeIDs.Sawmill, result.FactoryTypeID);
 			
-			Assert.AreEqual(1, database.InsertedCount);
+			
+			Assert.AreEqual(2, database.InsertedCount);
 		}
 
 		[TestMethod]
@@ -139,7 +138,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			logger = new MemoryLogger();
 			database = new MockedDatabase<Factory>(true, 1, (t) => new Factory() { FactoryID = t });
 			module = new FactoryModule(logger, database);
-			Assert.ThrowsException<PIODataException>(() => module.CreateFactory(1, FactoryTypeIDs.Sawmill));
+			Assert.ThrowsException<PIODataException>(() => module.CreateFactory(1,10,10,100, FactoryTypeIDs.Sawmill));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
 		}
 	}

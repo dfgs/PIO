@@ -21,17 +21,6 @@ namespace PIO.ClientLib.PIOServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetPlanets", ReplyAction="http://tempuri.org/IPIOService/GetPlanetsResponse")]
         PIO.Models.Planet[] GetPlanets();
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetBuilding", ReplyAction="http://tempuri.org/IPIOService/GetBuildingResponse")]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(PIO.Models.Factory))]
-        PIO.Models.Building GetBuilding(int BuildingID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetBuildingAtPos", ReplyAction="http://tempuri.org/IPIOService/GetBuildingAtPosResponse")]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(PIO.Models.Factory))]
-        PIO.Models.Building GetBuildingAtPos(int PlanetID, int X, int Y);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetBuildings", ReplyAction="http://tempuri.org/IPIOService/GetBuildingsResponse")]
-        PIO.Models.Building[] GetBuildings(int PlanetID);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetFactory", ReplyAction="http://tempuri.org/IPIOService/GetFactoryResponse")]
         PIO.Models.Factory GetFactory(int FactoryID);
         
@@ -110,9 +99,6 @@ namespace PIO.ClientLib.PIOServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetMissingResourcesToProduce", ReplyAction="http://tempuri.org/IPIOService/GetMissingResourcesToProduceResponse")]
         PIO.Models.ResourceTypeIDs[] GetMissingResourcesToProduce(int FactoryID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/WorkerIsInFactory", ReplyAction="http://tempuri.org/IPIOService/WorkerIsInFactoryResponse")]
-        bool WorkerIsInFactory(int WorkerID, int FactoryID);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/WorkerIsInBuilding", ReplyAction="http://tempuri.org/IPIOService/WorkerIsInBuildingResponse")]
         bool WorkerIsInBuilding(int WorkerID, int BuildingID);
         
@@ -125,11 +111,11 @@ namespace PIO.ClientLib.PIOServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/MoveTo", ReplyAction="http://tempuri.org/IPIOService/MoveToResponse")]
         PIO.Models.Task MoveTo(int WorkerID, int X, int Y);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/MoveToFactory", ReplyAction="http://tempuri.org/IPIOService/MoveToFactoryResponse")]
-        PIO.Models.Task MoveToFactory(int WorkerID, int FactoryID);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/MoveToBuilding", ReplyAction="http://tempuri.org/IPIOService/MoveToBuildingResponse")]
+        PIO.Models.Task MoveToBuilding(int WorkerID, int BuildingID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/CarryTo", ReplyAction="http://tempuri.org/IPIOService/CarryToResponse")]
-        PIO.Models.Task CarryTo(int WorkerID, int TargetFactoryID, PIO.Models.ResourceTypeIDs ResourceTypeID);
+        PIO.Models.Task CarryTo(int WorkerID, int TargetBuildingID, PIO.Models.ResourceTypeIDs ResourceTypeID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/CreateBuilding", ReplyAction="http://tempuri.org/IPIOService/CreateBuildingResponse")]
         PIO.Models.Task CreateBuilding(int WorkerID, PIO.Models.FactoryTypeIDs FactoryTypeID);
@@ -171,18 +157,6 @@ namespace PIO.ClientLib.PIOServiceReference {
         
         public PIO.Models.Planet[] GetPlanets() {
             return base.Channel.GetPlanets();
-        }
-        
-        public PIO.Models.Building GetBuilding(int BuildingID) {
-            return base.Channel.GetBuilding(BuildingID);
-        }
-        
-        public PIO.Models.Building GetBuildingAtPos(int PlanetID, int X, int Y) {
-            return base.Channel.GetBuildingAtPos(PlanetID, X, Y);
-        }
-        
-        public PIO.Models.Building[] GetBuildings(int PlanetID) {
-            return base.Channel.GetBuildings(PlanetID);
         }
         
         public PIO.Models.Factory GetFactory(int FactoryID) {
@@ -289,10 +263,6 @@ namespace PIO.ClientLib.PIOServiceReference {
             return base.Channel.GetMissingResourcesToProduce(FactoryID);
         }
         
-        public bool WorkerIsInFactory(int WorkerID, int FactoryID) {
-            return base.Channel.WorkerIsInFactory(WorkerID, FactoryID);
-        }
-        
         public bool WorkerIsInBuilding(int WorkerID, int BuildingID) {
             return base.Channel.WorkerIsInBuilding(WorkerID, BuildingID);
         }
@@ -309,12 +279,12 @@ namespace PIO.ClientLib.PIOServiceReference {
             return base.Channel.MoveTo(WorkerID, X, Y);
         }
         
-        public PIO.Models.Task MoveToFactory(int WorkerID, int FactoryID) {
-            return base.Channel.MoveToFactory(WorkerID, FactoryID);
+        public PIO.Models.Task MoveToBuilding(int WorkerID, int BuildingID) {
+            return base.Channel.MoveToBuilding(WorkerID, BuildingID);
         }
         
-        public PIO.Models.Task CarryTo(int WorkerID, int TargetFactoryID, PIO.Models.ResourceTypeIDs ResourceTypeID) {
-            return base.Channel.CarryTo(WorkerID, TargetFactoryID, ResourceTypeID);
+        public PIO.Models.Task CarryTo(int WorkerID, int TargetBuildingID, PIO.Models.ResourceTypeIDs ResourceTypeID) {
+            return base.Channel.CarryTo(WorkerID, TargetBuildingID, ResourceTypeID);
         }
         
         public PIO.Models.Task CreateBuilding(int WorkerID, PIO.Models.FactoryTypeIDs FactoryTypeID) {

@@ -12,7 +12,6 @@ namespace PIO.Models.Modules
 	public interface ILocationCheckerModule : IFunctionalModule
 	{
 
-		bool WorkerIsInFactory(int WorkerID, int FactoryID);
 		bool WorkerIsInBuilding(int WorkerID, int BuildingID);
 	}
 }

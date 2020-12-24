@@ -19,24 +19,6 @@
   <wsdl:message name="IPIOService_GetPlanets_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetPlanetsResponse" />
   </wsdl:message>
-  <wsdl:message name="IPIOService_GetBuilding_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetBuilding" />
-  </wsdl:message>
-  <wsdl:message name="IPIOService_GetBuilding_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetBuildingResponse" />
-  </wsdl:message>
-  <wsdl:message name="IPIOService_GetBuildingAtPos_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetBuildingAtPos" />
-  </wsdl:message>
-  <wsdl:message name="IPIOService_GetBuildingAtPos_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetBuildingAtPosResponse" />
-  </wsdl:message>
-  <wsdl:message name="IPIOService_GetBuildings_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetBuildings" />
-  </wsdl:message>
-  <wsdl:message name="IPIOService_GetBuildings_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetBuildingsResponse" />
-  </wsdl:message>
   <wsdl:message name="IPIOService_GetFactory_InputMessage">
     <wsdl:part name="parameters" element="tns:GetFactory" />
   </wsdl:message>
@@ -193,12 +175,6 @@
   <wsdl:message name="IPIOService_GetMissingResourcesToProduce_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetMissingResourcesToProduceResponse" />
   </wsdl:message>
-  <wsdl:message name="IPIOService_WorkerIsInFactory_InputMessage">
-    <wsdl:part name="parameters" element="tns:WorkerIsInFactory" />
-  </wsdl:message>
-  <wsdl:message name="IPIOService_WorkerIsInFactory_OutputMessage">
-    <wsdl:part name="parameters" element="tns:WorkerIsInFactoryResponse" />
-  </wsdl:message>
   <wsdl:message name="IPIOService_WorkerIsInBuilding_InputMessage">
     <wsdl:part name="parameters" element="tns:WorkerIsInBuilding" />
   </wsdl:message>
@@ -223,11 +199,11 @@
   <wsdl:message name="IPIOService_MoveTo_OutputMessage">
     <wsdl:part name="parameters" element="tns:MoveToResponse" />
   </wsdl:message>
-  <wsdl:message name="IPIOService_MoveToFactory_InputMessage">
-    <wsdl:part name="parameters" element="tns:MoveToFactory" />
+  <wsdl:message name="IPIOService_MoveToBuilding_InputMessage">
+    <wsdl:part name="parameters" element="tns:MoveToBuilding" />
   </wsdl:message>
-  <wsdl:message name="IPIOService_MoveToFactory_OutputMessage">
-    <wsdl:part name="parameters" element="tns:MoveToFactoryResponse" />
+  <wsdl:message name="IPIOService_MoveToBuilding_OutputMessage">
+    <wsdl:part name="parameters" element="tns:MoveToBuildingResponse" />
   </wsdl:message>
   <wsdl:message name="IPIOService_CarryTo_InputMessage">
     <wsdl:part name="parameters" element="tns:CarryTo" />
@@ -255,18 +231,6 @@
     <wsdl:operation name="GetPlanets">
       <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetPlanets" message="tns:IPIOService_GetPlanets_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/GetPlanetsResponse" message="tns:IPIOService_GetPlanets_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="GetBuilding">
-      <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetBuilding" message="tns:IPIOService_GetBuilding_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/GetBuildingResponse" message="tns:IPIOService_GetBuilding_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="GetBuildingAtPos">
-      <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetBuildingAtPos" message="tns:IPIOService_GetBuildingAtPos_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/GetBuildingAtPosResponse" message="tns:IPIOService_GetBuildingAtPos_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="GetBuildings">
-      <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetBuildings" message="tns:IPIOService_GetBuildings_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/GetBuildingsResponse" message="tns:IPIOService_GetBuildings_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetFactory">
       <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetFactory" message="tns:IPIOService_GetFactory_InputMessage" />
@@ -372,10 +336,6 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetMissingResourcesToProduce" message="tns:IPIOService_GetMissingResourcesToProduce_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/GetMissingResourcesToProduceResponse" message="tns:IPIOService_GetMissingResourcesToProduce_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="WorkerIsInFactory">
-      <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/WorkerIsInFactory" message="tns:IPIOService_WorkerIsInFactory_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/WorkerIsInFactoryResponse" message="tns:IPIOService_WorkerIsInFactory_OutputMessage" />
-    </wsdl:operation>
     <wsdl:operation name="WorkerIsInBuilding">
       <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/WorkerIsInBuilding" message="tns:IPIOService_WorkerIsInBuilding_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/WorkerIsInBuildingResponse" message="tns:IPIOService_WorkerIsInBuilding_OutputMessage" />
@@ -392,9 +352,9 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/MoveTo" message="tns:IPIOService_MoveTo_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/MoveToResponse" message="tns:IPIOService_MoveTo_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="MoveToFactory">
-      <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/MoveToFactory" message="tns:IPIOService_MoveToFactory_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/MoveToFactoryResponse" message="tns:IPIOService_MoveToFactory_OutputMessage" />
+    <wsdl:operation name="MoveToBuilding">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/MoveToBuilding" message="tns:IPIOService_MoveToBuilding_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/MoveToBuildingResponse" message="tns:IPIOService_MoveToBuilding_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="CarryTo">
       <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/CarryTo" message="tns:IPIOService_CarryTo_InputMessage" />
@@ -422,33 +382,6 @@
     </wsdl:operation>
     <wsdl:operation name="GetPlanets">
       <soap:operation soapAction="http://tempuri.org/IPIOService/GetPlanets" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetBuilding">
-      <soap:operation soapAction="http://tempuri.org/IPIOService/GetBuilding" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetBuildingAtPos">
-      <soap:operation soapAction="http://tempuri.org/IPIOService/GetBuildingAtPos" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetBuildings">
-      <soap:operation soapAction="http://tempuri.org/IPIOService/GetBuildings" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -690,15 +623,6 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="WorkerIsInFactory">
-      <soap:operation soapAction="http://tempuri.org/IPIOService/WorkerIsInFactory" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="WorkerIsInBuilding">
       <soap:operation soapAction="http://tempuri.org/IPIOService/WorkerIsInBuilding" style="document" />
       <wsdl:input>
@@ -735,8 +659,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="MoveToFactory">
-      <soap:operation soapAction="http://tempuri.org/IPIOService/MoveToFactory" style="document" />
+    <wsdl:operation name="MoveToBuilding">
+      <soap:operation soapAction="http://tempuri.org/IPIOService/MoveToBuilding" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

@@ -51,8 +51,6 @@
     <Compile Include="Bots\DataCmdlet\GetProduceOrdersCmdlet.cs" />
     <Compile Include="Bots\DataCmdlet\GetOrdersCmdlet.cs" />
     <Compile Include="Bots\FunctionalCmdlet\InvokeCreateProduceOrder.cs" />
-    <Compile Include="PIO\DataCmdlet\GetBuildingCmdlet.cs" />
-    <Compile Include="PIO\DataCmdlet\GetBuildingsCmdlet.cs" />
     <Compile Include="PIO\DataCmdlet\FindStackCmdlet.cs" />
     <Compile Include="PIO\DataCmdlet\GetStackQuantityCmdlet.cs" />
     <Compile Include="PIO\DataCmdlet\GetTestCmdlet.cs" />
@@ -81,7 +79,6 @@
     <Compile Include="PIO\DataCmdlet\GetPlanetCmdlet.cs" />
     <Compile Include="PIO\FunctionalCmdlet\GetMissingResourcesToProduceCmdlet.cs" />
     <Compile Include="PIO\FunctionalCmdlet\AssertWorkerIsInBuildingCmdlet.cs" />
-    <Compile Include="PIO\FunctionalCmdlet\AssertWorkerIsInFactoryCmdlet.cs" />
     <Compile Include="PIO\FunctionalCmdlet\InvokeBuildFactory.cs" />
     <Compile Include="PIO\FunctionalCmdlet\InvokeCreateBuilding.cs" />
     <Compile Include="PIO\FunctionalCmdlet\InvokeCarryToCmdlet.cs" />

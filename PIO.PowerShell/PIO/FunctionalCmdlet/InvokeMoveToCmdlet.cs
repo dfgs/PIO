@@ -20,8 +20,8 @@ namespace PIO.PowerShell
 		public int X { get; set; }
 		[Parameter(Position = 2, ValueFromPipeline = true, Mandatory = true, ParameterSetName = "ToPosition")]
 		public int Y { get; set; }
-		[Parameter(Position = 1, ValueFromPipeline = true, Mandatory = true, ParameterSetName = "ToFactoryID")]
-		public int FactoryID { get; set; }
+		[Parameter(Position = 1, ValueFromPipeline = true, Mandatory = true, ParameterSetName = "ToBuildingID")]
+		public int BuildingID { get; set; }
 
 
 
@@ -35,8 +35,8 @@ namespace PIO.PowerShell
 				case "ToPosition":
 					result = Try(() => client.MoveTo(WorkerID, X, Y));
 					break;
-				case "ToFactoryID":
-					result = Try(() => client.MoveToFactory(WorkerID, FactoryID));
+				case "ToBuildingID":
+					result = Try(() => client.MoveToBuilding(WorkerID, BuildingID));
 					break;
 				default:
 					throw new ArgumentException("Invalid parameter set.");

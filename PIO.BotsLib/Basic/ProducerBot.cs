@@ -27,7 +27,6 @@ namespace PIO.BotsLib.Basic
 		public override Models.Task RunTask()
 		{
 			Factory factory;
-			Building building;
 			Worker worker;
 			Models.Task task;
 			bool result,hasEnoughResources;
@@ -35,23 +34,20 @@ namespace PIO.BotsLib.Basic
 
 			Log(LogLevels.Information, "Checking if worker is in factory");
 			if (!Try(() => Client.GetWorker(WorkerID)).OrAlert(out worker, "Failed to get worker")) return null;
+			
+	
 			if (!Try(() => Client.GetFactory(FactoryID)).OrAlert(out factory, "Failed to get factory")) return null;
 			if (factory==null)
 			{
 				Log(LogLevels.Warning, $"Factory doesn't exists (FactoryID={FactoryID})");
 				return null;
 			}
-			if (!Try(() => Client.GetBuilding(factory.BuildingID)).OrAlert(out building, "Failed to get building")) return null;
-			if (building == null)
-			{
-				Log(LogLevels.Warning, $"Building doesn't exists (BuildingID={factory.BuildingID})");
-				return null;
-			}
+			
 
-			if ((worker.X != building.X)|| (worker.Y != building.Y))
+			if ((worker.X != factory.X)|| (worker.Y != factory.Y))
 			{
 				Log(LogLevels.Information, "Worker needs to move to factory");
-				result = Try(() => Client.MoveTo(WorkerID, building.X,building.Y)).OrAlert(out task, $"Failed to run task MoveTo (WorkerID={WorkerID})");
+				result = Try(() => Client.MoveTo(WorkerID, factory.X, factory.Y)).OrAlert(out task, $"Failed to run task MoveTo (WorkerID={WorkerID})");
 				return task;
 			}
 

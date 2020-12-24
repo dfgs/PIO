@@ -17,7 +17,7 @@ namespace PIO.PowerShell
 		[Parameter(Position = 0, ValueFromPipeline = true, Mandatory = true)]
 		public int WorkerID { get; set; }
 		[Parameter(Position = 1, ValueFromPipeline = true, Mandatory = true)]
-		public int TargetFactoryID { get; set; }
+		public int TargetBuildingID { get; set; }
 		[Parameter(Position = 2, ValueFromPipeline = true, Mandatory = true)]
 		public ResourceTypeIDs ResourceTypeID { get; set; }
 
@@ -29,7 +29,7 @@ namespace PIO.PowerShell
 		{
 			Task result;
 
-			result = Try(()=>client.CarryTo(WorkerID,TargetFactoryID,ResourceTypeID));
+			result = Try(()=>client.CarryTo(WorkerID, TargetBuildingID, ResourceTypeID));
 			
 			WriteObject(result);
 		}

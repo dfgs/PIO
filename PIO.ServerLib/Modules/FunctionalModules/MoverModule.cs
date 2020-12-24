@@ -17,28 +17,25 @@ namespace PIO.ServerLib.Modules
 	public class MoverModule : TaskGeneratorModule, IMoverModule
 	{
 
-		private IFactoryModule factoryModule;
 		private IBuildingModule buildingModule;
 
 
 
-		public MoverModule(ILogger Logger, ITaskModule TaskModule, IWorkerModule WorkerModule, IFactoryModule FactoryModule,IBuildingModule BuildingModule) : base(Logger,TaskModule,WorkerModule)
+		public MoverModule(ILogger Logger, ITaskModule TaskModule, IWorkerModule WorkerModule, IBuildingModule BuildingModule) : base(Logger,TaskModule,WorkerModule)
 		{
-			this.factoryModule = FactoryModule; this.buildingModule = BuildingModule;
+			this.buildingModule = BuildingModule;
 		}
 
-		public Task BeginMoveTo(int WorkerID, int FactoryID)
+		public Task BeginMoveTo(int WorkerID, int BuildingID)
 		{
 			Worker worker;
-			Factory factory;
 			Building building;
 			Task task;
 
 			LogEnter();
 
 			worker = AssertWorkerIsIdle(WorkerID);
-			factory = AssertExists(() => factoryModule.GetFactory(FactoryID), $"FactoryID = {FactoryID}");
-			building = AssertExists(() => buildingModule.GetBuilding(factory.BuildingID), $"BuildingID = {factory.BuildingID}");
+			building = AssertExists(() => buildingModule.GetBuilding(BuildingID), $"BuildingID={BuildingID}");
 
 			Log(LogLevels.Information, $"Creating task (WorkerID={WorkerID})");
 			task = Try(() => taskModule.CreateTask(TaskTypeIDs.MoveTo, WorkerID, building.X, building.Y, null, null, null, null, DateTime.Now.AddSeconds(10))).OrThrow<PIOInternalErrorException>("Failed to create task");

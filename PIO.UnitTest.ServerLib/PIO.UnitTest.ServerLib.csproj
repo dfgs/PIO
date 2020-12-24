@@ -49,10 +49,10 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Mocks\DataModules\MockedBuildingModule.cs" />
     <Compile Include="Mocks\DataModules\MockedMaterialModule.cs" />
     <Compile Include="Mocks\DataModules\MockedPlanetModule.cs" />
     <Compile Include="Mocks\DataModules\MockedDatabaseModule.cs" />
-    <Compile Include="Mocks\DataModules\MockedBuildingModule.cs" />
     <Compile Include="Mocks\DataModules\MockedProductModule.cs" />
     <Compile Include="Mocks\DataModules\MockedWorkerModule.cs" />
     <Compile Include="Mocks\DataModules\MockedFactoryModule.cs" />

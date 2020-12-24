@@ -15,18 +15,16 @@ Describe 'Test BuildFactory module'{
         
         It 'Given WorkerID and FactoryTypeID it creates building and build it to the end' {
             $forest = ((Get-Factories 1) | Where-Object FactoryTypeID -eq Forest)[0]
-            $forestBuilding = Get-Building $forest.BuildingID
 
             (Invoke-MoveTo -WorkerID 1 -X 11 -Y 11) | Wait-Task
             $task=(Invoke-CreateBuilding 1 Sawmill) | Wait-Task
             $sawmill=Get-Factory -PlanetID 1 -X 11 -Y 11
-            $sawmillBuilding=Get-Building -PlanetID 1 -X 11 -Y 11
 
 
-            while($sawmillBuilding.RemainingBuildSteps -gt 0)
+            while($sawmill.RemainingBuildSteps -gt 0)
             {
                 # prepare materials 
-                (Invoke-MoveTo -WorkerID 1 -X $forestBuilding.X -Y $forestBuilding.Y) | Wait-Task
+                (Invoke-MoveTo -WorkerID 1 -X $forest.X -Y $forest.Y) | Wait-Task
                 $task=(Invoke-Produce 1) | Wait-Task
                 $task=(Invoke-CarryTo 1 $sawmill.FactoryID Wood) | Wait-Task
 
@@ -38,7 +36,6 @@ Describe 'Test BuildFactory module'{
                 $result = Get-Task $task.TaskID
                 $result | Should -BeNullOrEmpty
  
-                $sawmillBuilding=Get-Building -PlanetID 1 -X 11 -Y 11
             }
            
             # nothing more to build

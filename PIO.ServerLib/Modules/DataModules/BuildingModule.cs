@@ -44,7 +44,7 @@ namespace PIO.ServerLib.Modules
 			Log(LogLevels.Information, $"Querying Building table (X={X}, Y={Y})");
 			query = new Select(BuildingTable.BuildingID, BuildingTable.PlanetID, BuildingTable.X, BuildingTable.Y, BuildingTable.HealthPoints, BuildingTable.RemainingBuildSteps)
 				.From(PIODB.BuildingTable)
-				.Where(BuildingTable.X.IsEqualTo(X).And(BuildingTable.Y.IsEqualTo(Y)).And(BuildingTable.PlanetID.IsEqualTo(PlanetID)));
+				.Where( BuildingTable.X.IsEqualTo(X).And(BuildingTable.Y.IsEqualTo(Y).And(BuildingTable.PlanetID.IsEqualTo(PlanetID))));
 
 			return TrySelectFirst<BuildingTable, Building>(query).OrThrow<PIODataException>("Failed to query");
 		}
@@ -60,8 +60,17 @@ namespace PIO.ServerLib.Modules
 				.Where(BuildingTable.PlanetID.IsEqualTo(PlanetID));
 			return TrySelectMany<BuildingTable, Building>(query).OrThrow<PIODataException>("Failed to query");
 		}
+		public void UpdateBuilding(int BuildingID, int RemainingBuildSteps)
+		{
+			IUpdate update;
 
-		public Building CreateBuilding(int PlanetID, int X, int Y, int RemainingBuildSteps)
+			LogEnter();
+
+			Log(LogLevels.Information, $"Updating Building table (StackID={BuildingID}, RemainingBuildSteps={RemainingBuildSteps})");
+			update = new Update(PIODB.BuildingTable).Set(BuildingTable.RemainingBuildSteps, RemainingBuildSteps).Where(BuildingTable.BuildingID.IsEqualTo(BuildingID));
+			Try(update).OrThrow<PIODataException>("Failed to update");
+		}
+		/*public Building CreateBuilding(int PlanetID, int X, int Y, int RemainingBuildSteps)
 		{
 			IInsert query;
 			Building item;
@@ -78,16 +87,7 @@ namespace PIO.ServerLib.Modules
 		}
 
 
-		public void UpdateBuilding(int BuildingID, int RemainingBuildSteps)
-		{
-			IUpdate update;
-
-			LogEnter();
-
-			Log(LogLevels.Information, $"Updating Building table (StackID={BuildingID}, RemainingBuildSteps={RemainingBuildSteps})");
-			update = new Update(PIODB.BuildingTable).Set(BuildingTable.RemainingBuildSteps, RemainingBuildSteps).Where(BuildingTable.BuildingID.IsEqualTo(BuildingID));
-			Try(update).OrThrow<PIODataException>("Failed to update");
-		}
+		*/
 
 
 	}

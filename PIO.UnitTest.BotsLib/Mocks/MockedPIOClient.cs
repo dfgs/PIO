@@ -222,7 +222,7 @@ namespace PIO.UnitTest.BotsLib.Mocks
 			MoveCount++;
 			return new Models.Task() { WorkerID = WorkerID, ETA = DateTime.Now.AddSeconds(1) };
 		}
-		public Models.Task MoveToFactory(int WorkerID, int FactoryID)
+		public Models.Task MoveToBuilding(int WorkerID, int BuildingID)
 		{
 			if (throwException) throw new InvalidOperationException("CLIENT ERROR");
 			MoveCount++;

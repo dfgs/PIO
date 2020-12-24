@@ -20,12 +20,11 @@ namespace PIO.ServerLib.Modules
 	public class LocationCheckerModule : FunctionalModule, ILocationCheckerModule
 	{
 		private IWorkerModule workerModule;
-		private IFactoryModule factoryModule;
 		private IBuildingModule buildingModule;
 
-		public LocationCheckerModule(ILogger Logger,IWorkerModule WorkerModule, IBuildingModule BuildingModule, IFactoryModule FactoryModule ) : base(Logger)
+		public LocationCheckerModule(ILogger Logger,IWorkerModule WorkerModule,IBuildingModule BuildingModule ) : base(Logger)
 		{
-			this.workerModule = WorkerModule; this.buildingModule =BuildingModule ; this.factoryModule = FactoryModule;
+			this.workerModule = WorkerModule;  this.buildingModule = BuildingModule;
 		}
 
 		public bool WorkerIsInBuilding(int WorkerID, int BuildingID)
@@ -36,7 +35,7 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 
 			worker = AssertExists(() => workerModule.GetWorker(WorkerID), $"WorkerID = {WorkerID}");
-			building = AssertExists(() => buildingModule.GetBuilding(BuildingID), $"BuildingID = {BuildingID}");
+			building = AssertExists(() => buildingModule.GetBuilding(BuildingID), $"BuildingID={BuildingID}");
 
 
 			Log(LogLevels.Information, "Checking is worker is in building");
@@ -47,15 +46,15 @@ namespace PIO.ServerLib.Modules
 			}
 			if ((worker.X != building.X) || (worker.Y != building.Y))
 			{
-				Log(LogLevels.Information, "Worker is not in factory");
+				Log(LogLevels.Information, "Worker is not in building");
 				return false;
 			}
 
-			Log(LogLevels.Information, "Worker is in factory");
+			Log(LogLevels.Information, "Worker is in building");
 			return true;
 		}
 
-		public bool WorkerIsInFactory(int WorkerID, int FactoryID)
+		/*public bool WorkerIsInFactory(int WorkerID, int FactoryID)
 		{
 			Building building;
 			Factory factory;
@@ -64,8 +63,8 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 
 			worker = AssertExists(() => workerModule.GetWorker(WorkerID), $"WorkerID = {WorkerID}");
-			factory = AssertExists(() => factoryModule.GetFactory(FactoryID), $"FactoryID = {FactoryID}");
-			building = AssertExists(() => buildingModule.GetBuilding(factory.BuildingID), $"BuildingID = {factory.BuildingID}");
+			factory = AssertExists(() => buildingModule.GetFactory(FactoryID), $"FactoryID = {FactoryID}");
+			building = AssertExists(() => buildingModule.GetBuilding(factory.BuildingID), $"BuildingID={factory.BuildingID}");
 
 
 			Log(LogLevels.Information, "Checking is worker is in factory");
@@ -83,6 +82,6 @@ namespace PIO.ServerLib.Modules
 			Log(LogLevels.Information, "Worker is in factory");
 			return true;
 
-		}
+		}*/
 	}
 }

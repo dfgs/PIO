@@ -70,6 +70,7 @@ namespace PIO.Bots.ServerLib.Modules
 			Task task;
 			ResourceTypeIDs[] missingResourceTypeID;
 			Worker worker;
+			Factory factory;
 			Stack stack;
 
 			LogEnter();
@@ -87,13 +88,15 @@ namespace PIO.Bots.ServerLib.Modules
 			}
 						
 			prioritaryOrder = produceOrders[0];
+			factory = AssertExists<Factory>(() => client.GetFactory(prioritaryOrder.FactoryID), $"FactoryID={prioritaryOrder.FactoryID}");
+
 
 			Log(LogLevels.Information, $"Checking if factory as enough resources to produce (FactoryID={prioritaryOrder.FactoryID})");
 			missingResourceTypeID = Try(()=>client.GetMissingResourcesToProduce(prioritaryOrder.FactoryID)).OrThrow<PIOInternalErrorException>("Failed to check resources");
 			if ((missingResourceTypeID==null) || (missingResourceTypeID.Length==0))
 			{
 				Log(LogLevels.Information, $"Checking if worker is on site (WorkerID={WorkerID}, FactoryID={prioritaryOrder.FactoryID})");
-				result = Try(() => client.WorkerIsInFactory(WorkerID, prioritaryOrder.FactoryID)).OrThrow<PIOInternalErrorException>("Failed to check worker location");
+				result = Try(() => client.WorkerIsInBuilding(WorkerID, factory.BuildingID)).OrThrow<PIOInternalErrorException>("Failed to check worker location");
 				if (result)
 				{
 					Log(LogLevels.Information, $"Worker is on site, creating produce task");
@@ -102,7 +105,7 @@ namespace PIO.Bots.ServerLib.Modules
 				else
 				{
 					Log(LogLevels.Information, $"Worker is not on site, creating moveto task");
-					task = Try(() => client.MoveToFactory(WorkerID,prioritaryOrder.FactoryID)).OrThrow<PIOInternalErrorException>("Failed to create task");
+					task = Try(() => client.MoveToBuilding(WorkerID,factory.BuildingID)).OrThrow<PIOInternalErrorException>("Failed to create task");
 				}
 				return task;
 			}
@@ -129,8 +132,7 @@ namespace PIO.Bots.ServerLib.Modules
 					else
 					{
 						Log(LogLevels.Information, $"Missing resource found, creating moveto task");
-						throw new NotImplementedException();
-						//task = Try(() => client.MoveToFactory(WorkerID, stack.BuildingID)).OrThrow<PIOInternalErrorException>("Failed to create task");
+						task = Try(() => client.MoveToBuilding(WorkerID, stack.BuildingID)).OrThrow<PIOInternalErrorException>("Failed to create task");
 						return task;
 					}
 				}

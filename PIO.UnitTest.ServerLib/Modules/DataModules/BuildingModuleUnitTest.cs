@@ -114,8 +114,31 @@ namespace PIO.UnitTest.ServerLib.Modules
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
 		}
 
-
 		[TestMethod]
+		public void ShouldUpdateBuilding()
+		{
+			MockedDatabase<Building> database;
+			BuildingModule module;
+
+			database = new MockedDatabase<Building>(false, 1, (t) => new Building() { BuildingID = t });
+			module = new BuildingModule(NullLogger.Instance, database);
+			module.UpdateBuilding(0, 10);
+			Assert.AreEqual(1, database.UpdatedCount);
+		}
+		[TestMethod]
+		public void ShouldNotUpdateBuildingAndLogError()
+		{
+			MockedDatabase<Building> database;
+			BuildingModule module;
+			MemoryLogger logger;
+
+			logger = new MemoryLogger();
+			database = new MockedDatabase<Building>(true, 3, (t) => new Building() { BuildingID = t });
+			module = new BuildingModule(logger, database);
+			Assert.ThrowsException<PIODataException>(() => module.UpdateBuilding(0, 1));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName == module.ModuleName)));
+		}
+		/*[TestMethod]
 		public void ShouldCreateBuilding()
 		{
 			MockedDatabase<Building> database;

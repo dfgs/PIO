@@ -18,7 +18,6 @@ namespace PIO.WebServiceLib
 	public class PIOService : Module, IPIOService
 	{
 		private IPlanetModule planetModule;
-		private IBuildingModule buildingModule;
 		private IFactoryModule factoryModule;
 		private IWorkerModule workerModule;
 		private IStackModule stackModule;
@@ -39,7 +38,7 @@ namespace PIO.WebServiceLib
 		private IFactoryBuilderModule factoryBuilderModule;
 
 		public PIOService(ILogger Logger,
-			IPlanetModule PlanetModule,IBuildingModule BuildingModule,  IFactoryModule FactoryModule,
+			IPlanetModule PlanetModule,  IFactoryModule FactoryModule,
 			IWorkerModule WorkerModule,
 			IStackModule StackModule,IResourceTypeModule ResourceTypeModule,
 			IFactoryTypeModule FactoryTypeModule,ITaskTypeModule TaskTypeModule,
@@ -54,7 +53,6 @@ namespace PIO.WebServiceLib
 		{
 			LogEnter();
 			this.planetModule = PlanetModule;
-			this.buildingModule = BuildingModule;
 			this.factoryModule = FactoryModule;
 			this.workerModule = WorkerModule;
 			this.stackModule = StackModule;
@@ -103,21 +101,7 @@ namespace PIO.WebServiceLib
 			LogEnter();
 			return Try(() => workerModule.GetWorkers(FactoryID)).OrThrow(GenerateFaultException);
 		}
-		public Building GetBuilding(int BuildingID)
-		{
-			LogEnter();
-			return Try(() => buildingModule.GetBuilding(BuildingID)).OrThrow(GenerateFaultException);
-		}
-		public Building GetBuildingAtPos(int PlanetID, int X,int Y)
-		{
-			LogEnter();
-			return Try(() => buildingModule.GetBuilding(PlanetID, X,Y)).OrThrow(GenerateFaultException);
-		}
-		public Building[] GetBuildings(int PlanetID)
-		{
-			LogEnter();
-			return Try(() => buildingModule.GetBuildings(PlanetID)).OrThrow(GenerateFaultException);
-		}
+		
 		public Factory GetFactory(int FactoryID)
 		{
 			LogEnter();
@@ -257,12 +241,7 @@ namespace PIO.WebServiceLib
 			return Try(() => resourceCheckerModule.GetMissingResourcesToProduce(FactoryID)).OrThrow(GenerateFaultException);
 		}
 
-		public bool WorkerIsInFactory(int WorkerID, int FactoryID)
-		{
-			LogEnter();
-
-			return Try(() => locationCheckerModule.WorkerIsInFactory(WorkerID, FactoryID)).OrThrow(GenerateFaultException);
-		}
+	
 
 		public bool WorkerIsInBuilding(int WorkerID, int BuildingID)
 		{
@@ -290,18 +269,18 @@ namespace PIO.WebServiceLib
 
 			return Try(() => moverModule.BeginMoveTo(WorkerID, X, Y)).OrThrow(GenerateFaultException);
 		}
-		public Task MoveToFactory(int WorkerID, int FactoryID)
+		public Task MoveToBuilding(int WorkerID, int BuildingID)
 		{
 			LogEnter();
 
-			return Try(() => moverModule.BeginMoveTo(WorkerID, FactoryID)).OrThrow(GenerateFaultException);
+			return Try(() => moverModule.BeginMoveTo(WorkerID, BuildingID)).OrThrow(GenerateFaultException);
 		}
 
-		public Task CarryTo(int WorkerID, int TargetFactoryID, ResourceTypeIDs ResourceTypeID)
+		public Task CarryTo(int WorkerID, int TargetBuildingID, ResourceTypeIDs ResourceTypeID)
 		{
 			LogEnter();
 
-			return Try(() => carrierModule.BeginCarryTo(WorkerID, TargetFactoryID, ResourceTypeID)).OrThrow(GenerateFaultException);
+			return Try(() => carrierModule.BeginCarryTo(WorkerID, TargetBuildingID, ResourceTypeID)).OrThrow(GenerateFaultException);
 		}
 		public Task CreateBuilding(int WorkerID, FactoryTypeIDs FactoryTypeID)
 		{
