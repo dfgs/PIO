@@ -38,7 +38,7 @@ namespace PIO.ServerLib.Modules
 			building = AssertExists(() => buildingModule.GetBuilding(BuildingID), $"BuildingID={BuildingID}");
 
 			Log(LogLevels.Information, $"Creating task (WorkerID={WorkerID})");
-			task = Try(() => taskModule.CreateTask(TaskTypeIDs.MoveTo, WorkerID, building.X, building.Y, null, null, null, null, DateTime.Now.AddSeconds(10))).OrThrow<PIOInternalErrorException>("Failed to create task");
+			task=Try(() => taskModule.CreateTask(TaskTypeIDs.MoveTo, WorkerID, building.X, building.Y, null, null, null, null, DateTime.Now.AddSeconds(10))).OrThrow<PIOInternalErrorException>("Failed to create task");
 
 			OnTaskCreated(task);
 
@@ -56,7 +56,7 @@ namespace PIO.ServerLib.Modules
 
 
 			Log(LogLevels.Information, $"Creating task (WorkerID={WorkerID})");
-			task = Try(() => taskModule.CreateTask(TaskTypeIDs.MoveTo, WorkerID, X, Y, null, null, null, null, DateTime.Now.AddSeconds(10))).OrThrow<PIOInternalErrorException>("Failed to create task");
+			task=Try(() => taskModule.CreateTask(TaskTypeIDs.MoveTo, WorkerID, X, Y, null, null, null, null, DateTime.Now.AddSeconds(10))).OrThrow<PIOInternalErrorException>("Failed to create task");
 
 			OnTaskCreated(task);
 
@@ -69,7 +69,7 @@ namespace PIO.ServerLib.Modules
 
 			LogEnter();
 
-			worker = AssertExists(() => workerModule.GetWorker(WorkerID), $"WorkerID = {WorkerID}");
+			worker = AssertExists(() => workerModule.GetWorker(WorkerID), $"WorkerID={WorkerID}");
 
 			Log(LogLevels.Information, $"Updating worker (WorkerID={WorkerID}, X={X}, Y={Y})");
 			Try(() => workerModule.UpdateWorker(WorkerID,X,Y)).OrThrow<PIOInternalErrorException>("Failed to update worker");

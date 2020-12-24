@@ -21,7 +21,7 @@ namespace PIO.PowerShell
 
 			binding = new BasicHttpBinding();
 			remoteAddress = new EndpointAddress($@"http://{Server}:8734/PIO/Bots/Service/");
-			client = new BotsServiceClient(binding, remoteAddress);
+			client=new BotsServiceClient(binding, remoteAddress);
 			client.Open();
 
 			return client;

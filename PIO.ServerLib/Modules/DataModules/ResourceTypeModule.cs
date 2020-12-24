@@ -30,7 +30,7 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying ResourceType table (ResourceTypeID={ResourceTypeID})");
-			query = new Select(ResourceTypeTable.ResourceTypeID, ResourceTypeTable.Name).From(PIODB.ResourceTypeTable).Where(ResourceTypeTable.ResourceTypeID.IsEqualTo(ResourceTypeID));
+			query=new Select(ResourceTypeTable.ResourceTypeID, ResourceTypeTable.Name).From(PIODB.ResourceTypeTable).Where(ResourceTypeTable.ResourceTypeID.IsEqualTo(ResourceTypeID));
 			return TrySelectFirst<ResourceTypeTable,ResourceType>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
@@ -40,7 +40,7 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying ResourceType table");
-			query = new Select(ResourceTypeTable.ResourceTypeID, ResourceTypeTable.Name).From(PIODB.ResourceTypeTable);
+			query=new Select(ResourceTypeTable.ResourceTypeID, ResourceTypeTable.Name).From(PIODB.ResourceTypeTable);
 			return TrySelectMany<ResourceTypeTable,ResourceType>(query).OrThrow<PIODataException>("Failed to query");
 		}
 

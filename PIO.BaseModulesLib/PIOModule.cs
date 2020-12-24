@@ -26,7 +26,7 @@ namespace PIO.BaseModulesLib
 			itemName = typeof(T).Name;
 
 			Log(LogLevels.Information, $"Get item {itemName} ({ParameterList})");
-			item = Try(() => Function()).OrThrow<PIOInternalErrorException>($"Failed to get item {itemName}");
+			item=Try(() => Function()).OrThrow<PIOInternalErrorException>($"Failed to get item {itemName}");
 			if (item == null)
 			{
 				Log(LogLevels.Warning, $"{itemName} doesn't exist ({ParameterList})");

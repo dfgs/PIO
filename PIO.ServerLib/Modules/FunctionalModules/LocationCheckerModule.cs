@@ -34,8 +34,8 @@ namespace PIO.ServerLib.Modules
 
 			LogEnter();
 
-			worker = AssertExists(() => workerModule.GetWorker(WorkerID), $"WorkerID = {WorkerID}");
-			building = AssertExists(() => buildingModule.GetBuilding(BuildingID), $"BuildingID={BuildingID}");
+			worker = AssertExists(() => workerModule.GetWorker(WorkerID), $"WorkerID={WorkerID}");
+			building=AssertExists(() => buildingModule.GetBuilding(BuildingID), $"BuildingID={BuildingID}");
 
 
 			Log(LogLevels.Information, "Checking is worker is in building");
@@ -62,9 +62,9 @@ namespace PIO.ServerLib.Modules
 
 			LogEnter();
 
-			worker = AssertExists(() => workerModule.GetWorker(WorkerID), $"WorkerID = {WorkerID}");
-			factory = AssertExists(() => buildingModule.GetFactory(FactoryID), $"FactoryID = {FactoryID}");
-			building = AssertExists(() => buildingModule.GetBuilding(factory.BuildingID), $"BuildingID={factory.BuildingID}");
+			worker = AssertExists(() => workerModule.GetWorker(WorkerID), $"WorkerID={WorkerID}");
+			factory=AssertExists(() => buildingModule.GetFactory(FactoryID), $"FactoryID={FactoryID}");
+			building=AssertExists(() => buildingModule.GetBuilding(factory.BuildingID), $"BuildingID={factory.BuildingID}");
 
 
 			Log(LogLevels.Information, "Checking is worker is in factory");

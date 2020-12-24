@@ -27,7 +27,7 @@ namespace PIO.ServerLib.Modules
 			Task task;
 
 			Log(LogLevels.Information, $"Checking if worker exists and is idle (WorkerID={WorkerID})");
-			worker = Try(() => workerModule.GetWorker(WorkerID) ).OrThrow<PIOInternalErrorException>($"Failed to get worker");
+			worker=Try(() => workerModule.GetWorker(WorkerID) ).OrThrow<PIOInternalErrorException>($"Failed to get worker");
 			if (worker == null)
 			{
 				Log(LogLevels.Warning, $"Worker doesn't exist (WorkerID={WorkerID})");

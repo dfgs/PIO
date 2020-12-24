@@ -44,10 +44,10 @@ namespace PIO.ServerLib.Modules
 
 			building = AssertExists(() => buildingModule.GetBuilding(worker.PlanetID, worker.X, worker.Y), $"X={worker.X}, Y={worker.Y}");
 
-			targetBuilding = AssertExists(() => buildingModule.GetBuilding(TargetBuildingID), $"BuildingID={TargetBuildingID}");
+			targetBuilding=AssertExists(() => buildingModule.GetBuilding(TargetBuildingID), $"BuildingID={TargetBuildingID}");
 
 			Log(LogLevels.Information, $"Check stack quantity (BuildingID={building.BuildingID}, ResourceTypeID={ResourceTypeID})");
-			stack = Try(() => stackModule.GetStack(building.BuildingID, ResourceTypeID)).OrThrow<PIOInternalErrorException>("Failed to get stack");
+			stack=Try(() => stackModule.GetStack(building.BuildingID, ResourceTypeID)).OrThrow<PIOInternalErrorException>("Failed to get stack");
 			if ((stack==null) || (stack.Quantity < carriedQuantity))
 			{
 				Log(LogLevels.Warning, $"Not enough resources (BuildingID={building.BuildingID}, ResourceTypeID={ResourceTypeID})");
@@ -60,7 +60,7 @@ namespace PIO.ServerLib.Modules
 			
 			
 			Log(LogLevels.Information, $"Creating task (WorkerID={WorkerID})");
-			task=Try(() => taskModule.CreateTask(TaskTypeIDs.CarryTo, WorkerID, null, null,null, TargetBuildingID, ResourceTypeID,null, DateTime.Now.AddSeconds(10))).OrThrow<PIOInternalErrorException>("Failed to create task");
+			task=Try(() => taskModule.CreateTask(TaskTypeIDs.CarryTo, WorkerID, null, null,TargetBuildingID, null, ResourceTypeID,null, DateTime.Now.AddSeconds(10))).OrThrow<PIOInternalErrorException>("Failed to create task");
 
 			OnTaskCreated(task);
 
@@ -75,12 +75,12 @@ namespace PIO.ServerLib.Modules
 
 			LogEnter();
 
-			worker = AssertExists(() => workerModule.GetWorker(WorkerID), $"WorkerID = {WorkerID}");
+			worker = AssertExists(() => workerModule.GetWorker(WorkerID), $"WorkerID={WorkerID}");
 
-			targetBuilding = AssertExists(() => buildingModule.GetBuilding(TargetBuildingID), $"BuildingID={TargetBuildingID}");
+			targetBuilding=AssertExists(() => buildingModule.GetBuilding(TargetBuildingID), $"BuildingID={TargetBuildingID}");
 
-			Log(LogLevels.Information, $"Get stack (FactoryID={TargetBuildingID}, ResourceTypeID={ResourceTypeID})");
-			stack = Try(() => stackModule.GetStack(TargetBuildingID, ResourceTypeID)).OrThrow<PIOInternalErrorException>("Failed to get stack");
+			Log(LogLevels.Information, $"Get stack (BuildingID={TargetBuildingID}, ResourceTypeID={ResourceTypeID})");
+			stack=Try(() => stackModule.GetStack(TargetBuildingID, ResourceTypeID)).OrThrow<PIOInternalErrorException>("Failed to get stack");
 
 			Log(LogLevels.Information, $"Adding resource (ResourceTypeID={ResourceTypeID}, Quantity={carriedQuantity})");
 			if (stack == null)

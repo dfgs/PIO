@@ -30,7 +30,7 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying Stack table (StackID={StackID})");
-			query = new Select(StackTable.StackID, StackTable.BuildingID, StackTable.ResourceTypeID, StackTable.Quantity).From(PIODB.StackTable).Where(StackTable.StackID.IsEqualTo(StackID));
+			query=new Select(StackTable.StackID, StackTable.BuildingID, StackTable.ResourceTypeID, StackTable.Quantity).From(PIODB.StackTable).Where(StackTable.StackID.IsEqualTo(StackID));
 			return TrySelectFirst <StackTable,Stack>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
@@ -42,7 +42,7 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying Stack table (BuildingID={BuildingID})");
-			query = new Select(StackTable.StackID, StackTable.BuildingID, StackTable.ResourceTypeID, StackTable.Quantity).From(PIODB.StackTable).Where(StackTable.BuildingID.IsEqualTo(BuildingID));
+			query=new Select(StackTable.StackID, StackTable.BuildingID, StackTable.ResourceTypeID, StackTable.Quantity).From(PIODB.StackTable).Where(StackTable.BuildingID.IsEqualTo(BuildingID));
 			return TrySelectMany<StackTable,Stack>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
@@ -53,7 +53,7 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying Stack table (BuildingID={BuildingID}, ResourceTypeID={ResourceTypeID})");
-			query = new Select(StackTable.StackID, StackTable.BuildingID, StackTable.ResourceTypeID, StackTable.Quantity).From(PIODB.StackTable).Where(new AndFilter(StackTable.BuildingID.IsEqualTo(BuildingID), StackTable.ResourceTypeID.IsEqualTo(ResourceTypeID)));
+			query=new Select(StackTable.StackID, StackTable.BuildingID, StackTable.ResourceTypeID, StackTable.Quantity).From(PIODB.StackTable).Where(new AndFilter(StackTable.BuildingID.IsEqualTo(BuildingID), StackTable.ResourceTypeID.IsEqualTo(ResourceTypeID)));
 			return TrySelectFirst<StackTable, Stack>(query).OrThrow<PIODataException>("Failed to query");
 		}
 		public Stack FindStack(int PlanetID, ResourceTypeIDs ResourceTypeID)
@@ -63,7 +63,7 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying Stack table (PlanetID={PlanetID}, ResourceTypeID={ResourceTypeID}), Quantity>0");
-			query = new Select(StackTable.StackID, StackTable.BuildingID, StackTable.ResourceTypeID, StackTable.Quantity)
+			query=new Select(StackTable.StackID, StackTable.BuildingID, StackTable.ResourceTypeID, StackTable.Quantity)
 				.From(
 					PIODB.StackTable.Join(PIODB.BuildingTable.On(StackTable.BuildingID, BuildingTable.BuildingID))
 				)
@@ -79,10 +79,10 @@ namespace PIO.ServerLib.Modules
 
 			LogEnter();
 			Log(LogLevels.Information, $"Inserting into Stack table (BuildingID={BuildingID}, ResourceTypeID={ResourceTypeID}, Quantity={Quantity})");
-			item = new Stack() { BuildingID = BuildingID, ResourceTypeID= ResourceTypeID, Quantity= Quantity};
+			item=new Stack() { BuildingID = BuildingID, ResourceTypeID= ResourceTypeID, Quantity= Quantity};
 			query = new Insert().Into(PIODB.StackTable).Set(StackTable.BuildingID, item.BuildingID).Set(StackTable.ResourceTypeID, item.ResourceTypeID).Set(StackTable.Quantity, item.Quantity);
 			result = Try(query).OrThrow<PIODataException>("Failed to insert");
-			item.StackID = Convert.ToInt32(result);
+			item.StackID=Convert.ToInt32(result);
 			return item;
 		}
 
@@ -93,7 +93,7 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 
 			Log(LogLevels.Information, $"Updating Stack table (StackID={StackID}, Quantity={Quantity})");
-			update = new Update(PIODB.StackTable).Set(StackTable.Quantity, Quantity).Where(StackTable.StackID.IsEqualTo(StackID));
+			update=new Update(PIODB.StackTable).Set(StackTable.Quantity, Quantity).Where(StackTable.StackID.IsEqualTo(StackID));
 			Try(update).OrThrow<PIODataException>("Failed to update");
 		}
 		public int GetStackQuantity(int BuildingID, ResourceTypeIDs ResourceTypeID)
@@ -104,7 +104,7 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying Stack table (BuildingID={BuildingID}, ResourceTypeID={ResourceTypeID})");
-			query = new Select(StackTable.StackID, StackTable.BuildingID, StackTable.ResourceTypeID, StackTable.Quantity).From(PIODB.StackTable).Where( new AndFilter( StackTable.BuildingID.IsEqualTo(BuildingID), StackTable.ResourceTypeID.IsEqualTo(ResourceTypeID)));
+			query=new Select(StackTable.StackID, StackTable.BuildingID, StackTable.ResourceTypeID, StackTable.Quantity).From(PIODB.StackTable).Where( new AndFilter( StackTable.BuildingID.IsEqualTo(BuildingID), StackTable.ResourceTypeID.IsEqualTo(ResourceTypeID)));
 			stack=TrySelectFirst<StackTable, Stack>(query).OrThrow<PIODataException>("Failed to query");
 			if (stack == null) return 0;
 			else return stack.Quantity;

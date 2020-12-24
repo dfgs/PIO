@@ -38,7 +38,7 @@ namespace PIO.Bots.ServerLib.Modules
 			#region check if worker is idle
 			Log(LogLevels.Information, $"Checking if worker is idle (WorkerID={WorkerID})");
 
-			result = Try(() => client.GetLastTask(WorkerID) ).OrAlert(out task, $"Failed to get worker tasks, waiting for {retryDelay}s before retry");
+			result=Try(() => client.GetLastTask(WorkerID) ).OrAlert(out task, $"Failed to get worker tasks, waiting for {retryDelay}s before retry");
 			if (!result)
 			{
 				Add(DateTime.Now.AddSeconds(retryDelay), WorkerID);
@@ -55,7 +55,7 @@ namespace PIO.Bots.ServerLib.Modules
 
 			#region enqueue new task
 			Log(LogLevels.Information, $"Running new task (WorkerID={WorkerID})");
-			result = Try(() => orderManager.CreateTask(WorkerID) ).OrAlert(out task, $"Failed to run new task (WorkerID={WorkerID})");
+			result=Try(() => orderManager.CreateTask(WorkerID) ).OrAlert(out task, $"Failed to run new task (WorkerID={WorkerID})");
 			if ((result) && (task != null))
 			{
 				Add(task.ETA, WorkerID);

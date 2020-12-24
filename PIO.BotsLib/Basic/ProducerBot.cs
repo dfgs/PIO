@@ -47,12 +47,12 @@ namespace PIO.BotsLib.Basic
 			if ((worker.X != factory.X)|| (worker.Y != factory.Y))
 			{
 				Log(LogLevels.Information, "Worker needs to move to factory");
-				result = Try(() => Client.MoveTo(WorkerID, factory.X, factory.Y)).OrAlert(out task, $"Failed to run task MoveTo (WorkerID={WorkerID})");
+				result=Try(() => Client.MoveTo(WorkerID, factory.X, factory.Y)).OrAlert(out task, $"Failed to run task MoveTo (WorkerID={WorkerID})");
 				return task;
 			}
 
 			Log(LogLevels.Information, $"Checking if factory has enough resources (FactoryID={FactoryID})");
-			result = Try(() => Client.HasEnoughResourcesToProduce(FactoryID)).OrAlert(out hasEnoughResources, $"Failed to check if factory has enough resources (FactoryID={FactoryID})");
+			result=Try(() => Client.HasEnoughResourcesToProduce(FactoryID)).OrAlert(out hasEnoughResources, $"Failed to check if factory has enough resources (FactoryID={FactoryID})");
 			if (!hasEnoughResources)
 			{
 				Log(LogLevels.Warning, "Factory doesn't have enough resources to produce");
@@ -60,7 +60,7 @@ namespace PIO.BotsLib.Basic
 			}
 
 			Log(LogLevels.Information, $"Trying to run task Produce (WorkerID={WorkerID})");
-			result = Try(() => Client.Produce(WorkerID)).OrAlert(out task, $"Failed to run task Produce (WorkerID={WorkerID})");
+			result=Try(() => Client.Produce(WorkerID)).OrAlert(out task, $"Failed to run task Produce (WorkerID={WorkerID})");
 			
 			return task;
 		}

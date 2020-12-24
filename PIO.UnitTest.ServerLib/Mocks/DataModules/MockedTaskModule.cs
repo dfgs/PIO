@@ -53,7 +53,7 @@ namespace PIO.UnitTest.ServerLib.Mocks
 
 			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
 
-			item = new Task() { TaskTypeID = TaskTypeID,  WorkerID=WorkerID,BuildingID=BuildingID,  FactoryID =TargetFactoryID,ResourceTypeID=ResourceTypeID,FactoryTypeID=FactoryTypeID, ETA=ETA };
+			item=new Task() { TaskTypeID = TaskTypeID,  WorkerID=WorkerID,BuildingID=BuildingID,  FactoryID =TargetFactoryID,ResourceTypeID=ResourceTypeID,FactoryTypeID=FactoryTypeID, ETA=ETA };
 			items.Add(item);
 			return item;
 		}

@@ -42,7 +42,7 @@ namespace PIO.UnitTest.ServerLib.Mocks
 			Factory result;
 
 			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
-			result = new Factory() { FactoryID = items.Count, BuildingID = 1,PlanetID=PlanetID,X=X,Y=Y,RemainingBuildSteps=RemainingBuildSteps,FactoryTypeID=FactoryTypeID };
+			result=new Factory() { FactoryID = items.Count, BuildingID = 1,PlanetID=PlanetID,X=X,Y=Y,RemainingBuildSteps=RemainingBuildSteps,FactoryTypeID=FactoryTypeID };
 			items.Add(result);
 			return result;
 		}

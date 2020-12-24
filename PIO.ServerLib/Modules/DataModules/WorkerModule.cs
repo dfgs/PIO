@@ -29,7 +29,7 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying Worker table (WorkerID={WorkerID})");
-			query = new Select(WorkerTable.WorkerID,WorkerTable.PlanetID,WorkerTable.X,WorkerTable.Y).From(PIODB.WorkerTable).Where(WorkerTable.WorkerID.IsEqualTo(WorkerID));
+			query=new Select(WorkerTable.WorkerID,WorkerTable.PlanetID,WorkerTable.X,WorkerTable.Y).From(PIODB.WorkerTable).Where(WorkerTable.WorkerID.IsEqualTo(WorkerID));
 			return TrySelectFirst<WorkerTable,Worker>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
@@ -39,7 +39,7 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying Worker table (PlanetID={PlanetID})");
-			query = new Select( WorkerTable.WorkerID, WorkerTable.PlanetID,WorkerTable.X,WorkerTable.Y).From(PIODB.WorkerTable).Where(WorkerTable.PlanetID.IsEqualTo(PlanetID));
+			query=new Select( WorkerTable.WorkerID, WorkerTable.PlanetID,WorkerTable.X,WorkerTable.Y).From(PIODB.WorkerTable).Where(WorkerTable.PlanetID.IsEqualTo(PlanetID));
 			return TrySelectMany<WorkerTable, Worker>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
@@ -50,7 +50,7 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 
 			Log(LogLevels.Information, $"Updating Worker table (WorkerID={WorkerID}, X={X}, Y={Y})");
-			update = new Update(PIODB.WorkerTable).Set(WorkerTable.X, X).Set(WorkerTable.Y,Y).Where(WorkerTable.WorkerID.IsEqualTo(WorkerID));
+			update=new Update(PIODB.WorkerTable).Set(WorkerTable.X, X).Set(WorkerTable.Y,Y).Where(WorkerTable.WorkerID.IsEqualTo(WorkerID));
 			Try(update).OrThrow<PIODataException>("Failed to update");
 		}
 

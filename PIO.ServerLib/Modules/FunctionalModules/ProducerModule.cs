@@ -51,8 +51,8 @@ namespace PIO.ServerLib.Modules
 			}
 
 
-			ingredients = AssertExists(() => ingredientModule.GetIngredients(factory.FactoryTypeID), $"FactoryTypeID={factory.FactoryTypeID}");
-			products = AssertExists(() => productModule.GetProducts(factory.FactoryTypeID), $"FactoryTypeID={factory.FactoryTypeID}");
+			ingredients=AssertExists(() => ingredientModule.GetIngredients(factory.FactoryTypeID), $"FactoryTypeID={factory.FactoryTypeID}");
+			products=AssertExists(() => productModule.GetProducts(factory.FactoryTypeID), $"FactoryTypeID={factory.FactoryTypeID}");
 			if (products.Length == 0)
 			{
 				Log(LogLevels.Warning, $"This factory has no product (FactoryTypeID={factory.FactoryTypeID})");
@@ -62,7 +62,7 @@ namespace PIO.ServerLib.Modules
 			foreach (Ingredient ingredient in ingredients)
 			{
 				Log(LogLevels.Information, $"Check stack quantity (ResourceTypeID={ingredient.ResourceTypeID}, Quantity={ingredient.Quantity})");
-				quantity = Try(()=> stackModule.GetStackQuantity(factory.FactoryID, ingredient.ResourceTypeID)).OrThrow<PIOInternalErrorException>("Failed to check stack quantity");
+				quantity=Try(()=> stackModule.GetStackQuantity(factory.BuildingID, ingredient.ResourceTypeID)).OrThrow<PIOInternalErrorException>("Failed to check stack quantity");
 				if (quantity < ingredient.Quantity)
 				{
 					Log(LogLevels.Warning, $"Not enough resources (FactoryID={factory.FactoryID}, ResourceTypeID={ingredient.ResourceTypeID})");
@@ -73,7 +73,7 @@ namespace PIO.ServerLib.Modules
 			foreach (Ingredient ingredient in ingredients)
 			{
 				Log(LogLevels.Information, $"Consuming ingredient (ResourceTypeID={ingredient.ResourceTypeID}, Quantity={ingredient.Quantity})");
-				stack = Try(() => stackModule.GetStack(factory.FactoryID, ingredient.ResourceTypeID)).OrThrow<PIOInternalErrorException>("Failed to consume ingredient");
+				stack=Try(() => stackModule.GetStack(factory.BuildingID, ingredient.ResourceTypeID)).OrThrow<PIOInternalErrorException>("Failed to consume ingredient");
 				stack.Quantity -= ingredient.Quantity;
 
 				Try(() => stackModule.UpdateStack(stack.StackID, stack.Quantity)).OrThrow<PIOInternalErrorException>("Failed to update stack");
@@ -99,16 +99,16 @@ namespace PIO.ServerLib.Modules
 
 			LogEnter();
 
-			worker = AssertExists(() => workerModule.GetWorker(WorkerID), $"WorkerID = {WorkerID}");
+			worker = AssertExists(() => workerModule.GetWorker(WorkerID), $"WorkerID={WorkerID}");
 
 
-			factory = AssertExists(() => factoryModule.GetFactory(worker.PlanetID, worker.X, worker.Y), $"X={worker.X}, Y={worker.Y}");
+			factory=AssertExists(() => factoryModule.GetFactory(worker.PlanetID, worker.X, worker.Y), $"X={worker.X}, Y={worker.Y}");
 
-			Log(LogLevels.Information, $"Get stacks (FactoryID={factory.FactoryID})");
-			stacks = Try(() => stackModule.GetStacks(factory.FactoryID)).OrThrow<PIOInternalErrorException>("Failed to get stacks");
+			Log(LogLevels.Information, $"Get stacks (BuildingID={factory.BuildingID})");
+			stacks=Try(() => stackModule.GetStacks(factory.BuildingID)).OrThrow<PIOInternalErrorException>("Failed to get stacks");
 
 			Log(LogLevels.Information, $"Get products (FactoryTypeID={factory.FactoryTypeID})");
-			products = Try(() => productModule.GetProducts(factory.FactoryTypeID)).OrThrow<PIOInternalErrorException>("Failed to get products");
+			products=Try(() => productModule.GetProducts(factory.FactoryTypeID)).OrThrow<PIOInternalErrorException>("Failed to get products");
 			if (products.Length == 0)
 			{
 				Log(LogLevels.Warning, $"This factory has no product (FactoryTypeID={factory.FactoryTypeID})");
@@ -118,11 +118,11 @@ namespace PIO.ServerLib.Modules
 			foreach (Product product in products)
 			{
 				Log(LogLevels.Information, $"Adding product (ResourceTypeID={product.ResourceTypeID}, Quantity={product.Quantity})");
-				stack = stacks.FirstOrDefault(item => item.ResourceTypeID == product.ResourceTypeID);
+				stack=stacks.FirstOrDefault(item => item.ResourceTypeID == product.ResourceTypeID);
 
 				if (stack == null)
 				{
-					Try(() => stackModule.InsertStack(factory.FactoryID,product.ResourceTypeID,product.Quantity )).OrThrow<PIOInternalErrorException>("Failed to insert stack");
+					Try(() => stackModule.InsertStack(factory.BuildingID, product.ResourceTypeID,product.Quantity )).OrThrow<PIOInternalErrorException>("Failed to insert stack");
 				}
 				else
 				{

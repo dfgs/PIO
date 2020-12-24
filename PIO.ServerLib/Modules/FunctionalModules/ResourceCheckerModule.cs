@@ -42,14 +42,14 @@ namespace PIO.ServerLib.Modules
 			Log(LogLevels.Information, $"Get ingredients (FactoryTypeID={factory.FactoryTypeID})");
 			ingredients= Try(() => ingredientModule.GetIngredients(factory.FactoryTypeID)).OrThrow<PIOInternalErrorException>("Failed to get ingredients");
 
-			Log(LogLevels.Information, $"Get stacks (FactoryID={factory.FactoryID})");
-			stacks = Try(() => stackModule.GetStacks(factory.FactoryID)).OrThrow<PIOInternalErrorException>("Failed to get stacks");
+			Log(LogLevels.Information, $"Get stacks (BuildingID={factory.BuildingID})");
+			stacks=Try(() => stackModule.GetStacks(factory.BuildingID)).OrThrow<PIOInternalErrorException>("Failed to get stacks");
 
 
 			foreach (Ingredient ingredient in ingredients)
 			{
 				Log(LogLevels.Information, $"Check stack quantity (ResourceTypeID={ingredient.ResourceTypeID}, Quantity={ingredient.Quantity})");
-				stack = stacks.FirstOrDefault(item => item.ResourceTypeID == ingredient.ResourceTypeID);
+				stack=stacks.FirstOrDefault(item => item.ResourceTypeID == ingredient.ResourceTypeID);
 				if (stack==null)
 				{
 					Log(LogLevels.Information, $"Resource not found in stacks");
@@ -79,17 +79,17 @@ namespace PIO.ServerLib.Modules
 			factory = AssertExists(() => factoryModule.GetFactory(FactoryID), $"FactoryID={FactoryID}");
 
 			Log(LogLevels.Information, $"Get ingredients (FactoryTypeID={factory.FactoryTypeID})");
-			ingredients = Try(() => ingredientModule.GetIngredients(factory.FactoryTypeID)).OrThrow<PIOInternalErrorException>("Failed to get ingredients");
+			ingredients=Try(() => ingredientModule.GetIngredients(factory.FactoryTypeID)).OrThrow<PIOInternalErrorException>("Failed to get ingredients");
 
-			Log(LogLevels.Information, $"Get stacks (FactoryID={factory.FactoryID})");
-			stacks = Try(() => stackModule.GetStacks(factory.FactoryID)).OrThrow<PIOInternalErrorException>("Failed to get stacks");
+			Log(LogLevels.Information, $"Get stacks (BuildingID={factory.BuildingID})");
+			stacks=Try(() => stackModule.GetStacks(factory.BuildingID)).OrThrow<PIOInternalErrorException>("Failed to get stacks");
 
-			missingResources = new List<ResourceTypeIDs>();
+			missingResources=new List<ResourceTypeIDs>();
 
 			foreach (Ingredient ingredient in ingredients)
 			{
 				Log(LogLevels.Information, $"Check stack quantity (ResourceTypeID={ingredient.ResourceTypeID}, Quantity={ingredient.Quantity})");
-				stack = stacks.FirstOrDefault(item => item.ResourceTypeID == ingredient.ResourceTypeID);
+				stack=stacks.FirstOrDefault(item => item.ResourceTypeID == ingredient.ResourceTypeID);
 				if (stack == null)
 				{
 					Log(LogLevels.Information, $"Resource not found in stacks");

@@ -91,7 +91,7 @@ namespace PIO.ServerLib.Modules
 					Try(() => moverModule.EndMoveTo(Task.WorkerID, Task.X.Value,Task.Y.Value)).OrAlert($"Failed to terminate task (TaskID={Task.TaskID})");
 					break;
 				case TaskTypeIDs.CarryTo:
-					Try(() => carrierModule.EndCarryTo(Task.WorkerID, Task.FactoryID.Value, Task.ResourceTypeID.Value)).OrAlert($"Failed to terminate task (TaskID={Task.TaskID})");
+					Try(() => carrierModule.EndCarryTo(Task.WorkerID, Task.BuildingID.Value, Task.ResourceTypeID.Value)).OrAlert($"Failed to terminate task (TaskID={Task.TaskID})");
 					break;
 				case TaskTypeIDs.CreateBuilding:
 					Try(() => factoryBuilderModule.EndCreateBuilding(Task.WorkerID, Task.FactoryTypeID.Value)).OrAlert($"Failed to terminate task (TaskID={Task.TaskID})");

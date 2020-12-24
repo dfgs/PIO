@@ -32,7 +32,7 @@ namespace PIO.Bots.ServerLib.Modules
 			LogEnter();
 			
 			Log(LogLevels.Information, $"Querying ProduceOrder table (ProduceOrderID={ProduceOrderID})");
-			query = new Select(ProduceOrderTable.ProduceOrderID, ProduceOrderTable.OrderID, ProduceOrderTable.FactoryID).From(BotsDB.ProduceOrderTable).Where(ProduceOrderTable.ProduceOrderID.IsEqualTo(ProduceOrderID));
+			query=new Select(ProduceOrderTable.ProduceOrderID, ProduceOrderTable.OrderID, ProduceOrderTable.FactoryID).From(BotsDB.ProduceOrderTable).Where(ProduceOrderTable.ProduceOrderID.IsEqualTo(ProduceOrderID));
 			return TrySelectFirst<ProduceOrderTable, ProduceOrder>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
@@ -43,7 +43,7 @@ namespace PIO.Bots.ServerLib.Modules
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying ProduceOrder table");
-			query = new Select(ProduceOrderTable.ProduceOrderID, ProduceOrderTable.OrderID, ProduceOrderTable.FactoryID).From(BotsDB.ProduceOrderTable);
+			query=new Select(ProduceOrderTable.ProduceOrderID, ProduceOrderTable.OrderID, ProduceOrderTable.FactoryID).From(BotsDB.ProduceOrderTable);
 			return TrySelectMany<ProduceOrderTable, ProduceOrder>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
@@ -55,12 +55,12 @@ namespace PIO.Bots.ServerLib.Modules
 
 			LogEnter();
 			Log(LogLevels.Information, $"Inserting into ProduceOrder table (OrderID={OrderID}, FactoryID={FactoryID})");
-			item = new ProduceOrder() {OrderID=OrderID,FactoryID=FactoryID };
+			item=new ProduceOrder() {OrderID=OrderID,FactoryID=FactoryID };
 			query = new Insert().Into(BotsDB.ProduceOrderTable)
 					.Set(ProduceOrderTable.OrderID, item.OrderID)
 					.Set(ProduceOrderTable.FactoryID, item.FactoryID) ;
 			result = Try(query).OrThrow<PIODataException>("Failed to insert");
-			item.ProduceOrderID = Convert.ToInt32(result);
+			item.ProduceOrderID=Convert.ToInt32(result);
 			return item;
 		}
 

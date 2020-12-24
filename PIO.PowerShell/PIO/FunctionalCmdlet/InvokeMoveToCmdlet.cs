@@ -33,10 +33,10 @@ namespace PIO.PowerShell
 			switch (this.ParameterSetName)
 			{
 				case "ToPosition":
-					result = Try(() => client.MoveTo(WorkerID, X, Y));
+					result=Try(() => client.MoveTo(WorkerID, X, Y));
 					break;
 				case "ToBuildingID":
-					result = Try(() => client.MoveToBuilding(WorkerID, BuildingID));
+					result=Try(() => client.MoveToBuilding(WorkerID, BuildingID));
 					break;
 				default:
 					throw new ArgumentException("Invalid parameter set.");

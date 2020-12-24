@@ -34,10 +34,10 @@ namespace PIO.PowerShell
 			switch (this.ParameterSetName)
 			{
 				case "FromID":
-					result = Try(() => client.GetFactory(FactoryID));
+					result=Try(() => client.GetFactory(FactoryID));
 					break;
 				case "FromPosition":
-					result = Try(() => client.GetFactoryAtPos(PlanetID,X,Y));
+					result=Try(() => client.GetFactoryAtPos(PlanetID,X,Y));
 					break;
 				default:
 					throw new ArgumentException("Invalid parameter set.");

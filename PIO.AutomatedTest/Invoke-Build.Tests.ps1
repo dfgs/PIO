@@ -26,7 +26,7 @@ Describe 'Test BuildFactory module'{
                 # prepare materials 
                 (Invoke-MoveTo -WorkerID 1 -X $forest.X -Y $forest.Y) | Wait-Task
                 $task=(Invoke-Produce 1) | Wait-Task
-                $task=(Invoke-CarryTo 1 $sawmill.FactoryID Wood) | Wait-Task
+                $task=(Invoke-CarryTo 1 $sawmill.BuildingID Wood) | Wait-Task
 
                 # build 
                 $task=Invoke-BuildFactory 1
@@ -36,6 +36,7 @@ Describe 'Test BuildFactory module'{
                 $result = Get-Task $task.TaskID
                 $result | Should -BeNullOrEmpty
  
+                $sawmill=Get-Factory -PlanetID 1 -X 11 -Y 11
             }
            
             # nothing more to build

@@ -107,7 +107,7 @@ namespace PIO.Bots.ServerHost
 			if (e.SpecialKey == ConsoleSpecialKey.ControlC)
 			{
 				Console.WriteLine("Control break invoked");
-				e.Cancel = true;
+				e.Cancel=true;
 				quitEvent.Set();
 			}
 

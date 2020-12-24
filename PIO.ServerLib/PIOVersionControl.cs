@@ -118,12 +118,15 @@ namespace PIO.ServerLib
 					#endregion
 
 					#region create startup Factories
-					yield return new Insert().Into(PIODB.BuildingTable).Set(BuildingTable.PlanetID, planetID).Set(BuildingTable.X,0).Set(BuildingTable.Y,0).Set(BuildingTable.HealthPoints, 10).Set(BuildingTable.RemainingBuildSteps,0);
+					// dummy building
+					yield return new Insert().Into(PIODB.BuildingTable).Set(BuildingTable.PlanetID, planetID).Set(BuildingTable.X, 20).Set(BuildingTable.Y, 20).Set(BuildingTable.HealthPoints, 10).Set(BuildingTable.RemainingBuildSteps, 0);
+
+					yield return new Insert().Into(PIODB.BuildingTable).Set(BuildingTable.PlanetID, planetID).Set(BuildingTable.X, 0).Set(BuildingTable.Y, 0).Set(BuildingTable.HealthPoints, 10).Set(BuildingTable.RemainingBuildSteps, 0);
 					yield return new SelectIdentity((result) => buildingID = Convert.ToInt32(result));
 					yield return new Insert().Into(PIODB.FactoryTable).Set(FactoryTable.BuildingID, buildingID).Set(FactoryTable.FactoryTypeID, FactoryTypeIDs.Forest);
 					yield return new SelectIdentity((result) => factoryID = Convert.ToInt32(result));
 					#region fill startup factories with material
-					yield return new Insert().Into(PIODB.StackTable).Set(StackTable.BuildingID, buildingID).Set(StackTable.ResourceTypeID, (int)ResourceTypeIDs.Tree).Set(StackTable.Quantity, 100);
+					yield return new Insert().Into(PIODB.StackTable).Set(StackTable.BuildingID, buildingID).Set(StackTable.ResourceTypeID, ResourceTypeIDs.Tree).Set(StackTable.Quantity, 5);
 					#endregion
 
 					yield return new Insert().Into(PIODB.BuildingTable).Set(BuildingTable.PlanetID, planetID).Set(BuildingTable.X, 1).Set(BuildingTable.Y, 0).Set(BuildingTable.HealthPoints, 10).Set(BuildingTable.RemainingBuildSteps, 0);

@@ -31,7 +31,7 @@ namespace PIO.Bots.ServerHost.Properties {
                 return ((int)(this["UnicastPort"]));
             }
             set {
-                this["UnicastPort"] = value;
+                this["UnicastPort"]=value;
             }
         }
         
@@ -43,7 +43,7 @@ namespace PIO.Bots.ServerHost.Properties {
                 return ((string)(this["BotsServerAddress"]));
             }
             set {
-                this["BotsServerAddress"] = value;
+                this["BotsServerAddress"]=value;
             }
         }
         
@@ -55,7 +55,7 @@ namespace PIO.Bots.ServerHost.Properties {
                 return ((string)(this["Server"]));
             }
             set {
-                this["Server"] = value;
+                this["Server"]=value;
             }
         }
         
@@ -67,7 +67,7 @@ namespace PIO.Bots.ServerHost.Properties {
                 return ((bool)(this["DropDatabase"]));
             }
             set {
-                this["DropDatabase"] = value;
+                this["DropDatabase"]=value;
             }
         }
         
@@ -79,7 +79,7 @@ namespace PIO.Bots.ServerHost.Properties {
                 return ((string)(this["DatabaseName"]));
             }
             set {
-                this["DatabaseName"] = value;
+                this["DatabaseName"]=value;
             }
         }
     }

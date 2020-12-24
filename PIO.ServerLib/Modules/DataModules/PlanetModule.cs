@@ -25,7 +25,7 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying Planet table (PlanetID={PlanetID})");
-			query = new Select(PlanetTable.PlanetID, PlanetTable.Name).From(PIODB.PlanetTable).Where(PlanetTable.PlanetID.IsEqualTo(PlanetID));
+			query=new Select(PlanetTable.PlanetID, PlanetTable.Name).From(PIODB.PlanetTable).Where(PlanetTable.PlanetID.IsEqualTo(PlanetID));
 			return TrySelectFirst<PlanetTable,Planet>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
@@ -35,7 +35,7 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying Planet table");
-			query = new Select(PlanetTable.PlanetID, PlanetTable.Name).From(PIODB.PlanetTable);
+			query=new Select(PlanetTable.PlanetID, PlanetTable.Name).From(PIODB.PlanetTable);
 			return TrySelectMany<PlanetTable,Planet>(query).OrThrow<PIODataException>("Failed to query");
 		}
 

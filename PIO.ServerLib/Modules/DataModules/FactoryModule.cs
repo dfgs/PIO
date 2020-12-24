@@ -29,7 +29,7 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying Factory table (FactoryID={FactoryID})");
-			query = new Select(
+			query=new Select(
 						BuildingTable.BuildingID,BuildingTable.PlanetID, BuildingTable.X,BuildingTable.Y,  BuildingTable.HealthPoints,BuildingTable.RemainingBuildSteps,
 						FactoryTable.FactoryID, FactoryTable.FactoryTypeID
 					)
@@ -44,7 +44,7 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying Factory table (X={X}, Y={Y})");
-			query = new Select(
+			query=new Select(
 						BuildingTable.BuildingID, BuildingTable.PlanetID, BuildingTable.X, BuildingTable.Y, BuildingTable.HealthPoints, BuildingTable.RemainingBuildSteps,
 						FactoryTable.FactoryID, FactoryTable.FactoryTypeID
 					)
@@ -60,7 +60,7 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying Factory table (PlanetID={PlanetID})");
-			query = new Select(
+			query=new Select(
 						BuildingTable.BuildingID, BuildingTable.PlanetID, BuildingTable.X, BuildingTable.Y, BuildingTable.HealthPoints, BuildingTable.RemainingBuildSteps,
 						FactoryTable.FactoryID, FactoryTable.FactoryTypeID
 					)
@@ -84,14 +84,14 @@ namespace PIO.ServerLib.Modules
 			item = new Factory() { PlanetID = PlanetID, X = X, Y = Y, RemainingBuildSteps = RemainingBuildSteps, FactoryTypeID = FactoryTypeID, };
 
 			Log(LogLevels.Information, $"Inserting into Building table (PlanetID={PlanetID}, X={X}, Y={Y}, RemainingBuildingSteps={RemainingBuildSteps})");
-			queryBuilding = new Insert().Into(PIODB.BuildingTable).Set(BuildingTable.PlanetID, item.PlanetID).Set(BuildingTable.X, item.X).Set(BuildingTable.Y, item.Y).Set(BuildingTable.HealthPoints, item.HealthPoints).Set(BuildingTable.RemainingBuildSteps, item.RemainingBuildSteps);
+			queryBuilding=new Insert().Into(PIODB.BuildingTable).Set(BuildingTable.PlanetID, item.PlanetID).Set(BuildingTable.X, item.X).Set(BuildingTable.Y, item.Y).Set(BuildingTable.HealthPoints, item.HealthPoints).Set(BuildingTable.RemainingBuildSteps, item.RemainingBuildSteps);
 			result = Try(queryBuilding).OrThrow<PIODataException>("Failed to insert");
-			item.BuildingID = Convert.ToInt32(result);
+			item.BuildingID=Convert.ToInt32(result);
 
 			Log(LogLevels.Information, $"Inserting into Factory table (BuildingID={item.BuildingID}, FactoryTypeID={FactoryTypeID})");
-			queryFactory = new Insert().Into(PIODB.FactoryTable).Set(FactoryTable.BuildingID, item.BuildingID).Set(FactoryTable.FactoryTypeID, item.FactoryTypeID);
+			queryFactory=new Insert().Into(PIODB.FactoryTable).Set(FactoryTable.BuildingID, item.BuildingID).Set(FactoryTable.FactoryTypeID, item.FactoryTypeID);
 			result = Try(queryFactory).OrThrow<PIODataException>("Failed to insert");
-			item.FactoryID = Convert.ToInt32(result);
+			item.FactoryID=Convert.ToInt32(result);
 			return item;
 		}
 

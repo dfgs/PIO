@@ -29,7 +29,7 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying TaskType table (TaskTypeID={TaskTypeID})");
-			query = new Select(TaskTypeTable.TaskTypeID, TaskTypeTable.Name).From(PIODB.TaskTypeTable).Where(TaskTypeTable.TaskTypeID.IsEqualTo(TaskTypeID));
+			query=new Select(TaskTypeTable.TaskTypeID, TaskTypeTable.Name).From(PIODB.TaskTypeTable).Where(TaskTypeTable.TaskTypeID.IsEqualTo(TaskTypeID));
 			return TrySelectFirst<TaskTypeTable,TaskType>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
@@ -39,7 +39,7 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying TaskType table");
-			query = new Select(TaskTypeTable.TaskTypeID, TaskTypeTable.Name).From(PIODB.TaskTypeTable);
+			query=new Select(TaskTypeTable.TaskTypeID, TaskTypeTable.Name).From(PIODB.TaskTypeTable);
 			return TrySelectMany<TaskTypeTable,TaskType>(query).OrThrow<PIODataException>("Failed to query");
 		}
 

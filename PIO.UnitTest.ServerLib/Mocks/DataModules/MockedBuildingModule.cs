@@ -40,7 +40,7 @@ namespace PIO.UnitTest.ServerLib.Mocks
 			Building result;
 
 			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
-			result = new Building() { BuildingID = items.Count, PlanetID = PlanetID, X = X, Y = Y };
+			result=new Building() { BuildingID = items.Count, PlanetID = PlanetID, X = X, Y = Y };
 			items.Add(result);
 			return result;
 		}
