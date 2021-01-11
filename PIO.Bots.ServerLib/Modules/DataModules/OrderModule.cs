@@ -32,20 +32,12 @@ namespace PIO.Bots.ServerLib.Modules
 			LogEnter();
 			
 			Log(LogLevels.Information, $"Querying Order table (OrderID={OrderID})");
-			query=new Select(OrderTable.OrderID,OrderTable.CreationDate).From(BotsDB.OrderTable).Where(OrderTable.OrderID.IsEqualTo(OrderID));
+			query=new Select(OrderTable.OrderID,OrderTable.PlanetID, OrderTable.WorkerID).From(BotsDB.OrderTable).Where(OrderTable.OrderID.IsEqualTo(OrderID));
 			return TrySelectFirst<OrderTable, Order>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
 		
-		/*public Order[] GetOrders(int WorkerID)
-		{
-			ISelect query;
-			LogEnter();
-
-			Log(LogLevels.Information, $"Querying Order table (WorkerID={WorkerID})");
-			query=new Select(OrderTable.OrderID).From(BotsDB.OrderTable).Where(OrderTable.WorkerID.IsEqualTo(WorkerID));
-			return TrySelectMany<OrderTable, Order>(query).OrThrow<PIODataException>("Failed to query");
-		}*/
+		
 
 		public Order[] GetOrders()
 		{
@@ -53,40 +45,49 @@ namespace PIO.Bots.ServerLib.Modules
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying Order table");
-			query=new Select(OrderTable.OrderID, OrderTable.CreationDate).From(BotsDB.OrderTable);
+			query=new Select(OrderTable.OrderID, OrderTable.PlanetID, OrderTable.WorkerID).From(BotsDB.OrderTable);
 			return TrySelectMany<OrderTable, Order>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
 
-		public Order CreateOrder()
+		public Order CreateOrder(int PlanetID)
 		{
 			IInsert query;
 			Order item;
 			object result;
-			DateTime date;
 
 
 			LogEnter();
 
-			date = DateTime.Now;
-			Log(LogLevels.Information, $"Inserting into Order table (CreationDate={date})");
-			item=new Order() {CreationDate=date } ;
+			Log(LogLevels.Information, $"Inserting into Order table (PlanetID={PlanetID})");
+			item=new Order() {PlanetID=PlanetID} ;
 			query = new Insert().Into(BotsDB.OrderTable)
-				.Set(OrderTable.CreationDate,item.CreationDate);
+				.Set(OrderTable.PlanetID, item.PlanetID);
 			result=Try(query).OrThrow<PIODataException>("Failed to insert");
 			item.OrderID=Convert.ToInt32(result);
 			return item;
 		}
-/*
-		public void DeleteOrder(int OrderID)
+
+		public void Assign(int OrderID,int WorkerID)
 		{
-			IDelete query;
+			IUpdate query;
 
 			LogEnter();
-			Log(LogLevels.Information, $"Deleting from Order table (OrderID={OrderID})");
-			query=new Delete().From(BotsDB.OrderTable).Where(OrderTable.OrderID.IsEqualTo(OrderID));
-			Try(query).OrThrow<PIODataException>("Failed to delete");
-		}*/
+			Log(LogLevels.Information, $"Updating Order Table (OrderID={OrderID}, WorkerID={WorkerID})");
+			query = new Update(BotsDB.OrderTable).Set(OrderTable.WorkerID, WorkerID).Where(OrderTable.OrderID.IsEqualTo(OrderID));
+			Try(query).OrThrow<PIODataException>("Failed to update");
+		}
+		public void UnAssignAll(int WorkerID)
+		{
+			IUpdate query;
+
+			LogEnter();
+			Log(LogLevels.Information, $"Updating Order Table (WorkerID={WorkerID})");
+			query = new Update(BotsDB.OrderTable).Set(OrderTable.WorkerID, null).Where(OrderTable.WorkerID.IsEqualTo(WorkerID));
+			Try(query).OrThrow<PIODataException>("Failed to update");
+		}
+
+
 
 	}
 }

@@ -26,10 +26,9 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			orderManagerModule.CreateTask(Arg.Any<int>()).Returns(new Task()).AndDoes((x)=>taskCreated++);
 			client = Substitute.For<PIO.ClientLib.PIOServiceReference.IPIOService>();
 			client.GetLastTask(Arg.Any<int>()).Returns((x)=>null);
-
+			client.GetAllWorkers().Returns(new Worker[] { new Worker() { WorkerID=1 } });
 			scheduler = new WorkerScheduler(NullLogger.Instance,client,orderManagerModule, 1);
 			Assert.IsTrue(scheduler.Start());
-			scheduler.Add(1);
 			Thread.Sleep(2000);
 			Assert.IsTrue(scheduler.Stop());
 			Assert.IsTrue(taskCreated > 0);
@@ -47,10 +46,10 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			orderManagerModule.CreateTask(Arg.Any<int>()).Returns(new Task()).AndDoes((x) => taskCreated++);
 			client = Substitute.For<PIO.ClientLib.PIOServiceReference.IPIOService>();
 			client.GetLastTask(Arg.Any<int>()).Returns(new Task());
+			client.GetWorkers(Arg.Any<int>()).Returns(new Worker[] { new Worker() { WorkerID = 1 } });
 
 			scheduler = new WorkerScheduler(NullLogger.Instance, client, orderManagerModule, 1);
 			Assert.IsTrue(scheduler.Start());
-			scheduler.Add(1);
 			Thread.Sleep(2000);
 			Assert.IsTrue(scheduler.Stop());
 			Assert.AreEqual(0, taskCreated);
@@ -70,10 +69,10 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			orderManagerModule.CreateTask(Arg.Any<int>()).Returns(new Task()).AndDoes((x) => taskCreated++);
 			client = Substitute.For<PIO.ClientLib.PIOServiceReference.IPIOService>();
 			client.GetLastTask(Arg.Any<int>()).Returns((x) => { throw new Exception(); });
+			client.GetAllWorkers().Returns(new Worker[] { new Worker() { WorkerID = 1 } });
 
 			scheduler = new WorkerScheduler(logger, client, orderManagerModule, 1);
 			Assert.IsTrue(scheduler.Start());
-			scheduler.Add(1);
 			Thread.Sleep(2000);
 			Assert.IsTrue(scheduler.Stop());
 			Assert.AreEqual(0, taskCreated);
@@ -94,10 +93,10 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			orderManagerModule.CreateTask(Arg.Any<int>()).Returns((x) => { throw new Exception(); });
 			client = Substitute.For<PIO.ClientLib.PIOServiceReference.IPIOService>();
 			client.GetLastTask(Arg.Any<int>()).Returns((x) => null);
+			client.GetAllWorkers().Returns(new Worker[] { new Worker() { WorkerID = 1 } });
 
 			scheduler = new WorkerScheduler(logger, client, orderManagerModule, 1);
 			Assert.IsTrue(scheduler.Start());
-			scheduler.Add(1);
 			Thread.Sleep(2000);
 			Assert.IsTrue(scheduler.Stop());
 			Assert.AreEqual(0, taskCreated);

@@ -15,18 +15,21 @@ namespace PIO.PowerShell
 	public class InvokeCreateProduceOrderCmdlet : BotsCmdLet
 	{
 		[Parameter(Position = 0, ValueFromPipeline = true, Mandatory = true)]
+		public int PlanetID { get; set; }
+
+
+		[Parameter(Position = 1, ValueFromPipeline = true, Mandatory = true)]
 		public int FactoryID { get; set; }
-		
-		
-		
-	
+
+
+
 
 
 		protected override void ProcessRecord()
 		{
 			ProduceOrder result;
 
-			result = Try(()=>client.CreateProduceOrder(FactoryID));
+			result = Try(()=>client.CreateProduceOrder(PlanetID,FactoryID));
 			
 			WriteObject(result);
 		}

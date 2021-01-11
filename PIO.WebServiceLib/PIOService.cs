@@ -96,12 +96,17 @@ namespace PIO.WebServiceLib
 			LogEnter();
 			return Try(() => workerModule.GetWorker(WorkerID)).OrThrow(GenerateFaultException);
 		}
-		public Worker[] GetWorkers(int FactoryID)
+		public Worker[] GetWorkers(int PlanetID)
 		{
 			LogEnter();
-			return Try(() => workerModule.GetWorkers(FactoryID)).OrThrow(GenerateFaultException);
+			return Try(() => workerModule.GetWorkers(PlanetID)).OrThrow(GenerateFaultException);
 		}
-		
+		public Worker[] GetAllWorkers()
+		{
+			LogEnter();
+			return Try(() => workerModule.GetWorkers()).OrThrow(GenerateFaultException);
+		}
+
 		public Factory GetFactory(int FactoryID)
 		{
 			LogEnter();

@@ -34,7 +34,10 @@ namespace PIO.ClientLib.PIOServiceReference {
         PIO.Models.Worker GetWorker(int WorkerID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetWorkers", ReplyAction="http://tempuri.org/IPIOService/GetWorkersResponse")]
-        PIO.Models.Worker[] GetWorkers(int FactoryID);
+        PIO.Models.Worker[] GetWorkers(int PlanetID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetAllWorkers", ReplyAction="http://tempuri.org/IPIOService/GetAllWorkersResponse")]
+        PIO.Models.Worker[] GetAllWorkers();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetStack", ReplyAction="http://tempuri.org/IPIOService/GetStackResponse")]
         PIO.Models.Stack GetStack(int StackID);
@@ -175,8 +178,12 @@ namespace PIO.ClientLib.PIOServiceReference {
             return base.Channel.GetWorker(WorkerID);
         }
         
-        public PIO.Models.Worker[] GetWorkers(int FactoryID) {
-            return base.Channel.GetWorkers(FactoryID);
+        public PIO.Models.Worker[] GetWorkers(int PlanetID) {
+            return base.Channel.GetWorkers(PlanetID);
+        }
+        
+        public PIO.Models.Worker[] GetAllWorkers() {
+            return base.Channel.GetAllWorkers();
         }
         
         public PIO.Models.Stack GetStack(int StackID) {

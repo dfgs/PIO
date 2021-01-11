@@ -16,27 +16,72 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 	[TestClass]
 	public class OrderManagerModuleUnitTest
 	{
-		
+
+		[TestMethod]
+		public void ShouldGetWaitingProduceOrders()
+		{
+			IOrderModule orderModule;
+			IProduceOrderModule produceOrderModule;
+			OrderManagerModule module;
+			ProduceOrder[] result;
+
+			orderModule = Substitute.For<IOrderModule>();
+			produceOrderModule = Substitute.For<IProduceOrderModule>();
+			produceOrderModule.GetProduceOrders(Arg.Any<int>()).Returns(new ProduceOrder[] { new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, FactoryID = 1 }, new ProduceOrder() { OrderID = 2, ProduceOrderID = 2, FactoryID = 2 } });
+
+			module = new OrderManagerModule(NullLogger.Instance, null, orderModule, produceOrderModule, 10);
+			result = module.GetWaitingProduceOrders(1);
+			Assert.IsNotNull(result);
+			Assert.AreEqual(2, result.Length);
+
+		}
+
+		[TestMethod]
+		public void ShouldNotGetWaitingProduceOrders()
+		{
+			IOrderModule orderModule;
+			IProduceOrderModule produceOrderModule;
+			OrderManagerModule module;
+			MemoryLogger logger;
+
+
+			logger = new MemoryLogger();
+
+			orderModule = Substitute.For<IOrderModule>();
+			produceOrderModule = Substitute.For<IProduceOrderModule>();
+			produceOrderModule.GetProduceOrders(Arg.Any<int>()).Returns((x) => { throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest"); });
+
+			module = new OrderManagerModule(logger, null, orderModule, produceOrderModule, 10);
+			Assert.ThrowsException<PIOInternalErrorException>(() => module.GetWaitingProduceOrders(1));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName == module.ModuleName)));
+
+		}
+
 		[TestMethod]
 		public void ShouldCreateProduceOrder()
 		{
+			ClientLib.PIOServiceReference.IPIOService client;
 			IOrderModule orderModule;
 			IProduceOrderModule produceOrderModule;
 			OrderManagerModule module;
 			ProduceOrder result;
 
 			orderModule = Substitute.For<IOrderModule>();
-			orderModule.CreateOrder().Returns(new Order() { OrderID=1});
+			orderModule.CreateOrder(Arg.Any<int>()).Returns(new Order() { OrderID=1});
 			produceOrderModule = Substitute.For<IProduceOrderModule>();
 			produceOrderModule.CreateProduceOrder(Arg.Any<int>(),Arg.Any<int>()).Returns(new ProduceOrder() { OrderID = 1,ProduceOrderID=1,FactoryID=1 });
 
-			module = new OrderManagerModule(NullLogger.Instance,null, orderModule,produceOrderModule,10);
-			result = module.CreateProduceOrder(1);
+			client = Substitute.For<PIO.ClientLib.PIOServiceReference.IPIOService>();
+			client.GetFactory(Arg.Any<int>()).Returns(new Factory() { PlanetID = 1 });
+
+
+			module = new OrderManagerModule(NullLogger.Instance,client, orderModule,produceOrderModule,10);
+			result = module.CreateProduceOrder(1,1);
 			Assert.AreEqual(1, module.ProduceOrderCount);
 			Assert.IsNotNull(result);
 			Assert.AreEqual(1, result.FactoryID);
 
-			result = module.CreateProduceOrder(1);
+			result = module.CreateProduceOrder(1,1);
 			Assert.AreEqual(2, module.ProduceOrderCount);
 			Assert.IsNotNull(result);
 			Assert.AreEqual(1, result.FactoryID);
@@ -53,34 +98,43 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			OrderManagerModule module;
 			MemoryLogger logger;
 
-
 			logger = new MemoryLogger();
 
 			orderModule = Substitute.For<IOrderModule>();
-			orderModule.CreateOrder().Returns((x)=> { throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest"); });
-			produceOrderModule = Substitute.For<IProduceOrderModule>();
-			produceOrderModule.CreateProduceOrder(Arg.Any<int>(), Arg.Any<int>()).Returns(new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, FactoryID = 1 });
-
-			module = new OrderManagerModule(logger, null, orderModule, produceOrderModule, 10);
-			Assert.ThrowsException<PIOInternalErrorException>(() => module.CreateProduceOrder(1));
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
-			Assert.AreEqual(0, module.ProduceOrderCount);
-
-
-			logger = new MemoryLogger();
-
-			orderModule = Substitute.For<IOrderModule>();
-			orderModule.CreateOrder().Returns(new Order() { OrderID = 1 });
+			orderModule.CreateOrder(Arg.Any<int>()).Returns(new Order() { OrderID = 1 });
 			produceOrderModule = Substitute.For<IProduceOrderModule>();
 			produceOrderModule.CreateProduceOrder(Arg.Any<int>(), Arg.Any<int>()).Returns((x) => { throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest"); });
 
 			module = new OrderManagerModule(logger, null, orderModule, produceOrderModule, 10);
-			Assert.ThrowsException<PIOInternalErrorException>(() => module.CreateProduceOrder(1));
+			Assert.ThrowsException<PIOInternalErrorException>(() => module.CreateProduceOrder(1,1));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName == module.ModuleName)));
 			Assert.AreEqual(0, module.ProduceOrderCount);
 		}
 
+		[TestMethod]
+		public void ShouldNotCreateProduceOrderIfFactoryIsNotInSamePlanet()
+		{
+			ClientLib.PIOServiceReference.IPIOService client;
+			IOrderModule orderModule;
+			IProduceOrderModule produceOrderModule;
+			OrderManagerModule module;
+			MemoryLogger logger;
 
+			logger = new MemoryLogger();
+
+			orderModule = Substitute.For<IOrderModule>();
+			orderModule.CreateOrder(Arg.Any<int>()).Returns(new Order() { OrderID = 1 });
+			produceOrderModule = Substitute.For<IProduceOrderModule>();
+			produceOrderModule.CreateProduceOrder(Arg.Any<int>(), Arg.Any<int>()).Returns(new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, FactoryID = 1 });
+
+			client = Substitute.For<PIO.ClientLib.PIOServiceReference.IPIOService>();
+			client.GetFactory(Arg.Any<int>()).Returns(new Factory() { PlanetID = 2 });
+
+			module = new OrderManagerModule(logger, client, orderModule, produceOrderModule, 10);
+			Assert.ThrowsException<PIOInvalidOperationException>(() => module.CreateProduceOrder(1, 1));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Warning) && (item.ComponentName == module.ModuleName)));
+			Assert.AreEqual(0, module.ProduceOrderCount);
+		}
 
 
 		[TestMethod]
@@ -149,7 +203,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			client.WorkerIsInBuilding(Arg.Any<int>(), Arg.Any<int>()).Returns(true);
 
 			orderModule = Substitute.For<IOrderModule>();
-			orderModule.CreateOrder().Returns(new Order() { OrderID = 1 });
+			orderModule.CreateOrder(Arg.Any<int>()).Returns(new Order() { OrderID = 1 });
 			produceOrderModule = Substitute.For<IProduceOrderModule>();
 			produceOrderModule.GetProduceOrders().Returns(new ProduceOrder[] { new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, FactoryID = 1 } });
 
@@ -182,7 +236,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			client.WorkerIsInBuilding(Arg.Any<int>(), Arg.Any<int>()).Returns(true);
 
 			orderModule = Substitute.For<IOrderModule>();
-			orderModule.CreateOrder().Returns(new Order() { OrderID = 1 });
+			orderModule.CreateOrder(Arg.Any<int>()).Returns(new Order() { OrderID = 1 });
 			produceOrderModule = Substitute.For<IProduceOrderModule>();
 			produceOrderModule.GetProduceOrders().Returns(new ProduceOrder[] { new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, FactoryID = 1 } });
 
@@ -208,7 +262,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			client.WorkerIsInBuilding(Arg.Any<int>(), Arg.Any<int>()).Returns(false);
 
 			orderModule = Substitute.For<IOrderModule>();
-			orderModule.CreateOrder().Returns(new Order() { OrderID = 1 });
+			orderModule.CreateOrder(Arg.Any<int>()).Returns(new Order() { OrderID = 1 });
 			produceOrderModule = Substitute.For<IProduceOrderModule>();
 			produceOrderModule.GetProduceOrders().Returns(new ProduceOrder[] { new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, FactoryID = 1 } });
 
@@ -236,7 +290,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			client.WorkerIsInBuilding(Arg.Any<int>(), Arg.Any<int>()).Returns(true);
 
 			orderModule = Substitute.For<IOrderModule>();
-			orderModule.CreateOrder().Returns(new Order() { OrderID = 1 });
+			orderModule.CreateOrder(Arg.Any<int>()).Returns(new Order() { OrderID = 1 });
 			produceOrderModule = Substitute.For<IProduceOrderModule>();
 			produceOrderModule.GetProduceOrders().Returns(new ProduceOrder[] { new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, FactoryID = 1 } });
 
@@ -261,7 +315,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			client.WorkerIsInBuilding(Arg.Any<int>(), Arg.Any<int>()).Returns(true);
 
 			orderModule = Substitute.For<IOrderModule>();
-			orderModule.CreateOrder().Returns(new Order() { OrderID = 1 });
+			orderModule.CreateOrder(Arg.Any<int>()).Returns(new Order() { OrderID = 1 });
 			produceOrderModule = Substitute.For<IProduceOrderModule>();
 			produceOrderModule.GetProduceOrders().Returns(new ProduceOrder[] { new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, FactoryID = 1 } });
 
@@ -288,7 +342,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			client.WorkerIsInBuilding(Arg.Any<int>(), Arg.Any<int>()).Returns(false);
 
 			orderModule = Substitute.For<IOrderModule>();
-			orderModule.CreateOrder().Returns(new Order() { OrderID = 1 });
+			orderModule.CreateOrder(Arg.Any<int>()).Returns(new Order() { OrderID = 1 });
 			produceOrderModule = Substitute.For<IProduceOrderModule>();
 			produceOrderModule.GetProduceOrders().Returns(new ProduceOrder[] { new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, FactoryID = 1 } });
 
@@ -299,32 +353,69 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			Assert.AreEqual(TaskTypeIDs.MoveTo, result.TaskTypeID);
 		}
 
-		/*[TestMethod]
-		public void ShouldNotReturnProduceTaskAndLogError()
+		[TestMethod]
+		public void ShouldUnassignAll()
 		{
 			IOrderModule orderModule;
-			IProduceOrderModule produceOrderModule;
-			ClientLib.PIOServiceReference.IPIOService client;
-			MemoryLogger logger;
 			OrderManagerModule module;
+
+			orderModule = Substitute.For<IOrderModule>();
+			orderModule.When(x=>x.UnAssignAll(Arg.Any<int>())).Do(x=> { return; });
+
+			module = new OrderManagerModule(NullLogger.Instance, null, orderModule, null, 10);
+			module.UnassignAll(1) ;
+			
+		}
+
+
+		[TestMethod]
+		public void ShouldAssignOrder()
+		{
+			IOrderModule orderModule;
+			OrderManagerModule module;
+
+			orderModule = Substitute.For<IOrderModule>();
+			orderModule.When(x => x.Assign(Arg.Any<int>(), Arg.Any<int>())).Do(x => { return; });
+
+			module = new OrderManagerModule(NullLogger.Instance, null, orderModule, null, 10);
+			module.Assign(1,1);
+
+		}
+
+		[TestMethod]
+		public void ShouldNotUnassignAll()
+		{
+			IOrderModule orderModule;
+			OrderManagerModule module;
+			MemoryLogger logger;
 
 			logger = new MemoryLogger();
 
-			client = Substitute.For<PIO.ClientLib.PIOServiceReference.IPIOService>();
-			client.Produce(Arg.Any<int>()).Returns(new Task() { TaskTypeID = TaskTypeIDs.Produce, WorkerID = 1 });
-			client.HasEnoughResourcesToProduce(Arg.Any<int>()).Returns(true);
-			client.WorkerIsInFactory(Arg.Any<int>(), Arg.Any<int>()).Returns(true);
+			orderModule = Substitute.For<IOrderModule>();
+			orderModule.When(x => x.UnAssignAll(Arg.Any<int>())).Do(x => { throw new Exception(); });
+
+			module = new OrderManagerModule(logger, null, orderModule, null, 10);
+			Assert.ThrowsException<PIOInternalErrorException>(() => module.UnassignAll(1));
+
+		}
+
+
+		[TestMethod]
+		public void ShouldNotAssignOrder()
+		{
+			IOrderModule orderModule;
+			OrderManagerModule module;
+			MemoryLogger logger;
+
+			logger = new MemoryLogger();
 
 			orderModule = Substitute.For<IOrderModule>();
-			orderModule.CreateOrder().Returns(new Order() { OrderID = 1 });
-			produceOrderModule = Substitute.For<IProduceOrderModule>();
-			produceOrderModule.GetProduceOrders().Returns(new ProduceOrder[] { new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, FactoryID = 1 } });
+			orderModule.When(x => x.Assign(Arg.Any<int>(), Arg.Any<int>())).Do(x => { throw new Exception(); });
 
-			module = new OrderManagerModule(logger, client, orderModule, produceOrderModule, 10);
-			Assert.ThrowsException<PIOInternalErrorException>(() => module.CreateTask(1));
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName == module.ModuleName)));
-		}*/
+			module = new OrderManagerModule(logger, null, orderModule, null, 10);
+			Assert.ThrowsException<PIOInternalErrorException>(()=> module.Assign(1, 1));
 
+		}
 
 
 	}

@@ -90,7 +90,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			Assert.AreEqual(0, schedulerModule.Count);
 
 		}
-
+		
 		[TestMethod]
 		public void ShouldNotCarryToWhenFactoryHasNotEnoughResourcesToCarryTo()
 		{
@@ -151,7 +151,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			ITaskModule taskModule;
 			MockedSchedulerModule schedulerModule;
 
-			buildingModule = new MockedBuildingModule(false, new Building() { X = 10, Y = 10 });
+			buildingModule = new MockedBuildingModule(false, new Building() { X = 10, Y = 10,BuildingID=2 });
 			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, PlanetID = 1 });
 			stackModule = new MockedStackModule(false, new Stack() { StackID = 0, BuildingID = 1, ResourceTypeID = ResourceTypeIDs.Plank, Quantity = 10 });
 			taskModule = new MockedTaskModule(false);
@@ -165,6 +165,34 @@ namespace PIO.UnitTest.ServerLib.Modules
 			Assert.AreEqual(0, schedulerModule.Count);
 
 		}
+
+		[TestMethod]
+		public void ShouldNotCarryToWhenTargetFactoryIsNotOnSamePlanet()
+		{
+			MemoryLogger logger;
+			CarrierModule module;
+			IBuildingModule buildingModule;
+			IWorkerModule workerModule;
+			IStackModule stackModule;
+			ITaskModule taskModule;
+			MockedSchedulerModule schedulerModule;
+
+			buildingModule = new MockedBuildingModule(false, new Building() { X = 0, Y = 0, PlanetID = 1, BuildingID = 1 }, new Building() { X = 10, Y = 10 ,PlanetID=2,BuildingID=2});
+			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, PlanetID = 1 });
+			stackModule = new MockedStackModule(false, new Stack() { StackID = 0, BuildingID = 1, ResourceTypeID = ResourceTypeIDs.Plank, Quantity = 10 });
+			taskModule = new MockedTaskModule(false);
+
+			logger = new MemoryLogger();
+			module = new CarrierModule(logger, taskModule, workerModule, buildingModule, stackModule);
+			schedulerModule = new MockedSchedulerModule(false, module);
+
+			Assert.ThrowsException<PIOInvalidOperationException>(() => module.BeginCarryTo(1, 2, ResourceTypeIDs.Wood));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Warning) && (item.ComponentName == module.ModuleName)));
+			Assert.AreEqual(0, schedulerModule.Count);
+
+		}
+
+
 		[TestMethod]
 		public void ShouldThrowExceptionAndLogErrorWhenSubModuleFails()
 		{

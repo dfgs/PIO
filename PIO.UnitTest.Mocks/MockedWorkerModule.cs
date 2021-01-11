@@ -24,7 +24,10 @@ namespace PIO.UnitTest.Mocks
 		{
 			throw new NotImplementedException();
 		}
-
+		public Worker[] GetWorkers()
+		{
+			throw new NotImplementedException();
+		}
 		public void UpdateWorker(int WorkerID, int X, int Y)
 		{
 			if (UpdateWorkerDelegate == null) throw new NotImplementedException("UpdateWorkerDelegate");

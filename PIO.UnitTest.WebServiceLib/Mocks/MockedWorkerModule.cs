@@ -27,6 +27,11 @@ namespace PIO.UnitTest.WebServiceLib.Mocks
 			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
 			return Generate((t) => new Worker() { WorkerID = t, PlanetID = PlanetID});
 		}
+		public Worker[] GetWorkers()
+		{
+			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
+			return Generate((t) => new Worker() { WorkerID = t, PlanetID = 1 });
+		}
 
 		public void UpdateWorker(int WorkerID, int X,int Y)
 		{

@@ -9,7 +9,7 @@ namespace PIO.Bots.ServerLib.Modules
 {
 	public interface IWorkerScheduler:IThreadModule
 	{
-		void Add(int WorkerID);
+		//void Add(int WorkerID);
 	
 	}
 }

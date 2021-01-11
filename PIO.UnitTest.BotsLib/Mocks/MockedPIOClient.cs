@@ -199,6 +199,10 @@ namespace PIO.UnitTest.BotsLib.Mocks
 		{
 			throw new NotImplementedException();
 		}
+		public Worker[] GetAllWorkers()
+		{
+			throw new NotImplementedException();
+		}
 
 		public bool HasEnoughResourcesToProduce(int FactoryID)
 		{

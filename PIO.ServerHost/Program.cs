@@ -66,6 +66,7 @@ namespace PIO.ServerHost
 
 			//logger = new ConsoleLogger(new DefaultLogFormatter());
 			logger = new UnicastLogger(IPAddress.Loopback, Properties.Settings.Default.UnicastPort);
+			//logger = new FileLogger(new DefaultLogFormatter(), "PIO.ServerHost.Log");
 
 			databaseCreator = new SqlDatabaseCreator(Properties.Settings.Default.Server, Properties.Settings.Default.DatabaseName);
 			connectionFactory = new SqlConnectionFactory(Properties.Settings.Default.Server, Properties.Settings.Default.DatabaseName);

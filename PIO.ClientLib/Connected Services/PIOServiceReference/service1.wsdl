@@ -49,6 +49,12 @@
   <wsdl:message name="IPIOService_GetWorkers_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetWorkersResponse" />
   </wsdl:message>
+  <wsdl:message name="IPIOService_GetAllWorkers_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllWorkers" />
+  </wsdl:message>
+  <wsdl:message name="IPIOService_GetAllWorkers_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllWorkersResponse" />
+  </wsdl:message>
   <wsdl:message name="IPIOService_GetStack_InputMessage">
     <wsdl:part name="parameters" element="tns:GetStack" />
   </wsdl:message>
@@ -252,6 +258,10 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetWorkers" message="tns:IPIOService_GetWorkers_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/GetWorkersResponse" message="tns:IPIOService_GetWorkers_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="GetAllWorkers">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetAllWorkers" message="tns:IPIOService_GetAllWorkers_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/GetAllWorkersResponse" message="tns:IPIOService_GetAllWorkers_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="GetStack">
       <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetStack" message="tns:IPIOService_GetStack_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/GetStackResponse" message="tns:IPIOService_GetStack_OutputMessage" />
@@ -427,6 +437,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetWorkers">
       <soap:operation soapAction="http://tempuri.org/IPIOService/GetWorkers" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAllWorkers">
+      <soap:operation soapAction="http://tempuri.org/IPIOService/GetAllWorkers" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

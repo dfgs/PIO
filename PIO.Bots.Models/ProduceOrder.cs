@@ -8,12 +8,10 @@ using System.Threading.Tasks;
 namespace PIO.Bots.Models
 {
 	[DataContract]
-	public class ProduceOrder
+	public class ProduceOrder:Order
 	{
 		[DataMember]
 		public int ProduceOrderID { get; set; }
-		[DataMember]
-		public int OrderID { get; set; }
 		[DataMember]
 		public int FactoryID { get; set; }
 	}

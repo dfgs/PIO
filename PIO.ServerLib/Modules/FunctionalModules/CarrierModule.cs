@@ -45,6 +45,11 @@ namespace PIO.ServerLib.Modules
 			building = AssertExists(() => buildingModule.GetBuilding(worker.PlanetID, worker.X, worker.Y), $"X={worker.X}, Y={worker.Y}");
 
 			targetBuilding=AssertExists(() => buildingModule.GetBuilding(TargetBuildingID), $"BuildingID={TargetBuildingID}");
+			if (targetBuilding.PlanetID!=building.PlanetID)
+			{
+				Log(LogLevels.Warning, $"Worker is not in the same planet as target building (WorkerID={WorkerID})");
+				throw new PIOInvalidOperationException($"Worker is not in the same planet as target building (WorkerID={WorkerID})", null, ID, ModuleName, "BeginCarryTo");
+			}
 
 			Log(LogLevels.Information, $"Check stack quantity (BuildingID={building.BuildingID}, ResourceTypeID={ResourceTypeID})");
 			stack=Try(() => stackModule.GetStack(building.BuildingID, ResourceTypeID)).OrThrow<PIOInternalErrorException>("Failed to get stack");

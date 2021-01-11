@@ -26,7 +26,9 @@ namespace PIO.Models
 		[OperationContract]
 		Worker GetWorker(int WorkerID);
 		[OperationContract]
-		Worker[] GetWorkers(int FactoryID);
+		Worker[] GetWorkers(int PlanetID);
+		[OperationContract]
+		Worker[] GetAllWorkers();
 		[OperationContract]
 		Stack GetStack(int StackID);
 		[OperationContract]

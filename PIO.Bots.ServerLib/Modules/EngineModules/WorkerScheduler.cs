@@ -2,12 +2,14 @@
 using ModuleLib;
 using PIO.Bots.Models.Modules;
 using PIO.ClientLib.PIOServiceReference;
+using PIO.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using IPIOService = PIO.ClientLib.PIOServiceReference.IPIOService;
 
 namespace PIO.Bots.ServerLib.Modules
 {
@@ -23,17 +25,42 @@ namespace PIO.Bots.ServerLib.Modules
 			this.retryDelay = RetryDelay;
 		}
 
-		public void Add(int WorkerID)
+		/*public void Add(int WorkerID)
 		{
 			Add(DateTime.Now, WorkerID);
+		}*/
+
+		protected override void OnStarting()
+		{
+			Worker[] items;
+
+			LogEnter();
+
+			Log(LogLevels.Information, $"Loading existing workers");
+			if (!Try(() => client.GetAllWorkers()).OrAlert(out items, "Failed to load Workers")) return;
+
+			foreach (Worker item in items)
+			{
+				Add(DateTime.Now, item.WorkerID);
+			}
 		}
-		
+
+
 		protected override void OnTriggerEvent(int WorkerID)
 		{
 			PIO.Models.Task task;
 			bool result;
 
 			LogEnter();
+			#region clear worker assignment
+			Log(LogLevels.Information, $"Clearing worker assignment (WorkerID={WorkerID})");
+			result = Try(() => orderManager.UnassignAll(WorkerID)).OrAlert($"Failed to clear worker assignment (WorkerID={WorkerID})");
+			if (!result)
+			{
+				Add(DateTime.Now.AddSeconds(retryDelay), WorkerID);
+				return;
+			}
+			#endregion
 
 			#region check if worker is idle
 			Log(LogLevels.Information, $"Checking if worker is idle (WorkerID={WorkerID})");
@@ -52,7 +79,6 @@ namespace PIO.Bots.ServerLib.Modules
 			}
 			#endregion
 			
-
 			#region enqueue new task
 			Log(LogLevels.Information, $"Running new task (WorkerID={WorkerID})");
 			result=Try(() => orderManager.CreateTask(WorkerID) ).OrAlert(out task, $"Failed to run new task (WorkerID={WorkerID})");

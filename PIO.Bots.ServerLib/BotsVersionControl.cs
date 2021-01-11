@@ -31,7 +31,7 @@ namespace PIO.Bots.ServerLib
 			switch (Version)
 			{
 				case 1:
-					yield return new CreateTable(BotsDB.OrderTable, OrderTable.OrderID,OrderTable.CreationDate);
+					yield return new CreateTable(BotsDB.OrderTable, OrderTable.OrderID,OrderTable.PlanetID, OrderTable.WorkerID);
 					yield return new CreateTable(BotsDB.ProduceOrderTable, ProduceOrderTable.ProduceOrderID, ProduceOrderTable.OrderID, ProduceOrderTable.FactoryID);
 					break;
 				case 2:

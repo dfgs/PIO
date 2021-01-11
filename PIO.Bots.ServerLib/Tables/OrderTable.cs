@@ -11,6 +11,7 @@ namespace PIO.Bots.ServerLib.Tables
 	public class OrderTable:Table
 	{
 		public static readonly Column<int> OrderID = new Column<int>() { Constraint = NetORMLib.ColumnConstraints.PrimaryKey, IsIdentity = true };
-		public static readonly Column<DateTime> CreationDate = new Column<DateTime>() ;
+		public static readonly Column<int> PlanetID = new Column<int>() ;
+		public static readonly Column<int> WorkerID = new Column<int>() { IsNullable = true };
 	}
 }

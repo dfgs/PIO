@@ -46,6 +46,24 @@ namespace PIO.UnitTest.ServerLib.Modules
 			}
 		}
 		[TestMethod]
+		public void ShouldGetAllWorkers()
+		{
+			MockedDatabase<Worker> database;
+			WorkerModule module;
+			Worker[] results;
+
+			database = new MockedDatabase<Worker>(false, 3, (t) => new Worker() { WorkerID = t, PlanetID = 2 });
+			module = new WorkerModule(NullLogger.Instance, database);
+			results = module.GetWorkers();
+			Assert.IsNotNull(results);
+			Assert.AreEqual(3, results.Length);
+			for (int t = 0; t < 3; t++)
+			{
+				Assert.IsNotNull(results[t]);
+				Assert.AreEqual(t, results[t].WorkerID);
+			}
+		}
+		[TestMethod]
 		public void ShouldNotGetWorkerAndLogError()
 		{
 			MockedDatabase<Worker> database;
@@ -74,7 +92,20 @@ namespace PIO.UnitTest.ServerLib.Modules
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
 		}
 
+		[TestMethod]
+		public void ShouldNotGetAllWorkersAndLogError()
+		{
+			MockedDatabase<Worker> database;
+			WorkerModule module;
+			MemoryLogger logger;
 
+
+			logger = new MemoryLogger();
+			database = new MockedDatabase<Worker>(true, 3, (t) => new Worker() { WorkerID = t });
+			module = new WorkerModule(logger, database);
+			Assert.ThrowsException<PIODataException>(() => module.GetWorkers());
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName == module.ModuleName)));
+		}
 
 
 		[TestMethod]

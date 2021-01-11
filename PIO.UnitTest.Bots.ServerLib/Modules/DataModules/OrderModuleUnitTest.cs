@@ -51,7 +51,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 				Assert.AreEqual(t+1, results[t].OrderID);
 			}
 		}
-		
+
 		[TestMethod]
 		public void ShouldNotGetOrderAndLogError()
 		{
@@ -101,8 +101,9 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 
 			module = new OrderModule(NullLogger.Instance, database);
 
-			result = module.CreateOrder();
+			result = module.CreateOrder(1);
 			Assert.IsNotNull(result);
+			Assert.AreEqual(1, result.PlanetID);
 			Assert.AreEqual(1, inserted);
 		}
 
@@ -119,8 +120,67 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			database.When(x => x.Execute(Arg.Any<IQuery[]>())).Do(x => { throw new Exception(); });
 
 			module = new OrderModule(logger, database);
-			Assert.ThrowsException<PIODataException>(() => module.CreateOrder());
+			Assert.ThrowsException<PIODataException>(() => module.CreateOrder(1));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName == module.ModuleName)));
+		}
+
+		[TestMethod]
+		public void ShouldAssignOrder()
+		{
+			OrderModule module;
+			IDatabase database;
+			int updated = 0;
+
+			database = Substitute.For<IDatabase>();
+			database.When(x => x.Execute(Arg.Any<IUpdate>())).Do(x => updated++);
+
+			module = new OrderModule(NullLogger.Instance, database);
+			module.Assign(1, 1);
+			Assert.AreEqual(1, updated);
+		}
+		[TestMethod]
+		public void ShouldUnAssignAll()
+		{
+			OrderModule module;
+			IDatabase database;
+			int updated = 0;
+
+			database = Substitute.For<IDatabase>();
+			database.When(x => x.Execute(Arg.Any<IUpdate>())).Do(x => updated++);
+
+			module = new OrderModule(NullLogger.Instance, database);
+			module.UnAssignAll(1);
+			Assert.AreEqual(1, updated);
+		}
+		[TestMethod]
+		public void ShouldNotAssignOrder()
+		{
+			OrderModule module;
+			IDatabase database;
+			MemoryLogger logger;
+
+			logger = new MemoryLogger();
+
+			database = Substitute.For<IDatabase>();
+			database.When(x => x.Execute(Arg.Any<IUpdate>())).Do(x => { throw new Exception(); });
+
+			module = new OrderModule(logger, database);
+			Assert.ThrowsException<PIODataException>(() => module.Assign(1,1));
+		}
+		[TestMethod]
+		public void ShouldNotUnAssignAll()
+		{
+			OrderModule module;
+			IDatabase database;
+			MemoryLogger logger;
+
+			logger = new MemoryLogger();
+
+			database = Substitute.For<IDatabase>();
+			database.When(x => x.Execute(Arg.Any<IUpdate>())).Do(x => { throw new Exception(); });
+
+			module = new OrderModule(logger, database);
+			Assert.ThrowsException<PIODataException>(() => module.UnAssignAll(1));
 		}
 
 

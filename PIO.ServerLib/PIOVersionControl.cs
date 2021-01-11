@@ -108,8 +108,8 @@ namespace PIO.ServerLib
 					#endregion
 
 					#region create Product
-					yield return new Insert().Into(PIODB.ProductTable).Set(ProductTable.FactoryTypeID, FactoryTypeIDs.Forest).Set(ProductTable.ResourceTypeID, ResourceTypeIDs.Wood).Set(ProductTable.Quantity, 2).Set(ProductTable.Duration, 6);
-					yield return new Insert().Into(PIODB.ProductTable).Set(ProductTable.FactoryTypeID, FactoryTypeIDs.Sawmill).Set(ProductTable.ResourceTypeID, ResourceTypeIDs.Plank).Set(ProductTable.Quantity, 2).Set(ProductTable.Duration, 6);
+					yield return new Insert().Into(PIODB.ProductTable).Set(ProductTable.FactoryTypeID, FactoryTypeIDs.Forest).Set(ProductTable.ResourceTypeID, ResourceTypeIDs.Wood).Set(ProductTable.Quantity, 2).Set(ProductTable.Duration, 30);
+					yield return new Insert().Into(PIODB.ProductTable).Set(ProductTable.FactoryTypeID, FactoryTypeIDs.Sawmill).Set(ProductTable.ResourceTypeID, ResourceTypeIDs.Plank).Set(ProductTable.Quantity, 2).Set(ProductTable.Duration, 30);
 					#endregion
 
 					#region create startup Planet
@@ -142,6 +142,7 @@ namespace PIO.ServerLib
 					#region create startup Worker
 					yield return new Insert().Into(PIODB.WorkerTable).Set(WorkerTable.PlanetID,planetID).Set(WorkerTable.X,0).Set(WorkerTable.Y,1);
 					yield return new SelectIdentity((result) => workerID = Convert.ToInt32(result));
+					yield return new Insert().Into(PIODB.WorkerTable).Set(WorkerTable.PlanetID, planetID).Set(WorkerTable.X, 0).Set(WorkerTable.Y, 2);
 					#endregion
 
 

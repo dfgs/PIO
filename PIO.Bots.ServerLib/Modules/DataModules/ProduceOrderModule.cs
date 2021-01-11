@@ -32,34 +32,68 @@ namespace PIO.Bots.ServerLib.Modules
 			LogEnter();
 			
 			Log(LogLevels.Information, $"Querying ProduceOrder table (ProduceOrderID={ProduceOrderID})");
-			query=new Select(ProduceOrderTable.ProduceOrderID, ProduceOrderTable.OrderID, ProduceOrderTable.FactoryID).From(BotsDB.ProduceOrderTable).Where(ProduceOrderTable.ProduceOrderID.IsEqualTo(ProduceOrderID));
+			query=new Select(OrderTable.OrderID, OrderTable.PlanetID,OrderTable.WorkerID, ProduceOrderTable.ProduceOrderID, ProduceOrderTable.OrderID, ProduceOrderTable.FactoryID )
+				.From(BotsDB.ProduceOrderTable.Join(BotsDB.OrderTable.On(ProduceOrderTable.OrderID,OrderTable.OrderID)))
+				.Where(ProduceOrderTable.ProduceOrderID.IsEqualTo(ProduceOrderID));
 			return TrySelectFirst<ProduceOrderTable, ProduceOrder>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
-		
+
 		public ProduceOrder[] GetProduceOrders()
 		{
 			ISelect query;
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying ProduceOrder table");
-			query=new Select(ProduceOrderTable.ProduceOrderID, ProduceOrderTable.OrderID, ProduceOrderTable.FactoryID).From(BotsDB.ProduceOrderTable);
+			query = new Select(OrderTable.OrderID, OrderTable.PlanetID, OrderTable.WorkerID, ProduceOrderTable.ProduceOrderID, ProduceOrderTable.OrderID, ProduceOrderTable.FactoryID)
+								.From(BotsDB.ProduceOrderTable.Join(BotsDB.OrderTable.On(ProduceOrderTable.OrderID, OrderTable.OrderID)));
 			return TrySelectMany<ProduceOrderTable, ProduceOrder>(query).OrThrow<PIODataException>("Failed to query");
 		}
+		public ProduceOrder[] GetProduceOrders(int PlanetID)
+		{
+			ISelect query;
+			LogEnter();
 
-		public ProduceOrder CreateProduceOrder(int OrderID,int FactoryID)
+			Log(LogLevels.Information, $"Querying ProduceOrder table");
+			query = new Select(OrderTable.OrderID, OrderTable.PlanetID, OrderTable.WorkerID, ProduceOrderTable.ProduceOrderID, ProduceOrderTable.OrderID, ProduceOrderTable.FactoryID)
+				.From(BotsDB.ProduceOrderTable.Join(BotsDB.OrderTable.On(ProduceOrderTable.OrderID, OrderTable.OrderID)))
+				.Where(OrderTable.PlanetID.IsEqualTo(PlanetID));
+			return TrySelectMany<ProduceOrderTable, ProduceOrder>(query).OrThrow<PIODataException>("Failed to query");
+		}
+		public ProduceOrder[] GetWaitingProduceOrders(int PlanetID)
+		{
+			ISelect query;
+			LogEnter();
+
+			Log(LogLevels.Information, $"Querying ProduceOrder table");
+			query = new Select(OrderTable.OrderID, OrderTable.PlanetID, OrderTable.WorkerID, ProduceOrderTable.ProduceOrderID, ProduceOrderTable.OrderID, ProduceOrderTable.FactoryID)
+				.From(BotsDB.ProduceOrderTable.Join(BotsDB.OrderTable.On(ProduceOrderTable.OrderID, OrderTable.OrderID)))
+				.Where(OrderTable.PlanetID.IsEqualTo(PlanetID).And(OrderTable.WorkerID.IsNull()));
+			return TrySelectMany<ProduceOrderTable, ProduceOrder>(query).OrThrow<PIODataException>("Failed to query");
+		}
+		public ProduceOrder CreateProduceOrder(int PlanetID,int FactoryID)
 		{
 			IInsert query;
 			ProduceOrder item;
 			object result;
 
 			LogEnter();
-			Log(LogLevels.Information, $"Inserting into ProduceOrder table (OrderID={OrderID}, FactoryID={FactoryID})");
-			item=new ProduceOrder() {OrderID=OrderID,FactoryID=FactoryID };
+
+			item = new ProduceOrder() {PlanetID=PlanetID,FactoryID = FactoryID };
+
+			Log(LogLevels.Information, $"Inserting into Order table (PlanetID={item.PlanetID})");
+			query = new Insert().Into(BotsDB.OrderTable)
+				.Set(OrderTable.PlanetID, item.PlanetID);
+			result = Try(query).OrThrow<PIODataException>("Failed to insert");
+			
+			item.OrderID = Convert.ToInt32(result);
+
+			Log(LogLevels.Information, $"Inserting into ProduceOrder table (OrderID={item.OrderID}, FactoryID={FactoryID})");
 			query = new Insert().Into(BotsDB.ProduceOrderTable)
 					.Set(ProduceOrderTable.OrderID, item.OrderID)
 					.Set(ProduceOrderTable.FactoryID, item.FactoryID) ;
 			result = Try(query).OrThrow<PIODataException>("Failed to insert");
+			
 			item.ProduceOrderID=Convert.ToInt32(result);
 			return item;
 		}

@@ -43,17 +43,35 @@ namespace PIO.Bots.ServerLib.Modules
 			produceOrders = new List<ProduceOrder>();
 		}
 
-		public ProduceOrder CreateProduceOrder(int FactoryID)
+		public void UnassignAll(int WorkerID)
 		{
-			Order order;
+			Log(LogLevels.Information, $"Clearing worker assignment (WorkerID={WorkerID})");
+			Try(() => orderModule.UnAssignAll(WorkerID)).OrThrow<PIOInternalErrorException>("Failed to clear worker assignment");
+
+		}
+		public void Assign(int OrderID, int WorkerID)
+		{
+			Log(LogLevels.Information, $"Assigning worker (OrderID={OrderID}, WorkerID={WorkerID})");
+			Try(() => orderModule.Assign(OrderID,WorkerID)).OrThrow<PIOInternalErrorException>("Failed to assign worker");
+
+		}
+		public ProduceOrder CreateProduceOrder(int PlanetID,int FactoryID)
+		{
 			ProduceOrder produceOrder;
+			Factory factory;
 
 			LogEnter();
 
-			Log(LogLevels.Information, $"Creating Order");
-			order=Try(() => orderModule.CreateOrder()).OrThrow<PIOInternalErrorException>("Failed to create Order");
+			factory=AssertExists(()=> client.GetFactory(FactoryID),$"FactoryID=({FactoryID})");
+			if (factory.PlanetID!=PlanetID)
+			{
+				Log(LogLevels.Warning, $"Factory is not in the same planet (FactoryID={FactoryID})");
+				throw new PIOInvalidOperationException($"Factory is not in the same planet (FactoryID={FactoryID})", null, ID, ModuleName, "CreateProduceOrder");
+			}
+
+
 			Log(LogLevels.Information, $"Creating ProduceOrder");
-			produceOrder=Try(() => produceOrderModule.CreateProduceOrder(order.OrderID,FactoryID)).OrThrow<PIOInternalErrorException>("Failed to create ProduceOrder");
+			produceOrder=Try(() => produceOrderModule.CreateProduceOrder(PlanetID,FactoryID)).OrThrow<PIOInternalErrorException>("Failed to create ProduceOrder");
 
 			produceOrders.Add(produceOrder);
 
@@ -120,6 +138,20 @@ namespace PIO.Bots.ServerLib.Modules
 
 		}
 
+
+		public ProduceOrder[] GetWaitingProduceOrders(int PlanetID)
+		{
+			ProduceOrder[] produceOrders;
+
+			LogEnter();
+
+			Log(LogLevels.Information, $"Getting Orders");
+			produceOrders = Try(() => produceOrderModule.GetWaitingProduceOrders(PlanetID)).OrThrow<PIOInternalErrorException>("Failed to get Orders");
+			
+			return produceOrders;
+		}
+
+
 		public Task CreateTask(int WorkerID)
 		{
 			ProduceOrder[] produceOrders;
@@ -130,8 +162,7 @@ namespace PIO.Bots.ServerLib.Modules
 
 			worker = AssertExists<Worker>(() => client.GetWorker(WorkerID), $"WorkerID={WorkerID}");
 
-			Log(LogLevels.Information, $"Getting Orders");
-			produceOrders=Try(() => produceOrderModule.GetProduceOrders()).OrThrow<PIOInternalErrorException>("Failed to get Orders");
+			produceOrders = GetWaitingProduceOrders(worker.PlanetID);
 
 			if ((produceOrders==null) || (produceOrders.Length==0))
 			{
@@ -143,7 +174,12 @@ namespace PIO.Bots.ServerLib.Modules
 			foreach (ProduceOrder order in produceOrders)
 			{
 				task = CreateTaskFromProduceOrder(worker, order);
-				if (task != null) return task;
+				if (task != null)
+				{
+					Log(LogLevels.Information, $"Assigning worker to order (OrderID={order.OrderID}, WorkerID={WorkerID})");
+					Try(() => Assign(order.OrderID, WorkerID)).OrThrow<PIOInternalErrorException>("Failed to assign worker to order");
+					return task;
+				}
 			}
 
 			Log(LogLevels.Information, $"Cannot create any task from orders, returning idle task");
@@ -153,6 +189,6 @@ namespace PIO.Bots.ServerLib.Modules
 
 		}
 
-
+		
 	}
 }

@@ -39,7 +39,16 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying Worker table (PlanetID={PlanetID})");
-			query=new Select( WorkerTable.WorkerID, WorkerTable.PlanetID,WorkerTable.X,WorkerTable.Y).From(PIODB.WorkerTable).Where(WorkerTable.PlanetID.IsEqualTo(PlanetID));
+			query = new Select(WorkerTable.WorkerID, WorkerTable.PlanetID, WorkerTable.X, WorkerTable.Y).From(PIODB.WorkerTable).Where(WorkerTable.PlanetID.IsEqualTo(PlanetID));
+			return TrySelectMany<WorkerTable, Worker>(query).OrThrow<PIODataException>("Failed to query");
+		}
+		public Worker[] GetWorkers()
+		{
+			ISelect query;
+			LogEnter();
+
+			Log(LogLevels.Information, $"Querying Worker table");
+			query = new Select(WorkerTable.WorkerID, WorkerTable.PlanetID, WorkerTable.X, WorkerTable.Y).From(PIODB.WorkerTable);
 			return TrySelectMany<WorkerTable, Worker>(query).OrThrow<PIODataException>("Failed to query");
 		}
 

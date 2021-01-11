@@ -182,7 +182,18 @@ namespace PIO.UnitTest.WebServiceLib
 			Assert.AreEqual(3, result.Length);
 			Assert.IsTrue(result.All((item) => item != null));
 		}
+		[TestMethod]
+		public void ShouldGetAllWorkers()
+		{
+			PIOService service;
+			Worker[] result;
 
+			service = new PIOService(NullLogger.Instance, null, null, new MockedWorkerModule(3, false), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+			result = service.GetAllWorkers();
+			Assert.IsNotNull(result);
+			Assert.AreEqual(3, result.Length);
+			Assert.IsTrue(result.All((item) => item != null));
+		}
 		[TestMethod]
 		public void ShouldNotGetWorkerAndLogError()
 		{
@@ -207,7 +218,18 @@ namespace PIO.UnitTest.WebServiceLib
 			Assert.ThrowsException<FaultException>(() => service.GetWorkers(1));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level ==LogLevels.Error) && (item.ComponentName==service.ModuleName)));
 		}
+		[TestMethod]
+		public void ShouldNotGetAllWorkersAndLogError()
+		{
+			PIOService service;
+			MemoryLogger logger;
 
+			logger = new MemoryLogger();
+			service = new PIOService(logger, null, null, new MockedWorkerModule(3, true), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+
+			Assert.ThrowsException<FaultException>(() => service.GetAllWorkers());
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName == service.ModuleName)));
+		}
 
 
 		[TestMethod]

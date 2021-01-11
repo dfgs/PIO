@@ -124,7 +124,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			MockedSchedulerModule schedulerModule;
 			Task result;
 
-			buildingModule = new MockedBuildingModule(false, new Building() { BuildingID = 3, X = 1, Y = 1 });
+			buildingModule = new MockedBuildingModule(false, new Building() { BuildingID = 3, PlanetID = 1, X = 1, Y = 1 });
 			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, PlanetID = 1 });
 			taskModule = new MockedTaskModule(false);
 			module = new MoverModule(NullLogger.Instance, taskModule, workerModule, buildingModule);
@@ -218,7 +218,25 @@ namespace PIO.UnitTest.ServerLib.Modules
 		}
 
 
+		[TestMethod]
+		public void ShouldNotMoveToBuildingWheWorkerIsNotOnSamePlanet()
+		{
+			MemoryLogger logger;
+			MoverModule module;
+			IBuildingModule buildingModule;
+			IWorkerModule workerModule;
+			ITaskModule taskModule;
 
+			buildingModule = new MockedBuildingModule(false, new Building() { BuildingID = 2, PlanetID=2, X = 1, Y = 1 });
+			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, PlanetID = 1 });
+			taskModule = new MockedTaskModule(false);
+
+			logger = new MemoryLogger();
+			module = new MoverModule(logger, taskModule, workerModule, buildingModule);
+
+			Assert.ThrowsException<PIOInvalidOperationException>(() => module.BeginMoveTo(1, 2));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Warning) && (item.ComponentName == module.ModuleName)));
+		}
 
 
 

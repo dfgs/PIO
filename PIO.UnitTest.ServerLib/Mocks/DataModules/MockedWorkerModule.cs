@@ -22,6 +22,11 @@ namespace PIO.UnitTest.ServerLib.Mocks
 			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
 			return items.Where(item => item.PlanetID == PlanetID).ToArray();
 		}
+		public Worker[] GetWorkers()
+		{
+			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
+			return items.ToArray();
+		}
 
 		public Worker GetWorker(int WorkerID)
 		{

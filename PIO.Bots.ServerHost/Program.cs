@@ -57,6 +57,7 @@ namespace PIO.Bots.ServerHost
 
 			//logger = new ConsoleLogger(new DefaultLogFormatter());
 			logger = new UnicastLogger(IPAddress.Loopback, Properties.Settings.Default.UnicastPort);
+			//logger = new FileLogger(new DefaultLogFormatter(), "PIO.Bots.ServerHost.Log");
 
 			databaseCreator = new SqlDatabaseCreator(Properties.Settings.Default.Server, Properties.Settings.Default.DatabaseName);
 			connectionFactory = new SqlConnectionFactory(Properties.Settings.Default.Server, Properties.Settings.Default.DatabaseName);
@@ -87,7 +88,6 @@ namespace PIO.Bots.ServerHost
 
 			workerScheduler = new WorkerScheduler(logger, client, orderManagerModule, 5);
 			workerScheduler.Start();
-			workerScheduler.Add(1);
 
 			WaitHandle.WaitAny(new WaitHandle[] { quitEvent }, -1);
 

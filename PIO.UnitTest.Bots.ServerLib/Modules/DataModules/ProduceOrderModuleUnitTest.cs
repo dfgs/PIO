@@ -51,6 +51,46 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 				Assert.AreEqual(t + 1, results[t].ProduceOrderID);
 			}
 		}
+		[TestMethod]
+		public void ShouldGetProduceOrdersForPlanet()
+		{
+			ProduceOrderModule module;
+			ProduceOrder[] results;
+			IDatabase database;
+
+			database = Substitute.For<IDatabase>();
+			database.Execute<ProduceOrder>(Arg.Any<ISelect>()).Returns(new ProduceOrder[] { new ProduceOrder() { ProduceOrderID = 1 }, new ProduceOrder() { ProduceOrderID = 2 }, new ProduceOrder() { ProduceOrderID = 3 } });
+
+			module = new ProduceOrderModule(NullLogger.Instance, database);
+			results = module.GetProduceOrders(1);
+			Assert.IsNotNull(results);
+			Assert.AreEqual(3, results.Length);
+			for (int t = 0; t < 3; t++)
+			{
+				Assert.IsNotNull(results[t]);
+				Assert.AreEqual(t + 1, results[t].ProduceOrderID);
+			}
+		}
+		[TestMethod]
+		public void ShouldGetWaitingProduceOrdersForPlanet()
+		{
+			ProduceOrderModule module;
+			ProduceOrder[] results;
+			IDatabase database;
+
+			database = Substitute.For<IDatabase>();
+			database.Execute<ProduceOrder>(Arg.Any<ISelect>()).Returns(new ProduceOrder[] { new ProduceOrder() { ProduceOrderID = 1 }, new ProduceOrder() { ProduceOrderID = 2 }, new ProduceOrder() { ProduceOrderID = 3 } });
+
+			module = new ProduceOrderModule(NullLogger.Instance, database);
+			results = module.GetWaitingProduceOrders(1);
+			Assert.IsNotNull(results);
+			Assert.AreEqual(3, results.Length);
+			for (int t = 0; t < 3; t++)
+			{
+				Assert.IsNotNull(results[t]);
+				Assert.AreEqual(t + 1, results[t].ProduceOrderID);
+			}
+		}
 
 		[TestMethod]
 		public void ShouldNotGetProduceOrderAndLogError()
@@ -86,7 +126,38 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName == module.ModuleName)));
 		}
 
+		[TestMethod]
+		public void ShouldNotGetProduceOrdersForPlanetAndLogError()
+		{
+			ProduceOrderModule module;
+			MemoryLogger logger;
+			IDatabase database;
 
+			logger = new MemoryLogger();
+
+			database = Substitute.For<IDatabase>();
+			database.Execute<ProduceOrder>(Arg.Any<ISelect>()).Returns((x) => { throw new Exception(); });
+
+			module = new ProduceOrderModule(logger, database);
+			Assert.ThrowsException<PIODataException>(() => module.GetProduceOrders(1));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName == module.ModuleName)));
+		}
+		[TestMethod]
+		public void ShouldNotGetWaitingProduceOrdersForPlanetAndLogError()
+		{
+			ProduceOrderModule module;
+			MemoryLogger logger;
+			IDatabase database;
+
+			logger = new MemoryLogger();
+
+			database = Substitute.For<IDatabase>();
+			database.Execute<ProduceOrder>(Arg.Any<ISelect>()).Returns((x) => { throw new Exception(); });
+
+			module = new ProduceOrderModule(logger, database);
+			Assert.ThrowsException<PIODataException>(() => module.GetWaitingProduceOrders(1));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName == module.ModuleName)));
+		}
 
 		[TestMethod]
 		public void ShouldCreateProduceOrder()
@@ -103,7 +174,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 
 			result = module.CreateProduceOrder(1,2);
 			Assert.IsNotNull(result);
-			Assert.AreEqual(1, inserted);
+			Assert.AreEqual(2, inserted);
 		}
 
 		[TestMethod]

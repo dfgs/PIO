@@ -56,10 +56,10 @@ namespace PIO.Bots.WebServiceLib
 
 		#endregion
 		#region functional
-		public ProduceOrder CreateProduceOrder(int FactoryID)
+		public ProduceOrder CreateProduceOrder(int PlanetID, int FactoryID)
 		{
 			LogEnter();
-			return Try(() => orderManagerModule.CreateProduceOrder(FactoryID)).OrThrow(GenerateFaultException);
+			return Try(() => orderManagerModule.CreateProduceOrder(PlanetID,FactoryID)).OrThrow(GenerateFaultException);
 		}
 		#endregion
 

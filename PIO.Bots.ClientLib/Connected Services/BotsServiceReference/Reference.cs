@@ -16,6 +16,7 @@ namespace PIO.Bots.ClientLib.BotsServiceReference {
     public interface IBotsService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/GetOrder", ReplyAction="http://tempuri.org/IBotsService/GetOrderResponse")]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(PIO.Bots.Models.ProduceOrder))]
         PIO.Bots.Models.Order GetOrder(int OrderID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/GetOrders", ReplyAction="http://tempuri.org/IBotsService/GetOrdersResponse")]
@@ -28,7 +29,7 @@ namespace PIO.Bots.ClientLib.BotsServiceReference {
         PIO.Bots.Models.ProduceOrder[] GetProduceOrders();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/CreateProduceOrder", ReplyAction="http://tempuri.org/IBotsService/CreateProduceOrderResponse")]
-        PIO.Bots.Models.ProduceOrder CreateProduceOrder(int FactoryID);
+        PIO.Bots.Models.ProduceOrder CreateProduceOrder(int PlanetID, int FactoryID);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -74,8 +75,8 @@ namespace PIO.Bots.ClientLib.BotsServiceReference {
             return base.Channel.GetProduceOrders();
         }
         
-        public PIO.Bots.Models.ProduceOrder CreateProduceOrder(int FactoryID) {
-            return base.Channel.CreateProduceOrder(FactoryID);
+        public PIO.Bots.Models.ProduceOrder CreateProduceOrder(int PlanetID, int FactoryID) {
+            return base.Channel.CreateProduceOrder(PlanetID, FactoryID);
         }
     }
 }

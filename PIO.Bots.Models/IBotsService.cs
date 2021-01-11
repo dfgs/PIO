@@ -24,7 +24,7 @@ namespace PIO.Bots.Models
 
 		#region functional
 		[OperationContract]
-		ProduceOrder CreateProduceOrder(int FactoryID);
+		ProduceOrder CreateProduceOrder(int PlanetID, int FactoryID);
 		#endregion
 
 	}

@@ -10,10 +10,12 @@ namespace PIO.Bots.Models.Modules
 	{
 		Order GetOrder(int OrderID);
 		Order[] GetOrders();
-		Order CreateOrder();
+		Order CreateOrder(int PlanetID);
+		void UnAssignAll(int WorkerID);
+		void Assign(int OrderID,int WorkerID);
 
-/*
-		Order CreateOrder(OrderTypeIDs OrderTypeID, int WorkerID, int? X, int? Y,int? BuildingID, int? FactoryID, ResourceTypeIDs? ResourceTypeID, FactoryTypeIDs? FactoryTypeID, DateTime ETA);
-		void DeleteOrder(int OrderID);*/
+		/*
+				Order CreateOrder(OrderTypeIDs OrderTypeID, int WorkerID, int? X, int? Y,int? BuildingID, int? FactoryID, ResourceTypeIDs? ResourceTypeID, FactoryTypeIDs? FactoryTypeID, DateTime ETA);
+				void DeleteOrder(int OrderID);*/
 	}
 }
