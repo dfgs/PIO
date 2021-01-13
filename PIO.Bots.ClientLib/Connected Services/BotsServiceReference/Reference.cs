@@ -19,17 +19,32 @@ namespace PIO.Bots.ClientLib.BotsServiceReference {
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(PIO.Bots.Models.ProduceOrder))]
         PIO.Bots.Models.Order GetOrder(int OrderID);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/GetOrder", ReplyAction="http://tempuri.org/IBotsService/GetOrderResponse")]
+        System.Threading.Tasks.Task<PIO.Bots.Models.Order> GetOrderAsync(int OrderID);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/GetOrders", ReplyAction="http://tempuri.org/IBotsService/GetOrdersResponse")]
         PIO.Bots.Models.Order[] GetOrders();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/GetOrders", ReplyAction="http://tempuri.org/IBotsService/GetOrdersResponse")]
+        System.Threading.Tasks.Task<PIO.Bots.Models.Order[]> GetOrdersAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/GetProduceOrder", ReplyAction="http://tempuri.org/IBotsService/GetProduceOrderResponse")]
         PIO.Bots.Models.ProduceOrder GetProduceOrder(int ProduceOrderID);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/GetProduceOrder", ReplyAction="http://tempuri.org/IBotsService/GetProduceOrderResponse")]
+        System.Threading.Tasks.Task<PIO.Bots.Models.ProduceOrder> GetProduceOrderAsync(int ProduceOrderID);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/GetProduceOrders", ReplyAction="http://tempuri.org/IBotsService/GetProduceOrdersResponse")]
         PIO.Bots.Models.ProduceOrder[] GetProduceOrders();
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/GetProduceOrders", ReplyAction="http://tempuri.org/IBotsService/GetProduceOrdersResponse")]
+        System.Threading.Tasks.Task<PIO.Bots.Models.ProduceOrder[]> GetProduceOrdersAsync();
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/CreateProduceOrder", ReplyAction="http://tempuri.org/IBotsService/CreateProduceOrderResponse")]
         PIO.Bots.Models.ProduceOrder CreateProduceOrder(int PlanetID, int FactoryID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/CreateProduceOrder", ReplyAction="http://tempuri.org/IBotsService/CreateProduceOrderResponse")]
+        System.Threading.Tasks.Task<PIO.Bots.Models.ProduceOrder> CreateProduceOrderAsync(int PlanetID, int FactoryID);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -63,20 +78,40 @@ namespace PIO.Bots.ClientLib.BotsServiceReference {
             return base.Channel.GetOrder(OrderID);
         }
         
+        public System.Threading.Tasks.Task<PIO.Bots.Models.Order> GetOrderAsync(int OrderID) {
+            return base.Channel.GetOrderAsync(OrderID);
+        }
+        
         public PIO.Bots.Models.Order[] GetOrders() {
             return base.Channel.GetOrders();
+        }
+        
+        public System.Threading.Tasks.Task<PIO.Bots.Models.Order[]> GetOrdersAsync() {
+            return base.Channel.GetOrdersAsync();
         }
         
         public PIO.Bots.Models.ProduceOrder GetProduceOrder(int ProduceOrderID) {
             return base.Channel.GetProduceOrder(ProduceOrderID);
         }
         
+        public System.Threading.Tasks.Task<PIO.Bots.Models.ProduceOrder> GetProduceOrderAsync(int ProduceOrderID) {
+            return base.Channel.GetProduceOrderAsync(ProduceOrderID);
+        }
+        
         public PIO.Bots.Models.ProduceOrder[] GetProduceOrders() {
             return base.Channel.GetProduceOrders();
         }
         
+        public System.Threading.Tasks.Task<PIO.Bots.Models.ProduceOrder[]> GetProduceOrdersAsync() {
+            return base.Channel.GetProduceOrdersAsync();
+        }
+        
         public PIO.Bots.Models.ProduceOrder CreateProduceOrder(int PlanetID, int FactoryID) {
             return base.Channel.CreateProduceOrder(PlanetID, FactoryID);
+        }
+        
+        public System.Threading.Tasks.Task<PIO.Bots.Models.ProduceOrder> CreateProduceOrderAsync(int PlanetID, int FactoryID) {
+            return base.Channel.CreateProduceOrderAsync(PlanetID, FactoryID);
         }
     }
 }

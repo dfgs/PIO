@@ -1,0 +1,45 @@
+﻿<Window x:Class="PIO.Console.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PIO.Console"
+		xmlns:views="clr-namespace:PIO.Console.Views"
+        mc:Ignorable="d"
+        Title="PIO Console" Height="450" Width="800" WindowStartupLocation="CenterScreen" ResizeMode="CanResizeWithGrip" WindowState="Maximized">
+	
+	<Window.CommandBindings>
+		<CommandBinding Command="Open" CanExecute="OpenCommandBinding_CanExecute" Executed="OpenCommandBinding_Executed" />
+		<CommandBinding Command="Close" CanExecute="CloseCommandBinding_CanExecute" Executed="CloseCommandBinding_Executed" />
+	</Window.CommandBindings>
+
+	<Window.Resources>
+		<Style TargetType="{x:Type Image}">
+			<Style.Triggers>
+				<Trigger Property="IsEnabled" Value="False">
+					<Setter Property="Opacity" Value="0.5"/>
+				</Trigger>
+			</Style.Triggers>
+		</Style>
+	</Window.Resources>
+	
+    <DockPanel >
+		<ToolBarTray DockPanel.Dock="Top">
+			<ToolBar>
+				<Button Command="Open">
+					<Image Source="Images/connect.png" Stretch="None" />
+				</Button>
+				<Button Command="Close">
+					<Image Source="Images/disconnect.png" Stretch="None" />
+				</Button>
+			</ToolBar>
+		</ToolBarTray>
+		
+		<StatusBar DockPanel.Dock="Bottom">
+			<TextBlock/>
+		</StatusBar>
+		<Grid>
+			<views:WorkersView DataContext="{Binding Workers}"/>
+		</Grid>
+	</DockPanel>
+</Window>

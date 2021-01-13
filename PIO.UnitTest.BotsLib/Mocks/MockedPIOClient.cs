@@ -248,5 +248,190 @@ namespace PIO.UnitTest.BotsLib.Mocks
 		{
 			throw new NotImplementedException();
 		}
+
+		public Task<Planet> GetPlanetAsync(int PlanetID)
+		{
+			throw new NotImplementedException();
+		}
+
+		public Task<Planet[]> GetPlanetsAsync()
+		{
+			throw new NotImplementedException();
+		}
+
+		public Task<Factory> GetFactoryAsync(int FactoryID)
+		{
+			throw new NotImplementedException();
+		}
+
+		public Task<Factory> GetFactoryAtPosAsync(int PlanetID, int X, int Y)
+		{
+			throw new NotImplementedException();
+		}
+
+		public Task<Factory[]> GetFactoriesAsync(int PlanetID)
+		{
+			throw new NotImplementedException();
+		}
+
+		public Task<Worker> GetWorkerAsync(int WorkerID)
+		{
+			throw new NotImplementedException();
+		}
+
+		public Task<Worker[]> GetWorkersAsync(int PlanetID)
+		{
+			throw new NotImplementedException();
+		}
+
+		public Task<Worker[]> GetAllWorkersAsync()
+		{
+			throw new NotImplementedException();
+		}
+
+		public Task<Stack> GetStackAsync(int StackID)
+		{
+			throw new NotImplementedException();
+		}
+
+		public Task<Stack> FindStackAsync(int PlanetID, ResourceTypeIDs ResourceTypeID)
+		{
+			throw new NotImplementedException();
+		}
+
+		public Task<Stack[]> GetStacksAsync(int BuildingID)
+		{
+			throw new NotImplementedException();
+		}
+
+		public Task<int> GetStackQuantityAsync(int BuildingID, ResourceTypeIDs ResourceTypeID)
+		{
+			throw new NotImplementedException();
+		}
+
+		public Task<ResourceType> GetResourceTypeAsync(ResourceTypeIDs ResourceTypeID)
+		{
+			throw new NotImplementedException();
+		}
+
+		public Task<ResourceType[]> GetResourceTypesAsync()
+		{
+			throw new NotImplementedException();
+		}
+
+		public Task<FactoryType> GetFactoryTypeAsync(FactoryTypeIDs FactoryTypeID)
+		{
+			throw new NotImplementedException();
+		}
+
+		public Task<FactoryType[]> GetFactoryTypesAsync()
+		{
+			throw new NotImplementedException();
+		}
+
+		public Task<TaskType> GetTaskTypeAsync(TaskTypeIDs TaskTypeID)
+		{
+			throw new NotImplementedException();
+		}
+
+		public Task<TaskType[]> GetTaskTypesAsync()
+		{
+			throw new NotImplementedException();
+		}
+
+		public Task<Material> GetMaterialAsync(int MaterialID)
+		{
+			throw new NotImplementedException();
+		}
+
+		public Task<Material[]> GetMaterialsAsync(FactoryTypeIDs FactoryTypeID)
+		{
+			throw new NotImplementedException();
+		}
+
+		public Task<Ingredient> GetIngredientAsync(int IngredientID)
+		{
+			throw new NotImplementedException();
+		}
+
+		public Task<Ingredient[]> GetIngredientsAsync(FactoryTypeIDs FactoryTypeID)
+		{
+			throw new NotImplementedException();
+		}
+
+		public Task<Product> GetProductAsync(int ProductID)
+		{
+			throw new NotImplementedException();
+		}
+
+		public Task<Product[]> GetProductsAsync(FactoryTypeIDs FactoryTypeID)
+		{
+			throw new NotImplementedException();
+		}
+
+		public Task<Models.Task> GetTaskAsync(int TaskID)
+		{
+			throw new NotImplementedException();
+		}
+
+		public Task<Models.Task[]> GetTasksAsync(int WorkerID)
+		{
+			throw new NotImplementedException();
+		}
+
+		public Task<Models.Task> GetLastTaskAsync(int WorkerID)
+		{
+			throw new NotImplementedException();
+		}
+
+		public Task<bool> HasEnoughResourcesToProduceAsync(int FactoryID)
+		{
+			throw new NotImplementedException();
+		}
+
+		public Task<ResourceTypeIDs[]> GetMissingResourcesToProduceAsync(int FactoryID)
+		{
+			throw new NotImplementedException();
+		}
+
+		public Task<bool> WorkerIsInBuildingAsync(int WorkerID, int BuildingID)
+		{
+			throw new NotImplementedException();
+		}
+
+		public Task<Models.Task> IdleAsync(int WorkerID, int Duration)
+		{
+			throw new NotImplementedException();
+		}
+
+		public Task<Models.Task> ProduceAsync(int WorkerID)
+		{
+			throw new NotImplementedException();
+		}
+
+		public Task<Models.Task> MoveToAsync(int WorkerID, int X, int Y)
+		{
+			throw new NotImplementedException();
+		}
+
+		public Task<Models.Task> MoveToBuildingAsync(int WorkerID, int BuildingID)
+		{
+			throw new NotImplementedException();
+		}
+
+		public Task<Models.Task> CarryToAsync(int WorkerID, int TargetBuildingID, ResourceTypeIDs ResourceTypeID)
+		{
+			throw new NotImplementedException();
+		}
+
+		public Task<Models.Task> CreateBuildingAsync(int WorkerID, FactoryTypeIDs FactoryTypeID)
+		{
+			throw new NotImplementedException();
+		}
+
+		public Task<Models.Task> BuildFactoryAsync(int WorkerID)
+		{
+			throw new NotImplementedException();
+		}
 	}
 }
