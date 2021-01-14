@@ -20,9 +20,18 @@ namespace PIO.Console.ViewModels
 			set { SetValue(WorkersProperty, value); }
 		}
 
+
+		public static readonly DependencyProperty FactoriesProperty = DependencyProperty.Register("Factories", typeof(FactoriesViewModel), typeof(ApplicationViewModel));
+		public FactoriesViewModel Factories
+		{
+			get { return (FactoriesViewModel)GetValue(FactoriesProperty); }
+			set { SetValue(FactoriesProperty, value); }
+		}
+
 		public ApplicationViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient) : base(PIOClient, BotsClient)
 		{
-			Workers = new WorkersViewModel(PIOClient,BotsClient);
+			Workers = new WorkersViewModel(PIOClient,BotsClient,1);
+			Factories = new FactoriesViewModel(PIOClient, BotsClient, 1);
 		}
 
 		protected override async Task<int> OnLoadModelAsync()
@@ -34,6 +43,7 @@ namespace PIO.Console.ViewModels
 		public override async Task LoadAsync(int Model)
 		{
 			await Workers.LoadAsync();
+			await Factories.LoadAsync();
 		}
 
 	}

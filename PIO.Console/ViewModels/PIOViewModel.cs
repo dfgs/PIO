@@ -20,9 +20,14 @@ namespace PIO.Console.ViewModels
 			this.PIOClient = PIOClient;this.BotsClient = BotsClient;
 		}
 
-		public override async Task RefreshAsync()
+		protected virtual async Task OnRefreshAsync()
 		{
 			await LoadAsync();
+
+		}
+		public sealed override async Task RefreshAsync()
+		{
+			await OnRefreshAsync();
 		}
 		protected abstract Task<T> OnLoadModelAsync();
 

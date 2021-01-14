@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="PIO.Console.Views.ErrorView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PIO.Console.Views"
+             mc:Ignorable="d" 
+             d:DesignWidth="800" 
+			 BorderBrush="Black" ToolTip="{Binding}"
+			 Background="{DynamicResource {x:Static SystemColors.InfoBrushKey}}">
+	
+	<UserControl.Style>
+		
+		<Style TargetType="{x:Type UserControl}">
+			<Setter Property="DataContext" Value="Error message"/>
+			<Style.Triggers>
+				<Trigger Property="DataContext" Value="{x:Null}">
+					<Setter Property="Visibility" Value="Collapsed"/>
+				</Trigger>
+			</Style.Triggers>
+		</Style>
+	</UserControl.Style>
+	<StackPanel Orientation="Horizontal">
+		<Image Source="/PIO.Console;component/Images/error.png" Stretch="None" Margin="5"/>
+		<TextBlock Text="{Binding}" VerticalAlignment="Center"/>
+	</StackPanel>
+</UserControl>

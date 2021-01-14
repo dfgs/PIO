@@ -11,21 +11,21 @@ using Task = System.Threading.Tasks.Task;
 
 namespace PIO.Console.ViewModels
 {
-	public class WorkerViewModel : PIOViewModel<Worker>
+	public class StackViewModel : PIOViewModel<Stack>
 	{
 
 		
 
-		public WorkerViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient) : base(PIOClient, BotsClient)
+		public StackViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient) : base(PIOClient, BotsClient)
 		{
 
 		}
 
 		
 
-		protected override async Task<Worker> OnLoadModelAsync()
+		protected override async Task<Stack> OnLoadModelAsync()
 		{
-			return await PIOClient.GetWorkerAsync(Model.WorkerID);
+			return await PIOClient.GetStackAsync(Model.StackID);
 		}
 
 	}

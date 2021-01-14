@@ -12,9 +12,10 @@ namespace PIO.Console.ViewModels
 {
 	public class WorkersViewModel : PIOViewModelCollection<WorkerViewModel,Worker>
 	{
-		public WorkersViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient) : base(PIOClient, BotsClient)
+		private int planetID;
+		public WorkersViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient,int PlanetID) : base(PIOClient, BotsClient)
 		{
-
+			this.planetID = PlanetID;
 		}
 
 		protected override WorkerViewModel OnCreateItem()
@@ -24,7 +25,7 @@ namespace PIO.Console.ViewModels
 
 		protected override async Task<IEnumerable<Worker>> OnLoadModelAsync()
 		{
-			return await PIOClient.GetWorkersAsync(1);
+			return await PIOClient.GetWorkersAsync(planetID);
 		}
 		
 
