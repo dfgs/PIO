@@ -14,6 +14,8 @@ using PIO.ModulesLib.Exceptions;
 
 namespace PIO.WebServiceLib
 {
+
+	
 	[ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Single)]
 	public class PIOService : Module, IPIOService
 	{
@@ -37,6 +39,8 @@ namespace PIO.WebServiceLib
 		private ICarrierModule carrierModule;
 		private IFactoryBuilderModule factoryBuilderModule;
 
+
+
 		public PIOService(ILogger Logger,
 			IPlanetModule PlanetModule,  IFactoryModule FactoryModule,
 			IWorkerModule WorkerModule,
@@ -45,6 +49,8 @@ namespace PIO.WebServiceLib
 			IMaterialModule MaterialModule,
 			IIngredientModule IngredientModule, IProductModule ProductModule, 
 			ITaskModule TaskModule,
+
+			ISchedulerModule SchedulerModule,
 
 			IResourceCheckerModule ResourceCheckerModule,ILocationCheckerModule LocationCheckerModule,
 			IIdlerModule IdlerModule, IProducerModule ProducerModule,
@@ -66,6 +72,7 @@ namespace PIO.WebServiceLib
 			this.productModule = ProductModule;
 			this.taskModule = TaskModule;
 
+	
 			this.resourceCheckerModule = ResourceCheckerModule;
 			this.idlerModule = IdlerModule;
 			this.producerModule = ProducerModule;
@@ -301,7 +308,11 @@ namespace PIO.WebServiceLib
 			return Try(() => factoryBuilderModule.BeginBuild(WorkerID)).OrThrow(GenerateFaultException);
 		}
 
+
+
 		#endregion
+
+
 
 
 	}

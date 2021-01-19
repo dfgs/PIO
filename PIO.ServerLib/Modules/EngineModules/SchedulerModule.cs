@@ -33,10 +33,15 @@ namespace PIO.ServerLib.Modules
 		private ICarrierModule carrierModule;
 		private IFactoryBuilderModule factoryBuilderModule;
 
+		public event TaskEventHandler TaskStarted;
+		public event TaskEventHandler TaskEnded;
+
+
 		public SchedulerModule(ILogger Logger,ITaskModule TaskModule, IIdlerModule IdlerModule, IProducerModule ProducerModule,IMoverModule MoverModule, ICarrierModule CarrierModule, IFactoryBuilderModule FactoryBuilderModule) : base(Logger, ThreadPriority.Normal)
 		{
 			this.taskModule = TaskModule;this.idlerModule = IdlerModule; this.producerModule = ProducerModule;this.moverModule = MoverModule;this.carrierModule = CarrierModule;
 			this.factoryBuilderModule = FactoryBuilderModule;
+
 
 			idlerModule.TaskCreated += TaskGeneratorModule_TaskCreated;
 			producerModule.TaskCreated += TaskGeneratorModule_TaskCreated;
@@ -44,6 +49,37 @@ namespace PIO.ServerLib.Modules
 			carrierModule.TaskCreated += TaskGeneratorModule_TaskCreated;
 			factoryBuilderModule.TaskCreated += TaskGeneratorModule_TaskCreated;
 		}
+
+		/*public bool RegisterCallBack(ITaskCallBack Callback)
+		{
+			LogEnter();
+			Log(LogLevels.Information, "Registering callback");
+			lock (callbackList)
+			{
+				if (callbackList.Contains(Callback))
+				{
+					Log(LogLevels.Warning, "Callback is already registered");
+					return false;
+				}
+				callbackList.Add(Callback);
+			}
+			return true;
+		}
+		public bool UnregisterCallBack(ITaskCallBack Callback)
+		{
+			LogEnter();
+			Log(LogLevels.Information, "Unregistering callback");
+			lock (callbackList)
+			{
+				if (!callbackList.Contains(Callback))
+				{
+					Log(LogLevels.Warning, "Callback is not registered");
+					return false;
+				}
+				callbackList.Remove(Callback);
+			}
+			return true;
+		}*/
 
 		private void TaskGeneratorModule_TaskCreated(ITaskGeneratorModule Module, Task Task)
 		{
@@ -55,8 +91,10 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 
 			Log(LogLevels.Information, $"Adding new task (TaskID={Task.TaskID}, WorkerID={Task.WorkerID}, ETA={Task.ETA})");
-
 			Try(() => this.Add(Task.ETA, Task)).OrAlert("Failed to enqueue task");
+
+			Log(LogLevels.Information, $"Triggering callbacks");
+			if (TaskStarted!=null) TaskStarted(this, new TaskEventArgs(Task));
 		}
 
 		protected override void OnStarting()
@@ -107,7 +145,19 @@ namespace PIO.ServerLib.Modules
 			Log(LogLevels.Information, $"Deleting task (TaskID={Task.TaskID})");
 			Try(() => taskModule.DeleteTask(Task.TaskID)).OrAlert("Failed to delete task");
 
+			Log(LogLevels.Information, $"Triggering callbacks");
+			if (TaskEnded != null) TaskEnded(this, new TaskEventArgs(Task));
+
+
 
 		}
+
+
+
+
+
+
+
+
 	}
 }

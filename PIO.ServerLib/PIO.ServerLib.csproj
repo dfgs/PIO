@@ -47,7 +47,6 @@
     <Compile Include="Modules\DataModules\TaskTypeModule.cs" />
     <Compile Include="Modules\DataModules\ProductModule.cs" />
     <Compile Include="Modules\DataModules\IngredientModule.cs" />
-    <Compile Include="Modules\EngineModules\ISchedulerModule.cs" />
     <Compile Include="Modules\EngineModules\SchedulerModule.cs" />
     <Compile Include="Modules\FunctionalModules\IdlerModule.cs" />
     <Compile Include="Modules\FunctionalModules\MoverModule.cs" />

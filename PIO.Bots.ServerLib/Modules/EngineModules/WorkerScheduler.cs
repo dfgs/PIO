@@ -30,19 +30,28 @@ namespace PIO.Bots.ServerLib.Modules
 			Add(DateTime.Now, WorkerID);
 		}*/
 
-		protected override void OnStarting()
+		private void LoadWorkers()
 		{
 			Worker[] items;
 
 			LogEnter();
 
 			Log(LogLevels.Information, $"Loading existing workers");
-			if (!Try(() => client.GetAllWorkers()).OrAlert(out items, "Failed to load Workers")) return;
+			if (!Try(() => client.GetAllWorkers()).OrAlert(out items, "Failed to load Workers"))
+			{
+				Add(DateTime.Now.AddSeconds(retryDelay), -1);
+				return;
+			}
 
 			foreach (Worker item in items)
 			{
 				Add(DateTime.Now, item.WorkerID);
 			}
+		}
+		protected override void OnStarting()
+		{
+			LogEnter();
+			LoadWorkers();
 		}
 
 
@@ -52,6 +61,13 @@ namespace PIO.Bots.ServerLib.Modules
 			bool result;
 
 			LogEnter();
+
+			if (WorkerID==-1)
+			{
+				LoadWorkers();
+				return;
+			}
+
 			#region clear worker assignment
 			Log(LogLevels.Information, $"Clearing worker assignment (WorkerID={WorkerID})");
 			result = Try(() => orderManager.UnassignAll(WorkerID)).OrAlert($"Failed to clear worker assignment (WorkerID={WorkerID})");

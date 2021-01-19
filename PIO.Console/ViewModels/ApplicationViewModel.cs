@@ -1,5 +1,6 @@
 ﻿using PIO.Bots.ClientLib.BotsServiceReference;
 using PIO.ClientLib.PIOServiceReference;
+using PIO.ClientLib.TaskCallbackServiceReference;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,6 +33,7 @@ namespace PIO.Console.ViewModels
 		{
 			Workers = new WorkersViewModel(PIOClient,BotsClient,1);
 			Factories = new FactoriesViewModel(PIOClient, BotsClient, 1);
+	
 		}
 
 		protected override async Task<int> OnLoadModelAsync()
@@ -45,6 +47,11 @@ namespace PIO.Console.ViewModels
 			await Workers.LoadAsync();
 			await Factories.LoadAsync();
 		}
+
+
+		
+
+
 
 	}
 }

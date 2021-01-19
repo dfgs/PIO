@@ -61,7 +61,9 @@
     <Compile Include="ViewModels\PIOViewModelCollection.cs" />
     <Compile Include="ViewModels\PIOViewModel.cs" />
     <Compile Include="ViewModels\FactoriesViewModel.cs" />
+    <Compile Include="ViewModels\TasksViewModel.cs" />
     <Compile Include="ViewModels\StacksViewModel.cs" />
+    <Compile Include="ViewModels\TaskViewModel.cs" />
     <Compile Include="ViewModels\WorkersViewModel.cs" />
     <Compile Include="ViewModels\StackViewModel.cs" />
     <Compile Include="ViewModels\WorkerViewModel.cs" />

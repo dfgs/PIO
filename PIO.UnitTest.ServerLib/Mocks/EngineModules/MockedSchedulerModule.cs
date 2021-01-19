@@ -1,4 +1,5 @@
 ﻿
+using PIO.Models;
 using PIO.Models.Modules;
 using PIO.ModulesLib.Exceptions;
 using PIO.ServerLib.Modules;
@@ -17,7 +18,10 @@ namespace PIO.UnitTest.ServerLib.Mocks.EngineModules
 			get;
 			set;
 		}
-		
+
+		public event TaskEventHandler TaskStarted;
+		public event TaskEventHandler TaskEnded;
+
 		public int Count
 		{
 			get;
@@ -29,6 +33,7 @@ namespace PIO.UnitTest.ServerLib.Mocks.EngineModules
 			TaskGeneratorModule.TaskCreated += ProducerModule_TaskCreated;
 		}
 
+
 		private void ProducerModule_TaskCreated(ITaskGeneratorModule Module, Models.Task Task)
 		{
 			Count++;
@@ -38,5 +43,9 @@ namespace PIO.UnitTest.ServerLib.Mocks.EngineModules
 		{
 			if (ThrowException) throw new PIOInternalErrorException("UnitTestException", null, 1, "UnitTest", "UnitTest");
 		}
+
+		
+
+		
 	}
 }

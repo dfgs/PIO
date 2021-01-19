@@ -45,9 +45,13 @@
   <ItemGroup>
     <Compile Include="Consts.cs" />
     <Compile Include="Building.cs" />
+    <Compile Include="ITaskCallbackService.cs" />
     <Compile Include="IPIOService.cs" />
+    <Compile Include="ITaskCallBack.cs" />
     <Compile Include="Modules\DataModules\IBuildingModule.cs" />
     <Compile Include="Modules\DataModules\ITaskTypeModule.cs" />
+    <Compile Include="Modules\EngineModules\ISchedulerModule.cs" />
+    <Compile Include="Modules\EngineModules\TaskEventArgs.cs" />
     <Compile Include="Modules\FunctionalModules\IIdlerModule.cs" />
     <Compile Include="Modules\FunctionalModules\IMoverModule.cs" />
     <Compile Include="Modules\FunctionalModules\ICarrierModule.cs" />
@@ -97,8 +101,6 @@
       <Name>PIO.ModulesLib</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Modules\EngineModules\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

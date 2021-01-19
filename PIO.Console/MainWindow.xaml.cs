@@ -15,16 +15,21 @@ using System.Windows.Shapes;
 using PIO.ClientLib.PIOServiceReference;
 using PIO.Bots.ClientLib.BotsServiceReference;
 using PIO.Console.ViewModels;
+using System.ServiceModel;
+using PIO.ClientLib.TaskCallbackServiceReference;
+using PIO.Models;
 
 namespace PIO.Console
 {
 	/// <summary>
 	/// Logique d'interaction pour MainWindow.xaml
 	/// </summary>
-	public partial class MainWindow : Window
+	public partial class MainWindow : Window,ITaskCallbackServiceCallback
 	{
 		private PIOServiceClient pioClient;
 		private BotsServiceClient botsClient;
+		private TaskCallbackServiceClient taskCallbackClient;
+
 		private bool isConnected;
 
 
@@ -56,11 +61,13 @@ namespace PIO.Console
 		{
 			try
 			{
-				pioClient = new PIOServiceClient();
+				pioClient = new PIOServiceClient(new BasicHttpBinding(), new EndpointAddress($@"http://127.0.0.1:8733/PIO/Service/"));
 				pioClient.Open();
-				botsClient = new BotsServiceClient();
+				botsClient = new BotsServiceClient(new BasicHttpBinding(), new EndpointAddress($@"http://127.0.0.1:8734/PIO/Bots/Service"));
 				botsClient.Open();
-
+				taskCallbackClient = new TaskCallbackServiceClient(new InstanceContext(this),  new WSDualHttpBinding(), new EndpointAddress($@"http://localhost:8735/PIO/TaskCallback/Service"));
+				taskCallbackClient.Open();
+				taskCallbackClient.Subscribe();
 				isConnected = true;
 			}
 			catch (Exception ex)
@@ -82,6 +89,12 @@ namespace PIO.Console
 		{
 			try
 			{
+				taskCallbackClient?.Unsubscribe();
+				taskCallbackClient?.Close();
+			}
+			catch { }
+			try
+			{
 				pioClient?.Close();
 			}
 			catch { }
@@ -99,6 +112,18 @@ namespace PIO.Console
 			isConnected = false;
 			
 		}
+
+		public async void OnTaskStarted(Models.Task Task)
+		{
+			await ApplicationViewModel.RefreshAsync();
+			
+		}
+
+		public async void OnTaskEnded(Models.Task Task)
+		{
+			await ApplicationViewModel.RefreshAsync();
+		}
+
 
 	}
 }

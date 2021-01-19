@@ -31,10 +31,12 @@ namespace PIO.ServerHost
 		{
 			ILogger logger;
 			VersionControlModule versionControlModule;
-			ServiceHostModule serviceHostModule;
+			ServiceHostModule pioServiceHostModule;
+			ServiceHostModule taskCallbackServiceHostModule;
 			SchedulerModule schedulerModule;
 
-			IPIOService service;
+			IPIOService pioService;
+			ITaskCallbackService taskCallbackService;
 			IDatabase database;
 			IConnectionFactory connectionFactory;
 			ICommandBuilder commandBuilder;
@@ -107,20 +109,25 @@ namespace PIO.ServerHost
 			schedulerModule.Start();
 			
 
-			service = new PIOService(
+			pioService = new PIOService(
 				logger,planetModule,factoryModule,workerModule,
 				stackModule,resourceTypeModule,
 				factoryTypeModule,taskTypeModule,materialModule,ingredientModule,productModule,taskModule, 
+				
+				schedulerModule,
 				resourceCheckerModule,locationCheckerModule, idlerModule,producerModule,moverModule,carrierModule,factoryBuilderModule);
 
-			serviceHostModule = new ServiceHostModule(logger,service);
-			serviceHostModule.Start();
+			pioServiceHostModule = new ServiceHostModule(logger,pioService);
+			pioServiceHostModule.Start();
 
-			
+			taskCallbackService = new TaskCallbackService(logger, schedulerModule);
+			taskCallbackServiceHostModule = new ServiceHostModule(logger, taskCallbackService);
+			taskCallbackServiceHostModule.Start();
 
 			WaitHandle.WaitAny(new WaitHandle[] {quitEvent }, -1);
 
-			serviceHostModule.Stop();
+			taskCallbackServiceHostModule.Stop();
+			pioServiceHostModule.Stop();
 			schedulerModule.Stop();
 
 			Console.CancelKeyPress -= new ConsoleCancelEventHandler(Console_CancelKeyPress);

@@ -13,6 +13,7 @@ using PIO.Bots.ServerLib.Modules;
 using PIO.Bots.WebServiceLib;
 using PIO.BotsLib;
 using PIO.BotsLib.Basic;
+using PIO.ClientLib;
 using PIO.ClientLib.PIOServiceReference;
 using System;
 using System.Collections.Generic;
@@ -71,9 +72,9 @@ namespace PIO.Bots.ServerHost
 				return;
 			}
 
-			client = new PIOServiceClient();
+			client = new PIOServiceClient(new BasicHttpBinding(), new EndpointAddress($@"http://127.0.0.1:8733/PIO/Service/"));
 			client.Open();
-
+			
 
 
 			orderModule = new OrderModule(logger, database);

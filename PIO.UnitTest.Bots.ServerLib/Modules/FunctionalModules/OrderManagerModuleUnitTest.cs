@@ -27,7 +27,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 
 			orderModule = Substitute.For<IOrderModule>();
 			produceOrderModule = Substitute.For<IProduceOrderModule>();
-			produceOrderModule.GetProduceOrders(Arg.Any<int>()).Returns(new ProduceOrder[] { new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, FactoryID = 1 }, new ProduceOrder() { OrderID = 2, ProduceOrderID = 2, FactoryID = 2 } });
+			produceOrderModule.GetWaitingProduceOrders(Arg.Any<int>()).Returns(new ProduceOrder[] { new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, FactoryID = 1 }, new ProduceOrder() { OrderID = 2, ProduceOrderID = 2, FactoryID = 2 } });
 
 			module = new OrderManagerModule(NullLogger.Instance, null, orderModule, produceOrderModule, 10);
 			result = module.GetWaitingProduceOrders(1);
@@ -49,7 +49,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 
 			orderModule = Substitute.For<IOrderModule>();
 			produceOrderModule = Substitute.For<IProduceOrderModule>();
-			produceOrderModule.GetProduceOrders(Arg.Any<int>()).Returns((x) => { throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest"); });
+			produceOrderModule.GetWaitingProduceOrders(Arg.Any<int>()).Returns((x) => { throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest"); });
 
 			module = new OrderManagerModule(logger, null, orderModule, produceOrderModule, 10);
 			Assert.ThrowsException<PIOInternalErrorException>(() => module.GetWaitingProduceOrders(1));
