@@ -61,6 +61,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Mocks\MockedCallback.cs" />
     <Compile Include="Mocks\MockedFactoryBuilderModule.cs" />
     <Compile Include="Mocks\MockedCarrierModule.cs" />
     <Compile Include="Mocks\MockedMoverModule.cs" />
@@ -82,6 +83,7 @@
     <Compile Include="Mocks\MockedTaskModule.cs" />
     <Compile Include="Mocks\MockedStackModule.cs" />
     <Compile Include="Mocks\MockedWorkerModule.cs" />
+    <Compile Include="TaskCallbackServiceUnitTest.cs" />
     <Compile Include="PIOServiceUnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

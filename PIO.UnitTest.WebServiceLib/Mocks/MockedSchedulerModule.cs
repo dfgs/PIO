@@ -21,7 +21,14 @@ namespace PIO.UnitTest.WebServiceLib.Mocks
 			this.throwException = ThrowException;
 		}
 
-		
+		public void InvokeTaskStarted()
+		{
+			if (TaskStarted != null) TaskStarted(this, new TaskEventArgs(null));
+		}
+		public void InvokeTaskEnded()
+		{
+			if (TaskEnded != null) TaskEnded(this, new TaskEventArgs(null));
+		}
 
 	}
 }

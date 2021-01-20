@@ -16,7 +16,6 @@ namespace PIO.WebServiceLib
 	[ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Single)]
 	public class TaskCallbackService: Module, ITaskCallbackService
 	{
-		private ITaskCallBack ServiceCallback = null;
 		private static List<ITaskCallBack> Subscribers = new List<ITaskCallBack>();
 
 		public TaskCallbackService(ILogger Logger, ISchedulerModule SchedulerModule) : base(Logger)
@@ -26,22 +25,29 @@ namespace PIO.WebServiceLib
 			SchedulerModule.TaskEnded += SchedulerModule_TaskEnded;
 		}
 
-		
 
 		private FaultException GenerateFaultException(Exception InnerException, int ComponentID, string ComponentName, string MethodName)
 		{
 			return new FaultException(InnerException.Message, new FaultCode(((PIOException)InnerException).FaultCode));
 		}
 
-		
 
 		public bool Subscribe()
+		{
+			ITaskCallBack ServiceCallback;
+			LogEnter();
+
+			Log(LogLevels.Information, "Get callback channel");
+			ServiceCallback = Try(()=>OperationContext.Current.GetCallbackChannel<ITaskCallBack>()).OrThrow(GenerateFaultException);
+			return Subscribe(ServiceCallback);
+		}
+
+		public bool Subscribe(ITaskCallBack ServiceCallback)
 		{
 			LogEnter();
 
 			Log(LogLevels.Information, "Subscribing callback");
 
-			ServiceCallback = Try(()=>OperationContext.Current.GetCallbackChannel<ITaskCallBack>()).OrThrow(GenerateFaultException);
 			lock (Subscribers)
 			{
 				if (Subscribers.Contains(ServiceCallback))
@@ -50,17 +56,28 @@ namespace PIO.WebServiceLib
 					return false;
 				}
 				Subscribers.Add(ServiceCallback);
-				return true;
 			}
+			return true;
+			
 		}
 
 		public bool Unsubscribe()
+		{
+			ITaskCallBack ServiceCallback;
+
+			LogEnter();
+
+			Log(LogLevels.Information, "Get callback channel");
+			ServiceCallback = Try(() => OperationContext.Current.GetCallbackChannel<ITaskCallBack>()).OrThrow(GenerateFaultException);
+			return Unsubscribe(ServiceCallback);
+		}
+
+		public bool Unsubscribe(ITaskCallBack ServiceCallback)
 		{
 			LogEnter();
 
 			Log(LogLevels.Information, "Unsubscribing callback");
 
-			ServiceCallback = Try(() => OperationContext.Current.GetCallbackChannel<ITaskCallBack>()).OrThrow(GenerateFaultException);
 			lock (Subscribers)
 			{
 				if (!Subscribers.Contains(ServiceCallback))
@@ -74,48 +91,44 @@ namespace PIO.WebServiceLib
 		}
 
 
-		private void SchedulerModule_TaskEnded(object sender, TaskEventArgs e)
+		private void SchedulerModule_TaskStarted(object sender, TaskEventArgs e)
 		{
 			OnTaskStarted(e.Task);
 		}
 
-		private void SchedulerModule_TaskStarted(object sender, TaskEventArgs e)
+		private void SchedulerModule_TaskEnded(object sender, TaskEventArgs e)
 		{
 			OnTaskEnded(e.Task);
 		}
+
 		private async void OnTaskStarted(Models.Task Task)
 		{
 			List<ITaskCallBack> failedSubscribers;
-			ITaskCallBack[] items;
-
+			
 			LogEnter();
 
 			failedSubscribers = new List<ITaskCallBack>();
 			Log(LogLevels.Information, "Notify subscribers");
 
-			lock (Subscribers)
-			{
-				items = Subscribers.ToArray();
-			}
+			
 
-			foreach (ITaskCallBack subscriber in items)
+			foreach (ITaskCallBack subscriber in Subscribers)
 			{
-				if (((IChannel)subscriber).State == CommunicationState.Opened)
+				
+				try
 				{
-					//Try(async () => await subscriber.OnTaskStarted(Task)).OrAlert("Failed to notify subscriber");
-					try
-					{
-						await subscriber.OnTaskStarted(Task);
-					}
-					catch
-					{
-
-					}
-							
+					await subscriber.OnTaskStarted(Task);
 				}
-				else failedSubscribers.Add(subscriber);
+				catch(Exception ex)
+				{
+					Log(ex);
+					Log(LogLevels.Warning, "Failed to notify subscriber, removing from list");
+					failedSubscribers.Add(subscriber);
+				}
+				
 			}
 
+			Log(LogLevels.Information, "Removing failed subscribers");
 			lock (Subscribers)
 			{
 				foreach (ITaskCallBack subscriber in failedSubscribers)
@@ -128,36 +141,28 @@ namespace PIO.WebServiceLib
 		private async void OnTaskEnded(Models.Task Task)
 		{
 			List<ITaskCallBack> failedSubscribers;
-			ITaskCallBack[] items;
-
+			
 			LogEnter();
 
 			failedSubscribers = new List<ITaskCallBack>();
 			Log(LogLevels.Information, "Notify subscribers");
 
-			lock (Subscribers)
-			{
-				items = Subscribers.ToArray();
-			}
 
-			foreach (ITaskCallBack subscriber in items)
+			foreach (ITaskCallBack subscriber in Subscribers)
 			{
-				if (((IChannel)subscriber).State == CommunicationState.Opened)
+				try
 				{
-					//Try(async () => await subscriber.OnTaskStarted(Task)).OrAlert("Failed to notify subscriber");
-					try
-					{
-						await subscriber.OnTaskEnded(Task);
-					}
-					catch
-					{
-
-					}
-
+					await subscriber.OnTaskEnded(Task);
 				}
-				else failedSubscribers.Add(subscriber);
+				catch (Exception ex)
+				{
+					Log(ex);
+					Log(LogLevels.Warning, "Failed to notify subscriber, removing from list");
+					failedSubscribers.Add(subscriber);
+				}
 			}
 
+			Log(LogLevels.Information, "Removing failed subscribers");
 			lock (Subscribers)
 			{
 				foreach (ITaskCallBack subscriber in failedSubscribers)

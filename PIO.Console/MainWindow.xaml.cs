@@ -116,7 +116,6 @@ namespace PIO.Console
 		public async void OnTaskStarted(Models.Task Task)
 		{
 			await ApplicationViewModel.RefreshAsync();
-			
 		}
 
 		public async void OnTaskEnded(Models.Task Task)

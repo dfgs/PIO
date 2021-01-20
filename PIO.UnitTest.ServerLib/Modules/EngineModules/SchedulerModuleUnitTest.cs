@@ -79,40 +79,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			Assert.AreEqual(2, module.Count);
 		}
 
-		/*[TestMethod]
-		public void ShouldRegisterCallBack()
-		{
-			MemoryLogger logger;
-			SchedulerModule module;
-			ITaskCallBack callback;
-
-			logger = new MemoryLogger();
-
-			callback = new MockedCallback();
-			module = new SchedulerModule(logger, new MockedTaskModule(false), new MockedIdlerModule(),new MockedProducerModule(), new MockedMoverModule(),new MockedCarrierModule(),new MockedFactoryBuilderModule());
-			Assert.IsTrue(module.RegisterCallBack(callback));
-			Assert.IsNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Warning) && (item.ComponentName == module.ModuleName)));
-			Assert.IsFalse(module.RegisterCallBack(callback));
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Warning) && (item.ComponentName == module.ModuleName)));
-
-		}
-		[TestMethod]
-		public void ShouldUnregisterCallBack()
-		{
-			MemoryLogger logger;
-			SchedulerModule module;
-			ITaskCallBack callback;
-
-			logger = new MemoryLogger();
-
-			callback = new MockedCallback();
-			module = new SchedulerModule(logger, new MockedTaskModule(false), new MockedIdlerModule(), new MockedProducerModule(), new MockedMoverModule(), new MockedCarrierModule(), new MockedFactoryBuilderModule());
-			Assert.IsFalse(module.UnregisterCallBack(callback));
-			module.RegisterCallBack(callback);
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Warning) && (item.ComponentName == module.ModuleName)));
-			Assert.IsTrue(module.UnregisterCallBack(callback));
-
-		}//*/
+		
 
 
 	}
