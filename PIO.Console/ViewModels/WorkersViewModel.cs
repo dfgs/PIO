@@ -28,6 +28,13 @@ namespace PIO.Console.ViewModels
 			return await PIOClient.GetWorkersAsync(planetID);
 		}
 		
+		public async Task RefreshWorker(int WorkerID)
+		{
+			WorkerViewModel vm;
+
+			vm = this.FirstOrDefault(item => item.Model?.WorkerID == WorkerID);
+			if (vm != null) await vm.RefreshAsync();
+		}
 
 	}
 }

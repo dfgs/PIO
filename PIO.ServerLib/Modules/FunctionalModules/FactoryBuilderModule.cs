@@ -61,7 +61,7 @@ namespace PIO.ServerLib.Modules
 			factoryType=AssertExists(() => factoryTypeModule.GetFactoryType(FactoryTypeID), $"FactoryTypeID={FactoryTypeID}");
 
 			Log(LogLevels.Information, $"Creating task (WorkerID={WorkerID})");
-			task=Try(() => taskModule.CreateTask(TaskTypeIDs.CreateBuilding, WorkerID, null, null, null, null, null, FactoryTypeID, DateTime.Now.AddSeconds(10))).OrThrow<PIOInternalErrorException>("Failed to create task");
+			task=Try(() => taskModule.CreateTask(TaskTypeIDs.CreateBuilding, WorkerID, null, null, null, null, FactoryTypeID, DateTime.Now.AddSeconds(10))).OrThrow<PIOInternalErrorException>("Failed to create task");
 
 			OnTaskCreated(task);
 
@@ -136,7 +136,7 @@ namespace PIO.ServerLib.Modules
 			}
 
 			Log(LogLevels.Information, $"Creating task (WorkerID={WorkerID})");
-			task=Try(() => taskModule.CreateTask(TaskTypeIDs.Build, WorkerID, null, null, null, null, null, null, DateTime.Now.AddSeconds(10))).OrThrow<PIOInternalErrorException>("Failed to create task");
+			task=Try(() => taskModule.CreateTask(TaskTypeIDs.Build, WorkerID, null, null, null, null, null, DateTime.Now.AddSeconds(10))).OrThrow<PIOInternalErrorException>("Failed to create task");
 
 			OnTaskCreated(task);
 

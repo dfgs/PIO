@@ -42,7 +42,7 @@ namespace PIO.ServerLib
 					yield return new CreateTable(PIODB.WorkerTable, WorkerTable.WorkerID, WorkerTable.PlanetID,WorkerTable.X,WorkerTable.Y);
 					yield return new CreateTable(PIODB.StackTable, StackTable.StackID, StackTable.BuildingID, StackTable.ResourceTypeID, StackTable.Quantity);
 					yield return new CreateTable(PIODB.MaterialTable, MaterialTable.MaterialID, MaterialTable.FactoryTypeID, MaterialTable.ResourceTypeID, MaterialTable.Quantity);
-					yield return new CreateTable(PIODB.TaskTable, TaskTable.TaskID,TaskTable.TaskTypeID, TaskTable.WorkerID,TaskTable.X,TaskTable.Y,TaskTable.BuildingID, TaskTable.FactoryID,TaskTable.ResourceTypeID,TaskTable.FactoryTypeID,  TaskTable.ETA);
+					yield return new CreateTable(PIODB.TaskTable, TaskTable.TaskID,TaskTable.TaskTypeID, TaskTable.WorkerID,TaskTable.X,TaskTable.Y,TaskTable.BuildingID, TaskTable.ResourceTypeID,TaskTable.FactoryTypeID,  TaskTable.ETA);
 
 					yield return new CreateTable(PIODB.IngredientTable, IngredientTable.IngredientID, IngredientTable.FactoryTypeID, IngredientTable.ResourceTypeID, IngredientTable.Quantity);
 					yield return new CreateTable(PIODB.ProductTable, ProductTable.ProductID, ProductTable.FactoryTypeID, ProductTable.ResourceTypeID, ProductTable.Quantity, ProductTable.Duration);
@@ -61,7 +61,8 @@ namespace PIO.ServerLib
 
 					yield return new CreateRelation<int>(PIODB.TaskTable, WorkerTable.WorkerID, TaskTable.WorkerID);
 					yield return new CreateRelation<int>(PIODB.TaskTable, BuildingTable.BuildingID, TaskTable.BuildingID);
-					yield return new CreateRelation<int>(PIODB.TaskTable, FactoryTable.FactoryID, TaskTable.FactoryID);
+					//yield return new CreateRelation<int>(PIODB.TaskTable, FactoryTable.BuildingID, TaskTable.TargetBuildingID);
+
 					yield return new CreateRelation<ResourceTypeIDs>(PIODB.TaskTable, ResourceTypeTable.ResourceTypeID, TaskTable.ResourceTypeID);
 					yield return new CreateRelation<FactoryTypeIDs>(PIODB.TaskTable, FactoryTypeTable.FactoryTypeID, TaskTable.FactoryTypeID);
 

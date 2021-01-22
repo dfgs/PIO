@@ -16,7 +16,7 @@ namespace PIO.ServerLib.Tables
 		public static readonly Column<int> X = new Column<int>() { IsNullable = true };
 		public static readonly Column<int> Y = new Column<int>() { IsNullable = true };
 		public static readonly Column<int> BuildingID = new Column<int>() { IsNullable = true };
-		public static readonly Column<int> FactoryID = new Column<int>() { IsNullable = true };
+		//public static readonly Column<int> TargetBuildingID = new Column<int>() { IsNullable = true };
 		public static readonly Column<ResourceTypeIDs> ResourceTypeID = new Column<ResourceTypeIDs>() { IsNullable = true };
 		public static readonly Column<FactoryTypeIDs> FactoryTypeID = new Column<FactoryTypeIDs>() { IsNullable = true };
 		public static readonly Column<DateTime> ETA = new Column<DateTime>() ;

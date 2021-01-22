@@ -28,7 +28,21 @@ namespace PIO.Console.ViewModels
 		{
 			return await PIOClient.GetFactoriesAsync(planetID);
 		}
-		
 
+		public async Task RefreshFactory(int X,int Y)
+		{
+			FactoryViewModel vm;
+
+			vm = this.FirstOrDefault(item => (item.Model?.X == X) && (item.Model?.Y==Y));
+			if (vm != null) await vm.RefreshAsync();
+		}
+
+		public async Task RefreshFactory(int FactoryID)
+		{
+			FactoryViewModel vm;
+
+			vm = this.FirstOrDefault(item => item.Model?.FactoryID == FactoryID);
+			if (vm != null) await vm.RefreshAsync();
+		}
 	}
 }

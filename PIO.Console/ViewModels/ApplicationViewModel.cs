@@ -49,8 +49,32 @@ namespace PIO.Console.ViewModels
 		}
 
 
-		
-
+		public async Task OnTaskStarted(PIO.Models.Task Task)
+		{
+			await Workers.RefreshWorker(Task.WorkerID);
+			switch (Task.TaskTypeID)
+			{
+				case Models.TaskTypeIDs.CarryTo:
+					await Factories.RefreshFactory(Task.X.Value, Task.Y.Value);
+					break;
+				case Models.TaskTypeIDs.Produce:
+					await Factories.RefreshFactory(Task.X.Value, Task.Y.Value);
+					break;
+			}
+		}
+		public async Task OnTaskEnded(PIO.Models.Task Task)
+		{
+			await Workers.RefreshWorker(Task.WorkerID);
+			switch (Task.TaskTypeID)
+			{
+				case Models.TaskTypeIDs.CarryTo:
+					await Factories.RefreshFactory(Task.X.Value, Task.Y.Value);
+					break;
+				case Models.TaskTypeIDs.Produce:
+					await Factories.RefreshFactory(Task.X.Value, Task.Y.Value);
+					break;
+			}
+		}
 
 
 	}
