@@ -42,7 +42,7 @@ namespace PIO.Console.ViewModels
 			return 0;
 		}
 
-		public override async Task LoadAsync(int Model)
+		protected override async Task OnLoadAsync(int Model)
 		{
 			await Workers.LoadAsync();
 			await Factories.LoadAsync();

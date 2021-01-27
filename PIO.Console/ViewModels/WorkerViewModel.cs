@@ -45,9 +45,8 @@ namespace PIO.Console.ViewModels
 		{
 			return await PIOClient.GetWorkerAsync(Model.WorkerID);
 		}
-		public override async Task LoadAsync(Worker Model)
+		protected override async Task OnLoadAsync(Worker Model)
 		{
-			await base.LoadAsync(Model);
 			Tasks = new TasksViewModel(PIOClient, BotsClient,Model.WorkerID);
 			await Tasks.LoadAsync();
 			Task = Tasks.FirstOrDefault();

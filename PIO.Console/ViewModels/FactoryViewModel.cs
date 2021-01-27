@@ -37,9 +37,8 @@ namespace PIO.Console.ViewModels
 		{
 			return await PIOClient.GetFactoryAsync(Model.FactoryID);
 		}
-		public override async Task LoadAsync(Factory Model)
+		protected override async Task OnLoadAsync(Factory Model)
 		{
-			await base.LoadAsync(Model);
 			Stacks = new StacksViewModel(PIOClient, BotsClient, Model.BuildingID);
 			await Stacks.LoadAsync();
 		}
