@@ -33,11 +33,13 @@ namespace PIO.ServerLib
 			switch (Version)
 			{
 				case 1:
-					yield return new CreateTable(PIODB.PlanetTable, PlanetTable.PlanetID, PlanetTable.Name);
+					yield return new CreateTable(PIODB.PlanetTable, PlanetTable.PlanetID, PlanetTable.Name,PlanetTable.Width,PlanetTable.Height);
 					yield return new CreateTable(PIODB.ResourceTypeTable, ResourceTypeTable.ResourceTypeID, ResourceTypeTable.Name);
 					yield return new CreateTable(PIODB.FactoryTypeTable, FactoryTypeTable.FactoryTypeID, FactoryTypeTable.Name, FactoryTypeTable.HealthPoints,FactoryTypeTable.BuildSteps);
 					yield return new CreateTable(PIODB.TaskTypeTable, TaskTypeTable.TaskTypeID, TaskTypeTable.Name);
-					yield return new CreateTable(PIODB.BuildingTable, BuildingTable.BuildingID, BuildingTable.PlanetID, BuildingTable.X,BuildingTable.Y,  BuildingTable.HealthPoints,BuildingTable.RemainingBuildSteps);
+
+					yield return new CreateTable(PIODB.CellTable, CellTable.CellID, CellTable.PlanetID, CellTable.X, CellTable.Y);
+					yield return new CreateTable(PIODB.BuildingTable, BuildingTable.BuildingID, BuildingTable.PlanetID, BuildingTable.X, BuildingTable.Y, BuildingTable.HealthPoints, BuildingTable.RemainingBuildSteps);
 					yield return new CreateTable(PIODB.FactoryTable, FactoryTable.FactoryID, FactoryTable.BuildingID, FactoryTable.FactoryTypeID);
 					yield return new CreateTable(PIODB.WorkerTable, WorkerTable.WorkerID, WorkerTable.PlanetID,WorkerTable.X,WorkerTable.Y);
 					yield return new CreateTable(PIODB.StackTable, StackTable.StackID, StackTable.BuildingID, StackTable.ResourceTypeID, StackTable.Quantity);
@@ -55,6 +57,7 @@ namespace PIO.ServerLib
 					yield return new CreateRelation<ResourceTypeIDs>(PIODB.MaterialTable, ResourceTypeTable.ResourceTypeID, MaterialTable.ResourceTypeID);
 					yield return new CreateRelation<FactoryTypeIDs>(PIODB.FactoryTable, FactoryTypeTable.FactoryTypeID, FactoryTable.FactoryTypeID);
 					yield return new CreateRelation<int>(PIODB.FactoryTable, BuildingTable.BuildingID, FactoryTable.BuildingID);
+					yield return new CreateRelation<int>(PIODB.CellTable, PlanetTable.PlanetID, CellTable.PlanetID);
 					yield return new CreateRelation<int>(PIODB.BuildingTable, PlanetTable.PlanetID, BuildingTable.PlanetID);
 
 					yield return new CreateRelation<TaskTypeIDs>(PIODB.TaskTable, TaskTypeTable.TaskTypeID, TaskTable.TaskTypeID);
@@ -71,6 +74,7 @@ namespace PIO.ServerLib
 					yield return new CreateRelation<FactoryTypeIDs>(PIODB.ProductTable, FactoryTypeTable.FactoryTypeID, ProductTable.FactoryTypeID);
 					yield return new CreateRelation<ResourceTypeIDs>(PIODB.ProductTable, ResourceTypeTable.ResourceTypeID, ProductTable.ResourceTypeID);
 
+					yield return new CreateConstraint(PIODB.CellTable, ColumnConstraints.Unique, CellTable.X, CellTable.Y);
 					yield return new CreateConstraint(PIODB.BuildingTable, ColumnConstraints.Unique, BuildingTable.X, BuildingTable.Y);
 					yield return new CreateConstraint(PIODB.TaskTable, ColumnConstraints.Unique, TaskTable.WorkerID);
 
@@ -114,9 +118,21 @@ namespace PIO.ServerLib
 					#endregion
 
 					#region create startup Planet
-					yield return new Insert().Into(PIODB.PlanetTable).Set(PlanetTable.Name, "Default");
+					yield return new Insert().Into(PIODB.PlanetTable).Set(PlanetTable.Name, "Default").Set(PlanetTable.Width,50).Set(PlanetTable.Height,50);
 					yield return new SelectIdentity((result) => planetID = Convert.ToInt32(result));
 					#endregion
+
+					#region create cells
+					for(int x=0;x<50;x++)
+					{
+						for(int y=0;y<50;y++)
+						{
+							yield return new Insert().Into(PIODB.CellTable).Set(CellTable.PlanetID, planetID).Set(CellTable.X, x).Set(CellTable.Y, y);
+						}
+					}
+
+					#endregion
+
 
 					#region create startup Factories
 					// dummy building

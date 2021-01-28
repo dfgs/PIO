@@ -43,6 +43,7 @@ namespace PIO.ServerHost
 			IDatabaseCreator databaseCreator;
 
 			IPlanetModule planetModule;
+			ICellModule cellModule;
 			IBuildingModule buildingModule;
 			IFactoryModule factoryModule;
 			IWorkerModule workerModule;
@@ -84,6 +85,7 @@ namespace PIO.ServerHost
 
 
 			planetModule = new PlanetModule(logger, database);
+			cellModule = new CellModule(logger, database);
 			buildingModule = new BuildingModule(logger, database);
 			factoryModule = new FactoryModule(logger, database);
 			workerModule = new WorkerModule(logger, database);
@@ -107,15 +109,15 @@ namespace PIO.ServerHost
 
 			schedulerModule = new SchedulerModule(logger, taskModule, idlerModule, producerModule,moverModule,carrierModule, factoryBuilderModule);
 			schedulerModule.Start();
-			
+
 
 			pioService = new PIOService(
-				logger,planetModule,factoryModule,workerModule,
-				stackModule,resourceTypeModule,
-				factoryTypeModule,taskTypeModule,materialModule,ingredientModule,productModule,taskModule, 
-				
+				logger, planetModule, cellModule, factoryModule, workerModule,
+				stackModule, resourceTypeModule,
+				factoryTypeModule, taskTypeModule, materialModule, ingredientModule, productModule, taskModule,
+
 				schedulerModule,
-				resourceCheckerModule,locationCheckerModule, idlerModule,producerModule,moverModule,carrierModule,factoryBuilderModule);
+				resourceCheckerModule, locationCheckerModule, idlerModule, producerModule, moverModule, carrierModule, factoryBuilderModule); ;
 
 			pioServiceHostModule = new ServiceHostModule(logger,pioService);
 			pioServiceHostModule.Start();

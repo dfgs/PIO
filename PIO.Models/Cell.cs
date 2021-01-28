@@ -5,21 +5,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace PIO.Models
 {
 	[DataContract]
-	public class Planet
+	public class Cell:ILocation
 	{
+		[DataMember]
+		public int CellID { get; set; }
 		[DataMember]
 		public int PlanetID { get; set; }
 		[DataMember]
-		public string Name { get; set; }
+		public int X { get; set; }
 		[DataMember]
-		public int Width { get; set; }
-		[DataMember]
-		public int Height { get; set; }
+		public int Y { get; set; }
+		/*[DataMember]
+		public CellTypeIDs CellTypeID { get; set; }*/
+		
+
 
 	}
 }

@@ -18,7 +18,7 @@ namespace PIO.Console.ViewModels
 			this.buildingID = BuildingID;
 		}
 
-		protected override StackViewModel OnCreateItem()
+		protected override StackViewModel OnCreateItem(Stack Model)
 		{
 			return new StackViewModel(PIOClient, BotsClient);
 		}

@@ -18,7 +18,7 @@ namespace PIO.Console.ViewModels
 			this.workerID = WorkerID;
 		}
 
-		protected override TaskViewModel OnCreateItem()
+		protected override TaskViewModel OnCreateItem(PIO.Models.Task Model)
 		{
 			return new TaskViewModel(PIOClient, BotsClient);
 		}

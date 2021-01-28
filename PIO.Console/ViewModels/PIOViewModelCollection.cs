@@ -28,7 +28,7 @@ namespace PIO.Console.ViewModels
 		}
 
 		protected abstract Task<IEnumerable<ModelT>> OnLoadModelAsync();
-		protected abstract T OnCreateItem();
+		protected abstract T OnCreateItem(ModelT Model);
 
 		public async Task LoadAsync()
 		{
@@ -45,7 +45,7 @@ namespace PIO.Console.ViewModels
 				
 				foreach (ModelT model in models)
 				{
-					vm = OnCreateItem();
+					vm = OnCreateItem(model);
 					await vm.LoadAsync(model);
 					items.Add(vm);
 				}

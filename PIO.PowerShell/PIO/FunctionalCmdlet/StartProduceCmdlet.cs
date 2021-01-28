@@ -10,25 +10,22 @@ using System.Text;
 
 namespace PIO.PowerShell
 {
-	[Cmdlet(VerbsLifecycle.Invoke, "CreateBuilding")]
+	[Cmdlet(VerbsLifecycle.Start, "Produce")]
 	[OutputType(typeof(Task))]
-	public class InvokeCreateBuildingCmdlet : PIOCmdLet
+	public class StartProduceCmdlet : PIOCmdLet
 	{
 		[Parameter(Position = 0, ValueFromPipeline = true, Mandatory = true)]
 		public int WorkerID { get; set; }
+
 		
-		
-		[Parameter(Position = 1, ValueFromPipeline = true, Mandatory = true)]
-		public FactoryTypeIDs FactoryTypeID { get; set; }
-		
-	
+
 
 
 		protected override void ProcessRecord()
 		{
 			Task result;
 
-			result = Try(()=>client.CreateBuilding(WorkerID,FactoryTypeID));
+			result = Try(()=>client.Produce(WorkerID));
 			
 			WriteObject(result);
 		}

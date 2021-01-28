@@ -18,7 +18,7 @@ namespace PIO.Console.ViewModels
 			this.planetID = PlanetID;
 		}
 
-		protected override WorkerViewModel OnCreateItem()
+		protected override WorkerViewModel OnCreateItem(Worker Model)
 		{
 			return new WorkerViewModel(PIOClient, BotsClient);
 		}

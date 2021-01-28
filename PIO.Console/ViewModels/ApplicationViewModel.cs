@@ -13,6 +13,13 @@ namespace PIO.Console.ViewModels
 {
 	public class ApplicationViewModel:PIOViewModel<int>
 	{
+		public static readonly DependencyProperty MapItemsProperty = DependencyProperty.Register("MapItems", typeof(MapItemsViewModel), typeof(ApplicationViewModel));
+		public MapItemsViewModel MapItems
+		{
+			get { return (MapItemsViewModel)GetValue(MapItemsProperty); }
+			set { SetValue(MapItemsProperty, value); }
+		}
+
 
 		public static readonly DependencyProperty WorkersProperty = DependencyProperty.Register("Workers", typeof(WorkersViewModel), typeof(ApplicationViewModel));
 		public WorkersViewModel Workers
@@ -31,6 +38,7 @@ namespace PIO.Console.ViewModels
 
 		public ApplicationViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient) : base(PIOClient, BotsClient)
 		{
+			MapItems = new MapItemsViewModel(PIOClient, BotsClient, 1);
 			Workers = new WorkersViewModel(PIOClient,BotsClient,1);
 			Factories = new FactoriesViewModel(PIOClient, BotsClient, 1);
 	
@@ -38,12 +46,12 @@ namespace PIO.Console.ViewModels
 
 		protected override async Task<int> OnLoadModelAsync()
 		{
-			await Task.Delay(0);
-			return 0;
+			return await Task.FromResult(0);
 		}
 
 		protected override async Task OnLoadAsync(int Model)
 		{
+			await MapItems.LoadAsync();
 			await Workers.LoadAsync();
 			await Factories.LoadAsync();
 		}
@@ -55,10 +63,10 @@ namespace PIO.Console.ViewModels
 			switch (Task.TaskTypeID)
 			{
 				case Models.TaskTypeIDs.CarryTo:
-					await Factories.RefreshFactory(Task.X.Value, Task.Y.Value);
+					await MapItems.RefreshFactory(Task.X.Value, Task.Y.Value);
 					break;
 				case Models.TaskTypeIDs.Produce:
-					await Factories.RefreshFactory(Task.X.Value, Task.Y.Value);
+					await MapItems.RefreshFactory(Task.X.Value, Task.Y.Value);
 					break;
 			}
 		}
@@ -67,11 +75,15 @@ namespace PIO.Console.ViewModels
 			await Workers.RefreshWorker(Task.WorkerID);
 			switch (Task.TaskTypeID)
 			{
+				case Models.TaskTypeIDs.MoveTo:
+					await MapItems.RefreshWorker(Task.WorkerID);
+					break;
 				case Models.TaskTypeIDs.CarryTo:
-					await Factories.RefreshFactory(Task.X.Value, Task.Y.Value);
+					await MapItems.RefreshWorker(Task.WorkerID);
+					await MapItems.RefreshFactory(Task.X.Value, Task.Y.Value);
 					break;
 				case Models.TaskTypeIDs.Produce:
-					await Factories.RefreshFactory(Task.X.Value, Task.Y.Value);
+					await MapItems.RefreshFactory(Task.X.Value, Task.Y.Value);
 					break;
 			}
 		}

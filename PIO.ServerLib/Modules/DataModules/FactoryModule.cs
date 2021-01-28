@@ -43,7 +43,7 @@ namespace PIO.ServerLib.Modules
 			ISelect query;
 			LogEnter();
 
-			Log(LogLevels.Information, $"Querying Factory table (X={X}, Y={Y})");
+			Log(LogLevels.Information, $"Querying Factory table (PlanetID={PlanetID}, X={X}, Y={Y})");
 			query=new Select(
 						BuildingTable.BuildingID, BuildingTable.PlanetID, BuildingTable.X, BuildingTable.Y, BuildingTable.HealthPoints, BuildingTable.RemainingBuildSteps,
 						FactoryTable.FactoryID, FactoryTable.FactoryTypeID

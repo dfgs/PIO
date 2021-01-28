@@ -10,9 +10,9 @@ using System.Text;
 
 namespace PIO.PowerShell
 {
-	[Cmdlet(VerbsLifecycle.Invoke, "CreateProduceOrder")]
+	[Cmdlet(VerbsCommon.New, "ProduceOrder")]
 	[OutputType(typeof(ProduceOrder))]
-	public class InvokeCreateProduceOrderCmdlet : BotsCmdLet
+	public class NewProduceOrderCmdlet : BotsCmdLet
 	{
 		[Parameter(Position = 0, ValueFromPipeline = true, Mandatory = true)]
 		public int PlanetID { get; set; }

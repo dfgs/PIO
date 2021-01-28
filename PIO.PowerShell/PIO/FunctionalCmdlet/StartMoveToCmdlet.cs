@@ -10,9 +10,9 @@ using System.Text;
 
 namespace PIO.PowerShell
 {
-	[Cmdlet(VerbsLifecycle.Invoke, "MoveTo")]
+	[Cmdlet(VerbsLifecycle.Start, "MoveTo")]
 	[OutputType(typeof(Task))]
-	public class InvokeMoveToCmdlet : PIOCmdLet
+	public class StartMoveToCmdlet : PIOCmdLet
 	{
 		[Parameter(Position = 0, ValueFromPipeline = true, Mandatory = true)]
 		public int WorkerID { get; set; }

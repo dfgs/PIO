@@ -10,15 +10,16 @@ using System.Text;
 
 namespace PIO.PowerShell
 {
-	[Cmdlet(VerbsLifecycle.Invoke, "Idle")]
+	[Cmdlet(VerbsLifecycle.Start, "CarryTo")]
 	[OutputType(typeof(Task))]
-	public class InvokeIdleCmdlet : PIOCmdLet
+	public class StartCarryToCmdlet : PIOCmdLet
 	{
 		[Parameter(Position = 0, ValueFromPipeline = true, Mandatory = true)]
 		public int WorkerID { get; set; }
-
 		[Parameter(Position = 1, ValueFromPipeline = true, Mandatory = true)]
-		public int Duration { get; set; }
+		public int TargetBuildingID { get; set; }
+		[Parameter(Position = 2, ValueFromPipeline = true, Mandatory = true)]
+		public ResourceTypeIDs ResourceTypeID { get; set; }
 
 
 
@@ -28,7 +29,7 @@ namespace PIO.PowerShell
 		{
 			Task result;
 
-			result = Try(()=>client.Idle(WorkerID,Duration));
+			result = Try(()=>client.CarryTo(WorkerID, TargetBuildingID, ResourceTypeID));
 			
 			WriteObject(result);
 		}

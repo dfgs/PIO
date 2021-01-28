@@ -10,14 +10,17 @@ using System.Text;
 
 namespace PIO.PowerShell
 {
-	[Cmdlet(VerbsLifecycle.Invoke, "Produce")]
+	[Cmdlet(VerbsLifecycle.Start, "Idle")]
 	[OutputType(typeof(Task))]
-	public class InvokeProduceCmdlet : PIOCmdLet
+	public class StartIdleCmdlet : PIOCmdLet
 	{
 		[Parameter(Position = 0, ValueFromPipeline = true, Mandatory = true)]
 		public int WorkerID { get; set; }
 
-		
+		[Parameter(Position = 1, ValueFromPipeline = true, Mandatory = true)]
+		public int Duration { get; set; }
+
+
 
 
 
@@ -25,7 +28,7 @@ namespace PIO.PowerShell
 		{
 			Task result;
 
-			result = Try(()=>client.Produce(WorkerID));
+			result = Try(()=>client.Idle(WorkerID,Duration));
 			
 			WriteObject(result);
 		}

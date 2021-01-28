@@ -19,6 +19,24 @@
   <wsdl:message name="IPIOService_GetPlanets_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetPlanetsResponse" />
   </wsdl:message>
+  <wsdl:message name="IPIOService_GetCell_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCell" />
+  </wsdl:message>
+  <wsdl:message name="IPIOService_GetCell_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCellResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPIOService_GetCellAtPos_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCellAtPos" />
+  </wsdl:message>
+  <wsdl:message name="IPIOService_GetCellAtPos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCellAtPosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPIOService_GetCells_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCells" />
+  </wsdl:message>
+  <wsdl:message name="IPIOService_GetCells_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCellsResponse" />
+  </wsdl:message>
   <wsdl:message name="IPIOService_GetFactory_InputMessage">
     <wsdl:part name="parameters" element="tns:GetFactory" />
   </wsdl:message>
@@ -238,6 +256,18 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetPlanets" message="tns:IPIOService_GetPlanets_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/GetPlanetsResponse" message="tns:IPIOService_GetPlanets_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="GetCell">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetCell" message="tns:IPIOService_GetCell_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/GetCellResponse" message="tns:IPIOService_GetCell_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCellAtPos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetCellAtPos" message="tns:IPIOService_GetCellAtPos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/GetCellAtPosResponse" message="tns:IPIOService_GetCellAtPos_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCells">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetCells" message="tns:IPIOService_GetCells_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/GetCellsResponse" message="tns:IPIOService_GetCells_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="GetFactory">
       <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetFactory" message="tns:IPIOService_GetFactory_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/GetFactoryResponse" message="tns:IPIOService_GetFactory_OutputMessage" />
@@ -392,6 +422,33 @@
     </wsdl:operation>
     <wsdl:operation name="GetPlanets">
       <soap:operation soapAction="http://tempuri.org/IPIOService/GetPlanets" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCell">
+      <soap:operation soapAction="http://tempuri.org/IPIOService/GetCell" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCellAtPos">
+      <soap:operation soapAction="http://tempuri.org/IPIOService/GetCellAtPos" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetCells">
+      <soap:operation soapAction="http://tempuri.org/IPIOService/GetCells" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

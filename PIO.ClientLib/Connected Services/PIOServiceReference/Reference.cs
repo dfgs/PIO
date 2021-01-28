@@ -27,6 +27,24 @@ namespace PIO.ClientLib.PIOServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetPlanets", ReplyAction="http://tempuri.org/IPIOService/GetPlanetsResponse")]
         System.Threading.Tasks.Task<PIO.Models.Planet[]> GetPlanetsAsync();
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetCell", ReplyAction="http://tempuri.org/IPIOService/GetCellResponse")]
+        PIO.Models.Cell GetCell(int CellID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetCell", ReplyAction="http://tempuri.org/IPIOService/GetCellResponse")]
+        System.Threading.Tasks.Task<PIO.Models.Cell> GetCellAsync(int CellID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetCellAtPos", ReplyAction="http://tempuri.org/IPIOService/GetCellAtPosResponse")]
+        PIO.Models.Cell GetCellAtPos(int PlanetID, int X, int Y);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetCellAtPos", ReplyAction="http://tempuri.org/IPIOService/GetCellAtPosResponse")]
+        System.Threading.Tasks.Task<PIO.Models.Cell> GetCellAtPosAsync(int PlanetID, int X, int Y);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetCells", ReplyAction="http://tempuri.org/IPIOService/GetCellsResponse")]
+        PIO.Models.Cell[] GetCells(int PlanetID, int X, int Y, int Width, int Height);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetCells", ReplyAction="http://tempuri.org/IPIOService/GetCellsResponse")]
+        System.Threading.Tasks.Task<PIO.Models.Cell[]> GetCellsAsync(int PlanetID, int X, int Y, int Width, int Height);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetFactory", ReplyAction="http://tempuri.org/IPIOService/GetFactoryResponse")]
         PIO.Models.Factory GetFactory(int FactoryID);
         
@@ -279,6 +297,30 @@ namespace PIO.ClientLib.PIOServiceReference {
         
         public System.Threading.Tasks.Task<PIO.Models.Planet[]> GetPlanetsAsync() {
             return base.Channel.GetPlanetsAsync();
+        }
+        
+        public PIO.Models.Cell GetCell(int CellID) {
+            return base.Channel.GetCell(CellID);
+        }
+        
+        public System.Threading.Tasks.Task<PIO.Models.Cell> GetCellAsync(int CellID) {
+            return base.Channel.GetCellAsync(CellID);
+        }
+        
+        public PIO.Models.Cell GetCellAtPos(int PlanetID, int X, int Y) {
+            return base.Channel.GetCellAtPos(PlanetID, X, Y);
+        }
+        
+        public System.Threading.Tasks.Task<PIO.Models.Cell> GetCellAtPosAsync(int PlanetID, int X, int Y) {
+            return base.Channel.GetCellAtPosAsync(PlanetID, X, Y);
+        }
+        
+        public PIO.Models.Cell[] GetCells(int PlanetID, int X, int Y, int Width, int Height) {
+            return base.Channel.GetCells(PlanetID, X, Y, Width, Height);
+        }
+        
+        public System.Threading.Tasks.Task<PIO.Models.Cell[]> GetCellsAsync(int PlanetID, int X, int Y, int Width, int Height) {
+            return base.Channel.GetCellsAsync(PlanetID, X, Y, Width, Height);
         }
         
         public PIO.Models.Factory GetFactory(int FactoryID) {

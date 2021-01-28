@@ -9,6 +9,9 @@ using System.Text;
 
 namespace PIO.Models
 {
+	// netsh http add urlacl url=http://+:8733/PIO/service user=dfgs8
+	// netsh http add urlacl url=http://+:8735/PIO/TaskCallback/service user=dfgs8
+	// netsh http add urlacl url=http://+:8734/PIO/Bots/service user=dfgs8
 	[ServiceContract]
 	public interface IPIOService
 	{
@@ -17,6 +20,12 @@ namespace PIO.Models
 		Planet GetPlanet(int PlanetID);
 		[OperationContract]
 		Planet[] GetPlanets();
+		[OperationContract]
+		Cell GetCell(int CellID);
+		[OperationContract]
+		Cell GetCellAtPos(int PlanetID, int X, int Y);
+		[OperationContract]
+		Cell[] GetCells(int PlanetID, int X, int Y,int Width,int Height);
 		[OperationContract]
 		Factory GetFactory(int FactoryID);
 		[OperationContract]

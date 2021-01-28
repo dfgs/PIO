@@ -7,30 +7,33 @@ using System.Management.Automation;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace PIO.PowerShell
 {
-	[Cmdlet(VerbsLifecycle.Invoke, "CarryTo")]
-	[OutputType(typeof(Task))]
-	public class InvokeCarryToCmdlet : PIOCmdLet
+	[Cmdlet(VerbsCommon.Get, "Cells")]
+	[OutputType(typeof(Cell[]))]
+	public class GetCellsCmdlet : PIOCmdLet
 	{
+
 		[Parameter(Position = 0, ValueFromPipeline = true, Mandatory = true)]
-		public int WorkerID { get; set; }
+		public int PlanetID { get; set; }
 		[Parameter(Position = 1, ValueFromPipeline = true, Mandatory = true)]
-		public int TargetBuildingID { get; set; }
+		public int X { get; set; }
 		[Parameter(Position = 2, ValueFromPipeline = true, Mandatory = true)]
-		public ResourceTypeIDs ResourceTypeID { get; set; }
-
-
-
+		public int Y { get; set; }
+		[Parameter(Position = 3, ValueFromPipeline = true, Mandatory = true)]
+		public int Width { get; set; }
+		[Parameter(Position = 4, ValueFromPipeline = true, Mandatory = true)]
+		public int Height { get; set; }
 
 
 		protected override void ProcessRecord()
 		{
-			Task result;
+			Cell[] result;
 
-			result = Try(()=>client.CarryTo(WorkerID, TargetBuildingID, ResourceTypeID));
-			
+			result = Try(() => client.GetCells(PlanetID,X,Y,Width,Height));
+
 			WriteObject(result);
 		}
 

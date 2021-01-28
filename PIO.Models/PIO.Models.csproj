@@ -43,11 +43,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cell.cs" />
     <Compile Include="Consts.cs" />
     <Compile Include="Building.cs" />
+    <Compile Include="ILocation.cs" />
     <Compile Include="ITaskCallbackService.cs" />
     <Compile Include="IPIOService.cs" />
     <Compile Include="ITaskCallBack.cs" />
+    <Compile Include="Modules\DataModules\ICellModule.cs" />
     <Compile Include="Modules\DataModules\IBuildingModule.cs" />
     <Compile Include="Modules\DataModules\ITaskTypeModule.cs" />
     <Compile Include="Modules\EngineModules\ISchedulerModule.cs" />

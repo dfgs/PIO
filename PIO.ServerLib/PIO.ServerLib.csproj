@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Modules\DataModules\CellModule.cs" />
     <Compile Include="Modules\DataModules\BuildingModule.cs" />
     <Compile Include="Modules\DataModules\TaskTypeModule.cs" />
     <Compile Include="Modules\DataModules\ProductModule.cs" />
@@ -66,6 +67,7 @@
     <Compile Include="Modules\DataModules\TaskModule.cs" />
     <Compile Include="PIODB.cs" />
     <Compile Include="PIOVersionControl.cs" />
+    <Compile Include="Tables\CellTable.cs" />
     <Compile Include="Tables\BuildingTable.cs" />
     <Compile Include="Tables\TaskTypeTable.cs" />
     <Compile Include="Tables\ProductTable.cs" />

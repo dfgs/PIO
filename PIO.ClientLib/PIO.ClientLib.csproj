@@ -85,6 +85,7 @@
     </None>
     <None Include="Properties\DataSources\PIO.Models.Building.datasource" />
     <None Include="Properties\DataSources\PIO.Models.BuildingType.datasource" />
+    <None Include="Properties\DataSources\PIO.Models.Cell.datasource" />
     <None Include="Properties\DataSources\PIO.Models.Factory.datasource" />
     <None Include="Properties\DataSources\PIO.Models.FactoryType.datasource" />
     <None Include="Properties\DataSources\PIO.Models.Ingredient.datasource" />

@@ -10,14 +10,16 @@ using System.Text;
 
 namespace PIO.PowerShell
 {
-	[Cmdlet(VerbsLifecycle.Invoke, "BuildFactory")]
+	[Cmdlet(VerbsCommon.New, "Building")]
 	[OutputType(typeof(Task))]
-	public class InvokeBuildFactoryCmdlet : PIOCmdLet
+	public class NewBuildingCmdlet : PIOCmdLet
 	{
 		[Parameter(Position = 0, ValueFromPipeline = true, Mandatory = true)]
 		public int WorkerID { get; set; }
 		
 		
+		[Parameter(Position = 1, ValueFromPipeline = true, Mandatory = true)]
+		public FactoryTypeIDs FactoryTypeID { get; set; }
 		
 	
 
@@ -26,7 +28,7 @@ namespace PIO.PowerShell
 		{
 			Task result;
 
-			result = Try(()=>client.BuildFactory(WorkerID));
+			result = Try(()=>client.CreateBuilding(WorkerID,FactoryTypeID));
 			
 			WriteObject(result);
 		}

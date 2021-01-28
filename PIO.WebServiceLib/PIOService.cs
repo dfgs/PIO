@@ -20,6 +20,7 @@ namespace PIO.WebServiceLib
 	public class PIOService : Module, IPIOService
 	{
 		private IPlanetModule planetModule;
+		private ICellModule cellModule;
 		private IFactoryModule factoryModule;
 		private IWorkerModule workerModule;
 		private IStackModule stackModule;
@@ -42,10 +43,10 @@ namespace PIO.WebServiceLib
 
 
 		public PIOService(ILogger Logger,
-			IPlanetModule PlanetModule,  IFactoryModule FactoryModule,
+			IPlanetModule PlanetModule, ICellModule CellModule, IFactoryModule FactoryModule,
 			IWorkerModule WorkerModule,
 			IStackModule StackModule,IResourceTypeModule ResourceTypeModule,
-			IFactoryTypeModule FactoryTypeModule,ITaskTypeModule TaskTypeModule,
+						IFactoryTypeModule FactoryTypeModule,ITaskTypeModule TaskTypeModule,
 			IMaterialModule MaterialModule,
 			IIngredientModule IngredientModule, IProductModule ProductModule, 
 			ITaskModule TaskModule,
@@ -59,6 +60,7 @@ namespace PIO.WebServiceLib
 		{
 			LogEnter();
 			this.planetModule = PlanetModule;
+			this.cellModule = CellModule;
 			this.factoryModule = FactoryModule;
 			this.workerModule = WorkerModule;
 			this.stackModule = StackModule;
@@ -112,6 +114,21 @@ namespace PIO.WebServiceLib
 		{
 			LogEnter();
 			return Try(() => workerModule.GetWorkers()).OrThrow(GenerateFaultException);
+		}
+		public Cell GetCell(int CellID)
+		{
+			LogEnter();
+			return Try(() => cellModule.GetCell(CellID)).OrThrow(GenerateFaultException);
+		}
+		public Cell GetCellAtPos(int PlanetID, int X, int Y)
+		{
+			LogEnter();
+			return Try(() => cellModule.GetCell(PlanetID, X, Y)).OrThrow(GenerateFaultException);
+		}
+		public Cell[] GetCells(int PlanetID, int X, int Y,int Width,int Height)
+		{
+			LogEnter();
+			return Try(() => cellModule.GetCells(PlanetID, X, Y,Width,Height)).OrThrow(GenerateFaultException);
 		}
 
 		public Factory GetFactory(int FactoryID)

@@ -434,6 +434,34 @@ namespace PIO.UnitTest.BotsLib.Mocks
 			throw new NotImplementedException();
 		}
 
-	
+		public Cell GetCell(int CellID)
+		{
+			throw new NotImplementedException();
+		}
+
+		public Task<Cell> GetCellAsync(int CellID)
+		{
+			throw new NotImplementedException();
+		}
+
+		public Cell GetCellAtPos(int PlanetID, int X, int Y)
+		{
+			throw new NotImplementedException();
+		}
+
+		public Task<Cell> GetCellAtPosAsync(int PlanetID, int X, int Y)
+		{
+			throw new NotImplementedException();
+		}
+
+		public Cell[] GetCells(int PlanetID, int X, int Y, int Width, int Height)
+		{
+			throw new NotImplementedException();
+		}
+
+		public Task<Cell[]> GetCellsAsync(int PlanetID, int X, int Y, int Width, int Height)
+		{
+			throw new NotImplementedException();
+		}
 	}
 }

@@ -9,7 +9,7 @@ using System.Text;
 namespace PIO.Models
 {
 	[DataContract]
-	public class Building
+	public class Building : ILocation
 	{
 		[DataMember]
 		public int BuildingID { get; set; }

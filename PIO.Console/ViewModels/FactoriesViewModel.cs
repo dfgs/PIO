@@ -19,7 +19,7 @@ namespace PIO.Console.ViewModels
 			this.planetID = PlanetID;
 		}
 
-		protected override FactoryViewModel OnCreateItem()
+		protected override FactoryViewModel OnCreateItem(Factory Model)
 		{
 			return new FactoryViewModel(PIOClient, BotsClient);
 		}
