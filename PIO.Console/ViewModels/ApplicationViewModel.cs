@@ -1,8 +1,10 @@
 ﻿using PIO.Bots.ClientLib.BotsServiceReference;
 using PIO.ClientLib.PIOServiceReference;
 using PIO.ClientLib.TaskCallbackServiceReference;
+using PIO.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,12 +15,7 @@ namespace PIO.Console.ViewModels
 {
 	public class ApplicationViewModel:PIOViewModel<int>
 	{
-		public static readonly DependencyProperty MapItemsProperty = DependencyProperty.Register("MapItems", typeof(MapItemsViewModel), typeof(ApplicationViewModel));
-		public MapItemsViewModel MapItems
-		{
-			get { return (MapItemsViewModel)GetValue(MapItemsProperty); }
-			set { SetValue(MapItemsProperty, value); }
-		}
+		
 
 
 		public static readonly DependencyProperty WorkersProperty = DependencyProperty.Register("Workers", typeof(WorkersViewModel), typeof(ApplicationViewModel));
@@ -36,54 +33,69 @@ namespace PIO.Console.ViewModels
 			set { SetValue(FactoriesProperty, value); }
 		}
 
+		public static readonly DependencyProperty CellsProperty = DependencyProperty.Register("Cells", typeof(CellsViewModel), typeof(ApplicationViewModel));
+		public CellsViewModel Cells
+		{
+			get { return (CellsViewModel)GetValue(CellsProperty); }
+			set { SetValue(CellsProperty, value); }
+		}
+
+		public static readonly DependencyProperty MapItemsProperty = DependencyProperty.Register("MapItems", typeof(ObservableCollection<object>), typeof(ApplicationViewModel));
+		public ObservableCollection<object> MapItems
+		{
+			get { return (ObservableCollection<object>)GetValue(MapItemsProperty); }
+			set { SetValue(MapItemsProperty, value); }
+		}
+
 		public ApplicationViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient) : base(PIOClient, BotsClient)
 		{
-			MapItems = new MapItemsViewModel(PIOClient, BotsClient, 1);
+			Cells = new CellsViewModel(PIOClient, BotsClient, 1);
 			Workers = new WorkersViewModel(PIOClient,BotsClient,1);
 			Factories = new FactoriesViewModel(PIOClient, BotsClient, 1);
-	
+			
 		}
 
 		protected override async Task<int> OnLoadModelAsync()
 		{
-			return await Task.FromResult(0);
+			return await System.Threading.Tasks.Task.FromResult(0);
 		}
 
-		protected override async Task OnLoadAsync(int Model)
+		protected override async System.Threading.Tasks.Task OnLoadAsync(int Model)
 		{
-			await MapItems.LoadAsync();
+			await Cells.LoadAsync();
 			await Workers.LoadAsync();
 			await Factories.LoadAsync();
+
+			MapItems = new ObservableCollection<object>(Cells.Cast<object>().Union(Factories).Union(Workers) );
+			
 		}
 
 
-		public async Task OnTaskStarted(PIO.Models.Task Task)
+		public async System.Threading.Tasks.Task OnTaskStarted(PIO.Models.Task Task)
 		{
 			await Workers.RefreshWorker(Task.WorkerID);
 			switch (Task.TaskTypeID)
 			{
 				case Models.TaskTypeIDs.CarryTo:
-					await MapItems.RefreshFactory(Task.X.Value, Task.Y.Value);
+					await Factories.RefreshFactory(Task.X.Value, Task.Y.Value);
 					break;
 				case Models.TaskTypeIDs.Produce:
-					await MapItems.RefreshFactory(Task.X.Value, Task.Y.Value);
+					await Factories.RefreshFactory(Task.X.Value, Task.Y.Value);
 					break;
 			}
 		}
-		public async Task OnTaskEnded(PIO.Models.Task Task)
+		public async System.Threading.Tasks.Task OnTaskEnded(PIO.Models.Task Task)
 		{
 			await Workers.RefreshWorker(Task.WorkerID);
 			switch (Task.TaskTypeID)
 			{
 				case Models.TaskTypeIDs.MoveTo:
-					await MapItems.RefreshWorker(Task.WorkerID);
 					break;
 				case Models.TaskTypeIDs.CarryTo:
-					await MapItems.RefreshWorker(Task.WorkerID);
-					await MapItems.RefreshFactory(Task.X.Value, Task.Y.Value);
+					await Factories.RefreshFactory(Task.X.Value, Task.Y.Value);
 					break;
 				case Models.TaskTypeIDs.Produce:
-					await MapItems.RefreshFactory(Task.X.Value, Task.Y.Value);
+					await Factories.RefreshFactory(Task.X.Value, Task.Y.Value);
 					break;
 			}
 		}

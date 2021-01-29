@@ -57,11 +57,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ViewModels\ApplicationViewModel.cs" />
-    <Compile Include="ViewModels\MapWorkerViewModel.cs" />
-    <Compile Include="ViewModels\MapFactoryViewModel.cs" />
-    <Compile Include="ViewModels\MapCellViewModel.cs" />
-    <Compile Include="ViewModels\MapItemsViewModel.cs" />
-    <Compile Include="ViewModels\MapItemViewModel.cs" />
+    <Compile Include="ViewModels\CellViewModel.cs" />
+    <Compile Include="ViewModels\CellsViewModel.cs" />
     <Compile Include="ViewModels\FactoryViewModel.cs" />
     <Compile Include="ViewModels\PIOViewModelCollection.cs" />
     <Compile Include="ViewModels\PIOViewModel.cs" />
@@ -81,6 +78,9 @@
     <Compile Include="Views\MapControl.cs" />
     <Compile Include="Views\MapView.xaml.cs">
       <DependentUpon>MapView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SelectionView.xaml.cs">
+      <DependentUpon>SelectionView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\StacksView.xaml.cs">
       <DependentUpon>StacksView.xaml</DependentUpon>
@@ -119,6 +119,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MapView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SelectionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

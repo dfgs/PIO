@@ -1,0 +1,58 @@
+﻿<UserControl x:Class="PIO.Console.Views.SelectionView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:views="clr-namespace:PIO.Console.Views"
+			 xmlns:viewModels="clr-namespace:PIO.Console.ViewModels"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+	<UserControl.Resources>
+		<DataTemplate DataType="{x:Type viewModels:CellViewModel}">
+			<StackPanel>
+				<TextBlock Text="Cell:" FontWeight="Bold"/>
+				<TextBlock Text="{Binding X}"/>
+				<TextBlock Text="{Binding Y}"/>
+			</StackPanel>
+		</DataTemplate>
+		<DataTemplate DataType="{x:Type viewModels:WorkerViewModel}">
+			<StackPanel>
+				<TextBlock Text="Worker:" FontWeight="Bold"/>
+				<TextBlock Text="{Binding X}"/>
+				<TextBlock Text="{Binding Y}"/>
+				<TextBlock Text="Tasks:" FontWeight="Bold"/>
+				<ItemsControl ItemsSource="{Binding Tasks}">
+					<ItemsControl.ItemTemplate>
+						<DataTemplate DataType="{x:Type viewModels:StackViewModel}">
+							<StackPanel Orientation="Horizontal">
+								<TextBlock Text="{Binding TaskTypeID}"/>
+								<TextBlock Text=": "/>
+								<TextBlock Text="{Binding ETA}"/>
+							</StackPanel>
+						</DataTemplate>
+					</ItemsControl.ItemTemplate>
+				</ItemsControl>
+			</StackPanel>
+		</DataTemplate>
+		<DataTemplate DataType="{x:Type viewModels:FactoryViewModel}">
+			<StackPanel>
+				<TextBlock Text="Factory:" FontWeight="Bold"/>
+				<TextBlock Text="{Binding X}"/>
+				<TextBlock Text="{Binding Y}"/>
+				<TextBlock Text="Stacks:" FontWeight="Bold"/>
+				<ItemsControl ItemsSource="{Binding Stacks}">
+					<ItemsControl.ItemTemplate>
+						<DataTemplate DataType="{x:Type viewModels:StackViewModel}">
+							<StackPanel Orientation="Horizontal">
+								<TextBlock Text="{Binding ResourceTypeID}"/>
+								<TextBlock Text=": "/>
+								<TextBlock Text="{Binding Quantity}"/>
+							</StackPanel>
+						</DataTemplate>
+					</ItemsControl.ItemTemplate>
+				</ItemsControl>
+			</StackPanel>
+		</DataTemplate>
+	</UserControl.Resources>
+	<ContentPresenter Content="{Binding}"/>
+</UserControl>

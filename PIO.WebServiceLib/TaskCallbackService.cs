@@ -104,29 +104,36 @@ namespace PIO.WebServiceLib
 		private async void OnTaskStarted(Models.Task Task)
 		{
 			List<ITaskCallBack> failedSubscribers;
-			
+			ITaskCallBack[] callbacks;
+
 			LogEnter();
 
 			failedSubscribers = new List<ITaskCallBack>();
 			Log(LogLevels.Information, "Notify subscribers");
 
-			
 
-			foreach (ITaskCallBack subscriber in Subscribers)
+
+			lock (Subscribers)
 			{
-				
+				callbacks = Subscribers.ToArray();
+			}
+
+			foreach (ITaskCallBack subscriber in callbacks)
+			{
+
 				try
 				{
 					await subscriber.OnTaskStarted(Task);
 				}
-				catch(Exception ex)
+				catch (Exception ex)
 				{
 					Log(ex);
 					Log(LogLevels.Warning, "Failed to notify subscriber, removing from list");
 					failedSubscribers.Add(subscriber);
 				}
-				
+
 			}
+			
 
 			Log(LogLevels.Information, "Removing failed subscribers");
 			lock (Subscribers)
@@ -141,14 +148,19 @@ namespace PIO.WebServiceLib
 		private async void OnTaskEnded(Models.Task Task)
 		{
 			List<ITaskCallBack> failedSubscribers;
-			
+			ITaskCallBack[] callbacks;
+
 			LogEnter();
 
 			failedSubscribers = new List<ITaskCallBack>();
 			Log(LogLevels.Information, "Notify subscribers");
 
 
-			foreach (ITaskCallBack subscriber in Subscribers)
+			lock (Subscribers)
+			{
+				callbacks = Subscribers.ToArray();
+			}
+			foreach (ITaskCallBack subscriber in callbacks)
 			{
 				try
 				{
@@ -161,6 +173,7 @@ namespace PIO.WebServiceLib
 					failedSubscribers.Add(subscriber);
 				}
 			}
+			
 
 			Log(LogLevels.Information, "Removing failed subscribers");
 			lock (Subscribers)

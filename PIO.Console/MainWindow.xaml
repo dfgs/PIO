@@ -43,17 +43,13 @@
 		
 		<Grid>
 			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="*"/>
-				<ColumnDefinition Width="5"/>
 				<ColumnDefinition Width="2*"/>
 				<ColumnDefinition Width="5"/>
 				<ColumnDefinition Width="1*"/>
 			</Grid.ColumnDefinitions>
-			<views:FactoriesView Grid.Column="0" DataContext="{Binding Factories}"/>
+			<views:MapView Grid.Column="0" DataContext="{Binding MapItems}"/>
 			<GridSplitter Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
-			<views:MapView Grid.Column="2" DataContext="{Binding MapItems}"/>
-			<GridSplitter Grid.Column="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
-			<views:StacksView Grid.Column="4" DataContext="{Binding MapItems.SelectedItem.Stacks}"/>
+			<views:SelectionView Grid.Column="2" DataContext="{Binding MapItems.SelectedItem}"/>
 		</Grid>
 	</DockPanel>
 </Window>

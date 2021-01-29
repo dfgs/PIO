@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 
 namespace PIO.Console.ViewModels
 {
-	public class MapCellViewModel:MapItemViewModel
+	public class CellViewModel : PIOViewModel<Cell>
 	{
-		public MapCellViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient) : base(PIOClient, BotsClient)
+		public CellViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient) : base(PIOClient, BotsClient)
 		{
 		}
 
 
-		protected override async Task<ILocation> OnLoadModelAsync()
+		protected override async Task<Cell> OnLoadModelAsync()
 		{
 			return await PIOClient.GetCellAsync(((Cell)Model).CellID);
 		}

@@ -8,35 +8,34 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 	<UserControl.Resources>
-		<DataTemplate DataType="{x:Type viewModels:MapCellViewModel}">
-			<Border Background="Green" BorderBrush="Black" BorderThickness="1"/>
+		<DataTemplate DataType="{x:Type viewModels:CellViewModel}">
+			<Border Background="Green" BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
 		</DataTemplate>
-		<DataTemplate DataType="{x:Type viewModels:MapFactoryViewModel}">
+		<DataTemplate DataType="{x:Type viewModels:FactoryViewModel}">
 			<Border Background="Blue" BorderBrush="Black" BorderThickness="1" Width="16" Height="16"/>
 		</DataTemplate>
-		<DataTemplate DataType="{x:Type viewModels:MapWorkerViewModel}">
-			<Image Stretch="None" Source="/PIO.Console;component/Images/user.png" HorizontalAlignment="Center"/>
+		<DataTemplate DataType="{x:Type viewModels:WorkerViewModel}">
+			<Image Stretch="None" Source="/PIO.Console;component/Images/user.png" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 		</DataTemplate>
 	</UserControl.Resources>
 	<DockPanel>
 		<views:ToolBarView DockPanel.Dock="Top"/>
 		<views:ErrorView DockPanel.Dock="Top" DataContext="{Binding ErrorMessage}"/>
-		<ListBox ItemsSource="{Binding}" SelectedItem="{Binding SelectedItem}">
-			<ListBox.ItemContainerStyle>
-				<Style TargetType="{x:Type ListBoxItem}">
+		<ItemsControl ItemsSource="{Binding}" >
+			<ItemsControl.ItemContainerStyle>
+				<Style TargetType="{x:Type ContentPresenter}">
 					<Setter Property="views:MapControl.X" Value="{Binding X}"/>
 					<Setter Property="views:MapControl.Y" Value="{Binding Y}"/>
-					<Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-					<Setter Property="VerticalContentAlignment" Value="Stretch"/>
+					<Setter Property="Margin" Value="0"/>
 				</Style>
-			</ListBox.ItemContainerStyle>
+			</ItemsControl.ItemContainerStyle>
 
-			<ListBox.ItemsPanel>
+			<ItemsControl.ItemsPanel>
 				<ItemsPanelTemplate>
 					<views:MapControl ItemWidth="32" ItemHeight="32"/>
 				</ItemsPanelTemplate>
-			</ListBox.ItemsPanel>
+			</ItemsControl.ItemsPanel>
 			
-		</ListBox>
+		</ItemsControl>
 	</DockPanel>
 </UserControl>
