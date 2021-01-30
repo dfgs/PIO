@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Mocks\MockedCallback.cs" />
+    <Compile Include="Mocks\MockedTakerModule.cs" />
     <Compile Include="Mocks\MockedFactoryBuilderModule.cs" />
     <Compile Include="Mocks\MockedCarrierModule.cs" />
     <Compile Include="Mocks\MockedCellModule.cs" />

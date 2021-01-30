@@ -117,9 +117,9 @@ namespace PIO.ServerHost
 				logger, planetModule, cellModule, factoryModule, workerModule,
 				stackModule, resourceTypeModule,
 				factoryTypeModule, taskTypeModule, materialModule, ingredientModule, productModule, taskModule,
-
 				schedulerModule,
-				resourceCheckerModule, locationCheckerModule, idlerModule, producerModule, moverModule, carrierModule, factoryBuilderModule); ;
+				resourceCheckerModule, locationCheckerModule, idlerModule, producerModule, moverModule, carrierModule,takerModule,
+				factoryBuilderModule); ;
 
 			pioServiceHostModule = new ServiceHostModule(logger,pioService);
 			pioServiceHostModule.Start();

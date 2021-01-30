@@ -98,6 +98,8 @@ namespace PIO.Models
 		[OperationContract]
 		Task CarryTo(int WorkerID, int TargetBuildingID, ResourceTypeIDs ResourceTypeID);
 		[OperationContract]
+		Task Take(int WorkerID,  ResourceTypeIDs ResourceTypeID);
+		[OperationContract]
 		Task CreateBuilding(int WorkerID, FactoryTypeIDs FactoryTypeID);
 		[OperationContract]
 		Task BuildFactory(int WorkerID);

@@ -69,12 +69,23 @@
   <xs:complexType name="Worker">
     <xs:sequence>
       <xs:element minOccurs="0" name="PlanetID" type="xs:int" />
+      <xs:element minOccurs="0" name="ResourceTypeID" nillable="true" type="tns:ResourceTypeIDs" />
       <xs:element minOccurs="0" name="WorkerID" type="xs:int" />
       <xs:element minOccurs="0" name="X" type="xs:int" />
       <xs:element minOccurs="0" name="Y" type="xs:int" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Worker" nillable="true" type="tns:Worker" />
+  <xs:simpleType name="ResourceTypeIDs">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Tree" />
+      <xs:enumeration value="Wood" />
+      <xs:enumeration value="Stone" />
+      <xs:enumeration value="Coal" />
+      <xs:enumeration value="Plank" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="ResourceTypeIDs" nillable="true" type="tns:ResourceTypeIDs" />
   <xs:complexType name="ArrayOfWorker">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="Worker" nillable="true" type="tns:Worker" />
@@ -90,16 +101,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Stack" nillable="true" type="tns:Stack" />
-  <xs:simpleType name="ResourceTypeIDs">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="Tree" />
-      <xs:enumeration value="Wood" />
-      <xs:enumeration value="Stone" />
-      <xs:enumeration value="Coal" />
-      <xs:enumeration value="Plank" />
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:element name="ResourceTypeIDs" nillable="true" type="tns:ResourceTypeIDs" />
   <xs:complexType name="ArrayOfStack">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="Stack" nillable="true" type="tns:Stack" />
@@ -142,6 +143,7 @@
       <xs:enumeration value="CarryTo" />
       <xs:enumeration value="CreateBuilding" />
       <xs:enumeration value="Build" />
+      <xs:enumeration value="Take" />
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="TaskTypeIDs" nillable="true" type="tns:TaskTypeIDs" />

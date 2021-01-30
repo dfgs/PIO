@@ -38,6 +38,7 @@ namespace PIO.WebServiceLib
 		private IProducerModule producerModule;
 		private IMoverModule moverModule;
 		private ICarrierModule carrierModule;
+		private ITakerModule takerModule;
 		private IFactoryBuilderModule factoryBuilderModule;
 
 
@@ -55,7 +56,8 @@ namespace PIO.WebServiceLib
 
 			IResourceCheckerModule ResourceCheckerModule,ILocationCheckerModule LocationCheckerModule,
 			IIdlerModule IdlerModule, IProducerModule ProducerModule,
-			IMoverModule MoverModule,ICarrierModule CarrierModule,IFactoryBuilderModule FactoryBuilderModule
+			IMoverModule MoverModule,ICarrierModule CarrierModule,ITakerModule TakerModule,
+			IFactoryBuilderModule FactoryBuilderModule
 		) :base(Logger)
 		{
 			LogEnter();
@@ -80,6 +82,7 @@ namespace PIO.WebServiceLib
 			this.producerModule = ProducerModule;
 			this.moverModule = MoverModule;
 			this.carrierModule = CarrierModule;
+			this.takerModule = TakerModule;
 			this.factoryBuilderModule = FactoryBuilderModule;
 		}
 
@@ -310,6 +313,12 @@ namespace PIO.WebServiceLib
 			LogEnter();
 
 			return Try(() => carrierModule.BeginCarryTo(WorkerID, TargetBuildingID, ResourceTypeID)).OrThrow(GenerateFaultException);
+		}
+		public Task Take(int WorkerID,  ResourceTypeIDs ResourceTypeID)
+		{
+			LogEnter();
+
+			return Try(() => takerModule.BeginTake(WorkerID,  ResourceTypeID)).OrThrow(GenerateFaultException);
 		}
 		public Task CreateBuilding(int WorkerID, FactoryTypeIDs FactoryTypeID)
 		{

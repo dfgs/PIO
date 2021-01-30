@@ -243,6 +243,12 @@ namespace PIO.ClientLib.PIOServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/CarryTo", ReplyAction="http://tempuri.org/IPIOService/CarryToResponse")]
         System.Threading.Tasks.Task<PIO.Models.Task> CarryToAsync(int WorkerID, int TargetBuildingID, PIO.Models.ResourceTypeIDs ResourceTypeID);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/Take", ReplyAction="http://tempuri.org/IPIOService/TakeResponse")]
+        PIO.Models.Task Take(int WorkerID, PIO.Models.ResourceTypeIDs ResourceTypeID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/Take", ReplyAction="http://tempuri.org/IPIOService/TakeResponse")]
+        System.Threading.Tasks.Task<PIO.Models.Task> TakeAsync(int WorkerID, PIO.Models.ResourceTypeIDs ResourceTypeID);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/CreateBuilding", ReplyAction="http://tempuri.org/IPIOService/CreateBuildingResponse")]
         PIO.Models.Task CreateBuilding(int WorkerID, PIO.Models.FactoryTypeIDs FactoryTypeID);
         
@@ -585,6 +591,14 @@ namespace PIO.ClientLib.PIOServiceReference {
         
         public System.Threading.Tasks.Task<PIO.Models.Task> CarryToAsync(int WorkerID, int TargetBuildingID, PIO.Models.ResourceTypeIDs ResourceTypeID) {
             return base.Channel.CarryToAsync(WorkerID, TargetBuildingID, ResourceTypeID);
+        }
+        
+        public PIO.Models.Task Take(int WorkerID, PIO.Models.ResourceTypeIDs ResourceTypeID) {
+            return base.Channel.Take(WorkerID, ResourceTypeID);
+        }
+        
+        public System.Threading.Tasks.Task<PIO.Models.Task> TakeAsync(int WorkerID, PIO.Models.ResourceTypeIDs ResourceTypeID) {
+            return base.Channel.TakeAsync(WorkerID, ResourceTypeID);
         }
         
         public PIO.Models.Task CreateBuilding(int WorkerID, PIO.Models.FactoryTypeIDs FactoryTypeID) {

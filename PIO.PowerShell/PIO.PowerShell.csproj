@@ -83,6 +83,7 @@
     <Compile Include="PIO\FunctionalCmdlet\AssertWorkerIsInBuildingCmdlet.cs" />
     <Compile Include="PIO\FunctionalCmdlet\NewFactoryCmdLet.cs" />
     <Compile Include="PIO\FunctionalCmdlet\NewBuildingCmdLet.cs" />
+    <Compile Include="PIO\FunctionalCmdlet\StartTakeToCmdlet.cs" />
     <Compile Include="PIO\FunctionalCmdlet\StartCarryToCmdlet.cs" />
     <Compile Include="PIO\FunctionalCmdlet\StartMoveToCmdlet.cs" />
     <Compile Include="PIO\FunctionalCmdlet\StartIdleCmdlet.cs" />
