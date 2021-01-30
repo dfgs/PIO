@@ -61,6 +61,7 @@
     <Compile Include="Mocks\DataModules\MockedStackModule.cs" />
     <Compile Include="Mocks\DataModules\MockedTaskModule.cs" />
     <Compile Include="Mocks\DataModules\MockedDatabase.cs" />
+    <Compile Include="Mocks\FunctionalModules\MockedTakerModule.cs" />
     <Compile Include="Mocks\FunctionalModules\MockedCarrierModule.cs" />
     <Compile Include="Mocks\FunctionalModules\MockedFactoryBuilderModule.cs" />
     <Compile Include="Mocks\FunctionalModules\MockedMoverModule.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="Modules\DataModules\IngredientModuleUnitTest.cs" />
     <Compile Include="Mocks\EngineModules\MockedSchedulerModule.cs" />
     <Compile Include="Modules\EngineModules\SchedulerModuleUnitTest.cs" />
+    <Compile Include="Modules\FunctionalModules\TakerModuleUnitTest.cs" />
     <Compile Include="Modules\FunctionalModules\IdlerModuleUnitTest.cs" />
     <Compile Include="Modules\FunctionalModules\MoverModuleUnitTest.cs" />
     <Compile Include="Modules\FunctionalModules\CarrierModuleUnitTest.cs" />

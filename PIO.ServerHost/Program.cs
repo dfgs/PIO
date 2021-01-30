@@ -63,6 +63,7 @@ namespace PIO.ServerHost
 			IProducerModule producerModule;
 			IMoverModule moverModule;
 			ICarrierModule carrierModule;
+			ITakerModule takerModule;
 
 			quitEvent = new AutoResetEvent(false);
 			Console.CancelKeyPress += new ConsoleCancelEventHandler(Console_CancelKeyPress);
@@ -106,8 +107,9 @@ namespace PIO.ServerHost
 			producerModule = new ProducerModule(logger, taskModule, workerModule, factoryModule,  stackModule, ingredientModule, productModule);
 			moverModule = new MoverModule(logger, taskModule, workerModule, buildingModule);
 			carrierModule = new CarrierModule(logger, taskModule, workerModule, buildingModule, stackModule);
+			takerModule = new TakerModule(logger, taskModule, workerModule, buildingModule, stackModule);
 
-			schedulerModule = new SchedulerModule(logger, taskModule, idlerModule, producerModule,moverModule,carrierModule, factoryBuilderModule);
+			schedulerModule = new SchedulerModule(logger, taskModule, idlerModule, producerModule,moverModule,carrierModule,takerModule, factoryBuilderModule);
 			schedulerModule.Start();
 
 

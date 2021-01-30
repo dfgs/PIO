@@ -32,14 +32,15 @@ namespace PIO.ServerLib.Modules
 		private IMoverModule moverModule;
 		private ICarrierModule carrierModule;
 		private IFactoryBuilderModule factoryBuilderModule;
+		private ITakerModule takerModule;
 
 		public event TaskEventHandler TaskStarted;
 		public event TaskEventHandler TaskEnded;
 
 
-		public SchedulerModule(ILogger Logger,ITaskModule TaskModule, IIdlerModule IdlerModule, IProducerModule ProducerModule,IMoverModule MoverModule, ICarrierModule CarrierModule, IFactoryBuilderModule FactoryBuilderModule) : base(Logger, ThreadPriority.Normal)
+		public SchedulerModule(ILogger Logger,ITaskModule TaskModule, IIdlerModule IdlerModule, IProducerModule ProducerModule,IMoverModule MoverModule, ICarrierModule CarrierModule, ITakerModule TakerModule, IFactoryBuilderModule FactoryBuilderModule) : base(Logger, ThreadPriority.Normal)
 		{
-			this.taskModule = TaskModule;this.idlerModule = IdlerModule; this.producerModule = ProducerModule;this.moverModule = MoverModule;this.carrierModule = CarrierModule;
+			this.taskModule = TaskModule;this.idlerModule = IdlerModule; this.producerModule = ProducerModule;this.moverModule = MoverModule;this.carrierModule = CarrierModule;this.takerModule = TakerModule;
 			this.factoryBuilderModule = FactoryBuilderModule;
 
 
@@ -47,40 +48,13 @@ namespace PIO.ServerLib.Modules
 			producerModule.TaskCreated += TaskGeneratorModule_TaskCreated;
 			moverModule.TaskCreated += TaskGeneratorModule_TaskCreated;
 			carrierModule.TaskCreated += TaskGeneratorModule_TaskCreated;
+			takerModule.TaskCreated += TaskGeneratorModule_TaskCreated;
+
+
 			factoryBuilderModule.TaskCreated += TaskGeneratorModule_TaskCreated;
 		}
 
-		/*public bool RegisterCallBack(ITaskCallBack Callback)
-		{
-			LogEnter();
-			Log(LogLevels.Information, "Registering callback");
-			lock (callbackList)
-			{
-				if (callbackList.Contains(Callback))
-				{
-					Log(LogLevels.Warning, "Callback is already registered");
-					return false;
-				}
-				callbackList.Add(Callback);
-			}
-			return true;
-		}
-		public bool UnregisterCallBack(ITaskCallBack Callback)
-		{
-			LogEnter();
-			Log(LogLevels.Information, "Unregistering callback");
-			lock (callbackList)
-			{
-				if (!callbackList.Contains(Callback))
-				{
-					Log(LogLevels.Warning, "Callback is not registered");
-					return false;
-				}
-				callbackList.Remove(Callback);
-			}
-			return true;
-		}*/
-
+		
 		private void TaskGeneratorModule_TaskCreated(ITaskGeneratorModule Module, Task Task)
 		{
 			Add(Task);
@@ -130,6 +104,9 @@ namespace PIO.ServerLib.Modules
 					break;
 				case TaskTypeIDs.CarryTo:
 					Try(() => carrierModule.EndCarryTo(Task.WorkerID, Task.BuildingID.Value, Task.ResourceTypeID.Value)).OrAlert($"Failed to terminate task (TaskID={Task.TaskID})");
+					break;
+				case TaskTypeIDs.Take:
+					Try(() => takerModule.EndTake(Task.WorkerID, Task.ResourceTypeID.Value)).OrAlert($"Failed to terminate task (TaskID={Task.TaskID})");
 					break;
 				case TaskTypeIDs.CreateBuilding:
 					Try(() => factoryBuilderModule.EndCreateBuilding(Task.WorkerID, Task.FactoryTypeID.Value)).OrAlert($"Failed to terminate task (TaskID={Task.TaskID})");

@@ -20,6 +20,9 @@ namespace PIO.Models
 		[DataMember]
 		public int Y { get; set; }
 
+		[DataMember]
+		public ResourceTypeIDs? ResourceTypeID { get; set; }
+
 
 
 

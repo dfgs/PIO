@@ -1,5 +1,6 @@
 ﻿using NetORMLib.Columns;
 using NetORMLib.Tables;
+using PIO.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace PIO.ServerLib.Tables
 		public static readonly Column<int> PlanetID = new Column<int>();
 		public static readonly Column<int> X = new Column<int>();
 		public static readonly Column<int> Y = new Column<int>();
+		public static readonly Column<ResourceTypeIDs> ResourceTypeID = new Column<ResourceTypeIDs>() { IsNullable=true};
 
 
 	}

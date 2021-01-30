@@ -34,5 +34,9 @@ namespace PIO.UnitTest.Mocks
 			UpdateWorkerDelegate(WorkerID,X,Y);
 		}//*/
 
+		public void UpdateWorker(int WorkerID, ResourceTypeIDs? ResourceTypeID)
+		{
+			throw new NotImplementedException();
+		}
 	}
 }

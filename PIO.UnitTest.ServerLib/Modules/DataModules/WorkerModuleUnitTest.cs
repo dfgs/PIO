@@ -109,7 +109,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 
 
 		[TestMethod]
-		public void ShouldUpdateWorker()
+		public void ShouldUpdateWorkerLocation()
 		{
 			MockedDatabase<Worker> database;
 			WorkerModule module;
@@ -121,7 +121,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 
 		}
 		[TestMethod]
-		public void ShouldNotUpdateWorkerAndLogError()
+		public void ShouldNotUpdateWorkerLocationAndLogError()
 		{
 			MockedDatabase<Worker> database;
 			WorkerModule module;
@@ -134,7 +134,34 @@ namespace PIO.UnitTest.ServerLib.Modules
 			Assert.ThrowsException<PIODataException>(() => module.UpdateWorker(0, 10,10));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
 		}
-		
+
+		[TestMethod]
+		public void ShouldUpdateWorkerResourceTypeID()
+		{
+			MockedDatabase<Worker> database;
+			WorkerModule module;
+
+			database = new MockedDatabase<Worker>(false, 1, (t) => new Worker() { WorkerID = t, PlanetID = 0 });
+			module = new WorkerModule(NullLogger.Instance, database);
+			module.UpdateWorker(1, ResourceTypeIDs.Wood);
+			Assert.AreEqual(1, database.UpdatedCount);
+
+		}
+		[TestMethod]
+		public void ShouldNotUpdateWorkerResourceTypeIDAndLogError()
+		{
+			MockedDatabase<Worker> database;
+			WorkerModule module;
+			MemoryLogger logger;
+
+
+			logger = new MemoryLogger();
+			database = new MockedDatabase<Worker>(true, 1, (t) => new Worker() { WorkerID = t, PlanetID = 0 });
+			module = new WorkerModule(logger, database);
+			Assert.ThrowsException<PIODataException>(() => module.UpdateWorker(0, ResourceTypeIDs.Wood));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName == module.ModuleName)));
+		}
+
 
 	}
 }

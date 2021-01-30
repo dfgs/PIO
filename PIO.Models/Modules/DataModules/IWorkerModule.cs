@@ -15,6 +15,7 @@ namespace PIO.Models.Modules
 		Worker[] GetWorkers();
 		Worker[] GetWorkers(int PlanetID);
 
-		void UpdateWorker(int WorkerID, int X,int Y);
+		void UpdateWorker(int WorkerID, int X, int Y);
+		void UpdateWorker(int WorkerID, ResourceTypeIDs? ResourceTypeID);
 	}
 }

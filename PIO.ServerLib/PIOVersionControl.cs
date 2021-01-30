@@ -41,7 +41,7 @@ namespace PIO.ServerLib
 					yield return new CreateTable(PIODB.CellTable, CellTable.CellID, CellTable.PlanetID, CellTable.X, CellTable.Y);
 					yield return new CreateTable(PIODB.BuildingTable, BuildingTable.BuildingID, BuildingTable.PlanetID, BuildingTable.X, BuildingTable.Y, BuildingTable.HealthPoints, BuildingTable.RemainingBuildSteps);
 					yield return new CreateTable(PIODB.FactoryTable, FactoryTable.FactoryID, FactoryTable.BuildingID, FactoryTable.FactoryTypeID);
-					yield return new CreateTable(PIODB.WorkerTable, WorkerTable.WorkerID, WorkerTable.PlanetID,WorkerTable.X,WorkerTable.Y);
+					yield return new CreateTable(PIODB.WorkerTable, WorkerTable.WorkerID, WorkerTable.PlanetID,WorkerTable.X,WorkerTable.Y, WorkerTable.ResourceTypeID);
 					yield return new CreateTable(PIODB.StackTable, StackTable.StackID, StackTable.BuildingID, StackTable.ResourceTypeID, StackTable.Quantity);
 					yield return new CreateTable(PIODB.MaterialTable, MaterialTable.MaterialID, MaterialTable.FactoryTypeID, MaterialTable.ResourceTypeID, MaterialTable.Quantity);
 					yield return new CreateTable(PIODB.TaskTable, TaskTable.TaskID,TaskTable.TaskTypeID, TaskTable.WorkerID,TaskTable.X,TaskTable.Y,TaskTable.BuildingID, TaskTable.ResourceTypeID,TaskTable.FactoryTypeID,  TaskTable.ETA);
@@ -51,6 +51,7 @@ namespace PIO.ServerLib
 					break;
 				case 2:
 					yield return new CreateRelation<int>(PIODB.WorkerTable, PlanetTable.PlanetID, WorkerTable.PlanetID);
+					yield return new CreateRelation<ResourceTypeIDs>(PIODB.WorkerTable, ResourceTypeTable.ResourceTypeID, WorkerTable.ResourceTypeID);
 					yield return new CreateRelation<int>(PIODB.StackTable, BuildingTable.BuildingID, StackTable.BuildingID);
 					yield return new CreateRelation<ResourceTypeIDs>(PIODB.StackTable, ResourceTypeTable.ResourceTypeID, StackTable.ResourceTypeID);
 					yield return new CreateRelation<FactoryTypeIDs>(PIODB.MaterialTable, FactoryTypeTable.FactoryTypeID, MaterialTable.FactoryTypeID);
@@ -101,6 +102,7 @@ namespace PIO.ServerLib
 					yield return new Insert().Into(PIODB.TaskTypeTable).Set(TaskTypeTable.TaskTypeID, TaskTypeIDs.CarryTo).Set(TaskTypeTable.Name, "CarryTo");
 					yield return new Insert().Into(PIODB.TaskTypeTable).Set(TaskTypeTable.TaskTypeID, TaskTypeIDs.CreateBuilding).Set(TaskTypeTable.Name, "CreateBuilding");
 					yield return new Insert().Into(PIODB.TaskTypeTable).Set(TaskTypeTable.TaskTypeID, TaskTypeIDs.Build).Set(TaskTypeTable.Name, "Build");
+					yield return new Insert().Into(PIODB.TaskTypeTable).Set(TaskTypeTable.TaskTypeID, TaskTypeIDs.Take).Set(TaskTypeTable.Name, "Take");
 					#endregion
 
 					#region create Material

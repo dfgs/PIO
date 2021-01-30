@@ -101,6 +101,12 @@ namespace PIO.Models
 		Task CreateBuilding(int WorkerID, FactoryTypeIDs FactoryTypeID);
 		[OperationContract]
 		Task BuildFactory(int WorkerID);
+
+		/*[OperationContract]
+		Task Take(int WorkerID, ResourceTypeIDs ResourceTypeID);
+		[OperationContract]
+		Task Store(int WorkerID);*/
+
 		#endregion
 
 	}

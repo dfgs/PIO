@@ -49,6 +49,7 @@
     <Compile Include="Modules\DataModules\ProductModule.cs" />
     <Compile Include="Modules\DataModules\IngredientModule.cs" />
     <Compile Include="Modules\EngineModules\SchedulerModule.cs" />
+    <Compile Include="Modules\FunctionalModules\TakerModule.cs" />
     <Compile Include="Modules\FunctionalModules\IdlerModule.cs" />
     <Compile Include="Modules\FunctionalModules\MoverModule.cs" />
     <Compile Include="Modules\FunctionalModules\CarrierModule.cs" />

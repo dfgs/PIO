@@ -12,6 +12,7 @@ namespace PIO.UnitTest.ServerLib.Mocks
 {
 	public class MockedWorkerModule :MockedDatabaseModule<Worker>, IWorkerModule
 	{
+		public ResourceTypeIDs? ResourceTypeID;
 
 		public MockedWorkerModule(bool ThrowException, params Worker[] Items):base(ThrowException, Items)
 		{
@@ -41,6 +42,11 @@ namespace PIO.UnitTest.ServerLib.Mocks
 			item = GetWorker(WorkerID);
 			item.X = X;
 			item.Y = Y;
+		}
+
+		public void UpdateWorker(int WorkerID, ResourceTypeIDs? ResourceTypeID)
+		{
+			this.ResourceTypeID = ResourceTypeID;
 		}
 	}
 }
