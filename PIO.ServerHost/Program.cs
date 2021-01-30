@@ -64,6 +64,7 @@ namespace PIO.ServerHost
 			IMoverModule moverModule;
 			ICarrierModule carrierModule;
 			ITakerModule takerModule;
+			IStorerModule storerModule;
 
 			quitEvent = new AutoResetEvent(false);
 			Console.CancelKeyPress += new ConsoleCancelEventHandler(Console_CancelKeyPress);
@@ -108,8 +109,9 @@ namespace PIO.ServerHost
 			moverModule = new MoverModule(logger, taskModule, workerModule, buildingModule);
 			carrierModule = new CarrierModule(logger, taskModule, workerModule, buildingModule, stackModule);
 			takerModule = new TakerModule(logger, taskModule, workerModule, buildingModule, stackModule);
+			storerModule = new StorerModule(logger, taskModule, workerModule, buildingModule, stackModule);
 
-			schedulerModule = new SchedulerModule(logger, taskModule, idlerModule, producerModule,moverModule,carrierModule,takerModule, factoryBuilderModule);
+			schedulerModule = new SchedulerModule(logger, taskModule, idlerModule, producerModule,moverModule,carrierModule,takerModule,storerModule, factoryBuilderModule);
 			schedulerModule.Start();
 
 
@@ -118,8 +120,8 @@ namespace PIO.ServerHost
 				stackModule, resourceTypeModule,
 				factoryTypeModule, taskTypeModule, materialModule, ingredientModule, productModule, taskModule,
 				schedulerModule,
-				resourceCheckerModule, locationCheckerModule, idlerModule, producerModule, moverModule, carrierModule,takerModule,
-				factoryBuilderModule); ;
+				resourceCheckerModule, locationCheckerModule, idlerModule, producerModule, moverModule, carrierModule, takerModule, storerModule,
+				factoryBuilderModule) ; 
 
 			pioServiceHostModule = new ServiceHostModule(logger,pioService);
 			pioServiceHostModule.Start();

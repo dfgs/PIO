@@ -103,6 +103,7 @@ namespace PIO.ServerLib
 					yield return new Insert().Into(PIODB.TaskTypeTable).Set(TaskTypeTable.TaskTypeID, TaskTypeIDs.CreateBuilding).Set(TaskTypeTable.Name, "CreateBuilding");
 					yield return new Insert().Into(PIODB.TaskTypeTable).Set(TaskTypeTable.TaskTypeID, TaskTypeIDs.Build).Set(TaskTypeTable.Name, "Build");
 					yield return new Insert().Into(PIODB.TaskTypeTable).Set(TaskTypeTable.TaskTypeID, TaskTypeIDs.Take).Set(TaskTypeTable.Name, "Take");
+					yield return new Insert().Into(PIODB.TaskTypeTable).Set(TaskTypeTable.TaskTypeID, TaskTypeIDs.Store).Set(TaskTypeTable.Name, "Store");
 					#endregion
 
 					#region create Material

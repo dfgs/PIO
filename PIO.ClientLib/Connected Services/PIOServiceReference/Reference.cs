@@ -249,6 +249,12 @@ namespace PIO.ClientLib.PIOServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/Take", ReplyAction="http://tempuri.org/IPIOService/TakeResponse")]
         System.Threading.Tasks.Task<PIO.Models.Task> TakeAsync(int WorkerID, PIO.Models.ResourceTypeIDs ResourceTypeID);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/Store", ReplyAction="http://tempuri.org/IPIOService/StoreResponse")]
+        PIO.Models.Task Store(int WorkerID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/Store", ReplyAction="http://tempuri.org/IPIOService/StoreResponse")]
+        System.Threading.Tasks.Task<PIO.Models.Task> StoreAsync(int WorkerID);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/CreateBuilding", ReplyAction="http://tempuri.org/IPIOService/CreateBuildingResponse")]
         PIO.Models.Task CreateBuilding(int WorkerID, PIO.Models.FactoryTypeIDs FactoryTypeID);
         
@@ -599,6 +605,14 @@ namespace PIO.ClientLib.PIOServiceReference {
         
         public System.Threading.Tasks.Task<PIO.Models.Task> TakeAsync(int WorkerID, PIO.Models.ResourceTypeIDs ResourceTypeID) {
             return base.Channel.TakeAsync(WorkerID, ResourceTypeID);
+        }
+        
+        public PIO.Models.Task Store(int WorkerID) {
+            return base.Channel.Store(WorkerID);
+        }
+        
+        public System.Threading.Tasks.Task<PIO.Models.Task> StoreAsync(int WorkerID) {
+            return base.Channel.StoreAsync(WorkerID);
         }
         
         public PIO.Models.Task CreateBuilding(int WorkerID, PIO.Models.FactoryTypeIDs FactoryTypeID) {

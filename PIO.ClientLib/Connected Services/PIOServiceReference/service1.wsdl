@@ -241,6 +241,12 @@
   <wsdl:message name="IPIOService_Take_OutputMessage">
     <wsdl:part name="parameters" element="tns:TakeResponse" />
   </wsdl:message>
+  <wsdl:message name="IPIOService_Store_InputMessage">
+    <wsdl:part name="parameters" element="tns:Store" />
+  </wsdl:message>
+  <wsdl:message name="IPIOService_Store_OutputMessage">
+    <wsdl:part name="parameters" element="tns:StoreResponse" />
+  </wsdl:message>
   <wsdl:message name="IPIOService_CreateBuilding_InputMessage">
     <wsdl:part name="parameters" element="tns:CreateBuilding" />
   </wsdl:message>
@@ -409,6 +415,10 @@
     <wsdl:operation name="Take">
       <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/Take" message="tns:IPIOService_Take_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/TakeResponse" message="tns:IPIOService_Take_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Store">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/Store" message="tns:IPIOService_Store_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/StoreResponse" message="tns:IPIOService_Store_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="CreateBuilding">
       <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/CreateBuilding" message="tns:IPIOService_CreateBuilding_InputMessage" />
@@ -765,6 +775,15 @@
     </wsdl:operation>
     <wsdl:operation name="Take">
       <soap:operation soapAction="http://tempuri.org/IPIOService/Take" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Store">
+      <soap:operation soapAction="http://tempuri.org/IPIOService/Store" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

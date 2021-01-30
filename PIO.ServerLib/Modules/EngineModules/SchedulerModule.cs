@@ -33,14 +33,15 @@ namespace PIO.ServerLib.Modules
 		private ICarrierModule carrierModule;
 		private IFactoryBuilderModule factoryBuilderModule;
 		private ITakerModule takerModule;
+		private IStorerModule storerModule;
 
 		public event TaskEventHandler TaskStarted;
 		public event TaskEventHandler TaskEnded;
 
 
-		public SchedulerModule(ILogger Logger,ITaskModule TaskModule, IIdlerModule IdlerModule, IProducerModule ProducerModule,IMoverModule MoverModule, ICarrierModule CarrierModule, ITakerModule TakerModule, IFactoryBuilderModule FactoryBuilderModule) : base(Logger, ThreadPriority.Normal)
+		public SchedulerModule(ILogger Logger,ITaskModule TaskModule, IIdlerModule IdlerModule, IProducerModule ProducerModule,IMoverModule MoverModule, ICarrierModule CarrierModule, ITakerModule TakerModule,IStorerModule StorerModule, IFactoryBuilderModule FactoryBuilderModule) : base(Logger, ThreadPriority.Normal)
 		{
-			this.taskModule = TaskModule;this.idlerModule = IdlerModule; this.producerModule = ProducerModule;this.moverModule = MoverModule;this.carrierModule = CarrierModule;this.takerModule = TakerModule;
+			this.taskModule = TaskModule;this.idlerModule = IdlerModule; this.producerModule = ProducerModule;this.moverModule = MoverModule;this.carrierModule = CarrierModule;this.takerModule = TakerModule;this.storerModule = StorerModule;
 			this.factoryBuilderModule = FactoryBuilderModule;
 
 
@@ -49,6 +50,7 @@ namespace PIO.ServerLib.Modules
 			moverModule.TaskCreated += TaskGeneratorModule_TaskCreated;
 			carrierModule.TaskCreated += TaskGeneratorModule_TaskCreated;
 			takerModule.TaskCreated += TaskGeneratorModule_TaskCreated;
+			storerModule.TaskCreated += TaskGeneratorModule_TaskCreated;
 
 
 			factoryBuilderModule.TaskCreated += TaskGeneratorModule_TaskCreated;
@@ -107,6 +109,9 @@ namespace PIO.ServerLib.Modules
 					break;
 				case TaskTypeIDs.Take:
 					Try(() => takerModule.EndTake(Task.WorkerID, Task.ResourceTypeID.Value)).OrAlert($"Failed to terminate task (TaskID={Task.TaskID})");
+					break;
+				case TaskTypeIDs.Store:
+					Try(() => storerModule.EndStore(Task.WorkerID, Task.ResourceTypeID.Value)).OrAlert($"Failed to terminate task (TaskID={Task.TaskID})");
 					break;
 				case TaskTypeIDs.CreateBuilding:
 					Try(() => factoryBuilderModule.EndCreateBuilding(Task.WorkerID, Task.FactoryTypeID.Value)).OrAlert($"Failed to terminate task (TaskID={Task.TaskID})");

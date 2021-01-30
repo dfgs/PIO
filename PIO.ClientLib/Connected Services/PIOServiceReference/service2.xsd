@@ -555,18 +555,32 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="Store">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="WorkerID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="StoreResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q47="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="StoreResult" nillable="true" type="q47:Task" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="CreateBuilding">
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="WorkerID" type="xs:int" />
-        <xs:element xmlns:q47="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="FactoryTypeID" type="q47:FactoryTypeIDs" />
+        <xs:element xmlns:q48="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="FactoryTypeID" type="q48:FactoryTypeIDs" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="CreateBuildingResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q48="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="CreateBuildingResult" nillable="true" type="q48:Task" />
+        <xs:element xmlns:q49="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="CreateBuildingResult" nillable="true" type="q49:Task" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -580,7 +594,7 @@
   <xs:element name="BuildFactoryResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q49="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="BuildFactoryResult" nillable="true" type="q49:Task" />
+        <xs:element xmlns:q50="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="BuildFactoryResult" nillable="true" type="q50:Task" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

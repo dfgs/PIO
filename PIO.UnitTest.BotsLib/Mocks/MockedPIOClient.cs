@@ -463,5 +463,15 @@ namespace PIO.UnitTest.BotsLib.Mocks
 		{
 			throw new NotImplementedException();
 		}
+
+		public Models.Task Take(int WorkerID, ResourceTypeIDs ResourceTypeID)
+		{
+			throw new NotImplementedException();
+		}
+
+		public Task<Models.Task> TakeAsync(int WorkerID, ResourceTypeIDs ResourceTypeID)
+		{
+			throw new NotImplementedException();
+		}
 	}
 }
