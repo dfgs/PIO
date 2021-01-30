@@ -30,7 +30,6 @@ namespace PIO.ServerLib.Modules
 		private IIdlerModule idlerModule;
 		private IProducerModule producerModule;
 		private IMoverModule moverModule;
-		private ICarrierModule carrierModule;
 		private IFactoryBuilderModule factoryBuilderModule;
 		private ITakerModule takerModule;
 		private IStorerModule storerModule;
@@ -39,16 +38,15 @@ namespace PIO.ServerLib.Modules
 		public event TaskEventHandler TaskEnded;
 
 
-		public SchedulerModule(ILogger Logger,ITaskModule TaskModule, IIdlerModule IdlerModule, IProducerModule ProducerModule,IMoverModule MoverModule, ICarrierModule CarrierModule, ITakerModule TakerModule,IStorerModule StorerModule, IFactoryBuilderModule FactoryBuilderModule) : base(Logger, ThreadPriority.Normal)
+		public SchedulerModule(ILogger Logger,ITaskModule TaskModule, IIdlerModule IdlerModule, IProducerModule ProducerModule,IMoverModule MoverModule,  ITakerModule TakerModule,IStorerModule StorerModule, IFactoryBuilderModule FactoryBuilderModule) : base(Logger, ThreadPriority.Normal)
 		{
-			this.taskModule = TaskModule;this.idlerModule = IdlerModule; this.producerModule = ProducerModule;this.moverModule = MoverModule;this.carrierModule = CarrierModule;this.takerModule = TakerModule;this.storerModule = StorerModule;
+			this.taskModule = TaskModule;this.idlerModule = IdlerModule; this.producerModule = ProducerModule;this.moverModule = MoverModule;this.takerModule = TakerModule;this.storerModule = StorerModule;
 			this.factoryBuilderModule = FactoryBuilderModule;
 
 
 			idlerModule.TaskCreated += TaskGeneratorModule_TaskCreated;
 			producerModule.TaskCreated += TaskGeneratorModule_TaskCreated;
 			moverModule.TaskCreated += TaskGeneratorModule_TaskCreated;
-			carrierModule.TaskCreated += TaskGeneratorModule_TaskCreated;
 			takerModule.TaskCreated += TaskGeneratorModule_TaskCreated;
 			storerModule.TaskCreated += TaskGeneratorModule_TaskCreated;
 
@@ -103,9 +101,6 @@ namespace PIO.ServerLib.Modules
 					break;
 				case TaskTypeIDs.MoveTo:
 					Try(() => moverModule.EndMoveTo(Task.WorkerID, Task.X.Value,Task.Y.Value)).OrAlert($"Failed to terminate task (TaskID={Task.TaskID})");
-					break;
-				case TaskTypeIDs.CarryTo:
-					Try(() => carrierModule.EndCarryTo(Task.WorkerID, Task.BuildingID.Value, Task.ResourceTypeID.Value)).OrAlert($"Failed to terminate task (TaskID={Task.TaskID})");
 					break;
 				case TaskTypeIDs.Take:
 					Try(() => takerModule.EndTake(Task.WorkerID, Task.ResourceTypeID.Value)).OrAlert($"Failed to terminate task (TaskID={Task.TaskID})");

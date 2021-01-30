@@ -229,12 +229,6 @@
   <wsdl:message name="IPIOService_MoveToBuilding_OutputMessage">
     <wsdl:part name="parameters" element="tns:MoveToBuildingResponse" />
   </wsdl:message>
-  <wsdl:message name="IPIOService_CarryTo_InputMessage">
-    <wsdl:part name="parameters" element="tns:CarryTo" />
-  </wsdl:message>
-  <wsdl:message name="IPIOService_CarryTo_OutputMessage">
-    <wsdl:part name="parameters" element="tns:CarryToResponse" />
-  </wsdl:message>
   <wsdl:message name="IPIOService_Take_InputMessage">
     <wsdl:part name="parameters" element="tns:Take" />
   </wsdl:message>
@@ -407,10 +401,6 @@
     <wsdl:operation name="MoveToBuilding">
       <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/MoveToBuilding" message="tns:IPIOService_MoveToBuilding_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/MoveToBuildingResponse" message="tns:IPIOService_MoveToBuilding_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="CarryTo">
-      <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/CarryTo" message="tns:IPIOService_CarryTo_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/CarryToResponse" message="tns:IPIOService_CarryTo_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="Take">
       <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/Take" message="tns:IPIOService_Take_InputMessage" />
@@ -757,15 +747,6 @@
     </wsdl:operation>
     <wsdl:operation name="MoveToBuilding">
       <soap:operation soapAction="http://tempuri.org/IPIOService/MoveToBuilding" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="CarryTo">
-      <soap:operation soapAction="http://tempuri.org/IPIOService/CarryTo" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

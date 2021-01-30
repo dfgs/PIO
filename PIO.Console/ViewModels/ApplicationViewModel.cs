@@ -88,7 +88,7 @@ namespace PIO.Console.ViewModels
 			await Workers.RefreshWorker(Task.WorkerID);
 			switch (Task.TaskTypeID)
 			{
-				case Models.TaskTypeIDs.CarryTo:
+				case Models.TaskTypeIDs.Take:
 					await Factories.RefreshFactory(Task.X.Value, Task.Y.Value);
 					break;
 				case Models.TaskTypeIDs.Produce:
@@ -103,7 +103,7 @@ namespace PIO.Console.ViewModels
 			{
 				case Models.TaskTypeIDs.MoveTo:
 					break;
-				case Models.TaskTypeIDs.CarryTo:
+				case Models.TaskTypeIDs.Store:
 					await Factories.RefreshFactory(Task.X.Value, Task.Y.Value);
 					break;
 				case Models.TaskTypeIDs.Produce:

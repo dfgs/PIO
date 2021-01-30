@@ -473,5 +473,15 @@ namespace PIO.UnitTest.BotsLib.Mocks
 		{
 			throw new NotImplementedException();
 		}
+
+		public Models.Task Store(int WorkerID)
+		{
+			throw new NotImplementedException();
+		}
+
+		public Task<Models.Task> StoreAsync(int WorkerID)
+		{
+			throw new NotImplementedException();
+		}
 	}
 }

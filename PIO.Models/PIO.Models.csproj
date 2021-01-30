@@ -59,7 +59,6 @@
     <Compile Include="Modules\FunctionalModules\ITakerModule.cs" />
     <Compile Include="Modules\FunctionalModules\IIdlerModule.cs" />
     <Compile Include="Modules\FunctionalModules\IMoverModule.cs" />
-    <Compile Include="Modules\FunctionalModules\ICarrierModule.cs" />
     <Compile Include="Modules\FunctionalModules\ILocationCheckerModule.cs" />
     <Compile Include="Modules\FunctionalModules\ITaskGeneratorModule.cs" />
     <Compile Include="TaskType.cs" />

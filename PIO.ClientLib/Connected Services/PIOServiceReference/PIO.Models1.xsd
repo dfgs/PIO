@@ -140,7 +140,6 @@
       <xs:enumeration value="Idle" />
       <xs:enumeration value="Produce" />
       <xs:enumeration value="MoveTo" />
-      <xs:enumeration value="CarryTo" />
       <xs:enumeration value="CreateBuilding" />
       <xs:enumeration value="Build" />
       <xs:enumeration value="Take" />

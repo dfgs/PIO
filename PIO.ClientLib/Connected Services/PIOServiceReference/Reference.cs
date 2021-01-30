@@ -237,12 +237,6 @@ namespace PIO.ClientLib.PIOServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/MoveToBuilding", ReplyAction="http://tempuri.org/IPIOService/MoveToBuildingResponse")]
         System.Threading.Tasks.Task<PIO.Models.Task> MoveToBuildingAsync(int WorkerID, int BuildingID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/CarryTo", ReplyAction="http://tempuri.org/IPIOService/CarryToResponse")]
-        PIO.Models.Task CarryTo(int WorkerID, int TargetBuildingID, PIO.Models.ResourceTypeIDs ResourceTypeID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/CarryTo", ReplyAction="http://tempuri.org/IPIOService/CarryToResponse")]
-        System.Threading.Tasks.Task<PIO.Models.Task> CarryToAsync(int WorkerID, int TargetBuildingID, PIO.Models.ResourceTypeIDs ResourceTypeID);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/Take", ReplyAction="http://tempuri.org/IPIOService/TakeResponse")]
         PIO.Models.Task Take(int WorkerID, PIO.Models.ResourceTypeIDs ResourceTypeID);
         
@@ -589,14 +583,6 @@ namespace PIO.ClientLib.PIOServiceReference {
         
         public System.Threading.Tasks.Task<PIO.Models.Task> MoveToBuildingAsync(int WorkerID, int BuildingID) {
             return base.Channel.MoveToBuildingAsync(WorkerID, BuildingID);
-        }
-        
-        public PIO.Models.Task CarryTo(int WorkerID, int TargetBuildingID, PIO.Models.ResourceTypeIDs ResourceTypeID) {
-            return base.Channel.CarryTo(WorkerID, TargetBuildingID, ResourceTypeID);
-        }
-        
-        public System.Threading.Tasks.Task<PIO.Models.Task> CarryToAsync(int WorkerID, int TargetBuildingID, PIO.Models.ResourceTypeIDs ResourceTypeID) {
-            return base.Channel.CarryToAsync(WorkerID, TargetBuildingID, ResourceTypeID);
         }
         
         public PIO.Models.Task Take(int WorkerID, PIO.Models.ResourceTypeIDs ResourceTypeID) {

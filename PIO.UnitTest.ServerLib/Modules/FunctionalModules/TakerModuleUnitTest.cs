@@ -279,15 +279,6 @@ namespace PIO.UnitTest.ServerLib.Modules
 
 			buildingModule = new MockedBuildingModule(false, new Building() { BuildingID = 2, X = 10, Y = 10 });
 			
-			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, PlanetID = 1 });
-			stackModule = new MockedStackModule(true);
-			taskModule = new MockedTaskModule(false);
-			logger = new MemoryLogger();
-			module = new TakerModule(logger, taskModule, workerModule, buildingModule,  stackModule);
-			schedulerModule = new MockedSchedulerModule(false, module);
-			Assert.ThrowsException<PIOInternalErrorException>(() => module.EndTake(1, ResourceTypeIDs.Wood));
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
-
 
 			workerModule = new MockedWorkerModule(true, new Worker() { WorkerID = 1, PlanetID = 1 });
 			stackModule = new MockedStackModule(false);

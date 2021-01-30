@@ -55,7 +55,6 @@
     <Compile Include="PIO\DataCmdlet\GetCellCmdlet.cs" />
     <Compile Include="PIO\DataCmdlet\GetCellsCmdlet.cs" />
     <Compile Include="PIO\DataCmdlet\GetStackQuantityCmdlet.cs" />
-    <Compile Include="PIO\DataCmdlet\GetTestCmdlet.cs" />
     <Compile Include="PIO\DataCmdlet\GetLastTaskCmdlet.cs" />
     <Compile Include="PIO\DataCmdlet\GetTaskTypeCmdlet.cs" />
     <Compile Include="PIO\DataCmdlet\GetTaskTypesCmdlet.cs" />
@@ -85,7 +84,6 @@
     <Compile Include="PIO\FunctionalCmdlet\NewBuildingCmdLet.cs" />
     <Compile Include="PIO\FunctionalCmdlet\StartStoreCmdlet.cs" />
     <Compile Include="PIO\FunctionalCmdlet\StartTakeCmdlet.cs" />
-    <Compile Include="PIO\FunctionalCmdlet\StartCarryToCmdlet.cs" />
     <Compile Include="PIO\FunctionalCmdlet\StartMoveToCmdlet.cs" />
     <Compile Include="PIO\FunctionalCmdlet\StartIdleCmdlet.cs" />
     <Compile Include="PIO\FunctionalCmdlet\WaitTaskCmdlet.cs" />

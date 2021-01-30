@@ -62,7 +62,6 @@ namespace PIO.ServerHost
 			ILocationCheckerModule locationCheckerModule;
 			IProducerModule producerModule;
 			IMoverModule moverModule;
-			ICarrierModule carrierModule;
 			ITakerModule takerModule;
 			IStorerModule storerModule;
 
@@ -107,11 +106,10 @@ namespace PIO.ServerHost
 			locationCheckerModule = new LocationCheckerModule(logger, workerModule, buildingModule);
 			producerModule = new ProducerModule(logger, taskModule, workerModule, factoryModule,  stackModule, ingredientModule, productModule);
 			moverModule = new MoverModule(logger, taskModule, workerModule, buildingModule);
-			carrierModule = new CarrierModule(logger, taskModule, workerModule, buildingModule, stackModule);
 			takerModule = new TakerModule(logger, taskModule, workerModule, buildingModule, stackModule);
 			storerModule = new StorerModule(logger, taskModule, workerModule, buildingModule, stackModule);
 
-			schedulerModule = new SchedulerModule(logger, taskModule, idlerModule, producerModule,moverModule,carrierModule,takerModule,storerModule, factoryBuilderModule);
+			schedulerModule = new SchedulerModule(logger, taskModule, idlerModule, producerModule,moverModule,takerModule,storerModule, factoryBuilderModule);
 			schedulerModule.Start();
 
 
@@ -120,7 +118,7 @@ namespace PIO.ServerHost
 				stackModule, resourceTypeModule,
 				factoryTypeModule, taskTypeModule, materialModule, ingredientModule, productModule, taskModule,
 				schedulerModule,
-				resourceCheckerModule, locationCheckerModule, idlerModule, producerModule, moverModule, carrierModule, takerModule, storerModule,
+				resourceCheckerModule, locationCheckerModule, idlerModule, producerModule, moverModule,  takerModule, storerModule,
 				factoryBuilderModule) ; 
 
 			pioServiceHostModule = new ServiceHostModule(logger,pioService);
