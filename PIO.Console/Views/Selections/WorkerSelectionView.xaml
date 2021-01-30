@@ -36,6 +36,7 @@
 		<StackPanel Grid.Column="2">
 			<Button Content="Create bot" Command="{Binding CreateBotCommand}"/>
 			<Button Content="Delete bot" Command="{Binding DeleteBotCommand}"/>
+			<Button Content="Produce" Command="{Binding ProduceCommand}"/>
 		</StackPanel>
 	</Grid>
 

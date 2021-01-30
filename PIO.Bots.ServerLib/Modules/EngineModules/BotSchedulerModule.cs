@@ -80,7 +80,7 @@ namespace PIO.Bots.ServerLib.Modules
 				throw new PIONotFoundException($"Bot doesn't exist (BotID={BotID})", null, ID, ModuleName, "DeleteBot");
 			}
 
-			RemCaove((int id) => id == BotID );
+			Remove((int id) => id == BotID );
 
 			#region clear bot assignment
 			Log(LogLevels.Information, $"Clearing bot assignment (BotID={BotID})");

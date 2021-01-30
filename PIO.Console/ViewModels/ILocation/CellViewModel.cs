@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using ViewModelLib;
 
 namespace PIO.Console.ViewModels
 {
@@ -25,10 +27,26 @@ namespace PIO.Console.ViewModels
 			get { return $"Cell {X},{Y}"; }
 		}
 
+		/*public static readonly DependencyProperty MoveToCommandProperty = DependencyProperty.Register("MoveToCommand", typeof(ViewModelCommand), typeof(CellViewModel), new PropertyMetadata(null));
+		public ViewModelCommand MoveToCommand
+		{
+			get { return (ViewModelCommand)GetValue(MoveToCommandProperty); }
+			set { SetValue(MoveToCommandProperty, value); }
+
+		}*/
 		public CellViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient) : base(PIOClient, BotsClient)
 		{
-		}
+			//MoveToCommand = new ViewModelCommand(MoveToCommandCanExecute, MoveToCommandExecute);
 
+		}
+		/*private bool MoveToCommandCanExecute(object arg)
+		{
+			return (Model != null) ;
+		}
+		private async void MoveToCommandExecute(object obj)
+		{
+			await System.Threading.Tasks.Task.Yield();
+		}*/
 
 		protected override async Task<Cell> OnLoadModelAsync()
 		{

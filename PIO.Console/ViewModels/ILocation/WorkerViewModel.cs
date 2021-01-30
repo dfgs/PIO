@@ -66,11 +66,21 @@ namespace PIO.Console.ViewModels
 			set { SetValue(DeleteBotCommandProperty, value); }
 		}
 
+		public static readonly DependencyProperty ProduceCommandProperty = DependencyProperty.Register("ProduceCommand", typeof(ViewModelCommand), typeof(WorkerViewModel), new PropertyMetadata(null));
+		public ViewModelCommand ProduceCommand
+		{
+			get { return (ViewModelCommand)GetValue(ProduceCommandProperty); }
+			set { SetValue(ProduceCommandProperty, value); }
+		}
+
+
 
 		public WorkerViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient) : base(PIOClient, BotsClient)
 		{
 			CreateBotCommand = new ViewModelCommand(CreateBotCommandCanExecute, CreateBotCommandExecute);
 			DeleteBotCommand = new ViewModelCommand(DeleteBotCommandCanExecute, DeleteBotCommandExecute);
+
+			ProduceCommand = new ViewModelCommand(ProduceCommandCanExecute, ProduceCommandExecute);
 
 		}
 
@@ -97,6 +107,30 @@ namespace PIO.Console.ViewModels
 			await TryAsync(BotsClient.DeleteBotAsync(Bot.Model.BotID));
 			Bot = null;
 		}
+
+
+
+		private bool ProduceCommandCanExecute(object arg)
+		{
+			return (Model != null) && (Bot == null);
+		}
+		private async void ProduceCommandExecute(object obj)
+		{
+			PIO.Models.Task result;
+
+			result = await TryAsync(PIOClient.ProduceAsync(Model.WorkerID));
+			if (result == null) return;
+		}
+
+
+
+
+
+
+
+
+
+
 		protected override async Task OnRefreshAsync()
 		{
 			Bot bot;

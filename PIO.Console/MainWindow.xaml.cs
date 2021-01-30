@@ -124,7 +124,7 @@ namespace PIO.Console
 			await ApplicationViewModel.OnTaskEnded(Task); 
 		}
 
-		private async void MapView_MapClicked(object sender, RoutedEventArgs e)
+		private async void MapView_MapLeftClicked(object sender, RoutedEventArgs e)
 		{
 			MapClickedRoutedEventArgs args;
 
@@ -132,6 +132,13 @@ namespace PIO.Console
 			await ApplicationViewModel.SelectAtAsync(args.X, args.Y);
 		}
 
+		private async void MapView_MapRightClicked(object sender, RoutedEventArgs e)
+		{
+			MapClickedRoutedEventArgs args;
+
+			args = e as MapClickedRoutedEventArgs;
+			await ApplicationViewModel.RunCommandAsync(args.X, args.Y);
+		}
 
 
 	}

@@ -127,7 +127,16 @@ namespace PIO.Console.ViewModels
 			await SelectedItems.LoadAsync(MapItems.Where(item => (item.X == X) && (item.Y == Y))) ;
 			SelectedItems.SelectedItem = SelectedItems.FirstOrDefault();
 		}
+		public async System.Threading.Tasks.Task RunCommandAsync(int X, int Y)
+		{
 
+			foreach (WorkerViewModel worker in Workers.Where(item => (item.Bot == null) && (item.IsSelected)))
+			{
+				await TryAsync(PIOClient.MoveToAsync(worker.Model.WorkerID,X,Y) );
+			}
+
+		}
+			
 
 	}
 }

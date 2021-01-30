@@ -20,6 +20,7 @@
 						</Style.Triggers>
 					</Style>
 				</Border.Style>
+				
 			</Border>
 		</DataTemplate>
 		<DataTemplate DataType="{x:Type viewModels:FactoryViewModel}">

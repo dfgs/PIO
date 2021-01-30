@@ -47,7 +47,7 @@
 				<RowDefinition Height="5"/>
 				<RowDefinition Height="150"/>
 			</Grid.RowDefinitions>
-			<views:MapView Grid.Row="0" DataContext="{Binding MapItems}" views:MapPanel.MapClicked="MapView_MapClicked" />
+			<views:MapView Grid.Row="0" DataContext="{Binding MapItems}" views:MapPanel.MapLeftClicked="MapView_MapLeftClicked" views:MapPanel.MapRightClicked="MapView_MapRightClicked" />
 			<GridSplitter Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
 			<views:SelectionView Grid.Row="2" DataContext="{Binding SelectedItems}"/>
 		</Grid>

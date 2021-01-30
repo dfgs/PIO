@@ -37,17 +37,22 @@ namespace PIO.Console.Views
 		public static readonly DependencyProperty XProperty = DependencyProperty.RegisterAttached("X", typeof(int), typeof(MapPanel), new FrameworkPropertyMetadata(0, FrameworkPropertyMetadataOptions.AffectsParentArrange));
 		public static readonly DependencyProperty YProperty = DependencyProperty.RegisterAttached("Y", typeof(int), typeof(MapPanel), new FrameworkPropertyMetadata(0, FrameworkPropertyMetadataOptions.AffectsParentArrange));
 
-		//public event MapClickedEventHandler MapClicked;
 
-		public static readonly RoutedEvent MapClickedEvent = EventManager.RegisterRoutedEvent("MapClicked", RoutingStrategy.Bubble,typeof(RoutedEventHandler), typeof(MapPanel));
-
-		public event RoutedEventHandler MapClicked
+		public static readonly RoutedEvent MapLeftClickedEvent = EventManager.RegisterRoutedEvent("MapLeftClicked", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(MapPanel));
+		public event RoutedEventHandler MapLeftClicked
 		{
-			add { AddHandler(MapClickedEvent, value); }
-			remove { RemoveHandler(MapClickedEvent, value); }
+			add { AddHandler(MapLeftClickedEvent, value); }
+			remove { RemoveHandler(MapLeftClickedEvent, value); }
 		}
 
-		
+		public static readonly RoutedEvent MapRightClickedEvent = EventManager.RegisterRoutedEvent("MapRightClicked", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(MapPanel));
+		public event RoutedEventHandler MapRightClicked
+		{
+			add { AddHandler(MapRightClickedEvent, value); }
+			remove { RemoveHandler(MapRightClickedEvent, value); }
+		}
+
+
 
 
 		public static int GetX(UIElement obj)
@@ -133,9 +138,25 @@ namespace PIO.Console.Views
 			x = (int)(pos.X / ItemWidth);
 			y= (int)(pos.Y/ItemHeight);
 			
-			RoutedEventArgs args = new MapClickedRoutedEventArgs(MapPanel.MapClickedEvent, x, y);
+			RoutedEventArgs args = new MapClickedRoutedEventArgs(MapPanel.MapLeftClickedEvent, x, y);
 			RaiseEvent(args);
 		}
+
+		protected override void OnMouseRightButtonUp(MouseButtonEventArgs e)
+		{
+			Point pos;
+			int x, y;
+
+			base.OnMouseRightButtonUp(e);
+
+			pos = e.GetPosition(this);
+			x = (int)(pos.X / ItemWidth);
+			y = (int)(pos.Y / ItemHeight);
+
+			RoutedEventArgs args = new MapClickedRoutedEventArgs(MapPanel.MapRightClickedEvent, x, y);
+			RaiseEvent(args);
+		}
+
 
 	}
 }
