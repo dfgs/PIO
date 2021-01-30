@@ -84,6 +84,7 @@ namespace PIO.Console.ViewModels
 		{
 			await base.OnRefreshAsync();
 			await Stacks.RefreshAsync();
+			await ProduceOrders.RefreshAsync();
 		}
 
 		protected override async Task<Factory> OnLoadModelAsync()
@@ -94,7 +95,7 @@ namespace PIO.Console.ViewModels
 		{
 			Stacks = new StacksViewModel(PIOClient, BotsClient, Model.BuildingID);
 			await Stacks.LoadAsync();
-			ProduceOrders = new ProduceOrdersViewModel(PIOClient, BotsClient, Model.BuildingID);
+			ProduceOrders = new ProduceOrdersViewModel(PIOClient, BotsClient, Model.FactoryID);
 			await ProduceOrders.LoadAsync();
 		}
 		
