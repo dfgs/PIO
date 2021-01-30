@@ -37,6 +37,8 @@ namespace PIO.Bots.Models
 		ProduceOrder CreateProduceOrder(int PlanetID, int FactoryID);
 		[OperationContract]
 		Bot CreateBot(int WorkerID);
+		[OperationContract]
+		void DeleteBot(int BotID);
 		#endregion
 
 	}

@@ -67,6 +67,12 @@
   <wsdl:message name="IBotsService_CreateBot_OutputMessage">
     <wsdl:part name="parameters" element="tns:CreateBotResponse" />
   </wsdl:message>
+  <wsdl:message name="IBotsService_DeleteBot_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteBot" />
+  </wsdl:message>
+  <wsdl:message name="IBotsService_DeleteBot_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteBotResponse" />
+  </wsdl:message>
   <wsdl:portType name="IBotsService">
     <wsdl:operation name="GetBot">
       <wsdl:input wsaw:Action="http://tempuri.org/IBotsService/GetBot" message="tns:IBotsService_GetBot_InputMessage" />
@@ -107,6 +113,10 @@
     <wsdl:operation name="CreateBot">
       <wsdl:input wsaw:Action="http://tempuri.org/IBotsService/CreateBot" message="tns:IBotsService_CreateBot_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IBotsService/CreateBotResponse" message="tns:IBotsService_CreateBot_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteBot">
+      <wsdl:input wsaw:Action="http://tempuri.org/IBotsService/DeleteBot" message="tns:IBotsService_DeleteBot_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IBotsService/DeleteBotResponse" message="tns:IBotsService_DeleteBot_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IBotsService" type="tns:IBotsService">
@@ -194,6 +204,15 @@
     </wsdl:operation>
     <wsdl:operation name="CreateBot">
       <soap:operation soapAction="http://tempuri.org/IBotsService/CreateBot" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteBot">
+      <soap:operation soapAction="http://tempuri.org/IBotsService/DeleteBot" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

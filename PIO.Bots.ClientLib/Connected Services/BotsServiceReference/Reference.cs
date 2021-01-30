@@ -75,6 +75,12 @@ namespace PIO.Bots.ClientLib.BotsServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/CreateBot", ReplyAction="http://tempuri.org/IBotsService/CreateBotResponse")]
         System.Threading.Tasks.Task<PIO.Bots.Models.Bot> CreateBotAsync(int WorkerID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/DeleteBot", ReplyAction="http://tempuri.org/IBotsService/DeleteBotResponse")]
+        void DeleteBot(int BotID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/DeleteBot", ReplyAction="http://tempuri.org/IBotsService/DeleteBotResponse")]
+        System.Threading.Tasks.Task DeleteBotAsync(int BotID);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -182,6 +188,14 @@ namespace PIO.Bots.ClientLib.BotsServiceReference {
         
         public System.Threading.Tasks.Task<PIO.Bots.Models.Bot> CreateBotAsync(int WorkerID) {
             return base.Channel.CreateBotAsync(WorkerID);
+        }
+        
+        public void DeleteBot(int BotID) {
+            base.Channel.DeleteBot(BotID);
+        }
+        
+        public System.Threading.Tasks.Task DeleteBotAsync(int BotID) {
+            return base.Channel.DeleteBotAsync(BotID);
         }
     }
 }

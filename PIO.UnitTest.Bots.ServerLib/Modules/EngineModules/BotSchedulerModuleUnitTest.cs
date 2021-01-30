@@ -55,6 +55,70 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName == scheduler.ModuleName)));
 		}
 
+		[TestMethod]
+		public void ShouldDeleteBot()
+		{
+			BotSchedulerModule scheduler;
+			IBotModule botModule;
+			IOrderManagerModule orderManagerModule;
+			PIO.ClientLib.PIOServiceReference.IPIOService client;
+			int counter = 0;
+
+			botModule = Substitute.For<IBotModule>();
+			botModule.GetBot(Arg.Any<int>()).Returns((x) => new Bot() { BotID = 1, WorkerID = 1 });
+			botModule.When(x=>x.DeleteBot(Arg.Any<int>())).Do(x=>counter++);
+			
+			orderManagerModule = Substitute.For<IOrderManagerModule>();
+			client = Substitute.For<PIO.ClientLib.PIOServiceReference.IPIOService>();
+
+			scheduler = new BotSchedulerModule(NullLogger.Instance, client, botModule, orderManagerModule, 1);
+			scheduler.DeleteBot(1);
+			Assert.AreEqual(1, counter);
+		}
+
+		[TestMethod]
+		public void ShouldNotDeleteBotWhenSubModuleFailsAndLogErrors()
+		{
+			MemoryLogger logger;
+			BotSchedulerModule scheduler;
+			IBotModule botModule;
+			IOrderManagerModule orderManagerModule;
+			PIO.ClientLib.PIOServiceReference.IPIOService client;
+
+			botModule = Substitute.For<IBotModule>();
+			botModule.GetBot(Arg.Any<int>()).Returns((x) => new Bot() { BotID = 1, WorkerID = 1 });
+			botModule.When(x => x.DeleteBot(Arg.Any<int>())).Do(x => throw new Exception());
+
+			orderManagerModule = Substitute.For<IOrderManagerModule>();
+			client = Substitute.For<PIO.ClientLib.PIOServiceReference.IPIOService>();
+
+			logger = new MemoryLogger();
+			scheduler = new BotSchedulerModule(logger, client, botModule, orderManagerModule, 1);
+			Assert.ThrowsException<PIOInternalErrorException>(() => scheduler.DeleteBot(1));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName == scheduler.ModuleName)));
+		}
+		[TestMethod]
+		public void ShouldNotDeleteBotWhenDoesntExistAndLogErrors()
+		{
+			MemoryLogger logger;
+			BotSchedulerModule scheduler;
+			IBotModule botModule;
+			IOrderManagerModule orderManagerModule;
+			PIO.ClientLib.PIOServiceReference.IPIOService client;
+
+			botModule = Substitute.For<IBotModule>();
+			botModule.GetBot(Arg.Any<int>()).Returns((x) => null);
+			botModule.When(x => x.DeleteBot(Arg.Any<int>())).Do(x=> { });
+
+			orderManagerModule = Substitute.For<IOrderManagerModule>();
+			client = Substitute.For<PIO.ClientLib.PIOServiceReference.IPIOService>();
+
+			logger = new MemoryLogger();
+			scheduler = new BotSchedulerModule(logger, client, botModule, orderManagerModule, 1);
+			Assert.ThrowsException<PIONotFoundException>(() => scheduler.DeleteBot(1));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Warning) && (item.ComponentName == scheduler.ModuleName)));
+		}
+
 
 		[TestMethod]
 		public void ShouldCreateTaskIfWorkerIsIdle()

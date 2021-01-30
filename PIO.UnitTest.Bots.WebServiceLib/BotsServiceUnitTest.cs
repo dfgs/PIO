@@ -338,6 +338,35 @@ namespace PIO.UnitTest.Bots.WebServiceLib
 			Assert.ThrowsException<FaultException>(() => service.CreateBot(1));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName == service.ModuleName)));
 		}
+		[TestMethod]
+		public void ShouldDeleteBot()
+		{
+			BotsService service;
+			IBotSchedulerModule subModule;
+			int counter = 0;
+
+			subModule = Substitute.For<IBotSchedulerModule>();
+			subModule.When(x => x.DeleteBot(Arg.Any<int>())).Do(x => counter++);
+
+			service = new BotsService(NullLogger.Instance, null, null, null, subModule, null);
+			service.DeleteBot(1);
+			Assert.AreEqual(1, counter);
+		}
+		[TestMethod]
+		public void ShouldNotDeleteBotWhenSubModuleFailsAndLogError()
+		{
+			MemoryLogger logger;
+			BotsService service;
+			IBotSchedulerModule subModule;
+
+			subModule = Substitute.For<IBotSchedulerModule>();
+			subModule.When(x => x.DeleteBot(Arg.Any<int>())).Do(x => throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest"));
+
+			logger = new MemoryLogger();
+			service = new BotsService(logger, null, null, null, subModule, null);
+			Assert.ThrowsException<FaultException>(() => service.DeleteBot(1));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName == service.ModuleName)));
+		}
 		#endregion
 
 

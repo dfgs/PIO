@@ -61,10 +61,36 @@ namespace PIO.Bots.ServerLib.Modules
 			LogEnter();
 
 			Log(LogLevels.Information, $"Trying to create bot");
-			item=Try(() => botModule.CreateBot(WorkerID)).OrThrow<PIOInvalidOperationException>("Failed to create Bot");
+			item=Try(() => botModule.CreateBot(WorkerID)).OrThrow<PIOInternalErrorException>("Failed to create Bot");
 			Add(DateTime.Now, item.BotID);
 
 			return item;
+		}
+		public void DeleteBot(int BotID)
+		{
+			Bot item;
+
+			LogEnter();
+
+			Log(LogLevels.Information, $"Trying to get bot");
+			item = Try(() => botModule.GetBot(BotID)).OrThrow<PIOInternalErrorException>("Failed to get Bot");
+			if (item == null)
+			{
+				Log(LogLevels.Warning, $"Bot doesn't exist (BotID={BotID})");
+				throw new PIONotFoundException($"Bot doesn't exist (BotID={BotID})", null, ID, ModuleName, "DeleteBot");
+			}
+
+			RemCaove((int id) => id == BotID );
+
+			#region clear bot assignment
+			Log(LogLevels.Information, $"Clearing bot assignment (BotID={BotID})");
+			Try(() => orderManager.UnassignAll(BotID)).OrThrow<PIOInternalErrorException>($"Failed to clear bot assignment");
+			
+			Log(LogLevels.Information, $"Deleting bot (BotID={BotID})");
+			Try(() => botModule.DeleteBot(BotID)).OrThrow<PIOInternalErrorException>($"Failed to delete bot");
+
+			#endregion
+
 		}
 
 		protected override void OnStarting()
@@ -104,6 +130,11 @@ namespace PIO.Bots.ServerLib.Modules
 			if (!result)
 			{
 				Add(DateTime.Now.AddSeconds(retryDelay), BotID);
+				return;
+			}
+			if (bot==null)
+			{
+				Log(LogLevels.Warning, $"Bot doesn't exist (BotID={BotID})");
 				return;
 			}
 			#endregion

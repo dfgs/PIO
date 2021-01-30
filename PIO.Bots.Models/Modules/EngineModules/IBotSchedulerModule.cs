@@ -10,6 +10,7 @@ namespace PIO.Bots.Models.Modules
 	public interface IBotSchedulerModule:IThreadModule
 	{
 		Bot CreateBot(int WorkerID);
+		void DeleteBot(int BotID);
 
 
 	}

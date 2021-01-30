@@ -70,6 +70,7 @@ namespace PIO.Console.ViewModels
 		public WorkerViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient) : base(PIOClient, BotsClient)
 		{
 			CreateBotCommand = new ViewModelCommand(CreateBotCommandCanExecute, CreateBotCommandExecute);
+			DeleteBotCommand = new ViewModelCommand(DeleteBotCommandCanExecute, DeleteBotCommandExecute);
 
 		}
 
@@ -86,7 +87,16 @@ namespace PIO.Console.ViewModels
 			Bot = new BotViewModel(PIOClient, BotsClient);
 			await Bot.LoadAsync(result);
 		}
+		private bool DeleteBotCommandCanExecute(object arg)
+		{
+			return (Model != null) && (Bot != null);
+		}
+		private async void DeleteBotCommandExecute(object obj)
+		{
 
+			await TryAsync(BotsClient.DeleteBotAsync(Bot.Model.BotID));
+			Bot = null;
+		}
 		protected override async Task OnRefreshAsync()
 		{
 			Bot bot;

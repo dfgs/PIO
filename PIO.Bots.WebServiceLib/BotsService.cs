@@ -93,6 +93,11 @@ namespace PIO.Bots.WebServiceLib
 			LogEnter();
 			return Try(() => botSchedulerModule.CreateBot(WorkerID)).OrThrow(GenerateFaultException);
 		}
+		public void DeleteBot(int BotID)
+		{
+			LogEnter();
+			Try(() => botSchedulerModule.DeleteBot(BotID)).OrThrow(GenerateFaultException);
+		}
 
 
 		#endregion
