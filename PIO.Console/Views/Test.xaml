@@ -6,9 +6,9 @@
              xmlns:local="clr-namespace:PIO.Console.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-	<local:MapControl ItemWidth="64" ItemHeight="32">
-		<Border Background="Red" local:MapControl.X="0" local:MapControl.Y="0"/>
-		<Border Background="Blue" local:MapControl.X="1" local:MapControl.Y="0"/>
-		<Border Background="Green" local:MapControl.X="1" local:MapControl.Y="1"/>
-	</local:MapControl>
+	<local:MapPanel ItemWidth="64" ItemHeight="32">
+		<Border Background="Red" local:MapPanel.X="0" local:MapPanel.Y="0"/>
+		<Border Background="Blue" local:MapPanel.X="1" local:MapPanel.Y="0"/>
+		<Border Background="Green" local:MapPanel.X="1" local:MapPanel.Y="1"/>
+	</local:MapPanel>
 </UserControl>

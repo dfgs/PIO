@@ -10,7 +10,7 @@ using Task = System.Threading.Tasks.Task;
 
 namespace PIO.Console.ViewModels
 {
-	public class WorkersViewModel : PIOViewModelCollection<WorkerViewModel,Worker>
+	public class WorkersViewModel : PIOViewModelCollection<WorkerViewModel,Worker>, ILocationViewModelCollection
 	{
 		private int planetID;
 		public WorkersViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient,int PlanetID) : base(PIOClient, BotsClient)

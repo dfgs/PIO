@@ -49,7 +49,7 @@ namespace PIO.Bots.ServerLib.Modules
 								.From(BotsDB.ProduceOrderTable.Join(BotsDB.OrderTable.On(ProduceOrderTable.OrderID, OrderTable.OrderID)));
 			return TrySelectMany<ProduceOrderTable, ProduceOrder>(query).OrThrow<PIODataException>("Failed to query");
 		}
-		public ProduceOrder[] GetProduceOrders(int PlanetID)
+		public ProduceOrder[] GetProduceOrders(int FactoryID)
 		{
 			ISelect query;
 			LogEnter();
@@ -57,7 +57,7 @@ namespace PIO.Bots.ServerLib.Modules
 			Log(LogLevels.Information, $"Querying ProduceOrder table");
 			query = new Select(OrderTable.OrderID, OrderTable.PlanetID, OrderTable.WorkerID, ProduceOrderTable.ProduceOrderID, ProduceOrderTable.OrderID, ProduceOrderTable.FactoryID)
 				.From(BotsDB.ProduceOrderTable.Join(BotsDB.OrderTable.On(ProduceOrderTable.OrderID, OrderTable.OrderID)))
-				.Where(OrderTable.PlanetID.IsEqualTo(PlanetID));
+				.Where(ProduceOrderTable.FactoryID.IsEqualTo(FactoryID));
 			return TrySelectMany<ProduceOrderTable, ProduceOrder>(query).OrThrow<PIODataException>("Failed to query");
 		}
 		public ProduceOrder[] GetWaitingProduceOrders(int PlanetID)

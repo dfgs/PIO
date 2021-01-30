@@ -4,55 +4,28 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:views="clr-namespace:PIO.Console.Views"
+			 xmlns:selections="clr-namespace:PIO.Console.Views.Selections"
 			 xmlns:viewModels="clr-namespace:PIO.Console.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 	<UserControl.Resources>
 		<DataTemplate DataType="{x:Type viewModels:CellViewModel}">
-			<StackPanel>
-				<TextBlock Text="Cell:" FontWeight="Bold"/>
-				<TextBlock Text="{Binding X}"/>
-				<TextBlock Text="{Binding Y}"/>
-			</StackPanel>
+			<selections:CellSelectionView/>
 		</DataTemplate>
 		<DataTemplate DataType="{x:Type viewModels:WorkerViewModel}">
-			<StackPanel>
-				<TextBlock Text="Worker:" FontWeight="Bold"/>
-				<TextBlock Text="{Binding X}"/>
-				<TextBlock Text="{Binding Y}"/>
-				<TextBlock Text="Tasks:" FontWeight="Bold"/>
-				<ItemsControl ItemsSource="{Binding Tasks}">
-					<ItemsControl.ItemTemplate>
-						<DataTemplate DataType="{x:Type viewModels:StackViewModel}">
-							<StackPanel Orientation="Horizontal">
-								<TextBlock Text="{Binding TaskTypeID}"/>
-								<TextBlock Text=": "/>
-								<TextBlock Text="{Binding ETA}"/>
-							</StackPanel>
-						</DataTemplate>
-					</ItemsControl.ItemTemplate>
-				</ItemsControl>
-			</StackPanel>
+			<selections:WorkerSelectionView/>
 		</DataTemplate>
 		<DataTemplate DataType="{x:Type viewModels:FactoryViewModel}">
-			<StackPanel>
-				<TextBlock Text="Factory:" FontWeight="Bold"/>
-				<TextBlock Text="{Binding X}"/>
-				<TextBlock Text="{Binding Y}"/>
-				<TextBlock Text="Stacks:" FontWeight="Bold"/>
-				<ItemsControl ItemsSource="{Binding Stacks}">
-					<ItemsControl.ItemTemplate>
-						<DataTemplate DataType="{x:Type viewModels:StackViewModel}">
-							<StackPanel Orientation="Horizontal">
-								<TextBlock Text="{Binding ResourceTypeID}"/>
-								<TextBlock Text=": "/>
-								<TextBlock Text="{Binding Quantity}"/>
-							</StackPanel>
-						</DataTemplate>
-					</ItemsControl.ItemTemplate>
-				</ItemsControl>
-			</StackPanel>
+			<selections:FactorySelectionView/>
 		</DataTemplate>
 	</UserControl.Resources>
-	<ContentPresenter Content="{Binding}"/>
+
+	<TabControl ItemsSource="{Binding}" SelectedItem="{Binding SelectedItem}">
+		<TabControl.ItemTemplate>
+			<DataTemplate>
+				<TextBlock Text="{Binding Description}"/>
+			</DataTemplate>		
+		</TabControl.ItemTemplate>
+	</TabControl>
+	
 </UserControl>

@@ -10,7 +10,7 @@ using Task = System.Threading.Tasks.Task;
 
 namespace PIO.Console.ViewModels
 {
-	public class CellsViewModel : PIOViewModelCollection<CellViewModel,Cell>
+	public class CellsViewModel : PIOViewModelCollection<CellViewModel,Cell>, ILocationViewModelCollection
 	{
 		private int planetID;
 

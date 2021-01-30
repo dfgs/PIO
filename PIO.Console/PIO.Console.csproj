@@ -57,27 +57,42 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ViewModels\ApplicationViewModel.cs" />
-    <Compile Include="ViewModels\CellViewModel.cs" />
-    <Compile Include="ViewModels\CellsViewModel.cs" />
-    <Compile Include="ViewModels\FactoryViewModel.cs" />
+    <Compile Include="ViewModels\ILocation\CellViewModel.cs" />
+    <Compile Include="ViewModels\ILocation\CellsViewModel.cs" />
+    <Compile Include="ViewModels\ILocation\FactoryViewModel.cs" />
+    <Compile Include="ViewModels\ILocation\ILocationViewModel.cs" />
+    <Compile Include="ViewModels\ILocation\ILocationViewModelCollection.cs" />
+    <Compile Include="ViewModels\ILocation\MapItemsViewModel.cs" />
     <Compile Include="ViewModels\PIOViewModelCollection.cs" />
     <Compile Include="ViewModels\PIOViewModel.cs" />
-    <Compile Include="ViewModels\FactoriesViewModel.cs" />
+    <Compile Include="ViewModels\ILocation\FactoriesViewModel.cs" />
+    <Compile Include="ViewModels\ProduceOrderViewModel.cs" />
+    <Compile Include="ViewModels\ProduceOrdersViewModel.cs" />
     <Compile Include="ViewModels\TasksViewModel.cs" />
     <Compile Include="ViewModels\StacksViewModel.cs" />
     <Compile Include="ViewModels\TaskViewModel.cs" />
-    <Compile Include="ViewModels\WorkersViewModel.cs" />
+    <Compile Include="ViewModels\ILocation\WorkersViewModel.cs" />
     <Compile Include="ViewModels\StackViewModel.cs" />
-    <Compile Include="ViewModels\WorkerViewModel.cs" />
+    <Compile Include="ViewModels\ILocation\WorkerViewModel.cs" />
     <Compile Include="Views\ErrorView.xaml.cs">
       <DependentUpon>ErrorView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\FactoriesView.xaml.cs">
       <DependentUpon>FactoriesView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\MapControl.cs" />
+    <Compile Include="Views\MapClickedRoutedEventArgs.cs" />
+    <Compile Include="Views\MapPanel.cs" />
     <Compile Include="Views\MapView.xaml.cs">
       <DependentUpon>MapView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Selections\CellSelectionView.xaml.cs">
+      <DependentUpon>CellSelectionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Selections\FactorySelectionView.xaml.cs">
+      <DependentUpon>FactorySelectionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Selections\WorkerSelectionView.xaml.cs">
+      <DependentUpon>WorkerSelectionView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SelectionView.xaml.cs">
       <DependentUpon>SelectionView.xaml</DependentUpon>
@@ -119,6 +134,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MapView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Selections\CellSelectionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Selections\FactorySelectionView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Selections\WorkerSelectionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -177,6 +204,10 @@
     <ProjectReference Include="..\PIO.Bots.ClientLib\PIO.Bots.ClientLib.csproj">
       <Project>{74510ce8-bbeb-4611-8de2-bfa7d6c05f7c}</Project>
       <Name>PIO.Bots.ClientLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PIO.Bots.Models\PIO.Bots.Models.csproj">
+      <Project>{FDF52966-F697-4E48-A055-3175A8E8BB6B}</Project>
+      <Name>PIO.Bots.Models</Name>
     </ProjectReference>
     <ProjectReference Include="..\PIO.ClientLib\PIO.ClientLib.csproj">
       <Project>{f9a386f1-d923-4a58-9b0d-ef8f5411c11b}</Project>

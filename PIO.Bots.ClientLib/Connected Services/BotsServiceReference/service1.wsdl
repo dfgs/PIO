@@ -31,6 +31,12 @@
   <wsdl:message name="IBotsService_GetProduceOrders_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetProduceOrdersResponse" />
   </wsdl:message>
+  <wsdl:message name="IBotsService_GetProduceOrdersForFactory_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetProduceOrdersForFactory" />
+  </wsdl:message>
+  <wsdl:message name="IBotsService_GetProduceOrdersForFactory_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetProduceOrdersForFactoryResponse" />
+  </wsdl:message>
   <wsdl:message name="IBotsService_CreateProduceOrder_InputMessage">
     <wsdl:part name="parameters" element="tns:CreateProduceOrder" />
   </wsdl:message>
@@ -53,6 +59,10 @@
     <wsdl:operation name="GetProduceOrders">
       <wsdl:input wsaw:Action="http://tempuri.org/IBotsService/GetProduceOrders" message="tns:IBotsService_GetProduceOrders_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IBotsService/GetProduceOrdersResponse" message="tns:IBotsService_GetProduceOrders_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetProduceOrdersForFactory">
+      <wsdl:input wsaw:Action="http://tempuri.org/IBotsService/GetProduceOrdersForFactory" message="tns:IBotsService_GetProduceOrdersForFactory_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IBotsService/GetProduceOrdersForFactoryResponse" message="tns:IBotsService_GetProduceOrdersForFactory_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="CreateProduceOrder">
       <wsdl:input wsaw:Action="http://tempuri.org/IBotsService/CreateProduceOrder" message="tns:IBotsService_CreateProduceOrder_InputMessage" />
@@ -90,6 +100,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetProduceOrders">
       <soap:operation soapAction="http://tempuri.org/IBotsService/GetProduceOrders" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetProduceOrdersForFactory">
+      <soap:operation soapAction="http://tempuri.org/IBotsService/GetProduceOrdersForFactory" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

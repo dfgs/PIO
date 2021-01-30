@@ -35,16 +35,9 @@ namespace PIO.Console.ViewModels
 		{
 			T model;
 
-			try
-			{
-				model = await OnLoadModelAsync();
-				await LoadAsync(model);
-				ErrorMessage = null;
-			}
-			catch (Exception ex)
-			{
-				ErrorMessage = ex.Message;
-			}
+			model = await TryAsync(OnLoadModelAsync());
+			if (model == null) return;
+			await TryAsync(LoadAsync(model));
 
 		}
 

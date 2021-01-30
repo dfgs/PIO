@@ -35,30 +35,23 @@ namespace PIO.Console.ViewModels
 			IEnumerable<ModelT> models;
 			T vm;
 			List<T> items;
+			bool result;
 
 			items = new List<T>();
 
+			models = await TryAsync(OnLoadModelAsync());
+			if (models == null) return;
 
-			try
+			foreach (ModelT model in models)
 			{
-				models = await OnLoadModelAsync();
-				
-				foreach (ModelT model in models)
-				{
-					vm = OnCreateItem(model);
-					await vm.LoadAsync(model);
-					items.Add(vm);
-				}
-
-				await LoadAsync(items);
-				ErrorMessage = null;
-			}
-			catch (Exception ex)
-			{
-				ErrorMessage = ex.Message;
+				vm = OnCreateItem(model);
+				result=await TryAsync(vm.LoadAsync(model));
+				if (result) items.Add(vm);
 			}
 
+			await TryAsync(LoadAsync(items));
 		}
+
 
 	}
 }

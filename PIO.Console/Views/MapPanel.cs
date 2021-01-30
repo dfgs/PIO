@@ -16,17 +16,17 @@ using System.Windows.Shapes;
 namespace PIO.Console.Views
 {
 	
-	public class MapControl : Panel
+	public class MapPanel : Panel
 	{
 
 
-		public static readonly DependencyProperty ItemWidthProperty = DependencyProperty.Register("ItemWidth", typeof(int), typeof(MapControl), new FrameworkPropertyMetadata(16,FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange));
+		public static readonly DependencyProperty ItemWidthProperty = DependencyProperty.Register("ItemWidth", typeof(int), typeof(MapPanel), new FrameworkPropertyMetadata(16,FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange));
 		public int ItemWidth
 		{
 			get { return (int)GetValue(ItemWidthProperty); }
 			set { SetValue(ItemWidthProperty, value); }
 		}
-		public static readonly DependencyProperty ItemHeightProperty = DependencyProperty.Register("ItemHeight", typeof(int), typeof(MapControl), new FrameworkPropertyMetadata(16, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange));
+		public static readonly DependencyProperty ItemHeightProperty = DependencyProperty.Register("ItemHeight", typeof(int), typeof(MapPanel), new FrameworkPropertyMetadata(16, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange));
 		public int ItemHeight
 		{
 			get { return (int)GetValue(ItemHeightProperty); }
@@ -34,8 +34,20 @@ namespace PIO.Console.Views
 		}
 
 
-		public static readonly DependencyProperty XProperty = DependencyProperty.RegisterAttached("X", typeof(int), typeof(MapControl), new FrameworkPropertyMetadata(0, FrameworkPropertyMetadataOptions.AffectsParentArrange));
-		public static readonly DependencyProperty YProperty = DependencyProperty.RegisterAttached("Y", typeof(int), typeof(MapControl), new FrameworkPropertyMetadata(0, FrameworkPropertyMetadataOptions.AffectsParentArrange));
+		public static readonly DependencyProperty XProperty = DependencyProperty.RegisterAttached("X", typeof(int), typeof(MapPanel), new FrameworkPropertyMetadata(0, FrameworkPropertyMetadataOptions.AffectsParentArrange));
+		public static readonly DependencyProperty YProperty = DependencyProperty.RegisterAttached("Y", typeof(int), typeof(MapPanel), new FrameworkPropertyMetadata(0, FrameworkPropertyMetadataOptions.AffectsParentArrange));
+
+		//public event MapClickedEventHandler MapClicked;
+
+		public static readonly RoutedEvent MapClickedEvent = EventManager.RegisterRoutedEvent("MapClicked", RoutingStrategy.Bubble,typeof(RoutedEventHandler), typeof(MapPanel));
+
+		public event RoutedEventHandler MapClicked
+		{
+			add { AddHandler(MapClickedEvent, value); }
+			remove { RemoveHandler(MapClickedEvent, value); }
+		}
+
+		
 
 
 		public static int GetX(UIElement obj)
@@ -59,13 +71,6 @@ namespace PIO.Console.Views
 		}
 
 
-
-
-
-		/*static MapControl()
-		{
-			DefaultStyleKeyProperty.OverrideMetadata(typeof(MapControl), new FrameworkPropertyMetadata(typeof(MapControl)));
-		}*/
 
 		protected override Size MeasureOverride(Size availableSize)
 		{
@@ -117,7 +122,20 @@ namespace PIO.Console.Views
 			return new Size(maxX, maxY);
 		}
 
-		
+		protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
+		{
+			Point pos;
+			int x, y;
+
+			base.OnMouseLeftButtonUp(e);
+
+			pos = e.GetPosition(this);
+			x = (int)(pos.X / ItemWidth);
+			y= (int)(pos.Y/ItemHeight);
+			
+			RoutedEventArgs args = new MapClickedRoutedEventArgs(MapPanel.MapClickedEvent, x, y);
+			RaiseEvent(args);
+		}
 
 	}
 }

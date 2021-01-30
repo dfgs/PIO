@@ -52,7 +52,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			}
 		}
 		[TestMethod]
-		public void ShouldGetProduceOrdersForPlanet()
+		public void ShouldGetProduceOrdersForFactory()
 		{
 			ProduceOrderModule module;
 			ProduceOrder[] results;
@@ -127,7 +127,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 		}
 
 		[TestMethod]
-		public void ShouldNotGetProduceOrdersForPlanetAndLogError()
+		public void ShouldNotGetProduceOrdersForFactoryAndLogError()
 		{
 			ProduceOrderModule module;
 			MemoryLogger logger;

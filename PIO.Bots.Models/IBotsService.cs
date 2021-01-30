@@ -20,6 +20,8 @@ namespace PIO.Bots.Models
 		ProduceOrder GetProduceOrder(int ProduceOrderID);
 		[OperationContract]
 		ProduceOrder[] GetProduceOrders();
+		[OperationContract]
+		ProduceOrder[] GetProduceOrdersForFactory(int FactoryID);
 		#endregion
 
 		#region functional

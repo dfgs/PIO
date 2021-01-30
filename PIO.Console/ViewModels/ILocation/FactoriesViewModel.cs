@@ -10,7 +10,7 @@ using Task = System.Threading.Tasks.Task;
 
 namespace PIO.Console.ViewModels
 {
-	public class FactoriesViewModel : PIOViewModelCollection<FactoryViewModel,Factory>
+	public class FactoriesViewModel : PIOViewModelCollection<FactoryViewModel,Factory>, ILocationViewModelCollection
 	{
 		private int planetID;
 

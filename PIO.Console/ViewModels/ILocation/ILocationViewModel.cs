@@ -6,19 +6,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using ViewModelLib;
+using Task = System.Threading.Tasks.Task;
 
 namespace PIO.Console.ViewModels
 {
-	public class CellViewModel : PIOViewModel<Cell>
+	public interface ILocationViewModel:IViewModel
 	{
-		public CellViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient) : base(PIOClient, BotsClient)
+		int X
 		{
+			get;
+		}
+		int Y
+		{
+			get;
+		}
+		string Description
+		{
+			get;
 		}
 
-
-		protected override async Task<Cell> OnLoadModelAsync()
-		{
-			return await PIOClient.GetCellAsync(((Cell)Model).CellID);
-		}
 	}
+
+
 }

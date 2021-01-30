@@ -11,9 +11,21 @@ using Task = System.Threading.Tasks.Task;
 
 namespace PIO.Console.ViewModels
 {
-	public class WorkerViewModel : PIOViewModel<Worker>
+	public class WorkerViewModel : PIOViewModel<Worker>, ILocationViewModel
 	{
+		public int X
+		{
+			get { return Model.X; }
+		}
+		public int Y
+		{
+			get { return Model.Y; }
+		}
 
+		public string Description
+		{
+			get { return $"Worker #{Model.WorkerID}"; }
+		}
 
 		public static readonly DependencyProperty TasksProperty = DependencyProperty.Register("Tasks", typeof(TasksViewModel), typeof(WorkerViewModel));
 		public TasksViewModel Tasks

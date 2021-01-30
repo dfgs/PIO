@@ -24,15 +24,15 @@
 		<ItemsControl ItemsSource="{Binding}" >
 			<ItemsControl.ItemContainerStyle>
 				<Style TargetType="{x:Type ContentPresenter}">
-					<Setter Property="views:MapControl.X" Value="{Binding X}"/>
-					<Setter Property="views:MapControl.Y" Value="{Binding Y}"/>
+					<Setter Property="views:MapPanel.X" Value="{Binding X}"/>
+					<Setter Property="views:MapPanel.Y" Value="{Binding Y}"/>
 					<Setter Property="Margin" Value="0"/>
 				</Style>
 			</ItemsControl.ItemContainerStyle>
 
 			<ItemsControl.ItemsPanel>
 				<ItemsPanelTemplate>
-					<views:MapControl ItemWidth="32" ItemHeight="32"/>
+					<views:MapPanel ItemWidth="32" ItemHeight="32"/>
 				</ItemsPanelTemplate>
 			</ItemsControl.ItemsPanel>
 			

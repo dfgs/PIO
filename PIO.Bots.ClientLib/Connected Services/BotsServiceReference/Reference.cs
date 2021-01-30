@@ -40,6 +40,12 @@ namespace PIO.Bots.ClientLib.BotsServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/GetProduceOrders", ReplyAction="http://tempuri.org/IBotsService/GetProduceOrdersResponse")]
         System.Threading.Tasks.Task<PIO.Bots.Models.ProduceOrder[]> GetProduceOrdersAsync();
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/GetProduceOrdersForFactory", ReplyAction="http://tempuri.org/IBotsService/GetProduceOrdersForFactoryResponse")]
+        PIO.Bots.Models.ProduceOrder[] GetProduceOrdersForFactory(int FactoryID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/GetProduceOrdersForFactory", ReplyAction="http://tempuri.org/IBotsService/GetProduceOrdersForFactoryResponse")]
+        System.Threading.Tasks.Task<PIO.Bots.Models.ProduceOrder[]> GetProduceOrdersForFactoryAsync(int FactoryID);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/CreateProduceOrder", ReplyAction="http://tempuri.org/IBotsService/CreateProduceOrderResponse")]
         PIO.Bots.Models.ProduceOrder CreateProduceOrder(int PlanetID, int FactoryID);
         
@@ -104,6 +110,14 @@ namespace PIO.Bots.ClientLib.BotsServiceReference {
         
         public System.Threading.Tasks.Task<PIO.Bots.Models.ProduceOrder[]> GetProduceOrdersAsync() {
             return base.Channel.GetProduceOrdersAsync();
+        }
+        
+        public PIO.Bots.Models.ProduceOrder[] GetProduceOrdersForFactory(int FactoryID) {
+            return base.Channel.GetProduceOrdersForFactory(FactoryID);
+        }
+        
+        public System.Threading.Tasks.Task<PIO.Bots.Models.ProduceOrder[]> GetProduceOrdersForFactoryAsync(int FactoryID) {
+            return base.Channel.GetProduceOrdersForFactoryAsync(FactoryID);
         }
         
         public PIO.Bots.Models.ProduceOrder CreateProduceOrder(int PlanetID, int FactoryID) {

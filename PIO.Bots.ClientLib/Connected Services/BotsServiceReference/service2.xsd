@@ -53,6 +53,20 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="GetProduceOrdersForFactory">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="FactoryID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetProduceOrdersForFactoryResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/PIO.Bots.Models" minOccurs="0" name="GetProduceOrdersForFactoryResult" nillable="true" type="q5:ArrayOfProduceOrder" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="CreateProduceOrder">
     <xs:complexType>
       <xs:sequence>
@@ -64,7 +78,7 @@
   <xs:element name="CreateProduceOrderResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/PIO.Bots.Models" minOccurs="0" name="CreateProduceOrderResult" nillable="true" type="q5:ProduceOrder" />
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/PIO.Bots.Models" minOccurs="0" name="CreateProduceOrderResult" nillable="true" type="q6:ProduceOrder" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

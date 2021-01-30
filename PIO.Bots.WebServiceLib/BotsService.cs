@@ -53,8 +53,14 @@ namespace PIO.Bots.WebServiceLib
 			LogEnter();
 			return Try(() => produceOrderModule.GetProduceOrders()).OrThrow(GenerateFaultException);
 		}
+		public ProduceOrder[] GetProduceOrdersForFactory(int FactoryID)
+		{
+			LogEnter();
+			return Try(() => produceOrderModule.GetProduceOrders(FactoryID)).OrThrow(GenerateFaultException);
+		}
 
 		#endregion
+
 		#region functional
 		public ProduceOrder CreateProduceOrder(int PlanetID, int FactoryID)
 		{

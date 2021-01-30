@@ -143,6 +143,39 @@ namespace PIO.UnitTest.Bots.WebServiceLib
 		}
 
 		[TestMethod]
+		public void ShouldGetProduceOrdersForFactory()
+		{
+			BotsService service;
+			ProduceOrder[] result;
+			IProduceOrderModule subModule;
+
+			subModule = Substitute.For<IProduceOrderModule>();
+			subModule.GetProduceOrders(Arg.Any<int>()).Returns(new ProduceOrder[] { new ProduceOrder() { ProduceOrderID = 1 }, new ProduceOrder() { ProduceOrderID = 2 }, new ProduceOrder() { ProduceOrderID = 3 } });
+
+			service = new BotsService(NullLogger.Instance, null, subModule, null);
+			result = service.GetProduceOrdersForFactory(1);
+			Assert.IsNotNull(result);
+			Assert.AreEqual(3, result.Length);
+			Assert.IsTrue(result.All((item) => item != null));
+		}
+		[TestMethod]
+		public void ShouldNotGetProduceOrdersForFactoryAndLogError()
+		{
+			MemoryLogger logger;
+			BotsService service;
+			IProduceOrderModule subModule;
+
+			subModule = Substitute.For<IProduceOrderModule>();
+			subModule.GetProduceOrders(Arg.Any<int>()).Returns((id) => { throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest"); });
+
+			logger = new MemoryLogger();
+			service = new BotsService(logger, null, subModule, null);
+			Assert.ThrowsException<FaultException>(() => service.GetProduceOrdersForFactory(1));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName == service.ModuleName)));
+		}
+
+
+		[TestMethod]
 		public void ShouldCreateProduceOrder()
 		{
 			BotsService service;

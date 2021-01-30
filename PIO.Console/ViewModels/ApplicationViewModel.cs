@@ -15,7 +15,15 @@ namespace PIO.Console.ViewModels
 {
 	public class ApplicationViewModel:PIOViewModel<int>
 	{
-		
+
+
+		public static readonly DependencyProperty SelectedItemsProperty = DependencyProperty.Register("SelectedItems", typeof(MapItemsViewModel), typeof(ApplicationViewModel), new PropertyMetadata(null));
+		public MapItemsViewModel SelectedItems
+		{
+			get { return (MapItemsViewModel)GetValue(SelectedItemsProperty); }
+			set { SetValue(SelectedItemsProperty, value); }
+		}
+
 
 
 		public static readonly DependencyProperty WorkersProperty = DependencyProperty.Register("Workers", typeof(WorkersViewModel), typeof(ApplicationViewModel));
@@ -40,10 +48,10 @@ namespace PIO.Console.ViewModels
 			set { SetValue(CellsProperty, value); }
 		}
 
-		public static readonly DependencyProperty MapItemsProperty = DependencyProperty.Register("MapItems", typeof(ObservableCollection<object>), typeof(ApplicationViewModel));
-		public ObservableCollection<object> MapItems
+		public static readonly DependencyProperty MapItemsProperty = DependencyProperty.Register("MapItems", typeof(MapItemsViewModel), typeof(ApplicationViewModel));
+		public MapItemsViewModel MapItems
 		{
-			get { return (ObservableCollection<object>)GetValue(MapItemsProperty); }
+			get { return (MapItemsViewModel)GetValue(MapItemsProperty); }
 			set { SetValue(MapItemsProperty, value); }
 		}
 
@@ -52,7 +60,10 @@ namespace PIO.Console.ViewModels
 			Cells = new CellsViewModel(PIOClient, BotsClient, 1);
 			Workers = new WorkersViewModel(PIOClient,BotsClient,1);
 			Factories = new FactoriesViewModel(PIOClient, BotsClient, 1);
-			
+			MapItems = new MapItemsViewModel() ;
+			SelectedItems = new MapItemsViewModel();
+
+
 		}
 
 		protected override async Task<int> OnLoadModelAsync()
@@ -66,8 +77,9 @@ namespace PIO.Console.ViewModels
 			await Workers.LoadAsync();
 			await Factories.LoadAsync();
 
-			MapItems = new ObservableCollection<object>(Cells.Cast<object>().Union(Factories).Union(Workers) );
+			await MapItems.LoadAsync(Cells.Union<ILocationViewModel>(Factories).Union(Workers));
 			
+
 		}
 
 
@@ -98,6 +110,12 @@ namespace PIO.Console.ViewModels
 					await Factories.RefreshFactory(Task.X.Value, Task.Y.Value);
 					break;
 			}
+		}
+
+		public async System.Threading.Tasks.Task SelectAtAsync(int X, int Y)
+		{
+			await SelectedItems.LoadAsync(MapItems.Where(item => (item.X == X) && (item.Y == Y))) ;
+			SelectedItems.SelectedItem = SelectedItems.FirstOrDefault();
 		}
 
 

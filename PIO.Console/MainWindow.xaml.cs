@@ -18,6 +18,7 @@ using PIO.Console.ViewModels;
 using System.ServiceModel;
 using PIO.ClientLib.TaskCallbackServiceReference;
 using PIO.Models;
+using PIO.Console.Views;
 
 namespace PIO.Console
 {
@@ -122,6 +123,15 @@ namespace PIO.Console
 		{
 			await ApplicationViewModel.OnTaskEnded(Task); 
 		}
+
+		private async void MapView_MapClicked(object sender, RoutedEventArgs e)
+		{
+			MapClickedRoutedEventArgs args;
+
+			args = e as MapClickedRoutedEventArgs;
+			await ApplicationViewModel.SelectAtAsync(args.X, args.Y);
+		}
+
 
 
 	}
