@@ -46,6 +46,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bots\DataCmdlet\GetBotsCmdlet.cs" />
+    <Compile Include="Bots\DataCmdlet\GetBotCmdlet.cs" />
     <Compile Include="Bots\DataCmdlet\GetProduceOrderCmdlet.cs" />
     <Compile Include="Bots\DataCmdlet\GetOrderCmdlet.cs" />
     <Compile Include="Bots\DataCmdlet\GetProduceOrdersCmdlet.cs" />

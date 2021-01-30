@@ -5,11 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PIO.Bots.ServerLib.Modules
+namespace PIO.Bots.Models.Modules
 {
-	public interface IWorkerScheduler:IThreadModule
+	public interface IBotSchedulerModule:IThreadModule
 	{
-		//void Add(int WorkerID);
-	
+		Bot CreateBot(int WorkerID);
+
+
 	}
 }

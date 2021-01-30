@@ -88,7 +88,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 
 
 
-		[TestMethod]
+		/*[TestMethod]
 		public void ShouldCreateOrder()
 		{
 			OrderModule module;
@@ -105,9 +105,9 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			Assert.IsNotNull(result);
 			Assert.AreEqual(1, result.PlanetID);
 			Assert.AreEqual(1, inserted);
-		}
+		}*/
 
-		[TestMethod]
+		/*[TestMethod]
 		public void ShouldNotCreateOrderAndLogError()
 		{
 			OrderModule module;
@@ -122,7 +122,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			module = new OrderModule(logger, database);
 			Assert.ThrowsException<PIODataException>(() => module.CreateOrder(1));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName == module.ModuleName)));
-		}
+		}*/
 
 		[TestMethod]
 		public void ShouldAssignOrder()

@@ -71,6 +71,7 @@
     <None Include="Connected Services\BotsServiceReference\service21.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Properties\DataSources\PIO.Bots.Models.Bot.datasource" />
     <None Include="Properties\DataSources\PIO.Bots.Models.Order.datasource" />
     <None Include="Properties\DataSources\PIO.Bots.Models.ProduceOrder.datasource" />
   </ItemGroup>

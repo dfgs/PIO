@@ -9,7 +9,18 @@
              d:DesignHeight="450" d:DesignWidth="800">
 	<UserControl.Resources>
 		<DataTemplate DataType="{x:Type viewModels:CellViewModel}">
-			<Border Background="Green" BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+			<Border Background="Green" BorderBrush="Red" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+				<Border.Style>
+					<Style TargetType="{x:Type Border}">
+						<Setter Property="BorderThickness" Value="0"/>
+						<Style.Triggers>
+							<DataTrigger Binding="{Binding IsSelected}" Value="True">
+								<Setter Property="BorderThickness" Value="1"/>
+							</DataTrigger>
+						</Style.Triggers>
+					</Style>
+				</Border.Style>
+			</Border>
 		</DataTemplate>
 		<DataTemplate DataType="{x:Type viewModels:FactoryViewModel}">
 			<Border Background="Blue" BorderBrush="Black" BorderThickness="1" Width="16" Height="16"/>

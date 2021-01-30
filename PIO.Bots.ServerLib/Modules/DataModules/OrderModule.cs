@@ -32,7 +32,7 @@ namespace PIO.Bots.ServerLib.Modules
 			LogEnter();
 			
 			Log(LogLevels.Information, $"Querying Order table (OrderID={OrderID})");
-			query=new Select(OrderTable.OrderID,OrderTable.PlanetID, OrderTable.WorkerID).From(BotsDB.OrderTable).Where(OrderTable.OrderID.IsEqualTo(OrderID));
+			query=new Select(OrderTable.OrderID, OrderTable.BotID).From(BotsDB.OrderTable).Where(OrderTable.OrderID.IsEqualTo(OrderID));
 			return TrySelectFirst<OrderTable, Order>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
@@ -45,45 +45,29 @@ namespace PIO.Bots.ServerLib.Modules
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying Order table");
-			query=new Select(OrderTable.OrderID, OrderTable.PlanetID, OrderTable.WorkerID).From(BotsDB.OrderTable);
+			query=new Select(OrderTable.OrderID,  OrderTable.BotID).From(BotsDB.OrderTable);
 			return TrySelectMany<OrderTable, Order>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
 
-		public Order CreateOrder(int PlanetID)
-		{
-			IInsert query;
-			Order item;
-			object result;
+		
 
-
-			LogEnter();
-
-			Log(LogLevels.Information, $"Inserting into Order table (PlanetID={PlanetID})");
-			item=new Order() {PlanetID=PlanetID} ;
-			query = new Insert().Into(BotsDB.OrderTable)
-				.Set(OrderTable.PlanetID, item.PlanetID);
-			result=Try(query).OrThrow<PIODataException>("Failed to insert");
-			item.OrderID=Convert.ToInt32(result);
-			return item;
-		}
-
-		public void Assign(int OrderID,int WorkerID)
+		public void Assign(int OrderID,int BotID)
 		{
 			IUpdate query;
 
 			LogEnter();
-			Log(LogLevels.Information, $"Updating Order Table (OrderID={OrderID}, WorkerID={WorkerID})");
-			query = new Update(BotsDB.OrderTable).Set(OrderTable.WorkerID, WorkerID).Where(OrderTable.OrderID.IsEqualTo(OrderID));
+			Log(LogLevels.Information, $"Updating Order Table (OrderID={OrderID}, WorkerID={BotID})");
+			query = new Update(BotsDB.OrderTable).Set(OrderTable.BotID, BotID).Where(OrderTable.OrderID.IsEqualTo(OrderID));
 			Try(query).OrThrow<PIODataException>("Failed to update");
 		}
-		public void UnAssignAll(int WorkerID)
+		public void UnAssignAll(int BotID)
 		{
 			IUpdate query;
 
 			LogEnter();
-			Log(LogLevels.Information, $"Updating Order Table (WorkerID={WorkerID})");
-			query = new Update(BotsDB.OrderTable).Set(OrderTable.WorkerID, null).Where(OrderTable.WorkerID.IsEqualTo(WorkerID));
+			Log(LogLevels.Information, $"Updating Order Table (WorkerID={BotID})");
+			query = new Update(BotsDB.OrderTable).Set(OrderTable.BotID, null).Where(OrderTable.BotID.IsEqualTo(BotID));
 			Try(query).OrThrow<PIODataException>("Failed to update");
 		}
 

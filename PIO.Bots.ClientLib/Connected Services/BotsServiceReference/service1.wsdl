@@ -7,6 +7,24 @@
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/PIO.Bots.Models" />
     </xsd:schema>
   </wsdl:types>
+  <wsdl:message name="IBotsService_GetBot_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetBot" />
+  </wsdl:message>
+  <wsdl:message name="IBotsService_GetBot_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetBotResponse" />
+  </wsdl:message>
+  <wsdl:message name="IBotsService_GetBotForWorker_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetBotForWorker" />
+  </wsdl:message>
+  <wsdl:message name="IBotsService_GetBotForWorker_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetBotForWorkerResponse" />
+  </wsdl:message>
+  <wsdl:message name="IBotsService_GetBots_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetBots" />
+  </wsdl:message>
+  <wsdl:message name="IBotsService_GetBots_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetBotsResponse" />
+  </wsdl:message>
   <wsdl:message name="IBotsService_GetOrder_InputMessage">
     <wsdl:part name="parameters" element="tns:GetOrder" />
   </wsdl:message>
@@ -43,7 +61,25 @@
   <wsdl:message name="IBotsService_CreateProduceOrder_OutputMessage">
     <wsdl:part name="parameters" element="tns:CreateProduceOrderResponse" />
   </wsdl:message>
+  <wsdl:message name="IBotsService_CreateBot_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateBot" />
+  </wsdl:message>
+  <wsdl:message name="IBotsService_CreateBot_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateBotResponse" />
+  </wsdl:message>
   <wsdl:portType name="IBotsService">
+    <wsdl:operation name="GetBot">
+      <wsdl:input wsaw:Action="http://tempuri.org/IBotsService/GetBot" message="tns:IBotsService_GetBot_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IBotsService/GetBotResponse" message="tns:IBotsService_GetBot_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetBotForWorker">
+      <wsdl:input wsaw:Action="http://tempuri.org/IBotsService/GetBotForWorker" message="tns:IBotsService_GetBotForWorker_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IBotsService/GetBotForWorkerResponse" message="tns:IBotsService_GetBotForWorker_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetBots">
+      <wsdl:input wsaw:Action="http://tempuri.org/IBotsService/GetBots" message="tns:IBotsService_GetBots_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IBotsService/GetBotsResponse" message="tns:IBotsService_GetBots_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="GetOrder">
       <wsdl:input wsaw:Action="http://tempuri.org/IBotsService/GetOrder" message="tns:IBotsService_GetOrder_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IBotsService/GetOrderResponse" message="tns:IBotsService_GetOrder_OutputMessage" />
@@ -68,9 +104,40 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IBotsService/CreateProduceOrder" message="tns:IBotsService_CreateProduceOrder_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IBotsService/CreateProduceOrderResponse" message="tns:IBotsService_CreateProduceOrder_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="CreateBot">
+      <wsdl:input wsaw:Action="http://tempuri.org/IBotsService/CreateBot" message="tns:IBotsService_CreateBot_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IBotsService/CreateBotResponse" message="tns:IBotsService_CreateBot_OutputMessage" />
+    </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IBotsService" type="tns:IBotsService">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetBot">
+      <soap:operation soapAction="http://tempuri.org/IBotsService/GetBot" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBotForWorker">
+      <soap:operation soapAction="http://tempuri.org/IBotsService/GetBotForWorker" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBots">
+      <soap:operation soapAction="http://tempuri.org/IBotsService/GetBots" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="GetOrder">
       <soap:operation soapAction="http://tempuri.org/IBotsService/GetOrder" style="document" />
       <wsdl:input>
@@ -118,6 +185,15 @@
     </wsdl:operation>
     <wsdl:operation name="CreateProduceOrder">
       <soap:operation soapAction="http://tempuri.org/IBotsService/CreateProduceOrder" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CreateBot">
+      <soap:operation soapAction="http://tempuri.org/IBotsService/CreateBot" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

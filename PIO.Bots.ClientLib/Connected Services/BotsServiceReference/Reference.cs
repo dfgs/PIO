@@ -15,6 +15,24 @@ namespace PIO.Bots.ClientLib.BotsServiceReference {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="BotsServiceReference.IBotsService")]
     public interface IBotsService {
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/GetBot", ReplyAction="http://tempuri.org/IBotsService/GetBotResponse")]
+        PIO.Bots.Models.Bot GetBot(int BotID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/GetBot", ReplyAction="http://tempuri.org/IBotsService/GetBotResponse")]
+        System.Threading.Tasks.Task<PIO.Bots.Models.Bot> GetBotAsync(int BotID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/GetBotForWorker", ReplyAction="http://tempuri.org/IBotsService/GetBotForWorkerResponse")]
+        PIO.Bots.Models.Bot GetBotForWorker(int WorkerID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/GetBotForWorker", ReplyAction="http://tempuri.org/IBotsService/GetBotForWorkerResponse")]
+        System.Threading.Tasks.Task<PIO.Bots.Models.Bot> GetBotForWorkerAsync(int WorkerID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/GetBots", ReplyAction="http://tempuri.org/IBotsService/GetBotsResponse")]
+        PIO.Bots.Models.Bot[] GetBots();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/GetBots", ReplyAction="http://tempuri.org/IBotsService/GetBotsResponse")]
+        System.Threading.Tasks.Task<PIO.Bots.Models.Bot[]> GetBotsAsync();
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/GetOrder", ReplyAction="http://tempuri.org/IBotsService/GetOrderResponse")]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(PIO.Bots.Models.ProduceOrder))]
         PIO.Bots.Models.Order GetOrder(int OrderID);
@@ -51,6 +69,12 @@ namespace PIO.Bots.ClientLib.BotsServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/CreateProduceOrder", ReplyAction="http://tempuri.org/IBotsService/CreateProduceOrderResponse")]
         System.Threading.Tasks.Task<PIO.Bots.Models.ProduceOrder> CreateProduceOrderAsync(int PlanetID, int FactoryID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/CreateBot", ReplyAction="http://tempuri.org/IBotsService/CreateBotResponse")]
+        PIO.Bots.Models.Bot CreateBot(int WorkerID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/CreateBot", ReplyAction="http://tempuri.org/IBotsService/CreateBotResponse")]
+        System.Threading.Tasks.Task<PIO.Bots.Models.Bot> CreateBotAsync(int WorkerID);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -78,6 +102,30 @@ namespace PIO.Bots.ClientLib.BotsServiceReference {
         
         public BotsServiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(binding, remoteAddress) {
+        }
+        
+        public PIO.Bots.Models.Bot GetBot(int BotID) {
+            return base.Channel.GetBot(BotID);
+        }
+        
+        public System.Threading.Tasks.Task<PIO.Bots.Models.Bot> GetBotAsync(int BotID) {
+            return base.Channel.GetBotAsync(BotID);
+        }
+        
+        public PIO.Bots.Models.Bot GetBotForWorker(int WorkerID) {
+            return base.Channel.GetBotForWorker(WorkerID);
+        }
+        
+        public System.Threading.Tasks.Task<PIO.Bots.Models.Bot> GetBotForWorkerAsync(int WorkerID) {
+            return base.Channel.GetBotForWorkerAsync(WorkerID);
+        }
+        
+        public PIO.Bots.Models.Bot[] GetBots() {
+            return base.Channel.GetBots();
+        }
+        
+        public System.Threading.Tasks.Task<PIO.Bots.Models.Bot[]> GetBotsAsync() {
+            return base.Channel.GetBotsAsync();
         }
         
         public PIO.Bots.Models.Order GetOrder(int OrderID) {
@@ -126,6 +174,14 @@ namespace PIO.Bots.ClientLib.BotsServiceReference {
         
         public System.Threading.Tasks.Task<PIO.Bots.Models.ProduceOrder> CreateProduceOrderAsync(int PlanetID, int FactoryID) {
             return base.Channel.CreateProduceOrderAsync(PlanetID, FactoryID);
+        }
+        
+        public PIO.Bots.Models.Bot CreateBot(int WorkerID) {
+            return base.Channel.CreateBot(WorkerID);
+        }
+        
+        public System.Threading.Tasks.Task<PIO.Bots.Models.Bot> CreateBotAsync(int WorkerID) {
+            return base.Channel.CreateBotAsync(WorkerID);
         }
     }
 }

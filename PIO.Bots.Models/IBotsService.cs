@@ -13,6 +13,14 @@ namespace PIO.Bots.Models
 	{
 		#region data
 		[OperationContract]
+		Bot GetBot(int BotID);
+		[OperationContract]
+		Bot GetBotForWorker(int WorkerID);
+		[OperationContract]
+		Bot[] GetBots();
+
+
+		[OperationContract]
 		Order GetOrder(int OrderID);
 		[OperationContract]
 		Order[] GetOrders();
@@ -27,6 +35,8 @@ namespace PIO.Bots.Models
 		#region functional
 		[OperationContract]
 		ProduceOrder CreateProduceOrder(int PlanetID, int FactoryID);
+		[OperationContract]
+		Bot CreateBot(int WorkerID);
 		#endregion
 
 	}

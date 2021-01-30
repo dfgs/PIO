@@ -43,16 +43,16 @@ namespace PIO.Bots.ServerLib.Modules
 			produceOrders = new List<ProduceOrder>();
 		}
 
-		public void UnassignAll(int WorkerID)
+		public void UnassignAll(int BotID)
 		{
-			Log(LogLevels.Information, $"Clearing worker assignment (WorkerID={WorkerID})");
-			Try(() => orderModule.UnAssignAll(WorkerID)).OrThrow<PIOInternalErrorException>("Failed to clear worker assignment");
+			Log(LogLevels.Information, $"Clearing worker assignment (BotID={BotID})");
+			Try(() => orderModule.UnAssignAll(BotID)).OrThrow<PIOInternalErrorException>("Failed to clear worker assignment");
 
 		}
-		public void Assign(int OrderID, int WorkerID)
+		public void Assign(int OrderID, int BotID)
 		{
-			Log(LogLevels.Information, $"Assigning worker (OrderID={OrderID}, WorkerID={WorkerID})");
-			Try(() => orderModule.Assign(OrderID,WorkerID)).OrThrow<PIOInternalErrorException>("Failed to assign worker");
+			Log(LogLevels.Information, $"Assigning worker (OrderID={OrderID}, BotID={BotID})");
+			Try(() => orderModule.Assign(OrderID,BotID)).OrThrow<PIOInternalErrorException>("Failed to assign worker");
 
 		}
 		public ProduceOrder CreateProduceOrder(int PlanetID,int FactoryID)
@@ -174,7 +174,7 @@ namespace PIO.Bots.ServerLib.Modules
 		}
 
 
-		public Task CreateTask(int WorkerID)
+		public Task CreateTask(int BotID,int WorkerID)
 		{
 			ProduceOrder[] produceOrders;
 			Task task;
@@ -198,8 +198,8 @@ namespace PIO.Bots.ServerLib.Modules
 				task = CreateTaskFromProduceOrder(worker, order);
 				if (task != null)
 				{
-					Log(LogLevels.Information, $"Assigning worker to order (OrderID={order.OrderID}, WorkerID={WorkerID})");
-					Try(() => Assign(order.OrderID, WorkerID)).OrThrow<PIOInternalErrorException>("Failed to assign worker to order");
+					Log(LogLevels.Information, $"Assigning bot to order (OrderID={order.OrderID}, Bot={BotID})");
+					Try(() => Assign(order.OrderID, BotID)).OrThrow<PIOInternalErrorException>("Failed to assign worker to order");
 					return task;
 				}
 			}

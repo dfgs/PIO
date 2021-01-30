@@ -44,14 +44,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IBotsService.cs" />
+    <Compile Include="Modules\DataModules\IBotModule.cs" />
     <Compile Include="Modules\DataModules\IProduceOrderModule.cs" />
     <Compile Include="Modules\DataModules\IOrderModule.cs" />
+    <Compile Include="Modules\EngineModules\IBotSchedulerModule.cs" />
     <Compile Include="Modules\FunctionalModules\IOrderManagerModule.cs" />
+    <Compile Include="Bot.cs" />
     <Compile Include="ProduceOrder.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\ModuleLib\ModuleLib\ModuleLib.csproj">
+      <Project>{f89b06c7-43cc-4589-9859-3a4656aaa4a6}</Project>
+      <Name>ModuleLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PIO.Models\PIO.Models.csproj">
       <Project>{7883D2F9-F04E-467A-A0A6-61158DCA5956}</Project>
       <Name>PIO.Models</Name>
@@ -61,8 +68,6 @@
       <Name>PIO.ModulesLib</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Modules\EngineModules\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

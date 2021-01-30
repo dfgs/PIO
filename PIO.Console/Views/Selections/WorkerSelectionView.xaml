@@ -7,21 +7,36 @@
             xmlns:local="clr-namespace:PIO.Console.Views.Selections"
              mc:Ignorable="d" 
              d:DesignHeight="100" d:DesignWidth="800">
-	<StackPanel>
-		<TextBlock Text="Worker:" FontWeight="Bold"/>
-		<TextBlock Text="{Binding X,FallbackValue=0}"/>
-		<TextBlock Text="{Binding Y,FallbackValue=0}"/>
-		<TextBlock Text="Tasks:" FontWeight="Bold"/>
-		<ItemsControl ItemsSource="{Binding Tasks}">
-			<ItemsControl.ItemTemplate>
-				<DataTemplate DataType="{x:Type viewModels:StackViewModel}">
-					<StackPanel Orientation="Horizontal">
-						<TextBlock Text="{Binding TaskTypeID}"/>
-						<TextBlock Text=": "/>
-						<TextBlock Text="{Binding ETA}"/>
-					</StackPanel>
-				</DataTemplate>
-			</ItemsControl.ItemTemplate>
-		</ItemsControl>
-	</StackPanel>
+	<Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="1*"/>
+			<ColumnDefinition Width="5"/>
+			<ColumnDefinition Width="150"/>
+		</Grid.ColumnDefinitions>
+		<StackPanel Grid.Column="0">
+			<TextBlock Text="Worker:" FontWeight="Bold"/>
+			<TextBlock Text="{Binding X,FallbackValue=0}"/>
+			<TextBlock Text="{Binding Y,FallbackValue=0}"/>
+			<TextBlock Text="Bot:" FontWeight="Bold"/>
+			<TextBlock Text="{Binding Bot.BotID,FallbackValue=None}"/>
+			<TextBlock Text="Tasks:" FontWeight="Bold"/>
+			<ItemsControl ItemsSource="{Binding Tasks}">
+				<ItemsControl.ItemTemplate>
+					<DataTemplate DataType="{x:Type viewModels:StackViewModel}">
+						<StackPanel Orientation="Horizontal">
+							<TextBlock Text="{Binding TaskTypeID}"/>
+							<TextBlock Text=": "/>
+							<TextBlock Text="{Binding ETA}"/>
+						</StackPanel>
+					</DataTemplate>
+				</ItemsControl.ItemTemplate>
+			</ItemsControl>
+		</StackPanel>
+		<GridSplitter Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+		<StackPanel Grid.Column="2">
+			<Button Content="Create bot" Command="{Binding CreateBotCommand}"/>
+			<Button Content="Delete bot" Command="{Binding DeleteBotCommand}"/>
+		</StackPanel>
+	</Grid>
+
 </UserControl>

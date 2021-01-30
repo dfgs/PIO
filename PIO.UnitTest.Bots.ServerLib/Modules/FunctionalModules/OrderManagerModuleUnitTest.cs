@@ -67,7 +67,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			ProduceOrder result;
 
 			orderModule = Substitute.For<IOrderModule>();
-			orderModule.CreateOrder(Arg.Any<int>()).Returns(new Order() { OrderID=1});
+			//orderModule.CreateOrder(Arg.Any<int>()).Returns(new Order() { OrderID=1});
 			produceOrderModule = Substitute.For<IProduceOrderModule>();
 			produceOrderModule.CreateProduceOrder(Arg.Any<int>(),Arg.Any<int>()).Returns(new ProduceOrder() { OrderID = 1,ProduceOrderID=1,FactoryID=1 });
 
@@ -101,7 +101,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			logger = new MemoryLogger();
 
 			orderModule = Substitute.For<IOrderModule>();
-			orderModule.CreateOrder(Arg.Any<int>()).Returns(new Order() { OrderID = 1 });
+			//orderModule.CreateOrder(Arg.Any<int>()).Returns(new Order() { OrderID = 1 });
 			produceOrderModule = Substitute.For<IProduceOrderModule>();
 			produceOrderModule.CreateProduceOrder(Arg.Any<int>(), Arg.Any<int>()).Returns((x) => { throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest"); });
 
@@ -123,7 +123,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			logger = new MemoryLogger();
 
 			orderModule = Substitute.For<IOrderModule>();
-			orderModule.CreateOrder(Arg.Any<int>()).Returns(new Order() { OrderID = 1 });
+			//orderModule.CreateOrder(Arg.Any<int>()).Returns(new Order() { OrderID = 1 });
 			produceOrderModule = Substitute.For<IProduceOrderModule>();
 			produceOrderModule.CreateProduceOrder(Arg.Any<int>(), Arg.Any<int>()).Returns(new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, FactoryID = 1 });
 
@@ -154,7 +154,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			produceOrderModule.GetProduceOrders().Returns(new ProduceOrder[] { });
 
 			module = new OrderManagerModule(NullLogger.Instance,client, orderModule, produceOrderModule,10);
-			result = module.CreateTask(1);
+			result = module.CreateTask(1,1);
 			Assert.IsNotNull(result);
 			Assert.AreEqual(1, result.WorkerID);
 			Assert.AreEqual(TaskTypeIDs.Idle, result.TaskTypeID);
@@ -180,7 +180,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			produceOrderModule.GetProduceOrders().Returns(new ProduceOrder[] { });
 
 			module = new OrderManagerModule(logger, client, orderModule, produceOrderModule, 10);
-			Assert.ThrowsException<PIOInternalErrorException>(() => module.CreateTask(1));
+			Assert.ThrowsException<PIOInternalErrorException>(() => module.CreateTask(1, 1));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName == module.ModuleName)));
 
 		}
@@ -203,12 +203,12 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			client.WorkerIsInBuilding(Arg.Any<int>(), Arg.Any<int>()).Returns(true);
 
 			orderModule = Substitute.For<IOrderModule>();
-			orderModule.CreateOrder(Arg.Any<int>()).Returns(new Order() { OrderID = 1 });
+			//orderModule.CreateOrder(Arg.Any<int>()).Returns(new Order() { OrderID = 1 });
 			produceOrderModule = Substitute.For<IProduceOrderModule>();
 			produceOrderModule.GetProduceOrders().Returns(new ProduceOrder[] { new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, FactoryID = 1 } });
 
 			module = new OrderManagerModule(NullLogger.Instance, client, orderModule, produceOrderModule, 10);
-			result = module.CreateTask(1);
+			result = module.CreateTask(1, 1);
 			Assert.IsNotNull(result);
 			Assert.AreEqual(1, result.WorkerID);
 			Assert.AreEqual(TaskTypeIDs.Idle, result.TaskTypeID);
@@ -236,7 +236,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			client.WorkerIsInBuilding(Arg.Any<int>(), Arg.Any<int>()).Returns(true);
 
 			orderModule = Substitute.For<IOrderModule>();
-			orderModule.CreateOrder(Arg.Any<int>()).Returns(new Order() { OrderID = 1 });
+			//orderModule.CreateOrder(Arg.Any<int>()).Returns(new Order() { OrderID = 1 });
 			produceOrderModule = Substitute.For<IProduceOrderModule>();
 			produceOrderModule.GetProduceOrders().Returns(new ProduceOrder[] { new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, FactoryID = 1 } });
 
@@ -263,7 +263,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			client.WorkerIsInBuilding(Arg.Any<int>(), Arg.Any<int>()).Returns(false);
 
 			orderModule = Substitute.For<IOrderModule>();
-			orderModule.CreateOrder(Arg.Any<int>()).Returns(new Order() { OrderID = 1 });
+			//orderModule.CreateOrder(Arg.Any<int>()).Returns(new Order() { OrderID = 1 });
 			produceOrderModule = Substitute.For<IProduceOrderModule>();
 			produceOrderModule.GetProduceOrders().Returns(new ProduceOrder[] { new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, FactoryID = 1 } });
 
@@ -292,7 +292,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			client.WorkerIsInBuilding(Arg.Any<int>(), Arg.Any<int>()).Returns(true);
 
 			orderModule = Substitute.For<IOrderModule>();
-			orderModule.CreateOrder(Arg.Any<int>()).Returns(new Order() { OrderID = 1 });
+			//orderModule.CreateOrder(Arg.Any<int>()).Returns(new Order() { OrderID = 1 });
 			produceOrderModule = Substitute.For<IProduceOrderModule>();
 			produceOrderModule.GetProduceOrders().Returns(new ProduceOrder[] { new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, FactoryID = 1 } });
 
@@ -318,7 +318,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			client.WorkerIsInBuilding(Arg.Any<int>(), Arg.Any<int>()).Returns(false);
 
 			orderModule = Substitute.For<IOrderModule>();
-			orderModule.CreateOrder(Arg.Any<int>()).Returns(new Order() { OrderID = 1 });
+			//orderModule.CreateOrder(Arg.Any<int>()).Returns(new Order() { OrderID = 1 });
 			produceOrderModule = Substitute.For<IProduceOrderModule>();
 			produceOrderModule.GetProduceOrders().Returns(new ProduceOrder[] { new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, FactoryID = 1 } });
 
@@ -345,7 +345,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			client.WorkerIsInBuilding(Arg.Any<int>(), Arg.Any<int>()).Returns(false);
 
 			orderModule = Substitute.For<IOrderModule>();
-			orderModule.CreateOrder(Arg.Any<int>()).Returns(new Order() { OrderID = 1 });
+			//orderModule.CreateOrder(Arg.Any<int>()).Returns(new Order() { OrderID = 1 });
 			produceOrderModule = Substitute.For<IProduceOrderModule>();
 			produceOrderModule.GetProduceOrders().Returns(new ProduceOrder[] { new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, FactoryID = 1 } });
 
@@ -372,7 +372,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			client.WorkerIsInBuilding(Arg.Any<int>(), Arg.Any<int>()).Returns(true);
 
 			orderModule = Substitute.For<IOrderModule>();
-			orderModule.CreateOrder(Arg.Any<int>()).Returns(new Order() { OrderID = 1 });
+			//orderModule.CreateOrder(Arg.Any<int>()).Returns(new Order() { OrderID = 1 });
 			produceOrderModule = Substitute.For<IProduceOrderModule>();
 			produceOrderModule.GetProduceOrders().Returns(new ProduceOrder[] { new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, FactoryID = 1 } });
 
@@ -399,7 +399,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			client.WorkerIsInBuilding(Arg.Any<int>(), Arg.Any<int>()).Returns(true);
 
 			orderModule = Substitute.For<IOrderModule>();
-			orderModule.CreateOrder(Arg.Any<int>()).Returns(new Order() { OrderID = 1 });
+			//orderModule.CreateOrder(Arg.Any<int>()).Returns(new Order() { OrderID = 1 });
 			produceOrderModule = Substitute.For<IProduceOrderModule>();
 			produceOrderModule.GetProduceOrders().Returns(new ProduceOrder[] { new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, FactoryID = 1 } });
 

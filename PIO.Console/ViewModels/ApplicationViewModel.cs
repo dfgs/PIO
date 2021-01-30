@@ -114,6 +114,16 @@ namespace PIO.Console.ViewModels
 
 		public async System.Threading.Tasks.Task SelectAtAsync(int X, int Y)
 		{
+			foreach (CellViewModel viewModel in Cells)
+			{
+				viewModel.IsSelected = (viewModel.X == X) && (viewModel.Y == Y);
+			}
+
+			foreach (WorkerViewModel viewModel in Workers)
+			{
+				viewModel.IsSelected = (viewModel.X == X) && (viewModel.Y == Y);
+			}
+
 			await SelectedItems.LoadAsync(MapItems.Where(item => (item.X == X) && (item.Y == Y))) ;
 			SelectedItems.SelectedItem = SelectedItems.FirstOrDefault();
 		}

@@ -44,11 +44,12 @@ namespace PIO.Bots.ServerHost
 			ICommandBuilder commandBuilder;
 			IDatabaseCreator databaseCreator;
 
+			IBotModule botModule;
 			IOrderModule orderModule;
 			IProduceOrderModule produceOrderModule;
 			IOrderManagerModule orderManagerModule;
 
-			IWorkerScheduler workerScheduler;
+			IBotSchedulerModule botSchedulerModule;
 
 			PIOServiceClient client;
 
@@ -74,26 +75,26 @@ namespace PIO.Bots.ServerHost
 
 			client = new PIOServiceClient(new BasicHttpBinding(), new EndpointAddress($@"http://127.0.0.1:8733/PIO/Service/"));
 			client.Open();
-			
 
 
+			botModule = new BotModule(logger, database);
 			orderModule = new OrderModule(logger, database);
 			produceOrderModule = new ProduceOrderModule(logger, database);
 
 			orderManagerModule = new OrderManagerModule(logger,client, orderModule, produceOrderModule,10);
 
-			service = new BotsService(logger, orderModule,produceOrderModule, orderManagerModule);
+			botSchedulerModule = new BotSchedulerModule(logger, client, botModule, orderManagerModule, 5);
+			botSchedulerModule.Start();
+
+			service = new BotsService(logger, botModule, orderModule, produceOrderModule, botSchedulerModule, orderManagerModule) ;
 
 			serviceHostModule = new ServiceHostModule(logger, service);
 			serviceHostModule.Start();
-
-			workerScheduler = new WorkerScheduler(logger, client, orderManagerModule, 5);
-			workerScheduler.Start();
-
+				
 			WaitHandle.WaitAny(new WaitHandle[] { quitEvent }, -1);
 
 			serviceHostModule.Stop();
-			workerScheduler.Stop();
+			botSchedulerModule.Stop();
 
 			client.Close();
 			logger.Dispose();

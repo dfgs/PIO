@@ -14,12 +14,12 @@ namespace PIO.Bots.Models.Modules
 			get;
 		}
 
-		void UnassignAll(int WorkerID);
-		void Assign(int OrderID,int WorkerID);
+		void UnassignAll(int BotID);
+		void Assign(int OrderID,int BotID);
 
 		ProduceOrder[] GetWaitingProduceOrders(int PlanetID);
 		
-		Task CreateTask(int WorkerID);
+		Task CreateTask(int BotID,int WorkerID);
 
 		Task CreateTaskFromProduceOrder(Worker Worker, ProduceOrder ProduceOrder);
 

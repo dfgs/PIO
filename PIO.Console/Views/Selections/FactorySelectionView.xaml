@@ -34,8 +34,6 @@
 				<ItemsControl.ItemTemplate>
 					<DataTemplate DataType="{x:Type viewModels:StackViewModel}">
 						<StackPanel Orientation="Horizontal">
-							<TextBlock Text="{Binding PlanetID}"/>
-							<TextBlock Text=": "/>
 							<TextBlock Text="{Binding FactoryID}"/>
 						</StackPanel>
 					</DataTemplate>

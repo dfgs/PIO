@@ -60,9 +60,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Modules\DataModules\BotModuleUnitTest.cs" />
     <Compile Include="Modules\DataModules\ProduceOrderModuleUnitTest.cs" />
     <Compile Include="Modules\DataModules\OrderModuleUnitTest.cs" />
-    <Compile Include="Modules\EngineModules\WorkerSchedulerUnitTest.cs" />
+    <Compile Include="Modules\EngineModules\BotSchedulerModuleUnitTest.cs" />
     <Compile Include="Modules\FunctionalModules\OrderManagerModuleUnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -15,16 +15,20 @@ namespace PIO.Bots.WebServiceLib
 	[ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Single)]
 	public class BotsService : Module, IBotsService
 	{
+		private IBotModule botModule;
 		private IOrderModule orderModule;
 		private IProduceOrderModule produceOrderModule;
 		private IOrderManagerModule orderManagerModule;
+		private IBotSchedulerModule botSchedulerModule;
 
 		public BotsService(ILogger Logger,
-			IOrderModule OrderModule, IProduceOrderModule ProduceOrderModule, IOrderManagerModule OrderManagerModule
+			IBotModule BotModule, IOrderModule OrderModule, IProduceOrderModule ProduceOrderModule, IBotSchedulerModule BotSchedulerModule, IOrderManagerModule OrderManagerModule
 		) : base(Logger)
 		{
 			LogEnter();
-			this.orderModule = OrderModule;this.produceOrderModule = ProduceOrderModule;this.orderManagerModule = OrderManagerModule;
+			this.botModule = BotModule; this.orderModule = OrderModule;this.produceOrderModule = ProduceOrderModule;
+			this.botSchedulerModule = BotSchedulerModule;
+			this.orderManagerModule = OrderManagerModule;
 		}
 
 		private FaultException GenerateFaultException(Exception InnerException, int ComponentID, string ComponentName, string MethodName)
@@ -33,6 +37,22 @@ namespace PIO.Bots.WebServiceLib
 		}
 
 		#region data
+		public Bot GetBot(int BotID)
+		{
+			LogEnter();
+			return Try(() => botModule.GetBot(BotID)).OrThrow(GenerateFaultException);
+		}
+		public Bot GetBotForWorker(int WorkerID)
+		{
+			LogEnter();
+			return Try(() => botModule.GetBotForWorker(WorkerID)).OrThrow(GenerateFaultException);
+		}
+		public Bot[] GetBots()
+		{
+			LogEnter();
+			return Try(() => botModule.GetBots()).OrThrow(GenerateFaultException);
+		}
+
 		public Order GetOrder(int OrderID)
 		{
 			LogEnter();
@@ -67,6 +87,14 @@ namespace PIO.Bots.WebServiceLib
 			LogEnter();
 			return Try(() => orderManagerModule.CreateProduceOrder(PlanetID,FactoryID)).OrThrow(GenerateFaultException);
 		}
+
+		public Bot CreateBot(int WorkerID)
+		{
+			LogEnter();
+			return Try(() => botSchedulerModule.CreateBot(WorkerID)).OrThrow(GenerateFaultException);
+		}
+
+
 		#endregion
 
 	}

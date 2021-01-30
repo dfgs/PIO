@@ -70,6 +70,7 @@
     <Compile Include="ViewModels\ProduceOrdersViewModel.cs" />
     <Compile Include="ViewModels\TasksViewModel.cs" />
     <Compile Include="ViewModels\StacksViewModel.cs" />
+    <Compile Include="ViewModels\BotViewModel.cs" />
     <Compile Include="ViewModels\TaskViewModel.cs" />
     <Compile Include="ViewModels\ILocation\WorkersViewModel.cs" />
     <Compile Include="ViewModels\StackViewModel.cs" />
