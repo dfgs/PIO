@@ -98,6 +98,9 @@ namespace PIO.Console.ViewModels
 		}
 		public async System.Threading.Tasks.Task OnTaskEnded(PIO.Models.Task Task)
 		{
+			Factory factory;
+			FactoryViewModel factoryViewModel;
+
 			await Workers.RefreshWorker(Task.WorkerID);
 			switch (Task.TaskTypeID)
 			{
@@ -108,6 +111,24 @@ namespace PIO.Console.ViewModels
 					break;
 				case Models.TaskTypeIDs.Produce:
 					await Factories.RefreshFactory(Task.X.Value, Task.Y.Value);
+					break;
+				case Models.TaskTypeIDs.CreateBuilding:
+					try
+					{
+						factory = PIOClient.GetFactoryAtPos(1, Task.X.Value, Task.Y.Value);
+						if (factory!=null)
+						{
+							factoryViewModel = new FactoryViewModel(PIOClient, BotsClient);
+							await factoryViewModel.LoadAsync(factory);
+							Factories.Add(factoryViewModel);
+							MapItems.Insert(Cells.Count, factoryViewModel);
+						}
+					}
+					catch(Exception ex)
+					{
+						ErrorMessage = ex.Message;
+					}
+					//await Factories.RefreshFactory(Task.X.Value, Task.Y.Value);
 					break;
 			}
 		}
