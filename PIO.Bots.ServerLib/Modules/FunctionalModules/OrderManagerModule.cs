@@ -245,6 +245,13 @@ namespace PIO.Bots.ServerLib.Modules
 			}
 			else
 			{
+
+				if (factory.RemainingBuildSteps==0)
+				{
+					Log(LogLevels.Information, $"Factory is already built (FactoryID={factory.FactoryID})");
+					return null;
+				}
+
 				Log(LogLevels.Information, $"Checking if factory as enough resources to build (FactoryID={factory.FactoryID})");
 				missingResourceTypeID = Try(() => client.GetMissingResourcesToBuild(factory.FactoryID)).OrThrow<PIOInternalErrorException>("Failed to check resources");
 				if ((missingResourceTypeID == null) || (missingResourceTypeID.Length == 0))

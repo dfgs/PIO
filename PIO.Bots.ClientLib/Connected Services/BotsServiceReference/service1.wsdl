@@ -68,6 +68,12 @@
   <wsdl:message name="IBotsService_GetBuildFactoryOrders_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetBuildFactoryOrdersResponse" />
   </wsdl:message>
+  <wsdl:message name="IBotsService_GetBuildFactoryOrdersAtPosition_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetBuildFactoryOrdersAtPosition" />
+  </wsdl:message>
+  <wsdl:message name="IBotsService_GetBuildFactoryOrdersAtPosition_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetBuildFactoryOrdersAtPositionResponse" />
+  </wsdl:message>
   <wsdl:message name="IBotsService_CreateProduceOrder_InputMessage">
     <wsdl:part name="parameters" element="tns:CreateProduceOrder" />
   </wsdl:message>
@@ -126,6 +132,10 @@
     <wsdl:operation name="GetBuildFactoryOrders">
       <wsdl:input wsaw:Action="http://tempuri.org/IBotsService/GetBuildFactoryOrders" message="tns:IBotsService_GetBuildFactoryOrders_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IBotsService/GetBuildFactoryOrdersResponse" message="tns:IBotsService_GetBuildFactoryOrders_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetBuildFactoryOrdersAtPosition">
+      <wsdl:input wsaw:Action="http://tempuri.org/IBotsService/GetBuildFactoryOrdersAtPosition" message="tns:IBotsService_GetBuildFactoryOrdersAtPosition_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IBotsService/GetBuildFactoryOrdersAtPositionResponse" message="tns:IBotsService_GetBuildFactoryOrdersAtPosition_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="CreateProduceOrder">
       <wsdl:input wsaw:Action="http://tempuri.org/IBotsService/CreateProduceOrder" message="tns:IBotsService_CreateProduceOrder_InputMessage" />
@@ -225,6 +235,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetBuildFactoryOrders">
       <soap:operation soapAction="http://tempuri.org/IBotsService/GetBuildFactoryOrders" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBuildFactoryOrdersAtPosition">
+      <soap:operation soapAction="http://tempuri.org/IBotsService/GetBuildFactoryOrdersAtPosition" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

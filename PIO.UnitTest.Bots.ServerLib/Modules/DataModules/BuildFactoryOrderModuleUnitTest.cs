@@ -51,7 +51,26 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 				Assert.AreEqual(t + 1, results[t].BuildFactoryOrderID);
 			}
 		}
-		
+		[TestMethod]
+		public void ShouldGetBuildFactoryOrdersAtPosition()
+		{
+			BuildFactoryOrderModule module;
+			BuildFactoryOrder[] results;
+			IDatabase database;
+
+			database = Substitute.For<IDatabase>();
+			database.Execute<BuildFactoryOrder>(Arg.Any<ISelect>()).Returns(new BuildFactoryOrder[] { new BuildFactoryOrder() { BuildFactoryOrderID = 1 }, new BuildFactoryOrder() { BuildFactoryOrderID = 2 }, new BuildFactoryOrder() { BuildFactoryOrderID = 3 } });
+
+			module = new BuildFactoryOrderModule(NullLogger.Instance, database);
+			results = module.GetBuildFactoryOrders(1,2,2);
+			Assert.IsNotNull(results);
+			Assert.AreEqual(3, results.Length);
+			for (int t = 0; t < 3; t++)
+			{
+				Assert.IsNotNull(results[t]);
+				Assert.AreEqual(t + 1, results[t].BuildFactoryOrderID);
+			}
+		}
 		[TestMethod]
 		public void ShouldGetWaitingBuildFactoryOrdersForPlanet()
 		{
@@ -107,7 +126,22 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName == module.ModuleName)));
 		}
 
-		
+		[TestMethod]
+		public void ShouldNotGetBuildFactoryOrdersAtPosAndLogError()
+		{
+			BuildFactoryOrderModule module;
+			MemoryLogger logger;
+			IDatabase database;
+
+			logger = new MemoryLogger();
+
+			database = Substitute.For<IDatabase>();
+			database.Execute<BuildFactoryOrder>(Arg.Any<ISelect>()).Returns((x) => { throw new Exception(); });
+
+			module = new BuildFactoryOrderModule(logger, database);
+			Assert.ThrowsException<PIODataException>(() => module.GetBuildFactoryOrders(1,2,2));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName == module.ModuleName)));
+		}
 		[TestMethod]
 		public void ShouldNotGetWaitingBuildFactoryOrdersForPlanetAndLogError()
 		{

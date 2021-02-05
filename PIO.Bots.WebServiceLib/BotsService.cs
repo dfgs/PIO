@@ -93,6 +93,11 @@ namespace PIO.Bots.WebServiceLib
 			LogEnter();
 			return Try(() => buildFactoryOrderModule.GetBuildFactoryOrders()).OrThrow(GenerateFaultException);
 		}
+		public BuildFactoryOrder[] GetBuildFactoryOrdersAtPosition(int PlanetID,int X,int Y)
+		{
+			LogEnter();
+			return Try(() => buildFactoryOrderModule.GetBuildFactoryOrders(PlanetID,X,Y)).OrThrow(GenerateFaultException);
+		}
 
 		#endregion
 

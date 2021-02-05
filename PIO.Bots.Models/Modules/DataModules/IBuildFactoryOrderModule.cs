@@ -11,6 +11,7 @@ namespace PIO.Bots.Models.Modules
 	{
 		BuildFactoryOrder GetBuildFactoryOrder(int BuildFactoryOrderID);
 		BuildFactoryOrder[] GetBuildFactoryOrders();
+		BuildFactoryOrder[] GetBuildFactoryOrders(int PlanetID,  int X, int Y);
 		BuildFactoryOrder[] GetWaitingBuildFactoryOrders(int PlanetID);
 		BuildFactoryOrder CreateBuildFactoryOrder(int PlanetID, FactoryTypeIDs FactoryTypeID,int X,int Y);
 

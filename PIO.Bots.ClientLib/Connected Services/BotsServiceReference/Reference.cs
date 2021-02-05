@@ -77,6 +77,12 @@ namespace PIO.Bots.ClientLib.BotsServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/GetBuildFactoryOrders", ReplyAction="http://tempuri.org/IBotsService/GetBuildFactoryOrdersResponse")]
         System.Threading.Tasks.Task<PIO.Bots.Models.BuildFactoryOrder[]> GetBuildFactoryOrdersAsync();
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/GetBuildFactoryOrdersAtPosition", ReplyAction="http://tempuri.org/IBotsService/GetBuildFactoryOrdersAtPositionResponse")]
+        PIO.Bots.Models.BuildFactoryOrder[] GetBuildFactoryOrdersAtPosition(int PlanetId, int X, int Y);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/GetBuildFactoryOrdersAtPosition", ReplyAction="http://tempuri.org/IBotsService/GetBuildFactoryOrdersAtPositionResponse")]
+        System.Threading.Tasks.Task<PIO.Bots.Models.BuildFactoryOrder[]> GetBuildFactoryOrdersAtPositionAsync(int PlanetId, int X, int Y);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/CreateProduceOrder", ReplyAction="http://tempuri.org/IBotsService/CreateProduceOrderResponse")]
         PIO.Bots.Models.ProduceOrder CreateProduceOrder(int PlanetID, int FactoryID);
         
@@ -201,6 +207,14 @@ namespace PIO.Bots.ClientLib.BotsServiceReference {
         
         public System.Threading.Tasks.Task<PIO.Bots.Models.BuildFactoryOrder[]> GetBuildFactoryOrdersAsync() {
             return base.Channel.GetBuildFactoryOrdersAsync();
+        }
+        
+        public PIO.Bots.Models.BuildFactoryOrder[] GetBuildFactoryOrdersAtPosition(int PlanetId, int X, int Y) {
+            return base.Channel.GetBuildFactoryOrdersAtPosition(PlanetId, X, Y);
+        }
+        
+        public System.Threading.Tasks.Task<PIO.Bots.Models.BuildFactoryOrder[]> GetBuildFactoryOrdersAtPositionAsync(int PlanetId, int X, int Y) {
+            return base.Channel.GetBuildFactoryOrdersAtPositionAsync(PlanetId, X, Y);
         }
         
         public PIO.Bots.Models.ProduceOrder CreateProduceOrder(int PlanetID, int FactoryID) {

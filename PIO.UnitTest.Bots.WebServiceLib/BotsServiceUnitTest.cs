@@ -305,6 +305,7 @@ namespace PIO.UnitTest.Bots.WebServiceLib
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName == service.ModuleName)));
 		}
 
+
 		[TestMethod]
 		public void ShouldGetBuildFactoryOrders()
 		{
@@ -334,6 +335,39 @@ namespace PIO.UnitTest.Bots.WebServiceLib
 			logger = new MemoryLogger();
 			service = new BotsService(logger, null, null, null, subModule, null,  null);
 			Assert.ThrowsException<FaultException>(() => service.GetBuildFactoryOrders());
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName == service.ModuleName)));
+		}
+
+
+		[TestMethod]
+		public void ShouldGetBuildFactoryOrdersAtPosition()
+		{
+			BotsService service;
+			BuildFactoryOrder[] result;
+			IBuildFactoryOrderModule subModule;
+
+			subModule = Substitute.For<IBuildFactoryOrderModule>();
+			subModule.GetBuildFactoryOrders(Arg.Any<int>(), Arg.Any<int>(),Arg.Any<int>() ).Returns(new BuildFactoryOrder[] { new BuildFactoryOrder() { BuildFactoryOrderID = 1 }, new BuildFactoryOrder() { BuildFactoryOrderID = 2 }, new BuildFactoryOrder() { BuildFactoryOrderID = 3 } });
+
+			service = new BotsService(NullLogger.Instance, null, null, null, subModule, null, null);
+			result = service.GetBuildFactoryOrdersAtPosition(1,2,3) ;
+			Assert.IsNotNull(result);
+			Assert.AreEqual(3, result.Length);
+			Assert.IsTrue(result.All((item) => item != null));
+		}
+		[TestMethod]
+		public void ShouldNotGetBuildFactoryOrdersAtPositionAndLogError()
+		{
+			MemoryLogger logger;
+			BotsService service;
+			IBuildFactoryOrderModule subModule;
+
+			subModule = Substitute.For<IBuildFactoryOrderModule>();
+			subModule.GetBuildFactoryOrders(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<int>()).Returns((id) => { throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest"); });
+
+			logger = new MemoryLogger();
+			service = new BotsService(logger, null, null, null, subModule, null, null);
+			Assert.ThrowsException<FaultException>(() => service.GetBuildFactoryOrdersAtPosition(1,2,3));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName == service.ModuleName)));
 		}
 

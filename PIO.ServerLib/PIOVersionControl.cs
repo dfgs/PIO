@@ -145,7 +145,7 @@ namespace PIO.ServerLib
 					yield return new Insert().Into(PIODB.FactoryTable).Set(FactoryTable.BuildingID, buildingID).Set(FactoryTable.FactoryTypeID, FactoryTypeIDs.Forest);
 					yield return new SelectIdentity((result) => factoryID = Convert.ToInt32(result));
 					#region fill startup factories with material
-					yield return new Insert().Into(PIODB.StackTable).Set(StackTable.BuildingID, buildingID).Set(StackTable.ResourceTypeID, ResourceTypeIDs.Tree).Set(StackTable.Quantity, 5);
+					yield return new Insert().Into(PIODB.StackTable).Set(StackTable.BuildingID, buildingID).Set(StackTable.ResourceTypeID, ResourceTypeIDs.Tree).Set(StackTable.Quantity, 15);
 					#endregion
 
 					yield return new Insert().Into(PIODB.BuildingTable).Set(BuildingTable.PlanetID, planetID).Set(BuildingTable.X, 1).Set(BuildingTable.Y, 0).Set(BuildingTable.HealthPoints, 10).Set(BuildingTable.RemainingBuildSteps, 0);
