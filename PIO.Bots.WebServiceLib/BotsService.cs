@@ -17,16 +17,18 @@ namespace PIO.Bots.WebServiceLib
 	{
 		private IBotModule botModule;
 		private IOrderModule orderModule;
-		private IProduceOrderModule produceOrderModule;
 		private IOrderManagerModule orderManagerModule;
+		private IProduceOrderModule produceOrderModule;
+		private IBuildFactoryOrderModule buildFactoryOrderModule;
+
 		private IBotSchedulerModule botSchedulerModule;
 
 		public BotsService(ILogger Logger,
-			IBotModule BotModule, IOrderModule OrderModule, IProduceOrderModule ProduceOrderModule, IBotSchedulerModule BotSchedulerModule, IOrderManagerModule OrderManagerModule
+			IBotModule BotModule, IOrderModule OrderModule, IProduceOrderModule ProduceOrderModule, IBuildFactoryOrderModule BuildFactoryOrderModule, IBotSchedulerModule BotSchedulerModule, IOrderManagerModule OrderManagerModule
 		) : base(Logger)
 		{
 			LogEnter();
-			this.botModule = BotModule; this.orderModule = OrderModule;this.produceOrderModule = ProduceOrderModule;
+			this.botModule = BotModule; this.orderModule = OrderModule;this.produceOrderModule = ProduceOrderModule;this.buildFactoryOrderModule = BuildFactoryOrderModule;
 			this.botSchedulerModule = BotSchedulerModule;
 			this.orderManagerModule = OrderManagerModule;
 		}
@@ -77,6 +79,18 @@ namespace PIO.Bots.WebServiceLib
 		{
 			LogEnter();
 			return Try(() => produceOrderModule.GetProduceOrders(FactoryID)).OrThrow(GenerateFaultException);
+		}
+
+
+		public BuildFactoryOrder GetBuildFactoryOrder(int BuildFactoryOrderID)
+		{
+			LogEnter();
+			return Try(() => buildFactoryOrderModule.GetBuildFactoryOrder(BuildFactoryOrderID)).OrThrow(GenerateFaultException);
+		}
+		public BuildFactoryOrder[] GetBuildFactoryOrders()
+		{
+			LogEnter();
+			return Try(() => buildFactoryOrderModule.GetBuildFactoryOrders()).OrThrow(GenerateFaultException);
 		}
 
 		#endregion

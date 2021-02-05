@@ -64,6 +64,9 @@
     <None Include="Connected Services\BotsServiceReference\PIO.Bots.Models1.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Connected Services\BotsServiceReference\PIO.Models.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Connected Services\BotsServiceReference\service1.wsdl" />
     <None Include="Connected Services\BotsServiceReference\service2.xsd">
       <SubType>Designer</SubType>
@@ -72,6 +75,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Properties\DataSources\PIO.Bots.Models.Bot.datasource" />
+    <None Include="Properties\DataSources\PIO.Bots.Models.BuildFactoryOrder.datasource" />
     <None Include="Properties\DataSources\PIO.Bots.Models.Order.datasource" />
     <None Include="Properties\DataSources\PIO.Bots.Models.ProduceOrder.datasource" />
   </ItemGroup>

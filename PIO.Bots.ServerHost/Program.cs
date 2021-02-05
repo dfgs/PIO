@@ -46,8 +46,9 @@ namespace PIO.Bots.ServerHost
 
 			IBotModule botModule;
 			IOrderModule orderModule;
-			IProduceOrderModule produceOrderModule;
 			IOrderManagerModule orderManagerModule;
+			IProduceOrderModule produceOrderModule;
+			IBuildFactoryOrderModule buildFactoryOrderModule;
 
 			IBotSchedulerModule botSchedulerModule;
 
@@ -80,13 +81,14 @@ namespace PIO.Bots.ServerHost
 			botModule = new BotModule(logger, database);
 			orderModule = new OrderModule(logger, database);
 			produceOrderModule = new ProduceOrderModule(logger, database);
+			buildFactoryOrderModule = new BuildFactoryOrderModule(logger, database);
 
 			orderManagerModule = new OrderManagerModule(logger,client, orderModule, produceOrderModule,10);
 
 			botSchedulerModule = new BotSchedulerModule(logger, client, botModule, orderManagerModule, 5);
 			botSchedulerModule.Start();
 
-			service = new BotsService(logger, botModule, orderModule, produceOrderModule, botSchedulerModule, orderManagerModule) ;
+			service = new BotsService(logger, botModule, orderModule, produceOrderModule,buildFactoryOrderModule,  botSchedulerModule, orderManagerModule) ;
 
 			serviceHostModule = new ServiceHostModule(logger, service);
 			serviceHostModule.Start();
