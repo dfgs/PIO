@@ -9,22 +9,7 @@
 //------------------------------------------------------------------------------
 
 namespace PIO.Bots.ClientLib.BotsServiceReference {
-    using System.Runtime.Serialization;
     
-    
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="FactoryTypeIDs", Namespace="http://schemas.datacontract.org/2004/07/PIO.Models")]
-    public enum FactoryTypeIDs : int {
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        Forest = 0,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        Stockpile = 1,
-        
-        [System.Runtime.Serialization.EnumMemberAttribute()]
-        Sawmill = 2,
-    }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="BotsServiceReference.IBotsService")]
@@ -97,6 +82,12 @@ namespace PIO.Bots.ClientLib.BotsServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/CreateProduceOrder", ReplyAction="http://tempuri.org/IBotsService/CreateProduceOrderResponse")]
         System.Threading.Tasks.Task<PIO.Bots.Models.ProduceOrder> CreateProduceOrderAsync(int PlanetID, int FactoryID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/CreateBuildFactoryOrder", ReplyAction="http://tempuri.org/IBotsService/CreateBuildFactoryOrderResponse")]
+        PIO.Bots.Models.BuildFactoryOrder CreateBuildFactoryOrder(int PlanetID, PIO.Models.FactoryTypeIDs FactoryTypeID, int X, int Y);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/CreateBuildFactoryOrder", ReplyAction="http://tempuri.org/IBotsService/CreateBuildFactoryOrderResponse")]
+        System.Threading.Tasks.Task<PIO.Bots.Models.BuildFactoryOrder> CreateBuildFactoryOrderAsync(int PlanetID, PIO.Models.FactoryTypeIDs FactoryTypeID, int X, int Y);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/CreateBot", ReplyAction="http://tempuri.org/IBotsService/CreateBotResponse")]
         PIO.Bots.Models.Bot CreateBot(int WorkerID);
@@ -218,6 +209,14 @@ namespace PIO.Bots.ClientLib.BotsServiceReference {
         
         public System.Threading.Tasks.Task<PIO.Bots.Models.ProduceOrder> CreateProduceOrderAsync(int PlanetID, int FactoryID) {
             return base.Channel.CreateProduceOrderAsync(PlanetID, FactoryID);
+        }
+        
+        public PIO.Bots.Models.BuildFactoryOrder CreateBuildFactoryOrder(int PlanetID, PIO.Models.FactoryTypeIDs FactoryTypeID, int X, int Y) {
+            return base.Channel.CreateBuildFactoryOrder(PlanetID, FactoryTypeID, X, Y);
+        }
+        
+        public System.Threading.Tasks.Task<PIO.Bots.Models.BuildFactoryOrder> CreateBuildFactoryOrderAsync(int PlanetID, PIO.Models.FactoryTypeIDs FactoryTypeID, int X, int Y) {
+            return base.Channel.CreateBuildFactoryOrderAsync(PlanetID, FactoryTypeID, X, Y);
         }
         
         public PIO.Bots.Models.Bot CreateBot(int WorkerID) {

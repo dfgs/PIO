@@ -54,6 +54,7 @@
     <Compile Include="Bots\DataCmdlet\GetBuildFactoryOrdersCmdlet.cs" />
     <Compile Include="Bots\DataCmdlet\GetProduceOrdersCmdlet.cs" />
     <Compile Include="Bots\DataCmdlet\GetOrdersCmdlet.cs" />
+    <Compile Include="Bots\FunctionalCmdlet\NewBuildFactoryOrderCmdLet.cs" />
     <Compile Include="Bots\FunctionalCmdlet\NewProduceOrderCmdLet.cs" />
     <Compile Include="PIO\DataCmdlet\FindStackCmdlet.cs" />
     <Compile Include="PIO\DataCmdlet\GetCellCmdlet.cs" />
