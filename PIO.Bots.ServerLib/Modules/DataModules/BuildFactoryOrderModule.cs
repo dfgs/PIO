@@ -32,7 +32,7 @@ namespace PIO.Bots.ServerLib.Modules
 			LogEnter();
 			
 			Log(LogLevels.Information, $"Querying BuildFactoryOrder table (BuildFactoryOrderID={BuildFactoryOrderID})");
-			query=new Select(OrderTable.OrderID, OrderTable.PlanetID, OrderTable.BotID, BuildFactoryOrderTable.BuildFactoryOrderID, BuildFactoryOrderTable.OrderID, BuildFactoryOrderTable.FactoryTypeID, BuildFactoryOrderTable.X, BuildFactoryOrderTable.Y)
+			query=new Select(OrderTable.OrderID,  OrderTable.BotID, BuildFactoryOrderTable.BuildFactoryOrderID, BuildFactoryOrderTable.OrderID, BuildFactoryOrderTable.FactoryTypeID, BuildFactoryOrderTable.PlanetID, BuildFactoryOrderTable.X, BuildFactoryOrderTable.Y)
 				.From(BotsDB.BuildFactoryOrderTable.Join(BotsDB.OrderTable.On(BuildFactoryOrderTable.OrderID,OrderTable.OrderID)))
 				.Where(BuildFactoryOrderTable.BuildFactoryOrderID.IsEqualTo(BuildFactoryOrderID));
 			return TrySelectFirst<BuildFactoryOrderTable, BuildFactoryOrder>(query).OrThrow<PIODataException>("Failed to query");
@@ -45,7 +45,7 @@ namespace PIO.Bots.ServerLib.Modules
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying BuildFactoryOrder table");
-			query = new Select(OrderTable.OrderID, OrderTable.PlanetID, OrderTable.BotID, BuildFactoryOrderTable.BuildFactoryOrderID, BuildFactoryOrderTable.OrderID, BuildFactoryOrderTable.FactoryTypeID, BuildFactoryOrderTable.X, BuildFactoryOrderTable.Y)
+			query = new Select(OrderTable.OrderID, OrderTable.BotID, BuildFactoryOrderTable.BuildFactoryOrderID, BuildFactoryOrderTable.OrderID, BuildFactoryOrderTable.FactoryTypeID, BuildFactoryOrderTable.PlanetID, BuildFactoryOrderTable.X, BuildFactoryOrderTable.Y)
 								.From(BotsDB.BuildFactoryOrderTable.Join(BotsDB.OrderTable.On(BuildFactoryOrderTable.OrderID, OrderTable.OrderID)));
 			return TrySelectMany<BuildFactoryOrderTable, BuildFactoryOrder>(query).OrThrow<PIODataException>("Failed to query");
 		}
@@ -55,9 +55,9 @@ namespace PIO.Bots.ServerLib.Modules
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying BuildFactoryOrder table");
-			query = new Select(OrderTable.OrderID, OrderTable.PlanetID, OrderTable.BotID,  BuildFactoryOrderTable.BuildFactoryOrderID, BuildFactoryOrderTable.OrderID, BuildFactoryOrderTable.FactoryTypeID, BuildFactoryOrderTable.X, BuildFactoryOrderTable.Y)
+			query = new Select(OrderTable.OrderID, OrderTable.BotID, BuildFactoryOrderTable.BuildFactoryOrderID, BuildFactoryOrderTable.OrderID, BuildFactoryOrderTable.FactoryTypeID, BuildFactoryOrderTable.PlanetID, BuildFactoryOrderTable.X, BuildFactoryOrderTable.Y)
 								.From(BotsDB.BuildFactoryOrderTable.Join(BotsDB.OrderTable.On(BuildFactoryOrderTable.OrderID, OrderTable.OrderID)))
-								.Where(OrderTable.PlanetID.IsEqualTo(PlanetID).And(BuildFactoryOrderTable.X.IsEqualTo(X)).And(BuildFactoryOrderTable.Y.IsEqualTo(Y)));
+								.Where(BuildFactoryOrderTable.PlanetID.IsEqualTo(PlanetID).And(BuildFactoryOrderTable.X.IsEqualTo(X)).And(BuildFactoryOrderTable.Y.IsEqualTo(Y)));
 			return TrySelectMany<BuildFactoryOrderTable, BuildFactoryOrder>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
@@ -68,9 +68,9 @@ namespace PIO.Bots.ServerLib.Modules
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying BuildFactoryOrder table");
-			query = new Select(OrderTable.OrderID, OrderTable.PlanetID, OrderTable.BotID, BuildFactoryOrderTable.BuildFactoryOrderID, BuildFactoryOrderTable.OrderID, BuildFactoryOrderTable.FactoryTypeID, BuildFactoryOrderTable.X, BuildFactoryOrderTable.Y)
+			query = new Select(OrderTable.OrderID, OrderTable.BotID, BuildFactoryOrderTable.BuildFactoryOrderID, BuildFactoryOrderTable.OrderID, BuildFactoryOrderTable.FactoryTypeID, BuildFactoryOrderTable.PlanetID, BuildFactoryOrderTable.X, BuildFactoryOrderTable.Y)
 				.From(BotsDB.BuildFactoryOrderTable.Join(BotsDB.OrderTable.On(BuildFactoryOrderTable.OrderID, OrderTable.OrderID)))
-				.Where(OrderTable.PlanetID.IsEqualTo(PlanetID).And( OrderTable.BotID.IsNull()));
+				.Where(BuildFactoryOrderTable.PlanetID.IsEqualTo(PlanetID).And( OrderTable.BotID.IsNull()));
 			return TrySelectMany<BuildFactoryOrderTable, BuildFactoryOrder>(query).OrThrow<PIODataException>("Failed to query");
 		}
 		
@@ -85,17 +85,17 @@ namespace PIO.Bots.ServerLib.Modules
 
 			item = new BuildFactoryOrder() { PlanetID = PlanetID, FactoryTypeID = FactoryTypeID,X=X,Y=Y };
 
-			Log(LogLevels.Information, $"Inserting into Order table (PlanetID={item.PlanetID})");
+			Log(LogLevels.Information, $"Inserting into Order table ()");
 			query = new Insert().Into(BotsDB.OrderTable)
-				.Set(OrderTable.PlanetID, item.PlanetID)
 				.Set(OrderTable.BotID, item.BotID);
 			result = Try(query).OrThrow<PIODataException>("Failed to insert");
 
 			item.OrderID = Convert.ToInt32(result);
 
-			Log(LogLevels.Information, $"Inserting into BuildFactoryOrder table (OrderID={item.OrderID}, FactoryTypeID={FactoryTypeID}, X={X}, Y={Y})");
+			Log(LogLevels.Information, $"Inserting into BuildFactoryOrder table (OrderID={item.OrderID}, FactoryTypeID={FactoryTypeID},PlanetID={item.PlanetID}, X={X}, Y={Y})");
 			query = new Insert().Into(BotsDB.BuildFactoryOrderTable)
 					.Set(BuildFactoryOrderTable.OrderID, item.OrderID)
+					.Set(BuildFactoryOrderTable.PlanetID, item.PlanetID)
 					.Set(BuildFactoryOrderTable.X, item.X)
 					.Set(BuildFactoryOrderTable.Y, item.Y)
 					.Set(BuildFactoryOrderTable.FactoryTypeID, item.FactoryTypeID);

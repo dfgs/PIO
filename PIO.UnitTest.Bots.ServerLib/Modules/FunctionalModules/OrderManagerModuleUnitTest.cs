@@ -189,7 +189,33 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			Assert.AreEqual(0, counter);
 		}
 
+		[TestMethod]
+		public void ShouldNotCreateProduceOrderIfAlreadyExists()
+		{
+			ClientLib.PIOServiceReference.IPIOService client;
+			IOrderModule orderModule;
+			IProduceOrderModule produceOrderModule;
+			OrderManagerModule module;
+			MemoryLogger logger;
+			int counter = 0;
 
+			logger = new MemoryLogger();
+
+			orderModule = Substitute.For<IOrderModule>();
+			//orderModule.CreateOrder(Arg.Any<int>()).Returns(new Order() { OrderID = 1 });
+			produceOrderModule = Substitute.For<IProduceOrderModule>();
+			produceOrderModule.CreateProduceOrder(Arg.Any<int>(), Arg.Any<int>()).Returns(new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, FactoryID = 1 });
+			produceOrderModule.When((del) => del.CreateProduceOrder(Arg.Any<int>(), Arg.Any<int>())).Do((del) => counter++);
+			produceOrderModule.GetProduceOrders(Arg.Any<int>()).Returns(new ProduceOrder[] { new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, FactoryID = 1 } });
+
+			client = Substitute.For<PIO.ClientLib.PIOServiceReference.IPIOService>();
+			client.GetFactory(Arg.Any<int>()).Returns(new Factory() { PlanetID = 2 });
+
+			module = new OrderManagerModule(logger, client, orderModule, produceOrderModule, null, 10);
+			Assert.ThrowsException<PIOInvalidOperationException>(() => module.CreateProduceOrder(1, 1));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Warning) && (item.ComponentName == module.ModuleName)));
+			Assert.AreEqual(0, counter);
+		}
 
 
 
@@ -278,6 +304,32 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			Assert.AreEqual(0, counter);
 		}
 
+		[TestMethod]
+		public void ShouldNotCreateBuildFactoryOrderIfAlreadyExists()
+		{
+			ClientLib.PIOServiceReference.IPIOService client;
+			IOrderModule orderModule;
+			IBuildFactoryOrderModule buildFactoryOrderModule;
+			OrderManagerModule module;
+			MemoryLogger logger;
+			int counter = 0;
+
+			logger = new MemoryLogger();
+
+			orderModule = Substitute.For<IOrderModule>();
+			//orderModule.CreateOrder(Arg.Any<int>()).Returns(new Order() { OrderID = 1 });
+			buildFactoryOrderModule = Substitute.For<IBuildFactoryOrderModule>();
+			buildFactoryOrderModule.CreateBuildFactoryOrder(Arg.Any<int>(), Arg.Any<FactoryTypeIDs>(), Arg.Any<int>(), Arg.Any<int>()).Returns(new BuildFactoryOrder() { OrderID = 1, BuildFactoryOrderID = 1, FactoryTypeID = FactoryTypeIDs.Forest });
+			buildFactoryOrderModule.When((del) => del.CreateBuildFactoryOrder(Arg.Any<int>(), Arg.Any<FactoryTypeIDs>(), Arg.Any<int>(), Arg.Any<int>())).Do((del) => counter++);
+			buildFactoryOrderModule.GetBuildFactoryOrders(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<int>()).Returns(new BuildFactoryOrder[] { new BuildFactoryOrder() { OrderID = 1, BuildFactoryOrderID = 1, FactoryTypeID = FactoryTypeIDs.Forest } });
+			client = Substitute.For<PIO.ClientLib.PIOServiceReference.IPIOService>();
+			client.GetFactoryAtPos(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<int>()).Returns(new Factory() { PlanetID = 2 });
+
+			module = new OrderManagerModule(logger, client, orderModule, null, buildFactoryOrderModule, 10);
+			Assert.ThrowsException<PIOInvalidOperationException>(() => module.CreateBuildFactoryOrder(1, FactoryTypeIDs.Forest, 1, 1));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Warning) && (item.ComponentName == module.ModuleName)));
+			Assert.AreEqual(0, counter);
+		}
 
 
 

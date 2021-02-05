@@ -32,7 +32,7 @@ namespace PIO.Bots.ServerLib.Modules
 			LogEnter();
 			
 			Log(LogLevels.Information, $"Querying Order table (OrderID={OrderID})");
-			query=new Select(OrderTable.OrderID, OrderTable.PlanetID, OrderTable.BotID).From(BotsDB.OrderTable).Where(OrderTable.OrderID.IsEqualTo(OrderID));
+			query=new Select(OrderTable.OrderID,  OrderTable.BotID).From(BotsDB.OrderTable).Where(OrderTable.OrderID.IsEqualTo(OrderID));
 			return TrySelectFirst<OrderTable, Order>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
@@ -45,7 +45,7 @@ namespace PIO.Bots.ServerLib.Modules
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying Order table");
-			query=new Select(OrderTable.OrderID, OrderTable.PlanetID, OrderTable.BotID).From(BotsDB.OrderTable);
+			query=new Select(OrderTable.OrderID, OrderTable.BotID).From(BotsDB.OrderTable);
 			return TrySelectMany<OrderTable, Order>(query).OrThrow<PIODataException>("Failed to query");
 		}
 

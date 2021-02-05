@@ -64,7 +64,7 @@ namespace PIO.Console.ViewModels
 
 		private bool CreateProduceOrderCommandCanExecute(object arg)
 		{
-			return (Model != null) && (ProduceOrders.Count==0);
+			return (Model != null);// && (ProduceOrders.Count==0);
 		}
 		private async void CreateProduceOrderCommandExecute(object obj)
 		{

@@ -13,6 +13,8 @@ namespace PIO.Bots.ServerLib.Tables
 	{
 		public static readonly Column<int> BuildFactoryOrderID = new Column<int>() { Constraint = NetORMLib.ColumnConstraints.PrimaryKey, IsIdentity = true };
 		public static readonly Column<int> OrderID = new Column<int>();
+		// planet ID cannot be part of order table because of constraint
+		public static readonly Column<int> PlanetID = new Column<int>();
 		public static readonly Column<int> X = new Column<int>();
 		public static readonly Column<int> Y = new Column<int>();
 		public static readonly Column<FactoryTypeIDs> FactoryTypeID = new Column<FactoryTypeIDs>();

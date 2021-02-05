@@ -57,20 +57,29 @@ namespace PIO.Bots.ServerLib.Modules
 
 
 
-		public ProduceOrder CreateProduceOrder(int PlanetID,int FactoryID)
+		public ProduceOrder CreateProduceOrder(int PlanetID, int FactoryID)
 		{
+			ProduceOrder[] existingOrders;
 			ProduceOrder produceOrder;
 			Factory factory;
 
 			LogEnter();
 
-			factory=AssertExists(()=> client.GetFactory(FactoryID),$"FactoryID=({FactoryID})");
+			Log(LogLevels.Information, $"Checking if factory is on planet (PlanetID={PlanetID}, FactoryID={FactoryID})");
+			factory = AssertExists(()=> client.GetFactory(FactoryID),$"FactoryID=({FactoryID})");
 			if (factory.PlanetID!=PlanetID)
 			{
 				Log(LogLevels.Warning, $"Factory is not in the same planet (FactoryID={FactoryID})");
 				throw new PIOInvalidOperationException($"Factory is not in the same planet (FactoryID={FactoryID})", null, ID, ModuleName, "CreateProduceOrder");
 			}
 
+			Log(LogLevels.Information, $"Checking if order already exists (FactoryID={FactoryID})");
+			existingOrders = Try(() => produceOrderModule.GetProduceOrders(FactoryID)).OrThrow<PIOInternalErrorException>("Failed to get ProduceOrder");
+			if ((existingOrders != null) && (existingOrders.Length>0))
+			{
+				Log(LogLevels.Warning, $"Produce order already exists for factory (FactoryID={FactoryID})");
+				throw new PIOInvalidOperationException($"Produce order already exists for factory (FactoryID={FactoryID})", null, ID, ModuleName, "CreateProduceOrder");
+			}
 
 			Log(LogLevels.Information, $"Creating ProduceOrder");
 			produceOrder=Try(() => produceOrderModule.CreateProduceOrder(PlanetID,FactoryID)).OrThrow<PIOInternalErrorException>("Failed to create ProduceOrder");
@@ -81,6 +90,7 @@ namespace PIO.Bots.ServerLib.Modules
 
 		public BuildFactoryOrder CreateBuildFactoryOrder(int PlanetID, FactoryTypeIDs FactoryTypeID,int X,int Y)
 		{
+			BuildFactoryOrder[] existingOrders;
 			BuildFactoryOrder buildFactoryOrder;
 			Factory factory;
 
@@ -93,6 +103,15 @@ namespace PIO.Bots.ServerLib.Modules
 				Log(LogLevels.Warning, $"Position is not free (PlanetID={PlanetID}, X={X}, Y={Y})");
 				throw new PIOInvalidOperationException($"Position is not free (PlanetID={PlanetID}, X={X}, Y={Y})", null, ID, ModuleName, "CreateBuildFactoryOrder");
 			}
+
+			Log(LogLevels.Information, $"Checking if order already exists (PlanetID={PlanetID}, X={X}, Y={Y})");
+			existingOrders = Try(() => buildFactoryOrderModule.GetBuildFactoryOrders(PlanetID,X,Y)).OrThrow<PIOInternalErrorException>("Failed to get ProduceOrder");
+			if ((existingOrders != null) && (existingOrders.Length > 0))
+			{
+				Log(LogLevels.Warning, $"BuildFactory order already exists (PlanetID={PlanetID}, X={X}, Y={Y})");
+				throw new PIOInvalidOperationException($"BuildFactory order already exists (PlanetID={PlanetID}, X={X}, Y={Y})", null, ID, ModuleName, "CreateBuildFactoryOrder");
+			}
+
 
 
 			Log(LogLevels.Information, $"Creating BuildFactoryOrder");
