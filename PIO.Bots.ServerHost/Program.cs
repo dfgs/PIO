@@ -83,7 +83,7 @@ namespace PIO.Bots.ServerHost
 			produceOrderModule = new ProduceOrderModule(logger, database);
 			buildFactoryOrderModule = new BuildFactoryOrderModule(logger, database);
 
-			orderManagerModule = new OrderManagerModule(logger,client, orderModule, produceOrderModule,10);
+			orderManagerModule = new OrderManagerModule(logger,client, orderModule, produceOrderModule, buildFactoryOrderModule, 10);
 
 			botSchedulerModule = new BotSchedulerModule(logger, client, botModule, orderManagerModule, 5);
 			botSchedulerModule.Start();

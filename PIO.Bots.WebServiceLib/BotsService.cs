@@ -2,6 +2,7 @@
 using ModuleLib;
 using PIO.Bots.Models;
 using PIO.Bots.Models.Modules;
+using PIO.Models;
 using PIO.ModulesLib.Exceptions;
 using System;
 using System.Collections.Generic;
@@ -100,6 +101,11 @@ namespace PIO.Bots.WebServiceLib
 		{
 			LogEnter();
 			return Try(() => orderManagerModule.CreateProduceOrder(PlanetID,FactoryID)).OrThrow(GenerateFaultException);
+		}
+		public BuildFactoryOrder CreateBuildFactoryOrder(int PlanetID, FactoryTypeIDs FactoryTypeID, int X, int Y)
+		{
+			LogEnter();
+			return Try(() => orderManagerModule.CreateBuildFactoryOrder(PlanetID, FactoryTypeID,X,Y)).OrThrow(GenerateFaultException);
 		}
 
 		public Bot CreateBot(int WorkerID)

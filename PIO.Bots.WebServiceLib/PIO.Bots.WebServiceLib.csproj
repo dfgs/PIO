@@ -58,6 +58,10 @@
       <Project>{FDF52966-F697-4E48-A055-3175A8E8BB6B}</Project>
       <Name>PIO.Bots.Models</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PIO.Models\PIO.Models.csproj">
+      <Project>{7883d2f9-f04e-467a-a0a6-61158dca5956}</Project>
+      <Name>PIO.Models</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PIO.ModulesLib\PIO.ModulesLib.csproj">
       <Project>{83F02FCD-3EBD-4D90-911A-9A1F684D343C}</Project>
       <Name>PIO.ModulesLib</Name>

@@ -1,4 +1,5 @@
 ﻿using PIO.Bots.Models;
+using PIO.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,6 +40,8 @@ namespace PIO.Bots.Models
 		#region functional
 		[OperationContract]
 		ProduceOrder CreateProduceOrder(int PlanetID, int FactoryID);
+		[OperationContract]
+		BuildFactoryOrder CreateBuildFactoryOrder(int PlanetID, FactoryTypeIDs FactoryTypeID,int X,int Y);
 		[OperationContract]
 		Bot CreateBot(int WorkerID);
 		#endregion

@@ -26,21 +26,17 @@ namespace PIO.Bots.ServerLib.Modules
 		private PIO.ClientLib.PIOServiceReference.IPIOService client;
 		private IOrderModule orderModule;
 		private IProduceOrderModule produceOrderModule;
+		private IBuildFactoryOrderModule buildFactoryOrderModule;
 
 
-		private List<ProduceOrder> produceOrders;
-		public int ProduceOrderCount
-		{
-			get { return produceOrders.Count;}
-		}
+		
 
 
-		public OrderManagerModule(ILogger Logger, PIO.ClientLib.PIOServiceReference.IPIOService Client, IOrderModule OrderModule,IProduceOrderModule ProduceOrderModule,int IdleDuration) : base(Logger)
+		public OrderManagerModule(ILogger Logger, PIO.ClientLib.PIOServiceReference.IPIOService Client, IOrderModule OrderModule,IProduceOrderModule ProduceOrderModule, IBuildFactoryOrderModule BuildFactoryOrderModule, int IdleDuration) : base(Logger)
 		{
 			this.client = Client;this.idleDuration = IdleDuration;
-			this.orderModule = OrderModule;this.produceOrderModule = ProduceOrderModule;
+			this.orderModule = OrderModule;this.produceOrderModule = ProduceOrderModule;this.buildFactoryOrderModule = BuildFactoryOrderModule;
 
-			produceOrders = new List<ProduceOrder>();
 		}
 
 		public void UnassignAll(int BotID)
@@ -73,12 +69,34 @@ namespace PIO.Bots.ServerLib.Modules
 			Log(LogLevels.Information, $"Creating ProduceOrder");
 			produceOrder=Try(() => produceOrderModule.CreateProduceOrder(PlanetID,FactoryID)).OrThrow<PIOInternalErrorException>("Failed to create ProduceOrder");
 
-			produceOrders.Add(produceOrder);
 
 			return produceOrder;
 		}
 
-		
+		public BuildFactoryOrder CreateBuildFactoryOrder(int PlanetID, FactoryTypeIDs FactoryTypeID,int X,int Y)
+		{
+			BuildFactoryOrder buildFactoryOrder;
+			Factory factory;
+
+			LogEnter();
+
+			Log(LogLevels.Information, $"Checking if position is free");
+			factory = Try(() => client.GetFactoryAtPos(PlanetID, X, Y)).OrThrow<PIOInternalErrorException>("Failed to check if position is free");
+			if (factory != null)
+			{
+				Log(LogLevels.Warning, $"Position is not free (PlanetID={PlanetID}, X={X}, Y={Y})");
+				throw new PIOInvalidOperationException($"Position is not free (PlanetID={PlanetID}, X={X}, Y={Y})", null, ID, ModuleName, "CreateBuildFactoryOrder");
+			}
+
+
+			Log(LogLevels.Information, $"Creating BuildFactoryOrder");
+			buildFactoryOrder = Try(() => buildFactoryOrderModule.CreateBuildFactoryOrder(PlanetID, FactoryTypeID,X,Y)).OrThrow<PIOInternalErrorException>("Failed to create BuildFactoryOrder");
+
+
+			return buildFactoryOrder;
+		}
+
+
 		public Task CreateTaskFromProduceOrder(Worker Worker, ProduceOrder ProduceOrder)
 		{
 			bool result;
