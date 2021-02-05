@@ -53,7 +53,7 @@ namespace PIO.Console.ViewModels
 
 		private bool CreateBuildFactoryOrderCommandCanExecute(object arg)
 		{
-			return (Model != null);//&& (BuildFactoryOrders.Count == 0);
+			return (Model != null)&& (BuildFactoryOrders.Count == 0);
 		}
 		private async void CreateBuildFactoryOrderCommandExecute(object obj)
 		{

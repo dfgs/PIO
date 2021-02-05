@@ -390,6 +390,7 @@ namespace PIO.UnitTest.Bots.WebServiceLib
 			Assert.IsNotNull(result);
 			Assert.AreEqual(1, result.BotID);
 		}
+		
 		[TestMethod]
 		public void ShouldNotCreateBotAndLogError()
 		{

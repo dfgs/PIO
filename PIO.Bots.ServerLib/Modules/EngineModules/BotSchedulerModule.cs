@@ -59,6 +59,13 @@ namespace PIO.Bots.ServerLib.Modules
 			Bot item;
 
 			LogEnter();
+			Log(LogLevels.Information, $"Checking if bot exists");
+			item = Try(() => botModule.GetBotForWorker(WorkerID)).OrThrow<PIOInvalidOperationException>("Failed to get Bot");
+			if (item!=null)
+			{
+				Log(LogLevels.Warning, $"Bot already exists (WorkerID={WorkerID})");
+				throw new PIOInvalidOperationException($"Bot already exists (WorkerID={WorkerID})", null, ID, ModuleName, "CreateBot");
+			}
 
 			Log(LogLevels.Information, $"Trying to create bot");
 			item=Try(() => botModule.CreateBot(WorkerID)).OrThrow<PIOInvalidOperationException>("Failed to create Bot");

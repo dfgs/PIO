@@ -36,6 +36,27 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			Assert.AreEqual(1, scheduler.Count);
 		}
 		[TestMethod]
+		public void ShouldNotCreateBotIfAlreadyExistsAndLogErrors()
+		{
+			MemoryLogger logger;
+			BotSchedulerModule scheduler;
+			IBotModule botModule;
+			IOrderManagerModule orderManagerModule;
+			PIO.ClientLib.PIOServiceReference.IPIOService client;
+
+			botModule = Substitute.For<IBotModule>();
+			botModule.CreateBot(Arg.Any<int>()).Returns((x) => new Bot() { BotID = 1, WorkerID = 1 });
+			botModule.GetBotForWorker(Arg.Any<int>()).Returns((x)=> new Bot() { BotID = 1, WorkerID = 1 });
+			orderManagerModule = Substitute.For<IOrderManagerModule>();
+			client = Substitute.For<PIO.ClientLib.PIOServiceReference.IPIOService>();
+
+			logger = new MemoryLogger();
+			scheduler = new BotSchedulerModule(logger, client, botModule, orderManagerModule, 1);
+			Assert.ThrowsException<PIOInvalidOperationException>(() => scheduler.CreateBot(1));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Warning) && (item.ComponentName == scheduler.ModuleName)));
+		}
+
+		[TestMethod]
 		public void ShouldNotCreateBotAndLogErrors()
 		{
 			MemoryLogger logger;
