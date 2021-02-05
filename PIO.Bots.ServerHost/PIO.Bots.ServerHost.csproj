@@ -96,10 +96,6 @@
       <Project>{384BF8A9-3D83-4455-9D84-9F79F290110E}</Project>
       <Name>PIO.Bots.WebServiceLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PIO.BotsLib\PIO.BotsLib.csproj">
-      <Project>{78375324-208D-4ECB-84AD-079CA8939C51}</Project>
-      <Name>PIO.BotsLib</Name>
-    </ProjectReference>
     <ProjectReference Include="..\PIO.ClientLib\PIO.ClientLib.csproj">
       <Project>{F9A386F1-D923-4A58-9B0D-EF8F5411C11B}</Project>
       <Name>PIO.ClientLib</Name>

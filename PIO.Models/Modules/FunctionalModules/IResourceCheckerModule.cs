@@ -13,5 +13,7 @@ namespace PIO.Models.Modules
 	{
 		bool HasEnoughResourcesToProduce(int FactoryID);
 		ResourceTypeIDs[] GetMissingResourcesToProduce(int FactoryID);
+		bool HasEnoughResourcesToBuild(int FactoryID);
+		ResourceTypeIDs[] GetMissingResourcesToBuild(int FactoryID);
 	}
 }

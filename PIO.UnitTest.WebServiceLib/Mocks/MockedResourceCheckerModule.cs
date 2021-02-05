@@ -33,5 +33,17 @@ namespace PIO.UnitTest.WebServiceLib.Mocks
 			return result;
 		}
 
+		public ResourceTypeIDs[] GetMissingResourcesToBuild(int FactoryID)
+		{
+			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
+			if (result) return new ResourceTypeIDs[] { ResourceTypeIDs.Coal };
+			else return new ResourceTypeIDs[] { };
+		}
+
+		public bool HasEnoughResourcesToBuild(int FactoryID)
+		{
+			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
+			return result;
+		}
 	}
 }

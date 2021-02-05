@@ -26,6 +26,7 @@
     <MetadataFile FileName="service2.xsd" MetadataType="Schema" ID="1491e1ff-4bb2-4284-95fd-795df98bab8e" SourceId="1" SourceUrl="http://localhost:8734/PIO/Bots/Service/mex" />
     <MetadataFile FileName="service21.xsd" MetadataType="Schema" ID="d1d8d1fb-ef3b-43e6-9422-b8ba48c54987" SourceId="1" SourceUrl="http://localhost:8734/PIO/Bots/Service/mex" />
     <MetadataFile FileName="PIO.Bots.Models1.xsd" MetadataType="Schema" ID="f159a2ad-acb9-4af4-8bff-7d76d4d56ba7" SourceId="1" SourceUrl="http://localhost:8734/PIO/Bots/Service/mex" />
+    <MetadataFile FileName="PIO.Models.xsd" MetadataType="Schema" ID="e6a82ac2-d70b-450c-b04b-fa19c0ad877d" SourceId="1" SourceUrl="http://localhost:8734/PIO/Bots/Service/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

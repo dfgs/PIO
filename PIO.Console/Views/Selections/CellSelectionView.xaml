@@ -5,10 +5,32 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PIO.Console.Views.Selections"
              mc:Ignorable="d" 
-             d:DesignHeight="45" d:DesignWidth="800">
-	<StackPanel>
-		<TextBlock Text="Cell:" FontWeight="Bold"/>
-		<TextBlock Text="{Binding X,FallbackValue=0}"/>
-		<TextBlock Text="{Binding Y,FallbackValue=0}"/>
-	</StackPanel>
+             d:DesignHeight="100" d:DesignWidth="800">
+	<Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="1*"/>
+			<ColumnDefinition Width="5"/>
+			<ColumnDefinition Width="150"/>
+		</Grid.ColumnDefinitions>
+		<StackPanel Grid.Column="0">
+			<TextBlock Text="Cell:" FontWeight="Bold"/>
+			<TextBlock Text="{Binding X,FallbackValue=0}"/>
+			<TextBlock Text="{Binding Y,FallbackValue=0}"/>
+			<TextBlock Text="Build factory orders:" FontWeight="Bold"/>
+			<ItemsControl ItemsSource="{Binding BuildFactoryOrders}">
+				<ItemsControl.ItemTemplate>
+					<DataTemplate>
+						<StackPanel Orientation="Horizontal">
+							<TextBlock Text="{Binding FactoryTypeID}"/>
+						</StackPanel>
+					</DataTemplate>
+				</ItemsControl.ItemTemplate>
+			</ItemsControl>
+		</StackPanel>
+		<GridSplitter Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+		<StackPanel Grid.Column="2">
+			<Button Content="New build factory order" Command="{Binding CreateBuildFactoryOrderCommand}"/>
+			<Button Content="New xxx"/>
+		</StackPanel>
+	</Grid>
 </UserControl>

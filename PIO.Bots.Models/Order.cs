@@ -13,6 +13,8 @@ namespace PIO.Bots.Models
 		[DataMember]
 		public int OrderID { get; set; }
 		[DataMember]
+		public int PlanetID { get; set; }
+		[DataMember]
 		public int? BotID { get; set; }
 	}
 

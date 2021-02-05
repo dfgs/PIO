@@ -32,7 +32,7 @@
 			<TextBlock Text="Produce orders:" FontWeight="Bold"/>
 			<ItemsControl ItemsSource="{Binding ProduceOrders}">
 				<ItemsControl.ItemTemplate>
-					<DataTemplate DataType="{x:Type viewModels:StackViewModel}">
+					<DataTemplate>
 						<StackPanel Orientation="Horizontal">
 							<TextBlock Text="{Binding FactoryID}"/>
 						</StackPanel>

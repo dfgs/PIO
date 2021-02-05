@@ -9,23 +9,34 @@ namespace PIO.Bots.Models.Modules
 {
 	public interface IOrderManagerModule : IFunctionalModule
 	{
-		int ProduceOrderCount
-		{
-			get;
-		}
+		
 
 		void UnassignAll(int BotID);
 		void Assign(int OrderID,int BotID);
 
+
+
+
 		ProduceOrder[] GetWaitingProduceOrders(int PlanetID);
-		
+		BuildFactoryOrder[] GetWaitingBuildFactoryOrders(int PlanetID);
+
+
+
+
+
+
 		Task CreateTask(int BotID,int WorkerID);
 
 		Task CreateTaskFromProduceOrder(Worker Worker, ProduceOrder ProduceOrder);
+		Task CreateTaskFromBuildFactoryOrder(Worker Worker, BuildFactoryOrder BuildFactoryOrder);
 
 
 
-		ProduceOrder CreateProduceOrder(int PlanetID,int FactoryID);
-		
+
+
+
+		ProduceOrder CreateProduceOrder(int PlanetID, int FactoryID);
+		BuildFactoryOrder CreateBuildFactoryOrder(int PlanetID, FactoryTypeIDs FactoryTypeID,int X,int Y);
+
 	}
 }

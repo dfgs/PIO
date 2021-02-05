@@ -275,7 +275,18 @@ namespace PIO.WebServiceLib
 			return Try(() => resourceCheckerModule.GetMissingResourcesToProduce(FactoryID)).OrThrow(GenerateFaultException);
 		}
 
-	
+		public bool HasEnoughResourcesToBuild(int FactoryID)
+		{
+			LogEnter();
+
+			return Try(() => resourceCheckerModule.HasEnoughResourcesToBuild(FactoryID)).OrThrow(GenerateFaultException);
+		}
+		public ResourceTypeIDs[] GetMissingResourcesToBuild(int FactoryID)
+		{
+			LogEnter();
+
+			return Try(() => resourceCheckerModule.GetMissingResourcesToBuild(FactoryID)).OrThrow(GenerateFaultException);
+		}
 
 		public bool WorkerIsInBuilding(int WorkerID, int BuildingID)
 		{

@@ -1,4 +1,5 @@
 ﻿using PIO.Bots.Models;
+using PIO.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,17 +25,27 @@ namespace PIO.Bots.Models
 		Order GetOrder(int OrderID);
 		[OperationContract]
 		Order[] GetOrders();
+		
 		[OperationContract]
 		ProduceOrder GetProduceOrder(int ProduceOrderID);
 		[OperationContract]
 		ProduceOrder[] GetProduceOrders();
 		[OperationContract]
 		ProduceOrder[] GetProduceOrdersForFactory(int FactoryID);
+		
+		[OperationContract]
+		BuildFactoryOrder GetBuildFactoryOrder(int BuildFactoryOrderID);
+		[OperationContract]
+		BuildFactoryOrder[] GetBuildFactoryOrders();
+		[OperationContract]
+		BuildFactoryOrder[] GetBuildFactoryOrdersAtPosition(int PlanetId,int X,int Y);
 		#endregion
 
 		#region functional
 		[OperationContract]
 		ProduceOrder CreateProduceOrder(int PlanetID, int FactoryID);
+		[OperationContract]
+		BuildFactoryOrder CreateBuildFactoryOrder(int PlanetID, FactoryTypeIDs FactoryTypeID,int X,int Y);
 		[OperationContract]
 		Bot CreateBot(int WorkerID);
 		[OperationContract]

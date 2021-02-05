@@ -86,7 +86,7 @@ namespace PIO.Console.ViewModels
 
 		private bool CreateBotCommandCanExecute(object arg)
 		{
-			return (Model != null) && (Bot == null);
+			return (Model != null)&& (Bot == null);
 		}
 		private async void CreateBotCommandExecute(object obj)
 		{

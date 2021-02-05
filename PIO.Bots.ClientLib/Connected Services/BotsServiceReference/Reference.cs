@@ -35,6 +35,7 @@ namespace PIO.Bots.ClientLib.BotsServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/GetOrder", ReplyAction="http://tempuri.org/IBotsService/GetOrderResponse")]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(PIO.Bots.Models.ProduceOrder))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(PIO.Bots.Models.BuildFactoryOrder))]
         PIO.Bots.Models.Order GetOrder(int OrderID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/GetOrder", ReplyAction="http://tempuri.org/IBotsService/GetOrderResponse")]
@@ -64,11 +65,35 @@ namespace PIO.Bots.ClientLib.BotsServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/GetProduceOrdersForFactory", ReplyAction="http://tempuri.org/IBotsService/GetProduceOrdersForFactoryResponse")]
         System.Threading.Tasks.Task<PIO.Bots.Models.ProduceOrder[]> GetProduceOrdersForFactoryAsync(int FactoryID);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/GetBuildFactoryOrder", ReplyAction="http://tempuri.org/IBotsService/GetBuildFactoryOrderResponse")]
+        PIO.Bots.Models.BuildFactoryOrder GetBuildFactoryOrder(int BuildFactoryOrderID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/GetBuildFactoryOrder", ReplyAction="http://tempuri.org/IBotsService/GetBuildFactoryOrderResponse")]
+        System.Threading.Tasks.Task<PIO.Bots.Models.BuildFactoryOrder> GetBuildFactoryOrderAsync(int BuildFactoryOrderID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/GetBuildFactoryOrders", ReplyAction="http://tempuri.org/IBotsService/GetBuildFactoryOrdersResponse")]
+        PIO.Bots.Models.BuildFactoryOrder[] GetBuildFactoryOrders();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/GetBuildFactoryOrders", ReplyAction="http://tempuri.org/IBotsService/GetBuildFactoryOrdersResponse")]
+        System.Threading.Tasks.Task<PIO.Bots.Models.BuildFactoryOrder[]> GetBuildFactoryOrdersAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/GetBuildFactoryOrdersAtPosition", ReplyAction="http://tempuri.org/IBotsService/GetBuildFactoryOrdersAtPositionResponse")]
+        PIO.Bots.Models.BuildFactoryOrder[] GetBuildFactoryOrdersAtPosition(int PlanetId, int X, int Y);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/GetBuildFactoryOrdersAtPosition", ReplyAction="http://tempuri.org/IBotsService/GetBuildFactoryOrdersAtPositionResponse")]
+        System.Threading.Tasks.Task<PIO.Bots.Models.BuildFactoryOrder[]> GetBuildFactoryOrdersAtPositionAsync(int PlanetId, int X, int Y);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/CreateProduceOrder", ReplyAction="http://tempuri.org/IBotsService/CreateProduceOrderResponse")]
         PIO.Bots.Models.ProduceOrder CreateProduceOrder(int PlanetID, int FactoryID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/CreateProduceOrder", ReplyAction="http://tempuri.org/IBotsService/CreateProduceOrderResponse")]
         System.Threading.Tasks.Task<PIO.Bots.Models.ProduceOrder> CreateProduceOrderAsync(int PlanetID, int FactoryID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/CreateBuildFactoryOrder", ReplyAction="http://tempuri.org/IBotsService/CreateBuildFactoryOrderResponse")]
+        PIO.Bots.Models.BuildFactoryOrder CreateBuildFactoryOrder(int PlanetID, PIO.Models.FactoryTypeIDs FactoryTypeID, int X, int Y);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/CreateBuildFactoryOrder", ReplyAction="http://tempuri.org/IBotsService/CreateBuildFactoryOrderResponse")]
+        System.Threading.Tasks.Task<PIO.Bots.Models.BuildFactoryOrder> CreateBuildFactoryOrderAsync(int PlanetID, PIO.Models.FactoryTypeIDs FactoryTypeID, int X, int Y);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/CreateBot", ReplyAction="http://tempuri.org/IBotsService/CreateBotResponse")]
         PIO.Bots.Models.Bot CreateBot(int WorkerID);
@@ -174,12 +199,44 @@ namespace PIO.Bots.ClientLib.BotsServiceReference {
             return base.Channel.GetProduceOrdersForFactoryAsync(FactoryID);
         }
         
+        public PIO.Bots.Models.BuildFactoryOrder GetBuildFactoryOrder(int BuildFactoryOrderID) {
+            return base.Channel.GetBuildFactoryOrder(BuildFactoryOrderID);
+        }
+        
+        public System.Threading.Tasks.Task<PIO.Bots.Models.BuildFactoryOrder> GetBuildFactoryOrderAsync(int BuildFactoryOrderID) {
+            return base.Channel.GetBuildFactoryOrderAsync(BuildFactoryOrderID);
+        }
+        
+        public PIO.Bots.Models.BuildFactoryOrder[] GetBuildFactoryOrders() {
+            return base.Channel.GetBuildFactoryOrders();
+        }
+        
+        public System.Threading.Tasks.Task<PIO.Bots.Models.BuildFactoryOrder[]> GetBuildFactoryOrdersAsync() {
+            return base.Channel.GetBuildFactoryOrdersAsync();
+        }
+        
+        public PIO.Bots.Models.BuildFactoryOrder[] GetBuildFactoryOrdersAtPosition(int PlanetId, int X, int Y) {
+            return base.Channel.GetBuildFactoryOrdersAtPosition(PlanetId, X, Y);
+        }
+        
+        public System.Threading.Tasks.Task<PIO.Bots.Models.BuildFactoryOrder[]> GetBuildFactoryOrdersAtPositionAsync(int PlanetId, int X, int Y) {
+            return base.Channel.GetBuildFactoryOrdersAtPositionAsync(PlanetId, X, Y);
+        }
+        
         public PIO.Bots.Models.ProduceOrder CreateProduceOrder(int PlanetID, int FactoryID) {
             return base.Channel.CreateProduceOrder(PlanetID, FactoryID);
         }
         
         public System.Threading.Tasks.Task<PIO.Bots.Models.ProduceOrder> CreateProduceOrderAsync(int PlanetID, int FactoryID) {
             return base.Channel.CreateProduceOrderAsync(PlanetID, FactoryID);
+        }
+        
+        public PIO.Bots.Models.BuildFactoryOrder CreateBuildFactoryOrder(int PlanetID, PIO.Models.FactoryTypeIDs FactoryTypeID, int X, int Y) {
+            return base.Channel.CreateBuildFactoryOrder(PlanetID, FactoryTypeID, X, Y);
+        }
+        
+        public System.Threading.Tasks.Task<PIO.Bots.Models.BuildFactoryOrder> CreateBuildFactoryOrderAsync(int PlanetID, PIO.Models.FactoryTypeIDs FactoryTypeID, int X, int Y) {
+            return base.Channel.CreateBuildFactoryOrderAsync(PlanetID, FactoryTypeID, X, Y);
         }
         
         public PIO.Bots.Models.Bot CreateBot(int WorkerID) {
