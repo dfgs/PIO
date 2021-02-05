@@ -64,7 +64,7 @@ namespace PIO.ServerLib.Modules
 		}
 
 
-		public Task CreateTask(TaskTypeIDs TaskTypeID, int WorkerID, int? X, int? Y,int? BuildingID, ResourceTypeIDs? ResourceTypeID, FactoryTypeIDs? FactoryTypeID, DateTime ETA)
+		public Task CreateTask(TaskTypeIDs TaskTypeID, int WorkerID, int X, int Y,int? BuildingID, ResourceTypeIDs? ResourceTypeID, FactoryTypeIDs? FactoryTypeID, DateTime ETA)
 		{
 			IInsert query;
 			Task item;

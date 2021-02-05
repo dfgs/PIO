@@ -20,9 +20,9 @@ namespace PIO.Models
 		[DataMember]
 		public DateTime ETA { get; set; }
 		[DataMember]
-		public int? X { get; set; }
+		public int X { get; set; }
 		[DataMember]
-		public int? Y { get; set; }
+		public int Y { get; set; }
 		[DataMember]
 		public int? BuildingID { get; set; }
 		/*[DataMember]

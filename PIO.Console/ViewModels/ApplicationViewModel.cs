@@ -89,10 +89,13 @@ namespace PIO.Console.ViewModels
 			switch (Task.TaskTypeID)
 			{
 				case Models.TaskTypeIDs.Take:
-					await Factories.RefreshFactory(Task.X.Value, Task.Y.Value);
+					await Factories.RefreshFactory(Task.X, Task.Y);
 					break;
 				case Models.TaskTypeIDs.Produce:
-					await Factories.RefreshFactory(Task.X.Value, Task.Y.Value);
+					await Factories.RefreshFactory(Task.X, Task.Y);
+					break;
+				case Models.TaskTypeIDs.Build:
+					await Factories.RefreshFactory(Task.X, Task.Y);
 					break;
 			}
 		}
@@ -107,15 +110,18 @@ namespace PIO.Console.ViewModels
 				case Models.TaskTypeIDs.MoveTo:
 					break;
 				case Models.TaskTypeIDs.Store:
-					await Factories.RefreshFactory(Task.X.Value, Task.Y.Value);
+					await Factories.RefreshFactory(Task.X, Task.Y);
 					break;
 				case Models.TaskTypeIDs.Produce:
-					await Factories.RefreshFactory(Task.X.Value, Task.Y.Value);
+					await Factories.RefreshFactory(Task.X, Task.Y);
+					break;
+				case Models.TaskTypeIDs.Build:
+					await Factories.RefreshFactory(Task.X, Task.Y);
 					break;
 				case Models.TaskTypeIDs.CreateBuilding:
 					try
 					{
-						factory = PIOClient.GetFactoryAtPos(1, Task.X.Value, Task.Y.Value);
+						factory = PIOClient.GetFactoryAtPos(1, Task.X, Task.Y);
 						if (factory!=null)
 						{
 							factoryViewModel = new FactoryViewModel(PIOClient, BotsClient);

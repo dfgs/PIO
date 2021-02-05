@@ -100,7 +100,7 @@ namespace PIO.ServerLib.Modules
 					Try(() => producerModule.EndProduce(Task.WorkerID)).OrAlert($"Failed to terminate task (TaskID={Task.TaskID})");
 					break;
 				case TaskTypeIDs.MoveTo:
-					Try(() => moverModule.EndMoveTo(Task.WorkerID, Task.X.Value,Task.Y.Value)).OrAlert($"Failed to terminate task (TaskID={Task.TaskID})");
+					Try(() => moverModule.EndMoveTo(Task.WorkerID, Task.X,Task.Y)).OrAlert($"Failed to terminate task (TaskID={Task.TaskID})");
 					break;
 				case TaskTypeIDs.Take:
 					Try(() => takerModule.EndTake(Task.WorkerID, Task.ResourceTypeID.Value)).OrAlert($"Failed to terminate task (TaskID={Task.TaskID})");

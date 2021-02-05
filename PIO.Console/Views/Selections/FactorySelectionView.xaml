@@ -15,8 +15,9 @@
 		</Grid.ColumnDefinitions>
 		<StackPanel Grid.Column="0">
 			<TextBlock Text="Factory:" FontWeight="Bold"/>
-			<TextBlock Text="{Binding X,FallbackValue=0}"/>
-			<TextBlock Text="{Binding Y,FallbackValue=0}"/>
+			<TextBlock Text="{Binding RemainingBuildSteps,FallbackValue=0,StringFormat=Remaining build steps: {0}}"/>
+			<TextBlock Text="{Binding X,FallbackValue=0,StringFormat=X: {0}}"/>
+			<TextBlock Text="{Binding Y,FallbackValue=0,StringFormat=Y: {0}}"/>
 			<TextBlock Text="Stacks:" FontWeight="Bold"/>
 			<ItemsControl ItemsSource="{Binding Stacks}">
 				<ItemsControl.ItemTemplate>

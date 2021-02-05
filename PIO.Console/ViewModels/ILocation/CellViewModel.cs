@@ -46,6 +46,7 @@ namespace PIO.Console.ViewModels
 
 		public CellViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient) : base(PIOClient, BotsClient)
 		{
+			CreateBuildFactoryOrderCommand = new ViewModelCommand(CreateBuildFactoryOrderCommandCanExecute, CreateBuildFactoryOrderCommandExecute);
 		}
 		private async void MoveToCommandExecute(object obj)
 		{
