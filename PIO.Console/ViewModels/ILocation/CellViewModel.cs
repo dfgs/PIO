@@ -50,7 +50,7 @@ namespace PIO.Console.ViewModels
 		private async void MoveToCommandExecute(object obj)
 		{
 			await System.Threading.Tasks.Task.Yield();
-		}*/
+		}//*/
 
 		private bool CreateBuildFactoryOrderCommandCanExecute(object arg)
 		{
