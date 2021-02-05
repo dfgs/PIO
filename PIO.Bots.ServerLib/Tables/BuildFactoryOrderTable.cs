@@ -1,0 +1,21 @@
+﻿using NetORMLib.Columns;
+using NetORMLib.Tables;
+using PIO.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace PIO.Bots.ServerLib.Tables
+{
+	public class BuildFactoryOrderTable:Table
+	{
+		public static readonly Column<int> BuildFactoryOrderID = new Column<int>() { Constraint = NetORMLib.ColumnConstraints.PrimaryKey, IsIdentity = true };
+		public static readonly Column<int> OrderID = new Column<int>();
+		public static readonly Column<int> X = new Column<int>();
+		public static readonly Column<int> Y = new Column<int>();
+		public static readonly Column<FactoryTypeIDs> FactoryTypeID = new Column<FactoryTypeIDs>();
+
+	}
+}

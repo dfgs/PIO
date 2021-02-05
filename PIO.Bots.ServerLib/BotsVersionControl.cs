@@ -32,12 +32,14 @@ namespace PIO.Bots.ServerLib
 			{
 				case 1:
 					yield return new CreateTable(BotsDB.BotTable, BotTable.BotID, BotTable.WorkerID);
-					yield return new CreateTable(BotsDB.OrderTable, OrderTable.OrderID, OrderTable.BotID);
+					yield return new CreateTable(BotsDB.OrderTable, OrderTable.OrderID, OrderTable.PlanetID, OrderTable.BotID);
 					yield return new CreateTable(BotsDB.ProduceOrderTable, ProduceOrderTable.ProduceOrderID, ProduceOrderTable.OrderID, ProduceOrderTable.FactoryID);
+					yield return new CreateTable(BotsDB.BuildFactoryOrderTable, BuildFactoryOrderTable.BuildFactoryOrderID, BuildFactoryOrderTable.OrderID, BuildFactoryOrderTable.FactoryTypeID, BuildFactoryOrderTable.X, BuildFactoryOrderTable.Y);
 					break;
 				case 2:
 					yield return new CreateRelation<int>(BotsDB.OrderTable, OrderTable.OrderID, ProduceOrderTable.OrderID);
-					
+					yield return new CreateRelation<int>(BotsDB.OrderTable, OrderTable.OrderID, BuildFactoryOrderTable.OrderID);
+
 					yield return new CreateRelation<int>(BotsDB.BotTable, BotTable.BotID, OrderTable.BotID);
 					break;
 				/*case 3:
