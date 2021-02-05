@@ -83,6 +83,8 @@
     <Compile Include="PIO\DataCmdlet\GetFactoriesCmdlet.cs" />
     <Compile Include="PIO\DataCmdlet\GetPlanetsCmdlet.cs" />
     <Compile Include="PIO\DataCmdlet\GetPlanetCmdlet.cs" />
+    <Compile Include="PIO\FunctionalCmdlet\AssertHasEnoughResourcesToBuildCmdlet.cs" />
+    <Compile Include="PIO\FunctionalCmdlet\GetMissingResourcesToBuildCmdlet.cs" />
     <Compile Include="PIO\FunctionalCmdlet\GetMissingResourcesToProduceCmdlet.cs" />
     <Compile Include="PIO\FunctionalCmdlet\AssertWorkerIsInBuildingCmdlet.cs" />
     <Compile Include="PIO\FunctionalCmdlet\NewFactoryCmdLet.cs" />

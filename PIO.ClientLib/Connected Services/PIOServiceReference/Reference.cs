@@ -207,6 +207,18 @@ namespace PIO.ClientLib.PIOServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetMissingResourcesToProduce", ReplyAction="http://tempuri.org/IPIOService/GetMissingResourcesToProduceResponse")]
         System.Threading.Tasks.Task<PIO.Models.ResourceTypeIDs[]> GetMissingResourcesToProduceAsync(int FactoryID);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/HasEnoughResourcesToBuild", ReplyAction="http://tempuri.org/IPIOService/HasEnoughResourcesToBuildResponse")]
+        bool HasEnoughResourcesToBuild(int FactoryID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/HasEnoughResourcesToBuild", ReplyAction="http://tempuri.org/IPIOService/HasEnoughResourcesToBuildResponse")]
+        System.Threading.Tasks.Task<bool> HasEnoughResourcesToBuildAsync(int FactoryID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetMissingResourcesToBuild", ReplyAction="http://tempuri.org/IPIOService/GetMissingResourcesToBuildResponse")]
+        PIO.Models.ResourceTypeIDs[] GetMissingResourcesToBuild(int FactoryID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetMissingResourcesToBuild", ReplyAction="http://tempuri.org/IPIOService/GetMissingResourcesToBuildResponse")]
+        System.Threading.Tasks.Task<PIO.Models.ResourceTypeIDs[]> GetMissingResourcesToBuildAsync(int FactoryID);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/WorkerIsInBuilding", ReplyAction="http://tempuri.org/IPIOService/WorkerIsInBuildingResponse")]
         bool WorkerIsInBuilding(int WorkerID, int BuildingID);
         
@@ -543,6 +555,22 @@ namespace PIO.ClientLib.PIOServiceReference {
         
         public System.Threading.Tasks.Task<PIO.Models.ResourceTypeIDs[]> GetMissingResourcesToProduceAsync(int FactoryID) {
             return base.Channel.GetMissingResourcesToProduceAsync(FactoryID);
+        }
+        
+        public bool HasEnoughResourcesToBuild(int FactoryID) {
+            return base.Channel.HasEnoughResourcesToBuild(FactoryID);
+        }
+        
+        public System.Threading.Tasks.Task<bool> HasEnoughResourcesToBuildAsync(int FactoryID) {
+            return base.Channel.HasEnoughResourcesToBuildAsync(FactoryID);
+        }
+        
+        public PIO.Models.ResourceTypeIDs[] GetMissingResourcesToBuild(int FactoryID) {
+            return base.Channel.GetMissingResourcesToBuild(FactoryID);
+        }
+        
+        public System.Threading.Tasks.Task<PIO.Models.ResourceTypeIDs[]> GetMissingResourcesToBuildAsync(int FactoryID) {
+            return base.Channel.GetMissingResourcesToBuildAsync(FactoryID);
         }
         
         public bool WorkerIsInBuilding(int WorkerID, int BuildingID) {

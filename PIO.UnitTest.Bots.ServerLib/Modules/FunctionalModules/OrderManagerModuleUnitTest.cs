@@ -362,10 +362,78 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 		}
 
 
+		[TestMethod]
+		public void ShouldUnassignAll()
+		{
+			IOrderModule orderModule;
+			OrderManagerModule module;
+
+			orderModule = Substitute.For<IOrderModule>();
+			orderModule.When(x => x.UnAssignAll(Arg.Any<int>())).Do(x => { return; });
+
+			module = new OrderManagerModule(NullLogger.Instance, null, orderModule, null, null, 10);
+			module.UnassignAll(1);
+
+		}
+
+
+		[TestMethod]
+		public void ShouldAssignOrder()
+		{
+			IOrderModule orderModule;
+			OrderManagerModule module;
+
+			orderModule = Substitute.For<IOrderModule>();
+			orderModule.When(x => x.Assign(Arg.Any<int>(), Arg.Any<int>())).Do(x => { return; });
+
+			module = new OrderManagerModule(NullLogger.Instance, null, orderModule, null, null, 10);
+			module.Assign(1, 1);
+
+		}
+
+		[TestMethod]
+		public void ShouldNotUnassignAll()
+		{
+			IOrderModule orderModule;
+			OrderManagerModule module;
+			MemoryLogger logger;
+
+			logger = new MemoryLogger();
+
+			orderModule = Substitute.For<IOrderModule>();
+			orderModule.When(x => x.UnAssignAll(Arg.Any<int>())).Do(x => { throw new Exception(); });
+
+			module = new OrderManagerModule(logger, null, orderModule, null, null, 10);
+			Assert.ThrowsException<PIOInternalErrorException>(() => module.UnassignAll(1));
+
+		}
+
+
+		[TestMethod]
+		public void ShouldNotAssignOrder()
+		{
+			IOrderModule orderModule;
+			OrderManagerModule module;
+			MemoryLogger logger;
+
+			logger = new MemoryLogger();
+
+			orderModule = Substitute.For<IOrderModule>();
+			orderModule.When(x => x.Assign(Arg.Any<int>(), Arg.Any<int>())).Do(x => { throw new Exception(); });
+
+			module = new OrderManagerModule(logger, null, orderModule, null, null, 10);
+			Assert.ThrowsException<PIOInternalErrorException>(() => module.Assign(1, 1));
+
+		}
 
 
 
 
+
+
+
+
+		#region produce order
 		[TestMethod]
 		public void CreateTaskFromProduceOrderShouldReturnProduceTaskIfHaveEnoughResourcesToProduce()
 		{
@@ -555,70 +623,204 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			Assert.AreEqual(1, result.WorkerID);
 			Assert.AreEqual(TaskTypeIDs.Store, result.TaskTypeID);
 		}
+		#endregion
 
+
+		#region build factory order
 		[TestMethod]
-		public void ShouldUnassignAll()
+		public void CreateTaskFromBuildFactoryOrderShouldReturnMoveToIfFactoryDoesntExistsAndWorkerIsNotOnSite()
 		{
 			IOrderModule orderModule;
+			ClientLib.PIOServiceReference.IPIOService client;
 			OrderManagerModule module;
+			Task result;
+
+			client = Substitute.For<PIO.ClientLib.PIOServiceReference.IPIOService>();
+			client.GetFactoryAtPos(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<int>()).Returns((Factory)null);
+			client.MoveTo(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<int>()).Returns(new Task() { TaskTypeID = TaskTypeIDs.MoveTo, WorkerID = 1 });
 
 			orderModule = Substitute.For<IOrderModule>();
-			orderModule.When(x=>x.UnAssignAll(Arg.Any<int>())).Do(x=> { return; });
 
-			module = new OrderManagerModule(NullLogger.Instance, null, orderModule, null, null, 10);
-			module.UnassignAll(1) ;
-			
+			module = new OrderManagerModule(NullLogger.Instance, client, orderModule, null, null, 10);
+			result = module.CreateTaskFromBuildFactoryOrder(new Worker() { PlanetID = 1, X = 1, Y = 2 }, new BuildFactoryOrder() { OrderID = 1, BuildFactoryOrderID = 1, FactoryTypeID = FactoryTypeIDs.Forest, X = 11, Y = 12 });
+			Assert.IsNotNull(result);
+			Assert.AreEqual(1, result.WorkerID);
+			Assert.AreEqual(TaskTypeIDs.MoveTo, result.TaskTypeID);
+		}
+		[TestMethod]
+		public void CreateTaskFromBuildFactoryOrderShouldReturnCreateBuildingIfFactoryDoesntExistsAndWorkerIsOnSite()
+		{
+			IOrderModule orderModule;
+			ClientLib.PIOServiceReference.IPIOService client;
+			OrderManagerModule module;
+			Task result;
+
+			client = Substitute.For<PIO.ClientLib.PIOServiceReference.IPIOService>();
+			client.GetFactoryAtPos(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<int>()).Returns((Factory)null);
+			client.CreateBuilding(Arg.Any<int>(), Arg.Any<FactoryTypeIDs>()).Returns(new Task() { TaskTypeID = TaskTypeIDs.CreateBuilding, WorkerID = 1 });
+
+			orderModule = Substitute.For<IOrderModule>();
+
+			module = new OrderManagerModule(NullLogger.Instance, client, orderModule, null, null, 10);
+			result = module.CreateTaskFromBuildFactoryOrder(new Worker() { PlanetID = 1, X = 11, Y = 12 }, new BuildFactoryOrder() { OrderID = 1, BuildFactoryOrderID = 1, FactoryTypeID = FactoryTypeIDs.Forest, X = 11, Y = 12 });
+			Assert.IsNotNull(result);
+			Assert.AreEqual(1, result.WorkerID);
+			Assert.AreEqual(TaskTypeIDs.CreateBuilding, result.TaskTypeID);
 		}
 
 
 		[TestMethod]
-		public void ShouldAssignOrder()
+		public void CreateTaskFromBuildFactoryOrderShouldReturnMoveToIfFactoryExistsAndHasEnoughResourcesAndWorkerIsNotOnSite()
 		{
 			IOrderModule orderModule;
+			ClientLib.PIOServiceReference.IPIOService client;
 			OrderManagerModule module;
+			Task result;
+
+			client = Substitute.For<PIO.ClientLib.PIOServiceReference.IPIOService>();
+			client.GetFactoryAtPos(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<int>()).Returns(new Factory() {PlanetID=1,X=11,Y=12 });
+			client.MoveTo(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<int>()).Returns(new Task() { TaskTypeID = TaskTypeIDs.MoveTo, WorkerID = 1 });
+			client.GetMissingResourcesToBuild(Arg.Any<int>()).Returns(new ResourceTypeIDs[] { });
+			orderModule = Substitute.For<IOrderModule>();
+
+			module = new OrderManagerModule(NullLogger.Instance, client, orderModule, null, null, 10);
+			result = module.CreateTaskFromBuildFactoryOrder(new Worker() { PlanetID = 1, X = 1, Y = 2 }, new BuildFactoryOrder() { OrderID = 1, BuildFactoryOrderID = 1, FactoryTypeID = FactoryTypeIDs.Forest, X = 11, Y = 12 });
+			Assert.IsNotNull(result);
+			Assert.AreEqual(1, result.WorkerID);
+			Assert.AreEqual(TaskTypeIDs.MoveTo, result.TaskTypeID);
+		}
+		[TestMethod]
+		public void CreateTaskFromBuildFactoryOrderShouldReturnBuildFactoryIfFactoryExistsAndHasEnoughResourcesAndWorkerIsOnSite()
+		{
+			IOrderModule orderModule;
+			ClientLib.PIOServiceReference.IPIOService client;
+			OrderManagerModule module;
+			Task result;
+
+			client = Substitute.For<PIO.ClientLib.PIOServiceReference.IPIOService>();
+			client.GetFactoryAtPos(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<int>()).Returns(new Factory() { PlanetID = 1, X = 11, Y = 12 });
+			client.BuildFactory(Arg.Any<int>()).Returns(new Task() { TaskTypeID = TaskTypeIDs.Build, WorkerID = 1 });
+			client.GetMissingResourcesToBuild(Arg.Any<int>()).Returns(new ResourceTypeIDs[] { });
 
 			orderModule = Substitute.For<IOrderModule>();
-			orderModule.When(x => x.Assign(Arg.Any<int>(), Arg.Any<int>())).Do(x => { return; });
 
-			module = new OrderManagerModule(NullLogger.Instance, null, orderModule, null, null, 10);
-			module.Assign(1,1);
-
+			module = new OrderManagerModule(NullLogger.Instance, client, orderModule, null, null, 10);
+			result = module.CreateTaskFromBuildFactoryOrder(new Worker() { PlanetID = 1, X = 11, Y = 12 }, new BuildFactoryOrder() { OrderID = 1, BuildFactoryOrderID = 1, FactoryTypeID = FactoryTypeIDs.Forest, X = 11, Y = 12 });
+			Assert.IsNotNull(result);
+			Assert.AreEqual(1, result.WorkerID);
+			Assert.AreEqual(TaskTypeIDs.Build, result.TaskTypeID);
 		}
+
 
 		[TestMethod]
-		public void ShouldNotUnassignAll()
+		public void CreateTaskFromBuildFactoryOrderShouldReturnMoveToIfFactoryExistsAndDoentHaveEnoughResourcesAndWorkerIsCarryingMissingResourceAndWorkerIsNotOnSite()
 		{
 			IOrderModule orderModule;
+			ClientLib.PIOServiceReference.IPIOService client;
 			OrderManagerModule module;
-			MemoryLogger logger;
+			Task result;
 
-			logger = new MemoryLogger();
+			client = Substitute.For<PIO.ClientLib.PIOServiceReference.IPIOService>();
+			client.GetFactoryAtPos(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<int>()).Returns(new Factory() { PlanetID = 1, X = 11, Y = 12 });
+			client.MoveTo(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<int>()).Returns(new Task() { TaskTypeID = TaskTypeIDs.MoveTo, WorkerID = 1 });
+			client.GetMissingResourcesToBuild(Arg.Any<int>()).Returns(new ResourceTypeIDs[] {ResourceTypeIDs.Wood });
+			orderModule = Substitute.For<IOrderModule>();
+
+			module = new OrderManagerModule(NullLogger.Instance, client, orderModule, null, null, 10);
+			result = module.CreateTaskFromBuildFactoryOrder(new Worker() { PlanetID = 1, X = 1, Y = 2 ,ResourceTypeID=ResourceTypeIDs.Wood}, new BuildFactoryOrder() { OrderID = 1, BuildFactoryOrderID = 1, FactoryTypeID = FactoryTypeIDs.Forest, X = 11, Y = 12 });
+			Assert.IsNotNull(result);
+			Assert.AreEqual(1, result.WorkerID);
+			Assert.AreEqual(TaskTypeIDs.MoveTo, result.TaskTypeID);
+		}
+		[TestMethod]
+		public void CreateTaskFromBuildFactoryOrderShouldReturnStoreIfFactoryExistsAndDoesntHabeEnoughResourcesAnWorkerIsCarryingMissingResourceAndWorkerIsOnSite()
+		{
+			IOrderModule orderModule;
+			ClientLib.PIOServiceReference.IPIOService client;
+			OrderManagerModule module;
+			Task result;
+
+			client = Substitute.For<PIO.ClientLib.PIOServiceReference.IPIOService>();
+			client.GetFactoryAtPos(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<int>()).Returns(new Factory() { PlanetID = 1, X = 11, Y = 12 });
+			client.Store(Arg.Any<int>()).Returns(new Task() { TaskTypeID = TaskTypeIDs.Store, WorkerID = 1 });
+			client.GetMissingResourcesToBuild(Arg.Any<int>()).Returns(new ResourceTypeIDs[] { ResourceTypeIDs.Wood });
 
 			orderModule = Substitute.For<IOrderModule>();
-			orderModule.When(x => x.UnAssignAll(Arg.Any<int>())).Do(x => { throw new Exception(); });
 
-			module = new OrderManagerModule(logger, null, orderModule, null, null, 10);
-			Assert.ThrowsException<PIOInternalErrorException>(() => module.UnassignAll(1));
-
+			module = new OrderManagerModule(NullLogger.Instance, client, orderModule, null, null, 10);
+			result = module.CreateTaskFromBuildFactoryOrder(new Worker() { PlanetID = 1, X = 11, Y = 12, ResourceTypeID = ResourceTypeIDs.Wood }, new BuildFactoryOrder() { OrderID = 1, BuildFactoryOrderID = 1, FactoryTypeID = FactoryTypeIDs.Forest, X = 11, Y = 12 });
+			Assert.IsNotNull(result);
+			Assert.AreEqual(1, result.WorkerID);
+			Assert.AreEqual(TaskTypeIDs.Store, result.TaskTypeID);
 		}
 
 
 		[TestMethod]
-		public void ShouldNotAssignOrder()
+		public void CreateTaskFromBuildFactoryOrderShouldReturnNullIfFactoryExistsAndDoesntHaveEnoughResourcesAndCannotLocateMissingResource()
 		{
 			IOrderModule orderModule;
+			ClientLib.PIOServiceReference.IPIOService client;
 			OrderManagerModule module;
-			MemoryLogger logger;
+			Task result;
 
-			logger = new MemoryLogger();
+			client = Substitute.For<PIO.ClientLib.PIOServiceReference.IPIOService>();
+			client.GetFactoryAtPos(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<int>()).Returns(new Factory() { PlanetID = 1, X = 11, Y = 12 });
+			client.MoveTo(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<int>()).Returns(new Task() { TaskTypeID = TaskTypeIDs.MoveTo, WorkerID = 1 });
+			client.GetMissingResourcesToBuild(Arg.Any<int>()).Returns(new ResourceTypeIDs[] { ResourceTypeIDs.Wood });
+			client.FindStack(Arg.Any<int>(), Arg.Any<ResourceTypeIDs>()).Returns((Stack)null);
+			orderModule = Substitute.For<IOrderModule>();
+
+			module = new OrderManagerModule(NullLogger.Instance, client, orderModule, null, null, 10);
+			result = module.CreateTaskFromBuildFactoryOrder(new Worker() { PlanetID = 1, X = 1, Y = 2 }, new BuildFactoryOrder() { OrderID = 1, BuildFactoryOrderID = 1, FactoryTypeID = FactoryTypeIDs.Forest, X = 11, Y = 12 });
+			Assert.IsNull(result);
+		}
+		[TestMethod]
+		public void CreateTaskFromBuildFactoryOrderShouldReturnMoveToIfFactoryExistsAndDoesntHaveEnoughResourcesAndCanLocateMissingResourceAndWorkerIsNotOnSite()
+		{
+			IOrderModule orderModule;
+			ClientLib.PIOServiceReference.IPIOService client;
+			OrderManagerModule module;
+			Task result;
+
+			client = Substitute.For<PIO.ClientLib.PIOServiceReference.IPIOService>();
+			client.GetFactoryAtPos(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<int>()).Returns(new Factory() { PlanetID = 1, X = 11, Y = 12 });
+			client.MoveToBuilding(Arg.Any<int>(), Arg.Any<int>()).Returns(new Task() { TaskTypeID = TaskTypeIDs.MoveTo, WorkerID = 1 });
+			client.GetMissingResourcesToBuild(Arg.Any<int>()).Returns(new ResourceTypeIDs[] { ResourceTypeIDs.Wood });
+			client.FindStack(Arg.Any<int>(), Arg.Any<ResourceTypeIDs>()).Returns(new Stack() { BuildingID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Wood, StackID = 1 });
+			client.WorkerIsInBuilding(Arg.Any<int>(), Arg.Any<int>()).Returns(false);
 
 			orderModule = Substitute.For<IOrderModule>();
-			orderModule.When(x => x.Assign(Arg.Any<int>(), Arg.Any<int>())).Do(x => { throw new Exception(); });
 
-			module = new OrderManagerModule(logger, null, orderModule, null, null, 10);
-			Assert.ThrowsException<PIOInternalErrorException>(()=> module.Assign(1, 1));
-
+			module = new OrderManagerModule(NullLogger.Instance, client, orderModule, null, null, 10);
+			result = module.CreateTaskFromBuildFactoryOrder(new Worker() { PlanetID = 1, X = 1, Y = 2 }, new BuildFactoryOrder() { OrderID = 1, BuildFactoryOrderID = 1, FactoryTypeID = FactoryTypeIDs.Forest, X = 11, Y = 12 });
+			Assert.IsNotNull(result);
+			Assert.AreEqual(1, result.WorkerID);
+			Assert.AreEqual(TaskTypeIDs.MoveTo, result.TaskTypeID);
 		}
+		[TestMethod]
+		public void CreateTaskFromBuildFactoryOrderShouldReturnTakeIfFactoryExistsAndDoesntHaveEnoughResourcesAndCanLocateMissingResourceAndWorkerIsOnSite()
+		{
+			IOrderModule orderModule;
+			ClientLib.PIOServiceReference.IPIOService client;
+			OrderManagerModule module;
+			Task result;
+
+			client = Substitute.For<PIO.ClientLib.PIOServiceReference.IPIOService>();
+			client.GetFactoryAtPos(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<int>()).Returns(new Factory() { PlanetID = 1, X = 11, Y = 12 });
+			client.Take(Arg.Any<int>(), Arg.Any<ResourceTypeIDs>()).Returns(new Task() { TaskTypeID = TaskTypeIDs.Take, WorkerID = 1 });
+			client.GetMissingResourcesToBuild(Arg.Any<int>()).Returns(new ResourceTypeIDs[] { ResourceTypeIDs.Wood });
+			client.FindStack(Arg.Any<int>(), Arg.Any<ResourceTypeIDs>()).Returns(new Stack() { BuildingID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Wood, StackID = 1 });
+			client.WorkerIsInBuilding(Arg.Any<int>(), Arg.Any<int>()).Returns(true);
+
+			orderModule = Substitute.For<IOrderModule>();
+
+			module = new OrderManagerModule(NullLogger.Instance, client, orderModule, null, null, 10);
+			result = module.CreateTaskFromBuildFactoryOrder(new Worker() { PlanetID = 1, X = 1, Y = 2 }, new BuildFactoryOrder() { OrderID = 1, BuildFactoryOrderID = 1, FactoryTypeID = FactoryTypeIDs.Forest, X = 11, Y = 12 });
+			Assert.IsNotNull(result);
+			Assert.AreEqual(1, result.WorkerID);
+			Assert.AreEqual(TaskTypeIDs.Take, result.TaskTypeID);
+		}
+		#endregion
 
 
 	}

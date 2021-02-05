@@ -22,10 +22,11 @@ namespace PIO.ServerLib.Modules
 		private IFactoryModule factoryModule;
 		private IStackModule stackModule;
 		private IIngredientModule ingredientModule;
+		private IMaterialModule materialModule;
 
-		public ResourceCheckerModule(ILogger Logger, IFactoryModule FactoryModule, IStackModule StackModule,IIngredientModule IngredientModule) : base(Logger)
+		public ResourceCheckerModule(ILogger Logger, IFactoryModule FactoryModule, IStackModule StackModule,IIngredientModule IngredientModule,IMaterialModule MaterialModule) : base(Logger)
 		{
-			this.factoryModule = FactoryModule;this.stackModule = StackModule;this.ingredientModule = IngredientModule;
+			this.factoryModule = FactoryModule;this.stackModule = StackModule;this.ingredientModule = IngredientModule;this.materialModule = MaterialModule;
 		}
 
 		public bool HasEnoughResourcesToProduce(int FactoryID)
@@ -108,6 +109,88 @@ namespace PIO.ServerLib.Modules
 			return missingResources.ToArray();
 		}
 
+
+
+
+		public bool HasEnoughResourcesToBuild(int FactoryID)
+		{
+			Factory factory;
+			Material[] materials;
+			Stack[] stacks;
+			Stack stack;
+
+			LogEnter();
+
+			factory = AssertExists(() => factoryModule.GetFactory(FactoryID), $"FactoryID={FactoryID}");
+
+			Log(LogLevels.Information, $"Get materials (FactoryTypeID={factory.FactoryTypeID})");
+			materials = Try(() => materialModule.GetMaterials(factory.FactoryTypeID)).OrThrow<PIOInternalErrorException>("Failed to get materials");
+
+			Log(LogLevels.Information, $"Get stacks (BuildingID={factory.BuildingID})");
+			stacks = Try(() => stackModule.GetStacks(factory.BuildingID)).OrThrow<PIOInternalErrorException>("Failed to get stacks");
+
+
+			foreach (Material material in materials)
+			{
+				Log(LogLevels.Information, $"Check stack quantity (ResourceTypeID={material.ResourceTypeID}, Quantity={material.Quantity})");
+				stack = stacks.FirstOrDefault(item => item.ResourceTypeID == material.ResourceTypeID);
+				if (stack == null)
+				{
+					Log(LogLevels.Information, $"Resource not found in stacks");
+					return false;
+				}
+
+				if (stack.Quantity < material.Quantity)
+				{
+					Log(LogLevels.Information, $"Not enough quantity in stack (Quantity={stack.Quantity})");
+					return false;
+				}
+			}
+
+			return true;
+		}
+		public ResourceTypeIDs[] GetMissingResourcesToBuild(int FactoryID)
+		{
+			Factory factory;
+			Material[] materials;
+			Stack[] stacks;
+			Stack stack;
+			List<ResourceTypeIDs> missingResources;
+
+			LogEnter();
+
+
+			factory = AssertExists(() => factoryModule.GetFactory(FactoryID), $"FactoryID={FactoryID}");
+
+			Log(LogLevels.Information, $"Get materials (FactoryTypeID={factory.FactoryTypeID})");
+			materials = Try(() => materialModule.GetMaterials(factory.FactoryTypeID)).OrThrow<PIOInternalErrorException>("Failed to get materials");
+
+			Log(LogLevels.Information, $"Get stacks (BuildingID={factory.BuildingID})");
+			stacks = Try(() => stackModule.GetStacks(factory.BuildingID)).OrThrow<PIOInternalErrorException>("Failed to get stacks");
+
+			missingResources = new List<ResourceTypeIDs>();
+
+			foreach (Material material in materials)
+			{
+				Log(LogLevels.Information, $"Check stack quantity (ResourceTypeID={material.ResourceTypeID}, Quantity={material.Quantity})");
+				stack = stacks.FirstOrDefault(item => item.ResourceTypeID == material.ResourceTypeID);
+				if (stack == null)
+				{
+					Log(LogLevels.Information, $"Resource not found in stacks");
+					missingResources.Add(material.ResourceTypeID);
+					continue;
+				}
+
+				if (stack.Quantity < material.Quantity)
+				{
+					Log(LogLevels.Information, $"Not enough quantity in stack (Quantity={stack.Quantity})");
+					missingResources.Add(material.ResourceTypeID);
+					continue;
+				}
+			}
+
+			return missingResources.ToArray();
+		}
 
 	}
 }

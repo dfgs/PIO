@@ -199,6 +199,18 @@
   <wsdl:message name="IPIOService_GetMissingResourcesToProduce_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetMissingResourcesToProduceResponse" />
   </wsdl:message>
+  <wsdl:message name="IPIOService_HasEnoughResourcesToBuild_InputMessage">
+    <wsdl:part name="parameters" element="tns:HasEnoughResourcesToBuild" />
+  </wsdl:message>
+  <wsdl:message name="IPIOService_HasEnoughResourcesToBuild_OutputMessage">
+    <wsdl:part name="parameters" element="tns:HasEnoughResourcesToBuildResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPIOService_GetMissingResourcesToBuild_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetMissingResourcesToBuild" />
+  </wsdl:message>
+  <wsdl:message name="IPIOService_GetMissingResourcesToBuild_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetMissingResourcesToBuildResponse" />
+  </wsdl:message>
   <wsdl:message name="IPIOService_WorkerIsInBuilding_InputMessage">
     <wsdl:part name="parameters" element="tns:WorkerIsInBuilding" />
   </wsdl:message>
@@ -381,6 +393,14 @@
     <wsdl:operation name="GetMissingResourcesToProduce">
       <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetMissingResourcesToProduce" message="tns:IPIOService_GetMissingResourcesToProduce_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/GetMissingResourcesToProduceResponse" message="tns:IPIOService_GetMissingResourcesToProduce_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="HasEnoughResourcesToBuild">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/HasEnoughResourcesToBuild" message="tns:IPIOService_HasEnoughResourcesToBuild_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/HasEnoughResourcesToBuildResponse" message="tns:IPIOService_HasEnoughResourcesToBuild_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMissingResourcesToBuild">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetMissingResourcesToBuild" message="tns:IPIOService_GetMissingResourcesToBuild_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/GetMissingResourcesToBuildResponse" message="tns:IPIOService_GetMissingResourcesToBuild_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="WorkerIsInBuilding">
       <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/WorkerIsInBuilding" message="tns:IPIOService_WorkerIsInBuilding_InputMessage" />
@@ -702,6 +722,24 @@
     </wsdl:operation>
     <wsdl:operation name="GetMissingResourcesToProduce">
       <soap:operation soapAction="http://tempuri.org/IPIOService/GetMissingResourcesToProduce" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="HasEnoughResourcesToBuild">
+      <soap:operation soapAction="http://tempuri.org/IPIOService/HasEnoughResourcesToBuild" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetMissingResourcesToBuild">
+      <soap:operation soapAction="http://tempuri.org/IPIOService/GetMissingResourcesToBuild" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

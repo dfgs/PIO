@@ -86,6 +86,10 @@ namespace PIO.Models
 		[OperationContract]
 		ResourceTypeIDs[] GetMissingResourcesToProduce(int FactoryID);
 		[OperationContract]
+		bool HasEnoughResourcesToBuild(int FactoryID);
+		[OperationContract]
+		ResourceTypeIDs[] GetMissingResourcesToBuild(int FactoryID);
+		[OperationContract]
 		bool WorkerIsInBuilding(int WorkerID, int BuildingID);
 		[OperationContract]
 		Task Idle(int WorkerID,int Duration);
