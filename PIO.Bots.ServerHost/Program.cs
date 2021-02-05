@@ -11,8 +11,6 @@ using PIO.Bots.Models.Modules;
 using PIO.Bots.ServerLib;
 using PIO.Bots.ServerLib.Modules;
 using PIO.Bots.WebServiceLib;
-using PIO.BotsLib;
-using PIO.BotsLib.Basic;
 using PIO.ClientLib;
 using PIO.ClientLib.PIOServiceReference;
 using System;

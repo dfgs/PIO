@@ -57,6 +57,55 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 
 		}
 
+
+
+
+		[TestMethod]
+		public void ShouldGetWaitingBuildFactoryOrders()
+		{
+			IOrderModule orderModule;
+			IBuildFactoryOrderModule buildFactoryOrderModule;
+			OrderManagerModule module;
+			BuildFactoryOrder[] result;
+
+			orderModule = Substitute.For<IOrderModule>();
+			buildFactoryOrderModule = Substitute.For<IBuildFactoryOrderModule>();
+			buildFactoryOrderModule.GetWaitingBuildFactoryOrders(Arg.Any<int>()).Returns(new BuildFactoryOrder[] { new BuildFactoryOrder() { OrderID = 1, BuildFactoryOrderID = 1, FactoryTypeID = FactoryTypeIDs.Forest }, new BuildFactoryOrder() { OrderID = 2, BuildFactoryOrderID = 2, FactoryTypeID = FactoryTypeIDs.Forest } });
+
+			module = new OrderManagerModule(NullLogger.Instance, null, orderModule, null, buildFactoryOrderModule, 10);
+			result = module.GetWaitingBuildFactoryOrders(1);
+			Assert.IsNotNull(result);
+			Assert.AreEqual(2, result.Length);
+
+		}
+
+		[TestMethod]
+		public void ShouldNotGetWaitingBuildFactoryOrders()
+		{
+			IOrderModule orderModule;
+			IBuildFactoryOrderModule buildFactoryOrderModule;
+			OrderManagerModule module;
+			MemoryLogger logger;
+
+
+			logger = new MemoryLogger();
+
+			orderModule = Substitute.For<IOrderModule>();
+			buildFactoryOrderModule = Substitute.For<IBuildFactoryOrderModule>();
+			buildFactoryOrderModule.GetWaitingBuildFactoryOrders(Arg.Any<int>()).Returns((x) => { throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest"); });
+
+			module = new OrderManagerModule(logger, null, orderModule, null, buildFactoryOrderModule,10);
+			Assert.ThrowsException<PIOInternalErrorException>(() => module.GetWaitingBuildFactoryOrders(1));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName == module.ModuleName)));
+
+		}
+
+
+
+
+
+
+
 		[TestMethod]
 		public void ShouldCreateProduceOrder()
 		{

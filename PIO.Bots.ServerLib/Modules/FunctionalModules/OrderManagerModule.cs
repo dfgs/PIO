@@ -51,6 +51,12 @@ namespace PIO.Bots.ServerLib.Modules
 			Try(() => orderModule.Assign(OrderID,BotID)).OrThrow<PIOInternalErrorException>("Failed to assign worker");
 
 		}
+
+
+
+
+
+
 		public ProduceOrder CreateProduceOrder(int PlanetID,int FactoryID)
 		{
 			ProduceOrder produceOrder;
@@ -95,6 +101,39 @@ namespace PIO.Bots.ServerLib.Modules
 
 			return buildFactoryOrder;
 		}
+
+
+
+
+
+
+
+		public ProduceOrder[] GetWaitingProduceOrders(int PlanetID)
+		{
+			ProduceOrder[] produceOrders;
+
+			LogEnter();
+
+			Log(LogLevels.Information, $"Getting Orders");
+			produceOrders = Try(() => produceOrderModule.GetWaitingProduceOrders(PlanetID)).OrThrow<PIOInternalErrorException>("Failed to get Orders");
+
+			return produceOrders;
+		}
+		public BuildFactoryOrder[] GetWaitingBuildFactoryOrders(int PlanetID)
+		{
+			BuildFactoryOrder[] buildFactoryOrders;
+
+			LogEnter();
+
+			Log(LogLevels.Information, $"Getting Orders");
+			buildFactoryOrders = Try(() => buildFactoryOrderModule.GetWaitingBuildFactoryOrders(PlanetID)).OrThrow<PIOInternalErrorException>("Failed to get Orders");
+
+			return buildFactoryOrders;
+		}
+
+
+
+
 
 
 		public Task CreateTaskFromProduceOrder(Worker Worker, ProduceOrder ProduceOrder)
@@ -178,23 +217,15 @@ namespace PIO.Bots.ServerLib.Modules
 
 		}
 
-
-		public ProduceOrder[] GetWaitingProduceOrders(int PlanetID)
+		public Task CreateTaskFromBuildFactoryOrder(Worker Worker, BuildFactoryOrder BuildFactoryOrder)
 		{
-			ProduceOrder[] produceOrders;
-
-			LogEnter();
-
-			Log(LogLevels.Information, $"Getting Orders");
-			produceOrders = Try(() => produceOrderModule.GetWaitingProduceOrders(PlanetID)).OrThrow<PIOInternalErrorException>("Failed to get Orders");
-			
-			return produceOrders;
+			return null;
 		}
 
 
 		public Task CreateTask(int BotID,int WorkerID)
 		{
-			ProduceOrder[] produceOrders;
+			Order[] orders;
 			Task task;
 			Worker worker;
 
@@ -202,18 +233,27 @@ namespace PIO.Bots.ServerLib.Modules
 
 			worker = AssertExists<Worker>(() => client.GetWorker(WorkerID), $"WorkerID={WorkerID}");
 
-			produceOrders = GetWaitingProduceOrders(worker.PlanetID);
+			orders = GetWaitingProduceOrders(worker.PlanetID).AsEnumerable<Order>().Union(GetWaitingBuildFactoryOrders(worker.PlanetID)).ToArray();
 
-			if ((produceOrders==null) || (produceOrders.Length==0))
+			if ((orders==null) || (orders.Length==0))
 			{
 				Log(LogLevels.Information, $"No order defined, creating idle task");
 				task= Try(()=>client.Idle(WorkerID, idleDuration)).OrThrow<PIOInternalErrorException>("Failed to create task");
 				return task;
 			}
 
-			foreach (ProduceOrder order in produceOrders)
+			foreach (Order order in orders)
 			{
-				task = CreateTaskFromProduceOrder(worker, order);
+				if (order is ProduceOrder produceOrder) task = CreateTaskFromProduceOrder(worker, produceOrder);
+				else if (order is BuildFactoryOrder buildFactoryOrder) task = CreateTaskFromBuildFactoryOrder(worker, buildFactoryOrder);
+				else
+				{
+					Log(LogLevels.Warning, $"Cannot handle order of type {order.GetType().Name}");
+					task = null;
+				}
+
+
+
 				if (task != null)
 				{
 					Log(LogLevels.Information, $"Assigning bot to order (OrderID={order.OrderID}, Bot={BotID})");
