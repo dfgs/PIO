@@ -45,6 +45,8 @@
   <ItemGroup>
     <Compile Include="Modules\DataModules\CellModule.cs" />
     <Compile Include="Modules\DataModules\BuildingModule.cs" />
+    <Compile Include="Modules\DataModules\FarmModule.cs" />
+    <Compile Include="Modules\DataModules\FarmTypeModule.cs" />
     <Compile Include="Modules\DataModules\TaskTypeModule.cs" />
     <Compile Include="Modules\DataModules\ProductModule.cs" />
     <Compile Include="Modules\DataModules\IngredientModule.cs" />
@@ -70,6 +72,8 @@
     <Compile Include="PIOVersionControl.cs" />
     <Compile Include="Tables\CellTable.cs" />
     <Compile Include="Tables\BuildingTable.cs" />
+    <Compile Include="Tables\FarmTable.cs" />
+    <Compile Include="Tables\FarmTypeTable.cs" />
     <Compile Include="Tables\TaskTypeTable.cs" />
     <Compile Include="Tables\ProductTable.cs" />
     <Compile Include="Tables\IngredientTable.cs" />

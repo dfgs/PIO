@@ -55,6 +55,24 @@
   <wsdl:message name="IPIOService_GetFactories_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetFactoriesResponse" />
   </wsdl:message>
+  <wsdl:message name="IPIOService_GetFarm_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetFarm" />
+  </wsdl:message>
+  <wsdl:message name="IPIOService_GetFarm_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetFarmResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPIOService_GetFarmAtPos_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetFarmAtPos" />
+  </wsdl:message>
+  <wsdl:message name="IPIOService_GetFarmAtPos_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetFarmAtPosResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPIOService_GetFarms_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetFarms" />
+  </wsdl:message>
+  <wsdl:message name="IPIOService_GetFarms_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetFarmsResponse" />
+  </wsdl:message>
   <wsdl:message name="IPIOService_GetWorker_InputMessage">
     <wsdl:part name="parameters" element="tns:GetWorker" />
   </wsdl:message>
@@ -120,6 +138,18 @@
   </wsdl:message>
   <wsdl:message name="IPIOService_GetFactoryTypes_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetFactoryTypesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPIOService_GetFarmType_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetFarmType" />
+  </wsdl:message>
+  <wsdl:message name="IPIOService_GetFarmType_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetFarmTypeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPIOService_GetFarmTypes_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetFarmTypes" />
+  </wsdl:message>
+  <wsdl:message name="IPIOService_GetFarmTypes_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetFarmTypesResponse" />
   </wsdl:message>
   <wsdl:message name="IPIOService_GetTaskType_InputMessage">
     <wsdl:part name="parameters" element="tns:GetTaskType" />
@@ -298,6 +328,18 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetFactories" message="tns:IPIOService_GetFactories_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/GetFactoriesResponse" message="tns:IPIOService_GetFactories_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="GetFarm">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetFarm" message="tns:IPIOService_GetFarm_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/GetFarmResponse" message="tns:IPIOService_GetFarm_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetFarmAtPos">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetFarmAtPos" message="tns:IPIOService_GetFarmAtPos_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/GetFarmAtPosResponse" message="tns:IPIOService_GetFarmAtPos_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetFarms">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetFarms" message="tns:IPIOService_GetFarms_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/GetFarmsResponse" message="tns:IPIOService_GetFarms_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="GetWorker">
       <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetWorker" message="tns:IPIOService_GetWorker_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/GetWorkerResponse" message="tns:IPIOService_GetWorker_OutputMessage" />
@@ -341,6 +383,14 @@
     <wsdl:operation name="GetFactoryTypes">
       <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetFactoryTypes" message="tns:IPIOService_GetFactoryTypes_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/GetFactoryTypesResponse" message="tns:IPIOService_GetFactoryTypes_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetFarmType">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetFarmType" message="tns:IPIOService_GetFarmType_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/GetFarmTypeResponse" message="tns:IPIOService_GetFarmType_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetFarmTypes">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetFarmTypes" message="tns:IPIOService_GetFarmTypes_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/GetFarmTypesResponse" message="tns:IPIOService_GetFarmTypes_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetTaskType">
       <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetTaskType" message="tns:IPIOService_GetTaskType_InputMessage" />
@@ -513,6 +563,33 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="GetFarm">
+      <soap:operation soapAction="http://tempuri.org/IPIOService/GetFarm" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFarmAtPos">
+      <soap:operation soapAction="http://tempuri.org/IPIOService/GetFarmAtPos" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFarms">
+      <soap:operation soapAction="http://tempuri.org/IPIOService/GetFarms" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="GetWorker">
       <soap:operation soapAction="http://tempuri.org/IPIOService/GetWorker" style="document" />
       <wsdl:input>
@@ -605,6 +682,24 @@
     </wsdl:operation>
     <wsdl:operation name="GetFactoryTypes">
       <soap:operation soapAction="http://tempuri.org/IPIOService/GetFactoryTypes" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFarmType">
+      <soap:operation soapAction="http://tempuri.org/IPIOService/GetFarmType" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetFarmTypes">
+      <soap:operation soapAction="http://tempuri.org/IPIOService/GetFarmTypes" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

@@ -22,10 +22,12 @@ namespace PIO.WebServiceLib
 		private IPlanetModule planetModule;
 		private ICellModule cellModule;
 		private IFactoryModule factoryModule;
+		private IFarmModule farmModule;
 		private IWorkerModule workerModule;
 		private IStackModule stackModule;
 		private IResourceTypeModule resourceTypeModule;
 		private IFactoryTypeModule factoryTypeModule;
+		private IFarmTypeModule farmTypeModule;
 		private ITaskTypeModule taskTypeModule;
 		private IMaterialModule materialModule;
 		private IIngredientModule ingredientModule;
@@ -45,10 +47,10 @@ namespace PIO.WebServiceLib
 
 
 		public PIOService(ILogger Logger,
-			IPlanetModule PlanetModule, ICellModule CellModule, IFactoryModule FactoryModule,
+			IPlanetModule PlanetModule, ICellModule CellModule, IFactoryModule FactoryModule,IFarmModule FarmModule,
 			IWorkerModule WorkerModule,
 			IStackModule StackModule,IResourceTypeModule ResourceTypeModule,
-						IFactoryTypeModule FactoryTypeModule,ITaskTypeModule TaskTypeModule,
+			IFactoryTypeModule FactoryTypeModule, IFarmTypeModule FarmTypeModule, ITaskTypeModule TaskTypeModule,
 			IMaterialModule MaterialModule,
 			IIngredientModule IngredientModule, IProductModule ProductModule, 
 			ITaskModule TaskModule,
@@ -65,12 +67,14 @@ namespace PIO.WebServiceLib
 			this.planetModule = PlanetModule;
 			this.cellModule = CellModule;
 			this.factoryModule = FactoryModule;
+			this.farmModule = FarmModule;
 			this.workerModule = WorkerModule;
 			this.stackModule = StackModule;
 			this.locationCheckerModule = LocationCheckerModule;
 			this.resourceTypeModule = ResourceTypeModule;
 			this.taskTypeModule = TaskTypeModule;
 			this.factoryTypeModule = FactoryTypeModule;
+			this.farmTypeModule = FarmTypeModule;
 			this.taskTypeModule = TaskTypeModule;
 			this.materialModule = MaterialModule;
 			this.ingredientModule = IngredientModule;
@@ -152,6 +156,23 @@ namespace PIO.WebServiceLib
 			return Try(() => factoryModule.GetFactories(PlanetID)).OrThrow(GenerateFaultException);
 		}
 
+		public Farm GetFarm(int FarmID)
+		{
+			LogEnter();
+			return Try(() => farmModule.GetFarm(FarmID)).OrThrow(GenerateFaultException);
+		}
+		public Farm GetFarmAtPos(int PlanetID, int X, int Y)
+		{
+			LogEnter();
+			return Try(() => farmModule.GetFarm(PlanetID, X, Y)).OrThrow(GenerateFaultException);
+		}
+		public Farm[] GetFarms(int PlanetID)
+		{
+			LogEnter();
+			return Try(() => farmModule.GetFarms(PlanetID)).OrThrow(GenerateFaultException);
+		}
+
+
 		public Stack GetStack(int StackID)
 		{
 			LogEnter();
@@ -185,7 +206,7 @@ namespace PIO.WebServiceLib
 			return Try(() => resourceTypeModule.GetResourceTypes()).OrThrow(GenerateFaultException);
 		}
 
-		
+
 		public FactoryType GetFactoryType(FactoryTypeIDs FactoryTypeID)
 		{
 			LogEnter();
@@ -195,6 +216,16 @@ namespace PIO.WebServiceLib
 		{
 			LogEnter();
 			return Try(() => factoryTypeModule.GetFactoryTypes()).OrThrow(GenerateFaultException);
+		}
+		public FarmType GetFarmType(FarmTypeIDs FarmTypeID)
+		{
+			LogEnter();
+			return Try(() => farmTypeModule.GetFarmType(FarmTypeID)).OrThrow(GenerateFaultException);
+		}
+		public FarmType[] GetFarmTypes()
+		{
+			LogEnter();
+			return Try(() => farmTypeModule.GetFarmTypes()).OrThrow(GenerateFaultException);
 		}
 		public TaskType GetTaskType(TaskTypeIDs TaskTypeID)
 		{

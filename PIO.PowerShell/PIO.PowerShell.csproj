@@ -59,6 +59,10 @@
     <Compile Include="PIO\DataCmdlet\FindStackCmdlet.cs" />
     <Compile Include="PIO\DataCmdlet\GetCellCmdlet.cs" />
     <Compile Include="PIO\DataCmdlet\GetCellsCmdlet.cs" />
+    <Compile Include="PIO\DataCmdlet\GetFarmsCmdlet.cs" />
+    <Compile Include="PIO\DataCmdlet\GetFarmCmdlet.cs" />
+    <Compile Include="PIO\DataCmdlet\GetFarmTypeCmdlet.cs" />
+    <Compile Include="PIO\DataCmdlet\GetFarmTypesCmdlet.cs" />
     <Compile Include="PIO\DataCmdlet\GetStackQuantityCmdlet.cs" />
     <Compile Include="PIO\DataCmdlet\GetLastTaskCmdlet.cs" />
     <Compile Include="PIO\DataCmdlet\GetTaskTypeCmdlet.cs" />

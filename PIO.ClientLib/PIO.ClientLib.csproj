@@ -88,6 +88,8 @@
     <None Include="Properties\DataSources\PIO.Models.Cell.datasource" />
     <None Include="Properties\DataSources\PIO.Models.Factory.datasource" />
     <None Include="Properties\DataSources\PIO.Models.FactoryType.datasource" />
+    <None Include="Properties\DataSources\PIO.Models.Farm.datasource" />
+    <None Include="Properties\DataSources\PIO.Models.FarmType.datasource" />
     <None Include="Properties\DataSources\PIO.Models.Ingredient.datasource" />
     <None Include="Properties\DataSources\PIO.Models.Material.datasource" />
     <None Include="Properties\DataSources\PIO.Models.Planet.datasource" />

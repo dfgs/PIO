@@ -63,6 +63,24 @@ namespace PIO.ClientLib.PIOServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetFactories", ReplyAction="http://tempuri.org/IPIOService/GetFactoriesResponse")]
         System.Threading.Tasks.Task<PIO.Models.Factory[]> GetFactoriesAsync(int PlanetID);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetFarm", ReplyAction="http://tempuri.org/IPIOService/GetFarmResponse")]
+        PIO.Models.Farm GetFarm(int FarmID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetFarm", ReplyAction="http://tempuri.org/IPIOService/GetFarmResponse")]
+        System.Threading.Tasks.Task<PIO.Models.Farm> GetFarmAsync(int FarmID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetFarmAtPos", ReplyAction="http://tempuri.org/IPIOService/GetFarmAtPosResponse")]
+        PIO.Models.Farm GetFarmAtPos(int PlanetID, int X, int Y);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetFarmAtPos", ReplyAction="http://tempuri.org/IPIOService/GetFarmAtPosResponse")]
+        System.Threading.Tasks.Task<PIO.Models.Farm> GetFarmAtPosAsync(int PlanetID, int X, int Y);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetFarms", ReplyAction="http://tempuri.org/IPIOService/GetFarmsResponse")]
+        PIO.Models.Farm[] GetFarms(int PlanetID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetFarms", ReplyAction="http://tempuri.org/IPIOService/GetFarmsResponse")]
+        System.Threading.Tasks.Task<PIO.Models.Farm[]> GetFarmsAsync(int PlanetID);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetWorker", ReplyAction="http://tempuri.org/IPIOService/GetWorkerResponse")]
         PIO.Models.Worker GetWorker(int WorkerID);
         
@@ -128,6 +146,18 @@ namespace PIO.ClientLib.PIOServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetFactoryTypes", ReplyAction="http://tempuri.org/IPIOService/GetFactoryTypesResponse")]
         System.Threading.Tasks.Task<PIO.Models.FactoryType[]> GetFactoryTypesAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetFarmType", ReplyAction="http://tempuri.org/IPIOService/GetFarmTypeResponse")]
+        PIO.Models.FarmType GetFarmType(PIO.Models.FarmTypeIDs FarmTypeID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetFarmType", ReplyAction="http://tempuri.org/IPIOService/GetFarmTypeResponse")]
+        System.Threading.Tasks.Task<PIO.Models.FarmType> GetFarmTypeAsync(PIO.Models.FarmTypeIDs FarmTypeID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetFarmTypes", ReplyAction="http://tempuri.org/IPIOService/GetFarmTypesResponse")]
+        PIO.Models.FarmType[] GetFarmTypes();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetFarmTypes", ReplyAction="http://tempuri.org/IPIOService/GetFarmTypesResponse")]
+        System.Threading.Tasks.Task<PIO.Models.FarmType[]> GetFarmTypesAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetTaskType", ReplyAction="http://tempuri.org/IPIOService/GetTaskTypeResponse")]
         PIO.Models.TaskType GetTaskType(PIO.Models.TaskTypeIDs TaskTypeID);
@@ -365,6 +395,30 @@ namespace PIO.ClientLib.PIOServiceReference {
             return base.Channel.GetFactoriesAsync(PlanetID);
         }
         
+        public PIO.Models.Farm GetFarm(int FarmID) {
+            return base.Channel.GetFarm(FarmID);
+        }
+        
+        public System.Threading.Tasks.Task<PIO.Models.Farm> GetFarmAsync(int FarmID) {
+            return base.Channel.GetFarmAsync(FarmID);
+        }
+        
+        public PIO.Models.Farm GetFarmAtPos(int PlanetID, int X, int Y) {
+            return base.Channel.GetFarmAtPos(PlanetID, X, Y);
+        }
+        
+        public System.Threading.Tasks.Task<PIO.Models.Farm> GetFarmAtPosAsync(int PlanetID, int X, int Y) {
+            return base.Channel.GetFarmAtPosAsync(PlanetID, X, Y);
+        }
+        
+        public PIO.Models.Farm[] GetFarms(int PlanetID) {
+            return base.Channel.GetFarms(PlanetID);
+        }
+        
+        public System.Threading.Tasks.Task<PIO.Models.Farm[]> GetFarmsAsync(int PlanetID) {
+            return base.Channel.GetFarmsAsync(PlanetID);
+        }
+        
         public PIO.Models.Worker GetWorker(int WorkerID) {
             return base.Channel.GetWorker(WorkerID);
         }
@@ -451,6 +505,22 @@ namespace PIO.ClientLib.PIOServiceReference {
         
         public System.Threading.Tasks.Task<PIO.Models.FactoryType[]> GetFactoryTypesAsync() {
             return base.Channel.GetFactoryTypesAsync();
+        }
+        
+        public PIO.Models.FarmType GetFarmType(PIO.Models.FarmTypeIDs FarmTypeID) {
+            return base.Channel.GetFarmType(FarmTypeID);
+        }
+        
+        public System.Threading.Tasks.Task<PIO.Models.FarmType> GetFarmTypeAsync(PIO.Models.FarmTypeIDs FarmTypeID) {
+            return base.Channel.GetFarmTypeAsync(FarmTypeID);
+        }
+        
+        public PIO.Models.FarmType[] GetFarmTypes() {
+            return base.Channel.GetFarmTypes();
+        }
+        
+        public System.Threading.Tasks.Task<PIO.Models.FarmType[]> GetFarmTypesAsync() {
+            return base.Channel.GetFarmTypesAsync();
         }
         
         public PIO.Models.TaskType GetTaskType(PIO.Models.TaskTypeIDs TaskTypeID) {

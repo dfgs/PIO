@@ -72,7 +72,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 
 			logger = new MemoryLogger();
 			scheduler = new BotSchedulerModule(logger, client, botModule, orderManagerModule, 1);
-			Assert.ThrowsException<PIOInvalidOperationException>(() => scheduler.CreateBot(1));
+			Assert.ThrowsException<PIOInternalErrorException>(() => scheduler.CreateBot(1));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName == scheduler.ModuleName)));
 		}
 

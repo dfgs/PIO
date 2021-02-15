@@ -66,6 +66,31 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfFactory" nillable="true" type="tns:ArrayOfFactory" />
+  <xs:complexType name="Farm">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Building">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="FarmID" type="xs:int" />
+          <xs:element minOccurs="0" name="FarmTypeID" type="tns:FarmTypeIDs" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Farm" nillable="true" type="tns:Farm" />
+  <xs:simpleType name="FarmTypeIDs">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Forest" />
+      <xs:enumeration value="Stone" />
+      <xs:enumeration value="Water" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="FarmTypeIDs" nillable="true" type="tns:FarmTypeIDs" />
+  <xs:complexType name="ArrayOfFarm">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Farm" nillable="true" type="tns:Farm" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfFarm" nillable="true" type="tns:ArrayOfFarm" />
   <xs:complexType name="Worker">
     <xs:sequence>
       <xs:element minOccurs="0" name="PlanetID" type="xs:int" />
@@ -135,6 +160,21 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfFactoryType" nillable="true" type="tns:ArrayOfFactoryType" />
+  <xs:complexType name="FarmType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BuildSteps" type="xs:int" />
+      <xs:element minOccurs="0" name="FarmTypeID" type="tns:FarmTypeIDs" />
+      <xs:element minOccurs="0" name="HealthPoints" type="xs:int" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="FarmType" nillable="true" type="tns:FarmType" />
+  <xs:complexType name="ArrayOfFarmType">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="FarmType" nillable="true" type="tns:FarmType" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfFarmType" nillable="true" type="tns:ArrayOfFarmType" />
   <xs:simpleType name="TaskTypeIDs">
     <xs:restriction base="xs:string">
       <xs:enumeration value="Idle" />
@@ -215,8 +255,8 @@
       <xs:element minOccurs="0" name="TaskID" type="xs:int" />
       <xs:element minOccurs="0" name="TaskTypeID" type="tns:TaskTypeIDs" />
       <xs:element minOccurs="0" name="WorkerID" type="xs:int" />
-      <xs:element minOccurs="0" name="X" nillable="true" type="xs:int" />
-      <xs:element minOccurs="0" name="Y" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="X" type="xs:int" />
+      <xs:element minOccurs="0" name="Y" type="xs:int" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="Task" nillable="true" type="tns:Task" />
