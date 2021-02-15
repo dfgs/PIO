@@ -59,6 +59,8 @@
     <Compile Include="ViewModels\ApplicationViewModel.cs" />
     <Compile Include="ViewModels\ILocation\CellViewModel.cs" />
     <Compile Include="ViewModels\ILocation\CellsViewModel.cs" />
+    <Compile Include="ViewModels\ILocation\FarmsViewModel.cs" />
+    <Compile Include="ViewModels\ILocation\FarmViewModel.cs" />
     <Compile Include="ViewModels\ILocation\FactoryViewModel.cs" />
     <Compile Include="ViewModels\ILocation\ILocationViewModel.cs" />
     <Compile Include="ViewModels\ILocation\ILocationViewModelCollection.cs" />
@@ -90,6 +92,9 @@
     </Compile>
     <Compile Include="Views\Selections\CellSelectionView.xaml.cs">
       <DependentUpon>CellSelectionView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Selections\FarmSelectionView.xaml.cs">
+      <DependentUpon>FarmSelectionView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Selections\FactorySelectionView.xaml.cs">
       <DependentUpon>FactorySelectionView.xaml</DependentUpon>
@@ -143,6 +148,10 @@
     <Page Include="Views\Selections\CellSelectionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Selections\FarmSelectionView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\Selections\FactorySelectionView.xaml">
       <SubType>Designer</SubType>
