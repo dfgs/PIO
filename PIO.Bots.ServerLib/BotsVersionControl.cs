@@ -36,16 +36,19 @@ namespace PIO.Bots.ServerLib
 					yield return new CreateTable(BotsDB.OrderTable, OrderTable.OrderID, OrderTable.BotID);
 					yield return new CreateTable(BotsDB.ProduceOrderTable, ProduceOrderTable.ProduceOrderID, ProduceOrderTable.OrderID, ProduceOrderTable.PlanetID, ProduceOrderTable.FactoryID);
 					yield return new CreateTable(BotsDB.BuildFactoryOrderTable, BuildFactoryOrderTable.BuildFactoryOrderID, BuildFactoryOrderTable.OrderID, BuildFactoryOrderTable.FactoryTypeID, BuildFactoryOrderTable.PlanetID, BuildFactoryOrderTable.X, BuildFactoryOrderTable.Y);
+					yield return new CreateTable(BotsDB.BuildFarmOrderTable, BuildFarmOrderTable.BuildFarmOrderID, BuildFarmOrderTable.OrderID, BuildFarmOrderTable.FarmTypeID, BuildFarmOrderTable.PlanetID, BuildFarmOrderTable.X, BuildFarmOrderTable.Y);
 					break;
 				case 2:
 					yield return new CreateRelation<int>(BotsDB.OrderTable, OrderTable.OrderID, ProduceOrderTable.OrderID);
 					yield return new CreateRelation<int>(BotsDB.OrderTable, OrderTable.OrderID, BuildFactoryOrderTable.OrderID);
+					yield return new CreateRelation<int>(BotsDB.OrderTable, OrderTable.OrderID, BuildFarmOrderTable.OrderID);
 
 					yield return new CreateRelation<int>(BotsDB.BotTable, BotTable.BotID, OrderTable.BotID);
 
 
 					yield return new CreateConstraint(BotsDB.ProduceOrderTable, ColumnConstraints.Unique, ProduceOrderTable.PlanetID, ProduceOrderTable.FactoryID);
 					yield return new CreateConstraint(BotsDB.BuildFactoryOrderTable, ColumnConstraints.Unique, BuildFactoryOrderTable.PlanetID, BuildFactoryOrderTable.X, BuildFactoryOrderTable.Y);
+					yield return new CreateConstraint(BotsDB.BuildFarmOrderTable, ColumnConstraints.Unique, BuildFarmOrderTable.PlanetID, BuildFarmOrderTable.X, BuildFarmOrderTable.Y);
 
 					break;
 				/*case 3:

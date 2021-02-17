@@ -75,7 +75,7 @@
     <Compile Include="Worker.cs" />
     <Compile Include="Factory.cs" />
     <Compile Include="Modules\DataModules\IWorkerModule.cs" />
-    <Compile Include="Modules\FunctionalModules\IFactoryBuilderModule.cs" />
+    <Compile Include="Modules\FunctionalModules\IBuilderModule.cs" />
     <Compile Include="Modules\DataModules\IFactoryModule.cs" />
     <Compile Include="Modules\DataModules\IFactoryTypeModule.cs" />
     <Compile Include="Modules\DataModules\IMaterialModule.cs" />

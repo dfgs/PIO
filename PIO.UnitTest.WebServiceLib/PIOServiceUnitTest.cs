@@ -701,7 +701,7 @@ namespace PIO.UnitTest.WebServiceLib
 			Material[] result;
 
 			service = new PIOService(NullLogger.Instance, null, null,  null, null, null, null, null, null, null, null, new MockedMaterialModule(3, false), null, null, null, null, null, null, null, null,null, null, null, null);
-			result = service.GetMaterials(FactoryTypeIDs.Stockpile);
+			result = service.GetMaterials(2);
 			Assert.IsNotNull(result);
 			Assert.AreEqual(3, result.Length);
 			Assert.IsTrue(result.All((item) => item != null));
@@ -728,7 +728,7 @@ namespace PIO.UnitTest.WebServiceLib
 			logger = new MemoryLogger();
 			service = new PIOService(logger, null, null, null, null, null, null, null, null, null, null, new MockedMaterialModule(3, true),  null,  null, null, null, null, null, null, null, null, null,null, null);
 
-			Assert.ThrowsException<FaultException>(() => service.GetMaterials(FactoryTypeIDs.Stockpile));
+			Assert.ThrowsException<FaultException>(() => service.GetMaterials(2));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level ==LogLevels.Error) && (item.ComponentName==service.ModuleName)));
 		}
 
@@ -1235,13 +1235,13 @@ namespace PIO.UnitTest.WebServiceLib
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName == service.ModuleName)));
 		}
 		[TestMethod]
-		public void ShouldCreateBuilding()
+		public void ShouldCreateFactory()
 		{
 			PIOService service;
 			Task result;
 
-			service = new PIOService(NullLogger.Instance, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, new MockedFactoryBuilderModule(false));
-			result = service.CreateBuilding(10,  FactoryTypeIDs.Sawmill);
+			service = new PIOService(NullLogger.Instance, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, new MockedBuilderModule(false));
+			result = service.CreateFactory(10,  FactoryTypeIDs.Sawmill);
 			Assert.IsNotNull(result);
 			Assert.AreEqual(10, result.WorkerID);
 			Assert.AreEqual(FactoryTypeIDs.Sawmill, result.FactoryTypeID);
@@ -1249,18 +1249,44 @@ namespace PIO.UnitTest.WebServiceLib
 
 
 		[TestMethod]
-		public void ShouldNotCreateBuildingAndLogError()
+		public void ShouldNotCreateFactoryAndLogError()
 		{
 			PIOService service;
 			MemoryLogger logger;
 
 			logger = new MemoryLogger();
-			service = new PIOService(logger, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,null,  null, null, new MockedFactoryBuilderModule(true));
+			service = new PIOService(logger, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,null,  null, null, new MockedBuilderModule(true));
 
-			Assert.ThrowsException<FaultException>(() => service.CreateBuilding(10,  FactoryTypeIDs.Sawmill));
+			Assert.ThrowsException<FaultException>(() => service.CreateFactory(10,  FactoryTypeIDs.Sawmill));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level ==LogLevels.Error) && (item.ComponentName==service.ModuleName)));
 		}
 
+		[TestMethod]
+		public void ShouldCreateFarm()
+		{
+			PIOService service;
+			Task result;
+
+			service = new PIOService(NullLogger.Instance, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, new MockedBuilderModule(false));
+			result = service.CreateFarm(10, FarmTypeIDs.Forest);
+			Assert.IsNotNull(result);
+			Assert.AreEqual(10, result.WorkerID);
+			Assert.AreEqual(FarmTypeIDs.Forest, result.FarmTypeID);
+		}
+
+
+		[TestMethod]
+		public void ShouldNotCreateFarmAndLogError()
+		{
+			PIOService service;
+			MemoryLogger logger;
+
+			logger = new MemoryLogger();
+			service = new PIOService(logger, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, new MockedBuilderModule(true));
+
+			Assert.ThrowsException<FaultException>(() => service.CreateFarm(10, FarmTypeIDs.Forest));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName == service.ModuleName)));
+		}
 
 
 		[TestMethod]
@@ -1269,8 +1295,8 @@ namespace PIO.UnitTest.WebServiceLib
 			PIOService service;
 			Task result;
 
-			service = new PIOService(NullLogger.Instance, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, new MockedFactoryBuilderModule(false));
-			result = service.BuildFactory(10);
+			service = new PIOService(NullLogger.Instance, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, new MockedBuilderModule(false));
+			result = service.Build(10);
 			Assert.IsNotNull(result);
 			Assert.AreEqual(10, result.WorkerID);
 		}
@@ -1283,15 +1309,16 @@ namespace PIO.UnitTest.WebServiceLib
 			MemoryLogger logger;
 
 			logger = new MemoryLogger();
-			service = new PIOService(logger, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,  null, null, new MockedFactoryBuilderModule(true));
+			service = new PIOService(logger, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null,  null, null, new MockedBuilderModule(true));
 
-			Assert.ThrowsException<FaultException>(() => service.BuildFactory(10));
+			Assert.ThrowsException<FaultException>(() => service.Build(10));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level ==LogLevels.Error) && (item.ComponentName==service.ModuleName)));
 		}
 
-
-
 	
+
+
+
 
 
 	}

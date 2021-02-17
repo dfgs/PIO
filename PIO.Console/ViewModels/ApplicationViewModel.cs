@@ -113,6 +113,9 @@ namespace PIO.Console.ViewModels
 			Factory factory;
 			FactoryViewModel factoryViewModel;
 
+			Farm farm;
+			FarmViewModel farmViewModel;
+
 			await Workers.RefreshWorker(Task.WorkerID);
 			switch (Task.TaskTypeID)
 			{
@@ -143,6 +146,22 @@ namespace PIO.Console.ViewModels
 					{
 						ErrorMessage = ex.Message;
 					}
+					try
+					{
+						farm = PIOClient.GetFarmAtPos(1, Task.X, Task.Y);
+						if (farm != null)
+						{
+							farmViewModel = new FarmViewModel(PIOClient, BotsClient);
+							await farmViewModel.LoadAsync(farm);
+							Farms.Add(farmViewModel);
+							MapItems.Insert(Cells.Count, farmViewModel);
+						}
+					}
+					catch (Exception ex)
+					{
+						ErrorMessage = ex.Message;
+					}
+
 					//await Factories.RefreshFactory(Task.X.Value, Task.Y.Value);
 					break;
 			}

@@ -42,7 +42,7 @@ namespace PIO.WebServiceLib
 		private ITakerModule takerModule;
 		private IStorerModule storerModule;
 
-		private IFactoryBuilderModule factoryBuilderModule;
+		private IBuilderModule builderModule;
 
 
 
@@ -60,7 +60,7 @@ namespace PIO.WebServiceLib
 			IResourceCheckerModule ResourceCheckerModule,ILocationCheckerModule LocationCheckerModule,
 			IIdlerModule IdlerModule, IProducerModule ProducerModule,
 			IMoverModule MoverModule,ITakerModule TakerModule,IStorerModule StorerModule,
-			IFactoryBuilderModule FactoryBuilderModule
+			IBuilderModule BuilderModule
 		) :base(Logger)
 		{
 			LogEnter();
@@ -89,7 +89,7 @@ namespace PIO.WebServiceLib
 			this.takerModule = TakerModule;
 			this.storerModule = StorerModule;
 
-			this.factoryBuilderModule = FactoryBuilderModule;
+			this.builderModule = BuilderModule;
 		}
 
 		private FaultException GenerateFaultException(Exception InnerException, int ComponentID, string ComponentName, string MethodName)
@@ -244,10 +244,10 @@ namespace PIO.WebServiceLib
 			return Try(() => materialModule.GetMaterial(MaterialID)).OrThrow(GenerateFaultException);
 		}
 
-		public Material[] GetMaterials(FactoryTypeIDs FactoryTypeID)
+		public Material[] GetMaterials(int MaterialSetID)
 		{
 			LogEnter();
-			return Try(() => materialModule.GetMaterials(FactoryTypeID)).OrThrow(GenerateFaultException);
+			return Try(() => materialModule.GetMaterials(MaterialSetID)).OrThrow(GenerateFaultException);
 		}
 
 		public Ingredient GetIngredient(int IngredientID)
@@ -365,18 +365,24 @@ namespace PIO.WebServiceLib
 
 			return Try(() => storerModule.BeginStore(WorkerID)).OrThrow(GenerateFaultException);
 		}
-		public Task CreateBuilding(int WorkerID, FactoryTypeIDs FactoryTypeID)
+		public Task CreateFactory(int WorkerID, FactoryTypeIDs FactoryTypeID)
 		{
 			LogEnter();
 
-			return Try(() => factoryBuilderModule.BeginCreateBuilding(WorkerID, FactoryTypeID)).OrThrow(GenerateFaultException);
+			return Try(() => builderModule.BeginCreateBuilding(WorkerID, FactoryTypeID, null)).OrThrow(GenerateFaultException);
+		}
+		public Task CreateFarm(int WorkerID, FarmTypeIDs FarmTypeID)
+		{
+			LogEnter();
+
+			return Try(() => builderModule.BeginCreateBuilding(WorkerID, null, FarmTypeID)).OrThrow(GenerateFaultException);
 		}
 
-		public Task BuildFactory(int WorkerID)
+		public Task Build(int WorkerID)
 		{
 			LogEnter();
 
-			return Try(() => factoryBuilderModule.BeginBuild(WorkerID)).OrThrow(GenerateFaultException);
+			return Try(() => builderModule.BeginBuild(WorkerID)).OrThrow(GenerateFaultException);
 		}
 
 

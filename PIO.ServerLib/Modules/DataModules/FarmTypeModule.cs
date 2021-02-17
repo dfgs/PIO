@@ -30,7 +30,7 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying FarmType table (FarmTypeID={FarmTypeID})");
-			query=new Select(FarmTypeTable.FarmTypeID, FarmTypeTable.Name,FarmTypeTable.HealthPoints,FarmTypeTable.BuildSteps).From(PIODB.FarmTypeTable).Where(FarmTypeTable.FarmTypeID.IsEqualTo(FarmTypeID));
+			query=new Select(FarmTypeTable.FarmTypeID,  FarmTypeTable.Name, FarmTypeTable.MaterialSetID, FarmTypeTable.HealthPoints,FarmTypeTable.BuildSteps).From(PIODB.FarmTypeTable).Where(FarmTypeTable.FarmTypeID.IsEqualTo(FarmTypeID));
 			return TrySelectFirst<FarmTypeTable,FarmType>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
@@ -40,7 +40,7 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying FarmType table");
-			query=new Select(FarmTypeTable.FarmTypeID, FarmTypeTable.Name, FarmTypeTable.HealthPoints, FarmTypeTable.BuildSteps).From(PIODB.FarmTypeTable);
+			query=new Select(FarmTypeTable.FarmTypeID, FarmTypeTable.Name, FarmTypeTable.MaterialSetID, FarmTypeTable.HealthPoints, FarmTypeTable.BuildSteps).From(PIODB.FarmTypeTable);
 			return TrySelectMany<FarmTypeTable,FarmType>(query).OrThrow<PIODataException>("Failed to query");
 		}
 

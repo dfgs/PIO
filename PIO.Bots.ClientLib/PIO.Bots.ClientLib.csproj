@@ -80,6 +80,7 @@
     </None>
     <None Include="Properties\DataSources\PIO.Bots.Models.Bot.datasource" />
     <None Include="Properties\DataSources\PIO.Bots.Models.BuildFactoryOrder.datasource" />
+    <None Include="Properties\DataSources\PIO.Bots.Models.BuildFarmOrder.datasource" />
     <None Include="Properties\DataSources\PIO.Bots.Models.Order.datasource" />
     <None Include="Properties\DataSources\PIO.Bots.Models.ProduceOrder.datasource" />
   </ItemGroup>

@@ -8,4 +8,12 @@
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="FactoryTypeIDs" nillable="true" type="tns:FactoryTypeIDs" />
+  <xs:simpleType name="FarmTypeIDs">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Forest" />
+      <xs:enumeration value="Stone" />
+      <xs:enumeration value="Water" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="FarmTypeIDs" nillable="true" type="tns:FarmTypeIDs" />
 </xs:schema>

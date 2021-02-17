@@ -31,6 +31,8 @@ namespace PIO.Models
 		public ResourceTypeIDs? ResourceTypeID { get; set; }
 		[DataMember]
 		public FactoryTypeIDs? FactoryTypeID { get; set; }
+		[DataMember]
+		public FarmTypeIDs? FarmTypeID { get; set; }
 
 
 	}

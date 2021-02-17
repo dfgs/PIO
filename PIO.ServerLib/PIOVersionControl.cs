@@ -35,8 +35,8 @@ namespace PIO.ServerLib
 				case 1:
 					yield return new CreateTable(PIODB.PlanetTable, PlanetTable.PlanetID, PlanetTable.Name,PlanetTable.Width,PlanetTable.Height);
 					yield return new CreateTable(PIODB.ResourceTypeTable, ResourceTypeTable.ResourceTypeID, ResourceTypeTable.Name);
-					yield return new CreateTable(PIODB.FactoryTypeTable, FactoryTypeTable.FactoryTypeID, FactoryTypeTable.Name, FactoryTypeTable.HealthPoints, FactoryTypeTable.BuildSteps);
-					yield return new CreateTable(PIODB.FarmTypeTable, FarmTypeTable.FarmTypeID, FarmTypeTable.Name, FarmTypeTable.HealthPoints, FarmTypeTable.BuildSteps);
+					yield return new CreateTable(PIODB.FactoryTypeTable, FactoryTypeTable.FactoryTypeID, FactoryTypeTable.Name, FactoryTypeTable.MaterialSetID, FactoryTypeTable.HealthPoints, FactoryTypeTable.BuildSteps);
+					yield return new CreateTable(PIODB.FarmTypeTable, FarmTypeTable.FarmTypeID,  FarmTypeTable.Name, FarmTypeTable.MaterialSetID, FarmTypeTable.HealthPoints, FarmTypeTable.BuildSteps);
 					yield return new CreateTable(PIODB.TaskTypeTable, TaskTypeTable.TaskTypeID, TaskTypeTable.Name);
 
 					yield return new CreateTable(PIODB.CellTable, CellTable.CellID, CellTable.PlanetID, CellTable.X, CellTable.Y);
@@ -45,8 +45,8 @@ namespace PIO.ServerLib
 					yield return new CreateTable(PIODB.FarmTable, FarmTable.FarmID, FarmTable.BuildingID, FarmTable.FarmTypeID);
 					yield return new CreateTable(PIODB.WorkerTable, WorkerTable.WorkerID, WorkerTable.PlanetID,WorkerTable.X,WorkerTable.Y, WorkerTable.ResourceTypeID);
 					yield return new CreateTable(PIODB.StackTable, StackTable.StackID, StackTable.BuildingID, StackTable.ResourceTypeID, StackTable.Quantity);
-					yield return new CreateTable(PIODB.MaterialTable, MaterialTable.MaterialID, MaterialTable.FactoryTypeID, MaterialTable.ResourceTypeID, MaterialTable.Quantity);
-					yield return new CreateTable(PIODB.TaskTable, TaskTable.TaskID,TaskTable.TaskTypeID, TaskTable.WorkerID,TaskTable.X,TaskTable.Y,TaskTable.BuildingID, TaskTable.ResourceTypeID,TaskTable.FactoryTypeID,  TaskTable.ETA);
+					yield return new CreateTable(PIODB.MaterialTable, MaterialTable.MaterialID, MaterialTable.MaterialSetID, MaterialTable.ResourceTypeID, MaterialTable.Quantity);
+					yield return new CreateTable(PIODB.TaskTable, TaskTable.TaskID,TaskTable.TaskTypeID, TaskTable.WorkerID,TaskTable.X,TaskTable.Y,TaskTable.BuildingID, TaskTable.ResourceTypeID,TaskTable.FactoryTypeID,TaskTable.FarmTypeID,  TaskTable.ETA);
 
 					yield return new CreateTable(PIODB.IngredientTable, IngredientTable.IngredientID, IngredientTable.FactoryTypeID, IngredientTable.ResourceTypeID, IngredientTable.Quantity);
 					yield return new CreateTable(PIODB.ProductTable, ProductTable.ProductID, ProductTable.FactoryTypeID, ProductTable.ResourceTypeID, ProductTable.Quantity, ProductTable.Duration);
@@ -56,7 +56,10 @@ namespace PIO.ServerLib
 					yield return new CreateRelation<ResourceTypeIDs>(PIODB.WorkerTable, ResourceTypeTable.ResourceTypeID, WorkerTable.ResourceTypeID);
 					yield return new CreateRelation<int>(PIODB.StackTable, BuildingTable.BuildingID, StackTable.BuildingID);
 					yield return new CreateRelation<ResourceTypeIDs>(PIODB.StackTable, ResourceTypeTable.ResourceTypeID, StackTable.ResourceTypeID);
-					yield return new CreateRelation<FactoryTypeIDs>(PIODB.MaterialTable, FactoryTypeTable.FactoryTypeID, MaterialTable.FactoryTypeID);
+
+					//yield return new CreateRelation<int>(PIODB.FactoryTypeTable, MaterialTable.MaterialSetID, FactoryTypeTable.MaterialSetID);
+					//yield return new CreateRelation<int>(PIODB.FarmTypeTable, MaterialTable.MaterialSetID, FarmTypeTable.MaterialSetID);
+
 					yield return new CreateRelation<ResourceTypeIDs>(PIODB.MaterialTable, ResourceTypeTable.ResourceTypeID, MaterialTable.ResourceTypeID);
 					yield return new CreateRelation<FactoryTypeIDs>(PIODB.FactoryTable, FactoryTypeTable.FactoryTypeID, FactoryTable.FactoryTypeID);
 					yield return new CreateRelation<FarmTypeIDs>(PIODB.FarmTable, FarmTypeTable.FarmTypeID, FarmTable.FarmTypeID);
@@ -73,6 +76,7 @@ namespace PIO.ServerLib
 
 					yield return new CreateRelation<ResourceTypeIDs>(PIODB.TaskTable, ResourceTypeTable.ResourceTypeID, TaskTable.ResourceTypeID);
 					yield return new CreateRelation<FactoryTypeIDs>(PIODB.TaskTable, FactoryTypeTable.FactoryTypeID, TaskTable.FactoryTypeID);
+					yield return new CreateRelation<FarmTypeIDs>(PIODB.TaskTable, FarmTypeTable.FarmTypeID, TaskTable.FarmTypeID);
 
 					yield return new CreateRelation<FactoryTypeIDs>(PIODB.IngredientTable, FactoryTypeTable.FactoryTypeID, IngredientTable.FactoryTypeID);
 					yield return new CreateRelation<ResourceTypeIDs>(PIODB.IngredientTable, ResourceTypeTable.ResourceTypeID, IngredientTable.ResourceTypeID);
@@ -93,14 +97,23 @@ namespace PIO.ServerLib
 					yield return new Insert().Into(PIODB.ResourceTypeTable).Set(ResourceTypeTable.ResourceTypeID, ResourceTypeIDs.Plank).Set(ResourceTypeTable.Name, "Plank");
 					#endregion
 
+					#region create Material
+					yield return new Insert().Into(PIODB.MaterialTable).Set(MaterialTable.MaterialSetID, 1).Set(MaterialTable.ResourceTypeID, ResourceTypeIDs.Wood).Set(MaterialTable.Quantity, 1);
+
+					yield return new Insert().Into(PIODB.MaterialTable).Set(MaterialTable.MaterialSetID, 2).Set(MaterialTable.ResourceTypeID, ResourceTypeIDs.Wood).Set(MaterialTable.Quantity, 1);
+					yield return new Insert().Into(PIODB.MaterialTable).Set(MaterialTable.MaterialSetID, 2).Set(MaterialTable.ResourceTypeID, ResourceTypeIDs.Stone).Set(MaterialTable.Quantity, 2);
+
+					yield return new Insert().Into(PIODB.MaterialTable).Set(MaterialTable.MaterialSetID, 3).Set(MaterialTable.ResourceTypeID, ResourceTypeIDs.Wood).Set(MaterialTable.Quantity, 1);
+					#endregion
+
 					#region create FactoryType
-					yield return new Insert().Into(PIODB.FactoryTypeTable).Set(FactoryTypeTable.FactoryTypeID, FactoryTypeIDs.Forest).Set(FactoryTypeTable.Name, "Forest").Set(FactoryTypeTable.HealthPoints, 10).Set(FactoryTypeTable.BuildSteps, 10);
-					yield return new Insert().Into(PIODB.FactoryTypeTable).Set(FactoryTypeTable.FactoryTypeID, FactoryTypeIDs.Stockpile).Set(FactoryTypeTable.Name, "Stockpile").Set(FactoryTypeTable.HealthPoints, 10).Set(FactoryTypeTable.BuildSteps, 10);
-					yield return new Insert().Into(PIODB.FactoryTypeTable).Set(FactoryTypeTable.FactoryTypeID, FactoryTypeIDs.Sawmill).Set(FactoryTypeTable.Name, "Sawmill").Set(FactoryTypeTable.HealthPoints, 10).Set(FactoryTypeTable.BuildSteps, 10);
+					yield return new Insert().Into(PIODB.FactoryTypeTable).Set(FactoryTypeTable.FactoryTypeID, FactoryTypeIDs.Forest).Set(FactoryTypeTable.MaterialSetID,1).Set(FactoryTypeTable.Name, "Forest").Set(FactoryTypeTable.HealthPoints, 10).Set(FactoryTypeTable.BuildSteps, 10);
+					yield return new Insert().Into(PIODB.FactoryTypeTable).Set(FactoryTypeTable.FactoryTypeID, FactoryTypeIDs.Stockpile).Set(FactoryTypeTable.MaterialSetID, 2).Set(FactoryTypeTable.Name, "Stockpile").Set(FactoryTypeTable.HealthPoints, 10).Set(FactoryTypeTable.BuildSteps, 10);
+					yield return new Insert().Into(PIODB.FactoryTypeTable).Set(FactoryTypeTable.FactoryTypeID, FactoryTypeIDs.Sawmill).Set(FactoryTypeTable.MaterialSetID, 3).Set(FactoryTypeTable.Name, "Sawmill").Set(FactoryTypeTable.HealthPoints, 10).Set(FactoryTypeTable.BuildSteps, 10);
 					#endregion
 
 					#region create FarmType
-					yield return new Insert().Into(PIODB.FarmTypeTable).Set(FarmTypeTable.FarmTypeID, FarmTypeIDs.Forest).Set(FarmTypeTable.Name, "Forest").Set(FarmTypeTable.HealthPoints, 10).Set(FarmTypeTable.BuildSteps, 10);
+					yield return new Insert().Into(PIODB.FarmTypeTable).Set(FarmTypeTable.FarmTypeID, FarmTypeIDs.Forest).Set(FarmTypeTable.MaterialSetID,1).Set(FarmTypeTable.Name, "Forest").Set(FarmTypeTable.HealthPoints, 10).Set(FarmTypeTable.BuildSteps, 10);
 					#endregion
 
 					#region create TaskType
@@ -113,9 +126,6 @@ namespace PIO.ServerLib
 					yield return new Insert().Into(PIODB.TaskTypeTable).Set(TaskTypeTable.TaskTypeID, TaskTypeIDs.Store).Set(TaskTypeTable.Name, "Store");
 					#endregion
 
-					#region create Material
-					yield return new Insert().Into(PIODB.MaterialTable).Set(MaterialTable.FactoryTypeID, FactoryTypeIDs.Sawmill).Set(MaterialTable.ResourceTypeID, ResourceTypeIDs.Wood).Set(MaterialTable.Quantity, 1);
-					#endregion
 
 					#region create Ingredient
 					yield return new Insert().Into(PIODB.IngredientTable).Set(IngredientTable.FactoryTypeID, FactoryTypeIDs.Forest).Set(IngredientTable.ResourceTypeID, ResourceTypeIDs.Tree).Set(IngredientTable.Quantity, 1);
@@ -186,12 +196,7 @@ namespace PIO.ServerLib
 					//yield return new Insert().Into(TaskTable)Set(TaskTable.WorkerID, factoryID).Set(TaskTable.ETA, DateTime.Now);
 
 
-					yield return new Insert().Into(PIODB.MaterialTable).Set(MaterialTable.FactoryTypeID, FactoryTypeIDs.Forest).Set(MaterialTable.ResourceTypeID, ResourceTypeIDs.Wood).Set(MaterialTable.Quantity, 1);
-					yield return new Insert().Into(PIODB.MaterialTable).Set(MaterialTable.FactoryTypeID, FactoryTypeIDs.Forest).Set(MaterialTable.ResourceTypeID, ResourceTypeIDs.Stone).Set(MaterialTable.Quantity, 2);
-
-					yield return new Insert().Into(PIODB.MaterialTable).Set(MaterialTable.FactoryTypeID, FactoryTypeIDs.Stockpile).Set(MaterialTable.ResourceTypeID, ResourceTypeIDs.Wood).Set(MaterialTable.Quantity, 1);
-
-					break;
+				break;
 				
 
 

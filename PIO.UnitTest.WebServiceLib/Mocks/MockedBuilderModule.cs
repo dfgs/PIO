@@ -9,26 +9,26 @@ using System.Text;
 
 namespace PIO.UnitTest.WebServiceLib.Mocks
 {
-	public class MockedFactoryBuilderModule :MockedFunctionalModule,  IFactoryBuilderModule
+	public class MockedBuilderModule :MockedFunctionalModule,  IBuilderModule
 	{
 
 		public event TaskCreatedHandler TaskCreated;
 
-		public MockedFactoryBuilderModule(bool ThrowException) : base( ThrowException)
+		public MockedBuilderModule(bool ThrowException) : base( ThrowException)
 		{
 		}
 
 
 
-		public Task BeginCreateBuilding(int WorkerID,FactoryTypeIDs FactoryTypeID)
+		public Task BeginCreateBuilding(int WorkerID,FactoryTypeIDs? FactoryTypeID, FarmTypeIDs? FarmTypeID)
 		{
 			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
-			Task task = new Task() { WorkerID = WorkerID, ETA = DateTime.Now, FactoryTypeID=FactoryTypeID };
+			Task task = new Task() { WorkerID = WorkerID, ETA = DateTime.Now, FactoryTypeID=FactoryTypeID ,FarmTypeID=FarmTypeID};
 			TaskCreated?.Invoke(this, task);
 			return task;
 		}
 
-		public void EndCreateBuilding(int PlanetID, FactoryTypeIDs FactoryTypeID)
+		public void EndCreateBuilding(int PlanetID, FactoryTypeIDs? FactoryTypeID, FarmTypeIDs? FarmTypeID)
 		{
 			throw new NotImplementedException();
 		}

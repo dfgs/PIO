@@ -7,11 +7,11 @@ using System.Text;
 
 namespace PIO.UnitTest.ServerLib.Mocks
 {
-	public class MockedFactoryBuilderModule : IFactoryBuilderModule
+	public class MockedFactoryBuilderModule : IBuilderModule
 	{
 		public event TaskCreatedHandler TaskCreated;
 
-		public Task BeginCreateBuilding(int WorkerID,  FactoryTypeIDs FactoryTypeID)
+		public Task BeginCreateBuilding(int WorkerID,  FactoryTypeIDs? FactoryTypeID, FarmTypeIDs? FarmTypeID)
 		{
 			Task task = new Models.Task() { WorkerID = WorkerID ,FactoryTypeID=FactoryTypeID};
 			TaskCreated(this, task);
@@ -21,7 +21,7 @@ namespace PIO.UnitTest.ServerLib.Mocks
 		
 		
 
-		public void EndCreateBuilding(int PlanetID, FactoryTypeIDs FactoryTypeID)
+		public void EndCreateBuilding(int PlanetID, FactoryTypeIDs? FactoryTypeID,FarmTypeIDs? FarmTypeID)
 		{
 		}
 

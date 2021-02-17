@@ -21,15 +21,19 @@ namespace PIO.Bots.WebServiceLib
 		private IOrderManagerModule orderManagerModule;
 		private IProduceOrderModule produceOrderModule;
 		private IBuildFactoryOrderModule buildFactoryOrderModule;
+		private IBuildFarmOrderModule buildFarmOrderModule;
 
 		private IBotSchedulerModule botSchedulerModule;
 
 		public BotsService(ILogger Logger,
-			IBotModule BotModule, IOrderModule OrderModule, IProduceOrderModule ProduceOrderModule, IBuildFactoryOrderModule BuildFactoryOrderModule, IBotSchedulerModule BotSchedulerModule, IOrderManagerModule OrderManagerModule
+			IBotModule BotModule, IOrderModule OrderModule, IProduceOrderModule ProduceOrderModule,
+			IBuildFactoryOrderModule BuildFactoryOrderModule, IBuildFarmOrderModule BuildFarmOrderModule,
+			IBotSchedulerModule BotSchedulerModule, IOrderManagerModule OrderManagerModule
 		) : base(Logger)
 		{
 			LogEnter();
-			this.botModule = BotModule; this.orderModule = OrderModule;this.produceOrderModule = ProduceOrderModule;this.buildFactoryOrderModule = BuildFactoryOrderModule;
+			this.botModule = BotModule; this.orderModule = OrderModule;this.produceOrderModule = ProduceOrderModule;
+			this.buildFactoryOrderModule = BuildFactoryOrderModule;this.buildFarmOrderModule = BuildFarmOrderModule;
 			this.botSchedulerModule = BotSchedulerModule;
 			this.orderManagerModule = OrderManagerModule;
 		}
@@ -99,6 +103,22 @@ namespace PIO.Bots.WebServiceLib
 			return Try(() => buildFactoryOrderModule.GetBuildFactoryOrders(PlanetID,X,Y)).OrThrow(GenerateFaultException);
 		}
 
+		public BuildFarmOrder GetBuildFarmOrder(int BuildFarmOrderID)
+		{
+			LogEnter();
+			return Try(() => buildFarmOrderModule.GetBuildFarmOrder(BuildFarmOrderID)).OrThrow(GenerateFaultException);
+		}
+		public BuildFarmOrder[] GetBuildFarmOrders()
+		{
+			LogEnter();
+			return Try(() => buildFarmOrderModule.GetBuildFarmOrders()).OrThrow(GenerateFaultException);
+		}
+		public BuildFarmOrder[] GetBuildFarmOrdersAtPosition(int PlanetID, int X, int Y)
+		{
+			LogEnter();
+			return Try(() => buildFarmOrderModule.GetBuildFarmOrders(PlanetID, X, Y)).OrThrow(GenerateFaultException);
+		}
+
 		#endregion
 
 		#region functional
@@ -110,7 +130,12 @@ namespace PIO.Bots.WebServiceLib
 		public BuildFactoryOrder CreateBuildFactoryOrder(int PlanetID, FactoryTypeIDs FactoryTypeID, int X, int Y)
 		{
 			LogEnter();
-			return Try(() => orderManagerModule.CreateBuildFactoryOrder(PlanetID, FactoryTypeID,X,Y)).OrThrow(GenerateFaultException);
+			return Try(() => orderManagerModule.CreateBuildFactoryOrder(PlanetID, FactoryTypeID, X, Y)).OrThrow(GenerateFaultException);
+		}
+		public BuildFarmOrder CreateBuildFarmOrder(int PlanetID, FarmTypeIDs FarmTypeID, int X, int Y)
+		{
+			LogEnter();
+			return Try(() => orderManagerModule.CreateBuildFarmOrder(PlanetID, FarmTypeID, X, Y)).OrThrow(GenerateFaultException);
 		}
 
 		public Bot CreateBot(int WorkerID)

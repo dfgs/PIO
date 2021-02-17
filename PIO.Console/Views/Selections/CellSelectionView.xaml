@@ -26,11 +26,21 @@
 					</DataTemplate>
 				</ItemsControl.ItemTemplate>
 			</ItemsControl>
+			<TextBlock Text="Build farm orders:" FontWeight="Bold"/>
+			<ItemsControl ItemsSource="{Binding BuildFarmOrders}">
+				<ItemsControl.ItemTemplate>
+					<DataTemplate>
+						<StackPanel Orientation="Horizontal">
+							<TextBlock Text="{Binding FarmTypeID}"/>
+						</StackPanel>
+					</DataTemplate>
+				</ItemsControl.ItemTemplate>
+			</ItemsControl>
 		</StackPanel>
 		<GridSplitter Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
 		<StackPanel Grid.Column="2">
 			<Button Content="New build factory order" Command="{Binding CreateBuildFactoryOrderCommand}"/>
-			<Button Content="New xxx"/>
+			<Button Content="New build farm order" Command="{Binding CreateBuildFarmOrderCommand}"/>
 		</StackPanel>
 	</Grid>
 </UserControl>

@@ -13,6 +13,7 @@ namespace PIO.ServerLib.Tables
 	{
 		public static readonly Column<FarmTypeIDs> FarmTypeID = new Column<FarmTypeIDs>() { Constraint = NetORMLib.ColumnConstraints.PrimaryKey };
 		public new static readonly Column<string> Name = new Column<string>();
+		public static readonly Column<int> MaterialSetID = new Column<int>();
 		public static readonly Column<int> HealthPoints = new Column<int>();
 		public static readonly Column<int> BuildSteps = new Column<int>();
 	}

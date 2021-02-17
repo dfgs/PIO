@@ -20,13 +20,14 @@ namespace PIO.ServerLib.Modules
 	public class ResourceCheckerModule : FunctionalModule, IResourceCheckerModule
 	{
 		private IFactoryModule factoryModule;
+		private IFactoryTypeModule factoryTypeModule;
 		private IStackModule stackModule;
 		private IIngredientModule ingredientModule;
 		private IMaterialModule materialModule;
 
-		public ResourceCheckerModule(ILogger Logger, IFactoryModule FactoryModule, IStackModule StackModule,IIngredientModule IngredientModule,IMaterialModule MaterialModule) : base(Logger)
+		public ResourceCheckerModule(ILogger Logger, IFactoryModule FactoryModule, IFactoryTypeModule FactoryTypeModule, IStackModule StackModule,IIngredientModule IngredientModule,IMaterialModule MaterialModule) : base(Logger)
 		{
-			this.factoryModule = FactoryModule;this.stackModule = StackModule;this.ingredientModule = IngredientModule;this.materialModule = MaterialModule;
+			this.factoryModule = FactoryModule;this.factoryTypeModule = FactoryTypeModule; this.stackModule = StackModule;this.ingredientModule = IngredientModule;this.materialModule = MaterialModule;
 		}
 
 		public bool HasEnoughResourcesToProduce(int FactoryID)
@@ -115,6 +116,7 @@ namespace PIO.ServerLib.Modules
 		public bool HasEnoughResourcesToBuild(int FactoryID)
 		{
 			Factory factory;
+			FactoryType factoryType;
 			Material[] materials;
 			Stack[] stacks;
 			Stack stack;
@@ -123,8 +125,11 @@ namespace PIO.ServerLib.Modules
 
 			factory = AssertExists(() => factoryModule.GetFactory(FactoryID), $"FactoryID={FactoryID}");
 
+			Log(LogLevels.Information, $"Get FactoryType (FactoryTypeID={factory.FactoryTypeID})");
+			factoryType = Try(() => factoryTypeModule.GetFactoryType(factory.FactoryTypeID)).OrThrow<PIOInternalErrorException>("Failed to get FactoryType");
+
 			Log(LogLevels.Information, $"Get materials (FactoryTypeID={factory.FactoryTypeID})");
-			materials = Try(() => materialModule.GetMaterials(factory.FactoryTypeID)).OrThrow<PIOInternalErrorException>("Failed to get materials");
+			materials = Try(() => materialModule.GetMaterials(factoryType.MaterialSetID)).OrThrow<PIOInternalErrorException>("Failed to get materials");
 
 			Log(LogLevels.Information, $"Get stacks (BuildingID={factory.BuildingID})");
 			stacks = Try(() => stackModule.GetStacks(factory.BuildingID)).OrThrow<PIOInternalErrorException>("Failed to get stacks");
@@ -152,6 +157,7 @@ namespace PIO.ServerLib.Modules
 		public ResourceTypeIDs[] GetMissingResourcesToBuild(int FactoryID)
 		{
 			Factory factory;
+			FactoryType factoryType;
 			Material[] materials;
 			Stack[] stacks;
 			Stack stack;
@@ -162,8 +168,11 @@ namespace PIO.ServerLib.Modules
 
 			factory = AssertExists(() => factoryModule.GetFactory(FactoryID), $"FactoryID={FactoryID}");
 
+			Log(LogLevels.Information, $"Get FactoryType (FactoryTypeID={factory.FactoryTypeID})");
+			factoryType = Try(() => factoryTypeModule.GetFactoryType(factory.FactoryTypeID)).OrThrow<PIOInternalErrorException>("Failed to get FactoryType");
+
 			Log(LogLevels.Information, $"Get materials (FactoryTypeID={factory.FactoryTypeID})");
-			materials = Try(() => materialModule.GetMaterials(factory.FactoryTypeID)).OrThrow<PIOInternalErrorException>("Failed to get materials");
+			materials = Try(() => materialModule.GetMaterials(factoryType.MaterialSetID)).OrThrow<PIOInternalErrorException>("Failed to get materials");
 
 			Log(LogLevels.Information, $"Get stacks (BuildingID={factory.BuildingID})");
 			stacks = Try(() => stackModule.GetStacks(factory.BuildingID)).OrThrow<PIOInternalErrorException>("Failed to get stacks");

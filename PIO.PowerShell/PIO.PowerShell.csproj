@@ -48,7 +48,9 @@
   <ItemGroup>
     <Compile Include="Bots\DataCmdlet\GetBotsCmdlet.cs" />
     <Compile Include="Bots\DataCmdlet\GetBotCmdlet.cs" />
+    <Compile Include="Bots\DataCmdlet\GetBuildFarmOrderCmdlet.cs" />
     <Compile Include="Bots\DataCmdlet\GetBuildFactoryOrderCmdlet.cs" />
+    <Compile Include="Bots\DataCmdlet\GetBuildFarmOrdersCmdlet.cs" />
     <Compile Include="Bots\DataCmdlet\GetProduceOrderCmdlet.cs" />
     <Compile Include="Bots\DataCmdlet\GetOrderCmdlet.cs" />
     <Compile Include="Bots\DataCmdlet\GetBuildFactoryOrdersCmdlet.cs" />
@@ -91,8 +93,9 @@
     <Compile Include="PIO\FunctionalCmdlet\GetMissingResourcesToBuildCmdlet.cs" />
     <Compile Include="PIO\FunctionalCmdlet\GetMissingResourcesToProduceCmdlet.cs" />
     <Compile Include="PIO\FunctionalCmdlet\AssertWorkerIsInBuildingCmdlet.cs" />
+    <Compile Include="PIO\FunctionalCmdlet\NewFarmCmdLet.cs" />
+    <Compile Include="PIO\FunctionalCmdlet\StartBuildCmdLet.cs" />
     <Compile Include="PIO\FunctionalCmdlet\NewFactoryCmdLet.cs" />
-    <Compile Include="PIO\FunctionalCmdlet\NewBuildingCmdLet.cs" />
     <Compile Include="PIO\FunctionalCmdlet\StartStoreCmdlet.cs" />
     <Compile Include="PIO\FunctionalCmdlet\StartTakeCmdlet.cs" />
     <Compile Include="PIO\FunctionalCmdlet\StartMoveToCmdlet.cs" />

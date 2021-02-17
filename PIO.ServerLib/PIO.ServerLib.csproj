@@ -59,7 +59,7 @@
     <Compile Include="Modules\FunctionalModules\TaskGeneratorModule.cs" />
     <Compile Include="Modules\FunctionalModules\ProducerModule.cs" />
     <Compile Include="Modules\FunctionalModules\ResourceCheckerModule.cs" />
-    <Compile Include="Modules\FunctionalModules\FactoryBuilderModule.cs" />
+    <Compile Include="Modules\FunctionalModules\BuilderModule.cs" />
     <Compile Include="Modules\DataModules\WorkerModule.cs" />
     <Compile Include="Modules\DataModules\FactoryModule.cs" />
     <Compile Include="Modules\DataModules\FactoryTypeModule.cs" />

@@ -81,11 +81,11 @@ namespace PIO.UnitTest.ServerLib.Modules
 		public void ShouldAddTaskFromFactoryBuilder()
 		{
 			SchedulerModule module;
-			IFactoryBuilderModule taskModule;
+			IBuilderModule taskModule;
 
 			taskModule = new MockedFactoryBuilderModule();
 			module = new SchedulerModule(NullLogger.Instance, null, new MockedIdlerModule(), new MockedProducerModule(), new MockedMoverModule(), new MockedTakerModule(), new MockedStorerModule(), taskModule);
-			taskModule.BeginCreateBuilding(1, FactoryTypeIDs.Stockpile);
+			taskModule.BeginCreateBuilding(1, FactoryTypeIDs.Stockpile,null);
 			Assert.AreEqual(1, module.Count);
 
 			taskModule.BeginBuild(1);

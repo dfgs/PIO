@@ -15,13 +15,13 @@ using PIO.UnitTest.ServerLib.Mocks.EngineModules;
 namespace PIO.UnitTest.ServerLib.Modules
 {
 	[TestClass]
-	public class FactoryBuilderModuleUnitTest
+	public class BuilderModuleUnitTest
 	{
 
 		[TestMethod]
 		public void ShouldCreateBuilding()
 		{
-			FactoryBuilderModule module;
+			BuilderModule module;
 			IWorkerModule workerModule;
 			ITaskModule taskModule;
 			MockedSchedulerModule schedulerModule;
@@ -38,11 +38,11 @@ namespace PIO.UnitTest.ServerLib.Modules
 			factoryModule = new MockedFactoryModule(false);
 			factoryTypeModule = new MockedFactoryTypeModule(false,new FactoryType() { FactoryTypeID=FactoryTypeIDs.Sawmill });
 			stackModule = new MockedStackModule(false, new Stack() { Quantity = 10, ResourceTypeID = ResourceTypeIDs.Wood, StackID = 1 }, new Stack() { Quantity = 10, ResourceTypeID = ResourceTypeIDs.Stone, StackID = 1 });
-			materialModule = new MockedMaterialModule(false, new Material() { Quantity = 1, ResourceTypeID = ResourceTypeIDs.Wood, FactoryTypeID = FactoryTypeIDs.Sawmill }, new Material() { Quantity = 2, ResourceTypeID = ResourceTypeIDs.Stone, FactoryTypeID = FactoryTypeIDs.Sawmill });
-			module = new FactoryBuilderModule(NullLogger.Instance, taskModule, workerModule, buildingModule,factoryModule,factoryTypeModule, stackModule, materialModule);
+			materialModule = new MockedMaterialModule(false, new Material() { Quantity = 1, ResourceTypeID = ResourceTypeIDs.Wood, MaterialSetID = 2 }, new Material() { Quantity = 2, ResourceTypeID = ResourceTypeIDs.Stone, MaterialSetID = 2 });
+			module = new BuilderModule(NullLogger.Instance, taskModule, workerModule, buildingModule,factoryModule,factoryTypeModule, null,null, stackModule, materialModule);
 			schedulerModule = new MockedSchedulerModule(false, module);
 
-			result = module.BeginCreateBuilding(1,FactoryTypeIDs.Sawmill) ;
+			result = module.BeginCreateBuilding(1,FactoryTypeIDs.Sawmill,null) ;
 
 			Assert.IsNotNull(result);
 			Assert.AreEqual(TaskTypeIDs.CreateBuilding, result.TaskTypeID);
@@ -54,7 +54,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 		public void ShouldNotCreateBuildingWhenWorkerIsAlreadyWorking()
 		{
 			MemoryLogger logger;
-			FactoryBuilderModule module;
+			BuilderModule module;
 			IWorkerModule workerModule;
 			ITaskModule taskModule;
 
@@ -62,9 +62,9 @@ namespace PIO.UnitTest.ServerLib.Modules
 			taskModule = new MockedTaskModule(false, new Task() { WorkerID = 1 });
 
 			logger = new MemoryLogger();
-			module = new FactoryBuilderModule(logger, taskModule, workerModule,null,null,null,null,null);
+			module = new BuilderModule(logger, taskModule, workerModule,null,null,null,null,null, null, null);
 
-			Assert.ThrowsException<PIOInvalidOperationException>(() => module.BeginCreateBuilding(1, FactoryTypeIDs.Forest));
+			Assert.ThrowsException<PIOInvalidOperationException>(() => module.BeginCreateBuilding(1, FactoryTypeIDs.Forest, null));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Warning) && (item.ComponentName == module.ModuleName)));
 		}
 
@@ -73,7 +73,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 		public void ShouldNotCreateBuildingWhenPositionIsOccupied()
 		{
 			MemoryLogger logger;
-			FactoryBuilderModule module;
+			BuilderModule module;
 			IWorkerModule workerModule;
 			ITaskModule taskModule;
 			IBuildingModule buildingModule;
@@ -90,10 +90,10 @@ namespace PIO.UnitTest.ServerLib.Modules
 
 			logger = new MemoryLogger();
 			stackModule = new MockedStackModule(false, new Stack() { Quantity = 10, ResourceTypeID = ResourceTypeIDs.Wood, StackID = 1 }, new Stack() { Quantity = 10, ResourceTypeID = ResourceTypeIDs.Stone, StackID = 1 });
-			materialModule = new MockedMaterialModule(false, new Material() { Quantity = 1, ResourceTypeID = ResourceTypeIDs.Wood, FactoryTypeID = FactoryTypeIDs.Sawmill }, new Material() { Quantity = 2, ResourceTypeID = ResourceTypeIDs.Stone, FactoryTypeID = FactoryTypeIDs.Sawmill });
-			module = new FactoryBuilderModule(logger, taskModule, workerModule, buildingModule, factoryModule, factoryTypeModule, stackModule, materialModule);
+			materialModule = new MockedMaterialModule(false, new Material() { Quantity = 1, ResourceTypeID = ResourceTypeIDs.Wood, MaterialSetID = 2 }, new Material() { Quantity = 2, ResourceTypeID = ResourceTypeIDs.Stone, MaterialSetID = 2 });
+			module = new BuilderModule(logger, taskModule, workerModule, buildingModule, factoryModule, factoryTypeModule, null, null, stackModule, materialModule);
 
-			Assert.ThrowsException<PIOInvalidOperationException>(() => module.BeginCreateBuilding(1, FactoryTypeIDs.Sawmill));
+			Assert.ThrowsException<PIOInvalidOperationException>(() => module.BeginCreateBuilding(1, FactoryTypeIDs.Sawmill, null));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level ==LogLevels.Warning) && (item.ComponentName==module.ModuleName)));
 		}
 
@@ -102,7 +102,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 		public void ShouldNotCreateBuildingWhenWorkerDoesntExists()
 		{
 			MemoryLogger logger;
-			FactoryBuilderModule module;
+			BuilderModule module;
 			IWorkerModule workerModule;
 			ITaskModule taskModule;
 			IBuildingModule buildingModule;
@@ -118,47 +118,20 @@ namespace PIO.UnitTest.ServerLib.Modules
 			factoryModule = new MockedFactoryModule(false);
 			factoryTypeModule = new MockedFactoryTypeModule(false, new FactoryType() { FactoryTypeID = FactoryTypeIDs.Sawmill });
 			stackModule = new MockedStackModule(false, new Stack() { Quantity = 10, ResourceTypeID = ResourceTypeIDs.Wood, StackID = 1 }, new Stack() { Quantity = 10, ResourceTypeID = ResourceTypeIDs.Stone, StackID = 1 });
-			materialModule = new MockedMaterialModule(false, new Material() { Quantity = 1, ResourceTypeID = ResourceTypeIDs.Wood, FactoryTypeID = FactoryTypeIDs.Sawmill }, new Material() { Quantity = 2, ResourceTypeID = ResourceTypeIDs.Stone, FactoryTypeID = FactoryTypeIDs.Sawmill });
+			materialModule = new MockedMaterialModule(false, new Material() { Quantity = 1, ResourceTypeID = ResourceTypeIDs.Wood, MaterialSetID = 2 }, new Material() { Quantity = 2, ResourceTypeID = ResourceTypeIDs.Stone, MaterialSetID = 2 });
 
 			logger = new MemoryLogger();
-			module = new FactoryBuilderModule(logger, taskModule, workerModule,  buildingModule, factoryModule, factoryTypeModule, stackModule, materialModule);
+			module = new BuilderModule(logger, taskModule, workerModule,  buildingModule, factoryModule, factoryTypeModule, null, null, stackModule, materialModule);
 
-			Assert.ThrowsException<PIONotFoundException>(() => module.BeginCreateBuilding(999,  FactoryTypeIDs.Sawmill));
+			Assert.ThrowsException<PIONotFoundException>(() => module.BeginCreateBuilding(999,  FactoryTypeIDs.Sawmill, null));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level ==LogLevels.Warning) && (item.ComponentName==module.ModuleName)));
 		}
-		[TestMethod]
-		public void ShouldNotCreateBuildingWhenFactoryTypeDoesntExists()
-		{
-			MemoryLogger logger;
-			FactoryBuilderModule module;
-			IWorkerModule workerModule;
-			ITaskModule taskModule;
-			IBuildingModule buildingModule;
-			IFactoryModule factoryModule;
-			IStackModule stackModule;
-			IMaterialModule materialModule;
-			IFactoryTypeModule factoryTypeModule;
-			
-
-			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, PlanetID = 1 });
-			taskModule = new MockedTaskModule(false);
-			buildingModule = new MockedBuildingModule(false);
-			factoryModule = new MockedFactoryModule(false);
-			factoryTypeModule = new MockedFactoryTypeModule(false);
-			stackModule = new MockedStackModule(false, new Stack() { Quantity = 10, ResourceTypeID = ResourceTypeIDs.Wood, StackID = 1 }, new Stack() { Quantity = 10, ResourceTypeID = ResourceTypeIDs.Stone, StackID = 1 });
-			materialModule = new MockedMaterialModule(false, new Material() { Quantity = 1, ResourceTypeID = ResourceTypeIDs.Wood, FactoryTypeID = FactoryTypeIDs.Sawmill }, new Material() { Quantity = 2, ResourceTypeID = ResourceTypeIDs.Stone, FactoryTypeID = FactoryTypeIDs.Sawmill });
-
-			logger = new MemoryLogger();
-			module = new FactoryBuilderModule(logger, taskModule, workerModule,  buildingModule, factoryModule, factoryTypeModule, stackModule, materialModule);
-
-			Assert.ThrowsException<PIONotFoundException>(() => module.BeginCreateBuilding(1, FactoryTypeIDs.Sawmill));
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level ==LogLevels.Warning) && (item.ComponentName==module.ModuleName)));
-		}
+		
 		[TestMethod]
 		public void ShouldNotCreateBuildingAndThrowExceptionAndLogErrorWhenSubModuleFails()
 		{
 			MemoryLogger logger;
-			FactoryBuilderModule module;
+			BuilderModule module;
 			IWorkerModule workerModule;
 			ITaskModule taskModule;
 			IBuildingModule buildingModule;
@@ -174,11 +147,11 @@ namespace PIO.UnitTest.ServerLib.Modules
 			factoryModule = new MockedFactoryModule(false);
 			factoryTypeModule = new MockedFactoryTypeModule(false, new FactoryType() { FactoryTypeID = FactoryTypeIDs.Sawmill });
 			stackModule = new MockedStackModule(false, new Stack() { Quantity = 10, ResourceTypeID = ResourceTypeIDs.Wood, StackID = 1 }, new Stack() { Quantity = 10, ResourceTypeID = ResourceTypeIDs.Stone, StackID = 1 });
-			materialModule = new MockedMaterialModule(false, new Material() { Quantity = 1, ResourceTypeID = ResourceTypeIDs.Wood, FactoryTypeID = FactoryTypeIDs.Sawmill }, new Material() { Quantity = 2, ResourceTypeID = ResourceTypeIDs.Stone, FactoryTypeID = FactoryTypeIDs.Sawmill });
+			materialModule = new MockedMaterialModule(false, new Material() { Quantity = 1, ResourceTypeID = ResourceTypeIDs.Wood, MaterialSetID = 2 }, new Material() { Quantity = 2, ResourceTypeID = ResourceTypeIDs.Stone, MaterialSetID = 2 });
 
 			logger = new MemoryLogger();
-			module = new FactoryBuilderModule(logger, taskModule, workerModule,  buildingModule, factoryModule, factoryTypeModule, stackModule, materialModule);
-			Assert.ThrowsException<PIOInternalErrorException>(() => module.BeginCreateBuilding(1, FactoryTypeIDs.Sawmill));
+			module = new BuilderModule(logger, taskModule, workerModule,  buildingModule, factoryModule, factoryTypeModule, null, null, stackModule, materialModule);
+			Assert.ThrowsException<PIOInternalErrorException>(() => module.BeginCreateBuilding(1, FactoryTypeIDs.Sawmill, null));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
 
 
@@ -188,26 +161,14 @@ namespace PIO.UnitTest.ServerLib.Modules
 			factoryModule = new MockedFactoryModule(false);
 			factoryTypeModule = new MockedFactoryTypeModule(false, new FactoryType() { FactoryTypeID = FactoryTypeIDs.Sawmill });
 			stackModule = new MockedStackModule(false, new Stack() { Quantity = 10, ResourceTypeID = ResourceTypeIDs.Wood, StackID = 1 }, new Stack() { Quantity = 10, ResourceTypeID = ResourceTypeIDs.Stone, StackID = 1 });
-			materialModule = new MockedMaterialModule(false, new Material() { Quantity = 1, ResourceTypeID = ResourceTypeIDs.Wood, FactoryTypeID = FactoryTypeIDs.Sawmill }, new Material() { Quantity = 2, ResourceTypeID = ResourceTypeIDs.Stone, FactoryTypeID = FactoryTypeIDs.Sawmill });
+			materialModule = new MockedMaterialModule(false, new Material() { Quantity = 1, ResourceTypeID = ResourceTypeIDs.Wood, MaterialSetID = 2 }, new Material() { Quantity = 2, ResourceTypeID = ResourceTypeIDs.Stone, MaterialSetID = 2 });
 
 			logger = new MemoryLogger();
-			module = new FactoryBuilderModule(logger, taskModule, workerModule,  buildingModule, factoryModule, factoryTypeModule, stackModule, materialModule);
-			Assert.ThrowsException<PIOInternalErrorException>(() => module.BeginCreateBuilding(1,  FactoryTypeIDs.Sawmill));
+			module = new BuilderModule(logger, taskModule, workerModule,  buildingModule, factoryModule, factoryTypeModule, null, null, stackModule, materialModule);
+			Assert.ThrowsException<PIOInternalErrorException>(() => module.BeginCreateBuilding(1,  FactoryTypeIDs.Sawmill, null));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
 
-			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, PlanetID = 1 });
-			taskModule = new MockedTaskModule(false);
-			buildingModule = new MockedBuildingModule(false);
-			factoryModule = new MockedFactoryModule(false);
-			factoryTypeModule = new MockedFactoryTypeModule(true, new FactoryType() { FactoryTypeID = FactoryTypeIDs.Sawmill });
-			stackModule = new MockedStackModule(false, new Stack() { Quantity = 10, ResourceTypeID = ResourceTypeIDs.Wood, StackID = 1 }, new Stack() { Quantity = 10, ResourceTypeID = ResourceTypeIDs.Stone, StackID = 1 });
-			materialModule = new MockedMaterialModule(false, new Material() { Quantity = 1, ResourceTypeID = ResourceTypeIDs.Wood, FactoryTypeID = FactoryTypeIDs.Sawmill }, new Material() { Quantity = 2, ResourceTypeID = ResourceTypeIDs.Stone, FactoryTypeID = FactoryTypeIDs.Sawmill });
-
-			logger = new MemoryLogger();
-			module = new FactoryBuilderModule(logger, taskModule, workerModule, buildingModule, factoryModule, factoryTypeModule, stackModule, materialModule);
-			Assert.ThrowsException<PIOInternalErrorException>(() => module.BeginCreateBuilding(1,  FactoryTypeIDs.Sawmill));
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
-
+			
 		}
 
 
@@ -215,7 +176,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 		[TestMethod]
 		public void ShouldEndCreateBuildingTasks()
 		{
-			FactoryBuilderModule module;
+			BuilderModule module;
 			IWorkerModule workerModule;
 			ITaskModule taskModule;
 			MockedBuildingModule buildingModule;
@@ -231,10 +192,10 @@ namespace PIO.UnitTest.ServerLib.Modules
 			factoryModule = new MockedFactoryModule(false);
 			factoryTypeModule = new MockedFactoryTypeModule(false, new FactoryType() { FactoryTypeID = FactoryTypeIDs.Sawmill });
 			stackModule = new MockedStackModule(false, new Stack() { Quantity = 10, ResourceTypeID = ResourceTypeIDs.Wood, StackID = 1 }, new Stack() { Quantity = 10, ResourceTypeID = ResourceTypeIDs.Stone, StackID = 1 });
-			materialModule = new MockedMaterialModule(false, new Material() { Quantity = 1, ResourceTypeID = ResourceTypeIDs.Wood, FactoryTypeID = FactoryTypeIDs.Sawmill }, new Material() { Quantity = 2, ResourceTypeID = ResourceTypeIDs.Stone, FactoryTypeID = FactoryTypeIDs.Sawmill });
-			module = new FactoryBuilderModule(NullLogger.Instance, taskModule, workerModule, buildingModule, factoryModule, factoryTypeModule, stackModule, materialModule);
+			materialModule = new MockedMaterialModule(false, new Material() { Quantity = 1, ResourceTypeID = ResourceTypeIDs.Wood, MaterialSetID = 2 }, new Material() { Quantity = 2, ResourceTypeID = ResourceTypeIDs.Stone, MaterialSetID = 2 });
+			module = new BuilderModule(NullLogger.Instance, taskModule, workerModule, buildingModule, factoryModule, factoryTypeModule, null, null, stackModule, materialModule);
 
-			module.EndCreateBuilding(1,FactoryTypeIDs.Sawmill);
+			module.EndCreateBuilding(1,FactoryTypeIDs.Sawmill, null);
 			Assert.AreEqual(1,factoryModule.Count);
 		}
 
@@ -242,7 +203,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 		public void ShouldNotEndCreateBuildingTaskWhenWorkerDoesntExists()
 		{
 			MemoryLogger logger;
-			FactoryBuilderModule module;
+			BuilderModule module;
 			IWorkerModule workerModule;
 			ITaskModule taskModule;
 			IBuildingModule buildingModule;
@@ -258,10 +219,10 @@ namespace PIO.UnitTest.ServerLib.Modules
 			factoryModule = new MockedFactoryModule(false);
 			factoryTypeModule = new MockedFactoryTypeModule(false, new FactoryType() { FactoryTypeID = FactoryTypeIDs.Sawmill });
 			stackModule = new MockedStackModule(false, new Stack() { Quantity = 10, ResourceTypeID = ResourceTypeIDs.Wood, StackID = 1 }, new Stack() { Quantity = 10, ResourceTypeID = ResourceTypeIDs.Stone, StackID = 1 });
-			materialModule = new MockedMaterialModule(false, new Material() { Quantity = 1, ResourceTypeID = ResourceTypeIDs.Wood, FactoryTypeID = FactoryTypeIDs.Sawmill }, new Material() { Quantity = 2, ResourceTypeID = ResourceTypeIDs.Stone, FactoryTypeID = FactoryTypeIDs.Sawmill });
-			module = new FactoryBuilderModule(logger, taskModule, workerModule,  buildingModule, factoryModule, factoryTypeModule, stackModule, materialModule);
+			materialModule = new MockedMaterialModule(false, new Material() { Quantity = 1, ResourceTypeID = ResourceTypeIDs.Wood, MaterialSetID = 2 }, new Material() { Quantity = 2, ResourceTypeID = ResourceTypeIDs.Stone, MaterialSetID = 2 });
+			module = new BuilderModule(logger, taskModule, workerModule,  buildingModule, factoryModule, factoryTypeModule, null, null, stackModule, materialModule);
 
-			Assert.ThrowsException<PIONotFoundException>(() => module.EndCreateBuilding(999, FactoryTypeIDs.Sawmill));
+			Assert.ThrowsException<PIONotFoundException>(() => module.EndCreateBuilding(999, FactoryTypeIDs.Sawmill, null));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level ==LogLevels.Warning) && (item.ComponentName==module.ModuleName)));
 
 		}
@@ -270,7 +231,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 		public void ShouldNotEndCreateBuildingTaskWhenSubModuleFails()
 		{
 			MemoryLogger logger;
-			FactoryBuilderModule module;
+			BuilderModule module;
 			IWorkerModule workerModule;
 			ITaskModule taskModule;
 			IBuildingModule buildingModule;
@@ -289,10 +250,10 @@ namespace PIO.UnitTest.ServerLib.Modules
 			factoryModule = new MockedFactoryModule(false);
 			factoryTypeModule = new MockedFactoryTypeModule(true, new FactoryType() { FactoryTypeID = FactoryTypeIDs.Sawmill });
 			stackModule = new MockedStackModule(false, new Stack() { Quantity = 10, ResourceTypeID = ResourceTypeIDs.Wood, StackID = 1 }, new Stack() { Quantity = 10, ResourceTypeID = ResourceTypeIDs.Stone, StackID = 1 });
-			materialModule = new MockedMaterialModule(false, new Material() { Quantity = 1, ResourceTypeID = ResourceTypeIDs.Wood, FactoryTypeID = FactoryTypeIDs.Sawmill }, new Material() { Quantity = 2, ResourceTypeID = ResourceTypeIDs.Stone, FactoryTypeID = FactoryTypeIDs.Sawmill });
-			module = new FactoryBuilderModule(logger, taskModule, workerModule,  buildingModule, factoryModule, factoryTypeModule, stackModule, materialModule);
+			materialModule = new MockedMaterialModule(false, new Material() { Quantity = 1, ResourceTypeID = ResourceTypeIDs.Wood, MaterialSetID = 2 }, new Material() { Quantity = 2, ResourceTypeID = ResourceTypeIDs.Stone, MaterialSetID = 2 });
+			module = new BuilderModule(logger, taskModule, workerModule,  buildingModule, factoryModule, factoryTypeModule, null, null, stackModule, materialModule);
 
-			Assert.ThrowsException<PIOInternalErrorException>(() => module.EndCreateBuilding(1, FactoryTypeIDs.Sawmill));
+			Assert.ThrowsException<PIOInternalErrorException>(() => module.EndCreateBuilding(1, FactoryTypeIDs.Sawmill, null));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
 
 
@@ -304,10 +265,10 @@ namespace PIO.UnitTest.ServerLib.Modules
 			factoryModule = new MockedFactoryModule(true);
 			factoryTypeModule = new MockedFactoryTypeModule(false, new FactoryType() { FactoryTypeID = FactoryTypeIDs.Sawmill });
 			stackModule = new MockedStackModule(false, new Stack() { Quantity = 10, ResourceTypeID = ResourceTypeIDs.Wood, StackID = 1 }, new Stack() { Quantity = 10, ResourceTypeID = ResourceTypeIDs.Stone, StackID = 1 });
-			materialModule = new MockedMaterialModule(false, new Material() { Quantity = 1, ResourceTypeID = ResourceTypeIDs.Wood, FactoryTypeID = FactoryTypeIDs.Sawmill }, new Material() { Quantity = 2, ResourceTypeID = ResourceTypeIDs.Stone, FactoryTypeID = FactoryTypeIDs.Sawmill });
-			module = new FactoryBuilderModule(logger, taskModule, workerModule,  buildingModule, factoryModule, factoryTypeModule, stackModule, materialModule);
+			materialModule = new MockedMaterialModule(false, new Material() { Quantity = 1, ResourceTypeID = ResourceTypeIDs.Wood, MaterialSetID = 2 }, new Material() { Quantity = 2, ResourceTypeID = ResourceTypeIDs.Stone, MaterialSetID = 2 });
+			module = new BuilderModule(logger, taskModule, workerModule,  buildingModule, factoryModule, factoryTypeModule, null, null, stackModule, materialModule);
 
-			Assert.ThrowsException<PIOInternalErrorException>(() => module.EndCreateBuilding(1, FactoryTypeIDs.Sawmill));
+			Assert.ThrowsException<PIOInternalErrorException>(() => module.EndCreateBuilding(1, FactoryTypeIDs.Sawmill, null));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
 
 		}
@@ -325,7 +286,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 		[TestMethod]
 		public void ShouldBuild()
 		{
-			FactoryBuilderModule module;
+			BuilderModule module;
 			IWorkerModule workerModule;
 			ITaskModule taskModule;
 			MockedSchedulerModule schedulerModule;
@@ -340,10 +301,10 @@ namespace PIO.UnitTest.ServerLib.Modules
 			taskModule = new MockedTaskModule(false);
 			buildingModule = new MockedBuildingModule(false,new Building() { BuildingID=2, RemainingBuildSteps=5});
 			factoryModule = new MockedFactoryModule(false,new Factory() {FactoryID=2,BuildingID=2, FactoryTypeID=FactoryTypeIDs.Sawmill, RemainingBuildSteps = 5 }) ;
-			factoryTypeModule = new MockedFactoryTypeModule(false, new FactoryType() { FactoryTypeID = FactoryTypeIDs.Sawmill });
+			factoryTypeModule = new MockedFactoryTypeModule(false, new FactoryType() { FactoryTypeID = FactoryTypeIDs.Sawmill, MaterialSetID = 2 });
 			stackModule = new MockedStackModule(false, new Stack() { BuildingID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Wood, StackID = 1 }, new Stack() { BuildingID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Stone, StackID = 1 });
-			materialModule = new MockedMaterialModule(false, new Material() { Quantity = 1, ResourceTypeID = ResourceTypeIDs.Wood, FactoryTypeID = FactoryTypeIDs.Sawmill }, new Material() { Quantity = 2, ResourceTypeID = ResourceTypeIDs.Stone, FactoryTypeID = FactoryTypeIDs.Sawmill });
-			module = new FactoryBuilderModule(NullLogger.Instance, taskModule, workerModule, buildingModule, factoryModule, factoryTypeModule, stackModule, materialModule);
+			materialModule = new MockedMaterialModule(false, new Material() { Quantity = 1, ResourceTypeID = ResourceTypeIDs.Wood, MaterialSetID = 2 }, new Material() { Quantity = 2, ResourceTypeID = ResourceTypeIDs.Stone, MaterialSetID = 2 });
+			module = new BuilderModule(NullLogger.Instance, taskModule, workerModule, buildingModule, factoryModule, factoryTypeModule, null, null, stackModule, materialModule);
 			schedulerModule = new MockedSchedulerModule(false, module);
 
 			result = module.BeginBuild(1);
@@ -357,7 +318,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 		public void ShouldNotBuildWhenWorkerIsAlreadyWorking()
 		{
 			MemoryLogger logger;
-			FactoryBuilderModule module;
+			BuilderModule module;
 			IWorkerModule workerModule;
 			ITaskModule taskModule;
 
@@ -365,7 +326,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			taskModule = new MockedTaskModule(false, new Task() { WorkerID = 1 });
 
 			logger = new MemoryLogger();
-			module = new FactoryBuilderModule(logger, taskModule, workerModule, null, null, null, null, null);
+			module = new BuilderModule(logger, taskModule, workerModule, null, null, null, null, null, null, null);
 
 			Assert.ThrowsException<PIOInvalidOperationException>(() => module.BeginBuild(1));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Warning) && (item.ComponentName == module.ModuleName)));
@@ -376,7 +337,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 		public void ShouldNotBuildWhenNoResourceAvailable()
 		{
 			MemoryLogger logger;
-			FactoryBuilderModule module;
+			BuilderModule module;
 			IWorkerModule workerModule;
 			ITaskModule taskModule;
 			IBuildingModule buildingModule;
@@ -390,12 +351,12 @@ namespace PIO.UnitTest.ServerLib.Modules
 			taskModule = new MockedTaskModule(false);
 			buildingModule = new MockedBuildingModule(false, new Building() { BuildingID = 2, RemainingBuildSteps = 5 });
 			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 2, BuildingID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill,RemainingBuildSteps=10 });
-			factoryTypeModule = new MockedFactoryTypeModule(false, new FactoryType() { FactoryTypeID = FactoryTypeIDs.Sawmill });
+			factoryTypeModule = new MockedFactoryTypeModule(false, new FactoryType() { FactoryTypeID = FactoryTypeIDs.Sawmill, MaterialSetID = 2 });
 			stackModule = new MockedStackModule(false, new Stack() { BuildingID = 2, Quantity = 0, ResourceTypeID = ResourceTypeIDs.Wood, StackID = 1 }, new Stack() { BuildingID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Stone, StackID = 1 });
-			materialModule = new MockedMaterialModule(false, new Material() { Quantity = 1, ResourceTypeID = ResourceTypeIDs.Wood, FactoryTypeID = FactoryTypeIDs.Sawmill }, new Material() { Quantity = 2, ResourceTypeID = ResourceTypeIDs.Stone, FactoryTypeID = FactoryTypeIDs.Sawmill });
+			materialModule = new MockedMaterialModule(false, new Material() { Quantity = 1, ResourceTypeID = ResourceTypeIDs.Wood, MaterialSetID = 2 }, new Material() { Quantity = 2, ResourceTypeID = ResourceTypeIDs.Stone, MaterialSetID = 2 });
 
 			logger = new MemoryLogger();
-			module = new FactoryBuilderModule(logger, taskModule, workerModule, buildingModule, factoryModule, factoryTypeModule, stackModule, materialModule);
+			module = new BuilderModule(logger, taskModule, workerModule, buildingModule, factoryModule, factoryTypeModule, null, null, stackModule, materialModule);
 
 			//result = module.BeginBuild(1, 2);
 
@@ -407,7 +368,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 		public void ShouldNotBuildWhenRemainingBuildStepsIsZero()
 		{
 			MemoryLogger logger;
-			FactoryBuilderModule module;
+			BuilderModule module;
 			IWorkerModule workerModule;
 			ITaskModule taskModule;
 			IBuildingModule buildingModule;
@@ -422,10 +383,10 @@ namespace PIO.UnitTest.ServerLib.Modules
 			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 2, BuildingID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill });
 			factoryTypeModule = new MockedFactoryTypeModule(false, new FactoryType() { FactoryTypeID = FactoryTypeIDs.Sawmill });
 			stackModule = new MockedStackModule(false, new Stack() { BuildingID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Wood, StackID = 1 }, new Stack() { BuildingID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Stone, StackID = 1 });
-			materialModule = new MockedMaterialModule(false, new Material() { Quantity = 1, ResourceTypeID = ResourceTypeIDs.Wood, FactoryTypeID = FactoryTypeIDs.Sawmill }, new Material() { Quantity = 2, ResourceTypeID = ResourceTypeIDs.Stone, FactoryTypeID = FactoryTypeIDs.Sawmill });
+			materialModule = new MockedMaterialModule(false, new Material() { Quantity = 1, ResourceTypeID = ResourceTypeIDs.Wood, MaterialSetID = 2 }, new Material() { Quantity = 2, ResourceTypeID = ResourceTypeIDs.Stone, MaterialSetID = 2 });
 
 			logger = new MemoryLogger();
-			module = new FactoryBuilderModule(logger, taskModule, workerModule, buildingModule, factoryModule, factoryTypeModule, stackModule, materialModule);
+			module = new BuilderModule(logger, taskModule, workerModule, buildingModule, factoryModule, factoryTypeModule, null, null, stackModule, materialModule);
 
 			Assert.ThrowsException<PIOInvalidOperationException>(() => module.BeginBuild(1));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level ==LogLevels.Warning) && (item.ComponentName==module.ModuleName)));
@@ -435,7 +396,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 		public void ShouldNotBuildWhenWorkerDoesntExists()
 		{
 			MemoryLogger logger;
-			FactoryBuilderModule module;
+			BuilderModule module;
 			IWorkerModule workerModule;
 			ITaskModule taskModule;
 			IBuildingModule buildingModule;
@@ -450,10 +411,10 @@ namespace PIO.UnitTest.ServerLib.Modules
 			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 2, BuildingID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill });
 			factoryTypeModule = new MockedFactoryTypeModule(false, new FactoryType() { FactoryTypeID = FactoryTypeIDs.Sawmill });
 			stackModule = new MockedStackModule(false, new Stack() { BuildingID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Wood, StackID = 1 }, new Stack() { BuildingID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Stone, StackID = 1 });
-			materialModule = new MockedMaterialModule(false, new Material() { Quantity = 1, ResourceTypeID = ResourceTypeIDs.Wood, FactoryTypeID = FactoryTypeIDs.Sawmill }, new Material() { Quantity = 2, ResourceTypeID = ResourceTypeIDs.Stone, FactoryTypeID = FactoryTypeIDs.Sawmill });
+			materialModule = new MockedMaterialModule(false, new Material() { Quantity = 1, ResourceTypeID = ResourceTypeIDs.Wood, MaterialSetID = 2 }, new Material() { Quantity = 2, ResourceTypeID = ResourceTypeIDs.Stone, MaterialSetID = 2 });
 
 			logger = new MemoryLogger();
-			module = new FactoryBuilderModule(logger, taskModule, workerModule, buildingModule, factoryModule, factoryTypeModule, stackModule, materialModule);
+			module = new BuilderModule(logger, taskModule, workerModule, buildingModule, factoryModule, factoryTypeModule, null, null, stackModule, materialModule);
 
 			Assert.ThrowsException<PIONotFoundException>(() => module.BeginBuild(999));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level ==LogLevels.Warning) && (item.ComponentName==module.ModuleName)));
@@ -462,26 +423,31 @@ namespace PIO.UnitTest.ServerLib.Modules
 		public void ShouldNotBuildWhenFactoryDoesntExistsAtPos()
 		{
 			MemoryLogger logger;
-			FactoryBuilderModule module;
+			BuilderModule module;
 			IWorkerModule workerModule;
 			ITaskModule taskModule;
 			IBuildingModule buildingModule;
 			IFactoryModule factoryModule;
+			IFarmModule farmModule;
 			IStackModule stackModule;
 			IMaterialModule materialModule;
 			IFactoryTypeModule factoryTypeModule;
+			IFarmTypeModule farmTypeModule;
 
-			
+
 			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, PlanetID = 1 ,X=10,Y=10});
 			taskModule = new MockedTaskModule(false);
 			buildingModule = new MockedBuildingModule(false, new Building() { BuildingID = 2, RemainingBuildSteps = 5 });
 			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 2, BuildingID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill });
 			factoryTypeModule = new MockedFactoryTypeModule(false, new FactoryType() { FactoryTypeID = FactoryTypeIDs.Sawmill });
+			farmModule = new MockedFarmModule(false, new Farm() { FarmID = 2, BuildingID = 2, FarmTypeID = FarmTypeIDs.Forest });
+			farmTypeModule = new MockedFarmTypeModule(false, new FarmType() { FarmTypeID = FarmTypeIDs.Forest });
+
 			stackModule = new MockedStackModule(false, new Stack() { BuildingID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Wood, StackID = 1 }, new Stack() { BuildingID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Stone, StackID = 1 });
-			materialModule = new MockedMaterialModule(false, new Material() { Quantity = 1, ResourceTypeID = ResourceTypeIDs.Wood, FactoryTypeID = FactoryTypeIDs.Sawmill }, new Material() { Quantity = 2, ResourceTypeID = ResourceTypeIDs.Stone, FactoryTypeID = FactoryTypeIDs.Sawmill });
+			materialModule = new MockedMaterialModule(false, new Material() { Quantity = 1, ResourceTypeID = ResourceTypeIDs.Wood, MaterialSetID = 2 }, new Material() { Quantity = 2, ResourceTypeID = ResourceTypeIDs.Stone, MaterialSetID = 2 });
 
 			logger = new MemoryLogger();
-			module = new FactoryBuilderModule(logger, taskModule, workerModule, buildingModule, factoryModule, factoryTypeModule, stackModule, materialModule);
+			module = new BuilderModule(logger, taskModule, workerModule, buildingModule, factoryModule, factoryTypeModule, farmModule, farmTypeModule, stackModule, materialModule);
 
 			Assert.ThrowsException<PIONotFoundException>(() => module.BeginBuild(1));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level ==LogLevels.Warning) && (item.ComponentName==module.ModuleName)));
@@ -490,7 +456,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 		public void ShouldNotBuildAndThrowExceptionAndLogErrorWhenSubModuleFails()
 		{
 			MemoryLogger logger;
-			FactoryBuilderModule module;
+			BuilderModule module;
 			IWorkerModule workerModule;
 			ITaskModule taskModule;
 			IBuildingModule buildingModule;
@@ -505,12 +471,12 @@ namespace PIO.UnitTest.ServerLib.Modules
 			taskModule = new MockedTaskModule(true);
 			buildingModule = new MockedBuildingModule(false, new Building() { BuildingID = 2, RemainingBuildSteps = 5 });
 			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 2, BuildingID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill, RemainingBuildSteps = 10 });
-			factoryTypeModule = new MockedFactoryTypeModule(false, new FactoryType() { FactoryTypeID = FactoryTypeIDs.Sawmill });
+			factoryTypeModule = new MockedFactoryTypeModule(false, new FactoryType() { FactoryTypeID = FactoryTypeIDs.Sawmill,MaterialSetID=2 });
 			stackModule = new MockedStackModule(false, new Stack() { BuildingID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Wood, StackID = 1 }, new Stack() { BuildingID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Stone, StackID = 1 });
-			materialModule = new MockedMaterialModule(false, new Material() { Quantity = 1, ResourceTypeID = ResourceTypeIDs.Wood, FactoryTypeID = FactoryTypeIDs.Sawmill }, new Material() { Quantity = 2, ResourceTypeID = ResourceTypeIDs.Stone, FactoryTypeID = FactoryTypeIDs.Sawmill });
+			materialModule = new MockedMaterialModule(false, new Material() { Quantity = 1, ResourceTypeID = ResourceTypeIDs.Wood, MaterialSetID = 2 }, new Material() { Quantity = 2, ResourceTypeID = ResourceTypeIDs.Stone, MaterialSetID = 2 });
 
 			logger = new MemoryLogger();
-			module = new FactoryBuilderModule(logger, taskModule, workerModule, buildingModule, factoryModule, factoryTypeModule, stackModule, materialModule);
+			module = new BuilderModule(logger, taskModule, workerModule, buildingModule, factoryModule, factoryTypeModule, null, null, stackModule, materialModule);
 			Assert.ThrowsException<PIOInternalErrorException>(() => module.BeginBuild(1));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
 
@@ -519,12 +485,12 @@ namespace PIO.UnitTest.ServerLib.Modules
 			taskModule = new MockedTaskModule(false);
 			buildingModule = new MockedBuildingModule(false, new Building() { BuildingID = 2, RemainingBuildSteps = 5 });
 			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 2, BuildingID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill, RemainingBuildSteps = 10 });
-			factoryTypeModule = new MockedFactoryTypeModule(false, new FactoryType() { FactoryTypeID = FactoryTypeIDs.Sawmill });
+			factoryTypeModule = new MockedFactoryTypeModule(false, new FactoryType() { FactoryTypeID = FactoryTypeIDs.Sawmill, MaterialSetID = 2 });
 			stackModule = new MockedStackModule(false, new Stack() { BuildingID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Wood, StackID = 1 }, new Stack() { BuildingID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Stone, StackID = 1 });
-			materialModule = new MockedMaterialModule(false, new Material() { Quantity = 1, ResourceTypeID = ResourceTypeIDs.Wood, FactoryTypeID = FactoryTypeIDs.Sawmill }, new Material() { Quantity = 2, ResourceTypeID = ResourceTypeIDs.Stone, FactoryTypeID = FactoryTypeIDs.Sawmill });
+			materialModule = new MockedMaterialModule(false, new Material() { Quantity = 1, ResourceTypeID = ResourceTypeIDs.Wood, MaterialSetID = 2 }, new Material() { Quantity = 2, ResourceTypeID = ResourceTypeIDs.Stone, MaterialSetID = 2 });
 
 			logger = new MemoryLogger();
-			module = new FactoryBuilderModule(logger, taskModule, workerModule, buildingModule, factoryModule, factoryTypeModule, stackModule, materialModule);
+			module = new BuilderModule(logger, taskModule, workerModule, buildingModule, factoryModule, factoryTypeModule, null, null, stackModule, materialModule);
 			Assert.ThrowsException<PIOInternalErrorException>(() => module.BeginBuild(1));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
 
@@ -532,12 +498,12 @@ namespace PIO.UnitTest.ServerLib.Modules
 			taskModule = new MockedTaskModule(false);
 			buildingModule = new MockedBuildingModule(false, new Building() { BuildingID = 2, RemainingBuildSteps = 5 });
 			factoryModule = new MockedFactoryModule(true, new Factory() { FactoryID = 2, BuildingID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill, RemainingBuildSteps = 10 });
-			factoryTypeModule = new MockedFactoryTypeModule(true, new FactoryType() { FactoryTypeID = FactoryTypeIDs.Sawmill });
+			factoryTypeModule = new MockedFactoryTypeModule(true, new FactoryType() { FactoryTypeID = FactoryTypeIDs.Sawmill, MaterialSetID = 2 });
 			stackModule = new MockedStackModule(false, new Stack() { BuildingID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Wood, StackID = 1 }, new Stack() { BuildingID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Stone, StackID = 1 });
-			materialModule = new MockedMaterialModule(false, new Material() { Quantity = 1, ResourceTypeID = ResourceTypeIDs.Wood, FactoryTypeID = FactoryTypeIDs.Sawmill }, new Material() { Quantity = 2, ResourceTypeID = ResourceTypeIDs.Stone, FactoryTypeID = FactoryTypeIDs.Sawmill });
+			materialModule = new MockedMaterialModule(false, new Material() { Quantity = 1, ResourceTypeID = ResourceTypeIDs.Wood, MaterialSetID = 2 }, new Material() { Quantity = 2, ResourceTypeID = ResourceTypeIDs.Stone, MaterialSetID = 2 });
 
 			logger = new MemoryLogger();
-			module = new FactoryBuilderModule(logger, taskModule, workerModule, buildingModule, factoryModule, factoryTypeModule, stackModule, materialModule);
+			module = new BuilderModule(logger, taskModule, workerModule, buildingModule, factoryModule, factoryTypeModule, null, null, stackModule, materialModule);
 			Assert.ThrowsException<PIOInternalErrorException>(() => module.BeginBuild(1));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
 
@@ -545,12 +511,12 @@ namespace PIO.UnitTest.ServerLib.Modules
 			taskModule = new MockedTaskModule(false);
 			buildingModule = new MockedBuildingModule(false, new Building() { BuildingID = 2, RemainingBuildSteps = 5 });
 			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 2, BuildingID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill, RemainingBuildSteps = 10 });
-			factoryTypeModule = new MockedFactoryTypeModule(false, new FactoryType() { FactoryTypeID = FactoryTypeIDs.Sawmill });
+			factoryTypeModule = new MockedFactoryTypeModule(false, new FactoryType() { FactoryTypeID = FactoryTypeIDs.Sawmill, MaterialSetID = 2 });
 			stackModule = new MockedStackModule(true, new Stack() { BuildingID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Wood, StackID = 1 }, new Stack() { BuildingID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Stone, StackID = 1 });
-			materialModule = new MockedMaterialModule(false, new Material() { Quantity = 1, ResourceTypeID = ResourceTypeIDs.Wood, FactoryTypeID = FactoryTypeIDs.Sawmill }, new Material() { Quantity = 2, ResourceTypeID = ResourceTypeIDs.Stone, FactoryTypeID = FactoryTypeIDs.Sawmill });
+			materialModule = new MockedMaterialModule(false, new Material() { Quantity = 1, ResourceTypeID = ResourceTypeIDs.Wood, MaterialSetID = 2 }, new Material() { Quantity = 2, ResourceTypeID = ResourceTypeIDs.Stone, MaterialSetID = 2 });
 
 			logger = new MemoryLogger();
-			module = new FactoryBuilderModule(logger, taskModule, workerModule, buildingModule, factoryModule, factoryTypeModule, stackModule, materialModule);
+			module = new BuilderModule(logger, taskModule, workerModule, buildingModule, factoryModule, factoryTypeModule, null, null, stackModule, materialModule);
 			Assert.ThrowsException<PIOInternalErrorException>(() => module.BeginBuild(1));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
 
@@ -558,12 +524,12 @@ namespace PIO.UnitTest.ServerLib.Modules
 			taskModule = new MockedTaskModule(false);
 			buildingModule = new MockedBuildingModule(false, new Building() { BuildingID = 2, RemainingBuildSteps = 5 });
 			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 2, BuildingID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill, RemainingBuildSteps = 10 });
-			factoryTypeModule = new MockedFactoryTypeModule(false, new FactoryType() { FactoryTypeID = FactoryTypeIDs.Sawmill });
+			factoryTypeModule = new MockedFactoryTypeModule(false, new FactoryType() { FactoryTypeID = FactoryTypeIDs.Sawmill, MaterialSetID = 2 });
 			stackModule = new MockedStackModule(false, new Stack() { BuildingID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Wood, StackID = 1 }, new Stack() { BuildingID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Stone, StackID = 1 });
-			materialModule = new MockedMaterialModule(true, new Material() { Quantity = 1, ResourceTypeID = ResourceTypeIDs.Wood, FactoryTypeID = FactoryTypeIDs.Sawmill }, new Material() { Quantity = 2, ResourceTypeID = ResourceTypeIDs.Stone, FactoryTypeID = FactoryTypeIDs.Sawmill });
+			materialModule = new MockedMaterialModule(true, new Material() { Quantity = 1, ResourceTypeID = ResourceTypeIDs.Wood, MaterialSetID = 2 }, new Material() { Quantity = 2, ResourceTypeID = ResourceTypeIDs.Stone, MaterialSetID = 2 });
 
 			logger = new MemoryLogger();
-			module = new FactoryBuilderModule(logger, taskModule, workerModule, buildingModule, factoryModule, factoryTypeModule, stackModule, materialModule);
+			module = new BuilderModule(logger, taskModule, workerModule, buildingModule, factoryModule, factoryTypeModule, null, null, stackModule, materialModule);
 			Assert.ThrowsException<PIOInternalErrorException>(() => module.BeginBuild(1));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
 
@@ -576,7 +542,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 		[TestMethod]
 		public void ShouldEndBuildTasks()
 		{
-			FactoryBuilderModule module;
+			BuilderModule module;
 			IWorkerModule workerModule;
 			ITaskModule taskModule;
 			IBuildingModule buildingModule;
@@ -592,8 +558,8 @@ namespace PIO.UnitTest.ServerLib.Modules
 			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 2, BuildingID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill });
 			factoryTypeModule = new MockedFactoryTypeModule(false, new FactoryType() { FactoryTypeID = FactoryTypeIDs.Sawmill });
 			stackModule = new MockedStackModule(false, new Stack() { BuildingID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Wood, StackID = 1 }, new Stack() { BuildingID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Stone, StackID = 1 });
-			materialModule = new MockedMaterialModule(false, new Material() { Quantity = 1, ResourceTypeID = ResourceTypeIDs.Wood, FactoryTypeID = FactoryTypeIDs.Sawmill }, new Material() { Quantity = 2, ResourceTypeID = ResourceTypeIDs.Stone, FactoryTypeID = FactoryTypeIDs.Sawmill });
-			module = new FactoryBuilderModule(NullLogger.Instance, taskModule, workerModule, buildingModule, factoryModule, factoryTypeModule, stackModule, materialModule);
+			materialModule = new MockedMaterialModule(false, new Material() { Quantity = 1, ResourceTypeID = ResourceTypeIDs.Wood, MaterialSetID = 2 }, new Material() { Quantity = 2, ResourceTypeID = ResourceTypeIDs.Stone, MaterialSetID = 2 });
+			module = new BuilderModule(NullLogger.Instance, taskModule, workerModule, buildingModule, factoryModule, factoryTypeModule, null, null, stackModule, materialModule);
 	
 			module.EndBuild(1);
 			Assert.AreEqual(4, buildingModule.GetBuilding(2).RemainingBuildSteps);
@@ -603,7 +569,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 		public void ShouldNotEndBuildTaskWhenWorkerDoesntExists()
 		{
 			MemoryLogger logger;
-			FactoryBuilderModule module;
+			BuilderModule module;
 			IWorkerModule workerModule;
 			ITaskModule taskModule;
 			IBuildingModule buildingModule;
@@ -620,8 +586,8 @@ namespace PIO.UnitTest.ServerLib.Modules
 			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 2, BuildingID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill });
 			factoryTypeModule = new MockedFactoryTypeModule(false, new FactoryType() { FactoryTypeID = FactoryTypeIDs.Sawmill });
 			stackModule = new MockedStackModule(false, new Stack() { BuildingID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Wood, StackID = 1 }, new Stack() { BuildingID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Stone, StackID = 1 });
-			materialModule = new MockedMaterialModule(false, new Material() { Quantity = 1, ResourceTypeID = ResourceTypeIDs.Wood, FactoryTypeID = FactoryTypeIDs.Sawmill }, new Material() { Quantity = 2, ResourceTypeID = ResourceTypeIDs.Stone, FactoryTypeID = FactoryTypeIDs.Sawmill });
-			module = new FactoryBuilderModule(logger, taskModule, workerModule, buildingModule, factoryModule, factoryTypeModule, stackModule, materialModule);
+			materialModule = new MockedMaterialModule(false, new Material() { Quantity = 1, ResourceTypeID = ResourceTypeIDs.Wood, MaterialSetID = 2 }, new Material() { Quantity = 2, ResourceTypeID = ResourceTypeIDs.Stone, MaterialSetID = 2 });
+			module = new BuilderModule(logger, taskModule, workerModule, buildingModule, factoryModule, factoryTypeModule, null, null, stackModule, materialModule);
 
 			Assert.ThrowsException<PIONotFoundException>(() => module.EndBuild(999));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level ==LogLevels.Warning) && (item.ComponentName==module.ModuleName)));
@@ -631,7 +597,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 		public void ShouldNotEndBuildTaskWhenFactoryDoesntExistsAtPos()
 		{
 			MemoryLogger logger;
-			FactoryBuilderModule module;
+			BuilderModule module;
 			IWorkerModule workerModule;
 			ITaskModule taskModule;
 			IBuildingModule buildingModule;
@@ -648,8 +614,8 @@ namespace PIO.UnitTest.ServerLib.Modules
 			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 2, BuildingID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill });
 			factoryTypeModule = new MockedFactoryTypeModule(false, new FactoryType() { FactoryTypeID = FactoryTypeIDs.Sawmill });
 			stackModule = new MockedStackModule(false, new Stack() { BuildingID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Wood, StackID = 1 }, new Stack() { BuildingID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Stone, StackID = 1 });
-			materialModule = new MockedMaterialModule(false, new Material() { Quantity = 1, ResourceTypeID = ResourceTypeIDs.Wood, FactoryTypeID = FactoryTypeIDs.Sawmill }, new Material() { Quantity = 2, ResourceTypeID = ResourceTypeIDs.Stone, FactoryTypeID = FactoryTypeIDs.Sawmill });
-			module = new FactoryBuilderModule(logger, taskModule, workerModule, buildingModule, factoryModule, factoryTypeModule, stackModule, materialModule);
+			materialModule = new MockedMaterialModule(false, new Material() { Quantity = 1, ResourceTypeID = ResourceTypeIDs.Wood, MaterialSetID = 2 }, new Material() { Quantity = 2, ResourceTypeID = ResourceTypeIDs.Stone, MaterialSetID = 2 });
+			module = new BuilderModule(logger, taskModule, workerModule, buildingModule, factoryModule, factoryTypeModule, null, null, stackModule, materialModule);
 
 			Assert.ThrowsException<PIONotFoundException>(() => module.EndBuild(1));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level ==LogLevels.Warning) && (item.ComponentName==module.ModuleName)));
@@ -659,14 +625,16 @@ namespace PIO.UnitTest.ServerLib.Modules
 		public void ShouldNotEndBuildTaskWhenSubModuleFails()
 		{
 			MemoryLogger logger;
-			FactoryBuilderModule module;
+			BuilderModule module;
 			IWorkerModule workerModule;
 			ITaskModule taskModule;
 			IBuildingModule buildingModule;
 			IFactoryModule factoryModule;
+			IFarmModule farmModule;
 			IStackModule stackModule;
 			IMaterialModule materialModule;
 			IFactoryTypeModule factoryTypeModule;
+			IFarmTypeModule farmTypeModule;
 
 
 
@@ -677,9 +645,11 @@ namespace PIO.UnitTest.ServerLib.Modules
 			buildingModule = new MockedBuildingModule(false, new Building() { BuildingID = 2, RemainingBuildSteps = 5 });
 			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 2, BuildingID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill });
 			factoryTypeModule = new MockedFactoryTypeModule(false, new FactoryType() { FactoryTypeID = FactoryTypeIDs.Sawmill });
+			farmModule = new MockedFarmModule(false, new Farm() { FarmID = 2, BuildingID = 2, FarmTypeID = FarmTypeIDs.Forest });
+			farmTypeModule = new MockedFarmTypeModule(false, new FarmType() { FarmTypeID = FarmTypeIDs.Forest });
 			stackModule = new MockedStackModule(false, new Stack() { BuildingID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Wood, StackID = 1 }, new Stack() { BuildingID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Stone, StackID = 1 });
-			materialModule = new MockedMaterialModule(false, new Material() { Quantity = 1, ResourceTypeID = ResourceTypeIDs.Wood, FactoryTypeID = FactoryTypeIDs.Sawmill }, new Material() { Quantity = 2, ResourceTypeID = ResourceTypeIDs.Stone, FactoryTypeID = FactoryTypeIDs.Sawmill });
-			module = new FactoryBuilderModule(logger, taskModule, workerModule, buildingModule, factoryModule, factoryTypeModule, stackModule, materialModule);
+			materialModule = new MockedMaterialModule(false, new Material() { Quantity = 1, ResourceTypeID = ResourceTypeIDs.Wood, MaterialSetID = 2 }, new Material() { Quantity = 2, ResourceTypeID = ResourceTypeIDs.Stone, MaterialSetID = 2 });
+			module = new BuilderModule(logger, taskModule, workerModule, buildingModule, factoryModule, factoryTypeModule, farmModule, farmTypeModule, stackModule, materialModule);
 
 			Assert.ThrowsException<PIOInternalErrorException>(() => module.EndBuild(1));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
@@ -693,28 +663,16 @@ namespace PIO.UnitTest.ServerLib.Modules
 			buildingModule = new MockedBuildingModule(true, new Building() { BuildingID = 2, RemainingBuildSteps = 5 });
 			factoryModule = new MockedFactoryModule(false, new Factory() { FactoryID = 2, BuildingID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill });
 			factoryTypeModule = new MockedFactoryTypeModule(false, new FactoryType() { FactoryTypeID = FactoryTypeIDs.Sawmill });
+			farmModule = new MockedFarmModule(false, new Farm() { FarmID = 2, BuildingID = 2, FarmTypeID = FarmTypeIDs.Forest });
+			farmTypeModule = new MockedFarmTypeModule(false, new FarmType() { FarmTypeID = FarmTypeIDs.Forest });
 			stackModule = new MockedStackModule(false, new Stack() { BuildingID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Wood, StackID = 1 }, new Stack() { BuildingID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Stone, StackID = 1 });
-			materialModule = new MockedMaterialModule(false, new Material() { Quantity = 1, ResourceTypeID = ResourceTypeIDs.Wood, FactoryTypeID = FactoryTypeIDs.Sawmill }, new Material() { Quantity = 2, ResourceTypeID = ResourceTypeIDs.Stone, FactoryTypeID = FactoryTypeIDs.Sawmill });
-			module = new FactoryBuilderModule(logger, taskModule, workerModule, buildingModule, factoryModule, factoryTypeModule, stackModule, materialModule);
+			materialModule = new MockedMaterialModule(false, new Material() { Quantity = 1, ResourceTypeID = ResourceTypeIDs.Wood, MaterialSetID = 2 }, new Material() { Quantity = 2, ResourceTypeID = ResourceTypeIDs.Stone, MaterialSetID = 2 });
+			module = new BuilderModule(logger, taskModule, workerModule, buildingModule, factoryModule, factoryTypeModule, farmModule, farmTypeModule, stackModule, materialModule);
 
 			Assert.ThrowsException<PIOInternalErrorException>(() => module.EndBuild(1));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
 
 
-
-
-			logger = new MemoryLogger();
-			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, PlanetID = 1 });
-			taskModule = new MockedTaskModule(false);
-			buildingModule = new MockedBuildingModule(false, new Building() { BuildingID = 2, RemainingBuildSteps = 5 });
-			factoryModule = new MockedFactoryModule(true, new Factory() { FactoryID = 2, BuildingID = 2, FactoryTypeID = FactoryTypeIDs.Sawmill });
-			factoryTypeModule = new MockedFactoryTypeModule(false, new FactoryType() { FactoryTypeID = FactoryTypeIDs.Sawmill });
-			stackModule = new MockedStackModule(false, new Stack() { BuildingID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Wood, StackID = 1 }, new Stack() { BuildingID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Stone, StackID = 1 });
-			materialModule = new MockedMaterialModule(false, new Material() { Quantity = 1, ResourceTypeID = ResourceTypeIDs.Wood, FactoryTypeID = FactoryTypeIDs.Sawmill }, new Material() { Quantity = 2, ResourceTypeID = ResourceTypeIDs.Stone, FactoryTypeID = FactoryTypeIDs.Sawmill });
-			module = new FactoryBuilderModule(logger, taskModule, workerModule, buildingModule, factoryModule, factoryTypeModule, stackModule, materialModule);
-
-			Assert.ThrowsException<PIOInternalErrorException>(() => module.EndBuild(1));
-			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
 
 		}
 

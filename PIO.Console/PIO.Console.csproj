@@ -57,6 +57,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ViewModels\ApplicationViewModel.cs" />
+    <Compile Include="ViewModels\BuildFarmOrderViewModel.cs" />
+    <Compile Include="ViewModels\BuildFarmOrdersViewModel.cs" />
     <Compile Include="ViewModels\ILocation\CellViewModel.cs" />
     <Compile Include="ViewModels\ILocation\CellsViewModel.cs" />
     <Compile Include="ViewModels\ILocation\FarmsViewModel.cs" />

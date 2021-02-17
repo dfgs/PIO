@@ -48,7 +48,7 @@ namespace PIO.ServerHost
 			IFactoryModule factoryModule;
 			IFarmModule farmModule;
 			IWorkerModule workerModule;
-			IFactoryBuilderModule factoryBuilderModule;
+			IBuilderModule factoryBuilderModule;
 			IStackModule stackModule;
 			IResourceTypeModule resourceTypeModule;
 			IFactoryTypeModule factoryTypeModule;
@@ -104,9 +104,9 @@ namespace PIO.ServerHost
 			taskModule = new TaskModule(logger, database);
 
 
-			factoryBuilderModule = new FactoryBuilderModule(logger,taskModule,workerModule,buildingModule, factoryModule, factoryTypeModule, stackModule,materialModule);
+			factoryBuilderModule = new BuilderModule(logger, taskModule, workerModule, buildingModule, factoryModule, factoryTypeModule, farmModule, farmTypeModule ,stackModule, materialModule); ;
 			idlerModule = new IdlerModule(logger,taskModule, workerModule);
-			resourceCheckerModule = new ResourceCheckerModule(logger, factoryModule, stackModule, ingredientModule,materialModule);
+			resourceCheckerModule = new ResourceCheckerModule(logger, factoryModule,factoryTypeModule ,stackModule, ingredientModule,materialModule);
 			locationCheckerModule = new LocationCheckerModule(logger, workerModule, buildingModule);
 			producerModule = new ProducerModule(logger, taskModule, workerModule, factoryModule,  stackModule, ingredientModule, productModule);
 			moverModule = new MoverModule(logger, taskModule, workerModule, buildingModule);

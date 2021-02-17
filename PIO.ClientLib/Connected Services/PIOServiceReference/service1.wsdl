@@ -283,17 +283,23 @@
   <wsdl:message name="IPIOService_Store_OutputMessage">
     <wsdl:part name="parameters" element="tns:StoreResponse" />
   </wsdl:message>
-  <wsdl:message name="IPIOService_CreateBuilding_InputMessage">
-    <wsdl:part name="parameters" element="tns:CreateBuilding" />
+  <wsdl:message name="IPIOService_CreateFactory_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateFactory" />
   </wsdl:message>
-  <wsdl:message name="IPIOService_CreateBuilding_OutputMessage">
-    <wsdl:part name="parameters" element="tns:CreateBuildingResponse" />
+  <wsdl:message name="IPIOService_CreateFactory_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateFactoryResponse" />
   </wsdl:message>
-  <wsdl:message name="IPIOService_BuildFactory_InputMessage">
-    <wsdl:part name="parameters" element="tns:BuildFactory" />
+  <wsdl:message name="IPIOService_CreateFarm_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateFarm" />
   </wsdl:message>
-  <wsdl:message name="IPIOService_BuildFactory_OutputMessage">
-    <wsdl:part name="parameters" element="tns:BuildFactoryResponse" />
+  <wsdl:message name="IPIOService_CreateFarm_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateFarmResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPIOService_Build_InputMessage">
+    <wsdl:part name="parameters" element="tns:Build" />
+  </wsdl:message>
+  <wsdl:message name="IPIOService_Build_OutputMessage">
+    <wsdl:part name="parameters" element="tns:BuildResponse" />
   </wsdl:message>
   <wsdl:portType name="IPIOService">
     <wsdl:operation name="GetPlanet">
@@ -480,13 +486,17 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/Store" message="tns:IPIOService_Store_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/StoreResponse" message="tns:IPIOService_Store_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="CreateBuilding">
-      <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/CreateBuilding" message="tns:IPIOService_CreateBuilding_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/CreateBuildingResponse" message="tns:IPIOService_CreateBuilding_OutputMessage" />
+    <wsdl:operation name="CreateFactory">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/CreateFactory" message="tns:IPIOService_CreateFactory_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/CreateFactoryResponse" message="tns:IPIOService_CreateFactory_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="BuildFactory">
-      <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/BuildFactory" message="tns:IPIOService_BuildFactory_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/BuildFactoryResponse" message="tns:IPIOService_BuildFactory_OutputMessage" />
+    <wsdl:operation name="CreateFarm">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/CreateFarm" message="tns:IPIOService_CreateFarm_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/CreateFarmResponse" message="tns:IPIOService_CreateFarm_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Build">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/Build" message="tns:IPIOService_Build_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/BuildResponse" message="tns:IPIOService_Build_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IPIOService" type="tns:IPIOService">
@@ -905,8 +915,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="CreateBuilding">
-      <soap:operation soapAction="http://tempuri.org/IPIOService/CreateBuilding" style="document" />
+    <wsdl:operation name="CreateFactory">
+      <soap:operation soapAction="http://tempuri.org/IPIOService/CreateFactory" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -914,8 +924,17 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="BuildFactory">
-      <soap:operation soapAction="http://tempuri.org/IPIOService/BuildFactory" style="document" />
+    <wsdl:operation name="CreateFarm">
+      <soap:operation soapAction="http://tempuri.org/IPIOService/CreateFarm" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Build">
+      <soap:operation soapAction="http://tempuri.org/IPIOService/Build" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

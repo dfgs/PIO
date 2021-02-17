@@ -150,6 +150,7 @@
       <xs:element minOccurs="0" name="BuildSteps" type="xs:int" />
       <xs:element minOccurs="0" name="FactoryTypeID" type="tns:FactoryTypeIDs" />
       <xs:element minOccurs="0" name="HealthPoints" type="xs:int" />
+      <xs:element minOccurs="0" name="MaterialSetID" type="xs:int" />
       <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
@@ -165,6 +166,7 @@
       <xs:element minOccurs="0" name="BuildSteps" type="xs:int" />
       <xs:element minOccurs="0" name="FarmTypeID" type="tns:FarmTypeIDs" />
       <xs:element minOccurs="0" name="HealthPoints" type="xs:int" />
+      <xs:element minOccurs="0" name="MaterialSetID" type="xs:int" />
       <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
     </xs:sequence>
   </xs:complexType>
@@ -202,8 +204,8 @@
   <xs:element name="ArrayOfTaskType" nillable="true" type="tns:ArrayOfTaskType" />
   <xs:complexType name="Material">
     <xs:sequence>
-      <xs:element minOccurs="0" name="FactoryTypeID" type="tns:FactoryTypeIDs" />
       <xs:element minOccurs="0" name="MaterialID" type="xs:int" />
+      <xs:element minOccurs="0" name="MaterialSetID" type="xs:int" />
       <xs:element minOccurs="0" name="Quantity" type="xs:int" />
       <xs:element minOccurs="0" name="ResourceTypeID" type="tns:ResourceTypeIDs" />
     </xs:sequence>
@@ -251,6 +253,7 @@
       <xs:element minOccurs="0" name="BuildingID" nillable="true" type="xs:int" />
       <xs:element minOccurs="0" name="ETA" type="xs:dateTime" />
       <xs:element minOccurs="0" name="FactoryTypeID" nillable="true" type="tns:FactoryTypeIDs" />
+      <xs:element minOccurs="0" name="FarmTypeID" nillable="true" type="tns:FarmTypeIDs" />
       <xs:element minOccurs="0" name="ResourceTypeID" nillable="true" type="tns:ResourceTypeIDs" />
       <xs:element minOccurs="0" name="TaskID" type="xs:int" />
       <xs:element minOccurs="0" name="TaskTypeID" type="tns:TaskTypeIDs" />

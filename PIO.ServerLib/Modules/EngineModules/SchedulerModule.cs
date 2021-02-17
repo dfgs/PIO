@@ -30,7 +30,7 @@ namespace PIO.ServerLib.Modules
 		private IIdlerModule idlerModule;
 		private IProducerModule producerModule;
 		private IMoverModule moverModule;
-		private IFactoryBuilderModule factoryBuilderModule;
+		private IBuilderModule factoryBuilderModule;
 		private ITakerModule takerModule;
 		private IStorerModule storerModule;
 
@@ -38,7 +38,7 @@ namespace PIO.ServerLib.Modules
 		public event TaskEventHandler TaskEnded;
 
 
-		public SchedulerModule(ILogger Logger,ITaskModule TaskModule, IIdlerModule IdlerModule, IProducerModule ProducerModule,IMoverModule MoverModule,  ITakerModule TakerModule,IStorerModule StorerModule, IFactoryBuilderModule FactoryBuilderModule) : base(Logger, ThreadPriority.Normal)
+		public SchedulerModule(ILogger Logger,ITaskModule TaskModule, IIdlerModule IdlerModule, IProducerModule ProducerModule,IMoverModule MoverModule,  ITakerModule TakerModule,IStorerModule StorerModule, IBuilderModule FactoryBuilderModule) : base(Logger, ThreadPriority.Normal)
 		{
 			this.taskModule = TaskModule;this.idlerModule = IdlerModule; this.producerModule = ProducerModule;this.moverModule = MoverModule;this.takerModule = TakerModule;this.storerModule = StorerModule;
 			this.factoryBuilderModule = FactoryBuilderModule;
@@ -109,7 +109,7 @@ namespace PIO.ServerLib.Modules
 					Try(() => storerModule.EndStore(Task.WorkerID, Task.ResourceTypeID.Value)).OrAlert($"Failed to terminate task (TaskID={Task.TaskID})");
 					break;
 				case TaskTypeIDs.CreateBuilding:
-					Try(() => factoryBuilderModule.EndCreateBuilding(Task.WorkerID, Task.FactoryTypeID.Value)).OrAlert($"Failed to terminate task (TaskID={Task.TaskID})");
+					Try(() => factoryBuilderModule.EndCreateBuilding(Task.WorkerID, Task.FactoryTypeID,Task.FarmTypeID)).OrAlert($"Failed to terminate task (TaskID={Task.TaskID})");
 					break;
 				case TaskTypeIDs.Build:
 					Try(() => factoryBuilderModule.EndBuild(Task.WorkerID)).OrAlert($"Failed to terminate task (TaskID={Task.TaskID})");

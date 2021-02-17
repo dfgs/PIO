@@ -77,7 +77,7 @@ namespace PIO.Models
 		[OperationContract]
 		Material GetMaterial(int MaterialID);
 		[OperationContract]
-		Material[] GetMaterials(FactoryTypeIDs FactoryTypeID);
+		Material[] GetMaterials(int MaterialSetID);
 		[OperationContract]
 		Ingredient GetIngredient(int IngredientID);
 		[OperationContract]
@@ -117,15 +117,16 @@ namespace PIO.Models
 		Task Take(int WorkerID, ResourceTypeIDs ResourceTypeID);
 		[OperationContract]
 		Task Store(int WorkerID);
-		[OperationContract]
-		Task CreateBuilding(int WorkerID, FactoryTypeIDs FactoryTypeID);
-		[OperationContract]
-		Task BuildFactory(int WorkerID);
 
-		/*[OperationContract]
-		Task Take(int WorkerID, ResourceTypeIDs ResourceTypeID);
 		[OperationContract]
-		Task Store(int WorkerID);*/
+		Task CreateFactory(int WorkerID, FactoryTypeIDs FactoryTypeID);
+		[OperationContract]
+		Task CreateFarm(int WorkerID, FarmTypeIDs FarmTypeID);
+		[OperationContract]
+		Task Build(int WorkerID);
+		
+
+
 
 		#endregion
 

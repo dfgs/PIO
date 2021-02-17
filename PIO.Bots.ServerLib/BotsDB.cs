@@ -13,7 +13,7 @@ namespace PIO.Bots.ServerLib
 		public static OrderTable OrderTable = new OrderTable();
 		public static ProduceOrderTable ProduceOrderTable = new ProduceOrderTable();
 		public static BuildFactoryOrderTable BuildFactoryOrderTable = new BuildFactoryOrderTable();
-
+		public static BuildFarmOrderTable BuildFarmOrderTable = new BuildFarmOrderTable();
 
 
 	}

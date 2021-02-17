@@ -10,16 +10,16 @@ using System.Text;
 
 namespace PIO.PowerShell
 {
-	[Cmdlet(VerbsCommon.New, "Factory")]
+	[Cmdlet(VerbsCommon.New, "Farm")]
 	[OutputType(typeof(Task))]
-	public class NewFactoryCmdlet : PIOCmdLet
+	public class NewFarmCmdlet : PIOCmdLet
 	{
 		[Parameter(Position = 0, ValueFromPipeline = true, Mandatory = true)]
 		public int WorkerID { get; set; }
 		
 		
 		[Parameter(Position = 1, ValueFromPipeline = true, Mandatory = true)]
-		public FactoryTypeIDs FactoryTypeID { get; set; }
+		public FarmTypeIDs FarmTypeID { get; set; }
 		
 	
 
@@ -28,7 +28,7 @@ namespace PIO.PowerShell
 		{
 			Task result;
 
-			result = Try(()=>client.CreateFactory(WorkerID,FactoryTypeID));
+			result = Try(()=>client.CreateFarm(WorkerID,FarmTypeID));
 			
 			WriteObject(result);
 		}
