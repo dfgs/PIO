@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 namespace PIO.Bots.Models
 {
 	[DataContract]
-	public class BuildFactoryOrder:Order
+	public class BuildOrder:Order
 	{
 		[DataMember]
-		public int BuildFactoryOrderID { get; set; }
+		public int BuildOrderID { get; set; }
 		[DataMember]
 		public BuildingTypeIDs BuildingTypeID { get; set; }
 		[DataMember]

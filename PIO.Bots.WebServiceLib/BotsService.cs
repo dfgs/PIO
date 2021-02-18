@@ -20,13 +20,13 @@ namespace PIO.Bots.WebServiceLib
 		private IOrderModule orderModule;
 		private IOrderManagerModule orderManagerModule;
 		private IProduceOrderModule produceOrderModule;
-		private IBuildFactoryOrderModule buildFactoryOrderModule;
+		private IBuildOrderModule buildFactoryOrderModule;
 
 		private IBotSchedulerModule botSchedulerModule;
 
 		public BotsService(ILogger Logger,
 			IBotModule BotModule, IOrderModule OrderModule, IProduceOrderModule ProduceOrderModule,
-			IBuildFactoryOrderModule BuildFactoryOrderModule,
+			IBuildOrderModule BuildFactoryOrderModule,
 			IBotSchedulerModule BotSchedulerModule, IOrderManagerModule OrderManagerModule
 		) : base(Logger)
 		{
@@ -79,27 +79,27 @@ namespace PIO.Bots.WebServiceLib
 			LogEnter();
 			return Try(() => produceOrderModule.GetProduceOrders()).OrThrow(GenerateFaultException);
 		}
-		public ProduceOrder[] GetProduceOrdersForFactory(int FactoryID)
+		public ProduceOrder[] GetProduceOrdersForBuilding(int FactoryID)
 		{
 			LogEnter();
 			return Try(() => produceOrderModule.GetProduceOrders(FactoryID)).OrThrow(GenerateFaultException);
 		}
 
 
-		public BuildFactoryOrder GetBuildFactoryOrder(int BuildFactoryOrderID)
+		public BuildOrder GetBuildOrder(int BuildFactoryOrderID)
 		{
 			LogEnter();
-			return Try(() => buildFactoryOrderModule.GetBuildFactoryOrder(BuildFactoryOrderID)).OrThrow(GenerateFaultException);
+			return Try(() => buildFactoryOrderModule.GetBuildOrder(BuildFactoryOrderID)).OrThrow(GenerateFaultException);
 		}
-		public BuildFactoryOrder[] GetBuildFactoryOrders()
+		public BuildOrder[] GetBuildOrders()
 		{
 			LogEnter();
-			return Try(() => buildFactoryOrderModule.GetBuildFactoryOrders()).OrThrow(GenerateFaultException);
+			return Try(() => buildFactoryOrderModule.GetBuildOrders()).OrThrow(GenerateFaultException);
 		}
-		public BuildFactoryOrder[] GetBuildFactoryOrdersAtPosition(int PlanetID,int X,int Y)
+		public BuildOrder[] GetBuildOrdersAtPosition(int PlanetID,int X,int Y)
 		{
 			LogEnter();
-			return Try(() => buildFactoryOrderModule.GetBuildFactoryOrders(PlanetID,X,Y)).OrThrow(GenerateFaultException);
+			return Try(() => buildFactoryOrderModule.GetBuildOrders(PlanetID,X,Y)).OrThrow(GenerateFaultException);
 		}
 
 		
@@ -112,10 +112,10 @@ namespace PIO.Bots.WebServiceLib
 			LogEnter();
 			return Try(() => orderManagerModule.CreateProduceOrder(PlanetID,FactoryID)).OrThrow(GenerateFaultException);
 		}
-		public BuildFactoryOrder CreateBuildFactoryOrder(int PlanetID, BuildingTypeIDs BuildingTypeID, int X, int Y)
+		public BuildOrder CreateBuildOrder(int PlanetID, BuildingTypeIDs BuildingTypeID, int X, int Y)
 		{
 			LogEnter();
-			return Try(() => orderManagerModule.CreateBuildFactoryOrder(PlanetID, BuildingTypeID, X, Y)).OrThrow(GenerateFaultException);
+			return Try(() => orderManagerModule.CreateBuildOrder(PlanetID, BuildingTypeID, X, Y)).OrThrow(GenerateFaultException);
 		}
 		
 

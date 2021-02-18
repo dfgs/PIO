@@ -14,11 +14,11 @@ namespace PIO.Console.ViewModels
 {
 	public class CellViewModel : PIOViewModel<Cell>,ILocationViewModel
 	{
-		public static readonly DependencyProperty CreateBuildFactoryOrderCommandProperty = DependencyProperty.Register("CreateBuildFactoryOrderCommand", typeof(ViewModelCommand), typeof(CellViewModel), new PropertyMetadata(null));
-		public ViewModelCommand CreateBuildFactoryOrderCommand
+		public static readonly DependencyProperty CreateBuildOrderCommandProperty = DependencyProperty.Register("CreateBuildOrderCommand", typeof(ViewModelCommand), typeof(CellViewModel), new PropertyMetadata(null));
+		public ViewModelCommand CreateBuildOrderCommand
 		{
-			get { return (ViewModelCommand)GetValue(CreateBuildFactoryOrderCommandProperty); }
-			set { SetValue(CreateBuildFactoryOrderCommandProperty, value); }
+			get { return (ViewModelCommand)GetValue(CreateBuildOrderCommandProperty); }
+			set { SetValue(CreateBuildOrderCommandProperty, value); }
 		}
 		
 
@@ -38,10 +38,10 @@ namespace PIO.Console.ViewModels
 		}
 
 
-		public static readonly DependencyProperty BuildFactoryOrdersProperty = DependencyProperty.Register("BuildFactoryOrders", typeof(BuildFactoryOrdersViewModel), typeof(CellViewModel));
-		public BuildFactoryOrdersViewModel BuildFactoryOrders
+		public static readonly DependencyProperty BuildFactoryOrdersProperty = DependencyProperty.Register("BuildFactoryOrders", typeof(BuildOrdersViewModel), typeof(CellViewModel));
+		public BuildOrdersViewModel BuildFactoryOrders
 		{
-			get { return (BuildFactoryOrdersViewModel)GetValue(BuildFactoryOrdersProperty); }
+			get { return (BuildOrdersViewModel)GetValue(BuildFactoryOrdersProperty); }
 			set { SetValue(BuildFactoryOrdersProperty, value); }
 		}
 
@@ -49,25 +49,25 @@ namespace PIO.Console.ViewModels
 
 		public CellViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient) : base(PIOClient, BotsClient)
 		{
-			CreateBuildFactoryOrderCommand = new ViewModelCommand(CreateBuildFactoryOrderCommandCanExecute, CreateBuildFactoryOrderCommandExecute);
+			CreateBuildOrderCommand = new ViewModelCommand(CreateBuildOrderCommandCanExecute, CreateBuildOrderCommandExecute);
 		}
 		private async void MoveToCommandExecute(object obj)
 		{
 			await System.Threading.Tasks.Task.Yield();
 		}//*/
 
-		private bool CreateBuildFactoryOrderCommandCanExecute(object arg)
+		private bool CreateBuildOrderCommandCanExecute(object arg)
 		{
 			return (Model != null)&& (BuildFactoryOrders.Count == 0);
 		}
-		private async void CreateBuildFactoryOrderCommandExecute(object obj)
+		private async void CreateBuildOrderCommandExecute(object obj)
 		{
-			BuildFactoryOrder result;
-			BuildFactoryOrderViewModel vm;
+			BuildOrder result;
+			BuildOrderViewModel vm;
 
-			result = await TryAsync(BotsClient.CreateBuildFactoryOrderAsync(Model.PlanetID, BuildingTypeIDs.Sawmill,Model.X,Model.Y));
+			result = await TryAsync(BotsClient.CreateBuildOrderAsync(Model.PlanetID, BuildingTypeIDs.Sawmill,Model.X,Model.Y));
 			if (result == null) return;
-			vm = new BuildFactoryOrderViewModel(PIOClient, BotsClient);
+			vm = new BuildOrderViewModel(PIOClient, BotsClient);
 			await vm.LoadAsync(result);
 			BuildFactoryOrders.Add(vm);
 		}
@@ -85,7 +85,7 @@ namespace PIO.Console.ViewModels
 
 		protected override async System.Threading.Tasks.Task OnLoadAsync(Cell Model)
 		{
-			BuildFactoryOrders = new BuildFactoryOrdersViewModel(PIOClient, BotsClient, Model.PlanetID,Model.X,Model.Y);
+			BuildFactoryOrders = new BuildOrdersViewModel(PIOClient, BotsClient, Model.PlanetID,Model.X,Model.Y);
 			await BuildFactoryOrders.LoadAsync();
 		}
 

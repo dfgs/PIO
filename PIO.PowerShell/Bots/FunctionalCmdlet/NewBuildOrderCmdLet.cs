@@ -10,9 +10,9 @@ using System.Text;
 
 namespace PIO.PowerShell
 {
-	[Cmdlet(VerbsCommon.New, "BuildFactoryOrder")]
-	[OutputType(typeof(BuildFactoryOrder))]
-	public class NewBuildFactoryOrderCmdlet : BotsCmdLet
+	[Cmdlet(VerbsCommon.New, "BuildOrder")]
+	[OutputType(typeof(BuildOrder))]
+	public class NewBuildOrderCmdlet : BotsCmdLet
 	{
 		[Parameter(Position = 0, ValueFromPipeline = true, Mandatory = true)]
 		public int PlanetID { get; set; }
@@ -32,9 +32,9 @@ namespace PIO.PowerShell
 
 		protected override void ProcessRecord()
 		{
-			BuildFactoryOrder result;
+			BuildOrder result;
 
-			result = Try(()=>client.CreateBuildFactoryOrder(PlanetID, BuildingTypeID, X,Y));
+			result = Try(()=>client.CreateBuildOrder(PlanetID, BuildingTypeID, X,Y));
 			
 			WriteObject(result);
 		}

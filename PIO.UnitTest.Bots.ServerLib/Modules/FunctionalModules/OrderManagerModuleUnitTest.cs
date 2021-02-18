@@ -61,29 +61,29 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 
 
 		[TestMethod]
-		public void ShouldGetWaitingBuildFactoryOrders()
+		public void ShouldGetWaitingBuildOrders()
 		{
 			IOrderModule orderModule;
-			IBuildFactoryOrderModule buildFactoryOrderModule;
+			IBuildOrderModule buildFactoryOrderModule;
 			OrderManagerModule module;
-			BuildFactoryOrder[] result;
+			BuildOrder[] result;
 
 			orderModule = Substitute.For<IOrderModule>();
-			buildFactoryOrderModule = Substitute.For<IBuildFactoryOrderModule>();
-			buildFactoryOrderModule.GetWaitingBuildFactoryOrders(Arg.Any<int>()).Returns(new BuildFactoryOrder[] { new BuildFactoryOrder() { OrderID = 1, BuildFactoryOrderID = 1, BuildingTypeID = BuildingTypeIDs.Forest }, new BuildFactoryOrder() { OrderID = 2, BuildFactoryOrderID = 2, BuildingTypeID = BuildingTypeIDs.Forest } });
+			buildFactoryOrderModule = Substitute.For<IBuildOrderModule>();
+			buildFactoryOrderModule.GetWaitingBuildOrders(Arg.Any<int>()).Returns(new BuildOrder[] { new BuildOrder() { OrderID = 1, BuildOrderID = 1, BuildingTypeID = BuildingTypeIDs.Forest }, new BuildOrder() { OrderID = 2, BuildOrderID = 2, BuildingTypeID = BuildingTypeIDs.Forest } });
 
 			module = new OrderManagerModule(NullLogger.Instance, null, orderModule, null, buildFactoryOrderModule, 10);
-			result = module.GetWaitingBuildFactoryOrders(1);
+			result = module.GetWaitingBuildOrders(1);
 			Assert.IsNotNull(result);
 			Assert.AreEqual(2, result.Length);
 
 		}
 
 		[TestMethod]
-		public void ShouldNotGetWaitingBuildFactoryOrders()
+		public void ShouldNotGetWaitingBuildOrders()
 		{
 			IOrderModule orderModule;
-			IBuildFactoryOrderModule buildFactoryOrderModule;
+			IBuildOrderModule buildFactoryOrderModule;
 			OrderManagerModule module;
 			MemoryLogger logger;
 
@@ -91,11 +91,11 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			logger = new MemoryLogger();
 
 			orderModule = Substitute.For<IOrderModule>();
-			buildFactoryOrderModule = Substitute.For<IBuildFactoryOrderModule>();
-			buildFactoryOrderModule.GetWaitingBuildFactoryOrders(Arg.Any<int>()).Returns((x) => { throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest"); });
+			buildFactoryOrderModule = Substitute.For<IBuildOrderModule>();
+			buildFactoryOrderModule.GetWaitingBuildOrders(Arg.Any<int>()).Returns((x) => { throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest"); });
 
 			module = new OrderManagerModule(logger, null, orderModule, null, buildFactoryOrderModule, 10);
-			Assert.ThrowsException<PIOInternalErrorException>(() => module.GetWaitingBuildFactoryOrders(1));
+			Assert.ThrowsException<PIOInternalErrorException>(() => module.GetWaitingBuildOrders(1));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName == module.ModuleName)));
 
 		}
@@ -221,20 +221,20 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 
 
 		[TestMethod]
-		public void ShouldCreateBuildFactoryOrder()
+		public void ShouldCreateBuildOrder()
 		{
 			ClientLib.PIOServiceReference.IPIOService client;
 			IOrderModule orderModule;
-			IBuildFactoryOrderModule buildFactoryOrderModule;
+			IBuildOrderModule buildFactoryOrderModule;
 			OrderManagerModule module;
-			BuildFactoryOrder result;
+			BuildOrder result;
 			int counter = 0;
 
 			orderModule = Substitute.For<IOrderModule>();
 			//orderModule.CreateOrder(Arg.Any<int>()).Returns(new Order() { OrderID=1});
-			buildFactoryOrderModule = Substitute.For<IBuildFactoryOrderModule>();
-			buildFactoryOrderModule.CreateBuildFactoryOrder(Arg.Any<int>(), Arg.Any<BuildingTypeIDs>(), Arg.Any<int>(), Arg.Any<int>()).Returns(new BuildFactoryOrder() { OrderID = 1, BuildFactoryOrderID = 1, BuildingTypeID = BuildingTypeIDs.Forest });
-			buildFactoryOrderModule.When((del) => del.CreateBuildFactoryOrder(Arg.Any<int>(), Arg.Any<BuildingTypeIDs>(), Arg.Any<int>(), Arg.Any<int>())).Do((del) => counter++);
+			buildFactoryOrderModule = Substitute.For<IBuildOrderModule>();
+			buildFactoryOrderModule.CreateBuildOrder(Arg.Any<int>(), Arg.Any<BuildingTypeIDs>(), Arg.Any<int>(), Arg.Any<int>()).Returns(new BuildOrder() { OrderID = 1, BuildOrderID = 1, BuildingTypeID = BuildingTypeIDs.Forest });
+			buildFactoryOrderModule.When((del) => del.CreateBuildOrder(Arg.Any<int>(), Arg.Any<BuildingTypeIDs>(), Arg.Any<int>(), Arg.Any<int>())).Do((del) => counter++);
 
 
 			client = Substitute.For<PIO.ClientLib.PIOServiceReference.IPIOService>();
@@ -242,12 +242,12 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 
 
 			module = new OrderManagerModule(NullLogger.Instance, client, orderModule,null, buildFactoryOrderModule, 10);
-			result = module.CreateBuildFactoryOrder(1,BuildingTypeIDs.Forest, 1,1);
+			result = module.CreateBuildOrder(1,BuildingTypeIDs.Forest, 1,1);
 			Assert.AreEqual(1, counter);
 			Assert.IsNotNull(result);
 			Assert.AreEqual(BuildingTypeIDs.Forest, result.BuildingTypeID);
 
-			result = module.CreateBuildFactoryOrder(1, BuildingTypeIDs.Forest, 1, 1);
+			result = module.CreateBuildOrder(1, BuildingTypeIDs.Forest, 1, 1);
 			Assert.AreEqual(2, counter);
 			Assert.IsNotNull(result);
 			Assert.AreEqual(BuildingTypeIDs.Forest, result.BuildingTypeID);
@@ -257,10 +257,10 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 
 
 		[TestMethod]
-		public void ShouldNotCreateBuildFactoryOrder()
+		public void ShouldNotCreateBuildOrder()
 		{
 			IOrderModule orderModule;
-			IBuildFactoryOrderModule buildFactoryOrderModule;
+			IBuildOrderModule buildFactoryOrderModule;
 			OrderManagerModule module;
 			MemoryLogger logger;
 
@@ -268,20 +268,20 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 
 			orderModule = Substitute.For<IOrderModule>();
 			//orderModule.CreateOrder(Arg.Any<int>()).Returns(new Order() { OrderID = 1 });
-			buildFactoryOrderModule = Substitute.For<IBuildFactoryOrderModule>();
-			buildFactoryOrderModule.CreateBuildFactoryOrder(Arg.Any<int>(), Arg.Any<BuildingTypeIDs>(), Arg.Any<int>(), Arg.Any<int>()).Returns((x) => { throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest"); });
+			buildFactoryOrderModule = Substitute.For<IBuildOrderModule>();
+			buildFactoryOrderModule.CreateBuildOrder(Arg.Any<int>(), Arg.Any<BuildingTypeIDs>(), Arg.Any<int>(), Arg.Any<int>()).Returns((x) => { throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest"); });
 
 			module = new OrderManagerModule(logger, null, orderModule, null, buildFactoryOrderModule, 10);
-			Assert.ThrowsException<PIOInternalErrorException>(() => module.CreateBuildFactoryOrder(1, BuildingTypeIDs.Forest, 1, 1));
+			Assert.ThrowsException<PIOInternalErrorException>(() => module.CreateBuildOrder(1, BuildingTypeIDs.Forest, 1, 1));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName == module.ModuleName)));
 		}
 
 		[TestMethod]
-		public void ShouldNotCreateBuildFactoryOrderIfPositionIsNotFree()
+		public void ShouldNotCreateBuildOrderIfPositionIsNotFree()
 		{
 			ClientLib.PIOServiceReference.IPIOService client;
 			IOrderModule orderModule;
-			IBuildFactoryOrderModule buildFactoryOrderModule;
+			IBuildOrderModule buildFactoryOrderModule;
 			OrderManagerModule module;
 			MemoryLogger logger;
 			int counter = 0;
@@ -290,25 +290,25 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 
 			orderModule = Substitute.For<IOrderModule>();
 			//orderModule.CreateOrder(Arg.Any<int>()).Returns(new Order() { OrderID = 1 });
-			buildFactoryOrderModule = Substitute.For<IBuildFactoryOrderModule>();
-			buildFactoryOrderModule.CreateBuildFactoryOrder(Arg.Any<int>(), Arg.Any<BuildingTypeIDs>(), Arg.Any<int>(), Arg.Any<int>()).Returns(new BuildFactoryOrder() { OrderID = 1, BuildFactoryOrderID = 1, BuildingTypeID = BuildingTypeIDs.Forest });
-			buildFactoryOrderModule.When((del) => del.CreateBuildFactoryOrder(Arg.Any<int>(), Arg.Any<BuildingTypeIDs>(), Arg.Any<int>(), Arg.Any<int>())).Do((del) => counter++);
+			buildFactoryOrderModule = Substitute.For<IBuildOrderModule>();
+			buildFactoryOrderModule.CreateBuildOrder(Arg.Any<int>(), Arg.Any<BuildingTypeIDs>(), Arg.Any<int>(), Arg.Any<int>()).Returns(new BuildOrder() { OrderID = 1, BuildOrderID = 1, BuildingTypeID = BuildingTypeIDs.Forest });
+			buildFactoryOrderModule.When((del) => del.CreateBuildOrder(Arg.Any<int>(), Arg.Any<BuildingTypeIDs>(), Arg.Any<int>(), Arg.Any<int>())).Do((del) => counter++);
 
 			client = Substitute.For<PIO.ClientLib.PIOServiceReference.IPIOService>();
 			client.GetBuildingAtPos(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<int>()).Returns(new Building() { PlanetID = 2 });
 
 			module = new OrderManagerModule(logger, client, orderModule, null, buildFactoryOrderModule, 10);
-			Assert.ThrowsException<PIOInvalidOperationException>(() => module.CreateBuildFactoryOrder(1, BuildingTypeIDs.Forest, 1, 1));
+			Assert.ThrowsException<PIOInvalidOperationException>(() => module.CreateBuildOrder(1, BuildingTypeIDs.Forest, 1, 1));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Warning) && (item.ComponentName == module.ModuleName)));
 			Assert.AreEqual(0, counter);
 		}
 
 		[TestMethod]
-		public void ShouldNotCreateBuildFactoryOrderIfAlreadyExists()
+		public void ShouldNotCreateBuildOrderIfAlreadyExists()
 		{
 			ClientLib.PIOServiceReference.IPIOService client;
 			IOrderModule orderModule;
-			IBuildFactoryOrderModule buildFactoryOrderModule;
+			IBuildOrderModule buildFactoryOrderModule;
 			OrderManagerModule module;
 			MemoryLogger logger;
 			int counter = 0;
@@ -317,15 +317,15 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 
 			orderModule = Substitute.For<IOrderModule>();
 			//orderModule.CreateOrder(Arg.Any<int>()).Returns(new Order() { OrderID = 1 });
-			buildFactoryOrderModule = Substitute.For<IBuildFactoryOrderModule>();
-			buildFactoryOrderModule.CreateBuildFactoryOrder(Arg.Any<int>(), Arg.Any<BuildingTypeIDs>(), Arg.Any<int>(), Arg.Any<int>()).Returns(new BuildFactoryOrder() { OrderID = 1, BuildFactoryOrderID = 1, BuildingTypeID = BuildingTypeIDs.Forest });
-			buildFactoryOrderModule.When((del) => del.CreateBuildFactoryOrder(Arg.Any<int>(), Arg.Any<BuildingTypeIDs>(), Arg.Any<int>(), Arg.Any<int>())).Do((del) => counter++);
-			buildFactoryOrderModule.GetBuildFactoryOrders(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<int>()).Returns(new BuildFactoryOrder[] { new BuildFactoryOrder() { OrderID = 1, BuildFactoryOrderID = 1, BuildingTypeID = BuildingTypeIDs.Forest } });
+			buildFactoryOrderModule = Substitute.For<IBuildOrderModule>();
+			buildFactoryOrderModule.CreateBuildOrder(Arg.Any<int>(), Arg.Any<BuildingTypeIDs>(), Arg.Any<int>(), Arg.Any<int>()).Returns(new BuildOrder() { OrderID = 1, BuildOrderID = 1, BuildingTypeID = BuildingTypeIDs.Forest });
+			buildFactoryOrderModule.When((del) => del.CreateBuildOrder(Arg.Any<int>(), Arg.Any<BuildingTypeIDs>(), Arg.Any<int>(), Arg.Any<int>())).Do((del) => counter++);
+			buildFactoryOrderModule.GetBuildOrders(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<int>()).Returns(new BuildOrder[] { new BuildOrder() { OrderID = 1, BuildOrderID = 1, BuildingTypeID = BuildingTypeIDs.Forest } });
 			client = Substitute.For<PIO.ClientLib.PIOServiceReference.IPIOService>();
 			client.GetBuildingAtPos(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<int>()).Returns(new Building() { PlanetID = 2 });
 
 			module = new OrderManagerModule(logger, client, orderModule, null, buildFactoryOrderModule, 10);
-			Assert.ThrowsException<PIOInvalidOperationException>(() => module.CreateBuildFactoryOrder(1, BuildingTypeIDs.Forest, 1, 1));
+			Assert.ThrowsException<PIOInvalidOperationException>(() => module.CreateBuildOrder(1, BuildingTypeIDs.Forest, 1, 1));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Warning) && (item.ComponentName == module.ModuleName)));
 			Assert.AreEqual(0, counter);
 		}
@@ -342,7 +342,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 		{
 			IOrderModule orderModule;
 			IProduceOrderModule produceOrderModule;
-			IBuildFactoryOrderModule buildFactoryOrderModule;
+			IBuildOrderModule buildFactoryOrderModule;
 			
 			ClientLib.PIOServiceReference.IPIOService client;
 			OrderManagerModule module;
@@ -355,8 +355,8 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			produceOrderModule = Substitute.For<IProduceOrderModule>();
 			produceOrderModule.GetProduceOrders().Returns(new ProduceOrder[] { });
 
-			buildFactoryOrderModule = Substitute.For<IBuildFactoryOrderModule>();
-			buildFactoryOrderModule.GetBuildFactoryOrders().Returns(new BuildFactoryOrder[] { });
+			buildFactoryOrderModule = Substitute.For<IBuildOrderModule>();
+			buildFactoryOrderModule.GetBuildOrders().Returns(new BuildOrder[] { });
 
 			module = new OrderManagerModule(NullLogger.Instance,client, orderModule, produceOrderModule, buildFactoryOrderModule,  10);
 			result = module.CreateTask(1,1);
@@ -394,7 +394,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 		{
 			IOrderModule orderModule;
 			IProduceOrderModule produceOrderModule;
-			IBuildFactoryOrderModule buildFactoryOrderModule;
+			IBuildOrderModule buildFactoryOrderModule;
 			
 			ClientLib.PIOServiceReference.IPIOService client;
 			OrderManagerModule module;
@@ -414,8 +414,8 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			produceOrderModule = Substitute.For<IProduceOrderModule>();
 			produceOrderModule.GetProduceOrders().Returns(new ProduceOrder[] { new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, BuildingID = 1 } });
 
-			buildFactoryOrderModule = Substitute.For<IBuildFactoryOrderModule>();
-			buildFactoryOrderModule.GetBuildFactoryOrders().Returns(new BuildFactoryOrder[] { new BuildFactoryOrder() { OrderID = 2, BuildFactoryOrderID = 1 } });
+			buildFactoryOrderModule = Substitute.For<IBuildOrderModule>();
+			buildFactoryOrderModule.GetBuildOrders().Returns(new BuildOrder[] { new BuildOrder() { OrderID = 2, BuildOrderID = 1 } });
 
 			module = new OrderManagerModule(NullLogger.Instance, client, orderModule, produceOrderModule, buildFactoryOrderModule,  10);
 			result = module.CreateTask(1, 1);
@@ -693,7 +693,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 		#region build factory order
 		
 		[TestMethod]
-		public void CreateTaskFromBuildFactoryOrderShouldReturnMoveToIfFactoryDoesntExistsAndWorkerIsNotOnSite()
+		public void CreateTaskFromBuildOrderShouldReturnMoveToIfFactoryDoesntExistsAndWorkerIsNotOnSite()
 		{
 			IOrderModule orderModule;
 			ClientLib.PIOServiceReference.IPIOService client;
@@ -707,13 +707,13 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			orderModule = Substitute.For<IOrderModule>();
 
 			module = new OrderManagerModule(NullLogger.Instance, client, orderModule, null, null, 10);
-			result = module.CreateTaskFromBuildFactoryOrder(new Worker() { PlanetID = 1, X = 1, Y = 2 }, new BuildFactoryOrder() { OrderID = 1, BuildFactoryOrderID = 1, BuildingTypeID = BuildingTypeIDs.Forest, X = 11, Y = 12 });
+			result = module.CreateTaskFromBuildOrder(new Worker() { PlanetID = 1, X = 1, Y = 2 }, new BuildOrder() { OrderID = 1, BuildOrderID = 1, BuildingTypeID = BuildingTypeIDs.Forest, X = 11, Y = 12 });
 			Assert.IsNotNull(result);
 			Assert.AreEqual(1, result.WorkerID);
 			Assert.AreEqual(TaskTypeIDs.MoveTo, result.TaskTypeID);
 		}
 		[TestMethod]
-		public void CreateTaskFromBuildFactoryOrderShouldReturnCreateBuildingIfFactoryDoesntExistsAndWorkerIsOnSite()
+		public void CreateTaskFromBuildOrderShouldReturnCreateBuildingIfFactoryDoesntExistsAndWorkerIsOnSite()
 		{
 			IOrderModule orderModule;
 			ClientLib.PIOServiceReference.IPIOService client;
@@ -727,13 +727,13 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			orderModule = Substitute.For<IOrderModule>();
 
 			module = new OrderManagerModule(NullLogger.Instance, client, orderModule, null, null, 10);
-			result = module.CreateTaskFromBuildFactoryOrder(new Worker() { PlanetID = 1, X = 11, Y = 12 }, new BuildFactoryOrder() { OrderID = 1, BuildFactoryOrderID = 1, BuildingTypeID = BuildingTypeIDs.Forest, X = 11, Y = 12 });
+			result = module.CreateTaskFromBuildOrder(new Worker() { PlanetID = 1, X = 11, Y = 12 }, new BuildOrder() { OrderID = 1, BuildOrderID = 1, BuildingTypeID = BuildingTypeIDs.Forest, X = 11, Y = 12 });
 			Assert.IsNotNull(result);
 			Assert.AreEqual(1, result.WorkerID);
 			Assert.AreEqual(TaskTypeIDs.CreateBuilding, result.TaskTypeID);
 		}
 		[TestMethod]
-		public void CreateTaskFromBuildFactoryOrderShouldReturnNullIfFactoryIsAlreadyBuilt()
+		public void CreateTaskFromBuildOrderShouldReturnNullIfFactoryIsAlreadyBuilt()
 		{
 			IOrderModule orderModule;
 			ClientLib.PIOServiceReference.IPIOService client;
@@ -747,12 +747,12 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			orderModule = Substitute.For<IOrderModule>();
 
 			module = new OrderManagerModule(NullLogger.Instance, client, orderModule, null, null, 10);
-			result = module.CreateTaskFromBuildFactoryOrder(new Worker() { PlanetID = 1, X = 1, Y = 2 }, new BuildFactoryOrder() { OrderID = 1, BuildFactoryOrderID = 1, BuildingTypeID = BuildingTypeIDs.Forest, X = 11, Y = 12 });
+			result = module.CreateTaskFromBuildOrder(new Worker() { PlanetID = 1, X = 1, Y = 2 }, new BuildOrder() { OrderID = 1, BuildOrderID = 1, BuildingTypeID = BuildingTypeIDs.Forest, X = 11, Y = 12 });
 			Assert.IsNull(result);
 		}
 
 		[TestMethod]
-		public void CreateTaskFromBuildFactoryOrderShouldReturnMoveToIfFactoryExistsAndHasEnoughResourcesAndWorkerIsNotOnSite()
+		public void CreateTaskFromBuildOrderShouldReturnMoveToIfFactoryExistsAndHasEnoughResourcesAndWorkerIsNotOnSite()
 		{
 			IOrderModule orderModule;
 			ClientLib.PIOServiceReference.IPIOService client;
@@ -766,13 +766,13 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			orderModule = Substitute.For<IOrderModule>();
 
 			module = new OrderManagerModule(NullLogger.Instance, client, orderModule, null, null, 10);
-			result = module.CreateTaskFromBuildFactoryOrder(new Worker() { PlanetID = 1, X = 1, Y = 2 }, new BuildFactoryOrder() { OrderID = 1, BuildFactoryOrderID = 1, BuildingTypeID = BuildingTypeIDs.Forest, X = 11, Y = 12 });
+			result = module.CreateTaskFromBuildOrder(new Worker() { PlanetID = 1, X = 1, Y = 2 }, new BuildOrder() { OrderID = 1, BuildOrderID = 1, BuildingTypeID = BuildingTypeIDs.Forest, X = 11, Y = 12 });
 			Assert.IsNotNull(result);
 			Assert.AreEqual(1, result.WorkerID);
 			Assert.AreEqual(TaskTypeIDs.MoveTo, result.TaskTypeID);
 		}
 		[TestMethod]
-		public void CreateTaskFromBuildFactoryOrderShouldReturnBuildFactoryIfFactoryExistsAndHasEnoughResourcesAndWorkerIsOnSite()
+		public void CreateTaskFromBuildOrderShouldReturnBuildIfFactoryExistsAndHasEnoughResourcesAndWorkerIsOnSite()
 		{
 			IOrderModule orderModule;
 			ClientLib.PIOServiceReference.IPIOService client;
@@ -787,7 +787,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			orderModule = Substitute.For<IOrderModule>();
 
 			module = new OrderManagerModule(NullLogger.Instance, client, orderModule, null, null, 10);
-			result = module.CreateTaskFromBuildFactoryOrder(new Worker() { PlanetID = 1, X = 11, Y = 12 }, new BuildFactoryOrder() { OrderID = 1, BuildFactoryOrderID = 1, BuildingTypeID = BuildingTypeIDs.Forest, X = 11, Y = 12 });
+			result = module.CreateTaskFromBuildOrder(new Worker() { PlanetID = 1, X = 11, Y = 12 }, new BuildOrder() { OrderID = 1, BuildOrderID = 1, BuildingTypeID = BuildingTypeIDs.Forest, X = 11, Y = 12 });
 			Assert.IsNotNull(result);
 			Assert.AreEqual(1, result.WorkerID);
 			Assert.AreEqual(TaskTypeIDs.Build, result.TaskTypeID);
@@ -795,7 +795,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 
 
 		[TestMethod]
-		public void CreateTaskFromBuildFactoryOrderShouldReturnMoveToIfFactoryExistsAndDoentHaveEnoughResourcesAndWorkerIsCarryingMissingResourceAndWorkerIsNotOnSite()
+		public void CreateTaskFromBuildOrderShouldReturnMoveToIfFactoryExistsAndDoentHaveEnoughResourcesAndWorkerIsCarryingMissingResourceAndWorkerIsNotOnSite()
 		{
 			IOrderModule orderModule;
 			ClientLib.PIOServiceReference.IPIOService client;
@@ -809,13 +809,13 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			orderModule = Substitute.For<IOrderModule>();
 
 			module = new OrderManagerModule(NullLogger.Instance, client, orderModule, null, null, 10);
-			result = module.CreateTaskFromBuildFactoryOrder(new Worker() { PlanetID = 1, X = 1, Y = 2 ,ResourceTypeID=ResourceTypeIDs.Wood}, new BuildFactoryOrder() { OrderID = 1, BuildFactoryOrderID = 1, BuildingTypeID = BuildingTypeIDs.Forest, X = 11, Y = 12 });
+			result = module.CreateTaskFromBuildOrder(new Worker() { PlanetID = 1, X = 1, Y = 2 ,ResourceTypeID=ResourceTypeIDs.Wood}, new BuildOrder() { OrderID = 1, BuildOrderID = 1, BuildingTypeID = BuildingTypeIDs.Forest, X = 11, Y = 12 });
 			Assert.IsNotNull(result);
 			Assert.AreEqual(1, result.WorkerID);
 			Assert.AreEqual(TaskTypeIDs.MoveTo, result.TaskTypeID);
 		}
 		[TestMethod]
-		public void CreateTaskFromBuildFactoryOrderShouldReturnStoreIfFactoryExistsAndDoesntHabeEnoughResourcesAnWorkerIsCarryingMissingResourceAndWorkerIsOnSite()
+		public void CreateTaskFromBuildOrderShouldReturnStoreIfFactoryExistsAndDoesntHabeEnoughResourcesAnWorkerIsCarryingMissingResourceAndWorkerIsOnSite()
 		{
 			IOrderModule orderModule;
 			ClientLib.PIOServiceReference.IPIOService client;
@@ -830,7 +830,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			orderModule = Substitute.For<IOrderModule>();
 
 			module = new OrderManagerModule(NullLogger.Instance, client, orderModule, null, null, 10);
-			result = module.CreateTaskFromBuildFactoryOrder(new Worker() { PlanetID = 1, X = 11, Y = 12, ResourceTypeID = ResourceTypeIDs.Wood }, new BuildFactoryOrder() { OrderID = 1, BuildFactoryOrderID = 1, BuildingTypeID = BuildingTypeIDs.Forest, X = 11, Y = 12 });
+			result = module.CreateTaskFromBuildOrder(new Worker() { PlanetID = 1, X = 11, Y = 12, ResourceTypeID = ResourceTypeIDs.Wood }, new BuildOrder() { OrderID = 1, BuildOrderID = 1, BuildingTypeID = BuildingTypeIDs.Forest, X = 11, Y = 12 });
 			Assert.IsNotNull(result);
 			Assert.AreEqual(1, result.WorkerID);
 			Assert.AreEqual(TaskTypeIDs.Store, result.TaskTypeID);
@@ -838,7 +838,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 
 
 		[TestMethod]
-		public void CreateTaskFromBuildFactoryOrderShouldReturnNullIfFactoryExistsAndDoesntHaveEnoughResourcesAndCannotLocateMissingResource()
+		public void CreateTaskFromBuildOrderShouldReturnNullIfFactoryExistsAndDoesntHaveEnoughResourcesAndCannotLocateMissingResource()
 		{
 			IOrderModule orderModule;
 			ClientLib.PIOServiceReference.IPIOService client;
@@ -853,11 +853,11 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			orderModule = Substitute.For<IOrderModule>();
 
 			module = new OrderManagerModule(NullLogger.Instance, client, orderModule, null, null, 10);
-			result = module.CreateTaskFromBuildFactoryOrder(new Worker() { PlanetID = 1, X = 1, Y = 2 }, new BuildFactoryOrder() { OrderID = 1, BuildFactoryOrderID = 1, BuildingTypeID = BuildingTypeIDs.Forest, X = 11, Y = 12 });
+			result = module.CreateTaskFromBuildOrder(new Worker() { PlanetID = 1, X = 1, Y = 2 }, new BuildOrder() { OrderID = 1, BuildOrderID = 1, BuildingTypeID = BuildingTypeIDs.Forest, X = 11, Y = 12 });
 			Assert.IsNull(result);
 		}
 		[TestMethod]
-		public void CreateTaskFromBuildFactoryOrderShouldReturnMoveToIfFactoryExistsAndDoesntHaveEnoughResourcesAndCanLocateMissingResourceAndWorkerIsNotOnSite()
+		public void CreateTaskFromBuildOrderShouldReturnMoveToIfFactoryExistsAndDoesntHaveEnoughResourcesAndCanLocateMissingResourceAndWorkerIsNotOnSite()
 		{
 			IOrderModule orderModule;
 			ClientLib.PIOServiceReference.IPIOService client;
@@ -874,13 +874,13 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			orderModule = Substitute.For<IOrderModule>();
 
 			module = new OrderManagerModule(NullLogger.Instance, client, orderModule, null, null, 10);
-			result = module.CreateTaskFromBuildFactoryOrder(new Worker() { PlanetID = 1, X = 1, Y = 2 }, new BuildFactoryOrder() { OrderID = 1, BuildFactoryOrderID = 1, BuildingTypeID = BuildingTypeIDs.Forest, X = 11, Y = 12 });
+			result = module.CreateTaskFromBuildOrder(new Worker() { PlanetID = 1, X = 1, Y = 2 }, new BuildOrder() { OrderID = 1, BuildOrderID = 1, BuildingTypeID = BuildingTypeIDs.Forest, X = 11, Y = 12 });
 			Assert.IsNotNull(result);
 			Assert.AreEqual(1, result.WorkerID);
 			Assert.AreEqual(TaskTypeIDs.MoveTo, result.TaskTypeID);
 		}
 		[TestMethod]
-		public void CreateTaskFromBuildFactoryOrderShouldReturnTakeIfFactoryExistsAndDoesntHaveEnoughResourcesAndCanLocateMissingResourceAndWorkerIsOnSite()
+		public void CreateTaskFromBuildOrderShouldReturnTakeIfFactoryExistsAndDoesntHaveEnoughResourcesAndCanLocateMissingResourceAndWorkerIsOnSite()
 		{
 			IOrderModule orderModule;
 			ClientLib.PIOServiceReference.IPIOService client;
@@ -897,7 +897,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			orderModule = Substitute.For<IOrderModule>();
 
 			module = new OrderManagerModule(NullLogger.Instance, client, orderModule, null, null, 10);
-			result = module.CreateTaskFromBuildFactoryOrder(new Worker() { PlanetID = 1, X = 1, Y = 2 }, new BuildFactoryOrder() { OrderID = 1, BuildFactoryOrderID = 1, BuildingTypeID = BuildingTypeIDs.Forest, X = 11, Y = 12 });
+			result = module.CreateTaskFromBuildOrder(new Worker() { PlanetID = 1, X = 1, Y = 2 }, new BuildOrder() { OrderID = 1, BuildOrderID = 1, BuildingTypeID = BuildingTypeIDs.Forest, X = 11, Y = 12 });
 			Assert.IsNotNull(result);
 			Assert.AreEqual(1, result.WorkerID);
 			Assert.AreEqual(TaskTypeIDs.Take, result.TaskTypeID);

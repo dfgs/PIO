@@ -18,7 +18,7 @@ namespace PIO.Bots.Models.Modules
 
 
 		ProduceOrder[] GetWaitingProduceOrders(int PlanetID);
-		BuildFactoryOrder[] GetWaitingBuildFactoryOrders(int PlanetID);
+		BuildOrder[] GetWaitingBuildOrders(int PlanetID);
 
 
 
@@ -28,15 +28,15 @@ namespace PIO.Bots.Models.Modules
 		Task CreateTask(int BotID,int WorkerID);
 
 		Task CreateTaskFromProduceOrder(Worker Worker, ProduceOrder ProduceOrder);
-		Task CreateTaskFromBuildFactoryOrder(Worker Worker, BuildFactoryOrder BuildFactoryOrder);
+		Task CreateTaskFromBuildOrder(Worker Worker, BuildOrder BuildOrder);
 	
 
 
 
 
 
-		ProduceOrder CreateProduceOrder(int PlanetID, int FactoryID);
-		BuildFactoryOrder CreateBuildFactoryOrder(int PlanetID, BuildingTypeIDs BuildingTypeID, int X, int Y);
+		ProduceOrder CreateProduceOrder(int PlanetID, int BuildingID);
+		BuildOrder CreateBuildOrder(int PlanetID, BuildingTypeIDs BuildingTypeID, int X, int Y);
 
 	}
 }

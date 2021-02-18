@@ -66,8 +66,8 @@
     <Compile Include="ViewModels\PIOViewModelCollection.cs" />
     <Compile Include="ViewModels\PIOViewModel.cs" />
     <Compile Include="ViewModels\ILocation\BuildingsViewModel.cs" />
-    <Compile Include="ViewModels\BuildFactoryOrderViewModel.cs" />
-    <Compile Include="ViewModels\BuildFactoryOrdersViewModel.cs" />
+    <Compile Include="ViewModels\BuildOrderViewModel.cs" />
+    <Compile Include="ViewModels\BuildOrdersViewModel.cs" />
     <Compile Include="ViewModels\ProduceOrderViewModel.cs" />
     <Compile Include="ViewModels\ProduceOrdersViewModel.cs" />
     <Compile Include="ViewModels\TasksViewModel.cs" />

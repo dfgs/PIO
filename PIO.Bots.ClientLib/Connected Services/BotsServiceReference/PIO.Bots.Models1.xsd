@@ -32,7 +32,7 @@
     <xs:complexContent mixed="false">
       <xs:extension base="tns:Order">
         <xs:sequence>
-          <xs:element minOccurs="0" name="FactoryID" type="xs:int" />
+          <xs:element minOccurs="0" name="BuildingID" type="xs:int" />
           <xs:element minOccurs="0" name="ProduceOrderID" type="xs:int" />
         </xs:sequence>
       </xs:extension>
@@ -45,11 +45,11 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfProduceOrder" nillable="true" type="tns:ArrayOfProduceOrder" />
-  <xs:complexType name="BuildFactoryOrder">
+  <xs:complexType name="BuildOrder">
     <xs:complexContent mixed="false">
       <xs:extension base="tns:Order">
         <xs:sequence>
-          <xs:element minOccurs="0" name="BuildFactoryOrderID" type="xs:int" />
+          <xs:element minOccurs="0" name="BuildOrderID" type="xs:int" />
           <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="BuildingTypeID" type="q1:BuildingTypeIDs" />
           <xs:element minOccurs="0" name="X" type="xs:int" />
           <xs:element minOccurs="0" name="Y" type="xs:int" />
@@ -57,11 +57,11 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-  <xs:element name="BuildFactoryOrder" nillable="true" type="tns:BuildFactoryOrder" />
-  <xs:complexType name="ArrayOfBuildFactoryOrder">
+  <xs:element name="BuildOrder" nillable="true" type="tns:BuildOrder" />
+  <xs:complexType name="ArrayOfBuildOrder">
     <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="BuildFactoryOrder" nillable="true" type="tns:BuildFactoryOrder" />
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="BuildOrder" nillable="true" type="tns:BuildOrder" />
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="ArrayOfBuildFactoryOrder" nillable="true" type="tns:ArrayOfBuildFactoryOrder" />
+  <xs:element name="ArrayOfBuildOrder" nillable="true" type="tns:ArrayOfBuildOrder" />
 </xs:schema>

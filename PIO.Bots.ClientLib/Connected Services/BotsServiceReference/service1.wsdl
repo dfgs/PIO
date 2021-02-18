@@ -50,29 +50,29 @@
   <wsdl:message name="IBotsService_GetProduceOrders_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetProduceOrdersResponse" />
   </wsdl:message>
-  <wsdl:message name="IBotsService_GetProduceOrdersForFactory_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetProduceOrdersForFactory" />
+  <wsdl:message name="IBotsService_GetProduceOrdersForBuilding_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetProduceOrdersForBuilding" />
   </wsdl:message>
-  <wsdl:message name="IBotsService_GetProduceOrdersForFactory_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetProduceOrdersForFactoryResponse" />
+  <wsdl:message name="IBotsService_GetProduceOrdersForBuilding_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetProduceOrdersForBuildingResponse" />
   </wsdl:message>
-  <wsdl:message name="IBotsService_GetBuildFactoryOrder_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetBuildFactoryOrder" />
+  <wsdl:message name="IBotsService_GetBuildOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetBuildOrder" />
   </wsdl:message>
-  <wsdl:message name="IBotsService_GetBuildFactoryOrder_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetBuildFactoryOrderResponse" />
+  <wsdl:message name="IBotsService_GetBuildOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetBuildOrderResponse" />
   </wsdl:message>
-  <wsdl:message name="IBotsService_GetBuildFactoryOrders_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetBuildFactoryOrders" />
+  <wsdl:message name="IBotsService_GetBuildOrders_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetBuildOrders" />
   </wsdl:message>
-  <wsdl:message name="IBotsService_GetBuildFactoryOrders_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetBuildFactoryOrdersResponse" />
+  <wsdl:message name="IBotsService_GetBuildOrders_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetBuildOrdersResponse" />
   </wsdl:message>
-  <wsdl:message name="IBotsService_GetBuildFactoryOrdersAtPosition_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetBuildFactoryOrdersAtPosition" />
+  <wsdl:message name="IBotsService_GetBuildOrdersAtPosition_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetBuildOrdersAtPosition" />
   </wsdl:message>
-  <wsdl:message name="IBotsService_GetBuildFactoryOrdersAtPosition_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetBuildFactoryOrdersAtPositionResponse" />
+  <wsdl:message name="IBotsService_GetBuildOrdersAtPosition_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetBuildOrdersAtPositionResponse" />
   </wsdl:message>
   <wsdl:message name="IBotsService_CreateProduceOrder_InputMessage">
     <wsdl:part name="parameters" element="tns:CreateProduceOrder" />
@@ -80,11 +80,11 @@
   <wsdl:message name="IBotsService_CreateProduceOrder_OutputMessage">
     <wsdl:part name="parameters" element="tns:CreateProduceOrderResponse" />
   </wsdl:message>
-  <wsdl:message name="IBotsService_CreateBuildFactoryOrder_InputMessage">
-    <wsdl:part name="parameters" element="tns:CreateBuildFactoryOrder" />
+  <wsdl:message name="IBotsService_CreateBuildOrder_InputMessage">
+    <wsdl:part name="parameters" element="tns:CreateBuildOrder" />
   </wsdl:message>
-  <wsdl:message name="IBotsService_CreateBuildFactoryOrder_OutputMessage">
-    <wsdl:part name="parameters" element="tns:CreateBuildFactoryOrderResponse" />
+  <wsdl:message name="IBotsService_CreateBuildOrder_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CreateBuildOrderResponse" />
   </wsdl:message>
   <wsdl:message name="IBotsService_CreateBot_InputMessage">
     <wsdl:part name="parameters" element="tns:CreateBot" />
@@ -127,29 +127,29 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IBotsService/GetProduceOrders" message="tns:IBotsService_GetProduceOrders_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IBotsService/GetProduceOrdersResponse" message="tns:IBotsService_GetProduceOrders_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="GetProduceOrdersForFactory">
-      <wsdl:input wsaw:Action="http://tempuri.org/IBotsService/GetProduceOrdersForFactory" message="tns:IBotsService_GetProduceOrdersForFactory_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IBotsService/GetProduceOrdersForFactoryResponse" message="tns:IBotsService_GetProduceOrdersForFactory_OutputMessage" />
+    <wsdl:operation name="GetProduceOrdersForBuilding">
+      <wsdl:input wsaw:Action="http://tempuri.org/IBotsService/GetProduceOrdersForBuilding" message="tns:IBotsService_GetProduceOrdersForBuilding_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IBotsService/GetProduceOrdersForBuildingResponse" message="tns:IBotsService_GetProduceOrdersForBuilding_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="GetBuildFactoryOrder">
-      <wsdl:input wsaw:Action="http://tempuri.org/IBotsService/GetBuildFactoryOrder" message="tns:IBotsService_GetBuildFactoryOrder_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IBotsService/GetBuildFactoryOrderResponse" message="tns:IBotsService_GetBuildFactoryOrder_OutputMessage" />
+    <wsdl:operation name="GetBuildOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IBotsService/GetBuildOrder" message="tns:IBotsService_GetBuildOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IBotsService/GetBuildOrderResponse" message="tns:IBotsService_GetBuildOrder_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="GetBuildFactoryOrders">
-      <wsdl:input wsaw:Action="http://tempuri.org/IBotsService/GetBuildFactoryOrders" message="tns:IBotsService_GetBuildFactoryOrders_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IBotsService/GetBuildFactoryOrdersResponse" message="tns:IBotsService_GetBuildFactoryOrders_OutputMessage" />
+    <wsdl:operation name="GetBuildOrders">
+      <wsdl:input wsaw:Action="http://tempuri.org/IBotsService/GetBuildOrders" message="tns:IBotsService_GetBuildOrders_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IBotsService/GetBuildOrdersResponse" message="tns:IBotsService_GetBuildOrders_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="GetBuildFactoryOrdersAtPosition">
-      <wsdl:input wsaw:Action="http://tempuri.org/IBotsService/GetBuildFactoryOrdersAtPosition" message="tns:IBotsService_GetBuildFactoryOrdersAtPosition_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IBotsService/GetBuildFactoryOrdersAtPositionResponse" message="tns:IBotsService_GetBuildFactoryOrdersAtPosition_OutputMessage" />
+    <wsdl:operation name="GetBuildOrdersAtPosition">
+      <wsdl:input wsaw:Action="http://tempuri.org/IBotsService/GetBuildOrdersAtPosition" message="tns:IBotsService_GetBuildOrdersAtPosition_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IBotsService/GetBuildOrdersAtPositionResponse" message="tns:IBotsService_GetBuildOrdersAtPosition_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="CreateProduceOrder">
       <wsdl:input wsaw:Action="http://tempuri.org/IBotsService/CreateProduceOrder" message="tns:IBotsService_CreateProduceOrder_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IBotsService/CreateProduceOrderResponse" message="tns:IBotsService_CreateProduceOrder_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="CreateBuildFactoryOrder">
-      <wsdl:input wsaw:Action="http://tempuri.org/IBotsService/CreateBuildFactoryOrder" message="tns:IBotsService_CreateBuildFactoryOrder_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IBotsService/CreateBuildFactoryOrderResponse" message="tns:IBotsService_CreateBuildFactoryOrder_OutputMessage" />
+    <wsdl:operation name="CreateBuildOrder">
+      <wsdl:input wsaw:Action="http://tempuri.org/IBotsService/CreateBuildOrder" message="tns:IBotsService_CreateBuildOrder_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IBotsService/CreateBuildOrderResponse" message="tns:IBotsService_CreateBuildOrder_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="CreateBot">
       <wsdl:input wsaw:Action="http://tempuri.org/IBotsService/CreateBot" message="tns:IBotsService_CreateBot_InputMessage" />
@@ -225,8 +225,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetProduceOrdersForFactory">
-      <soap:operation soapAction="http://tempuri.org/IBotsService/GetProduceOrdersForFactory" style="document" />
+    <wsdl:operation name="GetProduceOrdersForBuilding">
+      <soap:operation soapAction="http://tempuri.org/IBotsService/GetProduceOrdersForBuilding" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -234,8 +234,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetBuildFactoryOrder">
-      <soap:operation soapAction="http://tempuri.org/IBotsService/GetBuildFactoryOrder" style="document" />
+    <wsdl:operation name="GetBuildOrder">
+      <soap:operation soapAction="http://tempuri.org/IBotsService/GetBuildOrder" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -243,8 +243,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetBuildFactoryOrders">
-      <soap:operation soapAction="http://tempuri.org/IBotsService/GetBuildFactoryOrders" style="document" />
+    <wsdl:operation name="GetBuildOrders">
+      <soap:operation soapAction="http://tempuri.org/IBotsService/GetBuildOrders" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -252,8 +252,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetBuildFactoryOrdersAtPosition">
-      <soap:operation soapAction="http://tempuri.org/IBotsService/GetBuildFactoryOrdersAtPosition" style="document" />
+    <wsdl:operation name="GetBuildOrdersAtPosition">
+      <soap:operation soapAction="http://tempuri.org/IBotsService/GetBuildOrdersAtPosition" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -270,8 +270,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="CreateBuildFactoryOrder">
-      <soap:operation soapAction="http://tempuri.org/IBotsService/CreateBuildFactoryOrder" style="document" />
+    <wsdl:operation name="CreateBuildOrder">
+      <soap:operation soapAction="http://tempuri.org/IBotsService/CreateBuildOrder" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

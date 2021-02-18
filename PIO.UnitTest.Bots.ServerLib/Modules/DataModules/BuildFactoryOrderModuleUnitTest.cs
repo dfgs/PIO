@@ -18,161 +18,161 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 		[TestMethod]
 		public void ShouldGetBuildFactoryOrder()
 		{
-			BuildFactoryOrderModule module;
-			BuildFactoryOrder result;
+			BuildOrderModule module;
+			BuildOrder result;
 			IDatabase database;
 
 			database = Substitute.For<IDatabase>();
-			database.Execute<BuildFactoryOrder>(Arg.Any<ISelect>()).Returns(new BuildFactoryOrder[] { new BuildFactoryOrder() { BuildFactoryOrderID = 1 } });
+			database.Execute<BuildOrder>(Arg.Any<ISelect>()).Returns(new BuildOrder[] { new BuildOrder() { BuildOrderID = 1 } });
 
-			module = new BuildFactoryOrderModule(NullLogger.Instance, database);
-			result = module.GetBuildFactoryOrder(1);
+			module = new BuildOrderModule(NullLogger.Instance, database);
+			result = module.GetBuildOrder(1);
 			Assert.IsNotNull(result);
-			Assert.AreEqual(1, result.BuildFactoryOrderID);
+			Assert.AreEqual(1, result.BuildOrderID);
 		}
 
 		[TestMethod]
 		public void ShouldGetAllBuildFactoryOrders()
 		{
-			BuildFactoryOrderModule module;
-			BuildFactoryOrder[] results;
+			BuildOrderModule module;
+			BuildOrder[] results;
 			IDatabase database;
 
 			database = Substitute.For<IDatabase>();
-			database.Execute<BuildFactoryOrder>(Arg.Any<ISelect>()).Returns(new BuildFactoryOrder[] { new BuildFactoryOrder() { BuildFactoryOrderID = 1 }, new BuildFactoryOrder() { BuildFactoryOrderID = 2 }, new BuildFactoryOrder() { BuildFactoryOrderID = 3 } });
+			database.Execute<BuildOrder>(Arg.Any<ISelect>()).Returns(new BuildOrder[] { new BuildOrder() { BuildOrderID = 1 }, new BuildOrder() { BuildOrderID = 2 }, new BuildOrder() { BuildOrderID = 3 } });
 
-			module = new BuildFactoryOrderModule(NullLogger.Instance, database);
-			results = module.GetBuildFactoryOrders();
+			module = new BuildOrderModule(NullLogger.Instance, database);
+			results = module.GetBuildOrders();
 			Assert.IsNotNull(results);
 			Assert.AreEqual(3, results.Length);
 			for (int t = 0; t < 3; t++)
 			{
 				Assert.IsNotNull(results[t]);
-				Assert.AreEqual(t + 1, results[t].BuildFactoryOrderID);
+				Assert.AreEqual(t + 1, results[t].BuildOrderID);
 			}
 		}
 		[TestMethod]
 		public void ShouldGetBuildFactoryOrdersAtPosition()
 		{
-			BuildFactoryOrderModule module;
-			BuildFactoryOrder[] results;
+			BuildOrderModule module;
+			BuildOrder[] results;
 			IDatabase database;
 
 			database = Substitute.For<IDatabase>();
-			database.Execute<BuildFactoryOrder>(Arg.Any<ISelect>()).Returns(new BuildFactoryOrder[] { new BuildFactoryOrder() { BuildFactoryOrderID = 1 }, new BuildFactoryOrder() { BuildFactoryOrderID = 2 }, new BuildFactoryOrder() { BuildFactoryOrderID = 3 } });
+			database.Execute<BuildOrder>(Arg.Any<ISelect>()).Returns(new BuildOrder[] { new BuildOrder() { BuildOrderID = 1 }, new BuildOrder() { BuildOrderID = 2 }, new BuildOrder() { BuildOrderID = 3 } });
 
-			module = new BuildFactoryOrderModule(NullLogger.Instance, database);
-			results = module.GetBuildFactoryOrders(1,2,2);
+			module = new BuildOrderModule(NullLogger.Instance, database);
+			results = module.GetBuildOrders(1,2,2);
 			Assert.IsNotNull(results);
 			Assert.AreEqual(3, results.Length);
 			for (int t = 0; t < 3; t++)
 			{
 				Assert.IsNotNull(results[t]);
-				Assert.AreEqual(t + 1, results[t].BuildFactoryOrderID);
+				Assert.AreEqual(t + 1, results[t].BuildOrderID);
 			}
 		}
 		[TestMethod]
 		public void ShouldGetWaitingBuildFactoryOrdersForPlanet()
 		{
-			BuildFactoryOrderModule module;
-			BuildFactoryOrder[] results;
+			BuildOrderModule module;
+			BuildOrder[] results;
 			IDatabase database;
 
 			database = Substitute.For<IDatabase>();
-			database.Execute<BuildFactoryOrder>(Arg.Any<ISelect>()).Returns(new BuildFactoryOrder[] { new BuildFactoryOrder() { BuildFactoryOrderID = 1 }, new BuildFactoryOrder() { BuildFactoryOrderID = 2 }, new BuildFactoryOrder() { BuildFactoryOrderID = 3 } });
+			database.Execute<BuildOrder>(Arg.Any<ISelect>()).Returns(new BuildOrder[] { new BuildOrder() { BuildOrderID = 1 }, new BuildOrder() { BuildOrderID = 2 }, new BuildOrder() { BuildOrderID = 3 } });
 
-			module = new BuildFactoryOrderModule(NullLogger.Instance, database);
-			results = module.GetWaitingBuildFactoryOrders(1);
+			module = new BuildOrderModule(NullLogger.Instance, database);
+			results = module.GetWaitingBuildOrders(1);
 			Assert.IsNotNull(results);
 			Assert.AreEqual(3, results.Length);
 			for (int t = 0; t < 3; t++)
 			{
 				Assert.IsNotNull(results[t]);
-				Assert.AreEqual(t + 1, results[t].BuildFactoryOrderID);
+				Assert.AreEqual(t + 1, results[t].BuildOrderID);
 			}
 		}
 
 		[TestMethod]
 		public void ShouldNotGetBuildFactoryOrderAndLogError()
 		{
-			BuildFactoryOrderModule module;
+			BuildOrderModule module;
 			MemoryLogger logger;
 			IDatabase database;
 
 			logger = new MemoryLogger();
 
 			database = Substitute.For<IDatabase>();
-			database.Execute<BuildFactoryOrder>(Arg.Any<ISelect>()).Returns((x) => { throw new Exception(); });
+			database.Execute<BuildOrder>(Arg.Any<ISelect>()).Returns((x) => { throw new Exception(); });
 
-			module = new BuildFactoryOrderModule(logger, database);
-			Assert.ThrowsException<PIODataException>(() => module.GetBuildFactoryOrder(1));
+			module = new BuildOrderModule(logger, database);
+			Assert.ThrowsException<PIODataException>(() => module.GetBuildOrder(1));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName == module.ModuleName)));
 		}
 
 		[TestMethod]
 		public void ShouldNotGetAllBuildFactoryOrdersAndLogError()
 		{
-			BuildFactoryOrderModule module;
+			BuildOrderModule module;
 			MemoryLogger logger;
 			IDatabase database;
 
 			logger = new MemoryLogger();
 
 			database = Substitute.For<IDatabase>();
-			database.Execute<BuildFactoryOrder>(Arg.Any<ISelect>()).Returns((x) => { throw new Exception(); });
+			database.Execute<BuildOrder>(Arg.Any<ISelect>()).Returns((x) => { throw new Exception(); });
 
-			module = new BuildFactoryOrderModule(logger, database);
-			Assert.ThrowsException<PIODataException>(() => module.GetBuildFactoryOrders());
+			module = new BuildOrderModule(logger, database);
+			Assert.ThrowsException<PIODataException>(() => module.GetBuildOrders());
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName == module.ModuleName)));
 		}
 
 		[TestMethod]
 		public void ShouldNotGetBuildFactoryOrdersAtPosAndLogError()
 		{
-			BuildFactoryOrderModule module;
+			BuildOrderModule module;
 			MemoryLogger logger;
 			IDatabase database;
 
 			logger = new MemoryLogger();
 
 			database = Substitute.For<IDatabase>();
-			database.Execute<BuildFactoryOrder>(Arg.Any<ISelect>()).Returns((x) => { throw new Exception(); });
+			database.Execute<BuildOrder>(Arg.Any<ISelect>()).Returns((x) => { throw new Exception(); });
 
-			module = new BuildFactoryOrderModule(logger, database);
-			Assert.ThrowsException<PIODataException>(() => module.GetBuildFactoryOrders(1,2,2));
+			module = new BuildOrderModule(logger, database);
+			Assert.ThrowsException<PIODataException>(() => module.GetBuildOrders(1,2,2));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName == module.ModuleName)));
 		}
 		[TestMethod]
 		public void ShouldNotGetWaitingBuildFactoryOrdersForPlanetAndLogError()
 		{
-			BuildFactoryOrderModule module;
+			BuildOrderModule module;
 			MemoryLogger logger;
 			IDatabase database;
 
 			logger = new MemoryLogger();
 
 			database = Substitute.For<IDatabase>();
-			database.Execute<BuildFactoryOrder>(Arg.Any<ISelect>()).Returns((x) => { throw new Exception(); });
+			database.Execute<BuildOrder>(Arg.Any<ISelect>()).Returns((x) => { throw new Exception(); });
 
-			module = new BuildFactoryOrderModule(logger, database);
-			Assert.ThrowsException<PIODataException>(() => module.GetWaitingBuildFactoryOrders(1));
+			module = new BuildOrderModule(logger, database);
+			Assert.ThrowsException<PIODataException>(() => module.GetWaitingBuildOrders(1));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName == module.ModuleName)));
 		}
 
 		[TestMethod]
 		public void ShouldCreateBuildFactoryOrder()
 		{
-			BuildFactoryOrderModule module;
-			BuildFactoryOrder result;
+			BuildOrderModule module;
+			BuildOrder result;
 			IDatabase database;
 			int inserted = 0;
 
 			database = Substitute.For<IDatabase>();
 			database.When(x => x.Execute(Arg.Any<IQuery[]>())).Do(x => inserted++);
 
-			module = new BuildFactoryOrderModule(NullLogger.Instance, database);
+			module = new BuildOrderModule(NullLogger.Instance, database);
 
-			result = module.CreateBuildFactoryOrder(1,Models.BuildingTypeIDs.Sawmill, 2,2);
+			result = module.CreateBuildOrder(1,Models.BuildingTypeIDs.Sawmill, 2,2);
 			Assert.IsNotNull(result);
 			Assert.AreEqual(2, inserted);
 		}
@@ -180,7 +180,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 		[TestMethod]
 		public void ShouldNotCreateBuildFactoryOrderAndLogError()
 		{
-			BuildFactoryOrderModule module;
+			BuildOrderModule module;
 			MemoryLogger logger;
 			IDatabase database;
 
@@ -189,8 +189,8 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			database = Substitute.For<IDatabase>();
 			database.When(x => x.Execute(Arg.Any<IQuery[]>())).Do(x => { throw new Exception(); });
 
-			module = new BuildFactoryOrderModule(logger, database);
-			Assert.ThrowsException<PIODataException>(() => module.CreateBuildFactoryOrder(1, Models.BuildingTypeIDs.Sawmill, 2, 2));
+			module = new BuildOrderModule(logger, database);
+			Assert.ThrowsException<PIODataException>(() => module.CreateBuildOrder(1, Models.BuildingTypeIDs.Sawmill, 2, 2));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName == module.ModuleName)));
 		}
 

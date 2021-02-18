@@ -48,13 +48,13 @@
   <ItemGroup>
     <Compile Include="Bots\DataCmdlet\GetBotsCmdlet.cs" />
     <Compile Include="Bots\DataCmdlet\GetBotCmdlet.cs" />
-    <Compile Include="Bots\DataCmdlet\GetBuildFactoryOrderCmdlet.cs" />
+    <Compile Include="Bots\DataCmdlet\GetBuildOrderCmdlet.cs" />
     <Compile Include="Bots\DataCmdlet\GetProduceOrderCmdlet.cs" />
     <Compile Include="Bots\DataCmdlet\GetOrderCmdlet.cs" />
-    <Compile Include="Bots\DataCmdlet\GetBuildFactoryOrdersCmdlet.cs" />
+    <Compile Include="Bots\DataCmdlet\GetBuildOrdersCmdlet.cs" />
     <Compile Include="Bots\DataCmdlet\GetProduceOrdersCmdlet.cs" />
     <Compile Include="Bots\DataCmdlet\GetOrdersCmdlet.cs" />
-    <Compile Include="Bots\FunctionalCmdlet\NewBuildFactoryOrderCmdLet.cs" />
+    <Compile Include="Bots\FunctionalCmdlet\NewBuildOrderCmdLet.cs" />
     <Compile Include="Bots\FunctionalCmdlet\NewProduceOrderCmdLet.cs" />
     <Compile Include="PIO\DataCmdlet\FindStackCmdlet.cs" />
     <Compile Include="PIO\DataCmdlet\GetCellCmdlet.cs" />

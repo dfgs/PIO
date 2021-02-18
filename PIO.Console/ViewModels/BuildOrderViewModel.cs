@@ -12,21 +12,21 @@ using Task = System.Threading.Tasks.Task;
 
 namespace PIO.Console.ViewModels
 {
-	public class BuildFactoryOrderViewModel : PIOViewModel<BuildFactoryOrder>
+	public class BuildOrderViewModel : PIOViewModel<BuildOrder>
 	{
 
 		
 
-		public BuildFactoryOrderViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient) : base(PIOClient, BotsClient)
+		public BuildOrderViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient) : base(PIOClient, BotsClient)
 		{
 
 		}
 
 		
 
-		protected override async Task<BuildFactoryOrder> OnLoadModelAsync()
+		protected override async Task<BuildOrder> OnLoadModelAsync()
 		{
-			return await BotsClient.GetBuildFactoryOrderAsync(Model.BuildFactoryOrderID);
+			return await BotsClient.GetBuildOrderAsync(Model.BuildOrderID);
 		}
 
 	}

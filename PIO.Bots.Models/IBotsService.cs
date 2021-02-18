@@ -31,23 +31,23 @@ namespace PIO.Bots.Models
 		[OperationContract]
 		ProduceOrder[] GetProduceOrders();
 		[OperationContract]
-		ProduceOrder[] GetProduceOrdersForFactory(int FactoryID);
+		ProduceOrder[] GetProduceOrdersForBuilding(int BuildingID);
 
 		[OperationContract]
-		BuildFactoryOrder GetBuildFactoryOrder(int BuildFactoryOrderID);
+		BuildOrder GetBuildOrder(int BuildOrderID);
 		[OperationContract]
-		BuildFactoryOrder[] GetBuildFactoryOrders();
+		BuildOrder[] GetBuildOrders();
 		[OperationContract]
-		BuildFactoryOrder[] GetBuildFactoryOrdersAtPosition(int PlanetId, int X, int Y);
+		BuildOrder[] GetBuildOrdersAtPosition(int PlanetId, int X, int Y);
 		
 		
 		#endregion
 
 		#region functional
 		[OperationContract]
-		ProduceOrder CreateProduceOrder(int PlanetID, int FactoryID);
+		ProduceOrder CreateProduceOrder(int PlanetID, int BuildOrderID);
 		[OperationContract]
-		BuildFactoryOrder CreateBuildFactoryOrder(int PlanetID, BuildingTypeIDs BuildingTypeID, int X, int Y);
+		BuildOrder CreateBuildOrder(int PlanetID, BuildingTypeIDs BuildingTypeID, int X, int Y);
 		
 		[OperationContract]
 		Bot CreateBot(int WorkerID);
