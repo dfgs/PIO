@@ -76,7 +76,7 @@ namespace PIO.Console.ViewModels
 			BuildFactoryOrder result;
 			BuildFactoryOrderViewModel vm;
 
-			result = await TryAsync(BotsClient.CreateBuildFactoryOrderAsync(Model.PlanetID, FactoryTypeIDs.Sawmill,Model.X,Model.Y));
+			result = await TryAsync(BotsClient.CreateBuildFactoryOrderAsync(Model.PlanetID, BuildingTypeIDs.Sawmill,Model.X,Model.Y));
 			if (result == null) return;
 			vm = new BuildFactoryOrderViewModel(PIOClient, BotsClient);
 			await vm.LoadAsync(result);
@@ -91,7 +91,7 @@ namespace PIO.Console.ViewModels
 			BuildFarmOrder result;
 			BuildFarmOrderViewModel vm;
 
-			result = await TryAsync(BotsClient.CreateBuildFarmOrderAsync(Model.PlanetID, FarmTypeIDs.Forest, Model.X, Model.Y));
+			result = await TryAsync(BotsClient.CreateBuildFarmOrderAsync(Model.PlanetID, BuildingTypeIDs.Forest, Model.X, Model.Y));
 			if (result == null) return;
 			vm = new BuildFarmOrderViewModel(PIOClient, BotsClient);
 			await vm.LoadAsync(result);

@@ -61,6 +61,10 @@
     <Compile Include="PIO\DataCmdlet\FindStackCmdlet.cs" />
     <Compile Include="PIO\DataCmdlet\GetCellCmdlet.cs" />
     <Compile Include="PIO\DataCmdlet\GetCellsCmdlet.cs" />
+    <Compile Include="PIO\DataCmdlet\GetBuildingCmdlet.cs" />
+    <Compile Include="PIO\DataCmdlet\GetBuildingsCmdlet.cs" />
+    <Compile Include="PIO\DataCmdlet\GetBuildingTypeCmdlet.cs" />
+    <Compile Include="PIO\DataCmdlet\GetBuildingTypesCmdlet.cs" />
     <Compile Include="PIO\DataCmdlet\GetFarmsCmdlet.cs" />
     <Compile Include="PIO\DataCmdlet\GetFarmCmdlet.cs" />
     <Compile Include="PIO\DataCmdlet\GetFarmTypeCmdlet.cs" />

@@ -109,16 +109,16 @@ namespace PIO.Bots.ClientLib.BotsServiceReference {
         System.Threading.Tasks.Task<PIO.Bots.Models.ProduceOrder> CreateProduceOrderAsync(int PlanetID, int FactoryID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/CreateBuildFactoryOrder", ReplyAction="http://tempuri.org/IBotsService/CreateBuildFactoryOrderResponse")]
-        PIO.Bots.Models.BuildFactoryOrder CreateBuildFactoryOrder(int PlanetID, PIO.Models.FactoryTypeIDs FactoryTypeID, int X, int Y);
+        PIO.Bots.Models.BuildFactoryOrder CreateBuildFactoryOrder(int PlanetID, PIO.Models.BuildingTypeIDs BuildingTypeID, int X, int Y);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/CreateBuildFactoryOrder", ReplyAction="http://tempuri.org/IBotsService/CreateBuildFactoryOrderResponse")]
-        System.Threading.Tasks.Task<PIO.Bots.Models.BuildFactoryOrder> CreateBuildFactoryOrderAsync(int PlanetID, PIO.Models.FactoryTypeIDs FactoryTypeID, int X, int Y);
+        System.Threading.Tasks.Task<PIO.Bots.Models.BuildFactoryOrder> CreateBuildFactoryOrderAsync(int PlanetID, PIO.Models.BuildingTypeIDs BuildingTypeID, int X, int Y);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/CreateBuildFarmOrder", ReplyAction="http://tempuri.org/IBotsService/CreateBuildFarmOrderResponse")]
-        PIO.Bots.Models.BuildFarmOrder CreateBuildFarmOrder(int PlanetID, PIO.Models.FarmTypeIDs FarmTypeID, int X, int Y);
+        PIO.Bots.Models.BuildFarmOrder CreateBuildFarmOrder(int PlanetID, PIO.Models.BuildingTypeIDs BuildingTypeID, int X, int Y);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/CreateBuildFarmOrder", ReplyAction="http://tempuri.org/IBotsService/CreateBuildFarmOrderResponse")]
-        System.Threading.Tasks.Task<PIO.Bots.Models.BuildFarmOrder> CreateBuildFarmOrderAsync(int PlanetID, PIO.Models.FarmTypeIDs FarmTypeID, int X, int Y);
+        System.Threading.Tasks.Task<PIO.Bots.Models.BuildFarmOrder> CreateBuildFarmOrderAsync(int PlanetID, PIO.Models.BuildingTypeIDs BuildingTypeID, int X, int Y);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/CreateBot", ReplyAction="http://tempuri.org/IBotsService/CreateBotResponse")]
         PIO.Bots.Models.Bot CreateBot(int WorkerID);
@@ -280,20 +280,20 @@ namespace PIO.Bots.ClientLib.BotsServiceReference {
             return base.Channel.CreateProduceOrderAsync(PlanetID, FactoryID);
         }
         
-        public PIO.Bots.Models.BuildFactoryOrder CreateBuildFactoryOrder(int PlanetID, PIO.Models.FactoryTypeIDs FactoryTypeID, int X, int Y) {
-            return base.Channel.CreateBuildFactoryOrder(PlanetID, FactoryTypeID, X, Y);
+        public PIO.Bots.Models.BuildFactoryOrder CreateBuildFactoryOrder(int PlanetID, PIO.Models.BuildingTypeIDs BuildingTypeID, int X, int Y) {
+            return base.Channel.CreateBuildFactoryOrder(PlanetID, BuildingTypeID, X, Y);
         }
         
-        public System.Threading.Tasks.Task<PIO.Bots.Models.BuildFactoryOrder> CreateBuildFactoryOrderAsync(int PlanetID, PIO.Models.FactoryTypeIDs FactoryTypeID, int X, int Y) {
-            return base.Channel.CreateBuildFactoryOrderAsync(PlanetID, FactoryTypeID, X, Y);
+        public System.Threading.Tasks.Task<PIO.Bots.Models.BuildFactoryOrder> CreateBuildFactoryOrderAsync(int PlanetID, PIO.Models.BuildingTypeIDs BuildingTypeID, int X, int Y) {
+            return base.Channel.CreateBuildFactoryOrderAsync(PlanetID, BuildingTypeID, X, Y);
         }
         
-        public PIO.Bots.Models.BuildFarmOrder CreateBuildFarmOrder(int PlanetID, PIO.Models.FarmTypeIDs FarmTypeID, int X, int Y) {
-            return base.Channel.CreateBuildFarmOrder(PlanetID, FarmTypeID, X, Y);
+        public PIO.Bots.Models.BuildFarmOrder CreateBuildFarmOrder(int PlanetID, PIO.Models.BuildingTypeIDs BuildingTypeID, int X, int Y) {
+            return base.Channel.CreateBuildFarmOrder(PlanetID, BuildingTypeID, X, Y);
         }
         
-        public System.Threading.Tasks.Task<PIO.Bots.Models.BuildFarmOrder> CreateBuildFarmOrderAsync(int PlanetID, PIO.Models.FarmTypeIDs FarmTypeID, int X, int Y) {
-            return base.Channel.CreateBuildFarmOrderAsync(PlanetID, FarmTypeID, X, Y);
+        public System.Threading.Tasks.Task<PIO.Bots.Models.BuildFarmOrder> CreateBuildFarmOrderAsync(int PlanetID, PIO.Models.BuildingTypeIDs BuildingTypeID, int X, int Y) {
+            return base.Channel.CreateBuildFarmOrderAsync(PlanetID, BuildingTypeID, X, Y);
         }
         
         public PIO.Bots.Models.Bot CreateBot(int WorkerID) {

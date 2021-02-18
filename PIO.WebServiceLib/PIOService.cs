@@ -23,11 +23,13 @@ namespace PIO.WebServiceLib
 		private ICellModule cellModule;
 		private IFactoryModule factoryModule;
 		private IFarmModule farmModule;
+		private IBuildingModule buildingModule;
 		private IWorkerModule workerModule;
 		private IStackModule stackModule;
 		private IResourceTypeModule resourceTypeModule;
 		private IFactoryTypeModule factoryTypeModule;
 		private IFarmTypeModule farmTypeModule;
+		private IBuildingTypeModule buildingTypeModule;
 		private ITaskTypeModule taskTypeModule;
 		private IMaterialModule materialModule;
 		private IIngredientModule ingredientModule;
@@ -47,10 +49,12 @@ namespace PIO.WebServiceLib
 
 
 		public PIOService(ILogger Logger,
-			IPlanetModule PlanetModule, ICellModule CellModule, IFactoryModule FactoryModule,IFarmModule FarmModule,
+			IPlanetModule PlanetModule, ICellModule CellModule,
+			IFactoryModule FactoryModule,IFarmModule FarmModule,IBuildingModule BuildingModule,
 			IWorkerModule WorkerModule,
 			IStackModule StackModule,IResourceTypeModule ResourceTypeModule,
-			IFactoryTypeModule FactoryTypeModule, IFarmTypeModule FarmTypeModule, ITaskTypeModule TaskTypeModule,
+			IFactoryTypeModule FactoryTypeModule, IFarmTypeModule FarmTypeModule,IBuildingTypeModule BuildingTypeModule,
+			ITaskTypeModule TaskTypeModule,
 			IMaterialModule MaterialModule,
 			IIngredientModule IngredientModule, IProductModule ProductModule, 
 			ITaskModule TaskModule,
@@ -66,15 +70,21 @@ namespace PIO.WebServiceLib
 			LogEnter();
 			this.planetModule = PlanetModule;
 			this.cellModule = CellModule;
+			
 			this.factoryModule = FactoryModule;
 			this.farmModule = FarmModule;
+			this.buildingModule = BuildingModule;
+
 			this.workerModule = WorkerModule;
 			this.stackModule = StackModule;
 			this.locationCheckerModule = LocationCheckerModule;
 			this.resourceTypeModule = ResourceTypeModule;
 			this.taskTypeModule = TaskTypeModule;
+			
 			this.factoryTypeModule = FactoryTypeModule;
 			this.farmTypeModule = FarmTypeModule;
+			this.buildingTypeModule = BuildingTypeModule;
+
 			this.taskTypeModule = TaskTypeModule;
 			this.materialModule = MaterialModule;
 			this.ingredientModule = IngredientModule;
@@ -171,6 +181,21 @@ namespace PIO.WebServiceLib
 			LogEnter();
 			return Try(() => farmModule.GetFarms(PlanetID)).OrThrow(GenerateFaultException);
 		}
+		public Building GetBuilding(int BuildingID)
+		{
+			LogEnter();
+			return Try(() => buildingModule.GetBuilding(BuildingID)).OrThrow(GenerateFaultException);
+		}
+		public Building GetBuildingAtPos(int PlanetID, int X, int Y)
+		{
+			LogEnter();
+			return Try(() => buildingModule.GetBuilding(PlanetID, X, Y)).OrThrow(GenerateFaultException);
+		}
+		public Building[] GetBuildings(int PlanetID)
+		{
+			LogEnter();
+			return Try(() => buildingModule.GetBuildings(PlanetID)).OrThrow(GenerateFaultException);
+		}
 
 
 		public Stack GetStack(int StackID)
@@ -226,6 +251,16 @@ namespace PIO.WebServiceLib
 		{
 			LogEnter();
 			return Try(() => farmTypeModule.GetFarmTypes()).OrThrow(GenerateFaultException);
+		}
+		public BuildingType GetBuildingType(BuildingTypeIDs BuildingTypeID)
+		{
+			LogEnter();
+			return Try(() => buildingTypeModule.GetBuildingType(BuildingTypeID)).OrThrow(GenerateFaultException);
+		}
+		public BuildingType[] GetBuildingTypes()
+		{
+			LogEnter();
+			return Try(() => buildingTypeModule.GetBuildingTypes()).OrThrow(GenerateFaultException);
 		}
 		public TaskType GetTaskType(TaskTypeIDs TaskTypeID)
 		{

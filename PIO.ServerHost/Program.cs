@@ -120,9 +120,9 @@ namespace PIO.ServerHost
 
 
 			pioService = new PIOService(
-				logger, planetModule, cellModule, factoryModule, farmModule, workerModule,
+				logger, planetModule, cellModule, factoryModule, farmModule, buildingModule, workerModule,
 				stackModule, resourceTypeModule,
-				factoryTypeModule, farmTypeModule, taskTypeModule, materialModule, ingredientModule, productModule, taskModule,
+				factoryTypeModule, farmTypeModule,buildingTypeModule, taskTypeModule, materialModule, ingredientModule, productModule, taskModule,
 				schedulerModule,
 				resourceCheckerModule, locationCheckerModule, idlerModule, producerModule, moverModule,  takerModule, storerModule,
 				factoryBuilderModule) ; 

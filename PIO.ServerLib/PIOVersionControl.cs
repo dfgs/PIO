@@ -99,6 +99,14 @@ namespace PIO.ServerLib
 					yield return new Insert().Into(PIODB.ResourceTypeTable).Set(ResourceTypeTable.ResourceTypeID, ResourceTypeIDs.Plank).Set(ResourceTypeTable.Name, "Plank");
 					#endregion
 
+					#region create BuildingType
+					yield return new Insert().Into(PIODB.BuildingTypeTable).Set(BuildingTypeTable.BuildingTypeID, BuildingTypeIDs.Forest).Set(BuildingTypeTable.MaterialSetID, 1).Set(BuildingTypeTable.Name, "Forest").Set(BuildingTypeTable.HealthPoints, 10).Set(BuildingTypeTable.BuildSteps, 10);
+					yield return new Insert().Into(PIODB.BuildingTypeTable).Set(BuildingTypeTable.BuildingTypeID, BuildingTypeIDs.Stockpile).Set(BuildingTypeTable.MaterialSetID, 2).Set(BuildingTypeTable.Name, "Stockpile").Set(BuildingTypeTable.HealthPoints, 10).Set(BuildingTypeTable.BuildSteps, 10);
+					yield return new Insert().Into(PIODB.BuildingTypeTable).Set(BuildingTypeTable.BuildingTypeID, BuildingTypeIDs.Sawmill).Set(BuildingTypeTable.MaterialSetID, 3).Set(BuildingTypeTable.Name, "Sawmill").Set(BuildingTypeTable.HealthPoints, 10).Set(BuildingTypeTable.BuildSteps, 10);
+					yield return new Insert().Into(PIODB.BuildingTypeTable).Set(BuildingTypeTable.BuildingTypeID, BuildingTypeIDs.Stone).Set(BuildingTypeTable.MaterialSetID, 3).Set(BuildingTypeTable.Name, "Stone").Set(BuildingTypeTable.HealthPoints, 10).Set(BuildingTypeTable.BuildSteps, 10);
+					yield return new Insert().Into(PIODB.BuildingTypeTable).Set(BuildingTypeTable.BuildingTypeID, BuildingTypeIDs.Water).Set(BuildingTypeTable.MaterialSetID, 3).Set(BuildingTypeTable.Name, "Water").Set(BuildingTypeTable.HealthPoints, 10).Set(BuildingTypeTable.BuildSteps, 10);
+					#endregion
+
 					#region create Material
 					yield return new Insert().Into(PIODB.MaterialTable).Set(MaterialTable.BuildingTypeID, BuildingTypeIDs.Forest).Set(MaterialTable.ResourceTypeID, ResourceTypeIDs.Wood).Set(MaterialTable.Quantity, 1);
 
@@ -118,13 +126,6 @@ namespace PIO.ServerLib
 					yield return new Insert().Into(PIODB.FarmTypeTable).Set(FarmTypeTable.FarmTypeID, FarmTypeIDs.Forest).Set(FarmTypeTable.MaterialSetID,1).Set(FarmTypeTable.Name, "Forest").Set(FarmTypeTable.HealthPoints, 10).Set(FarmTypeTable.BuildSteps, 10);
 					#endregion
 
-					#region create BuildingType
-					yield return new Insert().Into(PIODB.BuildingTypeTable).Set(BuildingTypeTable.BuildingTypeID, BuildingTypeIDs.Forest).Set(BuildingTypeTable.MaterialSetID, 1).Set(BuildingTypeTable.Name, "Forest").Set(BuildingTypeTable.HealthPoints, 10).Set(BuildingTypeTable.BuildSteps, 10);
-					yield return new Insert().Into(PIODB.BuildingTypeTable).Set(BuildingTypeTable.BuildingTypeID, BuildingTypeIDs.Stockpile).Set(BuildingTypeTable.MaterialSetID, 2).Set(BuildingTypeTable.Name, "Stockpile").Set(BuildingTypeTable.HealthPoints, 10).Set(BuildingTypeTable.BuildSteps, 10);
-					yield return new Insert().Into(PIODB.BuildingTypeTable).Set(BuildingTypeTable.BuildingTypeID, BuildingTypeIDs.Sawmill).Set(BuildingTypeTable.MaterialSetID, 3).Set(BuildingTypeTable.Name, "Sawmill").Set(BuildingTypeTable.HealthPoints, 10).Set(BuildingTypeTable.BuildSteps, 10);
-					yield return new Insert().Into(PIODB.BuildingTypeTable).Set(BuildingTypeTable.BuildingTypeID, BuildingTypeIDs.Stone).Set(BuildingTypeTable.MaterialSetID, 3).Set(BuildingTypeTable.Name, "Stone").Set(BuildingTypeTable.HealthPoints, 10).Set(BuildingTypeTable.BuildSteps, 10);
-					yield return new Insert().Into(PIODB.BuildingTypeTable).Set(BuildingTypeTable.BuildingTypeID, BuildingTypeIDs.Water).Set(BuildingTypeTable.MaterialSetID, 3).Set(BuildingTypeTable.Name, "Water").Set(BuildingTypeTable.HealthPoints, 10).Set(BuildingTypeTable.BuildSteps, 10);
-					#endregion
 
 
 					#region create TaskType

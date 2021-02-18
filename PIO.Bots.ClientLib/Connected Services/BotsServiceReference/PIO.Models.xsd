@@ -1,19 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/PIO.Models" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/PIO.Models" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:simpleType name="FactoryTypeIDs">
+  <xs:simpleType name="BuildingTypeIDs">
     <xs:restriction base="xs:string">
       <xs:enumeration value="Forest" />
       <xs:enumeration value="Stockpile" />
       <xs:enumeration value="Sawmill" />
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:element name="FactoryTypeIDs" nillable="true" type="tns:FactoryTypeIDs" />
-  <xs:simpleType name="FarmTypeIDs">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="Forest" />
       <xs:enumeration value="Stone" />
       <xs:enumeration value="Water" />
     </xs:restriction>
   </xs:simpleType>
-  <xs:element name="FarmTypeIDs" nillable="true" type="tns:FarmTypeIDs" />
+  <xs:element name="BuildingTypeIDs" nillable="true" type="tns:BuildingTypeIDs" />
 </xs:schema>

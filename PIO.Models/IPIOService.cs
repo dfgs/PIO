@@ -39,6 +39,12 @@ namespace PIO.Models
 		Farm GetFarmAtPos(int PlanetID, int X, int Y);
 		[OperationContract]
 		Farm[] GetFarms(int PlanetID);
+		[OperationContract]
+		Building GetBuilding(int BuildingID);
+		[OperationContract]
+		Building GetBuildingAtPos(int PlanetID, int X, int Y);
+		[OperationContract]
+		Building[] GetBuildings(int PlanetID);
 
 
 
@@ -70,6 +76,10 @@ namespace PIO.Models
 		FarmType GetFarmType(FarmTypeIDs FarmTypeID);
 		[OperationContract]
 		FarmType[] GetFarmTypes();
+		[OperationContract]
+		BuildingType GetBuildingType(BuildingTypeIDs BuildingTypeID);
+		[OperationContract]
+		BuildingType[] GetBuildingTypes();
 		[OperationContract]
 		TaskType GetTaskType(TaskTypeIDs TaskTypeID);
 		[OperationContract]

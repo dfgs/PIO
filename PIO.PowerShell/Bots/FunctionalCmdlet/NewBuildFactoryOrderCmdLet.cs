@@ -19,7 +19,7 @@ namespace PIO.PowerShell
 
 
 		[Parameter(Position = 1, ValueFromPipeline = true, Mandatory = true)]
-		public FactoryTypeIDs FactoryTypeID { get; set; }
+		public BuildingTypeIDs BuildingTypeID { get; set; }
 
 		[Parameter(Position = 2, ValueFromPipeline = true, Mandatory = true)]
 		public int X { get; set; }
@@ -34,7 +34,7 @@ namespace PIO.PowerShell
 		{
 			BuildFactoryOrder result;
 
-			result = Try(()=>client.CreateBuildFactoryOrder(PlanetID,FactoryTypeID,X,Y));
+			result = Try(()=>client.CreateBuildFactoryOrder(PlanetID, BuildingTypeID, X,Y));
 			
 			WriteObject(result);
 		}

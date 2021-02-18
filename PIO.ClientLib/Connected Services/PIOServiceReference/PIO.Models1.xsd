@@ -102,6 +102,12 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfFarm" nillable="true" type="tns:ArrayOfFarm" />
+  <xs:complexType name="ArrayOfBuilding">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Building" nillable="true" type="tns:Building" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfBuilding" nillable="true" type="tns:ArrayOfBuilding" />
   <xs:complexType name="Worker">
     <xs:sequence>
       <xs:element minOccurs="0" name="PlanetID" type="xs:int" />
@@ -188,6 +194,22 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfFarmType" nillable="true" type="tns:ArrayOfFarmType" />
+  <xs:complexType name="BuildingType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BuildSteps" type="xs:int" />
+      <xs:element minOccurs="0" name="BuildingTypeID" type="tns:BuildingTypeIDs" />
+      <xs:element minOccurs="0" name="HealthPoints" type="xs:int" />
+      <xs:element minOccurs="0" name="MaterialSetID" type="xs:int" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="BuildingType" nillable="true" type="tns:BuildingType" />
+  <xs:complexType name="ArrayOfBuildingType">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="BuildingType" nillable="true" type="tns:BuildingType" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfBuildingType" nillable="true" type="tns:ArrayOfBuildingType" />
   <xs:simpleType name="TaskTypeIDs">
     <xs:restriction base="xs:string">
       <xs:enumeration value="Idle" />
