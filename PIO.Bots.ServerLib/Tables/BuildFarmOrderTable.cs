@@ -17,7 +17,7 @@ namespace PIO.Bots.ServerLib.Tables
 		public static readonly Column<int> PlanetID = new Column<int>();
 		public static readonly Column<int> X = new Column<int>();
 		public static readonly Column<int> Y = new Column<int>();
-		public static readonly Column<FarmTypeIDs> FarmTypeID = new Column<FarmTypeIDs>();
+		public static readonly Column<BuildingTypeIDs> BuildingTypeID = new Column<BuildingTypeIDs>();
 
 	}
 }

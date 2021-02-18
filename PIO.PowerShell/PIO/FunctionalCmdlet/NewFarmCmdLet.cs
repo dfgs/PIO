@@ -19,7 +19,7 @@ namespace PIO.PowerShell
 		
 		
 		[Parameter(Position = 1, ValueFromPipeline = true, Mandatory = true)]
-		public FarmTypeIDs FarmTypeID { get; set; }
+		public BuildingTypeIDs BuildingTypeID { get; set; }
 		
 	
 
@@ -28,7 +28,7 @@ namespace PIO.PowerShell
 		{
 			Task result;
 
-			result = Try(()=>client.CreateFarm(WorkerID,FarmTypeID));
+			result = Try(()=>client.CreateBuilding(WorkerID, BuildingTypeID));
 			
 			WriteObject(result);
 		}

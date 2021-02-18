@@ -38,8 +38,8 @@ namespace PIO.Bots.Models.Modules
 
 
 		ProduceOrder CreateProduceOrder(int PlanetID, int FactoryID);
-		BuildFactoryOrder CreateBuildFactoryOrder(int PlanetID, FactoryTypeIDs FactoryTypeID, int X, int Y);
-		BuildFarmOrder CreateBuildFarmOrder(int PlanetID, FarmTypeIDs FarmTypeID, int X, int Y);
+		BuildFactoryOrder CreateBuildFactoryOrder(int PlanetID, BuildingTypeIDs BuildingTypeID, int X, int Y);
+		BuildFarmOrder CreateBuildFarmOrder(int PlanetID, BuildingTypeIDs BuildingTypeID, int X, int Y);
 
 	}
 }

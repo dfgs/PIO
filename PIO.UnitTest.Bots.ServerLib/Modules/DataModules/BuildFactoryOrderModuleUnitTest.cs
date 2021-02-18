@@ -172,7 +172,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 
 			module = new BuildFactoryOrderModule(NullLogger.Instance, database);
 
-			result = module.CreateBuildFactoryOrder(1,Models.FactoryTypeIDs.Sawmill, 2,2);
+			result = module.CreateBuildFactoryOrder(1,Models.BuildingTypeIDs.Sawmill, 2,2);
 			Assert.IsNotNull(result);
 			Assert.AreEqual(2, inserted);
 		}
@@ -190,7 +190,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			database.When(x => x.Execute(Arg.Any<IQuery[]>())).Do(x => { throw new Exception(); });
 
 			module = new BuildFactoryOrderModule(logger, database);
-			Assert.ThrowsException<PIODataException>(() => module.CreateBuildFactoryOrder(1, Models.FactoryTypeIDs.Sawmill, 2, 2));
+			Assert.ThrowsException<PIODataException>(() => module.CreateBuildFactoryOrder(1, Models.BuildingTypeIDs.Sawmill, 2, 2));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName == module.ModuleName)));
 		}
 

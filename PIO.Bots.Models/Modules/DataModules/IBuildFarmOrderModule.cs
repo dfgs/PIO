@@ -13,7 +13,7 @@ namespace PIO.Bots.Models.Modules
 		BuildFarmOrder[] GetBuildFarmOrders();
 		BuildFarmOrder[] GetBuildFarmOrders(int PlanetID,  int X, int Y);
 		BuildFarmOrder[] GetWaitingBuildFarmOrders(int PlanetID);
-		BuildFarmOrder CreateBuildFarmOrder(int PlanetID, FarmTypeIDs FarmTypeID,int X,int Y);
+		BuildFarmOrder CreateBuildFarmOrder(int PlanetID, BuildingTypeIDs BuildingTypeID, int X,int Y);
 
 	}
 }

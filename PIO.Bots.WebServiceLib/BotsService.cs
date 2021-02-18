@@ -127,15 +127,15 @@ namespace PIO.Bots.WebServiceLib
 			LogEnter();
 			return Try(() => orderManagerModule.CreateProduceOrder(PlanetID,FactoryID)).OrThrow(GenerateFaultException);
 		}
-		public BuildFactoryOrder CreateBuildFactoryOrder(int PlanetID, FactoryTypeIDs FactoryTypeID, int X, int Y)
+		public BuildFactoryOrder CreateBuildFactoryOrder(int PlanetID, BuildingTypeIDs BuildingTypeID, int X, int Y)
 		{
 			LogEnter();
-			return Try(() => orderManagerModule.CreateBuildFactoryOrder(PlanetID, FactoryTypeID, X, Y)).OrThrow(GenerateFaultException);
+			return Try(() => orderManagerModule.CreateBuildFactoryOrder(PlanetID, BuildingTypeID, X, Y)).OrThrow(GenerateFaultException);
 		}
-		public BuildFarmOrder CreateBuildFarmOrder(int PlanetID, FarmTypeIDs FarmTypeID, int X, int Y)
+		public BuildFarmOrder CreateBuildFarmOrder(int PlanetID, BuildingTypeIDs BuildingTypeID, int X, int Y)
 		{
 			LogEnter();
-			return Try(() => orderManagerModule.CreateBuildFarmOrder(PlanetID, FarmTypeID, X, Y)).OrThrow(GenerateFaultException);
+			return Try(() => orderManagerModule.CreateBuildFarmOrder(PlanetID, BuildingTypeID, X, Y)).OrThrow(GenerateFaultException);
 		}
 
 		public Bot CreateBot(int WorkerID)

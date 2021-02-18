@@ -90,7 +90,7 @@ namespace PIO.Bots.ServerLib.Modules
 			return produceOrder;
 		}
 
-		public BuildFactoryOrder CreateBuildFactoryOrder(int PlanetID, FactoryTypeIDs FactoryTypeID,int X,int Y)
+		public BuildFactoryOrder CreateBuildFactoryOrder(int PlanetID, BuildingTypeIDs BuildingTypeID, int X,int Y)
 		{
 			BuildFactoryOrder[] existingOrders;
 			BuildFactoryOrder buildFactoryOrder;
@@ -117,13 +117,13 @@ namespace PIO.Bots.ServerLib.Modules
 
 
 			Log(LogLevels.Information, $"Creating BuildFactoryOrder");
-			buildFactoryOrder = Try(() => buildFactoryOrderModule.CreateBuildFactoryOrder(PlanetID, FactoryTypeID,X,Y)).OrThrow<PIOInternalErrorException>("Failed to create BuildFactoryOrder");
+			buildFactoryOrder = Try(() => buildFactoryOrderModule.CreateBuildFactoryOrder(PlanetID, BuildingTypeID, X,Y)).OrThrow<PIOInternalErrorException>("Failed to create BuildFactoryOrder");
 
 
 			return buildFactoryOrder;
 		}
 
-		public BuildFarmOrder CreateBuildFarmOrder(int PlanetID, FarmTypeIDs FarmTypeID, int X, int Y)
+		public BuildFarmOrder CreateBuildFarmOrder(int PlanetID, BuildingTypeIDs BuildingTypeID, int X, int Y)
 		{
 			BuildFarmOrder[] existingOrders;
 			BuildFarmOrder buildFarmOrder;
@@ -150,7 +150,7 @@ namespace PIO.Bots.ServerLib.Modules
 
 
 			Log(LogLevels.Information, $"Creating BuildFarmOrder");
-			buildFarmOrder = Try(() => buildFarmOrderModule.CreateBuildFarmOrder(PlanetID, FarmTypeID, X, Y)).OrThrow<PIOInternalErrorException>("Failed to create BuildFarmOrder");
+			buildFarmOrder = Try(() => buildFarmOrderModule.CreateBuildFarmOrder(PlanetID, BuildingTypeID, X, Y)).OrThrow<PIOInternalErrorException>("Failed to create BuildFarmOrder");
 
 
 			return buildFarmOrder;
@@ -297,7 +297,7 @@ namespace PIO.Bots.ServerLib.Modules
 				if (result)
 				{
 					Log(LogLevels.Information, $"Worker is on site, creating createbuilding task");
-					task = Try(() => client.CreateBuilding(Worker.WorkerID,BuildFactoryOrder.FactoryTypeID)).OrThrow<PIOInternalErrorException>("Failed to create task");
+					task = Try(() => client.CreateBuilding(Worker.WorkerID,BuildFactoryOrder.BuildingTypeID)).OrThrow<PIOInternalErrorException>("Failed to create task");
 				}
 				else
 				{
@@ -404,7 +404,7 @@ namespace PIO.Bots.ServerLib.Modules
 				if (result)
 				{
 					Log(LogLevels.Information, $"Worker is on site, creating createbuilding task");
-					task = Try(() => client.CreateFarm(Worker.WorkerID, BuildFarmOrder.FarmTypeID)).OrThrow<PIOInternalErrorException>("Failed to create task");
+					task = Try(() => client.CreateBuilding(Worker.WorkerID, BuildFarmOrder.BuildingTypeID)).OrThrow<PIOInternalErrorException>("Failed to create task");
 				}
 				else
 				{

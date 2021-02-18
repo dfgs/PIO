@@ -14,7 +14,7 @@ namespace PIO.Bots.Models
 		[DataMember]
 		public int BuildFarmOrderID { get; set; }
 		[DataMember]
-		public FarmTypeIDs FarmTypeID { get; set; }
+		public BuildingTypeIDs BuildingTypeID { get; set; }
 		[DataMember]
 		public int X { get; set; }
 		[DataMember]

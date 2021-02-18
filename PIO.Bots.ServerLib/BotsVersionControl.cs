@@ -35,8 +35,8 @@ namespace PIO.Bots.ServerLib
 					yield return new CreateTable(BotsDB.BotTable, BotTable.BotID, BotTable.WorkerID);
 					yield return new CreateTable(BotsDB.OrderTable, OrderTable.OrderID, OrderTable.BotID);
 					yield return new CreateTable(BotsDB.ProduceOrderTable, ProduceOrderTable.ProduceOrderID, ProduceOrderTable.OrderID, ProduceOrderTable.PlanetID, ProduceOrderTable.FactoryID);
-					yield return new CreateTable(BotsDB.BuildFactoryOrderTable, BuildFactoryOrderTable.BuildFactoryOrderID, BuildFactoryOrderTable.OrderID, BuildFactoryOrderTable.FactoryTypeID, BuildFactoryOrderTable.PlanetID, BuildFactoryOrderTable.X, BuildFactoryOrderTable.Y);
-					yield return new CreateTable(BotsDB.BuildFarmOrderTable, BuildFarmOrderTable.BuildFarmOrderID, BuildFarmOrderTable.OrderID, BuildFarmOrderTable.FarmTypeID, BuildFarmOrderTable.PlanetID, BuildFarmOrderTable.X, BuildFarmOrderTable.Y);
+					yield return new CreateTable(BotsDB.BuildFactoryOrderTable, BuildFactoryOrderTable.BuildFactoryOrderID, BuildFactoryOrderTable.OrderID, BuildFactoryOrderTable.BuildingTypeID, BuildFactoryOrderTable.PlanetID, BuildFactoryOrderTable.X, BuildFactoryOrderTable.Y);
+					yield return new CreateTable(BotsDB.BuildFarmOrderTable, BuildFarmOrderTable.BuildFarmOrderID, BuildFarmOrderTable.OrderID, BuildFarmOrderTable.BuildingTypeID, BuildFarmOrderTable.PlanetID, BuildFarmOrderTable.X, BuildFarmOrderTable.Y);
 					break;
 				case 2:
 					yield return new CreateRelation<int>(BotsDB.OrderTable, OrderTable.OrderID, ProduceOrderTable.OrderID);

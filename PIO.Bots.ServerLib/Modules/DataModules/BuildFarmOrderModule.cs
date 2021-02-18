@@ -32,7 +32,7 @@ namespace PIO.Bots.ServerLib.Modules
 			LogEnter();
 			
 			Log(LogLevels.Information, $"Querying BuildFarmOrder table (BuildFarmOrderID={BuildFarmOrderID})");
-			query=new Select(OrderTable.OrderID,  OrderTable.BotID, BuildFarmOrderTable.BuildFarmOrderID, BuildFarmOrderTable.OrderID, BuildFarmOrderTable.FarmTypeID, BuildFarmOrderTable.PlanetID, BuildFarmOrderTable.X, BuildFarmOrderTable.Y)
+			query=new Select(OrderTable.OrderID,  OrderTable.BotID, BuildFarmOrderTable.BuildFarmOrderID, BuildFarmOrderTable.OrderID, BuildFarmOrderTable.BuildingTypeID, BuildFarmOrderTable.PlanetID, BuildFarmOrderTable.X, BuildFarmOrderTable.Y)
 				.From(BotsDB.BuildFarmOrderTable.Join(BotsDB.OrderTable.On(BuildFarmOrderTable.OrderID,OrderTable.OrderID)))
 				.Where(BuildFarmOrderTable.BuildFarmOrderID.IsEqualTo(BuildFarmOrderID));
 			return TrySelectFirst<BuildFarmOrderTable, BuildFarmOrder>(query).OrThrow<PIODataException>("Failed to query");
@@ -45,7 +45,7 @@ namespace PIO.Bots.ServerLib.Modules
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying BuildFarmOrder table");
-			query = new Select(OrderTable.OrderID, OrderTable.BotID, BuildFarmOrderTable.BuildFarmOrderID, BuildFarmOrderTable.OrderID, BuildFarmOrderTable.FarmTypeID, BuildFarmOrderTable.PlanetID, BuildFarmOrderTable.X, BuildFarmOrderTable.Y)
+			query = new Select(OrderTable.OrderID, OrderTable.BotID, BuildFarmOrderTable.BuildFarmOrderID, BuildFarmOrderTable.OrderID, BuildFarmOrderTable.BuildingTypeID, BuildFarmOrderTable.PlanetID, BuildFarmOrderTable.X, BuildFarmOrderTable.Y)
 								.From(BotsDB.BuildFarmOrderTable.Join(BotsDB.OrderTable.On(BuildFarmOrderTable.OrderID, OrderTable.OrderID)));
 			return TrySelectMany<BuildFarmOrderTable, BuildFarmOrder>(query).OrThrow<PIODataException>("Failed to query");
 		}
@@ -55,7 +55,7 @@ namespace PIO.Bots.ServerLib.Modules
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying BuildFarmOrder table");
-			query = new Select(OrderTable.OrderID, OrderTable.BotID, BuildFarmOrderTable.BuildFarmOrderID, BuildFarmOrderTable.OrderID, BuildFarmOrderTable.FarmTypeID, BuildFarmOrderTable.PlanetID, BuildFarmOrderTable.X, BuildFarmOrderTable.Y)
+			query = new Select(OrderTable.OrderID, OrderTable.BotID, BuildFarmOrderTable.BuildFarmOrderID, BuildFarmOrderTable.OrderID, BuildFarmOrderTable.BuildingTypeID, BuildFarmOrderTable.PlanetID, BuildFarmOrderTable.X, BuildFarmOrderTable.Y)
 								.From(BotsDB.BuildFarmOrderTable.Join(BotsDB.OrderTable.On(BuildFarmOrderTable.OrderID, OrderTable.OrderID)))
 								.Where(BuildFarmOrderTable.PlanetID.IsEqualTo(PlanetID).And(BuildFarmOrderTable.X.IsEqualTo(X)).And(BuildFarmOrderTable.Y.IsEqualTo(Y)));
 			return TrySelectMany<BuildFarmOrderTable, BuildFarmOrder>(query).OrThrow<PIODataException>("Failed to query");
@@ -68,14 +68,14 @@ namespace PIO.Bots.ServerLib.Modules
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying BuildFarmOrder table");
-			query = new Select(OrderTable.OrderID, OrderTable.BotID, BuildFarmOrderTable.BuildFarmOrderID, BuildFarmOrderTable.OrderID, BuildFarmOrderTable.FarmTypeID, BuildFarmOrderTable.PlanetID, BuildFarmOrderTable.X, BuildFarmOrderTable.Y)
+			query = new Select(OrderTable.OrderID, OrderTable.BotID, BuildFarmOrderTable.BuildFarmOrderID, BuildFarmOrderTable.OrderID, BuildFarmOrderTable.BuildingTypeID, BuildFarmOrderTable.PlanetID, BuildFarmOrderTable.X, BuildFarmOrderTable.Y)
 				.From(BotsDB.BuildFarmOrderTable.Join(BotsDB.OrderTable.On(BuildFarmOrderTable.OrderID, OrderTable.OrderID)))
 				.Where(BuildFarmOrderTable.PlanetID.IsEqualTo(PlanetID).And( OrderTable.BotID.IsNull()));
 			return TrySelectMany<BuildFarmOrderTable, BuildFarmOrder>(query).OrThrow<PIODataException>("Failed to query");
 		}
 		
 
-		public BuildFarmOrder CreateBuildFarmOrder(int PlanetID, FarmTypeIDs FarmTypeID, int X, int Y)
+		public BuildFarmOrder CreateBuildFarmOrder(int PlanetID, BuildingTypeIDs BuildingTypeID, int X, int Y)
 		{
 			IInsert query;
 			BuildFarmOrder item;
@@ -83,7 +83,7 @@ namespace PIO.Bots.ServerLib.Modules
 
 			LogEnter();
 
-			item = new BuildFarmOrder() { PlanetID = PlanetID, FarmTypeID = FarmTypeID,X=X,Y=Y };
+			item = new BuildFarmOrder() { PlanetID = PlanetID, BuildingTypeID = BuildingTypeID, X=X,Y=Y };
 
 			Log(LogLevels.Information, $"Inserting into Order table ()");
 			query = new Insert().Into(BotsDB.OrderTable)
@@ -92,13 +92,13 @@ namespace PIO.Bots.ServerLib.Modules
 
 			item.OrderID = Convert.ToInt32(result);
 
-			Log(LogLevels.Information, $"Inserting into BuildFarmOrder table (OrderID={item.OrderID}, FarmTypeID={FarmTypeID},PlanetID={item.PlanetID}, X={X}, Y={Y})");
+			Log(LogLevels.Information, $"Inserting into BuildFarmOrder table (OrderID={item.OrderID}, BuildingTypeID={BuildingTypeID},PlanetID={item.PlanetID}, X={X}, Y={Y})");
 			query = new Insert().Into(BotsDB.BuildFarmOrderTable)
 					.Set(BuildFarmOrderTable.OrderID, item.OrderID)
 					.Set(BuildFarmOrderTable.PlanetID, item.PlanetID)
 					.Set(BuildFarmOrderTable.X, item.X)
 					.Set(BuildFarmOrderTable.Y, item.Y)
-					.Set(BuildFarmOrderTable.FarmTypeID, item.FarmTypeID);
+					.Set(BuildFarmOrderTable.BuildingTypeID, item.BuildingTypeID);
 			result = Try(query).OrThrow<PIODataException>("Failed to insert");
 
 			item.BuildFarmOrderID = Convert.ToInt32(result);

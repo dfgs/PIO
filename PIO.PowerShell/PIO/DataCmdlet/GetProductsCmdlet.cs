@@ -17,13 +17,13 @@ namespace PIO.PowerShell
 	{
 
 		[Parameter(Position = 0, ValueFromPipeline = true, Mandatory = true)]
-		public FactoryTypeIDs FactoryTypeID { get; set; }
+		public BuildingTypeIDs BuildingTypeID { get; set; }
 
 		protected override void ProcessRecord()
 		{
 			Product[] result;
 
-			result = Try(() => client.GetProducts(FactoryTypeID));
+			result = Try(() => client.GetProducts(BuildingTypeID));
 
 			WriteObject(result);
 		}
