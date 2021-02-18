@@ -34,11 +34,11 @@ namespace PIO.Console.ViewModels
 		}
 
 
-		public static readonly DependencyProperty FactoriesProperty = DependencyProperty.Register("Factories", typeof(FactoriesViewModel), typeof(ApplicationViewModel));
-		public FactoriesViewModel Factories
+		public static readonly DependencyProperty BuildingsProperty = DependencyProperty.Register("Buildings", typeof(BuildingsViewModel), typeof(ApplicationViewModel));
+		public BuildingsViewModel Buildings
 		{
-			get { return (FactoriesViewModel)GetValue(FactoriesProperty); }
-			set { SetValue(FactoriesProperty, value); }
+			get { return (BuildingsViewModel)GetValue(BuildingsProperty); }
+			set { SetValue(BuildingsProperty, value); }
 		}
 
 		
@@ -61,7 +61,7 @@ namespace PIO.Console.ViewModels
 		{
 			Cells = new CellsViewModel(PIOClient, BotsClient, 1);
 			Workers = new WorkersViewModel(PIOClient,BotsClient,1);
-			Factories = new FactoriesViewModel(PIOClient, BotsClient, 1);
+			Buildings = new BuildingsViewModel(PIOClient, BotsClient, 1);
 			MapItems = new MapItemsViewModel() ;
 			SelectedItems = new MapItemsViewModel();
 
@@ -77,9 +77,9 @@ namespace PIO.Console.ViewModels
 		{
 			await Cells.LoadAsync();
 			await Workers.LoadAsync();
-			await Factories.LoadAsync();
+			await Buildings.LoadAsync();
 
-			await MapItems.LoadAsync(Cells.Union<ILocationViewModel>(Factories).Union(Workers));
+			await MapItems.LoadAsync(Cells.Union<ILocationViewModel>(Buildings).Union(Workers));
 			
 
 		}
@@ -91,20 +91,20 @@ namespace PIO.Console.ViewModels
 			switch (Task.TaskTypeID)
 			{
 				case Models.TaskTypeIDs.Take:
-					await Factories.RefreshFactory(Task.X, Task.Y);
+					await Buildings.RefreshBuilding(Task.X, Task.Y);
 					break;
 				case Models.TaskTypeIDs.Produce:
-					await Factories.RefreshFactory(Task.X, Task.Y);
+					await Buildings.RefreshBuilding(Task.X, Task.Y);
 					break;
 				case Models.TaskTypeIDs.Build:
-					await Factories.RefreshFactory(Task.X, Task.Y);
+					await Buildings.RefreshBuilding(Task.X, Task.Y);
 					break;
 			}
 		}
 		public async System.Threading.Tasks.Task OnTaskEnded(PIO.Models.Task Task)
 		{
-			Factory factory;
-			FactoryViewModel factoryViewModel;
+			Building building;
+			BuildingViewModel factoryViewModel;
 
 			
 
@@ -114,23 +114,23 @@ namespace PIO.Console.ViewModels
 				case Models.TaskTypeIDs.MoveTo:
 					break;
 				case Models.TaskTypeIDs.Store:
-					await Factories.RefreshFactory(Task.X, Task.Y);
+					await Buildings.RefreshBuilding(Task.X, Task.Y);
 					break;
 				case Models.TaskTypeIDs.Produce:
-					await Factories.RefreshFactory(Task.X, Task.Y);
+					await Buildings.RefreshBuilding(Task.X, Task.Y);
 					break;
 				case Models.TaskTypeIDs.Build:
-					await Factories.RefreshFactory(Task.X, Task.Y);
+					await Buildings.RefreshBuilding(Task.X, Task.Y);
 					break;
 				case Models.TaskTypeIDs.CreateBuilding:
 					try
 					{
-						factory = PIOClient.GetFactoryAtPos(1, Task.X, Task.Y);
-						if (factory!=null)
+						building = PIOClient.GetBuildingAtPos(1, Task.X, Task.Y);
+						if (building!=null)
 						{
-							factoryViewModel = new FactoryViewModel(PIOClient, BotsClient);
-							await factoryViewModel.LoadAsync(factory);
-							Factories.Add(factoryViewModel);
+							factoryViewModel = new BuildingViewModel(PIOClient, BotsClient);
+							await factoryViewModel.LoadAsync(building);
+							Buildings.Add(factoryViewModel);
 							MapItems.Insert(Cells.Count, factoryViewModel);
 						}
 					}
@@ -140,7 +140,7 @@ namespace PIO.Console.ViewModels
 					}
 					
 
-					//await Factories.RefreshFactory(Task.X.Value, Task.Y.Value);
+					//await Buildings.RefreshBuilding(Task.X.Value, Task.Y.Value);
 					break;
 			}
 		}

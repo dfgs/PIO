@@ -27,7 +27,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 
 			orderModule = Substitute.For<IOrderModule>();
 			produceOrderModule = Substitute.For<IProduceOrderModule>();
-			produceOrderModule.GetWaitingProduceOrders(Arg.Any<int>()).Returns(new ProduceOrder[] { new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, FactoryID = 1 }, new ProduceOrder() { OrderID = 2, ProduceOrderID = 2, FactoryID = 2 } });
+			produceOrderModule.GetWaitingProduceOrders(Arg.Any<int>()).Returns(new ProduceOrder[] { new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, BuildingID = 1 }, new ProduceOrder() { OrderID = 2, ProduceOrderID = 2, BuildingID = 2 } });
 
 			module = new OrderManagerModule(NullLogger.Instance, null, orderModule, produceOrderModule,null,10);
 			result = module.GetWaitingProduceOrders(1);
@@ -118,24 +118,24 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			orderModule = Substitute.For<IOrderModule>();
 			//orderModule.CreateOrder(Arg.Any<int>()).Returns(new Order() { OrderID=1});
 			produceOrderModule = Substitute.For<IProduceOrderModule>();
-			produceOrderModule.CreateProduceOrder(Arg.Any<int>(), Arg.Any<int>()).Returns(new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, FactoryID = 1 });
+			produceOrderModule.CreateProduceOrder(Arg.Any<int>(), Arg.Any<int>()).Returns(new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, BuildingID = 1 });
 			produceOrderModule.When((del) => del.CreateProduceOrder(Arg.Any<int>(), Arg.Any<int>())).Do((del) => counter++);
 			
 
 			client = Substitute.For<PIO.ClientLib.PIOServiceReference.IPIOService>();
-			client.GetFactory(Arg.Any<int>()).Returns(new Factory() { PlanetID = 1 });
+			client.GetBuilding(Arg.Any<int>()).Returns(new Building() { PlanetID = 1 });
 
 
 			module = new OrderManagerModule(NullLogger.Instance,client, orderModule,produceOrderModule, null, 10);
 			result = module.CreateProduceOrder(1,1);
 			Assert.AreEqual(1, counter);
 			Assert.IsNotNull(result);
-			Assert.AreEqual(1, result.FactoryID);
+			Assert.AreEqual(1, result.BuildingID);
 
 			result = module.CreateProduceOrder(1,1);
 			Assert.AreEqual(2, counter);
 			Assert.IsNotNull(result);
-			Assert.AreEqual(1, result.FactoryID);
+			Assert.AreEqual(1, result.BuildingID);
 
 		}
 
@@ -176,11 +176,11 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			orderModule = Substitute.For<IOrderModule>();
 			//orderModule.CreateOrder(Arg.Any<int>()).Returns(new Order() { OrderID = 1 });
 			produceOrderModule = Substitute.For<IProduceOrderModule>();
-			produceOrderModule.CreateProduceOrder(Arg.Any<int>(), Arg.Any<int>()).Returns(new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, FactoryID = 1 });
+			produceOrderModule.CreateProduceOrder(Arg.Any<int>(), Arg.Any<int>()).Returns(new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, BuildingID = 1 });
 			produceOrderModule.When((del) => del.CreateProduceOrder(Arg.Any<int>(), Arg.Any<int>())).Do((del) => counter++);
 
 			client = Substitute.For<PIO.ClientLib.PIOServiceReference.IPIOService>();
-			client.GetFactory(Arg.Any<int>()).Returns(new Factory() { PlanetID = 2 });
+			client.GetBuilding(Arg.Any<int>()).Returns(new Building() { PlanetID = 2 });
 
 			module = new OrderManagerModule(logger, client, orderModule, produceOrderModule, null, 10);
 			Assert.ThrowsException<PIOInvalidOperationException>(() => module.CreateProduceOrder(1, 1));
@@ -203,12 +203,12 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			orderModule = Substitute.For<IOrderModule>();
 			//orderModule.CreateOrder(Arg.Any<int>()).Returns(new Order() { OrderID = 1 });
 			produceOrderModule = Substitute.For<IProduceOrderModule>();
-			produceOrderModule.CreateProduceOrder(Arg.Any<int>(), Arg.Any<int>()).Returns(new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, FactoryID = 1 });
+			produceOrderModule.CreateProduceOrder(Arg.Any<int>(), Arg.Any<int>()).Returns(new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, BuildingID = 1 });
 			produceOrderModule.When((del) => del.CreateProduceOrder(Arg.Any<int>(), Arg.Any<int>())).Do((del) => counter++);
-			produceOrderModule.GetProduceOrders(Arg.Any<int>()).Returns(new ProduceOrder[] { new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, FactoryID = 1 } });
+			produceOrderModule.GetProduceOrders(Arg.Any<int>()).Returns(new ProduceOrder[] { new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, BuildingID = 1 } });
 
 			client = Substitute.For<PIO.ClientLib.PIOServiceReference.IPIOService>();
-			client.GetFactory(Arg.Any<int>()).Returns(new Factory() { PlanetID = 2 });
+			client.GetBuilding(Arg.Any<int>()).Returns(new Building() { PlanetID = 2 });
 
 			module = new OrderManagerModule(logger, client, orderModule, produceOrderModule, null, 10);
 			Assert.ThrowsException<PIOInvalidOperationException>(() => module.CreateProduceOrder(1, 1));
@@ -238,7 +238,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 
 
 			client = Substitute.For<PIO.ClientLib.PIOServiceReference.IPIOService>();
-			client.GetFactoryAtPos(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<int>()).Returns((Factory)null);
+			client.GetBuildingAtPos(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<int>()).Returns((Building)null);
 
 
 			module = new OrderManagerModule(NullLogger.Instance, client, orderModule,null, buildFactoryOrderModule, 10);
@@ -295,7 +295,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			buildFactoryOrderModule.When((del) => del.CreateBuildFactoryOrder(Arg.Any<int>(), Arg.Any<BuildingTypeIDs>(), Arg.Any<int>(), Arg.Any<int>())).Do((del) => counter++);
 
 			client = Substitute.For<PIO.ClientLib.PIOServiceReference.IPIOService>();
-			client.GetFactoryAtPos(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<int>()).Returns(new Factory() { PlanetID = 2 });
+			client.GetBuildingAtPos(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<int>()).Returns(new Building() { PlanetID = 2 });
 
 			module = new OrderManagerModule(logger, client, orderModule, null, buildFactoryOrderModule, 10);
 			Assert.ThrowsException<PIOInvalidOperationException>(() => module.CreateBuildFactoryOrder(1, BuildingTypeIDs.Forest, 1, 1));
@@ -322,7 +322,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			buildFactoryOrderModule.When((del) => del.CreateBuildFactoryOrder(Arg.Any<int>(), Arg.Any<BuildingTypeIDs>(), Arg.Any<int>(), Arg.Any<int>())).Do((del) => counter++);
 			buildFactoryOrderModule.GetBuildFactoryOrders(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<int>()).Returns(new BuildFactoryOrder[] { new BuildFactoryOrder() { OrderID = 1, BuildFactoryOrderID = 1, BuildingTypeID = BuildingTypeIDs.Forest } });
 			client = Substitute.For<PIO.ClientLib.PIOServiceReference.IPIOService>();
-			client.GetFactoryAtPos(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<int>()).Returns(new Factory() { PlanetID = 2 });
+			client.GetBuildingAtPos(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<int>()).Returns(new Building() { PlanetID = 2 });
 
 			module = new OrderManagerModule(logger, client, orderModule, null, buildFactoryOrderModule, 10);
 			Assert.ThrowsException<PIOInvalidOperationException>(() => module.CreateBuildFactoryOrder(1, BuildingTypeIDs.Forest, 1, 1));
@@ -403,7 +403,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			client = Substitute.For<PIO.ClientLib.PIOServiceReference.IPIOService>();
 			client.GetWorker(Arg.Any<int>()).Returns(new Worker());
 			client.Idle(Arg.Any<int>(), Arg.Any<int>()).Returns(new Task() { TaskTypeID = TaskTypeIDs.Idle, WorkerID = 1 });
-			client.GetFactory(Arg.Any<int>()).Returns(new Factory() { FactoryID = 1 });
+			client.GetBuilding(Arg.Any<int>()).Returns(new Building() { BuildingID = 1 });
 			client.Produce(Arg.Any<int>()).Returns(new Task() { TaskTypeID = TaskTypeIDs.Produce, WorkerID = 1 });
 			client.GetMissingResourcesToProduce(Arg.Any<int>()).Returns(new ResourceTypeIDs[] { ResourceTypeIDs.Wood });
 			client.FindStack(Arg.Any<int>(), Arg.Any<ResourceTypeIDs>()).Returns((Stack)null);
@@ -412,7 +412,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			orderModule = Substitute.For<IOrderModule>();
 			//orderModule.CreateOrder(Arg.Any<int>()).Returns(new Order() { OrderID = 1 });
 			produceOrderModule = Substitute.For<IProduceOrderModule>();
-			produceOrderModule.GetProduceOrders().Returns(new ProduceOrder[] { new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, FactoryID = 1 } });
+			produceOrderModule.GetProduceOrders().Returns(new ProduceOrder[] { new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, BuildingID = 1 } });
 
 			buildFactoryOrderModule = Substitute.For<IBuildFactoryOrderModule>();
 			buildFactoryOrderModule.GetBuildFactoryOrders().Returns(new BuildFactoryOrder[] { new BuildFactoryOrder() { OrderID = 2, BuildFactoryOrderID = 1 } });
@@ -508,7 +508,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			Task result;
 
 			client = Substitute.For<PIO.ClientLib.PIOServiceReference.IPIOService>();
-			client.GetFactory(Arg.Any<int>()).Returns(new Factory() { FactoryID=1});
+			client.GetBuilding(Arg.Any<int>()).Returns(new Building() { BuildingID=1});
 			client.Produce(Arg.Any<int>()).Returns(new Task() { TaskTypeID = TaskTypeIDs.Produce, WorkerID = 1 });
 			client.GetMissingResourcesToProduce(Arg.Any<int>()).Returns(new ResourceTypeIDs[] { });
 			client.WorkerIsInBuilding(Arg.Any<int>(), Arg.Any<int>()).Returns(true);
@@ -516,10 +516,10 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			orderModule = Substitute.For<IOrderModule>();
 			//orderModule.CreateOrder(Arg.Any<int>()).Returns(new Order() { OrderID = 1 });
 			produceOrderModule = Substitute.For<IProduceOrderModule>();
-			produceOrderModule.GetProduceOrders().Returns(new ProduceOrder[] { new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, FactoryID = 1 } });
+			produceOrderModule.GetProduceOrders().Returns(new ProduceOrder[] { new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, BuildingID = 1 } });
 
 			module = new OrderManagerModule(NullLogger.Instance, client, orderModule, produceOrderModule, null, 10);
-			result = module.CreateTaskFromProduceOrder(new Worker() { PlanetID = 1 }, new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, FactoryID = 1 });
+			result = module.CreateTaskFromProduceOrder(new Worker() { PlanetID = 1 }, new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, BuildingID = 1 });
 			Assert.IsNotNull(result);
 			Assert.AreEqual(1, result.WorkerID);
 			Assert.AreEqual(TaskTypeIDs.Produce, result.TaskTypeID);
@@ -535,7 +535,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			Task result;
 
 			client = Substitute.For<PIO.ClientLib.PIOServiceReference.IPIOService>();
-			client.GetFactory(Arg.Any<int>()).Returns(new Factory() { FactoryID = 1 });
+			client.GetBuilding(Arg.Any<int>()).Returns(new Building() { BuildingID = 1 });
 			client.MoveToBuilding(Arg.Any<int>(),Arg.Any<int>()).Returns(new Task() { TaskTypeID = TaskTypeIDs.MoveTo, WorkerID = 1 });
 			client.GetMissingResourcesToProduce(Arg.Any<int>()).Returns(new ResourceTypeIDs[] { });
 			client.WorkerIsInBuilding(Arg.Any<int>(), Arg.Any<int>()).Returns(false);
@@ -543,10 +543,10 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			orderModule = Substitute.For<IOrderModule>();
 			//orderModule.CreateOrder(Arg.Any<int>()).Returns(new Order() { OrderID = 1 });
 			produceOrderModule = Substitute.For<IProduceOrderModule>();
-			produceOrderModule.GetProduceOrders().Returns(new ProduceOrder[] { new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, FactoryID = 1 } });
+			produceOrderModule.GetProduceOrders().Returns(new ProduceOrder[] { new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, BuildingID = 1 } });
 
 			module = new OrderManagerModule(NullLogger.Instance, client, orderModule, produceOrderModule, null, 10);
-			result = module.CreateTaskFromProduceOrder(new Worker() { PlanetID = 1 }, new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, FactoryID = 1 });
+			result = module.CreateTaskFromProduceOrder(new Worker() { PlanetID = 1 }, new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, BuildingID = 1 });
 			Assert.IsNotNull(result);
 			Assert.AreEqual(1, result.WorkerID);
 			Assert.AreEqual(TaskTypeIDs.MoveTo, result.TaskTypeID);
@@ -563,7 +563,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 
 			client = Substitute.For<PIO.ClientLib.PIOServiceReference.IPIOService>();
 			client.Idle(Arg.Any<int>(), Arg.Any<int>()).Returns(new Task() { TaskTypeID = TaskTypeIDs.Idle, WorkerID = 1 });
-			client.GetFactory(Arg.Any<int>()).Returns(new Factory() { FactoryID = 1 });
+			client.GetBuilding(Arg.Any<int>()).Returns(new Building() { BuildingID = 1 });
 			client.Produce(Arg.Any<int>()).Returns(new Task() { TaskTypeID = TaskTypeIDs.Produce, WorkerID = 1 });
 			client.GetMissingResourcesToProduce(Arg.Any<int>()).Returns(new ResourceTypeIDs[] { ResourceTypeIDs.Wood });
 			client.FindStack(Arg.Any<int>(), Arg.Any<ResourceTypeIDs>()).Returns((Stack)null);
@@ -572,10 +572,10 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			orderModule = Substitute.For<IOrderModule>();
 			//orderModule.CreateOrder(Arg.Any<int>()).Returns(new Order() { OrderID = 1 });
 			produceOrderModule = Substitute.For<IProduceOrderModule>();
-			produceOrderModule.GetProduceOrders().Returns(new ProduceOrder[] { new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, FactoryID = 1 } });
+			produceOrderModule.GetProduceOrders().Returns(new ProduceOrder[] { new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, BuildingID = 1 } });
 
 			module = new OrderManagerModule(NullLogger.Instance, client, orderModule, produceOrderModule, null, 10);
-			result = module.CreateTaskFromProduceOrder(new Worker() { PlanetID = 1 }, new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, FactoryID = 1 });
+			result = module.CreateTaskFromProduceOrder(new Worker() { PlanetID = 1 }, new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, BuildingID = 1 });
 			Assert.IsNull(result);
 		}
 
@@ -590,7 +590,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 
 			client = Substitute.For<PIO.ClientLib.PIOServiceReference.IPIOService>();
 			client.MoveToBuilding(Arg.Any<int>(), Arg.Any<int>()).Returns(new Task() { TaskTypeID = TaskTypeIDs.MoveTo, WorkerID = 1 });
-			client.GetFactory(Arg.Any<int>()).Returns(new Factory() { FactoryID = 1 });
+			client.GetBuilding(Arg.Any<int>()).Returns(new Building() { BuildingID = 1 });
 			client.GetMissingResourcesToProduce(Arg.Any<int>()).Returns(new ResourceTypeIDs[] { ResourceTypeIDs.Wood });
 			client.FindStack(Arg.Any<int>(), Arg.Any<ResourceTypeIDs>()).Returns(new Stack() { BuildingID=10,ResourceTypeID=ResourceTypeIDs.Wood,Quantity=10 });
 			client.WorkerIsInBuilding(Arg.Any<int>(), Arg.Any<int>()).Returns(false);
@@ -598,10 +598,10 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			orderModule = Substitute.For<IOrderModule>();
 			//orderModule.CreateOrder(Arg.Any<int>()).Returns(new Order() { OrderID = 1 });
 			produceOrderModule = Substitute.For<IProduceOrderModule>();
-			produceOrderModule.GetProduceOrders().Returns(new ProduceOrder[] { new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, FactoryID = 1 } });
+			produceOrderModule.GetProduceOrders().Returns(new ProduceOrder[] { new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, BuildingID = 1 } });
 
 			module = new OrderManagerModule(NullLogger.Instance, client, orderModule, produceOrderModule, null, 10);
-			result = module.CreateTaskFromProduceOrder(new Worker() { PlanetID = 1,ResourceTypeID=ResourceTypeIDs.Wood }, new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, FactoryID = 1 });
+			result = module.CreateTaskFromProduceOrder(new Worker() { PlanetID = 1,ResourceTypeID=ResourceTypeIDs.Wood }, new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, BuildingID = 1 });
 			Assert.IsNotNull(result);
 			Assert.AreEqual(1, result.WorkerID);
 			Assert.AreEqual(TaskTypeIDs.MoveTo, result.TaskTypeID);
@@ -617,7 +617,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 
 			client = Substitute.For<PIO.ClientLib.PIOServiceReference.IPIOService>();
 			client.MoveToBuilding(Arg.Any<int>(), Arg.Any<int>()).Returns(new Task() { TaskTypeID = TaskTypeIDs.MoveTo, WorkerID = 1 });
-			client.GetFactory(Arg.Any<int>()).Returns(new Factory() { FactoryID = 1 });
+			client.GetBuilding(Arg.Any<int>()).Returns(new Building() { BuildingID = 1 });
 			client.GetMissingResourcesToProduce(Arg.Any<int>()).Returns(new ResourceTypeIDs[] {ResourceTypeIDs.Wood });
 			client.FindStack(Arg.Any<int>(), Arg.Any<ResourceTypeIDs>()).Returns(new Stack() { BuildingID = 10, ResourceTypeID = ResourceTypeIDs.Wood, Quantity = 10 });
 			client.WorkerIsInBuilding(Arg.Any<int>(), Arg.Any<int>()).Returns(false);
@@ -625,10 +625,10 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			orderModule = Substitute.For<IOrderModule>();
 			//orderModule.CreateOrder(Arg.Any<int>()).Returns(new Order() { OrderID = 1 });
 			produceOrderModule = Substitute.For<IProduceOrderModule>();
-			produceOrderModule.GetProduceOrders().Returns(new ProduceOrder[] { new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, FactoryID = 1 } });
+			produceOrderModule.GetProduceOrders().Returns(new ProduceOrder[] { new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, BuildingID = 1 } });
 
 			module = new OrderManagerModule(NullLogger.Instance, client, orderModule, produceOrderModule, null, 10);
-			result = module.CreateTaskFromProduceOrder(new Worker() { PlanetID = 1 }, new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, FactoryID = 1 });
+			result = module.CreateTaskFromProduceOrder(new Worker() { PlanetID = 1 }, new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, BuildingID = 1 });
 			Assert.IsNotNull(result);
 			Assert.AreEqual(1, result.WorkerID);
 			Assert.AreEqual(TaskTypeIDs.MoveTo, result.TaskTypeID);
@@ -644,7 +644,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 
 			client = Substitute.For<PIO.ClientLib.PIOServiceReference.IPIOService>();
 			client.Take(Arg.Any<int>(), Arg.Any<ResourceTypeIDs>()).Returns(new Task() { TaskTypeID = TaskTypeIDs.Take, WorkerID = 1,ResourceTypeID=ResourceTypeIDs.Wood });
-			client.GetFactory(Arg.Any<int>()).Returns(new Factory() { FactoryID = 1 });
+			client.GetBuilding(Arg.Any<int>()).Returns(new Building() { BuildingID = 1 });
 			client.GetMissingResourcesToProduce(Arg.Any<int>()).Returns(new ResourceTypeIDs[] { ResourceTypeIDs.Wood });
 			client.FindStack(Arg.Any<int>(), Arg.Any<ResourceTypeIDs>()).Returns(new Stack() { BuildingID = 10, ResourceTypeID = ResourceTypeIDs.Wood, Quantity = 10 });
 			client.WorkerIsInBuilding(Arg.Any<int>(), Arg.Any<int>()).Returns(true);
@@ -652,10 +652,10 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			orderModule = Substitute.For<IOrderModule>();
 			//orderModule.CreateOrder(Arg.Any<int>()).Returns(new Order() { OrderID = 1 });
 			produceOrderModule = Substitute.For<IProduceOrderModule>();
-			produceOrderModule.GetProduceOrders().Returns(new ProduceOrder[] { new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, FactoryID = 1 } });
+			produceOrderModule.GetProduceOrders().Returns(new ProduceOrder[] { new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, BuildingID = 1 } });
 
 			module = new OrderManagerModule(NullLogger.Instance, client, orderModule, produceOrderModule, null, 10);
-			result = module.CreateTaskFromProduceOrder(new Worker() { PlanetID = 1 }, new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, FactoryID = 1 });
+			result = module.CreateTaskFromProduceOrder(new Worker() { PlanetID = 1 }, new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, BuildingID = 1 });
 			Assert.IsNotNull(result);
 			Assert.AreEqual(1, result.WorkerID);
 			Assert.AreEqual(TaskTypeIDs.Take, result.TaskTypeID);
@@ -671,7 +671,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 
 			client = Substitute.For<PIO.ClientLib.PIOServiceReference.IPIOService>();
 			client.Store(Arg.Any<int>()).Returns(new Task() { TaskTypeID = TaskTypeIDs.Store, WorkerID = 1 });
-			client.GetFactory(Arg.Any<int>()).Returns(new Factory() { FactoryID = 1 });
+			client.GetBuilding(Arg.Any<int>()).Returns(new Building() { BuildingID = 1 });
 			client.GetMissingResourcesToProduce(Arg.Any<int>()).Returns(new ResourceTypeIDs[] { ResourceTypeIDs.Wood });
 			client.FindStack(Arg.Any<int>(), Arg.Any<ResourceTypeIDs>()).Returns(new Stack() { BuildingID = 10, ResourceTypeID = ResourceTypeIDs.Wood, Quantity = 10 });
 			client.WorkerIsInBuilding(Arg.Any<int>(), Arg.Any<int>()).Returns(true);
@@ -679,10 +679,10 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			orderModule = Substitute.For<IOrderModule>();
 			//orderModule.CreateOrder(Arg.Any<int>()).Returns(new Order() { OrderID = 1 });
 			produceOrderModule = Substitute.For<IProduceOrderModule>();
-			produceOrderModule.GetProduceOrders().Returns(new ProduceOrder[] { new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, FactoryID = 1 } });
+			produceOrderModule.GetProduceOrders().Returns(new ProduceOrder[] { new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, BuildingID = 1 } });
 
 			module = new OrderManagerModule(NullLogger.Instance, client, orderModule, produceOrderModule, null, 10);
-			result = module.CreateTaskFromProduceOrder(new Worker() { PlanetID = 1 ,ResourceTypeID=ResourceTypeIDs.Wood}, new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, FactoryID = 1 });
+			result = module.CreateTaskFromProduceOrder(new Worker() { PlanetID = 1 ,ResourceTypeID=ResourceTypeIDs.Wood}, new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, BuildingID = 1 });
 			Assert.IsNotNull(result);
 			Assert.AreEqual(1, result.WorkerID);
 			Assert.AreEqual(TaskTypeIDs.Store, result.TaskTypeID);
@@ -701,7 +701,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			Task result;
 
 			client = Substitute.For<PIO.ClientLib.PIOServiceReference.IPIOService>();
-			client.GetFactoryAtPos(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<int>()).Returns((Factory)null);
+			client.GetBuildingAtPos(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<int>()).Returns((Building)null);
 			client.MoveTo(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<int>()).Returns(new Task() { TaskTypeID = TaskTypeIDs.MoveTo, WorkerID = 1 });
 
 			orderModule = Substitute.For<IOrderModule>();
@@ -721,7 +721,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			Task result;
 
 			client = Substitute.For<PIO.ClientLib.PIOServiceReference.IPIOService>();
-			client.GetFactoryAtPos(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<int>()).Returns((Factory)null);
+			client.GetBuildingAtPos(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<int>()).Returns((Building)null);
 			client.CreateBuilding(Arg.Any<int>(), Arg.Any<BuildingTypeIDs>()).Returns(new Task() { TaskTypeID = TaskTypeIDs.CreateBuilding, WorkerID = 1 });
 
 			orderModule = Substitute.For<IOrderModule>();
@@ -741,7 +741,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			Task result;
 
 			client = Substitute.For<PIO.ClientLib.PIOServiceReference.IPIOService>();
-			client.GetFactoryAtPos(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<int>()).Returns(new Factory() { PlanetID = 1, X = 11, Y = 12, RemainingBuildSteps = 0 });
+			client.GetBuildingAtPos(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<int>()).Returns(new Building() { PlanetID = 1, X = 11, Y = 12, RemainingBuildSteps = 0 });
 			client.MoveTo(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<int>()).Returns(new Task() { TaskTypeID = TaskTypeIDs.MoveTo, WorkerID = 1 });
 			client.GetMissingResourcesToBuild(Arg.Any<int>()).Returns(new ResourceTypeIDs[] { });
 			orderModule = Substitute.For<IOrderModule>();
@@ -760,7 +760,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			Task result;
 
 			client = Substitute.For<PIO.ClientLib.PIOServiceReference.IPIOService>();
-			client.GetFactoryAtPos(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<int>()).Returns(new Factory() {PlanetID=1,X=11,Y=12,RemainingBuildSteps=10 });
+			client.GetBuildingAtPos(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<int>()).Returns(new Building() {PlanetID=1,X=11,Y=12,RemainingBuildSteps=10 });
 			client.MoveTo(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<int>()).Returns(new Task() { TaskTypeID = TaskTypeIDs.MoveTo, WorkerID = 1 });
 			client.GetMissingResourcesToBuild(Arg.Any<int>()).Returns(new ResourceTypeIDs[] { });
 			orderModule = Substitute.For<IOrderModule>();
@@ -780,7 +780,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			Task result;
 
 			client = Substitute.For<PIO.ClientLib.PIOServiceReference.IPIOService>();
-			client.GetFactoryAtPos(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<int>()).Returns(new Factory() { PlanetID = 1, X = 11, Y = 12, RemainingBuildSteps = 10 });
+			client.GetBuildingAtPos(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<int>()).Returns(new Building() { PlanetID = 1, X = 11, Y = 12, RemainingBuildSteps = 10 });
 			client.Build(Arg.Any<int>()).Returns(new Task() { TaskTypeID = TaskTypeIDs.Build, WorkerID = 1 });
 			client.GetMissingResourcesToBuild(Arg.Any<int>()).Returns(new ResourceTypeIDs[] { });
 
@@ -803,7 +803,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			Task result;
 
 			client = Substitute.For<PIO.ClientLib.PIOServiceReference.IPIOService>();
-			client.GetFactoryAtPos(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<int>()).Returns(new Factory() { PlanetID = 1, X = 11, Y = 12, RemainingBuildSteps = 10 });
+			client.GetBuildingAtPos(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<int>()).Returns(new Building() { PlanetID = 1, X = 11, Y = 12, RemainingBuildSteps = 10 });
 			client.MoveTo(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<int>()).Returns(new Task() { TaskTypeID = TaskTypeIDs.MoveTo, WorkerID = 1 });
 			client.GetMissingResourcesToBuild(Arg.Any<int>()).Returns(new ResourceTypeIDs[] {ResourceTypeIDs.Wood });
 			orderModule = Substitute.For<IOrderModule>();
@@ -823,7 +823,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			Task result;
 
 			client = Substitute.For<PIO.ClientLib.PIOServiceReference.IPIOService>();
-			client.GetFactoryAtPos(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<int>()).Returns(new Factory() { PlanetID = 1, X = 11, Y = 12, RemainingBuildSteps = 10 });
+			client.GetBuildingAtPos(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<int>()).Returns(new Building() { PlanetID = 1, X = 11, Y = 12, RemainingBuildSteps = 10 });
 			client.Store(Arg.Any<int>()).Returns(new Task() { TaskTypeID = TaskTypeIDs.Store, WorkerID = 1 });
 			client.GetMissingResourcesToBuild(Arg.Any<int>()).Returns(new ResourceTypeIDs[] { ResourceTypeIDs.Wood });
 
@@ -846,7 +846,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			Task result;
 
 			client = Substitute.For<PIO.ClientLib.PIOServiceReference.IPIOService>();
-			client.GetFactoryAtPos(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<int>()).Returns(new Factory() { PlanetID = 1, X = 11, Y = 12, RemainingBuildSteps = 10 });
+			client.GetBuildingAtPos(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<int>()).Returns(new Building() { PlanetID = 1, X = 11, Y = 12, RemainingBuildSteps = 10 });
 			client.MoveTo(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<int>()).Returns(new Task() { TaskTypeID = TaskTypeIDs.MoveTo, WorkerID = 1 });
 			client.GetMissingResourcesToBuild(Arg.Any<int>()).Returns(new ResourceTypeIDs[] { ResourceTypeIDs.Wood });
 			client.FindStack(Arg.Any<int>(), Arg.Any<ResourceTypeIDs>()).Returns((Stack)null);
@@ -865,7 +865,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			Task result;
 
 			client = Substitute.For<PIO.ClientLib.PIOServiceReference.IPIOService>();
-			client.GetFactoryAtPos(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<int>()).Returns(new Factory() { PlanetID = 1, X = 11, Y = 12, RemainingBuildSteps = 10 });
+			client.GetBuildingAtPos(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<int>()).Returns(new Building() { PlanetID = 1, X = 11, Y = 12, RemainingBuildSteps = 10 });
 			client.MoveToBuilding(Arg.Any<int>(), Arg.Any<int>()).Returns(new Task() { TaskTypeID = TaskTypeIDs.MoveTo, WorkerID = 1 });
 			client.GetMissingResourcesToBuild(Arg.Any<int>()).Returns(new ResourceTypeIDs[] { ResourceTypeIDs.Wood });
 			client.FindStack(Arg.Any<int>(), Arg.Any<ResourceTypeIDs>()).Returns(new Stack() { BuildingID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Wood, StackID = 1 });
@@ -888,7 +888,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			Task result;
 
 			client = Substitute.For<PIO.ClientLib.PIOServiceReference.IPIOService>();
-			client.GetFactoryAtPos(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<int>()).Returns(new Factory() { PlanetID = 1, X = 11, Y = 12, RemainingBuildSteps = 10 });
+			client.GetBuildingAtPos(Arg.Any<int>(), Arg.Any<int>(), Arg.Any<int>()).Returns(new Building() { PlanetID = 1, X = 11, Y = 12, RemainingBuildSteps = 10 });
 			client.Take(Arg.Any<int>(), Arg.Any<ResourceTypeIDs>()).Returns(new Task() { TaskTypeID = TaskTypeIDs.Take, WorkerID = 1 });
 			client.GetMissingResourcesToBuild(Arg.Any<int>()).Returns(new ResourceTypeIDs[] { ResourceTypeIDs.Wood });
 			client.FindStack(Arg.Any<int>(), Arg.Any<ResourceTypeIDs>()).Returns(new Stack() { BuildingID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Wood, StackID = 1 });

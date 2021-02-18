@@ -37,24 +37,6 @@
   <wsdl:message name="IPIOService_GetCells_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetCellsResponse" />
   </wsdl:message>
-  <wsdl:message name="IPIOService_GetFactory_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetFactory" />
-  </wsdl:message>
-  <wsdl:message name="IPIOService_GetFactory_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetFactoryResponse" />
-  </wsdl:message>
-  <wsdl:message name="IPIOService_GetFactoryAtPos_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetFactoryAtPos" />
-  </wsdl:message>
-  <wsdl:message name="IPIOService_GetFactoryAtPos_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetFactoryAtPosResponse" />
-  </wsdl:message>
-  <wsdl:message name="IPIOService_GetFactories_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetFactories" />
-  </wsdl:message>
-  <wsdl:message name="IPIOService_GetFactories_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetFactoriesResponse" />
-  </wsdl:message>
   <wsdl:message name="IPIOService_GetBuilding_InputMessage">
     <wsdl:part name="parameters" element="tns:GetBuilding" />
   </wsdl:message>
@@ -126,18 +108,6 @@
   </wsdl:message>
   <wsdl:message name="IPIOService_GetResourceTypes_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetResourceTypesResponse" />
-  </wsdl:message>
-  <wsdl:message name="IPIOService_GetFactoryType_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetFactoryType" />
-  </wsdl:message>
-  <wsdl:message name="IPIOService_GetFactoryType_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetFactoryTypeResponse" />
-  </wsdl:message>
-  <wsdl:message name="IPIOService_GetFactoryTypes_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetFactoryTypes" />
-  </wsdl:message>
-  <wsdl:message name="IPIOService_GetFactoryTypes_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetFactoryTypesResponse" />
   </wsdl:message>
   <wsdl:message name="IPIOService_GetBuildingType_InputMessage">
     <wsdl:part name="parameters" element="tns:GetBuildingType" />
@@ -316,18 +286,6 @@
       <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetCells" message="tns:IPIOService_GetCells_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/GetCellsResponse" message="tns:IPIOService_GetCells_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="GetFactory">
-      <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetFactory" message="tns:IPIOService_GetFactory_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/GetFactoryResponse" message="tns:IPIOService_GetFactory_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="GetFactoryAtPos">
-      <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetFactoryAtPos" message="tns:IPIOService_GetFactoryAtPos_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/GetFactoryAtPosResponse" message="tns:IPIOService_GetFactoryAtPos_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="GetFactories">
-      <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetFactories" message="tns:IPIOService_GetFactories_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/GetFactoriesResponse" message="tns:IPIOService_GetFactories_OutputMessage" />
-    </wsdl:operation>
     <wsdl:operation name="GetBuilding">
       <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetBuilding" message="tns:IPIOService_GetBuilding_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/GetBuildingResponse" message="tns:IPIOService_GetBuilding_OutputMessage" />
@@ -375,14 +333,6 @@
     <wsdl:operation name="GetResourceTypes">
       <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetResourceTypes" message="tns:IPIOService_GetResourceTypes_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/GetResourceTypesResponse" message="tns:IPIOService_GetResourceTypes_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="GetFactoryType">
-      <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetFactoryType" message="tns:IPIOService_GetFactoryType_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/GetFactoryTypeResponse" message="tns:IPIOService_GetFactoryType_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="GetFactoryTypes">
-      <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetFactoryTypes" message="tns:IPIOService_GetFactoryTypes_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/GetFactoryTypesResponse" message="tns:IPIOService_GetFactoryTypes_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetBuildingType">
       <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetBuildingType" message="tns:IPIOService_GetBuildingType_InputMessage" />
@@ -536,33 +486,6 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetFactory">
-      <soap:operation soapAction="http://tempuri.org/IPIOService/GetFactory" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetFactoryAtPos">
-      <soap:operation soapAction="http://tempuri.org/IPIOService/GetFactoryAtPos" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetFactories">
-      <soap:operation soapAction="http://tempuri.org/IPIOService/GetFactories" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="GetBuilding">
       <soap:operation soapAction="http://tempuri.org/IPIOService/GetBuilding" style="document" />
       <wsdl:input>
@@ -664,24 +587,6 @@
     </wsdl:operation>
     <wsdl:operation name="GetResourceTypes">
       <soap:operation soapAction="http://tempuri.org/IPIOService/GetResourceTypes" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetFactoryType">
-      <soap:operation soapAction="http://tempuri.org/IPIOService/GetFactoryType" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="GetFactoryTypes">
-      <soap:operation soapAction="http://tempuri.org/IPIOService/GetFactoryTypes" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

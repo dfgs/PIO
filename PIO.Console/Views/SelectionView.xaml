@@ -15,7 +15,7 @@
 		<DataTemplate DataType="{x:Type viewModels:WorkerViewModel}">
 			<selections:WorkerSelectionView/>
 		</DataTemplate>
-		<DataTemplate DataType="{x:Type viewModels:FactoryViewModel}">
+		<DataTemplate DataType="{x:Type viewModels:BuildingViewModel}">
 			<selections:FactorySelectionView/>
 		</DataTemplate>
 		

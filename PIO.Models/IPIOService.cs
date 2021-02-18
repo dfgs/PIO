@@ -26,23 +26,12 @@ namespace PIO.Models
 		Cell GetCellAtPos(int PlanetID, int X, int Y);
 		[OperationContract]
 		Cell[] GetCells(int PlanetID, int X, int Y,int Width,int Height);
-
-		[OperationContract]
-		Factory GetFactory(int FactoryID);
-		[OperationContract]
-		Factory GetFactoryAtPos(int PlanetID, int X, int Y);
-		[OperationContract]
-		Factory[] GetFactories(int PlanetID);
-		
 		[OperationContract]
 		Building GetBuilding(int BuildingID);
 		[OperationContract]
 		Building GetBuildingAtPos(int PlanetID, int X, int Y);
 		[OperationContract]
 		Building[] GetBuildings(int PlanetID);
-
-
-
 		[OperationContract]
 		Worker GetWorker(int WorkerID);
 		[OperationContract]
@@ -63,11 +52,6 @@ namespace PIO.Models
 		[OperationContract]
 		ResourceType[] GetResourceTypes();
 
-		[OperationContract]
-		FactoryType GetFactoryType(FactoryTypeIDs FactoryTypeID);
-		[OperationContract]
-		FactoryType[] GetFactoryTypes();
-		
 		[OperationContract]
 		BuildingType GetBuildingType(BuildingTypeIDs BuildingTypeID);
 		[OperationContract]

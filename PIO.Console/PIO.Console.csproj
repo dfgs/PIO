@@ -59,13 +59,13 @@
     <Compile Include="ViewModels\ApplicationViewModel.cs" />
     <Compile Include="ViewModels\ILocation\CellViewModel.cs" />
     <Compile Include="ViewModels\ILocation\CellsViewModel.cs" />
-    <Compile Include="ViewModels\ILocation\FactoryViewModel.cs" />
+    <Compile Include="ViewModels\ILocation\BuildingViewModel.cs" />
     <Compile Include="ViewModels\ILocation\ILocationViewModel.cs" />
     <Compile Include="ViewModels\ILocation\ILocationViewModelCollection.cs" />
     <Compile Include="ViewModels\ILocation\MapItemsViewModel.cs" />
     <Compile Include="ViewModels\PIOViewModelCollection.cs" />
     <Compile Include="ViewModels\PIOViewModel.cs" />
-    <Compile Include="ViewModels\ILocation\FactoriesViewModel.cs" />
+    <Compile Include="ViewModels\ILocation\BuildingsViewModel.cs" />
     <Compile Include="ViewModels\BuildFactoryOrderViewModel.cs" />
     <Compile Include="ViewModels\BuildFactoryOrdersViewModel.cs" />
     <Compile Include="ViewModels\ProduceOrderViewModel.cs" />

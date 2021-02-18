@@ -13,7 +13,7 @@ namespace PIO.Bots.Models
 		[DataMember]
 		public int ProduceOrderID { get; set; }
 		[DataMember]
-		public int FactoryID { get; set; }
+		public int BuildingID { get; set; }
 	}
 
 }

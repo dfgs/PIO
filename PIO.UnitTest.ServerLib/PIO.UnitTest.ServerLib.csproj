@@ -56,8 +56,6 @@
     <Compile Include="Mocks\DataModules\MockedDatabaseModule.cs" />
     <Compile Include="Mocks\DataModules\MockedProductModule.cs" />
     <Compile Include="Mocks\DataModules\MockedWorkerModule.cs" />
-    <Compile Include="Mocks\DataModules\MockedFactoryModule.cs" />
-    <Compile Include="Mocks\DataModules\MockedFactoryTypeModule.cs" />
     <Compile Include="Mocks\DataModules\MockedIngredientModule.cs" />
     <Compile Include="Mocks\DataModules\MockedStackModule.cs" />
     <Compile Include="Mocks\DataModules\MockedTaskModule.cs" />
@@ -85,12 +83,10 @@
     <Compile Include="Modules\FunctionalModules\ResourceCheckerModuleUnitTest.cs" />
     <Compile Include="Modules\FunctionalModules\BuilderModuleUnitTest.cs" />
     <Compile Include="Modules\DataModules\WorkerModuleUnitTest.cs" />
-    <Compile Include="Modules\DataModules\FactoryTypeModuleUnitTest.cs" />
     <Compile Include="Modules\DataModules\TaskModuleUnitTest.cs" />
     <Compile Include="Modules\DataModules\ResourceTypeModuleUnitTest.cs" />
     <Compile Include="Modules\DataModules\MaterialModuleUnitTest.cs" />
     <Compile Include="Modules\DataModules\StackModuleUnitTest.cs" />
-    <Compile Include="Modules\DataModules\FactoryModuleUnitTest.cs" />
     <Compile Include="Modules\DataModules\PlanetModuleUnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

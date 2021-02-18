@@ -13,10 +13,10 @@ using Task = System.Threading.Tasks.Task;
 
 namespace PIO.Console.ViewModels
 {
-	public class FactoryViewModel :PIOViewModel<Factory>, ILocationViewModel
+	public class BuildingViewModel :PIOViewModel<Building>, ILocationViewModel
 	{
 
-		public static readonly DependencyProperty CreateProduceOrderCommandProperty = DependencyProperty.Register("CreateProduceOrderCommand", typeof(ViewModelCommand), typeof(FactoryViewModel), new PropertyMetadata(null));
+		public static readonly DependencyProperty CreateProduceOrderCommandProperty = DependencyProperty.Register("CreateProduceOrderCommand", typeof(ViewModelCommand), typeof(BuildingViewModel), new PropertyMetadata(null));
 		public ViewModelCommand CreateProduceOrderCommand
 		{
 			get { return (ViewModelCommand)GetValue(CreateProduceOrderCommandProperty); }
@@ -39,17 +39,17 @@ namespace PIO.Console.ViewModels
 
 		public string Description
 		{
-			get { return $"Factory #{Model.FactoryID}"; }
+			get { return $"Building #{Model.BuildingID}"; }
 		}
 
-		public static readonly DependencyProperty StacksProperty = DependencyProperty.Register("Stacks", typeof(StacksViewModel), typeof(FactoryViewModel));
+		public static readonly DependencyProperty StacksProperty = DependencyProperty.Register("Stacks", typeof(StacksViewModel), typeof(BuildingViewModel));
 		public StacksViewModel Stacks
 		{
 			get { return (StacksViewModel)GetValue(StacksProperty); }
 			set { SetValue(StacksProperty, value); }
 		}
 		
-		public static readonly DependencyProperty ProduceOrdersProperty = DependencyProperty.Register("ProduceOrders", typeof(ProduceOrdersViewModel), typeof(FactoryViewModel));
+		public static readonly DependencyProperty ProduceOrdersProperty = DependencyProperty.Register("ProduceOrders", typeof(ProduceOrdersViewModel), typeof(BuildingViewModel));
 		public ProduceOrdersViewModel ProduceOrders
 		{
 			get { return (ProduceOrdersViewModel)GetValue(ProduceOrdersProperty); }
@@ -57,7 +57,7 @@ namespace PIO.Console.ViewModels
 		}
 
 
-		public FactoryViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient) : base(PIOClient, BotsClient)
+		public BuildingViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient) : base(PIOClient, BotsClient)
 		{
 			CreateProduceOrderCommand = new ViewModelCommand(CreateProduceOrderCommandCanExecute, CreateProduceOrderCommandExecute);
 		}
@@ -71,7 +71,7 @@ namespace PIO.Console.ViewModels
 			ProduceOrder result;
 			ProduceOrderViewModel vm;
 
-			result=await TryAsync(BotsClient.CreateProduceOrderAsync(Model.PlanetID, Model.FactoryID));
+			result=await TryAsync(BotsClient.CreateProduceOrderAsync(Model.PlanetID, Model.BuildingID));
 			if (result == null) return;
 			vm = new ProduceOrderViewModel(PIOClient, BotsClient);
 			await vm.LoadAsync(result);
@@ -87,15 +87,15 @@ namespace PIO.Console.ViewModels
 			await ProduceOrders.RefreshAsync();
 		}
 
-		protected override async Task<Factory> OnLoadModelAsync()
+		protected override async Task<Building> OnLoadModelAsync()
 		{
-			return await PIOClient.GetFactoryAsync(Model.FactoryID);
+			return await PIOClient.GetBuildingAsync(Model.BuildingID);
 		}
-		protected override async Task OnLoadAsync(Factory Model)
+		protected override async Task OnLoadAsync(Building Model)
 		{
 			Stacks = new StacksViewModel(PIOClient, BotsClient, Model.BuildingID);
 			await Stacks.LoadAsync();
-			ProduceOrders = new ProduceOrdersViewModel(PIOClient, BotsClient, Model.FactoryID);
+			ProduceOrders = new ProduceOrdersViewModel(PIOClient, BotsClient, Model.BuildingID);
 			await ProduceOrders.LoadAsync();
 		}
 		

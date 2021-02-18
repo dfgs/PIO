@@ -21,12 +21,10 @@ namespace PIO.WebServiceLib
 	{
 		private IPlanetModule planetModule;
 		private ICellModule cellModule;
-		private IFactoryModule factoryModule;
 		private IBuildingModule buildingModule;
 		private IWorkerModule workerModule;
 		private IStackModule stackModule;
 		private IResourceTypeModule resourceTypeModule;
-		private IFactoryTypeModule factoryTypeModule;
 		private IBuildingTypeModule buildingTypeModule;
 		private ITaskTypeModule taskTypeModule;
 		private IMaterialModule materialModule;
@@ -48,10 +46,10 @@ namespace PIO.WebServiceLib
 
 		public PIOService(ILogger Logger,
 			IPlanetModule PlanetModule, ICellModule CellModule,
-			IFactoryModule FactoryModule,IBuildingModule BuildingModule,
+			IBuildingModule BuildingModule,
 			IWorkerModule WorkerModule,
 			IStackModule StackModule,IResourceTypeModule ResourceTypeModule,
-			IFactoryTypeModule FactoryTypeModule, IBuildingTypeModule BuildingTypeModule,
+			IBuildingTypeModule BuildingTypeModule,
 			ITaskTypeModule TaskTypeModule,
 			IMaterialModule MaterialModule,
 			IIngredientModule IngredientModule, IProductModule ProductModule, 
@@ -69,7 +67,6 @@ namespace PIO.WebServiceLib
 			this.planetModule = PlanetModule;
 			this.cellModule = CellModule;
 			
-			this.factoryModule = FactoryModule;
 			this.buildingModule = BuildingModule;
 
 			this.workerModule = WorkerModule;
@@ -78,7 +75,6 @@ namespace PIO.WebServiceLib
 			this.resourceTypeModule = ResourceTypeModule;
 			this.taskTypeModule = TaskTypeModule;
 			
-			this.factoryTypeModule = FactoryTypeModule;
 			this.buildingTypeModule = BuildingTypeModule;
 
 			this.taskTypeModule = TaskTypeModule;
@@ -146,21 +142,7 @@ namespace PIO.WebServiceLib
 			return Try(() => cellModule.GetCells(PlanetID, X, Y,Width,Height)).OrThrow(GenerateFaultException);
 		}
 
-		public Factory GetFactory(int FactoryID)
-		{
-			LogEnter();
-			return Try(() => factoryModule.GetFactory(FactoryID)).OrThrow(GenerateFaultException);
-		}
-		public Factory GetFactoryAtPos(int PlanetID, int X, int Y)
-		{
-			LogEnter();
-			return Try(() => factoryModule.GetFactory(PlanetID, X,Y)).OrThrow(GenerateFaultException);
-		}
-		public Factory[] GetFactories(int PlanetID)
-		{
-			LogEnter();
-			return Try(() => factoryModule.GetFactories(PlanetID)).OrThrow(GenerateFaultException);
-		}
+		
 
 		
 		public Building GetBuilding(int BuildingID)
@@ -214,16 +196,7 @@ namespace PIO.WebServiceLib
 		}
 
 
-		public FactoryType GetFactoryType(FactoryTypeIDs FactoryTypeID)
-		{
-			LogEnter();
-			return Try(() => factoryTypeModule.GetFactoryType(FactoryTypeID)).OrThrow(GenerateFaultException);
-		}
-		public FactoryType[] GetFactoryTypes()
-		{
-			LogEnter();
-			return Try(() => factoryTypeModule.GetFactoryTypes()).OrThrow(GenerateFaultException);
-		}
+		
 		
 		public BuildingType GetBuildingType(BuildingTypeIDs BuildingTypeID)
 		{

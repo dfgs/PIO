@@ -45,33 +45,13 @@ namespace PIO.ClientLib.PIOServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetCells", ReplyAction="http://tempuri.org/IPIOService/GetCellsResponse")]
         System.Threading.Tasks.Task<PIO.Models.Cell[]> GetCellsAsync(int PlanetID, int X, int Y, int Width, int Height);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetFactory", ReplyAction="http://tempuri.org/IPIOService/GetFactoryResponse")]
-        PIO.Models.Factory GetFactory(int FactoryID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetFactory", ReplyAction="http://tempuri.org/IPIOService/GetFactoryResponse")]
-        System.Threading.Tasks.Task<PIO.Models.Factory> GetFactoryAsync(int FactoryID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetFactoryAtPos", ReplyAction="http://tempuri.org/IPIOService/GetFactoryAtPosResponse")]
-        PIO.Models.Factory GetFactoryAtPos(int PlanetID, int X, int Y);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetFactoryAtPos", ReplyAction="http://tempuri.org/IPIOService/GetFactoryAtPosResponse")]
-        System.Threading.Tasks.Task<PIO.Models.Factory> GetFactoryAtPosAsync(int PlanetID, int X, int Y);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetFactories", ReplyAction="http://tempuri.org/IPIOService/GetFactoriesResponse")]
-        PIO.Models.Factory[] GetFactories(int PlanetID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetFactories", ReplyAction="http://tempuri.org/IPIOService/GetFactoriesResponse")]
-        System.Threading.Tasks.Task<PIO.Models.Factory[]> GetFactoriesAsync(int PlanetID);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetBuilding", ReplyAction="http://tempuri.org/IPIOService/GetBuildingResponse")]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(PIO.Models.Factory))]
         PIO.Models.Building GetBuilding(int BuildingID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetBuilding", ReplyAction="http://tempuri.org/IPIOService/GetBuildingResponse")]
         System.Threading.Tasks.Task<PIO.Models.Building> GetBuildingAsync(int BuildingID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetBuildingAtPos", ReplyAction="http://tempuri.org/IPIOService/GetBuildingAtPosResponse")]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(PIO.Models.Factory))]
         PIO.Models.Building GetBuildingAtPos(int PlanetID, int X, int Y);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetBuildingAtPos", ReplyAction="http://tempuri.org/IPIOService/GetBuildingAtPosResponse")]
@@ -136,18 +116,6 @@ namespace PIO.ClientLib.PIOServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetResourceTypes", ReplyAction="http://tempuri.org/IPIOService/GetResourceTypesResponse")]
         System.Threading.Tasks.Task<PIO.Models.ResourceType[]> GetResourceTypesAsync();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetFactoryType", ReplyAction="http://tempuri.org/IPIOService/GetFactoryTypeResponse")]
-        PIO.Models.FactoryType GetFactoryType(PIO.Models.FactoryTypeIDs FactoryTypeID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetFactoryType", ReplyAction="http://tempuri.org/IPIOService/GetFactoryTypeResponse")]
-        System.Threading.Tasks.Task<PIO.Models.FactoryType> GetFactoryTypeAsync(PIO.Models.FactoryTypeIDs FactoryTypeID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetFactoryTypes", ReplyAction="http://tempuri.org/IPIOService/GetFactoryTypesResponse")]
-        PIO.Models.FactoryType[] GetFactoryTypes();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetFactoryTypes", ReplyAction="http://tempuri.org/IPIOService/GetFactoryTypesResponse")]
-        System.Threading.Tasks.Task<PIO.Models.FactoryType[]> GetFactoryTypesAsync();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetBuildingType", ReplyAction="http://tempuri.org/IPIOService/GetBuildingTypeResponse")]
         PIO.Models.BuildingType GetBuildingType(PIO.Models.BuildingTypeIDs BuildingTypeID);
@@ -373,30 +341,6 @@ namespace PIO.ClientLib.PIOServiceReference {
             return base.Channel.GetCellsAsync(PlanetID, X, Y, Width, Height);
         }
         
-        public PIO.Models.Factory GetFactory(int FactoryID) {
-            return base.Channel.GetFactory(FactoryID);
-        }
-        
-        public System.Threading.Tasks.Task<PIO.Models.Factory> GetFactoryAsync(int FactoryID) {
-            return base.Channel.GetFactoryAsync(FactoryID);
-        }
-        
-        public PIO.Models.Factory GetFactoryAtPos(int PlanetID, int X, int Y) {
-            return base.Channel.GetFactoryAtPos(PlanetID, X, Y);
-        }
-        
-        public System.Threading.Tasks.Task<PIO.Models.Factory> GetFactoryAtPosAsync(int PlanetID, int X, int Y) {
-            return base.Channel.GetFactoryAtPosAsync(PlanetID, X, Y);
-        }
-        
-        public PIO.Models.Factory[] GetFactories(int PlanetID) {
-            return base.Channel.GetFactories(PlanetID);
-        }
-        
-        public System.Threading.Tasks.Task<PIO.Models.Factory[]> GetFactoriesAsync(int PlanetID) {
-            return base.Channel.GetFactoriesAsync(PlanetID);
-        }
-        
         public PIO.Models.Building GetBuilding(int BuildingID) {
             return base.Channel.GetBuilding(BuildingID);
         }
@@ -491,22 +435,6 @@ namespace PIO.ClientLib.PIOServiceReference {
         
         public System.Threading.Tasks.Task<PIO.Models.ResourceType[]> GetResourceTypesAsync() {
             return base.Channel.GetResourceTypesAsync();
-        }
-        
-        public PIO.Models.FactoryType GetFactoryType(PIO.Models.FactoryTypeIDs FactoryTypeID) {
-            return base.Channel.GetFactoryType(FactoryTypeID);
-        }
-        
-        public System.Threading.Tasks.Task<PIO.Models.FactoryType> GetFactoryTypeAsync(PIO.Models.FactoryTypeIDs FactoryTypeID) {
-            return base.Channel.GetFactoryTypeAsync(FactoryTypeID);
-        }
-        
-        public PIO.Models.FactoryType[] GetFactoryTypes() {
-            return base.Channel.GetFactoryTypes();
-        }
-        
-        public System.Threading.Tasks.Task<PIO.Models.FactoryType[]> GetFactoryTypesAsync() {
-            return base.Channel.GetFactoryTypesAsync();
         }
         
         public PIO.Models.BuildingType GetBuildingType(PIO.Models.BuildingTypeIDs BuildingTypeID) {

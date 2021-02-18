@@ -73,8 +73,6 @@
     <Compile Include="PIO\DataCmdlet\GetIngredientsCmdlet.cs" />
     <Compile Include="PIO\DataCmdlet\GetWorkersCmdlet.cs" />
     <Compile Include="PIO\DataCmdlet\GetWorkerCmdlet.cs" />
-    <Compile Include="PIO\DataCmdlet\GetFactoryTypeCmdlet.cs" />
-    <Compile Include="PIO\DataCmdlet\GetFactoryTypesCmdlet.cs" />
     <Compile Include="PIO\DataCmdlet\GetTasksCmdlet.cs" />
     <Compile Include="PIO\DataCmdlet\GetTaskCmdlet.cs" />
     <Compile Include="PIO\DataCmdlet\GetResourceTypesCmdlet.cs" />
@@ -83,8 +81,6 @@
     <Compile Include="PIO\DataCmdlet\GetMaterialsCmdlet.cs" />
     <Compile Include="PIO\DataCmdlet\GetStacksCmdlet.cs" />
     <Compile Include="PIO\DataCmdlet\GetStackCmdlet.cs" />
-    <Compile Include="PIO\DataCmdlet\GetFactoryCmdlet.cs" />
-    <Compile Include="PIO\DataCmdlet\GetFactoriesCmdlet.cs" />
     <Compile Include="PIO\DataCmdlet\GetPlanetsCmdlet.cs" />
     <Compile Include="PIO\DataCmdlet\GetPlanetCmdlet.cs" />
     <Compile Include="PIO\FunctionalCmdlet\AssertHasEnoughResourcesToBuildCmdlet.cs" />

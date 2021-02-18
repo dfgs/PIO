@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace PIO.PowerShell
 {
 	[Cmdlet(VerbsCommon.Get, "Workers")]
-	[OutputType(typeof(Factory[]))]
+	[OutputType(typeof(Worker[]))]
 	public class GetWorkersCmdlet : PIOCmdLet
 	{
 

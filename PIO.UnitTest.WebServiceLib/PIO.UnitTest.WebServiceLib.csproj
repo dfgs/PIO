@@ -76,8 +76,6 @@
     <Compile Include="Mocks\MockedTaskTypeModule.cs" />
     <Compile Include="Mocks\MockedFunctionalModule.cs" />
     <Compile Include="Mocks\MockedDatabaseModule.cs" />
-    <Compile Include="Mocks\MockedFactoryModule.cs" />
-    <Compile Include="Mocks\MockedFactoryTypeModule.cs" />
     <Compile Include="Mocks\MockedProducerModule.cs" />
     <Compile Include="Mocks\MockedResourceCheckerModule.cs" />
     <Compile Include="Mocks\MockedProductModule.cs" />

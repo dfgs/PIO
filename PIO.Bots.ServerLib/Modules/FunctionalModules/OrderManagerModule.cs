@@ -26,7 +26,7 @@ namespace PIO.Bots.ServerLib.Modules
 		private PIO.ClientLib.PIOServiceReference.IPIOService client;
 		private IOrderModule orderModule;
 		private IProduceOrderModule produceOrderModule;
-		private IBuildFactoryOrderModule buildFactoryOrderModule;
+		private IBuildFactoryOrderModule buildBuildingOrderModule;
 
 
 
@@ -36,7 +36,7 @@ namespace PIO.Bots.ServerLib.Modules
 		{
 			this.client = Client;this.idleDuration = IdleDuration;
 			this.orderModule = OrderModule;this.produceOrderModule = ProduceOrderModule;
-			this.buildFactoryOrderModule = BuildFactoryOrderModule;
+			this.buildBuildingOrderModule = BuildFactoryOrderModule;
 
 		}
 
@@ -58,32 +58,32 @@ namespace PIO.Bots.ServerLib.Modules
 
 
 
-		public ProduceOrder CreateProduceOrder(int PlanetID, int FactoryID)
+		public ProduceOrder CreateProduceOrder(int PlanetID, int BuildingID)
 		{
 			ProduceOrder[] existingOrders;
 			ProduceOrder produceOrder;
-			Factory factory;
+			Building building;
 
 			LogEnter();
 
-			Log(LogLevels.Information, $"Checking if factory is on planet (PlanetID={PlanetID}, FactoryID={FactoryID})");
-			factory = AssertExists(()=> client.GetFactory(FactoryID),$"FactoryID=({FactoryID})");
-			if (factory.PlanetID!=PlanetID)
+			Log(LogLevels.Information, $"Checking if building is on planet (PlanetID={PlanetID}, BuildingID={BuildingID})");
+			building = AssertExists(()=> client.GetBuilding(BuildingID),$"BuildingID=({BuildingID})");
+			if (building.PlanetID!=PlanetID)
 			{
-				Log(LogLevels.Warning, $"Factory is not in the same planet (FactoryID={FactoryID})");
-				throw new PIOInvalidOperationException($"Factory is not in the same planet (FactoryID={FactoryID})", null, ID, ModuleName, "CreateProduceOrder");
+				Log(LogLevels.Warning, $"Building is not in the same planet (BuildingID={BuildingID})");
+				throw new PIOInvalidOperationException($"Building is not in the same planet (BuildingID={BuildingID})", null, ID, ModuleName, "CreateProduceOrder");
 			}
 
-			Log(LogLevels.Information, $"Checking if order already exists (FactoryID={FactoryID})");
-			existingOrders = Try(() => produceOrderModule.GetProduceOrders(FactoryID)).OrThrow<PIOInternalErrorException>("Failed to get ProduceOrder");
+			Log(LogLevels.Information, $"Checking if order already exists (BuildingID={BuildingID})");
+			existingOrders = Try(() => produceOrderModule.GetProduceOrders(BuildingID)).OrThrow<PIOInternalErrorException>("Failed to get ProduceOrder");
 			if ((existingOrders != null) && (existingOrders.Length>0))
 			{
-				Log(LogLevels.Warning, $"Produce order already exists for factory (FactoryID={FactoryID})");
-				throw new PIOInvalidOperationException($"Produce order already exists for factory (FactoryID={FactoryID})", null, ID, ModuleName, "CreateProduceOrder");
+				Log(LogLevels.Warning, $"Produce order already exists for building (BuildingID={BuildingID})");
+				throw new PIOInvalidOperationException($"Produce order already exists for building (BuildingID={BuildingID})", null, ID, ModuleName, "CreateProduceOrder");
 			}
 
 			Log(LogLevels.Information, $"Creating ProduceOrder");
-			produceOrder=Try(() => produceOrderModule.CreateProduceOrder(PlanetID,FactoryID)).OrThrow<PIOInternalErrorException>("Failed to create ProduceOrder");
+			produceOrder=Try(() => produceOrderModule.CreateProduceOrder(PlanetID,BuildingID)).OrThrow<PIOInternalErrorException>("Failed to create ProduceOrder");
 
 
 			return produceOrder;
@@ -92,34 +92,34 @@ namespace PIO.Bots.ServerLib.Modules
 		public BuildFactoryOrder CreateBuildFactoryOrder(int PlanetID, BuildingTypeIDs BuildingTypeID, int X,int Y)
 		{
 			BuildFactoryOrder[] existingOrders;
-			BuildFactoryOrder buildFactoryOrder;
-			Factory factory;
+			BuildFactoryOrder buildBuildingOrder;
+			Building building;
 
 			LogEnter();
 
 			Log(LogLevels.Information, $"Checking if position is free");
-			factory = Try(() => client.GetFactoryAtPos(PlanetID, X, Y)).OrThrow<PIOInternalErrorException>("Failed to check if position is free");
-			if (factory != null)
+			building = Try(() => client.GetBuildingAtPos(PlanetID, X, Y)).OrThrow<PIOInternalErrorException>("Failed to check if position is free");
+			if (building != null)
 			{
 				Log(LogLevels.Warning, $"Position is not free (PlanetID={PlanetID}, X={X}, Y={Y})");
 				throw new PIOInvalidOperationException($"Position is not free (PlanetID={PlanetID}, X={X}, Y={Y})", null, ID, ModuleName, "CreateBuildFactoryOrder");
 			}
 
 			Log(LogLevels.Information, $"Checking if order already exists (PlanetID={PlanetID}, X={X}, Y={Y})");
-			existingOrders = Try(() => buildFactoryOrderModule.GetBuildFactoryOrders(PlanetID,X,Y)).OrThrow<PIOInternalErrorException>("Failed to get ProduceOrder");
+			existingOrders = Try(() => buildBuildingOrderModule.GetBuildFactoryOrders(PlanetID,X,Y)).OrThrow<PIOInternalErrorException>("Failed to get ProduceOrder");
 			if ((existingOrders != null) && (existingOrders.Length > 0))
 			{
-				Log(LogLevels.Warning, $"BuildFactory order already exists (PlanetID={PlanetID}, X={X}, Y={Y})");
-				throw new PIOInvalidOperationException($"BuildFactory order already exists (PlanetID={PlanetID}, X={X}, Y={Y})", null, ID, ModuleName, "CreateBuildFactoryOrder");
+				Log(LogLevels.Warning, $"BuildBuilding order already exists (PlanetID={PlanetID}, X={X}, Y={Y})");
+				throw new PIOInvalidOperationException($"BuildBuilding order already exists (PlanetID={PlanetID}, X={X}, Y={Y})", null, ID, ModuleName, "CreateBuildFactoryOrder");
 			}
 
 
 
 			Log(LogLevels.Information, $"Creating BuildFactoryOrder");
-			buildFactoryOrder = Try(() => buildFactoryOrderModule.CreateBuildFactoryOrder(PlanetID, BuildingTypeID, X,Y)).OrThrow<PIOInternalErrorException>("Failed to create BuildFactoryOrder");
+			buildBuildingOrder = Try(() => buildBuildingOrderModule.CreateBuildFactoryOrder(PlanetID, BuildingTypeID, X,Y)).OrThrow<PIOInternalErrorException>("Failed to create BuildFactoryOrder");
 
 
-			return buildFactoryOrder;
+			return buildBuildingOrder;
 		}
 
 
@@ -140,14 +140,14 @@ namespace PIO.Bots.ServerLib.Modules
 		}
 		public BuildFactoryOrder[] GetWaitingBuildFactoryOrders(int PlanetID)
 		{
-			BuildFactoryOrder[] buildFactoryOrders;
+			BuildFactoryOrder[] buildBuildingOrders;
 
 			LogEnter();
 
 			Log(LogLevels.Information, $"Getting Orders");
-			buildFactoryOrders = Try(() => buildFactoryOrderModule.GetWaitingBuildFactoryOrders(PlanetID)).OrThrow<PIOInternalErrorException>("Failed to get Orders");
+			buildBuildingOrders = Try(() => buildBuildingOrderModule.GetWaitingBuildFactoryOrders(PlanetID)).OrThrow<PIOInternalErrorException>("Failed to get Orders");
 
-			return buildFactoryOrders;
+			return buildBuildingOrders;
 		}
 
 
@@ -160,18 +160,18 @@ namespace PIO.Bots.ServerLib.Modules
 		{
 			bool result;
 			ResourceTypeIDs[] missingResourceTypeID;
-			Factory factory;
+			Building building;
 			Stack stack;
 			Task task;
 
-			factory = AssertExists<Factory>(() => client.GetFactory(ProduceOrder.FactoryID), $"FactoryID={ProduceOrder.FactoryID}");
+			building = AssertExists<Building>(() => client.GetBuilding(ProduceOrder.BuildingID), $"BuildingID={ProduceOrder.BuildingID}");
 
-			Log(LogLevels.Information, $"Checking if factory as enough resources to produce (FactoryID={ProduceOrder.FactoryID})");
-			missingResourceTypeID = Try(() => client.GetMissingResourcesToProduce(ProduceOrder.FactoryID)).OrThrow<PIOInternalErrorException>("Failed to check resources");
+			Log(LogLevels.Information, $"Checking if building as enough resources to produce (BuildingID={ProduceOrder.BuildingID})");
+			missingResourceTypeID = Try(() => client.GetMissingResourcesToProduce(ProduceOrder.BuildingID)).OrThrow<PIOInternalErrorException>("Failed to check resources");
 			if ((missingResourceTypeID == null) || (missingResourceTypeID.Length == 0))
 			{
-				Log(LogLevels.Information, $"Checking if worker is on site (WorkerID={Worker.WorkerID}, FactoryID={ProduceOrder.FactoryID})");
-				result = Try(() => client.WorkerIsInBuilding(Worker.WorkerID, factory.BuildingID)).OrThrow<PIOInternalErrorException>("Failed to check worker location");
+				Log(LogLevels.Information, $"Checking if worker is on site (WorkerID={Worker.WorkerID}, BuildingID={ProduceOrder.BuildingID})");
+				result = Try(() => client.WorkerIsInBuilding(Worker.WorkerID, building.BuildingID)).OrThrow<PIOInternalErrorException>("Failed to check worker location");
 				if (result)
 				{
 					Log(LogLevels.Information, $"Worker is on site, creating produce task");
@@ -180,7 +180,7 @@ namespace PIO.Bots.ServerLib.Modules
 				else
 				{
 					Log(LogLevels.Information, $"Worker is not on site, creating moveto task");
-					task = Try(() => client.MoveToBuilding(Worker.WorkerID, factory.BuildingID)).OrThrow<PIOInternalErrorException>("Failed to create task");
+					task = Try(() => client.MoveToBuilding(Worker.WorkerID, building.BuildingID)).OrThrow<PIOInternalErrorException>("Failed to create task");
 				}
 				return task;
 			}
@@ -189,8 +189,8 @@ namespace PIO.Bots.ServerLib.Modules
 				Log(LogLevels.Information, $"Checking if worker is carrying missing resource (PlanetID={Worker.PlanetID})");
 				if ((Worker.ResourceTypeID != null) && missingResourceTypeID.Contains(Worker.ResourceTypeID.Value))
 				{
-					Log(LogLevels.Information, $"Worker is carrying missing resource, checking if worker is on site (WorkerID={Worker.WorkerID}, FactoryID={ProduceOrder.FactoryID})");
-					result = Try(() => client.WorkerIsInBuilding(Worker.WorkerID, factory.BuildingID)).OrThrow<PIOInternalErrorException>("Failed to check worker location");
+					Log(LogLevels.Information, $"Worker is carrying missing resource, checking if worker is on site (WorkerID={Worker.WorkerID}, BuildingID={ProduceOrder.BuildingID})");
+					result = Try(() => client.WorkerIsInBuilding(Worker.WorkerID, building.BuildingID)).OrThrow<PIOInternalErrorException>("Failed to check worker location");
 					if (result)
 					{
 						Log(LogLevels.Information, $"Worker is on site, creating store task");
@@ -200,7 +200,7 @@ namespace PIO.Bots.ServerLib.Modules
 					else
 					{
 						Log(LogLevels.Information, $"Worker is not on site, creating moveto task");
-						task = Try(() => client.MoveToBuilding(Worker.WorkerID, factory.BuildingID)).OrThrow<PIOInternalErrorException>("Failed to create task");
+						task = Try(() => client.MoveToBuilding(Worker.WorkerID, building.BuildingID)).OrThrow<PIOInternalErrorException>("Failed to create task");
 						return task;
 					}
 				}
@@ -239,15 +239,15 @@ namespace PIO.Bots.ServerLib.Modules
 
 		public Task CreateTaskFromBuildFactoryOrder(Worker Worker, BuildFactoryOrder BuildFactoryOrder)
 		{
-			Factory factory;
+			Building building;
 			bool result;
 			Task task;
 			ResourceTypeIDs[] missingResourceTypeID;
 			Stack stack;
 
-			Log(LogLevels.Information, $"Checking if factory exists (PlanetID={BuildFactoryOrder.PlanetID}, X={BuildFactoryOrder.X}, Y={BuildFactoryOrder.Y})");
-			factory = Try(() => client.GetFactoryAtPos(BuildFactoryOrder.PlanetID,BuildFactoryOrder.X,BuildFactoryOrder.Y)).OrThrow<PIOInternalErrorException>("Failed to check is factory exists");
-			if (factory == null) 
+			Log(LogLevels.Information, $"Checking if building exists (PlanetID={BuildFactoryOrder.PlanetID}, X={BuildFactoryOrder.X}, Y={BuildFactoryOrder.Y})");
+			building = Try(() => client.GetBuildingAtPos(BuildFactoryOrder.PlanetID,BuildFactoryOrder.X,BuildFactoryOrder.Y)).OrThrow<PIOInternalErrorException>("Failed to check is building exists");
+			if (building == null) 
 			{
 				Log(LogLevels.Information, $"Checking if worker is on site (WorkerID={Worker.WorkerID}, X={BuildFactoryOrder.X}, Y={BuildFactoryOrder.X})");
 				result = (Worker.X == BuildFactoryOrder.X) && (Worker.Y == BuildFactoryOrder.Y);
@@ -266,21 +266,21 @@ namespace PIO.Bots.ServerLib.Modules
 			else
 			{
 
-				if (factory.RemainingBuildSteps==0)
+				if (building.RemainingBuildSteps==0)
 				{
-					Log(LogLevels.Information, $"Factory is already built (FactoryID={factory.FactoryID})");
+					Log(LogLevels.Information, $"Building is already built (BuildingID={building.BuildingID})");
 					return null;
 				}
 
-				Log(LogLevels.Information, $"Checking if factory as enough resources to build (FactoryID={factory.FactoryID})");
-				missingResourceTypeID = Try(() => client.GetMissingResourcesToBuild(factory.FactoryID)).OrThrow<PIOInternalErrorException>("Failed to check resources");
+				Log(LogLevels.Information, $"Checking if building as enough resources to build (BuildingID={building.BuildingID})");
+				missingResourceTypeID = Try(() => client.GetMissingResourcesToBuild(building.BuildingID)).OrThrow<PIOInternalErrorException>("Failed to check resources");
 				if ((missingResourceTypeID == null) || (missingResourceTypeID.Length == 0))
 				{
-					Log(LogLevels.Information, $"Checking if worker is on site (WorkerID={Worker.WorkerID}, FactoryID={factory.FactoryID})");
+					Log(LogLevels.Information, $"Checking if worker is on site (WorkerID={Worker.WorkerID}, BuildingID={building.BuildingID})");
 					result = (Worker.X == BuildFactoryOrder.X) && (Worker.Y == BuildFactoryOrder.Y);
 					if (result)
 					{
-						Log(LogLevels.Information, $"Worker is on site, creating BuildFactory task");
+						Log(LogLevels.Information, $"Worker is on site, creating BuildBuilding task");
 						task = Try(() => client.Build(Worker.WorkerID)).OrThrow<PIOInternalErrorException>("Failed to create task");
 					}
 					else
@@ -367,7 +367,7 @@ namespace PIO.Bots.ServerLib.Modules
 			foreach (Order order in orders)
 			{
 				if (order is ProduceOrder produceOrder) task = CreateTaskFromProduceOrder(worker, produceOrder);
-				else if (order is BuildFactoryOrder buildFactoryOrder) task = CreateTaskFromBuildFactoryOrder(worker, buildFactoryOrder);
+				else if (order is BuildFactoryOrder buildBuildingOrder) task = CreateTaskFromBuildFactoryOrder(worker, buildBuildingOrder);
 				else
 				{
 					Log(LogLevels.Warning, $"Cannot handle order of type {order.GetType().Name}");

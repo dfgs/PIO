@@ -23,7 +23,7 @@
 				
 			</Border>
 		</DataTemplate>
-		<DataTemplate DataType="{x:Type viewModels:FactoryViewModel}">
+		<DataTemplate DataType="{x:Type viewModels:BuildingViewModel}">
 			<Border Background="Blue" BorderBrush="Black" BorderThickness="1" Width="16" Height="16"/>
 		</DataTemplate>
 		

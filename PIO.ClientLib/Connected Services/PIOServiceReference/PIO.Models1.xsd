@@ -30,17 +30,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfCell" nillable="true" type="tns:ArrayOfCell" />
-  <xs:complexType name="Factory">
-    <xs:complexContent mixed="false">
-      <xs:extension base="tns:Building">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="FactoryID" type="xs:int" />
-          <xs:element minOccurs="0" name="FactoryTypeID" type="tns:FactoryTypeIDs" />
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:element name="Factory" nillable="true" type="tns:Factory" />
   <xs:complexType name="Building">
     <xs:sequence>
       <xs:element minOccurs="0" name="BuildingID" type="xs:int" />
@@ -63,20 +52,6 @@
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="BuildingTypeIDs" nillable="true" type="tns:BuildingTypeIDs" />
-  <xs:simpleType name="FactoryTypeIDs">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="Forest" />
-      <xs:enumeration value="Stockpile" />
-      <xs:enumeration value="Sawmill" />
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:element name="FactoryTypeIDs" nillable="true" type="tns:FactoryTypeIDs" />
-  <xs:complexType name="ArrayOfFactory">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="Factory" nillable="true" type="tns:Factory" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfFactory" nillable="true" type="tns:ArrayOfFactory" />
   <xs:complexType name="ArrayOfBuilding">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="Building" nillable="true" type="tns:Building" />
@@ -137,22 +112,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfResourceType" nillable="true" type="tns:ArrayOfResourceType" />
-  <xs:complexType name="FactoryType">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="BuildSteps" type="xs:int" />
-      <xs:element minOccurs="0" name="FactoryTypeID" type="tns:FactoryTypeIDs" />
-      <xs:element minOccurs="0" name="HealthPoints" type="xs:int" />
-      <xs:element minOccurs="0" name="MaterialSetID" type="xs:int" />
-      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="FactoryType" nillable="true" type="tns:FactoryType" />
-  <xs:complexType name="ArrayOfFactoryType">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="FactoryType" nillable="true" type="tns:FactoryType" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfFactoryType" nillable="true" type="tns:ArrayOfFactoryType" />
   <xs:complexType name="BuildingType">
     <xs:sequence>
       <xs:element minOccurs="0" name="BuildSteps" type="xs:int" />

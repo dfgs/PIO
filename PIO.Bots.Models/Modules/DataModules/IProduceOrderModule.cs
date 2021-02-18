@@ -10,9 +10,9 @@ namespace PIO.Bots.Models.Modules
 	{
 		ProduceOrder GetProduceOrder(int ProduceOrderID);
 		ProduceOrder[] GetProduceOrders();
-		ProduceOrder[] GetProduceOrders(int FactoryID);
+		ProduceOrder[] GetProduceOrders(int BuildingID);
 		ProduceOrder[] GetWaitingProduceOrders(int PlanetID);
-		ProduceOrder CreateProduceOrder(int PlanetID,int FactoryID);
+		ProduceOrder CreateProduceOrder(int PlanetID,int BuildingID);
 
 	}
 }

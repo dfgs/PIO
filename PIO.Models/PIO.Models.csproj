@@ -71,11 +71,8 @@
     <Compile Include="Ingredient.cs" />
     <Compile Include="Modules\DataModules\IIngredientModule.cs" />
     <Compile Include="Worker.cs" />
-    <Compile Include="Factory.cs" />
     <Compile Include="Modules\DataModules\IWorkerModule.cs" />
     <Compile Include="Modules\FunctionalModules\IBuilderModule.cs" />
-    <Compile Include="Modules\DataModules\IFactoryModule.cs" />
-    <Compile Include="Modules\DataModules\IFactoryTypeModule.cs" />
     <Compile Include="Modules\DataModules\IMaterialModule.cs" />
     <Compile Include="Modules\DataModules\IPlanetModule.cs" />
     <Compile Include="Modules\DataModules\IResourceTypeModule.cs" />
@@ -83,7 +80,6 @@
     <Compile Include="Modules\DataModules\ITaskModule.cs" />
     <Compile Include="Planet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="FactoryType.cs" />
     <Compile Include="ResourceType.cs" />
     <Compile Include="Task.cs" />
     <Compile Include="Material.cs" />
