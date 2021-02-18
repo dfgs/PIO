@@ -46,13 +46,11 @@ namespace PIO.ServerHost
 			ICellModule cellModule;
 			IBuildingModule buildingModule;
 			IFactoryModule factoryModule;
-			IFarmModule farmModule;
 			IWorkerModule workerModule;
 			IBuilderModule factoryBuilderModule;
 			IStackModule stackModule;
 			IResourceTypeModule resourceTypeModule;
 			IFactoryTypeModule factoryTypeModule;
-			IFarmTypeModule farmTypeModule;
 			IBuildingTypeModule buildingTypeModule;
 			ITaskTypeModule taskTypeModule;
 			IMaterialModule materialModule;
@@ -92,12 +90,10 @@ namespace PIO.ServerHost
 			cellModule = new CellModule(logger, database);
 			buildingModule = new BuildingModule(logger, database);
 			factoryModule = new FactoryModule(logger, database);
-			farmModule = new FarmModule(logger, database);
 			workerModule = new WorkerModule(logger, database);
 			stackModule = new StackModule(logger, database);
 			resourceTypeModule = new ResourceTypeModule(logger, database);
 			factoryTypeModule = new FactoryTypeModule(logger, database);
-			farmTypeModule = new FarmTypeModule(logger, database);
 			buildingTypeModule = new BuildingTypeModule(logger, database);
 			taskTypeModule = new TaskTypeModule(logger, database);
 			materialModule = new MaterialModule(logger, database);
@@ -120,9 +116,9 @@ namespace PIO.ServerHost
 
 
 			pioService = new PIOService(
-				logger, planetModule, cellModule, factoryModule, farmModule, buildingModule, workerModule,
+				logger, planetModule, cellModule, factoryModule,buildingModule, workerModule,
 				stackModule, resourceTypeModule,
-				factoryTypeModule, farmTypeModule,buildingTypeModule, taskTypeModule, materialModule, ingredientModule, productModule, taskModule,
+				factoryTypeModule, buildingTypeModule, taskTypeModule, materialModule, ingredientModule, productModule, taskModule,
 				schedulerModule,
 				resourceCheckerModule, locationCheckerModule, idlerModule, producerModule, moverModule,  takerModule, storerModule,
 				factoryBuilderModule) ; 

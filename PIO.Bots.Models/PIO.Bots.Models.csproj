@@ -43,10 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BuildFarmOrder.cs" />
     <Compile Include="IBotsService.cs" />
     <Compile Include="Modules\DataModules\IBotModule.cs" />
-    <Compile Include="Modules\DataModules\IBuildFarmOrderModule.cs" />
     <Compile Include="Modules\DataModules\IBuildFactoryOrderModule.cs" />
     <Compile Include="Modules\DataModules\IProduceOrderModule.cs" />
     <Compile Include="Modules\DataModules\IOrderModule.cs" />

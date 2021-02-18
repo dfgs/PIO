@@ -47,8 +47,6 @@
     <Compile Include="Consts.cs" />
     <Compile Include="Building.cs" />
     <Compile Include="BuildingType.cs" />
-    <Compile Include="FarmType.cs" />
-    <Compile Include="Farm.cs" />
     <Compile Include="ILocation.cs" />
     <Compile Include="ITaskCallbackService.cs" />
     <Compile Include="IPIOService.cs" />
@@ -56,8 +54,6 @@
     <Compile Include="Modules\DataModules\ICellModule.cs" />
     <Compile Include="Modules\DataModules\IBuildingModule.cs" />
     <Compile Include="Modules\DataModules\IBuildingTypeModule.cs" />
-    <Compile Include="Modules\DataModules\IFarmModule.cs" />
-    <Compile Include="Modules\DataModules\IFarmTypeModule.cs" />
     <Compile Include="Modules\DataModules\ITaskTypeModule.cs" />
     <Compile Include="Modules\EngineModules\ISchedulerModule.cs" />
     <Compile Include="Modules\EngineModules\TaskEventArgs.cs" />

@@ -22,13 +22,11 @@ namespace PIO.WebServiceLib
 		private IPlanetModule planetModule;
 		private ICellModule cellModule;
 		private IFactoryModule factoryModule;
-		private IFarmModule farmModule;
 		private IBuildingModule buildingModule;
 		private IWorkerModule workerModule;
 		private IStackModule stackModule;
 		private IResourceTypeModule resourceTypeModule;
 		private IFactoryTypeModule factoryTypeModule;
-		private IFarmTypeModule farmTypeModule;
 		private IBuildingTypeModule buildingTypeModule;
 		private ITaskTypeModule taskTypeModule;
 		private IMaterialModule materialModule;
@@ -50,10 +48,10 @@ namespace PIO.WebServiceLib
 
 		public PIOService(ILogger Logger,
 			IPlanetModule PlanetModule, ICellModule CellModule,
-			IFactoryModule FactoryModule,IFarmModule FarmModule,IBuildingModule BuildingModule,
+			IFactoryModule FactoryModule,IBuildingModule BuildingModule,
 			IWorkerModule WorkerModule,
 			IStackModule StackModule,IResourceTypeModule ResourceTypeModule,
-			IFactoryTypeModule FactoryTypeModule, IFarmTypeModule FarmTypeModule,IBuildingTypeModule BuildingTypeModule,
+			IFactoryTypeModule FactoryTypeModule, IBuildingTypeModule BuildingTypeModule,
 			ITaskTypeModule TaskTypeModule,
 			IMaterialModule MaterialModule,
 			IIngredientModule IngredientModule, IProductModule ProductModule, 
@@ -72,7 +70,6 @@ namespace PIO.WebServiceLib
 			this.cellModule = CellModule;
 			
 			this.factoryModule = FactoryModule;
-			this.farmModule = FarmModule;
 			this.buildingModule = BuildingModule;
 
 			this.workerModule = WorkerModule;
@@ -82,7 +79,6 @@ namespace PIO.WebServiceLib
 			this.taskTypeModule = TaskTypeModule;
 			
 			this.factoryTypeModule = FactoryTypeModule;
-			this.farmTypeModule = FarmTypeModule;
 			this.buildingTypeModule = BuildingTypeModule;
 
 			this.taskTypeModule = TaskTypeModule;
@@ -166,21 +162,7 @@ namespace PIO.WebServiceLib
 			return Try(() => factoryModule.GetFactories(PlanetID)).OrThrow(GenerateFaultException);
 		}
 
-		public Farm GetFarm(int FarmID)
-		{
-			LogEnter();
-			return Try(() => farmModule.GetFarm(FarmID)).OrThrow(GenerateFaultException);
-		}
-		public Farm GetFarmAtPos(int PlanetID, int X, int Y)
-		{
-			LogEnter();
-			return Try(() => farmModule.GetFarm(PlanetID, X, Y)).OrThrow(GenerateFaultException);
-		}
-		public Farm[] GetFarms(int PlanetID)
-		{
-			LogEnter();
-			return Try(() => farmModule.GetFarms(PlanetID)).OrThrow(GenerateFaultException);
-		}
+		
 		public Building GetBuilding(int BuildingID)
 		{
 			LogEnter();
@@ -242,16 +224,7 @@ namespace PIO.WebServiceLib
 			LogEnter();
 			return Try(() => factoryTypeModule.GetFactoryTypes()).OrThrow(GenerateFaultException);
 		}
-		public FarmType GetFarmType(FarmTypeIDs FarmTypeID)
-		{
-			LogEnter();
-			return Try(() => farmTypeModule.GetFarmType(FarmTypeID)).OrThrow(GenerateFaultException);
-		}
-		public FarmType[] GetFarmTypes()
-		{
-			LogEnter();
-			return Try(() => farmTypeModule.GetFarmTypes()).OrThrow(GenerateFaultException);
-		}
+		
 		public BuildingType GetBuildingType(BuildingTypeIDs BuildingTypeID)
 		{
 			LogEnter();

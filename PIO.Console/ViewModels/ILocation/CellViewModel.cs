@@ -20,12 +20,7 @@ namespace PIO.Console.ViewModels
 			get { return (ViewModelCommand)GetValue(CreateBuildFactoryOrderCommandProperty); }
 			set { SetValue(CreateBuildFactoryOrderCommandProperty, value); }
 		}
-		public static readonly DependencyProperty CreateBuildFarmOrderCommandProperty = DependencyProperty.Register("CreateBuildFarmOrderCommand", typeof(ViewModelCommand), typeof(CellViewModel), new PropertyMetadata(null));
-		public ViewModelCommand CreateBuildFarmOrderCommand
-		{
-			get { return (ViewModelCommand)GetValue(CreateBuildFarmOrderCommandProperty); }
-			set { SetValue(CreateBuildFarmOrderCommandProperty, value); }
-		}
+		
 
 
 		public int X
@@ -50,17 +45,11 @@ namespace PIO.Console.ViewModels
 			set { SetValue(BuildFactoryOrdersProperty, value); }
 		}
 
-		public static readonly DependencyProperty BuildFarmOrdersProperty = DependencyProperty.Register("BuildFarmOrders", typeof(BuildFarmOrdersViewModel), typeof(CellViewModel));
-		public BuildFarmOrdersViewModel BuildFarmOrders
-		{
-			get { return (BuildFarmOrdersViewModel)GetValue(BuildFarmOrdersProperty); }
-			set { SetValue(BuildFarmOrdersProperty, value); }
-		}
+		
 
 		public CellViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient) : base(PIOClient, BotsClient)
 		{
 			CreateBuildFactoryOrderCommand = new ViewModelCommand(CreateBuildFactoryOrderCommandCanExecute, CreateBuildFactoryOrderCommandExecute);
-			CreateBuildFarmOrderCommand = new ViewModelCommand(CreateBuildFarmOrderCommandCanExecute, CreateBuildFarmOrderCommandExecute);
 		}
 		private async void MoveToCommandExecute(object obj)
 		{
@@ -82,26 +71,11 @@ namespace PIO.Console.ViewModels
 			await vm.LoadAsync(result);
 			BuildFactoryOrders.Add(vm);
 		}
-		private bool CreateBuildFarmOrderCommandCanExecute(object arg)
-		{
-			return (Model != null) && (BuildFarmOrders.Count == 0);
-		}
-		private async void CreateBuildFarmOrderCommandExecute(object obj)
-		{
-			BuildFarmOrder result;
-			BuildFarmOrderViewModel vm;
-
-			result = await TryAsync(BotsClient.CreateBuildFarmOrderAsync(Model.PlanetID, BuildingTypeIDs.Forest, Model.X, Model.Y));
-			if (result == null) return;
-			vm = new BuildFarmOrderViewModel(PIOClient, BotsClient);
-			await vm.LoadAsync(result);
-			BuildFarmOrders.Add(vm);
-		}
+		
 		protected override async System.Threading.Tasks.Task OnRefreshAsync()
 		{
 			await base.OnRefreshAsync();
 			await BuildFactoryOrders.RefreshAsync();
-			await BuildFarmOrders.RefreshAsync();
 		}
 
 		protected override async Task<Cell> OnLoadModelAsync()
@@ -113,8 +87,6 @@ namespace PIO.Console.ViewModels
 		{
 			BuildFactoryOrders = new BuildFactoryOrdersViewModel(PIOClient, BotsClient, Model.PlanetID,Model.X,Model.Y);
 			await BuildFactoryOrders.LoadAsync();
-			BuildFarmOrders = new BuildFarmOrdersViewModel(PIOClient, BotsClient, Model.PlanetID, Model.X, Model.Y);
-			await BuildFarmOrders.LoadAsync();
 		}
 
 

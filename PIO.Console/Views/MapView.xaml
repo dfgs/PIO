@@ -26,9 +26,7 @@
 		<DataTemplate DataType="{x:Type viewModels:FactoryViewModel}">
 			<Border Background="Blue" BorderBrush="Black" BorderThickness="1" Width="16" Height="16"/>
 		</DataTemplate>
-		<DataTemplate DataType="{x:Type viewModels:FarmViewModel}">
-			<Border Background="Yellow" BorderBrush="Black" BorderThickness="1" Width="16" Height="16"/>
-		</DataTemplate>
+		
 		<DataTemplate DataType="{x:Type viewModels:WorkerViewModel}">
 			<Image Stretch="None" Source="/PIO.Console;component/Images/user.png" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 		</DataTemplate>

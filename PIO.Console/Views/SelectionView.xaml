@@ -18,9 +18,7 @@
 		<DataTemplate DataType="{x:Type viewModels:FactoryViewModel}">
 			<selections:FactorySelectionView/>
 		</DataTemplate>
-		<DataTemplate DataType="{x:Type viewModels:FarmViewModel}">
-			<selections:FarmSelectionView/>
-		</DataTemplate>
+		
 	</UserControl.Resources>
 
 	<TabControl ItemsSource="{Binding}" SelectedItem="{Binding SelectedItem}">

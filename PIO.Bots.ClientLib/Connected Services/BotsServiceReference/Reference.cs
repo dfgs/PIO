@@ -36,7 +36,6 @@ namespace PIO.Bots.ClientLib.BotsServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/GetOrder", ReplyAction="http://tempuri.org/IBotsService/GetOrderResponse")]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(PIO.Bots.Models.ProduceOrder))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(PIO.Bots.Models.BuildFactoryOrder))]
-        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(PIO.Bots.Models.BuildFarmOrder))]
         PIO.Bots.Models.Order GetOrder(int OrderID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/GetOrder", ReplyAction="http://tempuri.org/IBotsService/GetOrderResponse")]
@@ -84,24 +83,6 @@ namespace PIO.Bots.ClientLib.BotsServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/GetBuildFactoryOrdersAtPosition", ReplyAction="http://tempuri.org/IBotsService/GetBuildFactoryOrdersAtPositionResponse")]
         System.Threading.Tasks.Task<PIO.Bots.Models.BuildFactoryOrder[]> GetBuildFactoryOrdersAtPositionAsync(int PlanetId, int X, int Y);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/GetBuildFarmOrder", ReplyAction="http://tempuri.org/IBotsService/GetBuildFarmOrderResponse")]
-        PIO.Bots.Models.BuildFarmOrder GetBuildFarmOrder(int BuildFarmOrderID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/GetBuildFarmOrder", ReplyAction="http://tempuri.org/IBotsService/GetBuildFarmOrderResponse")]
-        System.Threading.Tasks.Task<PIO.Bots.Models.BuildFarmOrder> GetBuildFarmOrderAsync(int BuildFarmOrderID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/GetBuildFarmOrders", ReplyAction="http://tempuri.org/IBotsService/GetBuildFarmOrdersResponse")]
-        PIO.Bots.Models.BuildFarmOrder[] GetBuildFarmOrders();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/GetBuildFarmOrders", ReplyAction="http://tempuri.org/IBotsService/GetBuildFarmOrdersResponse")]
-        System.Threading.Tasks.Task<PIO.Bots.Models.BuildFarmOrder[]> GetBuildFarmOrdersAsync();
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/GetBuildFarmOrdersAtPosition", ReplyAction="http://tempuri.org/IBotsService/GetBuildFarmOrdersAtPositionResponse")]
-        PIO.Bots.Models.BuildFarmOrder[] GetBuildFarmOrdersAtPosition(int PlanetId, int X, int Y);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/GetBuildFarmOrdersAtPosition", ReplyAction="http://tempuri.org/IBotsService/GetBuildFarmOrdersAtPositionResponse")]
-        System.Threading.Tasks.Task<PIO.Bots.Models.BuildFarmOrder[]> GetBuildFarmOrdersAtPositionAsync(int PlanetId, int X, int Y);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/CreateProduceOrder", ReplyAction="http://tempuri.org/IBotsService/CreateProduceOrderResponse")]
         PIO.Bots.Models.ProduceOrder CreateProduceOrder(int PlanetID, int FactoryID);
         
@@ -113,12 +94,6 @@ namespace PIO.Bots.ClientLib.BotsServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/CreateBuildFactoryOrder", ReplyAction="http://tempuri.org/IBotsService/CreateBuildFactoryOrderResponse")]
         System.Threading.Tasks.Task<PIO.Bots.Models.BuildFactoryOrder> CreateBuildFactoryOrderAsync(int PlanetID, PIO.Models.BuildingTypeIDs BuildingTypeID, int X, int Y);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/CreateBuildFarmOrder", ReplyAction="http://tempuri.org/IBotsService/CreateBuildFarmOrderResponse")]
-        PIO.Bots.Models.BuildFarmOrder CreateBuildFarmOrder(int PlanetID, PIO.Models.BuildingTypeIDs BuildingTypeID, int X, int Y);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/CreateBuildFarmOrder", ReplyAction="http://tempuri.org/IBotsService/CreateBuildFarmOrderResponse")]
-        System.Threading.Tasks.Task<PIO.Bots.Models.BuildFarmOrder> CreateBuildFarmOrderAsync(int PlanetID, PIO.Models.BuildingTypeIDs BuildingTypeID, int X, int Y);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/CreateBot", ReplyAction="http://tempuri.org/IBotsService/CreateBotResponse")]
         PIO.Bots.Models.Bot CreateBot(int WorkerID);
@@ -248,30 +223,6 @@ namespace PIO.Bots.ClientLib.BotsServiceReference {
             return base.Channel.GetBuildFactoryOrdersAtPositionAsync(PlanetId, X, Y);
         }
         
-        public PIO.Bots.Models.BuildFarmOrder GetBuildFarmOrder(int BuildFarmOrderID) {
-            return base.Channel.GetBuildFarmOrder(BuildFarmOrderID);
-        }
-        
-        public System.Threading.Tasks.Task<PIO.Bots.Models.BuildFarmOrder> GetBuildFarmOrderAsync(int BuildFarmOrderID) {
-            return base.Channel.GetBuildFarmOrderAsync(BuildFarmOrderID);
-        }
-        
-        public PIO.Bots.Models.BuildFarmOrder[] GetBuildFarmOrders() {
-            return base.Channel.GetBuildFarmOrders();
-        }
-        
-        public System.Threading.Tasks.Task<PIO.Bots.Models.BuildFarmOrder[]> GetBuildFarmOrdersAsync() {
-            return base.Channel.GetBuildFarmOrdersAsync();
-        }
-        
-        public PIO.Bots.Models.BuildFarmOrder[] GetBuildFarmOrdersAtPosition(int PlanetId, int X, int Y) {
-            return base.Channel.GetBuildFarmOrdersAtPosition(PlanetId, X, Y);
-        }
-        
-        public System.Threading.Tasks.Task<PIO.Bots.Models.BuildFarmOrder[]> GetBuildFarmOrdersAtPositionAsync(int PlanetId, int X, int Y) {
-            return base.Channel.GetBuildFarmOrdersAtPositionAsync(PlanetId, X, Y);
-        }
-        
         public PIO.Bots.Models.ProduceOrder CreateProduceOrder(int PlanetID, int FactoryID) {
             return base.Channel.CreateProduceOrder(PlanetID, FactoryID);
         }
@@ -286,14 +237,6 @@ namespace PIO.Bots.ClientLib.BotsServiceReference {
         
         public System.Threading.Tasks.Task<PIO.Bots.Models.BuildFactoryOrder> CreateBuildFactoryOrderAsync(int PlanetID, PIO.Models.BuildingTypeIDs BuildingTypeID, int X, int Y) {
             return base.Channel.CreateBuildFactoryOrderAsync(PlanetID, BuildingTypeID, X, Y);
-        }
-        
-        public PIO.Bots.Models.BuildFarmOrder CreateBuildFarmOrder(int PlanetID, PIO.Models.BuildingTypeIDs BuildingTypeID, int X, int Y) {
-            return base.Channel.CreateBuildFarmOrder(PlanetID, BuildingTypeID, X, Y);
-        }
-        
-        public System.Threading.Tasks.Task<PIO.Bots.Models.BuildFarmOrder> CreateBuildFarmOrderAsync(int PlanetID, PIO.Models.BuildingTypeIDs BuildingTypeID, int X, int Y) {
-            return base.Channel.CreateBuildFarmOrderAsync(PlanetID, BuildingTypeID, X, Y);
         }
         
         public PIO.Bots.Models.Bot CreateBot(int WorkerID) {

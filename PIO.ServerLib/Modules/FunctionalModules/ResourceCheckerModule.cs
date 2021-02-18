@@ -152,7 +152,6 @@ namespace PIO.ServerLib.Modules
 		public ResourceTypeIDs[] GetMissingResourcesToBuild(int BuildingID)
 		{
 			Building building;
-			BuildingType buildingType;
 			Material[] materials;
 			Stack[] stacks;
 			Stack stack;

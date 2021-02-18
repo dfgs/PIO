@@ -40,12 +40,7 @@ namespace PIO.Bots.Models
 		[OperationContract]
 		BuildFactoryOrder[] GetBuildFactoryOrdersAtPosition(int PlanetId, int X, int Y);
 		
-		[OperationContract]
-		BuildFarmOrder GetBuildFarmOrder(int BuildFarmOrderID);
-		[OperationContract]
-		BuildFarmOrder[] GetBuildFarmOrders();
-		[OperationContract]
-		BuildFarmOrder[] GetBuildFarmOrdersAtPosition(int PlanetId, int X, int Y);
+		
 		#endregion
 
 		#region functional
@@ -53,8 +48,7 @@ namespace PIO.Bots.Models
 		ProduceOrder CreateProduceOrder(int PlanetID, int FactoryID);
 		[OperationContract]
 		BuildFactoryOrder CreateBuildFactoryOrder(int PlanetID, BuildingTypeIDs BuildingTypeID, int X, int Y);
-		[OperationContract]
-		BuildFarmOrder CreateBuildFarmOrder(int PlanetID, BuildingTypeIDs BuildingTypeID, int X, int Y);
+		
 		[OperationContract]
 		Bot CreateBot(int WorkerID);
 		[OperationContract]

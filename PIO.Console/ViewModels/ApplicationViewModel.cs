@@ -41,12 +41,7 @@ namespace PIO.Console.ViewModels
 			set { SetValue(FactoriesProperty, value); }
 		}
 
-		public static readonly DependencyProperty FarmsProperty = DependencyProperty.Register("Farms", typeof(FarmsViewModel), typeof(ApplicationViewModel));
-		public FarmsViewModel Farms
-		{
-			get { return (FarmsViewModel)GetValue(FarmsProperty); }
-			set { SetValue(FarmsProperty, value); }
-		}
+		
 
 		public static readonly DependencyProperty CellsProperty = DependencyProperty.Register("Cells", typeof(CellsViewModel), typeof(ApplicationViewModel));
 		public CellsViewModel Cells
@@ -67,7 +62,6 @@ namespace PIO.Console.ViewModels
 			Cells = new CellsViewModel(PIOClient, BotsClient, 1);
 			Workers = new WorkersViewModel(PIOClient,BotsClient,1);
 			Factories = new FactoriesViewModel(PIOClient, BotsClient, 1);
-			Farms = new FarmsViewModel(PIOClient, BotsClient, 1);
 			MapItems = new MapItemsViewModel() ;
 			SelectedItems = new MapItemsViewModel();
 
@@ -84,9 +78,8 @@ namespace PIO.Console.ViewModels
 			await Cells.LoadAsync();
 			await Workers.LoadAsync();
 			await Factories.LoadAsync();
-			await Farms.LoadAsync();
 
-			await MapItems.LoadAsync(Cells.Union<ILocationViewModel>(Factories).Union(Farms).Union(Workers));
+			await MapItems.LoadAsync(Cells.Union<ILocationViewModel>(Factories).Union(Workers));
 			
 
 		}
@@ -113,8 +106,7 @@ namespace PIO.Console.ViewModels
 			Factory factory;
 			FactoryViewModel factoryViewModel;
 
-			Farm farm;
-			FarmViewModel farmViewModel;
+			
 
 			await Workers.RefreshWorker(Task.WorkerID);
 			switch (Task.TaskTypeID)
@@ -146,21 +138,7 @@ namespace PIO.Console.ViewModels
 					{
 						ErrorMessage = ex.Message;
 					}
-					try
-					{
-						farm = PIOClient.GetFarmAtPos(1, Task.X, Task.Y);
-						if (farm != null)
-						{
-							farmViewModel = new FarmViewModel(PIOClient, BotsClient);
-							await farmViewModel.LoadAsync(farm);
-							Farms.Add(farmViewModel);
-							MapItems.Insert(Cells.Count, farmViewModel);
-						}
-					}
-					catch (Exception ex)
-					{
-						ErrorMessage = ex.Message;
-					}
+					
 
 					//await Factories.RefreshFactory(Task.X.Value, Task.Y.Value);
 					break;

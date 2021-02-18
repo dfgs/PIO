@@ -44,7 +44,6 @@
     <Compile Include="BotsDB.cs" />
     <Compile Include="BotsVersionControl.cs" />
     <Compile Include="Modules\DataModules\BotModule.cs" />
-    <Compile Include="Modules\DataModules\BuildFarmOrderModule.cs" />
     <Compile Include="Modules\DataModules\BuildFactoryOrderModule.cs" />
     <Compile Include="Modules\DataModules\ProduceOrderModule.cs" />
     <Compile Include="Modules\DataModules\OrderModule.cs" />

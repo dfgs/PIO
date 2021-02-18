@@ -48,9 +48,7 @@
   <ItemGroup>
     <Compile Include="Bots\DataCmdlet\GetBotsCmdlet.cs" />
     <Compile Include="Bots\DataCmdlet\GetBotCmdlet.cs" />
-    <Compile Include="Bots\DataCmdlet\GetBuildFarmOrderCmdlet.cs" />
     <Compile Include="Bots\DataCmdlet\GetBuildFactoryOrderCmdlet.cs" />
-    <Compile Include="Bots\DataCmdlet\GetBuildFarmOrdersCmdlet.cs" />
     <Compile Include="Bots\DataCmdlet\GetProduceOrderCmdlet.cs" />
     <Compile Include="Bots\DataCmdlet\GetOrderCmdlet.cs" />
     <Compile Include="Bots\DataCmdlet\GetBuildFactoryOrdersCmdlet.cs" />
@@ -65,10 +63,6 @@
     <Compile Include="PIO\DataCmdlet\GetBuildingsCmdlet.cs" />
     <Compile Include="PIO\DataCmdlet\GetBuildingTypeCmdlet.cs" />
     <Compile Include="PIO\DataCmdlet\GetBuildingTypesCmdlet.cs" />
-    <Compile Include="PIO\DataCmdlet\GetFarmsCmdlet.cs" />
-    <Compile Include="PIO\DataCmdlet\GetFarmCmdlet.cs" />
-    <Compile Include="PIO\DataCmdlet\GetFarmTypeCmdlet.cs" />
-    <Compile Include="PIO\DataCmdlet\GetFarmTypesCmdlet.cs" />
     <Compile Include="PIO\DataCmdlet\GetStackQuantityCmdlet.cs" />
     <Compile Include="PIO\DataCmdlet\GetLastTaskCmdlet.cs" />
     <Compile Include="PIO\DataCmdlet\GetTaskTypeCmdlet.cs" />
