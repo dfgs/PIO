@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Mocks\DataModules\MockedBuildingModule.cs" />
+    <Compile Include="Mocks\DataModules\MockedBuildingTypeModule.cs" />
     <Compile Include="Mocks\DataModules\MockedFarmTypeModule.cs" />
     <Compile Include="Mocks\DataModules\MockedFarmModule.cs" />
     <Compile Include="Mocks\DataModules\MockedMaterialModule.cs" />
@@ -71,6 +72,7 @@
     <Compile Include="Mocks\FunctionalModules\MockedProducerModule.cs" />
     <Compile Include="Modules\DataModules\CellModuleUnitTest.cs" />
     <Compile Include="Modules\DataModules\BuildingModuleUnitTest.cs" />
+    <Compile Include="Modules\DataModules\BuildingTypeModuleUnitTest.cs" />
     <Compile Include="Modules\DataModules\FarmModuleUnitTest.cs" />
     <Compile Include="Modules\DataModules\FarmTypeModuleUnitTest.cs" />
     <Compile Include="Modules\DataModules\TaskTypeModuleUnitTest.cs" />

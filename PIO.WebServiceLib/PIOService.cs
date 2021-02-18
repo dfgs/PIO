@@ -244,10 +244,10 @@ namespace PIO.WebServiceLib
 			return Try(() => materialModule.GetMaterial(MaterialID)).OrThrow(GenerateFaultException);
 		}
 
-		public Material[] GetMaterials(int MaterialSetID)
+		public Material[] GetMaterials(BuildingTypeIDs BuildingTypeID)
 		{
 			LogEnter();
-			return Try(() => materialModule.GetMaterials(MaterialSetID)).OrThrow(GenerateFaultException);
+			return Try(() => materialModule.GetMaterials(BuildingTypeID)).OrThrow(GenerateFaultException);
 		}
 
 		public Ingredient GetIngredient(int IngredientID)
@@ -256,10 +256,10 @@ namespace PIO.WebServiceLib
 			return Try(() => ingredientModule.GetIngredient(IngredientID)).OrThrow(GenerateFaultException);
 		}
 
-		public Ingredient[] GetIngredients(FactoryTypeIDs FactoryTypeID)
+		public Ingredient[] GetIngredients(BuildingTypeIDs BuildingTypeID)
 		{
 			LogEnter();
-			return Try(() => ingredientModule.GetIngredients(FactoryTypeID)).OrThrow(GenerateFaultException);
+			return Try(() => ingredientModule.GetIngredients(BuildingTypeID)).OrThrow(GenerateFaultException);
 		}
 		public Product GetProduct(int ProductID)
 		{
@@ -267,10 +267,10 @@ namespace PIO.WebServiceLib
 			return Try(() => productModule.GetProduct(ProductID)).OrThrow(GenerateFaultException);
 		}
 
-		public Product[] GetProducts(FactoryTypeIDs FactoryTypeID)
+		public Product[] GetProducts(BuildingTypeIDs BuildingTypeID)
 		{
 			LogEnter();
-			return Try(() => productModule.GetProducts(FactoryTypeID)).OrThrow(GenerateFaultException);
+			return Try(() => productModule.GetProducts(BuildingTypeID)).OrThrow(GenerateFaultException);
 		}
 
 		public Task GetTask(int TaskID)
@@ -293,30 +293,30 @@ namespace PIO.WebServiceLib
 
 		#region functional
 
-		public bool HasEnoughResourcesToProduce(int FactoryID)
+		public bool HasEnoughResourcesToProduce(int BuildingID)
 		{
 			LogEnter();
 
-			return Try(() => resourceCheckerModule.HasEnoughResourcesToProduce(FactoryID)).OrThrow(GenerateFaultException);
+			return Try(() => resourceCheckerModule.HasEnoughResourcesToProduce(BuildingID)).OrThrow(GenerateFaultException);
 		}
-		public ResourceTypeIDs[] GetMissingResourcesToProduce(int FactoryID)
+		public ResourceTypeIDs[] GetMissingResourcesToProduce(int BuildingID)
 		{
 			LogEnter();
 
-			return Try(() => resourceCheckerModule.GetMissingResourcesToProduce(FactoryID)).OrThrow(GenerateFaultException);
+			return Try(() => resourceCheckerModule.GetMissingResourcesToProduce(BuildingID)).OrThrow(GenerateFaultException);
 		}
 
-		public bool HasEnoughResourcesToBuild(int FactoryID)
+		public bool HasEnoughResourcesToBuild(int BuildingID)
 		{
 			LogEnter();
 
-			return Try(() => resourceCheckerModule.HasEnoughResourcesToBuild(FactoryID)).OrThrow(GenerateFaultException);
+			return Try(() => resourceCheckerModule.HasEnoughResourcesToBuild(BuildingID)).OrThrow(GenerateFaultException);
 		}
-		public ResourceTypeIDs[] GetMissingResourcesToBuild(int FactoryID)
+		public ResourceTypeIDs[] GetMissingResourcesToBuild(int BuildingID)
 		{
 			LogEnter();
 
-			return Try(() => resourceCheckerModule.GetMissingResourcesToBuild(FactoryID)).OrThrow(GenerateFaultException);
+			return Try(() => resourceCheckerModule.GetMissingResourcesToBuild(BuildingID)).OrThrow(GenerateFaultException);
 		}
 
 		public bool WorkerIsInBuilding(int WorkerID, int BuildingID)
@@ -365,18 +365,13 @@ namespace PIO.WebServiceLib
 
 			return Try(() => storerModule.BeginStore(WorkerID)).OrThrow(GenerateFaultException);
 		}
-		public Task CreateFactory(int WorkerID, FactoryTypeIDs FactoryTypeID)
+		public Task CreateBuilding(int WorkerID, BuildingTypeIDs BuildingTypeID)
 		{
 			LogEnter();
 
-			return Try(() => builderModule.BeginCreateBuilding(WorkerID, FactoryTypeID, null)).OrThrow(GenerateFaultException);
+			return Try(() => builderModule.BeginCreateBuilding(WorkerID, BuildingTypeID)).OrThrow(GenerateFaultException);
 		}
-		public Task CreateFarm(int WorkerID, FarmTypeIDs FarmTypeID)
-		{
-			LogEnter();
-
-			return Try(() => builderModule.BeginCreateBuilding(WorkerID, null, FarmTypeID)).OrThrow(GenerateFaultException);
-		}
+		
 
 		public Task Build(int WorkerID)
 		{

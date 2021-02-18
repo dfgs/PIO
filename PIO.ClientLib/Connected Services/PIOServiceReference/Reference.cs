@@ -178,10 +178,10 @@ namespace PIO.ClientLib.PIOServiceReference {
         System.Threading.Tasks.Task<PIO.Models.Material> GetMaterialAsync(int MaterialID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetMaterials", ReplyAction="http://tempuri.org/IPIOService/GetMaterialsResponse")]
-        PIO.Models.Material[] GetMaterials(int MaterialSetID);
+        PIO.Models.Material[] GetMaterials(PIO.Models.BuildingTypeIDs BuildingTypeID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetMaterials", ReplyAction="http://tempuri.org/IPIOService/GetMaterialsResponse")]
-        System.Threading.Tasks.Task<PIO.Models.Material[]> GetMaterialsAsync(int MaterialSetID);
+        System.Threading.Tasks.Task<PIO.Models.Material[]> GetMaterialsAsync(PIO.Models.BuildingTypeIDs BuildingTypeID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetIngredient", ReplyAction="http://tempuri.org/IPIOService/GetIngredientResponse")]
         PIO.Models.Ingredient GetIngredient(int IngredientID);
@@ -190,10 +190,10 @@ namespace PIO.ClientLib.PIOServiceReference {
         System.Threading.Tasks.Task<PIO.Models.Ingredient> GetIngredientAsync(int IngredientID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetIngredients", ReplyAction="http://tempuri.org/IPIOService/GetIngredientsResponse")]
-        PIO.Models.Ingredient[] GetIngredients(PIO.Models.FactoryTypeIDs FactoryTypeID);
+        PIO.Models.Ingredient[] GetIngredients(PIO.Models.BuildingTypeIDs BuildingTypeID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetIngredients", ReplyAction="http://tempuri.org/IPIOService/GetIngredientsResponse")]
-        System.Threading.Tasks.Task<PIO.Models.Ingredient[]> GetIngredientsAsync(PIO.Models.FactoryTypeIDs FactoryTypeID);
+        System.Threading.Tasks.Task<PIO.Models.Ingredient[]> GetIngredientsAsync(PIO.Models.BuildingTypeIDs BuildingTypeID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetProduct", ReplyAction="http://tempuri.org/IPIOService/GetProductResponse")]
         PIO.Models.Product GetProduct(int ProductID);
@@ -202,10 +202,10 @@ namespace PIO.ClientLib.PIOServiceReference {
         System.Threading.Tasks.Task<PIO.Models.Product> GetProductAsync(int ProductID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetProducts", ReplyAction="http://tempuri.org/IPIOService/GetProductsResponse")]
-        PIO.Models.Product[] GetProducts(PIO.Models.FactoryTypeIDs FactoryTypeID);
+        PIO.Models.Product[] GetProducts(PIO.Models.BuildingTypeIDs BuildingTypeID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetProducts", ReplyAction="http://tempuri.org/IPIOService/GetProductsResponse")]
-        System.Threading.Tasks.Task<PIO.Models.Product[]> GetProductsAsync(PIO.Models.FactoryTypeIDs FactoryTypeID);
+        System.Threading.Tasks.Task<PIO.Models.Product[]> GetProductsAsync(PIO.Models.BuildingTypeIDs BuildingTypeID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetTask", ReplyAction="http://tempuri.org/IPIOService/GetTaskResponse")]
         PIO.Models.Task GetTask(int TaskID);
@@ -226,28 +226,28 @@ namespace PIO.ClientLib.PIOServiceReference {
         System.Threading.Tasks.Task<PIO.Models.Task> GetLastTaskAsync(int WorkerID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/HasEnoughResourcesToProduce", ReplyAction="http://tempuri.org/IPIOService/HasEnoughResourcesToProduceResponse")]
-        bool HasEnoughResourcesToProduce(int FactoryID);
+        bool HasEnoughResourcesToProduce(int BuildingID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/HasEnoughResourcesToProduce", ReplyAction="http://tempuri.org/IPIOService/HasEnoughResourcesToProduceResponse")]
-        System.Threading.Tasks.Task<bool> HasEnoughResourcesToProduceAsync(int FactoryID);
+        System.Threading.Tasks.Task<bool> HasEnoughResourcesToProduceAsync(int BuildingID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetMissingResourcesToProduce", ReplyAction="http://tempuri.org/IPIOService/GetMissingResourcesToProduceResponse")]
-        PIO.Models.ResourceTypeIDs[] GetMissingResourcesToProduce(int FactoryID);
+        PIO.Models.ResourceTypeIDs[] GetMissingResourcesToProduce(int BuildingID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetMissingResourcesToProduce", ReplyAction="http://tempuri.org/IPIOService/GetMissingResourcesToProduceResponse")]
-        System.Threading.Tasks.Task<PIO.Models.ResourceTypeIDs[]> GetMissingResourcesToProduceAsync(int FactoryID);
+        System.Threading.Tasks.Task<PIO.Models.ResourceTypeIDs[]> GetMissingResourcesToProduceAsync(int BuildingID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/HasEnoughResourcesToBuild", ReplyAction="http://tempuri.org/IPIOService/HasEnoughResourcesToBuildResponse")]
-        bool HasEnoughResourcesToBuild(int FactoryID);
+        bool HasEnoughResourcesToBuild(int BuildingID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/HasEnoughResourcesToBuild", ReplyAction="http://tempuri.org/IPIOService/HasEnoughResourcesToBuildResponse")]
-        System.Threading.Tasks.Task<bool> HasEnoughResourcesToBuildAsync(int FactoryID);
+        System.Threading.Tasks.Task<bool> HasEnoughResourcesToBuildAsync(int BuildingID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetMissingResourcesToBuild", ReplyAction="http://tempuri.org/IPIOService/GetMissingResourcesToBuildResponse")]
-        PIO.Models.ResourceTypeIDs[] GetMissingResourcesToBuild(int FactoryID);
+        PIO.Models.ResourceTypeIDs[] GetMissingResourcesToBuild(int BuildingID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetMissingResourcesToBuild", ReplyAction="http://tempuri.org/IPIOService/GetMissingResourcesToBuildResponse")]
-        System.Threading.Tasks.Task<PIO.Models.ResourceTypeIDs[]> GetMissingResourcesToBuildAsync(int FactoryID);
+        System.Threading.Tasks.Task<PIO.Models.ResourceTypeIDs[]> GetMissingResourcesToBuildAsync(int BuildingID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/WorkerIsInBuilding", ReplyAction="http://tempuri.org/IPIOService/WorkerIsInBuildingResponse")]
         bool WorkerIsInBuilding(int WorkerID, int BuildingID);
@@ -291,17 +291,11 @@ namespace PIO.ClientLib.PIOServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/Store", ReplyAction="http://tempuri.org/IPIOService/StoreResponse")]
         System.Threading.Tasks.Task<PIO.Models.Task> StoreAsync(int WorkerID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/CreateFactory", ReplyAction="http://tempuri.org/IPIOService/CreateFactoryResponse")]
-        PIO.Models.Task CreateFactory(int WorkerID, PIO.Models.FactoryTypeIDs FactoryTypeID);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/CreateBuilding", ReplyAction="http://tempuri.org/IPIOService/CreateBuildingResponse")]
+        PIO.Models.Task CreateBuilding(int WorkerID, PIO.Models.BuildingTypeIDs BuildingTypeID);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/CreateFactory", ReplyAction="http://tempuri.org/IPIOService/CreateFactoryResponse")]
-        System.Threading.Tasks.Task<PIO.Models.Task> CreateFactoryAsync(int WorkerID, PIO.Models.FactoryTypeIDs FactoryTypeID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/CreateFarm", ReplyAction="http://tempuri.org/IPIOService/CreateFarmResponse")]
-        PIO.Models.Task CreateFarm(int WorkerID, PIO.Models.FarmTypeIDs FarmTypeID);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/CreateFarm", ReplyAction="http://tempuri.org/IPIOService/CreateFarmResponse")]
-        System.Threading.Tasks.Task<PIO.Models.Task> CreateFarmAsync(int WorkerID, PIO.Models.FarmTypeIDs FarmTypeID);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/CreateBuilding", ReplyAction="http://tempuri.org/IPIOService/CreateBuildingResponse")]
+        System.Threading.Tasks.Task<PIO.Models.Task> CreateBuildingAsync(int WorkerID, PIO.Models.BuildingTypeIDs BuildingTypeID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/Build", ReplyAction="http://tempuri.org/IPIOService/BuildResponse")]
         PIO.Models.Task Build(int WorkerID);
@@ -553,12 +547,12 @@ namespace PIO.ClientLib.PIOServiceReference {
             return base.Channel.GetMaterialAsync(MaterialID);
         }
         
-        public PIO.Models.Material[] GetMaterials(int MaterialSetID) {
-            return base.Channel.GetMaterials(MaterialSetID);
+        public PIO.Models.Material[] GetMaterials(PIO.Models.BuildingTypeIDs BuildingTypeID) {
+            return base.Channel.GetMaterials(BuildingTypeID);
         }
         
-        public System.Threading.Tasks.Task<PIO.Models.Material[]> GetMaterialsAsync(int MaterialSetID) {
-            return base.Channel.GetMaterialsAsync(MaterialSetID);
+        public System.Threading.Tasks.Task<PIO.Models.Material[]> GetMaterialsAsync(PIO.Models.BuildingTypeIDs BuildingTypeID) {
+            return base.Channel.GetMaterialsAsync(BuildingTypeID);
         }
         
         public PIO.Models.Ingredient GetIngredient(int IngredientID) {
@@ -569,12 +563,12 @@ namespace PIO.ClientLib.PIOServiceReference {
             return base.Channel.GetIngredientAsync(IngredientID);
         }
         
-        public PIO.Models.Ingredient[] GetIngredients(PIO.Models.FactoryTypeIDs FactoryTypeID) {
-            return base.Channel.GetIngredients(FactoryTypeID);
+        public PIO.Models.Ingredient[] GetIngredients(PIO.Models.BuildingTypeIDs BuildingTypeID) {
+            return base.Channel.GetIngredients(BuildingTypeID);
         }
         
-        public System.Threading.Tasks.Task<PIO.Models.Ingredient[]> GetIngredientsAsync(PIO.Models.FactoryTypeIDs FactoryTypeID) {
-            return base.Channel.GetIngredientsAsync(FactoryTypeID);
+        public System.Threading.Tasks.Task<PIO.Models.Ingredient[]> GetIngredientsAsync(PIO.Models.BuildingTypeIDs BuildingTypeID) {
+            return base.Channel.GetIngredientsAsync(BuildingTypeID);
         }
         
         public PIO.Models.Product GetProduct(int ProductID) {
@@ -585,12 +579,12 @@ namespace PIO.ClientLib.PIOServiceReference {
             return base.Channel.GetProductAsync(ProductID);
         }
         
-        public PIO.Models.Product[] GetProducts(PIO.Models.FactoryTypeIDs FactoryTypeID) {
-            return base.Channel.GetProducts(FactoryTypeID);
+        public PIO.Models.Product[] GetProducts(PIO.Models.BuildingTypeIDs BuildingTypeID) {
+            return base.Channel.GetProducts(BuildingTypeID);
         }
         
-        public System.Threading.Tasks.Task<PIO.Models.Product[]> GetProductsAsync(PIO.Models.FactoryTypeIDs FactoryTypeID) {
-            return base.Channel.GetProductsAsync(FactoryTypeID);
+        public System.Threading.Tasks.Task<PIO.Models.Product[]> GetProductsAsync(PIO.Models.BuildingTypeIDs BuildingTypeID) {
+            return base.Channel.GetProductsAsync(BuildingTypeID);
         }
         
         public PIO.Models.Task GetTask(int TaskID) {
@@ -617,36 +611,36 @@ namespace PIO.ClientLib.PIOServiceReference {
             return base.Channel.GetLastTaskAsync(WorkerID);
         }
         
-        public bool HasEnoughResourcesToProduce(int FactoryID) {
-            return base.Channel.HasEnoughResourcesToProduce(FactoryID);
+        public bool HasEnoughResourcesToProduce(int BuildingID) {
+            return base.Channel.HasEnoughResourcesToProduce(BuildingID);
         }
         
-        public System.Threading.Tasks.Task<bool> HasEnoughResourcesToProduceAsync(int FactoryID) {
-            return base.Channel.HasEnoughResourcesToProduceAsync(FactoryID);
+        public System.Threading.Tasks.Task<bool> HasEnoughResourcesToProduceAsync(int BuildingID) {
+            return base.Channel.HasEnoughResourcesToProduceAsync(BuildingID);
         }
         
-        public PIO.Models.ResourceTypeIDs[] GetMissingResourcesToProduce(int FactoryID) {
-            return base.Channel.GetMissingResourcesToProduce(FactoryID);
+        public PIO.Models.ResourceTypeIDs[] GetMissingResourcesToProduce(int BuildingID) {
+            return base.Channel.GetMissingResourcesToProduce(BuildingID);
         }
         
-        public System.Threading.Tasks.Task<PIO.Models.ResourceTypeIDs[]> GetMissingResourcesToProduceAsync(int FactoryID) {
-            return base.Channel.GetMissingResourcesToProduceAsync(FactoryID);
+        public System.Threading.Tasks.Task<PIO.Models.ResourceTypeIDs[]> GetMissingResourcesToProduceAsync(int BuildingID) {
+            return base.Channel.GetMissingResourcesToProduceAsync(BuildingID);
         }
         
-        public bool HasEnoughResourcesToBuild(int FactoryID) {
-            return base.Channel.HasEnoughResourcesToBuild(FactoryID);
+        public bool HasEnoughResourcesToBuild(int BuildingID) {
+            return base.Channel.HasEnoughResourcesToBuild(BuildingID);
         }
         
-        public System.Threading.Tasks.Task<bool> HasEnoughResourcesToBuildAsync(int FactoryID) {
-            return base.Channel.HasEnoughResourcesToBuildAsync(FactoryID);
+        public System.Threading.Tasks.Task<bool> HasEnoughResourcesToBuildAsync(int BuildingID) {
+            return base.Channel.HasEnoughResourcesToBuildAsync(BuildingID);
         }
         
-        public PIO.Models.ResourceTypeIDs[] GetMissingResourcesToBuild(int FactoryID) {
-            return base.Channel.GetMissingResourcesToBuild(FactoryID);
+        public PIO.Models.ResourceTypeIDs[] GetMissingResourcesToBuild(int BuildingID) {
+            return base.Channel.GetMissingResourcesToBuild(BuildingID);
         }
         
-        public System.Threading.Tasks.Task<PIO.Models.ResourceTypeIDs[]> GetMissingResourcesToBuildAsync(int FactoryID) {
-            return base.Channel.GetMissingResourcesToBuildAsync(FactoryID);
+        public System.Threading.Tasks.Task<PIO.Models.ResourceTypeIDs[]> GetMissingResourcesToBuildAsync(int BuildingID) {
+            return base.Channel.GetMissingResourcesToBuildAsync(BuildingID);
         }
         
         public bool WorkerIsInBuilding(int WorkerID, int BuildingID) {
@@ -705,20 +699,12 @@ namespace PIO.ClientLib.PIOServiceReference {
             return base.Channel.StoreAsync(WorkerID);
         }
         
-        public PIO.Models.Task CreateFactory(int WorkerID, PIO.Models.FactoryTypeIDs FactoryTypeID) {
-            return base.Channel.CreateFactory(WorkerID, FactoryTypeID);
+        public PIO.Models.Task CreateBuilding(int WorkerID, PIO.Models.BuildingTypeIDs BuildingTypeID) {
+            return base.Channel.CreateBuilding(WorkerID, BuildingTypeID);
         }
         
-        public System.Threading.Tasks.Task<PIO.Models.Task> CreateFactoryAsync(int WorkerID, PIO.Models.FactoryTypeIDs FactoryTypeID) {
-            return base.Channel.CreateFactoryAsync(WorkerID, FactoryTypeID);
-        }
-        
-        public PIO.Models.Task CreateFarm(int WorkerID, PIO.Models.FarmTypeIDs FarmTypeID) {
-            return base.Channel.CreateFarm(WorkerID, FarmTypeID);
-        }
-        
-        public System.Threading.Tasks.Task<PIO.Models.Task> CreateFarmAsync(int WorkerID, PIO.Models.FarmTypeIDs FarmTypeID) {
-            return base.Channel.CreateFarmAsync(WorkerID, FarmTypeID);
+        public System.Threading.Tasks.Task<PIO.Models.Task> CreateBuildingAsync(int WorkerID, PIO.Models.BuildingTypeIDs BuildingTypeID) {
+            return base.Channel.CreateBuildingAsync(WorkerID, BuildingTypeID);
         }
         
         public PIO.Models.Task Build(int WorkerID) {

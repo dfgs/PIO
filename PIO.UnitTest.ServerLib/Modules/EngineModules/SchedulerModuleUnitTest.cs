@@ -85,7 +85,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 
 			taskModule = new MockedFactoryBuilderModule();
 			module = new SchedulerModule(NullLogger.Instance, null, new MockedIdlerModule(), new MockedProducerModule(), new MockedMoverModule(), new MockedTakerModule(), new MockedStorerModule(), taskModule);
-			taskModule.BeginCreateBuilding(1, FactoryTypeIDs.Stockpile,null);
+			taskModule.BeginCreateBuilding(1, BuildingTypeIDs.Sawmill);
 			Assert.AreEqual(1, module.Count);
 
 			taskModule.BeginBuild(1);

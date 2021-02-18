@@ -30,7 +30,7 @@ namespace PIO.ServerLib.Modules
 
 			Log(LogLevels.Information, $"Querying Farm table (FarmID={FarmID})");
 			query=new Select(
-						BuildingTable.BuildingID,BuildingTable.PlanetID, BuildingTable.X,BuildingTable.Y,  BuildingTable.HealthPoints,BuildingTable.RemainingBuildSteps,
+						BuildingTable.BuildingID,BuildingTable.PlanetID, BuildingTypeTable.BuildingTypeID, BuildingTable.X,BuildingTable.Y,  BuildingTable.HealthPoints,BuildingTable.RemainingBuildSteps,
 						FarmTable.FarmID, FarmTable.FarmTypeID
 					)
 				.From(PIODB.FarmTable.Join(PIODB.BuildingTable.On(FarmTable.BuildingID, BuildingTable.BuildingID)))
@@ -45,7 +45,7 @@ namespace PIO.ServerLib.Modules
 
 			Log(LogLevels.Information, $"Querying Farm table (PlanetID={PlanetID}, X={X}, Y={Y})");
 			query=new Select(
-						BuildingTable.BuildingID, BuildingTable.PlanetID, BuildingTable.X, BuildingTable.Y, BuildingTable.HealthPoints, BuildingTable.RemainingBuildSteps,
+						BuildingTable.BuildingID, BuildingTable.PlanetID, BuildingTypeTable.BuildingTypeID, BuildingTable.X, BuildingTable.Y, BuildingTable.HealthPoints, BuildingTable.RemainingBuildSteps,
 						FarmTable.FarmID, FarmTable.FarmTypeID
 					)
 				.From(PIODB.FarmTable.Join(PIODB.BuildingTable.On(FarmTable.BuildingID, BuildingTable.BuildingID)))
@@ -61,7 +61,7 @@ namespace PIO.ServerLib.Modules
 
 			Log(LogLevels.Information, $"Querying Farm table (PlanetID={PlanetID})");
 			query=new Select(
-						BuildingTable.BuildingID, BuildingTable.PlanetID, BuildingTable.X, BuildingTable.Y, BuildingTable.HealthPoints, BuildingTable.RemainingBuildSteps,
+						BuildingTable.BuildingID, BuildingTable.PlanetID, BuildingTypeTable.BuildingTypeID, BuildingTable.X, BuildingTable.Y, BuildingTable.HealthPoints, BuildingTable.RemainingBuildSteps,
 						FarmTable.FarmID, FarmTable.FarmTypeID
 					)
 				.From(PIODB.FarmTable.Join(PIODB.BuildingTable.On(FarmTable.BuildingID, BuildingTable.BuildingID)))
@@ -69,7 +69,7 @@ namespace PIO.ServerLib.Modules
 			return TrySelectMany<FarmTable, Farm>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
-		public Farm CreateFarm(int PlanetID, int X, int Y, int RemainingBuildSteps,FarmTypeIDs FarmTypeID)
+		public Farm CreateFarm(int PlanetID, int X, int Y, int RemainingBuildSteps, BuildingTypeIDs BuildingTypeID, FarmTypeIDs FarmTypeID)
 		{
 			IInsert queryBuilding,queryFarm;
 			Farm item;
@@ -81,10 +81,10 @@ namespace PIO.ServerLib.Modules
 			//new SelectIdentity((result) => buildingID = Convert.ToInt32(result));
 			//new Insert().Into(PIODB.FarmTable).Set(FarmTable.BuildingID, buildingID).Set(FarmTable.FarmTypeID, FarmTypeIDs.Forest);
 
-			item = new Farm() { PlanetID = PlanetID, X = X, Y = Y, RemainingBuildSteps = RemainingBuildSteps, FarmTypeID = FarmTypeID, };
+			item = new Farm() { PlanetID = PlanetID,BuildingTypeID=BuildingTypeID, X = X, Y = Y, RemainingBuildSteps = RemainingBuildSteps, FarmTypeID = FarmTypeID, };
 
-			Log(LogLevels.Information, $"Inserting into Building table (PlanetID={PlanetID}, X={X}, Y={Y}, RemainingBuildingSteps={RemainingBuildSteps})");
-			queryBuilding=new Insert().Into(PIODB.BuildingTable).Set(BuildingTable.PlanetID, item.PlanetID).Set(BuildingTable.X, item.X).Set(BuildingTable.Y, item.Y).Set(BuildingTable.HealthPoints, item.HealthPoints).Set(BuildingTable.RemainingBuildSteps, item.RemainingBuildSteps);
+			Log(LogLevels.Information, $"Inserting into Building table (PlanetID={PlanetID}, BuildingTypeID={BuildingTypeID}, X={X}, Y={Y}, RemainingBuildingSteps={RemainingBuildSteps})");
+			queryBuilding=new Insert().Into(PIODB.BuildingTable).Set(BuildingTable.PlanetID, item.PlanetID).Set(BuildingTable.BuildingTypeID, item.BuildingTypeID).Set(BuildingTable.X, item.X).Set(BuildingTable.Y, item.Y).Set(BuildingTable.HealthPoints, item.HealthPoints).Set(BuildingTable.RemainingBuildSteps, item.RemainingBuildSteps);
 			result = Try(queryBuilding).OrThrow<PIODataException>("Failed to insert");
 			item.BuildingID=Convert.ToInt32(result);
 

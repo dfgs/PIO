@@ -54,7 +54,7 @@ namespace PIO.ServerLib.Modules
 			Try(() => workerModule.UpdateWorker(WorkerID, null)).OrThrow<PIOInternalErrorException>("Failed to update worker");
 
 			Log(LogLevels.Information, $"Creating task (WorkerID={WorkerID})");
-			task = Try(() => taskModule.CreateTask(TaskTypeIDs.Store, WorkerID, worker.X, worker.Y, null, resourceTypeID, null,null, DateTime.Now.AddSeconds(5))).OrThrow<PIOInternalErrorException>("Failed to create task");
+			task = Try(() => taskModule.CreateTask(TaskTypeIDs.Store, WorkerID, worker.X, worker.Y, null, resourceTypeID, null, DateTime.Now.AddSeconds(5))).OrThrow<PIOInternalErrorException>("Failed to create task");
 
 			OnTaskCreated(task);
 

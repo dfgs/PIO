@@ -109,7 +109,7 @@ namespace PIO.ServerLib.Modules
 					Try(() => storerModule.EndStore(Task.WorkerID, Task.ResourceTypeID.Value)).OrAlert($"Failed to terminate task (TaskID={Task.TaskID})");
 					break;
 				case TaskTypeIDs.CreateBuilding:
-					Try(() => factoryBuilderModule.EndCreateBuilding(Task.WorkerID, Task.FactoryTypeID,Task.FarmTypeID)).OrAlert($"Failed to terminate task (TaskID={Task.TaskID})");
+					Try(() => factoryBuilderModule.EndCreateBuilding(Task.WorkerID, Task.BuildingTypeID.Value)).OrAlert($"Failed to terminate task (TaskID={Task.TaskID})");
 					break;
 				case TaskTypeIDs.Build:
 					Try(() => factoryBuilderModule.EndBuild(Task.WorkerID)).OrAlert($"Failed to terminate task (TaskID={Task.TaskID})");

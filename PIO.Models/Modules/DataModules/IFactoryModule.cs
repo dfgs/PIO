@@ -16,7 +16,7 @@ namespace PIO.Models.Modules
 		Factory[] GetFactories(int PlanetID);
 
 		//void SetHealthPoints(int FactoryID,int HealthPoints);
-		Factory CreateFactory(int PlanetID, int X, int Y, int RemainingBuildSteps, FactoryTypeIDs FactoryTypeID);
+		Factory CreateFactory(int PlanetID, int X, int Y, int RemainingBuildSteps, BuildingTypeIDs BuildingTypeID, FactoryTypeIDs FactoryTypeID);
 
 	}
 }

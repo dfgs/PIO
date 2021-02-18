@@ -30,17 +30,17 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying Product table (ProductID={ProductID})");
-			query=new Select(ProductTable.ProductID, ProductTable.FactoryTypeID, ProductTable.ResourceTypeID, ProductTable.Quantity, ProductTable.Duration).From(PIODB.ProductTable).Where(ProductTable.ProductID.IsEqualTo(ProductID));
+			query=new Select(ProductTable.ProductID, ProductTable.BuildingTypeID, ProductTable.ResourceTypeID, ProductTable.Quantity, ProductTable.Duration).From(PIODB.ProductTable).Where(ProductTable.ProductID.IsEqualTo(ProductID));
 			return TrySelectFirst <ProductTable,Product>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
-		public Product[] GetProducts(FactoryTypeIDs FactoryTypeID)
+		public Product[] GetProducts(BuildingTypeIDs BuildingTypeID)
 		{
 			ISelect query;
 			LogEnter();
 
-			Log(LogLevels.Information, $"Querying Product table (FactoryTypeID={FactoryTypeID})");
-			query=new Select(ProductTable.ProductID, ProductTable.FactoryTypeID, ProductTable.ResourceTypeID, ProductTable.Quantity, ProductTable.Duration).From(PIODB.ProductTable).Where(ProductTable.FactoryTypeID.IsEqualTo(FactoryTypeID));
+			Log(LogLevels.Information, $"Querying Product table (BuildingTypeID={BuildingTypeID})");
+			query=new Select(ProductTable.ProductID, ProductTable.BuildingTypeID, ProductTable.ResourceTypeID, ProductTable.Quantity, ProductTable.Duration).From(PIODB.ProductTable).Where(ProductTable.BuildingTypeID.IsEqualTo(BuildingTypeID));
 			return TrySelectMany<ProductTable,Product>(query).OrThrow<PIODataException>("Failed to query");
 		}
 

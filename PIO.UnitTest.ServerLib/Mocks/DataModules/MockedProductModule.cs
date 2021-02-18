@@ -28,10 +28,10 @@ namespace PIO.UnitTest.ServerLib.Mocks
 			return items.FirstOrDefault(item => item.ProductID == ProductID);
 		}
 
-		public Product[] GetProducts(FactoryTypeIDs FactoryTypeID)
+		public Product[] GetProducts(BuildingTypeIDs BuildingTypeID)
 		{
 			if (throwException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
-			return items.Where(item => item.FactoryTypeID == FactoryTypeID).ToArray();
+			return items.Where(item => item.BuildingTypeID == BuildingTypeID).ToArray();
 		}
 
 

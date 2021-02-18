@@ -297,7 +297,7 @@ namespace PIO.Bots.ServerLib.Modules
 				if (result)
 				{
 					Log(LogLevels.Information, $"Worker is on site, creating createbuilding task");
-					task = Try(() => client.CreateFactory(Worker.WorkerID,BuildFactoryOrder.FactoryTypeID)).OrThrow<PIOInternalErrorException>("Failed to create task");
+					task = Try(() => client.CreateBuilding(Worker.WorkerID,BuildFactoryOrder.FactoryTypeID)).OrThrow<PIOInternalErrorException>("Failed to create task");
 				}
 				else
 				{

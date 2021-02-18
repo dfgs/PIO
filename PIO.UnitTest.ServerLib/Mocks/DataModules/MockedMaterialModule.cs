@@ -28,10 +28,10 @@ namespace PIO.UnitTest.ServerLib.Mocks
 			return items.FirstOrDefault(item => item.MaterialID == MaterialID);
 		}
 
-		public Material[] GetMaterials(int MaterialSetID)
+		public Material[] GetMaterials(BuildingTypeIDs BuildingTypeID)
 		{
 			if (throwException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
-			return items.Where(item => item.MaterialSetID == MaterialSetID).ToArray();
+			return items.Where(item => item.BuildingTypeID == BuildingTypeID).ToArray();
 		}
 
 

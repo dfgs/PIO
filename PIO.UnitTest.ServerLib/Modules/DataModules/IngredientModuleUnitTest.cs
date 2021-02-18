@@ -36,7 +36,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 
 			database = new MockedDatabase<Ingredient>(false, 3, (t) => new Ingredient() { IngredientID = t });
 			module = new IngredientModule(NullLogger.Instance, database);
-			results = module.GetIngredients(FactoryTypeIDs.Stockpile);
+			results = module.GetIngredients(BuildingTypeIDs.Stockpile);
 			Assert.IsNotNull(results);
 			Assert.AreEqual(3, results.Length);
 			for(int t=0;t<3;t++)
@@ -70,7 +70,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			logger = new MemoryLogger();
 			database = new MockedDatabase<Ingredient>(true, 3, (t) => new Ingredient() { IngredientID = t });
 			module = new IngredientModule(logger, database);
-			Assert.ThrowsException<PIODataException>(() => module.GetIngredients(FactoryTypeIDs.Stockpile));
+			Assert.ThrowsException<PIODataException>(() => module.GetIngredients(BuildingTypeIDs.Stockpile));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
 		}
 

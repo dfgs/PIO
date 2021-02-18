@@ -491,6 +491,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			IOrderModule orderModule;
 			IProduceOrderModule produceOrderModule;
 			IBuildFactoryOrderModule buildFactoryOrderModule;
+			IBuildFarmOrderModule buildFarmOrderModule;
 			ClientLib.PIOServiceReference.IPIOService client;
 			OrderManagerModule module;
 			Task result;
@@ -503,9 +504,11 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			produceOrderModule.GetProduceOrders().Returns(new ProduceOrder[] { });
 
 			buildFactoryOrderModule = Substitute.For<IBuildFactoryOrderModule>();
-			buildFactoryOrderModule.GetBuildFactoryOrders().Returns(new BuildFactoryOrder[] {  });
+			buildFactoryOrderModule.GetBuildFactoryOrders().Returns(new BuildFactoryOrder[] { });
+			buildFarmOrderModule = Substitute.For<IBuildFarmOrderModule>();
+			buildFarmOrderModule.GetBuildFarmOrders().Returns(new BuildFarmOrder[] { });
 
-			module = new OrderManagerModule(NullLogger.Instance,client, orderModule, produceOrderModule, buildFactoryOrderModule, null, 10);
+			module = new OrderManagerModule(NullLogger.Instance,client, orderModule, produceOrderModule, buildFactoryOrderModule, buildFarmOrderModule, 10);
 			result = module.CreateTask(1,1);
 			Assert.IsNotNull(result);
 			Assert.AreEqual(1, result.WorkerID);
@@ -542,6 +545,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			IOrderModule orderModule;
 			IProduceOrderModule produceOrderModule;
 			IBuildFactoryOrderModule buildFactoryOrderModule;
+			IBuildFarmOrderModule buildFarmOrderModule;
 			ClientLib.PIOServiceReference.IPIOService client;
 			OrderManagerModule module;
 			Task result;
@@ -561,9 +565,11 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			produceOrderModule.GetProduceOrders().Returns(new ProduceOrder[] { new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, FactoryID = 1 } });
 
 			buildFactoryOrderModule = Substitute.For<IBuildFactoryOrderModule>();
-			buildFactoryOrderModule.GetBuildFactoryOrders().Returns(new BuildFactoryOrder[] { new BuildFactoryOrder() { OrderID = 2, BuildFactoryOrderID = 1 } } );
+			buildFactoryOrderModule.GetBuildFactoryOrders().Returns(new BuildFactoryOrder[] { new BuildFactoryOrder() { OrderID = 2, BuildFactoryOrderID = 1 } });
+			buildFarmOrderModule = Substitute.For<IBuildFarmOrderModule>();
+			buildFarmOrderModule.GetBuildFarmOrders().Returns(new BuildFarmOrder[] { new BuildFarmOrder() { OrderID = 2, BuildFarmOrderID = 1 } });
 
-			module = new OrderManagerModule(NullLogger.Instance, client, orderModule, produceOrderModule, buildFactoryOrderModule, null, 10);
+			module = new OrderManagerModule(NullLogger.Instance, client, orderModule, produceOrderModule, buildFactoryOrderModule, buildFarmOrderModule, 10);
 			result = module.CreateTask(1, 1);
 			Assert.IsNotNull(result);
 			Assert.AreEqual(1, result.WorkerID);

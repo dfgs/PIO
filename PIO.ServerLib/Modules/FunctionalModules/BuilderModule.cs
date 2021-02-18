@@ -17,27 +17,28 @@ namespace PIO.ServerLib.Modules
 	public class BuilderModule : TaskGeneratorModule, IBuilderModule
 	{
 		private IBuildingModule buildingModule;
-		private IFactoryModule factoryModule;
-		private IFarmModule farmModule;
-		private IFactoryTypeModule factoryTypeModule;
-		private IFarmTypeModule farmTypeModule;
+		private IBuildingTypeModule buildingTypeModule;
+		//private IFactoryModule factoryModule;
+		//private IFarmModule farmModule;
+		//private IFactoryTypeModule factoryTypeModule;
+		//private IFarmTypeModule farmTypeModule;
 		private IStackModule stackModule;
 		private IMaterialModule materialModule;
 
 		public BuilderModule(ILogger Logger, ITaskModule TaskModule, IWorkerModule WorkerModule,  
-			IBuildingModule BuildingModule, IFactoryModule FactoryModule, IFactoryTypeModule FactoryTypeModule,
-			IFarmModule FarmModule,IFarmTypeModule FarmTypeModule,
+			IBuildingModule BuildingModule, IBuildingTypeModule BuildingTypeModule,
 			IStackModule StackModule,IMaterialModule MaterialModule) : base(Logger,TaskModule,WorkerModule)
 		{
-			this.buildingModule = BuildingModule; 
-			this.factoryModule = FactoryModule; this.factoryTypeModule = FactoryTypeModule;
-			this.farmModule = FarmModule;this.farmTypeModule = FarmTypeModule;
+			this.buildingModule = BuildingModule;
+			this.buildingTypeModule = BuildingTypeModule;
+			//this.factoryModule = FactoryModule; this.factoryTypeModule = FactoryTypeModule;
+			//this.farmModule = FarmModule;this.farmTypeModule = FarmTypeModule;
 			this.stackModule = StackModule;this.materialModule = MaterialModule;
 
 		}
 
 
-		public Task BeginCreateBuilding(int WorkerID, FactoryTypeIDs? FactoryTypeID, FarmTypeIDs? FarmTypeID)
+		public Task BeginCreateBuilding(int WorkerID, BuildingTypeIDs BuildingTypeID)
 		{
 			Worker worker;
 			Building building;
@@ -65,52 +66,34 @@ namespace PIO.ServerLib.Modules
 
 
 			Log(LogLevels.Information, $"Creating task (WorkerID={WorkerID})");
-			task=Try(() => taskModule.CreateTask(TaskTypeIDs.CreateBuilding, WorkerID, worker.X, worker.Y, null, null, FactoryTypeID,FarmTypeID, DateTime.Now.AddSeconds(10))).OrThrow<PIOInternalErrorException>("Failed to create task");
+			task=Try(() => taskModule.CreateTask(TaskTypeIDs.CreateBuilding, WorkerID, worker.X, worker.Y, null, null, BuildingTypeID, DateTime.Now.AddSeconds(10))).OrThrow<PIOInternalErrorException>("Failed to create task");
 
 			OnTaskCreated(task);
 
 			return task;
 		}
 
-		public void EndCreateBuilding(int WorkerID, FactoryTypeIDs? FactoryTypeID, FarmTypeIDs? FarmTypeID)
+		public void EndCreateBuilding(int WorkerID, BuildingTypeIDs BuildingTypeID)
 		{
-			FactoryType factoryType;
-			FarmType farmType;
-			Factory factory;
-			Farm farm;
+			BuildingType buildingType;
+			Building building;
 			Worker worker;
 
 			LogEnter();
 			
-			Log(LogLevels.Information, $"End create building (FactoryTypeID={FactoryTypeID})");
+			Log(LogLevels.Information, $"End create building (BuildingTypeID={BuildingTypeID})");
 
 			worker=AssertExists(() => workerModule.GetWorker(WorkerID), $"WorkerID={WorkerID}");
-			if (FactoryTypeID.HasValue)
-			{
-				factoryType = AssertExists(() => factoryTypeModule.GetFactoryType(FactoryTypeID.Value), $"FactoryTypeID={FactoryTypeID}");
-				Log(LogLevels.Information, $"Creating factory (FactoryTypeID={FactoryTypeID})");
-				factory = Try(() => factoryModule.CreateFactory(worker.PlanetID, worker.X, worker.Y, factoryType.BuildSteps, FactoryTypeID.Value)).OrThrow<PIOInternalErrorException>("Failed to create factory");
-			}
-			else if (FarmTypeID.HasValue)
-			{
-				farmType = AssertExists(() => farmTypeModule.GetFarmType(FarmTypeID.Value), $"FarmTypeID={FarmTypeID}");
-				Log(LogLevels.Information, $"Creating farm (FarmTypeID={FarmTypeID})");
-				farm = Try(() => farmModule.CreateFarm(worker.PlanetID, worker.X, worker.Y, farmType.BuildSteps, FarmTypeID.Value)).OrThrow<PIOInternalErrorException>("Failed to create farm");
-			}
-			else
-			{
-				Log(LogLevels.Error, $"No valid building type provided");
-				throw new PIOInternalErrorException($"No valid building type provided", null, ID, ModuleName, "EndCreateBuilding");
-			}
 
+			buildingType = AssertExists(() => buildingTypeModule.GetBuildingType(BuildingTypeID), $"BuildingTypeID={BuildingTypeID}");
+			Log(LogLevels.Information, $"Creating building (BuildingTypeID={BuildingTypeID})");
+			building = Try(() => buildingModule.CreateBuilding(worker.PlanetID, worker.X, worker.Y, buildingType.BuildSteps, BuildingTypeID)).OrThrow<PIOInternalErrorException>("Failed to create factory");
+			
 		}
 
 		public Task BeginBuild(int WorkerID)
 		{
-			//Building building;
 			Building building;
-			FactoryType factoryType;
-			FarmType farmType;
 			Worker worker;
 			Material[] materials;
 			Stack stack;
@@ -123,42 +106,15 @@ namespace PIO.ServerLib.Modules
 
 
 
-			building = AssertExists(() =>
-				(Building)factoryModule.GetFactory(worker.PlanetID, worker.X, worker.Y) ?? (Building)farmModule.GetFarm(worker.PlanetID, worker.X, worker.Y),
-			$"X={worker.X}, Y={worker.Y}");
+			building = AssertExists(() =>buildingModule.GetBuilding(worker.PlanetID, worker.X, worker.Y), $"X={worker.X}, Y={worker.Y}");
 
-			if (building is Factory factory)
+			if (building.RemainingBuildSteps == 0)
 			{
-				if (factory.RemainingBuildSteps == 0)
-				{
-					Log(LogLevels.Warning, $"Factory is already build (FactoryID={factory.FactoryID})");
-					throw new PIOInvalidOperationException($"Factory is already build (FactoryID={factory.FactoryID})", null, ID, ModuleName, "BeginBuild");
-				}
-
-				Log(LogLevels.Information, $"Get FactoryType (FactoryTypeID={factory.FactoryTypeID})");
-				factoryType = Try(() => factoryTypeModule.GetFactoryType(factory.FactoryTypeID)).OrThrow<PIOInternalErrorException>("Failed to get FactoryType");
-
-				materials = AssertExists(() => materialModule.GetMaterials(factoryType.MaterialSetID), $"FactoryTypeID={factory.FactoryTypeID}");
+				Log(LogLevels.Warning, $"Building is already build (BuildingID={building.BuildingID})");
+				throw new PIOInvalidOperationException($"Building is already build (BuildingID={building.BuildingID})", null, ID, ModuleName, "BeginBuild");
 			}
-			else if (building is Farm farm)
-			{
-				if (farm.RemainingBuildSteps == 0)
-				{
-					Log(LogLevels.Warning, $"Farm is already build (FarmID={farm.FarmID})");
-					throw new PIOInvalidOperationException($"Farm is already build (FarmID={farm.FarmID})", null, ID, ModuleName, "BeginBuild");
-				}
+			materials = AssertExists(() => materialModule.GetMaterials(building.BuildingTypeID), $"BuildingTypeID={building.BuildingTypeID}");
 
-				Log(LogLevels.Information, $"Get FarmType (FarmTypeID={farm.FarmTypeID})");
-				farmType = Try(() => farmTypeModule.GetFarmType(farm.FarmTypeID)).OrThrow<PIOInternalErrorException>("Failed to get FarmType");
-
-				materials = AssertExists(() => materialModule.GetMaterials(farmType.MaterialSetID), $"FarmTypeID={farm.FarmTypeID}");
-
-			}
-			else
-			{
-				Log(LogLevels.Error, $"No valid building type provided");
-				throw new PIOInternalErrorException($"No valid building type provided", null, ID, ModuleName, "BeginBuild");
-			}
 
 			foreach (Material material in materials)
 			{
@@ -181,7 +137,7 @@ namespace PIO.ServerLib.Modules
 			}
 
 			Log(LogLevels.Information, $"Creating task (WorkerID={WorkerID})");
-			task=Try(() => taskModule.CreateTask(TaskTypeIDs.Build, WorkerID, worker.X, worker.Y, null, null, null,null, DateTime.Now.AddSeconds(10))).OrThrow<PIOInternalErrorException>("Failed to create task");
+			task=Try(() => taskModule.CreateTask(TaskTypeIDs.Build, WorkerID, worker.X, worker.Y, null, null, null, DateTime.Now.AddSeconds(10))).OrThrow<PIOInternalErrorException>("Failed to create task");
 
 			OnTaskCreated(task);
 

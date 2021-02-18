@@ -30,17 +30,17 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying Ingredient table (IngredientID={IngredientID})");
-			query=new Select(IngredientTable.IngredientID, IngredientTable.FactoryTypeID, IngredientTable.ResourceTypeID, IngredientTable.Quantity).From(PIODB.IngredientTable).Where(IngredientTable.IngredientID.IsEqualTo(IngredientID));
+			query=new Select(IngredientTable.IngredientID, IngredientTable.BuildingTypeID, IngredientTable.ResourceTypeID, IngredientTable.Quantity).From(PIODB.IngredientTable).Where(IngredientTable.IngredientID.IsEqualTo(IngredientID));
 			return TrySelectFirst <IngredientTable,Ingredient>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
-		public Ingredient[] GetIngredients(FactoryTypeIDs FactoryTypeID)
+		public Ingredient[] GetIngredients(BuildingTypeIDs BuildingTypeID)
 		{
 			ISelect query;
 			LogEnter();
 
-			Log(LogLevels.Information, $"Querying Ingredient table (FactoryTypeID={FactoryTypeID})");
-			query=new Select(IngredientTable.IngredientID, IngredientTable.FactoryTypeID, IngredientTable.ResourceTypeID, IngredientTable.Quantity).From(PIODB.IngredientTable).Where(IngredientTable.FactoryTypeID.IsEqualTo(FactoryTypeID));
+			Log(LogLevels.Information, $"Querying Ingredient table (BuildingTypeID={BuildingTypeID})");
+			query=new Select(IngredientTable.IngredientID, IngredientTable.BuildingTypeID, IngredientTable.ResourceTypeID, IngredientTable.Quantity).From(PIODB.IngredientTable).Where(IngredientTable.BuildingTypeID.IsEqualTo(BuildingTypeID));
 			return TrySelectMany<IngredientTable,Ingredient>(query).OrThrow<PIODataException>("Failed to query");
 		}
 

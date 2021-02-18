@@ -37,7 +37,7 @@ namespace PIO.UnitTest.ServerLib.Mocks
 			return items.FirstOrDefault();
 		}
 
-		public Farm CreateFarm(int PlanetID, int X, int Y, int RemainingBuildSteps, FarmTypeIDs FarmTypeID)
+		public Farm CreateFarm(int PlanetID, int X, int Y, int RemainingBuildSteps, BuildingTypeIDs BuildingTypeID, FarmTypeIDs FarmTypeID)
 		{
 			Farm result;
 

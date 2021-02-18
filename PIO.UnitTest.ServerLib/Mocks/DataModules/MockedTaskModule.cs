@@ -47,13 +47,13 @@ namespace PIO.UnitTest.ServerLib.Mocks
 			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
 			return items.LastOrDefault();
 		}
-		public Task CreateTask(TaskTypeIDs TaskTypeID, int WorkerID, int X, int Y, int? BuildingID,  ResourceTypeIDs? ResourceTypeID, FactoryTypeIDs? FactoryTypeID,FarmTypeIDs? FarmTypeID, DateTime ETA)
+		public Task CreateTask(TaskTypeIDs TaskTypeID, int WorkerID, int X, int Y, int? BuildingID,  ResourceTypeIDs? ResourceTypeID, BuildingTypeIDs? BuildingTypeID, DateTime ETA)
 		{
 			Task item;
 
 			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
 
-			item=new Task() { TaskTypeID = TaskTypeID,  WorkerID=WorkerID,BuildingID=BuildingID,  ResourceTypeID=ResourceTypeID,FactoryTypeID=FactoryTypeID, ETA=ETA };
+			item=new Task() { TaskTypeID = TaskTypeID,  WorkerID=WorkerID,BuildingID=BuildingID,  ResourceTypeID=ResourceTypeID, BuildingTypeID = BuildingTypeID, ETA=ETA };
 			items.Add(item);
 			return item;
 		}

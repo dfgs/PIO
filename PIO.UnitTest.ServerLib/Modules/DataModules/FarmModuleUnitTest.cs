@@ -120,7 +120,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 
 			database = new MockedDatabase<Farm>(false, 1, (t) => new Farm() { FarmID = t,BuildingID=1,X=10,Y=10,RemainingBuildSteps=100,FarmTypeID=FarmTypeIDs.Forest });
 			module = new FarmModule(NullLogger.Instance, database);
-			result = module.CreateFarm(1,10,10,100,  FarmTypeIDs.Forest);
+			result = module.CreateFarm(1,10,10,100, BuildingTypeIDs.Sawmill, FarmTypeIDs.Forest);
 			Assert.IsNotNull(result);
 			
 			
@@ -138,7 +138,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			logger = new MemoryLogger();
 			database = new MockedDatabase<Farm>(true, 1, (t) => new Farm() { FarmID = t });
 			module = new FarmModule(logger, database);
-			Assert.ThrowsException<PIODataException>(() => module.CreateFarm(1,10,10,100, FarmTypeIDs.Forest));
+			Assert.ThrowsException<PIODataException>(() => module.CreateFarm(1,10,10,100, BuildingTypeIDs.Sawmill, FarmTypeIDs.Forest));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
 		}
 	}

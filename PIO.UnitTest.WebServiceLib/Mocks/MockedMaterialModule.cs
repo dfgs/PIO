@@ -24,10 +24,10 @@ namespace PIO.UnitTest.WebServiceLib.Mocks
 			return new Material() { MaterialID = MaterialID };
 		}
 
-		public Material[] GetMaterials(int MaterialSetID)
+		public Material[] GetMaterials(BuildingTypeIDs BuildingTypeID)
 		{
 			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
-			return Generate((t) => new Material() { MaterialID = t, MaterialSetID = MaterialSetID });
+			return Generate((t) => new Material() { MaterialID = t, BuildingTypeID = BuildingTypeID });
 		}
 
 		

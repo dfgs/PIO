@@ -16,7 +16,7 @@ namespace PIO.Models.Modules
 		Farm[] GetFarms(int PlanetID);
 
 		//void SetHealthPoints(int FarmID,int HealthPoints);
-		Farm CreateFarm(int PlanetID, int X, int Y, int RemainingBuildSteps, FarmTypeIDs FarmTypeID);
+		Farm CreateFarm(int PlanetID, int X, int Y, int RemainingBuildSteps, BuildingTypeIDs BuildingTypeID, FarmTypeIDs FarmTypeID);
 
 	}
 }

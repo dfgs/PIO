@@ -12,6 +12,6 @@ namespace PIO.Models.Modules
 	public interface IProductModule:IDatabaseModule
 	{
 		Product GetProduct(int ProductID);
-		Product[] GetProducts(FactoryTypeIDs FactoryTypeID);
+		Product[] GetProducts(BuildingTypeIDs BuildingTypeID);
 	}
 }

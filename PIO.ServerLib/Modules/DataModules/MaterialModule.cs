@@ -30,17 +30,17 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying Material table (MaterialID={MaterialID})");
-			query=new Select(MaterialTable.MaterialID, MaterialTable.MaterialSetID, MaterialTable.ResourceTypeID, MaterialTable.Quantity).From(PIODB.MaterialTable).Where(MaterialTable.MaterialID.IsEqualTo(MaterialID));
+			query=new Select(MaterialTable.MaterialID, MaterialTable.BuildingTypeID, MaterialTable.ResourceTypeID, MaterialTable.Quantity).From(PIODB.MaterialTable).Where(MaterialTable.MaterialID.IsEqualTo(MaterialID));
 			return TrySelectFirst <MaterialTable,Material>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
-		public Material[] GetMaterials(int MaterialSetID)
+		public Material[] GetMaterials(BuildingTypeIDs BuildingTypeID)
 		{
 			ISelect query;
 			LogEnter();
 
-			Log(LogLevels.Information, $"Querying Material table (MaterialSetID={MaterialSetID})");
-			query=new Select(MaterialTable.MaterialID, MaterialTable.MaterialSetID, MaterialTable.ResourceTypeID, MaterialTable.Quantity).From(PIODB.MaterialTable).Where(MaterialTable.MaterialSetID.IsEqualTo(MaterialSetID));
+			Log(LogLevels.Information, $"Querying Material table (BuildingTypeID={BuildingTypeID})");
+			query=new Select(MaterialTable.MaterialID, MaterialTable.BuildingTypeID, MaterialTable.ResourceTypeID, MaterialTable.Quantity).From(PIODB.MaterialTable).Where(MaterialTable.BuildingTypeID.IsEqualTo(BuildingTypeID));
 			return TrySelectMany<MaterialTable,Material>(query).OrThrow<PIODataException>("Failed to query");
 		}
 

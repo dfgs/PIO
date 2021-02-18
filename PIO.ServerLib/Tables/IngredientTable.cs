@@ -11,7 +11,7 @@ namespace PIO.ServerLib.Tables
 	public class IngredientTable : Table
 	{
 		public static readonly Column<int> IngredientID = new Column<int>() { IsIdentity=true, Constraint = NetORMLib.ColumnConstraints.PrimaryKey };
-		public static readonly Column<FactoryTypeIDs> FactoryTypeID = new Column<FactoryTypeIDs>();
+		public static readonly Column<BuildingTypeIDs> BuildingTypeID = new Column<BuildingTypeIDs>();
 		public static readonly Column<ResourceTypeIDs> ResourceTypeID = new Column<ResourceTypeIDs>();
 		public static readonly Column<int> Quantity = new Column<int>() ;
 	}

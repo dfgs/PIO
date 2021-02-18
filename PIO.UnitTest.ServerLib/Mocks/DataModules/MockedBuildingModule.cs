@@ -50,6 +50,15 @@ namespace PIO.UnitTest.ServerLib.Mocks
 			items.FirstOrDefault(item => item.BuildingID == BuildingID).RemainingBuildSteps = RemainingBuildSteps;
 		}
 
+		public Building CreateBuilding(int PlanetID, int X, int Y, int RemainingBuildSteps, BuildingTypeIDs BuildingTypeID)
+		{
+			Building result;
+
+			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
+			result = new Building() { BuildingID = items.Count,  PlanetID = PlanetID, X = X, Y = Y, RemainingBuildSteps = RemainingBuildSteps, BuildingTypeID = BuildingTypeID };
+			items.Add(result);
+			return result;
+		}
 	}
 
 }

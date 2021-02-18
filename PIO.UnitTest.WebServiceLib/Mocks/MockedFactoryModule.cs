@@ -40,7 +40,7 @@ namespace PIO.UnitTest.WebServiceLib.Mocks
 			throw new NotImplementedException();
 		}
 
-		public Factory CreateFactory(int PlanetID, int X, int Y, int RemainingBuildSteps, FactoryTypeIDs FactoryTypeID)
+		public Factory CreateFactory(int PlanetID, int X, int Y, int RemainingBuildSteps, BuildingTypeIDs BuildingTypeID, FactoryTypeIDs FactoryTypeID)
 		{
 			throw new NotImplementedException();
 		}

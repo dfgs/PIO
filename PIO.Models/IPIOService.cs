@@ -77,15 +77,15 @@ namespace PIO.Models
 		[OperationContract]
 		Material GetMaterial(int MaterialID);
 		[OperationContract]
-		Material[] GetMaterials(int MaterialSetID);
+		Material[] GetMaterials(BuildingTypeIDs BuildingTypeID);
 		[OperationContract]
 		Ingredient GetIngredient(int IngredientID);
 		[OperationContract]
-		Ingredient[] GetIngredients(FactoryTypeIDs FactoryTypeID);
+		Ingredient[] GetIngredients(BuildingTypeIDs BuildingTypeID);
 		[OperationContract]
 		Product GetProduct(int ProductID);
 		[OperationContract]
-		Product[] GetProducts(FactoryTypeIDs FactoryTypeID);
+		Product[] GetProducts(BuildingTypeIDs BuildingTypeID);
 		[OperationContract]
 		Task GetTask(int TaskID);
 		[OperationContract]
@@ -96,13 +96,15 @@ namespace PIO.Models
 
 		#region functional
 		[OperationContract]
-		bool HasEnoughResourcesToProduce(int FactoryID);
+		bool HasEnoughResourcesToProduce(int BuildingID);
 		[OperationContract]
-		ResourceTypeIDs[] GetMissingResourcesToProduce(int FactoryID);
+		ResourceTypeIDs[] GetMissingResourcesToProduce(int BuildingID);
+		
 		[OperationContract]
-		bool HasEnoughResourcesToBuild(int FactoryID);
+		bool HasEnoughResourcesToBuild(int BuildingID);
 		[OperationContract]
-		ResourceTypeIDs[] GetMissingResourcesToBuild(int FactoryID);
+		ResourceTypeIDs[] GetMissingResourcesToBuild(int BuildingID);
+
 		[OperationContract]
 		bool WorkerIsInBuilding(int WorkerID, int BuildingID);
 		[OperationContract]
@@ -119,9 +121,7 @@ namespace PIO.Models
 		Task Store(int WorkerID);
 
 		[OperationContract]
-		Task CreateFactory(int WorkerID, FactoryTypeIDs FactoryTypeID);
-		[OperationContract]
-		Task CreateFarm(int WorkerID, FarmTypeIDs FarmTypeID);
+		Task CreateBuilding(int WorkerID, BuildingTypeIDs BuildingTypeID);
 		[OperationContract]
 		Task Build(int WorkerID);
 		

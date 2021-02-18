@@ -37,7 +37,7 @@ namespace PIO.UnitTest.ServerLib.Mocks
 			return items.FirstOrDefault();
 		}
 
-		public Factory CreateFactory(int PlanetID, int X, int Y, int RemainingBuildSteps, FactoryTypeIDs FactoryTypeID)
+		public Factory CreateFactory(int PlanetID, int X, int Y, int RemainingBuildSteps,BuildingTypeIDs BuildingTypeID, FactoryTypeIDs FactoryTypeID)
 		{
 			Factory result;
 

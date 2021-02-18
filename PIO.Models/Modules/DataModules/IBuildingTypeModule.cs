@@ -9,9 +9,9 @@ using PIO.ModulesLib.Modules.DataModules;
 
 namespace PIO.Models.Modules
 {
-	public interface IIngredientModule:IDatabaseModule
+	public interface IBuildingTypeModule:IDatabaseModule
 	{
-		Ingredient GetIngredient(int IngredientID);
-		Ingredient[] GetIngredients(BuildingTypeIDs BuildingTypeID);
+		BuildingType GetBuildingType(BuildingTypeIDs BuildingTypeID);
+		BuildingType[] GetBuildingTypes();
 	}
 }

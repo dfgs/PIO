@@ -53,6 +53,7 @@ namespace PIO.ServerHost
 			IResourceTypeModule resourceTypeModule;
 			IFactoryTypeModule factoryTypeModule;
 			IFarmTypeModule farmTypeModule;
+			IBuildingTypeModule buildingTypeModule;
 			ITaskTypeModule taskTypeModule;
 			IMaterialModule materialModule;
 			IIngredientModule ingredientModule;
@@ -97,6 +98,7 @@ namespace PIO.ServerHost
 			resourceTypeModule = new ResourceTypeModule(logger, database);
 			factoryTypeModule = new FactoryTypeModule(logger, database);
 			farmTypeModule = new FarmTypeModule(logger, database);
+			buildingTypeModule = new BuildingTypeModule(logger, database);
 			taskTypeModule = new TaskTypeModule(logger, database);
 			materialModule = new MaterialModule(logger, database);
 			ingredientModule = new IngredientModule(logger, database);
@@ -104,11 +106,11 @@ namespace PIO.ServerHost
 			taskModule = new TaskModule(logger, database);
 
 
-			factoryBuilderModule = new BuilderModule(logger, taskModule, workerModule, buildingModule, factoryModule, factoryTypeModule, farmModule, farmTypeModule ,stackModule, materialModule); ;
+			factoryBuilderModule = new BuilderModule(logger, taskModule, workerModule, buildingModule, buildingTypeModule, stackModule, materialModule); ;
 			idlerModule = new IdlerModule(logger,taskModule, workerModule);
-			resourceCheckerModule = new ResourceCheckerModule(logger, factoryModule,factoryTypeModule ,stackModule, ingredientModule,materialModule);
+			resourceCheckerModule = new ResourceCheckerModule(logger, buildingModule,stackModule, ingredientModule,materialModule);
 			locationCheckerModule = new LocationCheckerModule(logger, workerModule, buildingModule);
-			producerModule = new ProducerModule(logger, taskModule, workerModule, factoryModule,  stackModule, ingredientModule, productModule);
+			producerModule = new ProducerModule(logger, taskModule, workerModule, buildingModule,  stackModule, ingredientModule, productModule);
 			moverModule = new MoverModule(logger, taskModule, workerModule, buildingModule);
 			takerModule = new TakerModule(logger, taskModule, workerModule, buildingModule, stackModule);
 			storerModule = new StorerModule(logger, taskModule, workerModule, buildingModule, stackModule);

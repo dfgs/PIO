@@ -18,6 +18,7 @@ namespace PIO.ServerLib
 		public static FactoryTypeTable FactoryTypeTable = new FactoryTypeTable();
 		public static FarmTable FarmTable = new FarmTable();
 		public static FarmTypeTable FarmTypeTable = new FarmTypeTable();
+		public static BuildingTypeTable BuildingTypeTable = new BuildingTypeTable();
 		public static IngredientTable IngredientTable = new IngredientTable();
 		public static MaterialTable MaterialTable = new MaterialTable();
 		public static ProductTable ProductTable = new ProductTable();

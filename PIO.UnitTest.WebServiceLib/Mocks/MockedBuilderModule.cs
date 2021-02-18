@@ -20,15 +20,15 @@ namespace PIO.UnitTest.WebServiceLib.Mocks
 
 
 
-		public Task BeginCreateBuilding(int WorkerID,FactoryTypeIDs? FactoryTypeID, FarmTypeIDs? FarmTypeID)
+		public Task BeginCreateBuilding(int WorkerID, BuildingTypeIDs BuildingTypeID)
 		{
 			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
-			Task task = new Task() { WorkerID = WorkerID, ETA = DateTime.Now, FactoryTypeID=FactoryTypeID ,FarmTypeID=FarmTypeID};
+			Task task = new Task() { WorkerID = WorkerID, ETA = DateTime.Now, BuildingTypeID = BuildingTypeID};
 			TaskCreated?.Invoke(this, task);
 			return task;
 		}
 
-		public void EndCreateBuilding(int PlanetID, FactoryTypeIDs? FactoryTypeID, FarmTypeIDs? FarmTypeID)
+		public void EndCreateBuilding(int PlanetID, BuildingTypeIDs BuildingTypeID)
 		{
 			throw new NotImplementedException();
 		}

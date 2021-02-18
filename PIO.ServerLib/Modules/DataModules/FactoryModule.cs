@@ -30,7 +30,7 @@ namespace PIO.ServerLib.Modules
 
 			Log(LogLevels.Information, $"Querying Factory table (FactoryID={FactoryID})");
 			query=new Select(
-						BuildingTable.BuildingID,BuildingTable.PlanetID, BuildingTable.X,BuildingTable.Y,  BuildingTable.HealthPoints,BuildingTable.RemainingBuildSteps,
+						BuildingTable.BuildingID,BuildingTable.PlanetID, BuildingTypeTable.BuildingTypeID, BuildingTable.X,BuildingTable.Y,  BuildingTable.HealthPoints,BuildingTable.RemainingBuildSteps,
 						FactoryTable.FactoryID, FactoryTable.FactoryTypeID
 					)
 				.From(PIODB.FactoryTable.Join(PIODB.BuildingTable.On(FactoryTable.BuildingID, BuildingTable.BuildingID)))
@@ -45,7 +45,7 @@ namespace PIO.ServerLib.Modules
 
 			Log(LogLevels.Information, $"Querying Factory table (PlanetID={PlanetID}, X={X}, Y={Y})");
 			query=new Select(
-						BuildingTable.BuildingID, BuildingTable.PlanetID, BuildingTable.X, BuildingTable.Y, BuildingTable.HealthPoints, BuildingTable.RemainingBuildSteps,
+						BuildingTable.BuildingID, BuildingTable.PlanetID, BuildingTypeTable.BuildingTypeID, BuildingTable.X, BuildingTable.Y, BuildingTable.HealthPoints, BuildingTable.RemainingBuildSteps,
 						FactoryTable.FactoryID, FactoryTable.FactoryTypeID
 					)
 				.From(PIODB.FactoryTable.Join(PIODB.BuildingTable.On(FactoryTable.BuildingID, BuildingTable.BuildingID)))
@@ -61,7 +61,7 @@ namespace PIO.ServerLib.Modules
 
 			Log(LogLevels.Information, $"Querying Factory table (PlanetID={PlanetID})");
 			query=new Select(
-						BuildingTable.BuildingID, BuildingTable.PlanetID, BuildingTable.X, BuildingTable.Y, BuildingTable.HealthPoints, BuildingTable.RemainingBuildSteps,
+						BuildingTable.BuildingID, BuildingTable.PlanetID, BuildingTypeTable.BuildingTypeID, BuildingTable.X, BuildingTable.Y, BuildingTable.HealthPoints, BuildingTable.RemainingBuildSteps,
 						FactoryTable.FactoryID, FactoryTable.FactoryTypeID
 					)
 				.From(PIODB.FactoryTable.Join(PIODB.BuildingTable.On(FactoryTable.BuildingID, BuildingTable.BuildingID)))
@@ -69,7 +69,7 @@ namespace PIO.ServerLib.Modules
 			return TrySelectMany<FactoryTable, Factory>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
-		public Factory CreateFactory(int PlanetID, int X, int Y, int RemainingBuildSteps,FactoryTypeIDs FactoryTypeID)
+		public Factory CreateFactory(int PlanetID, int X, int Y, int RemainingBuildSteps,BuildingTypeIDs BuildingTypeID, FactoryTypeIDs FactoryTypeID)
 		{
 			IInsert queryBuilding,queryFactory;
 			Factory item;
@@ -81,10 +81,10 @@ namespace PIO.ServerLib.Modules
 			//new SelectIdentity((result) => buildingID = Convert.ToInt32(result));
 			//new Insert().Into(PIODB.FactoryTable).Set(FactoryTable.BuildingID, buildingID).Set(FactoryTable.FactoryTypeID, FactoryTypeIDs.Forest);
 
-			item = new Factory() { PlanetID = PlanetID, X = X, Y = Y, RemainingBuildSteps = RemainingBuildSteps, FactoryTypeID = FactoryTypeID, };
+			item = new Factory() { PlanetID = PlanetID, BuildingTypeID=BuildingTypeID, X = X, Y = Y, RemainingBuildSteps = RemainingBuildSteps, FactoryTypeID = FactoryTypeID, };
 
-			Log(LogLevels.Information, $"Inserting into Building table (PlanetID={PlanetID}, X={X}, Y={Y}, RemainingBuildingSteps={RemainingBuildSteps})");
-			queryBuilding=new Insert().Into(PIODB.BuildingTable).Set(BuildingTable.PlanetID, item.PlanetID).Set(BuildingTable.X, item.X).Set(BuildingTable.Y, item.Y).Set(BuildingTable.HealthPoints, item.HealthPoints).Set(BuildingTable.RemainingBuildSteps, item.RemainingBuildSteps);
+			Log(LogLevels.Information, $"Inserting into Building table (PlanetID={PlanetID}, X={X}, Y={Y}, BuildingTypeID={BuildingTypeID}, RemainingBuildingSteps={RemainingBuildSteps})");
+			queryBuilding=new Insert().Into(PIODB.BuildingTable).Set(BuildingTable.PlanetID, item.PlanetID).Set(BuildingTable.BuildingTypeID, item.BuildingTypeID).Set(BuildingTable.X, item.X).Set(BuildingTable.Y, item.Y).Set(BuildingTable.HealthPoints, item.HealthPoints).Set(BuildingTable.RemainingBuildSteps, item.RemainingBuildSteps);
 			result = Try(queryBuilding).OrThrow<PIODataException>("Failed to insert");
 			item.BuildingID=Convert.ToInt32(result);
 

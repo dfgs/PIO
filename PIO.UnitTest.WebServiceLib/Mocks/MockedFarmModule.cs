@@ -40,7 +40,7 @@ namespace PIO.UnitTest.WebServiceLib.Mocks
 			throw new NotImplementedException();
 		}
 
-		public Farm CreateFarm(int PlanetID, int X, int Y, int RemainingBuildSteps, FarmTypeIDs FarmTypeID)
+		public Farm CreateFarm(int PlanetID, int X, int Y, int RemainingBuildSteps, BuildingTypeIDs BuildingTypeID, FarmTypeIDs FarmTypeID)
 		{
 			throw new NotImplementedException();
 		}

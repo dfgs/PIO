@@ -24,10 +24,10 @@ namespace PIO.UnitTest.WebServiceLib.Mocks
 			return new Ingredient() { IngredientID = IngredientID };
 		}
 
-		public Ingredient[] GetIngredients(FactoryTypeIDs FactoryTypeID)
+		public Ingredient[] GetIngredients(BuildingTypeIDs BuildingTypeID)
 		{
 			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
-			return Generate((t) => new Ingredient() { IngredientID = t,FactoryTypeID=FactoryTypeID });
+			return Generate((t) => new Ingredient() { IngredientID = t, BuildingTypeID = BuildingTypeID });
 		}
 
 		

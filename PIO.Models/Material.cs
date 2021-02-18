@@ -14,7 +14,7 @@ namespace PIO.Models
 		[DataMember]
 		public int MaterialID { get; set; }
 		[DataMember]
-		public int MaterialSetID { get; set; }
+		public BuildingTypeIDs BuildingTypeID { get; set; }
 		[DataMember]
 		public ResourceTypeIDs ResourceTypeID { get; set; }
 		[DataMember]

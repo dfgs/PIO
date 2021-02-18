@@ -11,9 +11,9 @@ namespace PIO.Models.Modules
 {
 	public interface IResourceCheckerModule : IFunctionalModule
 	{
-		bool HasEnoughResourcesToProduce(int FactoryID);
-		ResourceTypeIDs[] GetMissingResourcesToProduce(int FactoryID);
-		bool HasEnoughResourcesToBuild(int FactoryID);
-		ResourceTypeIDs[] GetMissingResourcesToBuild(int FactoryID);
+		bool HasEnoughResourcesToProduce(int BuildingID);
+		ResourceTypeIDs[] GetMissingResourcesToProduce(int BuildingID);
+		bool HasEnoughResourcesToBuild(int BuildingID);
+		ResourceTypeIDs[] GetMissingResourcesToBuild(int BuildingID);
 	}
 }
