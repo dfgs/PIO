@@ -30,7 +30,7 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying Building table (BuildingID={BuildingID})");
-			query=new Select(BuildingTable.BuildingID, BuildingTable.PlanetID,BuildingTypeTable.BuildingTypeID, BuildingTable.X, BuildingTable.Y,  BuildingTable.HealthPoints, BuildingTable.RemainingBuildSteps)
+			query=new Select(BuildingTable.BuildingID, BuildingTable.PlanetID,BuildingTable.BuildingTypeID, BuildingTable.X, BuildingTable.Y,  BuildingTable.HealthPoints, BuildingTable.RemainingBuildSteps)
 				.From(PIODB.BuildingTable)
 				.Where(BuildingTable.BuildingID.IsEqualTo(BuildingID));
 
@@ -42,7 +42,7 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying Building table (X={X}, Y={Y})");
-			query=new Select(BuildingTable.BuildingID, BuildingTable.PlanetID, BuildingTypeTable.BuildingTypeID, BuildingTable.X, BuildingTable.Y, BuildingTable.HealthPoints, BuildingTable.RemainingBuildSteps)
+			query=new Select(BuildingTable.BuildingID, BuildingTable.PlanetID, BuildingTable.BuildingTypeID, BuildingTable.X, BuildingTable.Y, BuildingTable.HealthPoints, BuildingTable.RemainingBuildSteps)
 				.From(PIODB.BuildingTable)
 				.Where( BuildingTable.X.IsEqualTo(X).And(BuildingTable.Y.IsEqualTo(Y).And(BuildingTable.PlanetID.IsEqualTo(PlanetID))));
 
@@ -55,7 +55,7 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying Building table (PlanetID={PlanetID})");
-			query=new Select(BuildingTable.BuildingID, BuildingTable.PlanetID, BuildingTypeTable.BuildingTypeID, BuildingTable.X, BuildingTable.Y,  BuildingTable.HealthPoints, BuildingTable.RemainingBuildSteps)
+			query=new Select(BuildingTable.BuildingID, BuildingTable.PlanetID, BuildingTable.BuildingTypeID, BuildingTable.X, BuildingTable.Y,  BuildingTable.HealthPoints, BuildingTable.RemainingBuildSteps)
 				.From(PIODB.BuildingTable)
 				.Where(BuildingTable.PlanetID.IsEqualTo(PlanetID));
 			return TrySelectMany<BuildingTable, Building>(query).OrThrow<PIODataException>("Failed to query");

@@ -91,11 +91,8 @@
     <Compile Include="Views\Selections\CellSelectionView.xaml.cs">
       <DependentUpon>CellSelectionView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Selections\FarmSelectionView.xaml.cs">
-      <DependentUpon>FarmSelectionView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Selections\FactorySelectionView.xaml.cs">
-      <DependentUpon>FactorySelectionView.xaml</DependentUpon>
+    <Compile Include="Views\Selections\BuildingSelectionView.xaml.cs">
+      <DependentUpon>BuildingSelectionView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Selections\WorkerSelectionView.xaml.cs">
       <DependentUpon>WorkerSelectionView.xaml</DependentUpon>
@@ -147,11 +144,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Selections\FarmSelectionView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\Selections\FactorySelectionView.xaml">
+    <Page Include="Views\Selections\BuildingSelectionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

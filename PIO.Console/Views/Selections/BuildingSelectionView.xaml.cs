@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace PIO.Console.Views.Selections
 {
 	/// <summary>
-	/// Logique d'interaction pour FarmSelectionView.xaml
+	/// Logique d'interaction pour BuildingSelectionView.xaml
 	/// </summary>
-	public partial class FarmSelectionView : UserControl
+	public partial class BuildingSelectionView : UserControl
 	{
-		public FarmSelectionView()
+		public BuildingSelectionView()
 		{
 			InitializeComponent();
 		}

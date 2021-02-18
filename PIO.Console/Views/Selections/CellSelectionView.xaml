@@ -16,31 +16,22 @@
 			<TextBlock Text="Cell:" FontWeight="Bold"/>
 			<TextBlock Text="{Binding X,FallbackValue=0}"/>
 			<TextBlock Text="{Binding Y,FallbackValue=0}"/>
-			<TextBlock Text="Build factory orders:" FontWeight="Bold"/>
-			<ItemsControl ItemsSource="{Binding BuildFactoryOrders}">
+			<TextBlock Text="Build orders:" FontWeight="Bold"/>
+			<ItemsControl ItemsSource="{Binding BuildOrders}">
 				<ItemsControl.ItemTemplate>
 					<DataTemplate>
 						<StackPanel Orientation="Horizontal">
-							<TextBlock Text="{Binding FactoryTypeID}"/>
+							<TextBlock Text="{Binding BuildingTypeID}"/>
 						</StackPanel>
 					</DataTemplate>
 				</ItemsControl.ItemTemplate>
 			</ItemsControl>
-			<TextBlock Text="Build farm orders:" FontWeight="Bold"/>
-			<ItemsControl ItemsSource="{Binding BuildFarmOrders}">
-				<ItemsControl.ItemTemplate>
-					<DataTemplate>
-						<StackPanel Orientation="Horizontal">
-							<TextBlock Text="{Binding FarmTypeID}"/>
-						</StackPanel>
-					</DataTemplate>
-				</ItemsControl.ItemTemplate>
-			</ItemsControl>
+			
 		</StackPanel>
 		<GridSplitter Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
 		<StackPanel Grid.Column="2">
-			<Button Content="New build factory order" Command="{Binding CreateBuildFactoryOrderCommand}"/>
-			<Button Content="New build farm order" Command="{Binding CreateBuildFarmOrderCommand}"/>
+			<Button Content="New build order" Command="{Binding CreateBuildOrderCommand}"/>
+			<Button Content="xxx" Command="{Binding CreateBuildFarmOrderCommand}"/>
 		</StackPanel>
 	</Grid>
 </UserControl>

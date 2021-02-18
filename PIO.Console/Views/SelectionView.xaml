@@ -16,7 +16,7 @@
 			<selections:WorkerSelectionView/>
 		</DataTemplate>
 		<DataTemplate DataType="{x:Type viewModels:BuildingViewModel}">
-			<selections:FactorySelectionView/>
+			<selections:BuildingSelectionView/>
 		</DataTemplate>
 		
 	</UserControl.Resources>
