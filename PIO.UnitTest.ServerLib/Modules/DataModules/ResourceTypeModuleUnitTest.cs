@@ -23,9 +23,9 @@ namespace PIO.UnitTest.ServerLib.Modules
 
 			database = new MockedDatabase<ResourceType>(false, 1, (t) => new ResourceType() { ResourceTypeID = (ResourceTypeIDs)t });
 			module = new ResourceTypeModule(NullLogger.Instance, database);
-			result = module.GetResourceType(ResourceTypeIDs.Tree);
+			result = module.GetResourceType(ResourceTypeIDs.Wood);
 			Assert.IsNotNull(result);
-			Assert.AreEqual(ResourceTypeIDs.Tree, result.ResourceTypeID);
+			Assert.AreEqual(ResourceTypeIDs.Wood, result.ResourceTypeID);
 		}
 		[TestMethod]
 		public void ShouldGetResourceTypes()
@@ -83,9 +83,9 @@ namespace PIO.UnitTest.ServerLib.Modules
 
 			database = new MockedDatabase<ResourceType>(false, 1, (t) => new ResourceType() { ResourceTypeID = (ResourceTypeIDs)t });
 			module = new ResourceTypeModule(NullLogger.Instance, database);
-			result = module.CreateResourceType(ResourceTypeIDs.Tree,"New");
+			result = module.CreateResourceType(ResourceTypeIDs.Wood, "New");
 			Assert.IsNotNull(result);
-			Assert.AreEqual(ResourceTypeIDs.Tree, result.ResourceTypeID);
+			Assert.AreEqual(ResourceTypeIDs.Wood, result.ResourceTypeID);
 			Assert.AreEqual(1, database.InsertedCount);
 		}
 		[TestMethod]

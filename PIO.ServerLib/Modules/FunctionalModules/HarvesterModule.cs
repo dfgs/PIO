@@ -14,32 +14,28 @@ using PIO.ModulesLib.Exceptions;
 
 namespace PIO.ServerLib.Modules
 {
-	public class ProducerModule : TaskGeneratorModule, IProducerModule
+	public class HarvesterModule : TaskGeneratorModule, IHarvesterModule
 	{
 		private IBuildingModule buildingModule;
 		private IBuildingTypeModule buildingTypeModule;
 		private IStackModule stackModule;
-		private IIngredientModule ingredientModule;
 		private IProductModule productModule;
 
 
 
-		public ProducerModule(ILogger Logger, ITaskModule TaskModule, IWorkerModule WorkerModule, IBuildingModule BuildingModule, IBuildingTypeModule BuildingTypeModule, IStackModule StackModule, IIngredientModule IngredientModule, IProductModule ProductModule) : base(Logger,TaskModule,WorkerModule)
+		public HarvesterModule(ILogger Logger, ITaskModule TaskModule, IWorkerModule WorkerModule, IBuildingModule BuildingModule, IBuildingTypeModule BuildingTypeModule, IStackModule StackModule, IProductModule ProductModule) : base(Logger,TaskModule,WorkerModule)
 		{
-			this.buildingModule = BuildingModule; this.buildingTypeModule = BuildingTypeModule; this.stackModule = StackModule; this.ingredientModule = IngredientModule;this.productModule = ProductModule; 
+			this.buildingModule = BuildingModule; this.buildingTypeModule = BuildingTypeModule; this.stackModule = StackModule; this.productModule = ProductModule; 
 		}
 
 
-		public Task BeginProduce(int WorkerID)
+		public Task BeginHarvest(int WorkerID)
 		{
 			Building building;
 			BuildingType buildingType;
 			Worker worker;
-			Ingredient[] ingredients;
 			Product[] products;
 			Task task;
-			Stack stack;
-			int quantity;
 
 			LogEnter();
 
@@ -49,18 +45,17 @@ namespace PIO.ServerLib.Modules
 			if (building.RemainingBuildSteps > 0)
 			{
 				Log(LogLevels.Warning, $"Building is building (BuildingID={building.BuildingID})");
-				throw new PIOInvalidOperationException($"Building is building (BuildingID={building.BuildingID})", null, ID, ModuleName, "BeginProduce");
+				throw new PIOInvalidOperationException($"Building is building (BuildingID={building.BuildingID})", null, ID, ModuleName, "BeginHarveste");
 			}
 
 			buildingType = AssertExists(() => buildingTypeModule.GetBuildingType(building.BuildingTypeID), $"BuildingTypeID={building.BuildingTypeID}");
-			if (!buildingType.IsFactory)
+			if (!buildingType.IsFarm)
 			{
-				Log(LogLevels.Warning, $"Building is not a factory (BuildingID={building.BuildingID})");
-				throw new PIOInvalidOperationException($"Building is not a factory (BuildingID={building.BuildingID})", null, ID, ModuleName, "BeginProduce");
+				Log(LogLevels.Warning, $"Building is not a farm (BuildingID={building.BuildingID})");
+				throw new PIOInvalidOperationException($"Building is not a factory (BuildingID={building.BuildingID})", null, ID, ModuleName, "BeginHarveste");
 			}
 
 
-			ingredients = AssertExists(() => ingredientModule.GetIngredients(building.BuildingTypeID), $"BuildingTypeID={building.BuildingTypeID}");
 			products=AssertExists(() => productModule.GetProducts(building.BuildingTypeID), $"BuildingTypeID={building.BuildingTypeID}");
 			if (products.Length == 0)
 			{
@@ -68,37 +63,17 @@ namespace PIO.ServerLib.Modules
 				return null;
 			}
 
-			foreach (Ingredient ingredient in ingredients)
-			{
-				Log(LogLevels.Information, $"Check stack quantity (ResourceTypeID={ingredient.ResourceTypeID}, Quantity={ingredient.Quantity})");
-				quantity=Try(()=> stackModule.GetStackQuantity(building.BuildingID, ingredient.ResourceTypeID)).OrThrow<PIOInternalErrorException>("Failed to check stack quantity");
-				if (quantity < ingredient.Quantity)
-				{
-					Log(LogLevels.Warning, $"Not enough resources (BuildingID={building.BuildingID}, ResourceTypeID={ingredient.ResourceTypeID})");
-					throw new PIONoResourcesException($"Not enough resources (BuildingID={building.BuildingID}, ResourceTypeID={ingredient.ResourceTypeID})", null, ID, ModuleName, "BeginProduce");
-				}
-			}
-
-			foreach (Ingredient ingredient in ingredients)
-			{
-				Log(LogLevels.Information, $"Consuming ingredient (ResourceTypeID={ingredient.ResourceTypeID}, Quantity={ingredient.Quantity})");
-				stack=Try(() => stackModule.GetStack(building.BuildingID, ingredient.ResourceTypeID)).OrThrow<PIOInternalErrorException>("Failed to consume ingredient");
-				stack.Quantity -= ingredient.Quantity;
-
-				Try(() => stackModule.UpdateStack(stack.StackID, stack.Quantity)).OrThrow<PIOInternalErrorException>("Failed to update stack");
-			}
-
-			
+				
 			
 			Log(LogLevels.Information, $"Creating task (WorkerID={WorkerID})");
-			task=Try(() => taskModule.CreateTask(TaskTypeIDs.Produce, WorkerID, worker.X, worker.Y,null, null, null,  DateTime.Now.AddSeconds(products[0].Duration))).OrThrow<PIOInternalErrorException>("Failed to create task");
+			task=Try(() => taskModule.CreateTask(TaskTypeIDs.Harvest, WorkerID, worker.X, worker.Y,null, null, null,  DateTime.Now.AddSeconds(products[0].Duration))).OrThrow<PIOInternalErrorException>("Failed to create task");
 
 			OnTaskCreated(task);
 
 			return task;
 		}
 
-		public void EndProduce(int WorkerID)
+		public void EndHarvest(int WorkerID)
 		{
 			Building building;
 			Product[] products;

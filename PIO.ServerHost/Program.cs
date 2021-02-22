@@ -104,7 +104,7 @@ namespace PIO.ServerHost
 			idlerModule = new IdlerModule(logger,taskModule, workerModule);
 			resourceCheckerModule = new ResourceCheckerModule(logger, buildingModule,stackModule, ingredientModule,materialModule);
 			locationCheckerModule = new LocationCheckerModule(logger, workerModule, buildingModule);
-			producerModule = new ProducerModule(logger, taskModule, workerModule, buildingModule,  stackModule, ingredientModule, productModule);
+			producerModule = new ProducerModule(logger, taskModule, workerModule, buildingModule, buildingTypeModule,  stackModule, ingredientModule, productModule);
 			moverModule = new MoverModule(logger, taskModule, workerModule, buildingModule);
 			takerModule = new TakerModule(logger, taskModule, workerModule, buildingModule, stackModule);
 			storerModule = new StorerModule(logger, taskModule, workerModule, buildingModule, stackModule);

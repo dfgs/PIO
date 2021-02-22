@@ -19,6 +19,10 @@ namespace PIO.Models
 		public int HealthPoints { get; set; }
 		[DataMember]
 		public int BuildSteps { get; set; }
+		[DataMember]
+		public bool IsFactory { get; set; }
+		[DataMember]
+		public bool IsFarm { get; set; }
 
 	}
 }

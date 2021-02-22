@@ -40,22 +40,21 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 
 			Log(LogLevels.Information, "Creating ResourceType items");
-			resourceTypeModule.CreateResourceType(Models.ResourceTypeIDs.Tree, "Tree");
 			resourceTypeModule.CreateResourceType(Models.ResourceTypeIDs.Wood, "Wood");
 			resourceTypeModule.CreateResourceType(Models.ResourceTypeIDs.Stone, "Stone");
 			resourceTypeModule.CreateResourceType(Models.ResourceTypeIDs.Coal, "Coal");
 			resourceTypeModule.CreateResourceType(Models.ResourceTypeIDs.Plank, "Plank");
 
 			Log(LogLevels.Information, "Creating BuildingType items");
-			buildingTypeModule.CreateBuildingType(Models.BuildingTypeIDs.Forest, "Forest", 5, 10);
-			buildingTypeModule.CreateBuildingType(Models.BuildingTypeIDs.Stockpile, "Stockpile", 5, 10); ;
-			buildingTypeModule.CreateBuildingType(Models.BuildingTypeIDs.Sawmill, "Sawmill", 5, 10);
-			buildingTypeModule.CreateBuildingType(Models.BuildingTypeIDs.Stone, "Stone", 5, 10);
-			buildingTypeModule.CreateBuildingType(Models.BuildingTypeIDs.Water, "Water", 5, 10);
+			buildingTypeModule.CreateBuildingType(Models.BuildingTypeIDs.Forest, "Forest", 1, 10,false,true);
+			buildingTypeModule.CreateBuildingType(Models.BuildingTypeIDs.Stockpile, "Stockpile", 2, 10,false,false); ;
+			buildingTypeModule.CreateBuildingType(Models.BuildingTypeIDs.Sawmill, "Sawmill", 2, 10,true,false);
+			buildingTypeModule.CreateBuildingType(Models.BuildingTypeIDs.StoneCutter, "Stone cutter", 5, 10,true,false);
 
 			Log(LogLevels.Information, "Creating TaskType items");
 			taskTypeModule.CreateTaskType(Models.TaskTypeIDs.Idle, "Idle");
 			taskTypeModule.CreateTaskType(Models.TaskTypeIDs.Produce, "Produce");
+			taskTypeModule.CreateTaskType(Models.TaskTypeIDs.Harvest, "Harvest");
 			taskTypeModule.CreateTaskType(Models.TaskTypeIDs.MoveTo, "Move to");
 			taskTypeModule.CreateTaskType(Models.TaskTypeIDs.CreateBuilding, "Create building");
 			taskTypeModule.CreateTaskType(Models.TaskTypeIDs.Build, "Build");
@@ -63,18 +62,19 @@ namespace PIO.ServerLib.Modules
 			taskTypeModule.CreateTaskType(Models.TaskTypeIDs.Store, "Store");
 
 			Log(LogLevels.Information, "Creating Material items");
-			materialModule.CreateMaterial(Models.BuildingTypeIDs.Forest, Models.ResourceTypeIDs.Wood, 1);
+			materialModule.CreateMaterial(Models.BuildingTypeIDs.Forest, Models.ResourceTypeIDs.Wood, 0);
 			materialModule.CreateMaterial(Models.BuildingTypeIDs.Sawmill, Models.ResourceTypeIDs.Wood, 1);
-			materialModule.CreateMaterial(Models.BuildingTypeIDs.Sawmill, Models.ResourceTypeIDs.Stone, 1);
-			materialModule.CreateMaterial(Models.BuildingTypeIDs.Stone, Models.ResourceTypeIDs.Wood, 1);
+			materialModule.CreateMaterial(Models.BuildingTypeIDs.StoneCutter, Models.ResourceTypeIDs.Plank, 1);
+			materialModule.CreateMaterial(Models.BuildingTypeIDs.StoneCutter, Models.ResourceTypeIDs.Stone, 1);
 
 			Log(LogLevels.Information, "Creating Ingredient items");
-			ingredientModule.CreateIngredient(Models.BuildingTypeIDs.Forest, Models.ResourceTypeIDs.Tree, 1);
 			ingredientModule.CreateIngredient(Models.BuildingTypeIDs.Sawmill, Models.ResourceTypeIDs.Wood, 1);
+			ingredientModule.CreateIngredient(Models.BuildingTypeIDs.StoneCutter, Models.ResourceTypeIDs.Stone, 1);
 
 			Log(LogLevels.Information, "Creating Product items");
-			productModule.CreateProduct(Models.BuildingTypeIDs.Forest, Models.ResourceTypeIDs.Wood, 2, 30);
-			productModule.CreateProduct(Models.BuildingTypeIDs.Sawmill, Models.ResourceTypeIDs.Plank, 2, 30);
+			productModule.CreateProduct(Models.BuildingTypeIDs.Forest, Models.ResourceTypeIDs.Wood, 1, 10);
+			productModule.CreateProduct(Models.BuildingTypeIDs.Sawmill, Models.ResourceTypeIDs.Plank, 2, 20);
+			productModule.CreateProduct(Models.BuildingTypeIDs.StoneCutter, Models.ResourceTypeIDs.CutStone, 2, 20);
 
 			Log(LogLevels.Information, "Creating Planet items");
 			planet=planetModule.CreatePlanet("Default", 50, 50);

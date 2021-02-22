@@ -16,11 +16,7 @@ namespace PIO.UnitTest.WebServiceLib.Mocks
 		{
 		}
 
-		public BuildingType CreateBuildingType(BuildingTypeIDs BuildingTypeID, string Name, int BuildSteps, int HealthPoints)
-		{
-			throw new NotImplementedException();
-		}
-
+	
 		public BuildingType GetBuildingType(BuildingTypeIDs BuildingTypeID)
 		{
 			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
@@ -33,6 +29,11 @@ namespace PIO.UnitTest.WebServiceLib.Mocks
 			return Generate((t) => new BuildingType() { BuildingTypeID = (BuildingTypeIDs)t });
 		}
 
-		
+		public BuildingType CreateBuildingType(BuildingTypeIDs BuildingTypeID, string Name, int BuildSteps, int HealthPoints, bool IsFactory, bool IsFarm)
+		{
+			throw new NotImplementedException();
+		}
+
+
 	}
 }

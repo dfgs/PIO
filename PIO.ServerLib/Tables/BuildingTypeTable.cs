@@ -15,5 +15,7 @@ namespace PIO.ServerLib.Tables
 		public new static readonly Column<string> Name = new Column<string>();
 		public static readonly Column<int> HealthPoints = new Column<int>();
 		public static readonly Column<int> BuildSteps = new Column<int>();
+		public static readonly Column<bool> IsFactory = new Column<bool>();
+		public static readonly Column<bool> IsFarm = new Column<bool>();
 	}
 }

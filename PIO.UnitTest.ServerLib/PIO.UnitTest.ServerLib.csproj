@@ -74,6 +74,7 @@
     <Compile Include="Modules\DataModules\IngredientModuleUnitTest.cs" />
     <Compile Include="Mocks\EngineModules\MockedSchedulerModule.cs" />
     <Compile Include="Modules\EngineModules\SchedulerModuleUnitTest.cs" />
+    <Compile Include="Modules\FunctionalModules\HarvesterModuleUnitTest.cs" />
     <Compile Include="Modules\FunctionalModules\StorerModuleUnitTest.cs" />
     <Compile Include="Modules\FunctionalModules\TakerModuleUnitTest.cs" />
     <Compile Include="Modules\FunctionalModules\IdlerModuleUnitTest.cs" />

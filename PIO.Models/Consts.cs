@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 namespace PIO.Models
 {
 
-	public enum ResourceTypeIDs : int { Tree = 0, Wood = 1, Stone = 2, Coal = 3, Plank = 4 };
-	public enum BuildingTypeIDs : int { Forest = 0, Stockpile = 1, Sawmill = 2, Stone = 3, Water = 4 };
-	public enum TaskTypeIDs : int { Idle=0, Produce = 1, MoveTo = 2, CreateBuilding=3, Build = 4, Take = 5, Store = 6 };
+	public enum ResourceTypeIDs : int { Wood = 0,  Stone = 1, Plank = 3, CutStone=4, Coal = 5 };
+	public enum BuildingTypeIDs : int { Forest = 0, Sawmill = 1, Stockpile = 2, StoneCutter = 3 };
+	public enum TaskTypeIDs : int { Idle=0, Produce = 1, Harvest =2, MoveTo = 3, CreateBuilding=4, Build = 5, Take = 6, Store = 7 };
 
 
 

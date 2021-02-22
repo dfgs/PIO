@@ -83,7 +83,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 
 			database = new MockedDatabase<BuildingType>(false, 1, (t) => new BuildingType() { BuildingTypeID = (BuildingTypeIDs)t });
 			module = new BuildingTypeModule(NullLogger.Instance, database);
-			result = module.CreateBuildingType(BuildingTypeIDs.Sawmill, "New",0,10);
+			result = module.CreateBuildingType(BuildingTypeIDs.Sawmill, "New",0,10,false,false);
 			Assert.IsNotNull(result);
 			Assert.AreEqual(BuildingTypeIDs.Sawmill, result.BuildingTypeID);
 			Assert.AreEqual(1, database.InsertedCount);
@@ -99,7 +99,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			logger = new MemoryLogger();
 			database = new MockedDatabase<BuildingType>(true, 1, (t) => new BuildingType() { BuildingTypeID = (BuildingTypeIDs)t });
 			module = new BuildingTypeModule(logger, database);
-			Assert.ThrowsException<PIODataException>(() => module.CreateBuildingType(BuildingTypeIDs.Sawmill, "New", 0, 10));
+			Assert.ThrowsException<PIODataException>(() => module.CreateBuildingType(BuildingTypeIDs.Sawmill, "New", 0, 10, false, false));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName == module.ModuleName)));
 			Assert.AreEqual(0, database.InsertedCount);
 		}

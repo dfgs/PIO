@@ -225,19 +225,18 @@ namespace PIO.UnitTest.ServerLib.Modules
 			Stack stack;
 
 			buildingModule = new MockedBuildingModule(false, new Building() {BuildingID=2, X = 10, Y = 10 });
-			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, PlanetID = 1, X = 10, Y = 10, ResourceTypeID = ResourceTypeIDs.Tree });
+			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, PlanetID = 1, X = 10, Y = 10, ResourceTypeID = ResourceTypeIDs.Wood });
 			stackModule = new MockedStackModule(false,
 				new Stack() { StackID = 0, BuildingID = 2, ResourceTypeID = ResourceTypeIDs.Plank, Quantity = 10 },
-				new Stack() { StackID = 1, BuildingID = 2, ResourceTypeID = ResourceTypeIDs.Wood, Quantity = 10 },
-				new Stack() { StackID = 2, BuildingID = 2, ResourceTypeID = ResourceTypeIDs.Stone, Quantity = 10 },
-				new Stack() { StackID = 3, BuildingID = 2, ResourceTypeID = ResourceTypeIDs.Coal, Quantity = 10 }
+				new Stack() { StackID = 1, BuildingID = 2, ResourceTypeID = ResourceTypeIDs.Stone, Quantity = 10 },
+				new Stack() { StackID = 2, BuildingID = 2, ResourceTypeID = ResourceTypeIDs.Coal, Quantity = 10 }
 				);
 			taskModule = new MockedTaskModule(false);
 			module = new StorerModule(NullLogger.Instance, taskModule, workerModule, buildingModule, stackModule);
 			schedulerModule = new MockedSchedulerModule(false, module);
 
-			module.EndStore(1,ResourceTypeIDs.Tree);
-			stack = stackModule.GetStack(4);
+			module.EndStore(1,ResourceTypeIDs.Wood);
+			stack = stackModule.GetStack(3);
 			Assert.AreEqual(1, stack.Quantity);
 			//Assert.AreEqual(2, workerModule.GetWorker(1).FactoryID);
 
