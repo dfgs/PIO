@@ -18,10 +18,6 @@ namespace PIO.ServerLib.Modules
 	{
 		private IBuildingModule buildingModule;
 		private IBuildingTypeModule buildingTypeModule;
-		//private IFactoryModule factoryModule;
-		//private IFarmModule farmModule;
-		//private IFactoryTypeModule factoryTypeModule;
-		//private IFarmTypeModule farmTypeModule;
 		private IStackModule stackModule;
 		private IMaterialModule materialModule;
 
@@ -31,8 +27,6 @@ namespace PIO.ServerLib.Modules
 		{
 			this.buildingModule = BuildingModule;
 			this.buildingTypeModule = BuildingTypeModule;
-			//this.factoryModule = FactoryModule; this.factoryTypeModule = FactoryTypeModule;
-			//this.farmModule = FarmModule;this.farmTypeModule = FarmTypeModule;
 			this.stackModule = StackModule;this.materialModule = MaterialModule;
 
 		}
@@ -50,20 +44,11 @@ namespace PIO.ServerLib.Modules
 
 			Log(LogLevels.Information, $"Checking if worker is idle (WorkerID={WorkerID})");
 			task=Try(() => taskModule.GetLastTask(WorkerID)).OrThrow<PIOInternalErrorException>("Failed to get last task");
-			if (task != null)
-			{
-				Log(LogLevels.Warning, $"Worker is not free (WorkerID={WorkerID})");
-				throw new PIOInvalidOperationException($"Worker is not free (WorkerID={WorkerID})", null, ID, ModuleName, "BeginCreateBuilding");
-			}
+			if (task != null) Throw< PIOInvalidOperationException>(LogLevels.Warning, $"Worker is not free (WorkerID={WorkerID})");
 
 			Log(LogLevels.Information, $"Checking if position is free (X={worker.X}, Y={worker.Y})");
 			building=Try(() => buildingModule.GetBuilding(worker.PlanetID,worker.X, worker.Y)).OrThrow<PIOInternalErrorException>("Failed to get building at position");
-			if (building!=null)
-			{
-				Log(LogLevels.Warning, $"Current position is not free (X={worker.X}, Y={worker.Y})");
-				throw new PIOInvalidOperationException($"Current position is not free (X={worker.X}, Y={worker.Y})", null, ID, ModuleName, "BeginCreateBuilding");
-			}
-
+			if (building!=null) Throw< PIOInvalidOperationException>(LogLevels.Warning, $"Current position is not free (X={worker.X}, Y={worker.Y})");
 
 			Log(LogLevels.Information, $"Creating task (WorkerID={WorkerID})");
 			task=Try(() => taskModule.CreateTask(TaskTypeIDs.CreateBuilding, WorkerID, worker.X, worker.Y, null, null, BuildingTypeID, DateTime.Now.AddSeconds(10))).OrThrow<PIOInternalErrorException>("Failed to create task");
@@ -108,11 +93,8 @@ namespace PIO.ServerLib.Modules
 
 			building = AssertExists(() =>buildingModule.GetBuilding(worker.PlanetID, worker.X, worker.Y), $"X={worker.X}, Y={worker.Y}");
 
-			if (building.RemainingBuildSteps == 0)
-			{
-				Log(LogLevels.Warning, $"Building is already build (BuildingID={building.BuildingID})");
-				throw new PIOInvalidOperationException($"Building is already build (BuildingID={building.BuildingID})", null, ID, ModuleName, "BeginBuild");
-			}
+			if (building.RemainingBuildSteps == 0) Throw< PIOInvalidOperationException>(LogLevels.Warning, $"Building is already build (BuildingID={building.BuildingID})");
+			
 			materials = AssertExists(() => materialModule.GetMaterials(building.BuildingTypeID), $"BuildingTypeID={building.BuildingTypeID}");
 
 
@@ -120,11 +102,7 @@ namespace PIO.ServerLib.Modules
 			{
 				Log(LogLevels.Information, $"Check stack quantity (ResourceTypeID={material.ResourceTypeID}, Quantity={material.Quantity})");
 				quantity=Try(() => stackModule.GetStackQuantity(building.BuildingID, material.ResourceTypeID)).OrThrow<PIOInternalErrorException>("Failed to check stack quantity");
-				if (quantity < material.Quantity)
-				{
-					Log(LogLevels.Warning, $"Not enough resources (BuildingID={building.BuildingID}, ResourceTypeID={material.ResourceTypeID})");
-					throw new PIONoResourcesException($"Not enough resources (BuildingID={building.BuildingID}, ResourceTypeID={material.ResourceTypeID})", null, ID, ModuleName, "BeginBuild");
-				}
+				if (quantity < material.Quantity) Throw< PIONoResourcesException>(LogLevels.Warning, $"Not enough resources (BuildingID={building.BuildingID}, ResourceTypeID={material.ResourceTypeID})");
 			}
 
 			foreach (Material material in materials)

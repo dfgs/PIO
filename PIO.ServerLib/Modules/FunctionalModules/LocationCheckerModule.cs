@@ -54,34 +54,5 @@ namespace PIO.ServerLib.Modules
 			return true;
 		}
 
-		/*public bool WorkerIsInFactory(int WorkerID, int FactoryID)
-		{
-			Building building;
-			Factory factory;
-			Worker worker;
-
-			LogEnter();
-
-			worker = AssertExists(() => workerModule.GetWorker(WorkerID), $"WorkerID={WorkerID}");
-			factory=AssertExists(() => buildingModule.GetFactory(FactoryID), $"FactoryID={FactoryID}");
-			building=AssertExists(() => buildingModule.GetBuilding(factory.BuildingID), $"BuildingID={factory.BuildingID}");
-
-
-			Log(LogLevels.Information, "Checking is worker is in factory");
-			if (worker.PlanetID!=building.PlanetID)
-			{
-				Log(LogLevels.Information, "Worker and Building are not in same Planet");
-				return false;
-			}
-			if ((worker.X!=building.X) || (worker.Y != building.Y))
-			{
-				Log(LogLevels.Information, "Worker is not in factory");
-				return false;
-			}
-
-			Log(LogLevels.Information, "Worker is in factory");
-			return true;
-
-		}*/
 	}
 }

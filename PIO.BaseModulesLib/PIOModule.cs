@@ -35,25 +35,12 @@ namespace PIO.BaseModulesLib
 
 			return item;
 		}
-		/*protected T AssertExists<T>(Func<T> Function1, Func<T> Function2, string ParameterList, [CallerMemberName] string MethodName = null)
-			where T : class
+		protected void Throw<TException>(LogLevels LogLevel, string Message, [CallerMemberName] string MethodName = null)
+			where TException : TryException
 		{
-			T item;
-			string itemName;
-
-			itemName = typeof(T).Name;
-
-			Log(LogLevels.Information, $"Get item {itemName} ({ParameterList})");
-			item = Try(() => Function1() ?? Function2()).OrThrow<PIOInternalErrorException>($"Failed to get item {itemName}");
-			if (item == null)
-			{
-				Log(LogLevels.Warning, $"{itemName} doesn't exist ({ParameterList})");
-				throw new PIONotFoundException($"{itemName} doesn't exist ({ParameterList})", null, ID, ModuleName, MethodName);
-			}
-
-			return item;
-		}*/
-
+			Log(LogLevel, Message);
+			throw (TException)Activator.CreateInstance(typeof(TException), Message, null, ID, ModuleName, MethodName);
+		}
 
 	}
 }

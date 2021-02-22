@@ -41,20 +41,12 @@ namespace PIO.ServerLib.Modules
 			worker = AssertWorkerIsIdle(WorkerID);
 
 			Log(LogLevels.Information, $"Check if worker is not carrying item (WorkerID={worker.WorkerID})");
-			if (worker.ResourceTypeID!= null) 
-			{
-				Log(LogLevels.Warning, $"Worker is already carrying item (WorkerID={worker.WorkerID}, ResourceTypeID={worker.ResourceTypeID})");
-				throw new PIOInvalidOperationException($"Worker is already carrying item (WorkerID={worker.WorkerID}, ResourceTypeID={worker.ResourceTypeID})", null, ID, ModuleName, "BeginTake");
-			}
+			if (worker.ResourceTypeID!= null)  Throw< PIOInvalidOperationException>(LogLevels.Warning, $"Worker is already carrying item (WorkerID={worker.WorkerID}, ResourceTypeID={worker.ResourceTypeID})");
 
 			building = AssertExists(() => buildingModule.GetBuilding(worker.PlanetID, worker.X, worker.Y), $"X={worker.X}, Y={worker.Y}");
 			Log(LogLevels.Information, $"Check stack quantity (BuildingID={building.BuildingID}, ResourceTypeID={ResourceTypeID})");
 			stack = Try(() => stackModule.GetStack(building.BuildingID, ResourceTypeID)).OrThrow<PIOInternalErrorException>("Failed to get stack");
-			if ((stack == null) || (stack.Quantity < carriedQuantity))
-			{
-				Log(LogLevels.Warning, $"Not enough resources (BuildingID={building.BuildingID}, ResourceTypeID={ResourceTypeID})");
-				throw new PIONoResourcesException($"Not enough resources (BuildingID={building.BuildingID}, ResourceTypeID={ResourceTypeID})", null, ID, ModuleName, "BeginTake");
-			}
+			if ((stack == null) || (stack.Quantity < carriedQuantity)) Throw<PIONoResourcesException>(LogLevels.Warning, $"Not enough resources (BuildingID={building.BuildingID}, ResourceTypeID={ResourceTypeID})");
 
 			Log(LogLevels.Information, $"Consuming resource (BuildingID={building.BuildingID}, ResourceTypeID={ResourceTypeID}, Quantity={carriedQuantity})");
 			stack.Quantity -= carriedQuantity;

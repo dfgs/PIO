@@ -119,6 +119,9 @@ namespace PIO.Console.ViewModels
 				case Models.TaskTypeIDs.Produce:
 					await Buildings.RefreshBuilding(Task.X, Task.Y);
 					break;
+				case Models.TaskTypeIDs.Harvest:
+					await Buildings.RefreshBuilding(Task.X, Task.Y);
+					break;
 				case Models.TaskTypeIDs.Build:
 					await Buildings.RefreshBuilding(Task.X, Task.Y);
 					break;

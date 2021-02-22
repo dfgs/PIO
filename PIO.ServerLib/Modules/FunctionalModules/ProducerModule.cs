@@ -46,19 +46,10 @@ namespace PIO.ServerLib.Modules
 			worker = AssertWorkerIsIdle(WorkerID);
 
 			building = AssertExists(() => buildingModule.GetBuilding(worker.PlanetID, worker.X, worker.Y), $"X={worker.X}, Y={worker.Y}");
-			if (building.RemainingBuildSteps > 0)
-			{
-				Log(LogLevels.Warning, $"Building is building (BuildingID={building.BuildingID})");
-				throw new PIOInvalidOperationException($"Building is building (BuildingID={building.BuildingID})", null, ID, ModuleName, "BeginProduce");
-			}
+			if (building.RemainingBuildSteps > 0) Throw< PIOInvalidOperationException>(LogLevels.Warning, $"Building is building (BuildingID={building.BuildingID})");
 
 			buildingType = AssertExists(() => buildingTypeModule.GetBuildingType(building.BuildingTypeID), $"BuildingTypeID={building.BuildingTypeID}");
-			if (!buildingType.IsFactory)
-			{
-				Log(LogLevels.Warning, $"Building is not a factory (BuildingID={building.BuildingID})");
-				throw new PIOInvalidOperationException($"Building is not a factory (BuildingID={building.BuildingID})", null, ID, ModuleName, "BeginProduce");
-			}
-
+			if (!buildingType.IsFactory) Throw< PIOInvalidOperationException>(LogLevels.Warning, $"Building is not a factory (BuildingID={building.BuildingID})");
 
 			ingredients = AssertExists(() => ingredientModule.GetIngredients(building.BuildingTypeID), $"BuildingTypeID={building.BuildingTypeID}");
 			products=AssertExists(() => productModule.GetProducts(building.BuildingTypeID), $"BuildingTypeID={building.BuildingTypeID}");
@@ -72,11 +63,7 @@ namespace PIO.ServerLib.Modules
 			{
 				Log(LogLevels.Information, $"Check stack quantity (ResourceTypeID={ingredient.ResourceTypeID}, Quantity={ingredient.Quantity})");
 				quantity=Try(()=> stackModule.GetStackQuantity(building.BuildingID, ingredient.ResourceTypeID)).OrThrow<PIOInternalErrorException>("Failed to check stack quantity");
-				if (quantity < ingredient.Quantity)
-				{
-					Log(LogLevels.Warning, $"Not enough resources (BuildingID={building.BuildingID}, ResourceTypeID={ingredient.ResourceTypeID})");
-					throw new PIONoResourcesException($"Not enough resources (BuildingID={building.BuildingID}, ResourceTypeID={ingredient.ResourceTypeID})", null, ID, ModuleName, "BeginProduce");
-				}
+				if (quantity < ingredient.Quantity) Throw< PIONoResourcesException>(LogLevels.Warning, $"Not enough resources (BuildingID={building.BuildingID}, ResourceTypeID={ingredient.ResourceTypeID})");
 			}
 
 			foreach (Ingredient ingredient in ingredients)

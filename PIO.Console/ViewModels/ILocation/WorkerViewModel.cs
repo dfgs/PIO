@@ -72,6 +72,12 @@ namespace PIO.Console.ViewModels
 			get { return (ViewModelCommand)GetValue(ProduceCommandProperty); }
 			set { SetValue(ProduceCommandProperty, value); }
 		}
+		public static readonly DependencyProperty HarvestCommandProperty = DependencyProperty.Register("HarvestCommand", typeof(ViewModelCommand), typeof(WorkerViewModel), new PropertyMetadata(null));
+		public ViewModelCommand HarvestCommand
+		{
+			get { return (ViewModelCommand)GetValue(HarvestCommandProperty); }
+			set { SetValue(HarvestCommandProperty, value); }
+		}
 
 
 
@@ -81,6 +87,7 @@ namespace PIO.Console.ViewModels
 			DeleteBotCommand = new ViewModelCommand(DeleteBotCommandCanExecute, DeleteBotCommandExecute);
 
 			ProduceCommand = new ViewModelCommand(ProduceCommandCanExecute, ProduceCommandExecute);
+			HarvestCommand = new ViewModelCommand(HarvestCommandCanExecute, HarvestCommandExecute);
 
 		}
 
@@ -119,6 +126,17 @@ namespace PIO.Console.ViewModels
 			PIO.Models.Task result;
 
 			result = await TryAsync(PIOClient.ProduceAsync(Model.WorkerID));
+			if (result == null) return;
+		}
+		private bool HarvestCommandCanExecute(object arg)
+		{
+			return (Model != null) && (Bot == null);
+		}
+		private async void HarvestCommandExecute(object obj)
+		{
+			PIO.Models.Task result;
+
+			result = await TryAsync(PIOClient.HarvestAsync(Model.WorkerID));
 			if (result == null) return;
 		}
 

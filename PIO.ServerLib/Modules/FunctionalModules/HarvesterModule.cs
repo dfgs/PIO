@@ -42,18 +42,10 @@ namespace PIO.ServerLib.Modules
 			worker = AssertWorkerIsIdle(WorkerID);
 
 			building = AssertExists(() => buildingModule.GetBuilding(worker.PlanetID, worker.X, worker.Y), $"X={worker.X}, Y={worker.Y}");
-			if (building.RemainingBuildSteps > 0)
-			{
-				Log(LogLevels.Warning, $"Building is building (BuildingID={building.BuildingID})");
-				throw new PIOInvalidOperationException($"Building is building (BuildingID={building.BuildingID})", null, ID, ModuleName, "BeginHarveste");
-			}
+			if (building.RemainingBuildSteps > 0) Throw< PIOInvalidOperationException>(LogLevels.Warning, $"Building is building (BuildingID={building.BuildingID})");
 
 			buildingType = AssertExists(() => buildingTypeModule.GetBuildingType(building.BuildingTypeID), $"BuildingTypeID={building.BuildingTypeID}");
-			if (!buildingType.IsFarm)
-			{
-				Log(LogLevels.Warning, $"Building is not a farm (BuildingID={building.BuildingID})");
-				throw new PIOInvalidOperationException($"Building is not a factory (BuildingID={building.BuildingID})", null, ID, ModuleName, "BeginHarveste");
-			}
+			if (!buildingType.IsFarm)  Throw<PIOInvalidOperationException>(LogLevels.Warning, $"Building is not a farm (BuildingID={building.BuildingID})");
 
 
 			products=AssertExists(() => productModule.GetProducts(building.BuildingTypeID), $"BuildingTypeID={building.BuildingTypeID}");

@@ -31,25 +31,24 @@ namespace PIO.ServerLib.Modules
 			this.planetModule = PlanetModule;this.cellModule = CellModule;this.buildingModule = BuildingModule;this.workerModule = WorkerModule;
 		}
 
-		public void Generate()
+		protected void OnGenerate()
 		{
-			Planet planet ;
+			Planet planet;
 			Building building;
 			Worker worker;
-
-			LogEnter();
 
 			Log(LogLevels.Information, "Creating ResourceType items");
 			resourceTypeModule.CreateResourceType(Models.ResourceTypeIDs.Wood, "Wood");
 			resourceTypeModule.CreateResourceType(Models.ResourceTypeIDs.Stone, "Stone");
 			resourceTypeModule.CreateResourceType(Models.ResourceTypeIDs.Coal, "Coal");
 			resourceTypeModule.CreateResourceType(Models.ResourceTypeIDs.Plank, "Plank");
+			resourceTypeModule.CreateResourceType(Models.ResourceTypeIDs.CutStone, "Cut stone");
 
 			Log(LogLevels.Information, "Creating BuildingType items");
-			buildingTypeModule.CreateBuildingType(Models.BuildingTypeIDs.Forest, "Forest", 1, 10,false,true);
-			buildingTypeModule.CreateBuildingType(Models.BuildingTypeIDs.Stockpile, "Stockpile", 2, 10,false,false); ;
-			buildingTypeModule.CreateBuildingType(Models.BuildingTypeIDs.Sawmill, "Sawmill", 2, 10,true,false);
-			buildingTypeModule.CreateBuildingType(Models.BuildingTypeIDs.StoneCutter, "Stone cutter", 5, 10,true,false);
+			buildingTypeModule.CreateBuildingType(Models.BuildingTypeIDs.Forest, "Forest", 1, 10, false, true);
+			buildingTypeModule.CreateBuildingType(Models.BuildingTypeIDs.Stockpile, "Stockpile", 2, 10, false, false); ;
+			buildingTypeModule.CreateBuildingType(Models.BuildingTypeIDs.Sawmill, "Sawmill", 2, 10, true, false);
+			buildingTypeModule.CreateBuildingType(Models.BuildingTypeIDs.StoneCutter, "Stone cutter", 5, 10, true, false);
 
 			Log(LogLevels.Information, "Creating TaskType items");
 			taskTypeModule.CreateTaskType(Models.TaskTypeIDs.Idle, "Idle");
@@ -77,7 +76,7 @@ namespace PIO.ServerLib.Modules
 			productModule.CreateProduct(Models.BuildingTypeIDs.StoneCutter, Models.ResourceTypeIDs.CutStone, 2, 20);
 
 			Log(LogLevels.Information, "Creating Planet items");
-			planet=planetModule.CreatePlanet("Default", 50, 50);
+			planet = planetModule.CreatePlanet("Default", 50, 50);
 
 
 			Log(LogLevels.Information, "Creating Cell items");
@@ -98,9 +97,13 @@ namespace PIO.ServerLib.Modules
 			worker = workerModule.CreateWorker(planet.PlanetID, 0, 3);
 			worker = workerModule.CreateWorker(planet.PlanetID, 2, 3);
 			#endregion
-
-
-
 		}
+		public bool Generate()
+		{
+
+			LogEnter();
+			return Try(() => OnGenerate()).OrAlert("Error occured during planet generation");
+		}
+
 	}
 }

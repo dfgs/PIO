@@ -98,6 +98,8 @@ namespace PIO.Models
 		[OperationContract]
 		Task Produce(int WorkerID);
 		[OperationContract]
+		Task Harvest(int WorkerID);
+		[OperationContract]
 		Task MoveTo(int WorkerID, int X, int Y);
 		[OperationContract]
 		Task MoveToBuilding(int WorkerID, int BuildingID);

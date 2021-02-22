@@ -237,6 +237,12 @@ namespace PIO.ClientLib.PIOServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/Produce", ReplyAction="http://tempuri.org/IPIOService/ProduceResponse")]
         System.Threading.Tasks.Task<PIO.Models.Task> ProduceAsync(int WorkerID);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/Harvest", ReplyAction="http://tempuri.org/IPIOService/HarvestResponse")]
+        PIO.Models.Task Harvest(int WorkerID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/Harvest", ReplyAction="http://tempuri.org/IPIOService/HarvestResponse")]
+        System.Threading.Tasks.Task<PIO.Models.Task> HarvestAsync(int WorkerID);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/MoveTo", ReplyAction="http://tempuri.org/IPIOService/MoveToResponse")]
         PIO.Models.Task MoveTo(int WorkerID, int X, int Y);
         
@@ -595,6 +601,14 @@ namespace PIO.ClientLib.PIOServiceReference {
         
         public System.Threading.Tasks.Task<PIO.Models.Task> ProduceAsync(int WorkerID) {
             return base.Channel.ProduceAsync(WorkerID);
+        }
+        
+        public PIO.Models.Task Harvest(int WorkerID) {
+            return base.Channel.Harvest(WorkerID);
+        }
+        
+        public System.Threading.Tasks.Task<PIO.Models.Task> HarvestAsync(int WorkerID) {
+            return base.Channel.HarvestAsync(WorkerID);
         }
         
         public PIO.Models.Task MoveTo(int WorkerID, int X, int Y) {

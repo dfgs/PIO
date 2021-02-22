@@ -37,11 +37,7 @@ namespace PIO.ServerLib.Modules
 			worker = AssertWorkerIsIdle(WorkerID);
 			building = AssertExists(() => buildingModule.GetBuilding(BuildingID), $"BuildingID={BuildingID}");
 
-			if (worker.PlanetID!=building.PlanetID)
-			{
-				Log(LogLevels.Warning, $"Worker is not in the same planet as building (WorkerID={WorkerID})");
-				throw new PIOInvalidOperationException($"Worker is not in the same planet as building (WorkerID={WorkerID})", null, ID, ModuleName, "BeginMoveTo");
-			}
+			if (worker.PlanetID!=building.PlanetID) Throw< PIOInvalidOperationException>(LogLevels.Warning, $"Worker is not in the same planet as building (WorkerID={WorkerID})");
 
 			Log(LogLevels.Information, $"Creating task (WorkerID={WorkerID})");
 			task=Try(() => taskModule.CreateTask(TaskTypeIDs.MoveTo, WorkerID, building.X, building.Y, null, null,  null, DateTime.Now.AddSeconds(10))).OrThrow<PIOInternalErrorException>("Failed to create task");

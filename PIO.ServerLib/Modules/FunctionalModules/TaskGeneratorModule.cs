@@ -28,18 +28,11 @@ namespace PIO.ServerLib.Modules
 
 			Log(LogLevels.Information, $"Checking if worker exists and is idle (WorkerID={WorkerID})");
 			worker=Try(() => workerModule.GetWorker(WorkerID) ).OrThrow<PIOInternalErrorException>($"Failed to get worker");
-			if (worker == null)
-			{
-				Log(LogLevels.Warning, $"Worker doesn't exist (WorkerID={WorkerID})");
-				throw new PIONotFoundException($"Worker doesn't exist (WorkerID={WorkerID})", null, ID, ModuleName, MethodName);
-			}
+			if (worker == null) Throw<PIONotFoundException>(LogLevels.Warning, $"Worker doesn't exist (WorkerID={WorkerID})");
+		
 
 			task = Try(() => taskModule.GetLastTask(WorkerID)).OrThrow<PIOInternalErrorException>("Failed to get last worker task");
-			if (task != null)
-			{
-				Log(LogLevels.Warning, $"Worker is not free (WorkerID={WorkerID})");
-				throw new PIOInvalidOperationException($"Worker is not free (WorkerID={WorkerID})", null, ID, ModuleName, MethodName);
-			}
+			if (task != null) Throw<PIOInvalidOperationException>(LogLevels.Warning, $"Worker is not free (WorkerID={WorkerID})");
 
 			return worker;
 		}

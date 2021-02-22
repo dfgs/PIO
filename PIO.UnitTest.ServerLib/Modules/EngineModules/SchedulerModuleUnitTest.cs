@@ -24,7 +24,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			IIdlerModule taskModule;
 
 			taskModule = new MockedIdlerModule();
-			module = new SchedulerModule(NullLogger.Instance, null, taskModule, new MockedProducerModule(), new MockedMoverModule(),  new MockedTakerModule(), new MockedStorerModule(), new MockedFactoryBuilderModule());;
+			module = new SchedulerModule(NullLogger.Instance, null, taskModule, new MockedProducerModule(), new MockedHarvesterModule(), new MockedMoverModule(),  new MockedTakerModule(), new MockedStorerModule(), new MockedFactoryBuilderModule());;
 			taskModule.BeginIdle(1,10);
 			Assert.AreEqual(1, module.Count);
 		}
@@ -35,11 +35,21 @@ namespace PIO.UnitTest.ServerLib.Modules
 			IProducerModule taskModule;
 
 			taskModule = new MockedProducerModule();
-			module = new SchedulerModule(NullLogger.Instance,null, new MockedIdlerModule(), taskModule, new MockedMoverModule(),new MockedTakerModule(), new MockedStorerModule(), new MockedFactoryBuilderModule());
+			module = new SchedulerModule(NullLogger.Instance,null, new MockedIdlerModule(), taskModule, new MockedHarvesterModule(), new MockedMoverModule(),new MockedTakerModule(), new MockedStorerModule(), new MockedFactoryBuilderModule());
 			taskModule.BeginProduce(1);
 			Assert.AreEqual(1, module.Count);
 		}
+		[TestMethod]
+		public void ShouldAddTaskFromHarvester()
+		{
+			SchedulerModule module;
+			IHarvesterModule taskModule;
 
+			taskModule = new MockedHarvesterModule();
+			module = new SchedulerModule(NullLogger.Instance, null, new MockedIdlerModule(),new MockedProducerModule(), taskModule, new MockedMoverModule(), new MockedTakerModule(), new MockedStorerModule(), new MockedFactoryBuilderModule());
+			taskModule.BeginHarvest(1);
+			Assert.AreEqual(1, module.Count);
+		}
 		[TestMethod]
 		public void ShouldAddTaskFromMover()
 		{
@@ -47,7 +57,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			IMoverModule taskModule;
 
 			taskModule = new MockedMoverModule();
-			module = new SchedulerModule(NullLogger.Instance, null, new MockedIdlerModule(), new MockedProducerModule(), taskModule, new MockedTakerModule(), new MockedStorerModule(), new MockedFactoryBuilderModule());
+			module = new SchedulerModule(NullLogger.Instance, null, new MockedIdlerModule(), new MockedProducerModule(), new MockedHarvesterModule(), taskModule, new MockedTakerModule(), new MockedStorerModule(), new MockedFactoryBuilderModule());
 			taskModule.BeginMoveTo(1,2,5);
 			Assert.AreEqual(1, module.Count);
 		}
@@ -61,7 +71,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			ITakerModule takerModule;
 
 			takerModule = new MockedTakerModule();
-			module = new SchedulerModule(NullLogger.Instance, null, new MockedIdlerModule(), new MockedProducerModule(), new MockedMoverModule(), takerModule, new MockedStorerModule(), new MockedFactoryBuilderModule());
+			module = new SchedulerModule(NullLogger.Instance, null, new MockedIdlerModule(), new MockedProducerModule(), new MockedHarvesterModule(), new MockedMoverModule(), takerModule, new MockedStorerModule(), new MockedFactoryBuilderModule());
 			takerModule.BeginTake(1, ResourceTypeIDs.Wood);
 			Assert.AreEqual(1, module.Count);
 		}
@@ -72,7 +82,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			IStorerModule storerModule;
 
 			storerModule = new MockedStorerModule();
-			module = new SchedulerModule(NullLogger.Instance, null, new MockedIdlerModule(), new MockedProducerModule(), new MockedMoverModule(), new MockedTakerModule(), storerModule, new MockedFactoryBuilderModule());
+			module = new SchedulerModule(NullLogger.Instance, null, new MockedIdlerModule(), new MockedProducerModule(), new MockedHarvesterModule(), new MockedMoverModule(), new MockedTakerModule(), storerModule, new MockedFactoryBuilderModule());
 			storerModule.BeginStore(1);
 			Assert.AreEqual(1, module.Count);
 		}
@@ -84,7 +94,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			IBuilderModule taskModule;
 
 			taskModule = new MockedFactoryBuilderModule();
-			module = new SchedulerModule(NullLogger.Instance, null, new MockedIdlerModule(), new MockedProducerModule(), new MockedMoverModule(), new MockedTakerModule(), new MockedStorerModule(), taskModule);
+			module = new SchedulerModule(NullLogger.Instance, null, new MockedIdlerModule(), new MockedProducerModule(), new MockedHarvesterModule(), new MockedMoverModule(), new MockedTakerModule(), new MockedStorerModule(), taskModule);
 			taskModule.BeginCreateBuilding(1, BuildingTypeIDs.Sawmill);
 			Assert.AreEqual(1, module.Count);
 

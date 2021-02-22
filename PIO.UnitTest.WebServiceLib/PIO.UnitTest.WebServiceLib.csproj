@@ -64,6 +64,7 @@
     <Compile Include="Mocks\MockedCallback.cs" />
     <Compile Include="Mocks\MockedBuildingModule.cs" />
     <Compile Include="Mocks\MockedBuildingTypeModule.cs" />
+    <Compile Include="Mocks\MockedHarvesterModule.cs" />
     <Compile Include="Mocks\MockedStorerModule.cs" />
     <Compile Include="Mocks\MockedTakerModule.cs" />
     <Compile Include="Mocks\MockedBuilderModule.cs" />

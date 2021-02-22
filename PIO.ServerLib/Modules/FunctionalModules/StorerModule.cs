@@ -41,12 +41,8 @@ namespace PIO.ServerLib.Modules
 			worker = AssertWorkerIsIdle(WorkerID);
 
 			Log(LogLevels.Information, $"Check if worker is carrying item (WorkerID={worker.WorkerID})");
-			if (worker.ResourceTypeID== null) 
-			{
-				Log(LogLevels.Warning, $"Worker is not carrying item (WorkerID={worker.WorkerID})");
-				throw new PIOInvalidOperationException($"Worker is not carrying item (WorkerID={worker.WorkerID})", null, ID, ModuleName, "BeginStore");
-			}
-
+			if (worker.ResourceTypeID== null)  Throw< PIOInvalidOperationException>(LogLevels.Warning, $"Worker is not carrying item (WorkerID={worker.WorkerID})");
+				
 			building = AssertExists(() => buildingModule.GetBuilding(worker.PlanetID, worker.X, worker.Y), $"X={worker.X}, Y={worker.Y}");
 
 			resourceTypeID = worker.ResourceTypeID;

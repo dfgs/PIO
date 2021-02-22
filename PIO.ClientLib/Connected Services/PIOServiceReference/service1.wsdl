@@ -229,6 +229,12 @@
   <wsdl:message name="IPIOService_Produce_OutputMessage">
     <wsdl:part name="parameters" element="tns:ProduceResponse" />
   </wsdl:message>
+  <wsdl:message name="IPIOService_Harvest_InputMessage">
+    <wsdl:part name="parameters" element="tns:Harvest" />
+  </wsdl:message>
+  <wsdl:message name="IPIOService_Harvest_OutputMessage">
+    <wsdl:part name="parameters" element="tns:HarvestResponse" />
+  </wsdl:message>
   <wsdl:message name="IPIOService_MoveTo_InputMessage">
     <wsdl:part name="parameters" element="tns:MoveTo" />
   </wsdl:message>
@@ -413,6 +419,10 @@
     <wsdl:operation name="Produce">
       <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/Produce" message="tns:IPIOService_Produce_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/ProduceResponse" message="tns:IPIOService_Produce_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Harvest">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/Harvest" message="tns:IPIOService_Harvest_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/HarvestResponse" message="tns:IPIOService_Harvest_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="MoveTo">
       <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/MoveTo" message="tns:IPIOService_MoveTo_InputMessage" />
@@ -767,6 +777,15 @@
     </wsdl:operation>
     <wsdl:operation name="Produce">
       <soap:operation soapAction="http://tempuri.org/IPIOService/Produce" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Harvest">
+      <soap:operation soapAction="http://tempuri.org/IPIOService/Harvest" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

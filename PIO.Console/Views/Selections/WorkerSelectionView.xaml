@@ -37,6 +37,7 @@
 			<Button Content="Create bot" Command="{Binding CreateBotCommand}"/>
 			<Button Content="Delete bot" Command="{Binding DeleteBotCommand}"/>
 			<Button Content="Produce" Command="{Binding ProduceCommand}"/>
+			<Button Content="Harvest" Command="{Binding HarvestCommand}"/>
 		</StackPanel>
 	</Grid>
 

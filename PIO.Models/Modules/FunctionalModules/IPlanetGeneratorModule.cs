@@ -9,6 +9,6 @@ namespace PIO.Models.Modules
 {
 	public interface IPlanetGeneratorModule: IFunctionalModule
 	{
-		void Generate();
+		bool Generate();
 	}
 }

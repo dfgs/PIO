@@ -90,6 +90,7 @@
     <Compile Include="PIO\FunctionalCmdlet\NewFarmCmdLet.cs" />
     <Compile Include="PIO\FunctionalCmdlet\StartBuildCmdLet.cs" />
     <Compile Include="PIO\FunctionalCmdlet\NewFactoryCmdLet.cs" />
+    <Compile Include="PIO\FunctionalCmdlet\StartHarvestCmdlet.cs" />
     <Compile Include="PIO\FunctionalCmdlet\StartStoreCmdlet.cs" />
     <Compile Include="PIO\FunctionalCmdlet\StartTakeCmdlet.cs" />
     <Compile Include="PIO\FunctionalCmdlet\StartMoveToCmdlet.cs" />

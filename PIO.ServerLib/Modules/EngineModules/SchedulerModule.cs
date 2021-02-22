@@ -29,6 +29,7 @@ namespace PIO.ServerLib.Modules
 		private ITaskModule taskModule;
 		private IIdlerModule idlerModule;
 		private IProducerModule producerModule;
+		private IHarvesterModule harvesterModule;
 		private IMoverModule moverModule;
 		private IBuilderModule factoryBuilderModule;
 		private ITakerModule takerModule;
@@ -38,14 +39,16 @@ namespace PIO.ServerLib.Modules
 		public event TaskEventHandler TaskEnded;
 
 
-		public SchedulerModule(ILogger Logger,ITaskModule TaskModule, IIdlerModule IdlerModule, IProducerModule ProducerModule,IMoverModule MoverModule,  ITakerModule TakerModule,IStorerModule StorerModule, IBuilderModule FactoryBuilderModule) : base(Logger, ThreadPriority.Normal)
+		public SchedulerModule(ILogger Logger,ITaskModule TaskModule, IIdlerModule IdlerModule, IProducerModule ProducerModule, IHarvesterModule HarvesterModule, IMoverModule MoverModule,  ITakerModule TakerModule,IStorerModule StorerModule, IBuilderModule FactoryBuilderModule) : base(Logger, ThreadPriority.Normal)
 		{
-			this.taskModule = TaskModule;this.idlerModule = IdlerModule; this.producerModule = ProducerModule;this.moverModule = MoverModule;this.takerModule = TakerModule;this.storerModule = StorerModule;
+			this.taskModule = TaskModule;this.idlerModule = IdlerModule; this.producerModule = ProducerModule; this.harvesterModule = HarvesterModule;
+			this.moverModule = MoverModule;this.takerModule = TakerModule;this.storerModule = StorerModule;
 			this.factoryBuilderModule = FactoryBuilderModule;
 
 
 			idlerModule.TaskCreated += TaskGeneratorModule_TaskCreated;
 			producerModule.TaskCreated += TaskGeneratorModule_TaskCreated;
+			harvesterModule.TaskCreated += TaskGeneratorModule_TaskCreated;
 			moverModule.TaskCreated += TaskGeneratorModule_TaskCreated;
 			takerModule.TaskCreated += TaskGeneratorModule_TaskCreated;
 			storerModule.TaskCreated += TaskGeneratorModule_TaskCreated;
@@ -98,6 +101,9 @@ namespace PIO.ServerLib.Modules
 					break;
 				case TaskTypeIDs.Produce:
 					Try(() => producerModule.EndProduce(Task.WorkerID)).OrAlert($"Failed to terminate task (TaskID={Task.TaskID})");
+					break;
+				case TaskTypeIDs.Harvest:
+					Try(() => harvesterModule.EndHarvest(Task.WorkerID)).OrAlert($"Failed to terminate task (TaskID={Task.TaskID})");
 					break;
 				case TaskTypeIDs.MoveTo:
 					Try(() => moverModule.EndMoveTo(Task.WorkerID, Task.X,Task.Y)).OrAlert($"Failed to terminate task (TaskID={Task.TaskID})");

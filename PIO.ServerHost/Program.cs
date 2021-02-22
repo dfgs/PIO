@@ -62,6 +62,7 @@ namespace PIO.ServerHost
 			IResourceCheckerModule resourceCheckerModule;
 			ILocationCheckerModule locationCheckerModule;
 			IProducerModule producerModule;
+			IHarvesterModule harvesterModule;
 			IMoverModule moverModule;
 			ITakerModule takerModule;
 			IStorerModule storerModule;
@@ -79,11 +80,8 @@ namespace PIO.ServerHost
 			database = new Database(connectionFactory, commandBuilder);
 
 			versionControlModule = new VersionControlModule(logger,databaseCreator,new PIOVersionControl(database));
-			if (!versionControlModule.InitializeDatabase(Properties.Settings.Default.DropDatabase))
-			{
-				Console.ReadLine();
-				return;
-			}
+			if (!versionControlModule.InitializeDatabase(Properties.Settings.Default.DropDatabase)) return;
+			
 
 
 			planetModule = new PlanetModule(logger, database);
@@ -105,14 +103,15 @@ namespace PIO.ServerHost
 			resourceCheckerModule = new ResourceCheckerModule(logger, buildingModule,stackModule, ingredientModule,materialModule);
 			locationCheckerModule = new LocationCheckerModule(logger, workerModule, buildingModule);
 			producerModule = new ProducerModule(logger, taskModule, workerModule, buildingModule, buildingTypeModule,  stackModule, ingredientModule, productModule);
+			harvesterModule = new HarvesterModule(logger, taskModule, workerModule, buildingModule, buildingTypeModule, stackModule, productModule);
 			moverModule = new MoverModule(logger, taskModule, workerModule, buildingModule);
 			takerModule = new TakerModule(logger, taskModule, workerModule, buildingModule, stackModule);
 			storerModule = new StorerModule(logger, taskModule, workerModule, buildingModule, stackModule);
 
 			planetGeneratorModule = new PlanetGeneratorModule(logger,resourceTypeModule,buildingTypeModule,taskTypeModule,materialModule,ingredientModule,productModule,planetModule,cellModule,buildingModule,workerModule);
-			planetGeneratorModule.Generate();
+			if (!planetGeneratorModule.Generate()) return; 
 
-			schedulerModule = new SchedulerModule(logger, taskModule, idlerModule, producerModule,moverModule,takerModule,storerModule, factoryBuilderModule);
+			schedulerModule = new SchedulerModule(logger, taskModule, idlerModule, producerModule,harvesterModule, moverModule,takerModule,storerModule, factoryBuilderModule);
 			schedulerModule.Start();
 
 
@@ -121,7 +120,7 @@ namespace PIO.ServerHost
 				stackModule, resourceTypeModule,
 				 buildingTypeModule, taskTypeModule, materialModule, ingredientModule, productModule, taskModule,
 				schedulerModule,
-				resourceCheckerModule, locationCheckerModule, idlerModule, producerModule, moverModule,  takerModule, storerModule,
+				resourceCheckerModule, locationCheckerModule, idlerModule, producerModule, harvesterModule, moverModule,  takerModule, storerModule,
 				factoryBuilderModule) ; 
 
 			pioServiceHostModule = new ServiceHostModule(logger,pioService);

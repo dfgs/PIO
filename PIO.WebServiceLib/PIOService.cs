@@ -36,6 +36,7 @@ namespace PIO.WebServiceLib
 		private IResourceCheckerModule resourceCheckerModule;
 		private ILocationCheckerModule locationCheckerModule;
 		private IProducerModule producerModule;
+		private IHarvesterModule harvesterModule;
 		private IMoverModule moverModule;
 		private ITakerModule takerModule;
 		private IStorerModule storerModule;
@@ -58,7 +59,7 @@ namespace PIO.WebServiceLib
 			ISchedulerModule SchedulerModule,
 
 			IResourceCheckerModule ResourceCheckerModule,ILocationCheckerModule LocationCheckerModule,
-			IIdlerModule IdlerModule, IProducerModule ProducerModule,
+			IIdlerModule IdlerModule, IProducerModule ProducerModule,IHarvesterModule HarvesterModule,
 			IMoverModule MoverModule,ITakerModule TakerModule,IStorerModule StorerModule,
 			IBuilderModule BuilderModule
 		) :base(Logger)
@@ -87,6 +88,7 @@ namespace PIO.WebServiceLib
 			this.resourceCheckerModule = ResourceCheckerModule;
 			this.idlerModule = IdlerModule;
 			this.producerModule = ProducerModule;
+			this.harvesterModule = HarvesterModule;
 			this.moverModule = MoverModule;
 			this.takerModule = TakerModule;
 			this.storerModule = StorerModule;
@@ -318,6 +320,12 @@ namespace PIO.WebServiceLib
 			LogEnter();
 
 			return Try(() => producerModule.BeginProduce(WorkerID)).OrThrow(GenerateFaultException);
+		}
+		public Task Harvest(int WorkerID)
+		{
+			LogEnter();
+
+			return Try(() => harvesterModule.BeginHarvest(WorkerID)).OrThrow(GenerateFaultException);
 		}
 
 		public Task MoveTo(int WorkerID, int X, int Y)
