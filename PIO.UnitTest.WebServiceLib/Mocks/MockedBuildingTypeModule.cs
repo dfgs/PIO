@@ -16,7 +16,10 @@ namespace PIO.UnitTest.WebServiceLib.Mocks
 		{
 		}
 
-		
+		public BuildingType CreateBuildingType(BuildingTypeIDs BuildingTypeID, string Name, int BuildSteps, int HealthPoints)
+		{
+			throw new NotImplementedException();
+		}
 
 		public BuildingType GetBuildingType(BuildingTypeIDs BuildingTypeID)
 		{

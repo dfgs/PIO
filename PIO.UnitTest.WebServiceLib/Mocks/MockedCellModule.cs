@@ -16,6 +16,11 @@ namespace PIO.UnitTest.WebServiceLib.Mocks
 		{
 		}
 
+		public Cell CreateCell(int PlanetID, int X, int Y)
+		{
+			throw new NotImplementedException();
+		}
+
 		public Cell GetCell(int CellID)
 		{
 			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");

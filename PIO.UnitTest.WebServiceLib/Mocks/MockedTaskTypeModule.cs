@@ -16,7 +16,10 @@ namespace PIO.UnitTest.WebServiceLib.Mocks
 		{
 		}
 
-		
+		public TaskType CreateTaskType(TaskTypeIDs TaskTypeID, string Name)
+		{
+			throw new NotImplementedException();
+		}
 
 		public TaskType GetTaskType(TaskTypeIDs TaskTypeID)
 		{

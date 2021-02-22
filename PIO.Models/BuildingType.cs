@@ -16,8 +16,6 @@ namespace PIO.Models
 		[DataMember]
 		public string Name { get; set; }
 		[DataMember]
-		public int MaterialSetID { get; set; }
-		[DataMember]
 		public int HealthPoints { get; set; }
 		[DataMember]
 		public int BuildSteps { get; set; }

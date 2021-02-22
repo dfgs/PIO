@@ -22,6 +22,11 @@ namespace PIO.UnitTest.ServerLib.Mocks
 			this.items = new List<Material>(Items);
 		}
 
+		public Material CreateMaterial(BuildingTypeIDs BuildingTypeID, ResourceTypeIDs ResourceTypeID, int Quantity)
+		{
+			throw new NotImplementedException();
+		}
+
 		public Material GetMaterial(int MaterialID)
 		{
 			if (throwException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");

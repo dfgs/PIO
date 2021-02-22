@@ -62,7 +62,26 @@ namespace PIO.ServerLib.Modules
 				.And(CellTable.PlanetID.IsEqualTo(PlanetID))))));
 			return TrySelectMany<CellTable, Cell>(query).OrThrow<PIODataException>("Failed to query");
 		}
-		
+
+		public Cell CreateCell(int PlanetID, int X, int Y)
+		{
+			IInsert query;
+			Cell item;
+			object result;
+
+			LogEnter();
+
+			item = new Cell() { PlanetID=PlanetID, X= X, Y= Y, };
+
+			Log(LogLevels.Information, $"Inserting into Cell table (Name={PlanetID}, Width={X}, Height={Y})");
+			query = new Insert().Into(PIODB.CellTable).Set(CellTable.PlanetID, item.PlanetID).Set(CellTable.X, item.X).Set(CellTable.Y, item.Y);
+			result = Try(query).OrThrow<PIODataException>("Failed to insert");
+			item.CellID = Convert.ToInt32(result);
+
+			return item;
+		}
+
+
 
 
 	}

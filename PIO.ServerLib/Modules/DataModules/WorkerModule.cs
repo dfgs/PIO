@@ -52,6 +52,26 @@ namespace PIO.ServerLib.Modules
 			return TrySelectMany<WorkerTable, Worker>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
+
+		public Worker CreateWorker(int PlanetID, int X, int Y)
+		{
+			IInsert queryWorker;
+			Worker item;
+			object result;
+
+			LogEnter();
+
+			item = new Worker() { PlanetID = PlanetID, X = X, Y = Y};
+
+			Log(LogLevels.Information, $"Inserting into Worker table (PlanetID={PlanetID}, X={X}, Y={Y})");
+			queryWorker = new Insert().Into(PIODB.WorkerTable).Set(WorkerTable.PlanetID, item.PlanetID).Set(WorkerTable.X, item.X).Set(WorkerTable.Y, item.Y);
+			result = Try(queryWorker).OrThrow<PIODataException>("Failed to insert");
+			item.WorkerID = Convert.ToInt32(result);
+
+			return item;
+		}
+
+
 		public void UpdateWorker(int WorkerID, int X, int Y)
 		{
 			IUpdate update;

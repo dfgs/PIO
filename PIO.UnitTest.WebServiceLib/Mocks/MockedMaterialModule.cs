@@ -16,7 +16,10 @@ namespace PIO.UnitTest.WebServiceLib.Mocks
 		{
 		}
 
-		
+		public Material CreateMaterial(BuildingTypeIDs BuildingTypeID, ResourceTypeIDs ResourceTypeID, int Quantity)
+		{
+			throw new NotImplementedException();
+		}
 
 		public Material GetMaterial(int MaterialID)
 		{

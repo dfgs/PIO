@@ -57,6 +57,7 @@
     <Compile Include="Modules\DataModules\ITaskTypeModule.cs" />
     <Compile Include="Modules\EngineModules\ISchedulerModule.cs" />
     <Compile Include="Modules\EngineModules\TaskEventArgs.cs" />
+    <Compile Include="Modules\FunctionalModules\IPlanetGeneratorModule.cs" />
     <Compile Include="Modules\FunctionalModules\IStorerModule.cs" />
     <Compile Include="Modules\FunctionalModules\ITakerModule.cs" />
     <Compile Include="Modules\FunctionalModules\IIdlerModule.cs" />

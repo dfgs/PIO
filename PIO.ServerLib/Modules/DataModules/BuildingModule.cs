@@ -71,7 +71,7 @@ namespace PIO.ServerLib.Modules
 			Try(update).OrThrow<PIODataException>("Failed to update");
 		}
 
-		public Building CreateBuilding(int PlanetID, int X, int Y, int RemainingBuildSteps, BuildingTypeIDs BuildingTypeID)
+		public Building CreateBuilding(int PlanetID, int X, int Y, BuildingTypeIDs BuildingTypeID, int RemainingBuildSteps,int HealthPoints )
 		{
 			IInsert queryBuilding;
 			Building item;
@@ -79,11 +79,7 @@ namespace PIO.ServerLib.Modules
 
 			LogEnter();
 
-			//new Insert().Into(PIODB.BuildingTable).Set(BuildingTable.PlanetID, planetID).Set(BuildingTable.X, 0).Set(BuildingTable.Y, 0).Set(BuildingTable.HealthPoints, 10).Set(BuildingTable.RemainingBuildSteps, 0);
-			//new SelectIdentity((result) => buildingID = Convert.ToInt32(result));
-			//new Insert().Into(PIODB.BuildingTable).Set(BuildingTable.BuildingID, buildingID).Set(BuildingTable.BuildingTypeID, BuildingTypeIDs.Forest);
-
-			item = new Building() { PlanetID = PlanetID, BuildingTypeID = BuildingTypeID, X = X, Y = Y, RemainingBuildSteps = RemainingBuildSteps,};
+			item = new Building() { PlanetID = PlanetID, BuildingTypeID = BuildingTypeID, X = X, Y = Y, RemainingBuildSteps = RemainingBuildSteps, HealthPoints=HealthPoints};
 
 			Log(LogLevels.Information, $"Inserting into Building table (PlanetID={PlanetID}, X={X}, Y={Y}, BuildingTypeID={BuildingTypeID}, RemainingBuildingSteps={RemainingBuildSteps})");
 			queryBuilding = new Insert().Into(PIODB.BuildingTable).Set(BuildingTable.PlanetID, item.PlanetID).Set(BuildingTable.BuildingTypeID, item.BuildingTypeID).Set(BuildingTable.X, item.X).Set(BuildingTable.Y, item.Y).Set(BuildingTable.HealthPoints, item.HealthPoints).Set(BuildingTable.RemainingBuildSteps, item.RemainingBuildSteps);

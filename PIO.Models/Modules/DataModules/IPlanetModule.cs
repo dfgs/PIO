@@ -13,5 +13,7 @@ namespace PIO.Models.Modules
 	{
 		Planet GetPlanet(int PlanetID);
 		Planet[] GetPlanets();
+
+		Planet CreatePlanet(string Name,int Width, int Height);
 	}
 }

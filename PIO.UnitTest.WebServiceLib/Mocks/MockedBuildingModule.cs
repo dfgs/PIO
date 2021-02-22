@@ -41,12 +41,14 @@ namespace PIO.UnitTest.WebServiceLib.Mocks
 		}
 
 		
-		public Building CreateBuilding(int PlanetID, int X, int Y, int RemainingBuildSteps, BuildingTypeIDs BuildingTypeID)
+		
+
+		public void UpdateBuilding(int BuildingID, int RemainingBuildSteps)
 		{
 			throw new NotImplementedException();
 		}
 
-		public void UpdateBuilding(int BuildingID, int RemainingBuildSteps)
+		public Building CreateBuilding(int PlanetID, int X, int Y, BuildingTypeIDs BuildingTypeID, int RemainingBuildSteps, int HealthPoints)
 		{
 			throw new NotImplementedException();
 		}

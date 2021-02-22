@@ -16,7 +16,10 @@ namespace PIO.UnitTest.WebServiceLib.Mocks
 		{
 		}
 
-		
+		public Product CreateProduct(BuildingTypeIDs BuildingTypeID, ResourceTypeIDs ResourceTypeID, int Quantity, int Duration)
+		{
+			throw new NotImplementedException();
+		}
 
 		public Product GetProduct(int ProductID)
 		{

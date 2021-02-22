@@ -74,6 +74,36 @@ namespace PIO.UnitTest.ServerLib.Modules
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
 		}
 
+		[TestMethod]
+		public void ShouldCreateResourceType()
+		{
+			MockedDatabase<ResourceType> database;
+			ResourceTypeModule module;
+			ResourceType result;
+
+			database = new MockedDatabase<ResourceType>(false, 1, (t) => new ResourceType() { ResourceTypeID = (ResourceTypeIDs)t });
+			module = new ResourceTypeModule(NullLogger.Instance, database);
+			result = module.CreateResourceType(ResourceTypeIDs.Tree,"New");
+			Assert.IsNotNull(result);
+			Assert.AreEqual(ResourceTypeIDs.Tree, result.ResourceTypeID);
+			Assert.AreEqual(1, database.InsertedCount);
+		}
+		[TestMethod]
+		public void ShouldNotCreateResourceTypeAndLogError()
+		{
+			MockedDatabase<ResourceType> database;
+			ResourceTypeModule module;
+			MemoryLogger logger;
+
+
+			logger = new MemoryLogger();
+			database = new MockedDatabase<ResourceType>(true, 1, (t) => new ResourceType() { ResourceTypeID = (ResourceTypeIDs)t });
+			module = new ResourceTypeModule(logger, database);
+			Assert.ThrowsException<PIODataException>(() => module.CreateResourceType(ResourceTypeIDs.Wood,"New"));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName == module.ModuleName)));
+			Assert.AreEqual(0, database.InsertedCount);
+		}
+
 
 	}
 }

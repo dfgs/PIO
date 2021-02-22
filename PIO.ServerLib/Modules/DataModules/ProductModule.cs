@@ -44,5 +44,23 @@ namespace PIO.ServerLib.Modules
 			return TrySelectMany<ProductTable,Product>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
+		public Product CreateProduct(BuildingTypeIDs BuildingTypeID, ResourceTypeIDs ResourceTypeID, int Quantity,int Duration)
+		{
+			IInsert query;
+			Product item;
+			object result;
+
+			LogEnter();
+
+			item = new Product() { BuildingTypeID = BuildingTypeID, ResourceTypeID = ResourceTypeID, Quantity = Quantity,Duration=Duration };
+
+			Log(LogLevels.Information, $"Inserting into Product table (BuildingTypeID={BuildingTypeID},ResourceTypeID={ResourceTypeID}, Quantity={Quantity}, Duration={Duration})");
+			query = new Insert().Into(PIODB.ProductTable).Set(ProductTable.BuildingTypeID, item.BuildingTypeID).Set(ProductTable.ResourceTypeID, item.ResourceTypeID).Set(ProductTable.Quantity, item.Quantity).Set(ProductTable.Duration, item.Duration);
+			result = Try(query).OrThrow<PIODataException>("Failed to insert");
+			item.ProductID = Convert.ToInt32(result);
+
+			return item;
+		}
+
 	}
 }

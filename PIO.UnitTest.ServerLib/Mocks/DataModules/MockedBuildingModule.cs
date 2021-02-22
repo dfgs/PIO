@@ -35,27 +35,28 @@ namespace PIO.UnitTest.ServerLib.Mocks
 			return items.FirstOrDefault(item => (item.X == X) && (item.Y == Y));
 		}
 
-		public Building CreateBuilding(int PlanetID, int X, int Y,  int RemainingBuildSteps)
-		{
-			Building result;
-
-			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
-			result=new Building() { BuildingID = items.Count, PlanetID = PlanetID, X = X, Y = Y };
-			items.Add(result);
-			return result;
-		}
 
 		public void UpdateBuilding(int BuildingID, int RemainingBuildSteps)
 		{
 			items.FirstOrDefault(item => item.BuildingID == BuildingID).RemainingBuildSteps = RemainingBuildSteps;
 		}
 
-		public Building CreateBuilding(int PlanetID, int X, int Y, int RemainingBuildSteps, BuildingTypeIDs BuildingTypeID)
+		/*public Building CreateBuilding(int PlanetID, int X, int Y, int RemainingBuildSteps, BuildingTypeIDs BuildingTypeID)
 		{
 			Building result;
 
 			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
 			result = new Building() { BuildingID = items.Count,  PlanetID = PlanetID, X = X, Y = Y, RemainingBuildSteps = RemainingBuildSteps, BuildingTypeID = BuildingTypeID };
+			items.Add(result);
+			return result;
+		}*/
+
+		public Building CreateBuilding(int PlanetID, int X, int Y, BuildingTypeIDs BuildingTypeID, int RemainingBuildSteps, int HealthPoints)
+		{
+			Building result;
+
+			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
+			result = new Building() { BuildingID = items.Count, PlanetID = PlanetID, X = X, Y = Y };
 			items.Add(result);
 			return result;
 		}

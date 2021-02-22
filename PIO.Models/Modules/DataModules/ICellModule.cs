@@ -15,7 +15,8 @@ namespace PIO.Models.Modules
 		Cell GetCell(int PlanetID, int X,int Y);
 		Cell[] GetCells(int PlanetID, int X, int Y,int Width,int Height);
 
-		
-		
+		Cell CreateCell(int PlanetID, int X, int Y);
+
+
 	}
 }

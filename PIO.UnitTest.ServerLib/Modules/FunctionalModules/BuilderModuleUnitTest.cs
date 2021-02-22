@@ -441,7 +441,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, PlanetID = 1 });
 			taskModule = new MockedTaskModule(true);
 			buildingModule = new MockedBuildingModule(false, new Building() { BuildingID = 2, BuildingTypeID = BuildingTypeIDs.Sawmill, RemainingBuildSteps = 10 });
-			buildingTypeModule = new MockedBuildingTypeModule(false, new BuildingType() { BuildingTypeID = BuildingTypeIDs.Sawmill,MaterialSetID=2 });
+			buildingTypeModule = new MockedBuildingTypeModule(false, new BuildingType() { BuildingTypeID = BuildingTypeIDs.Sawmill });
 			stackModule = new MockedStackModule(false, new Stack() { BuildingID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Wood, StackID = 1 }, new Stack() { BuildingID = 2, Quantity = 10, ResourceTypeID = ResourceTypeIDs.Stone, StackID = 1 });
 			materialModule = new MockedMaterialModule(false, new Material() { Quantity = 1, ResourceTypeID = ResourceTypeIDs.Wood,BuildingTypeID = BuildingTypeIDs.Sawmill }, new Material() { Quantity = 2, ResourceTypeID = ResourceTypeIDs.Stone,BuildingTypeID = BuildingTypeIDs.Sawmill });
 

@@ -14,6 +14,11 @@ namespace PIO.UnitTest.Mocks
 		public Func<int, Worker> GetWorkerDelegate;
 		public Action<int, int,int> UpdateWorkerDelegate;
 
+		public Worker CreateWorker(int PlanetID, int X, int Y)
+		{
+			throw new NotImplementedException();
+		}
+
 		public Worker GetWorker(int WorkerID)
 		{
 			if (GetWorkerDelegate == null) throw new NotImplementedException("GetWorkerDelegate");

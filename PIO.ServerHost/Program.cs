@@ -42,6 +42,8 @@ namespace PIO.ServerHost
 			ICommandBuilder commandBuilder;
 			IDatabaseCreator databaseCreator;
 
+			IPlanetGeneratorModule planetGeneratorModule;
+
 			IPlanetModule planetModule;
 			ICellModule cellModule;
 			IBuildingModule buildingModule;
@@ -106,6 +108,9 @@ namespace PIO.ServerHost
 			moverModule = new MoverModule(logger, taskModule, workerModule, buildingModule);
 			takerModule = new TakerModule(logger, taskModule, workerModule, buildingModule, stackModule);
 			storerModule = new StorerModule(logger, taskModule, workerModule, buildingModule, stackModule);
+
+			planetGeneratorModule = new PlanetGeneratorModule(logger,resourceTypeModule,buildingTypeModule,taskTypeModule,materialModule,ingredientModule,productModule,planetModule,cellModule,buildingModule,workerModule);
+			planetGeneratorModule.Generate();
 
 			schedulerModule = new SchedulerModule(logger, taskModule, idlerModule, producerModule,moverModule,takerModule,storerModule, factoryBuilderModule);
 			schedulerModule.Start();

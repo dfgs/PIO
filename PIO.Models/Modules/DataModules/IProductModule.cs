@@ -13,5 +13,7 @@ namespace PIO.Models.Modules
 	{
 		Product GetProduct(int ProductID);
 		Product[] GetProducts(BuildingTypeIDs BuildingTypeID);
+		Product CreateProduct(BuildingTypeIDs BuildingTypeID, ResourceTypeIDs ResourceTypeID, int Quantity,int Duration);
+
 	}
 }

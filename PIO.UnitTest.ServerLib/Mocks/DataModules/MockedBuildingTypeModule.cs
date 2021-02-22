@@ -17,6 +17,11 @@ namespace PIO.UnitTest.ServerLib.Mocks
 		{
 		}
 
+		public BuildingType CreateBuildingType(BuildingTypeIDs BuildingTypeID, string Name, int BuildSteps, int HealthPoints)
+		{
+			throw new NotImplementedException();
+		}
+
 		public BuildingType GetBuildingType(BuildingTypeIDs BuildingTypeID)
 		{
 			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");

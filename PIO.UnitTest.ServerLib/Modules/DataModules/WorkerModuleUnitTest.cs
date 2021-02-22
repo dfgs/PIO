@@ -163,5 +163,43 @@ namespace PIO.UnitTest.ServerLib.Modules
 		}
 
 
+		[TestMethod]
+		public void ShouldCreateWorker()
+		{
+			MockedDatabase<Worker> database;
+			WorkerModule module;
+			Worker result;
+
+			database = new MockedDatabase<Worker>(false, 1, (t) => new Worker() { WorkerID = t });
+			module = new WorkerModule(NullLogger.Instance, database);
+			result = module.CreateWorker(1, 7, 9);
+			Assert.IsNotNull(result);
+			Assert.AreEqual(1, result.PlanetID);
+			Assert.AreEqual(7, result.X);
+			Assert.AreEqual(9, result.Y);
+
+			Assert.AreEqual(1, database.InsertedCount);
+		}
+
+		[TestMethod]
+		public void ShouldNotCreateWorkerAndLogError()
+		{
+			MockedDatabase<Worker> database;
+			WorkerModule module;
+			MemoryLogger logger;
+
+
+			logger = new MemoryLogger();
+			database = new MockedDatabase<Worker>(true, 1, (t) => new Worker() { WorkerID = t });
+			module = new WorkerModule(logger, database);
+			Assert.ThrowsException<PIODataException>(() => module.CreateWorker(1, 7, 9));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName == module.ModuleName)));
+
+			Assert.AreEqual(0, database.InsertedCount);
+		}
+
+
+
+
 	}
 }

@@ -75,5 +75,37 @@ namespace PIO.UnitTest.ServerLib.Modules
 		}
 
 
+		[TestMethod]
+		public void ShouldCreatePlanet()
+		{
+			MockedDatabase<Planet> database;
+			PlanetModule module;
+			Planet result;
+
+			database = new MockedDatabase<Planet>(false, 1, (t) => new Planet() { PlanetID = t });
+			module = new PlanetModule(NullLogger.Instance, database);
+			result = module.CreatePlanet("New",10,10);
+			Assert.IsNotNull(result);
+			Assert.AreEqual(10, result.Width);
+			Assert.AreEqual(1, database.InsertedCount);
+		}
+		[TestMethod]
+		public void ShouldNotCreatePlanetAndLogError()
+		{
+			MockedDatabase<Planet> database;
+			PlanetModule module;
+			MemoryLogger logger;
+
+
+			logger = new MemoryLogger();
+			database = new MockedDatabase<Planet>(true, 1, (t) => new Planet() { PlanetID = t });
+			module = new PlanetModule(logger, database);
+			Assert.ThrowsException<PIODataException>(() => module.CreatePlanet("New",10,10));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName == module.ModuleName)));
+			Assert.AreEqual(0, database.InsertedCount);
+		}
+
+
+
 	}
 }

@@ -22,6 +22,11 @@ namespace PIO.UnitTest.ServerLib.Mocks
 			this.items = new List<Ingredient>(Items);
 		}
 
+		public Ingredient CreateIngredient(BuildingTypeIDs BuildingTypeID, ResourceTypeIDs ResourceTypeID, int Quantity)
+		{
+			throw new NotImplementedException();
+		}
+
 		public Ingredient GetIngredient(int IngredientID)
 		{
 			if (throwException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");

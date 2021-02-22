@@ -16,7 +16,10 @@ namespace PIO.UnitTest.WebServiceLib.Mocks
 		{
 		}
 
-		
+		public Ingredient CreateIngredient(BuildingTypeIDs BuildingTypeID, ResourceTypeIDs ResourceTypeID, int Quantity)
+		{
+			throw new NotImplementedException();
+		}
 
 		public Ingredient GetIngredient(int IngredientID)
 		{

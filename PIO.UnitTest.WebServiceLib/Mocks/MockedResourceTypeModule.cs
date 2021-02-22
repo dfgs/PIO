@@ -16,7 +16,10 @@ namespace PIO.UnitTest.WebServiceLib.Mocks
 		{
 		}
 
-		
+		public ResourceType CreateResourceType(ResourceTypeIDs ResourceTypeID, string Name)
+		{
+			throw new NotImplementedException();
+		}
 
 		public ResourceType GetResourceType(ResourceTypeIDs ResourceTypeID)
 		{

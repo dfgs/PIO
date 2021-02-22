@@ -44,5 +44,23 @@ namespace PIO.ServerLib.Modules
 			return TrySelectMany<MaterialTable,Material>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
+		public Material CreateMaterial(BuildingTypeIDs BuildingTypeID, ResourceTypeIDs ResourceTypeID, int Quantity)
+		{
+			IInsert query;
+			Material item;
+			object result;
+
+			LogEnter();
+
+			item = new Material() { BuildingTypeID=BuildingTypeID, ResourceTypeID = ResourceTypeID, Quantity = Quantity, };
+
+			Log(LogLevels.Information, $"Inserting into Material table (BuildingTypeID={BuildingTypeID},ResourceTypeID={ResourceTypeID}, Quantity={Quantity})");
+			query = new Insert().Into(PIODB.MaterialTable).Set(MaterialTable.BuildingTypeID,item.BuildingTypeID).Set(MaterialTable.ResourceTypeID, item.ResourceTypeID).Set(MaterialTable.Quantity, item.Quantity);
+			result = Try(query).OrThrow<PIODataException>("Failed to insert");
+			item.MaterialID = Convert.ToInt32(result);
+
+			return item;
+		}
+
 	}
 }

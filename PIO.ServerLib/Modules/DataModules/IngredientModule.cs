@@ -44,5 +44,24 @@ namespace PIO.ServerLib.Modules
 			return TrySelectMany<IngredientTable,Ingredient>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
+		public Ingredient CreateIngredient(BuildingTypeIDs BuildingTypeID, ResourceTypeIDs ResourceTypeID, int Quantity)
+		{
+			IInsert query;
+			Ingredient item;
+			object result;
+
+			LogEnter();
+
+			item = new Ingredient() { BuildingTypeID = BuildingTypeID, ResourceTypeID = ResourceTypeID, Quantity = Quantity, };
+
+			Log(LogLevels.Information, $"Inserting into Ingredient table (BuildingTypeID={BuildingTypeID},ResourceTypeID={ResourceTypeID}, Quantity={Quantity})");
+			query = new Insert().Into(PIODB.IngredientTable).Set(IngredientTable.BuildingTypeID, item.BuildingTypeID).Set(IngredientTable.ResourceTypeID, item.ResourceTypeID).Set(IngredientTable.Quantity, item.Quantity);
+			result = Try(query).OrThrow<PIODataException>("Failed to insert");
+			item.IngredientID = Convert.ToInt32(result);
+
+			return item;
+		}
+
+
 	}
 }

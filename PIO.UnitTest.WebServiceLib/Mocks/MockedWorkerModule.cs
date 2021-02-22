@@ -16,6 +16,11 @@ namespace PIO.UnitTest.WebServiceLib.Mocks
 		{
 		}
 
+		public Worker CreateWorker(int PlanetID, int X, int Y)
+		{
+			throw new NotImplementedException();
+		}
+
 		public Worker GetWorker(int WorkerID)
 		{
 			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");

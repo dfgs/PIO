@@ -48,5 +48,10 @@ namespace PIO.UnitTest.ServerLib.Mocks
 		{
 			this.ResourceTypeID = ResourceTypeID;
 		}
+
+		public Worker CreateWorker(int PlanetID, int X, int Y)
+		{
+			throw new NotImplementedException();
+		}
 	}
 }

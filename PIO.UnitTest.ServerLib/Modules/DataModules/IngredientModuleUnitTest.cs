@@ -75,5 +75,37 @@ namespace PIO.UnitTest.ServerLib.Modules
 		}
 
 
+		[TestMethod]
+		public void ShouldCreateIngredient()
+		{
+			MockedDatabase<Ingredient> database;
+			IngredientModule module;
+			Ingredient result;
+
+			database = new MockedDatabase<Ingredient>(false, 1, (t) => new Ingredient() { IngredientID = t });
+			module = new IngredientModule(NullLogger.Instance, database);
+			result = module.CreateIngredient(BuildingTypeIDs.Forest, ResourceTypeIDs.Wood, 1);
+			Assert.IsNotNull(result);
+			Assert.AreEqual(ResourceTypeIDs.Wood, result.ResourceTypeID);
+			Assert.AreEqual(1, database.InsertedCount);
+		}
+		[TestMethod]
+		public void ShouldNotCreateIngredientAndLogError()
+		{
+			MockedDatabase<Ingredient> database;
+			IngredientModule module;
+			MemoryLogger logger;
+
+
+			logger = new MemoryLogger();
+			database = new MockedDatabase<Ingredient>(true, 1, (t) => new Ingredient() { IngredientID = t });
+			module = new IngredientModule(logger, database);
+			Assert.ThrowsException<PIODataException>(() => module.CreateIngredient(BuildingTypeIDs.Forest, ResourceTypeIDs.Wood, 1));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName == module.ModuleName)));
+			Assert.AreEqual(0, database.InsertedCount);
+		}
+
+
+
 	}
 }

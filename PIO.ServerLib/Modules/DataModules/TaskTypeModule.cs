@@ -43,5 +43,24 @@ namespace PIO.ServerLib.Modules
 			return TrySelectMany<TaskTypeTable,TaskType>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
+		public TaskType CreateTaskType(TaskTypeIDs TaskTypeID, string Name)
+		{
+			IInsert query;
+			TaskType item;
+			object result;
+
+			LogEnter();
+
+			item = new TaskType() { TaskTypeID = TaskTypeID, Name = Name,  };
+
+			Log(LogLevels.Information, $"Inserting into TaskType table (TaskTypeID={TaskTypeID}, Name={Name})");
+			query = new Insert().Into(PIODB.TaskTypeTable).Set(TaskTypeTable.TaskTypeID, item.TaskTypeID).Set(TaskTypeTable.Name, item.Name);
+			result = Try(query).OrThrow<PIODataException>("Failed to insert");
+			//item.TaskTypeID = Convert.ToInt32(result);
+
+			return item;
+		}
+
+
 	}
 }

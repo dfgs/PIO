@@ -1,0 +1,106 @@
+﻿using LogLib;
+using PIO.Models;
+using PIO.Models.Modules;
+using PIOBaseModulesLib.Modules.FunctionalModules;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace PIO.ServerLib.Modules
+{
+	public class PlanetGeneratorModule : FunctionalModule,IPlanetGeneratorModule
+	{
+		private IResourceTypeModule resourceTypeModule;
+		private IBuildingTypeModule buildingTypeModule;
+		private ITaskTypeModule taskTypeModule;
+		private IMaterialModule materialModule;
+		private IIngredientModule ingredientModule;
+		private IProductModule productModule;
+		private IPlanetModule planetModule;
+		private ICellModule cellModule;
+		private IBuildingModule buildingModule;
+		private IWorkerModule workerModule;
+
+		public PlanetGeneratorModule(ILogger Logger,IResourceTypeModule ResourceTypeModule,IBuildingTypeModule BuildingTypeModule,ITaskTypeModule TaskTypeModule,IMaterialModule MaterialModule,IIngredientModule IngredientModule,IProductModule ProductModule,
+			IPlanetModule PlanetModule,ICellModule CellModule,IBuildingModule BuildingModule,IWorkerModule WorkerModule
+			) : base(Logger)
+		{
+			this.resourceTypeModule = ResourceTypeModule;this.buildingTypeModule = BuildingTypeModule;this.taskTypeModule = TaskTypeModule;this.materialModule = MaterialModule;this.ingredientModule = IngredientModule;this.productModule = ProductModule;
+			this.planetModule = PlanetModule;this.cellModule = CellModule;this.buildingModule = BuildingModule;this.workerModule = WorkerModule;
+		}
+
+		public void Generate()
+		{
+			Planet planet ;
+			Building building;
+			Worker worker;
+
+			LogEnter();
+
+			Log(LogLevels.Information, "Creating ResourceType items");
+			resourceTypeModule.CreateResourceType(Models.ResourceTypeIDs.Tree, "Tree");
+			resourceTypeModule.CreateResourceType(Models.ResourceTypeIDs.Wood, "Wood");
+			resourceTypeModule.CreateResourceType(Models.ResourceTypeIDs.Stone, "Stone");
+			resourceTypeModule.CreateResourceType(Models.ResourceTypeIDs.Coal, "Coal");
+			resourceTypeModule.CreateResourceType(Models.ResourceTypeIDs.Plank, "Plank");
+
+			Log(LogLevels.Information, "Creating BuildingType items");
+			buildingTypeModule.CreateBuildingType(Models.BuildingTypeIDs.Forest, "Forest", 5, 10);
+			buildingTypeModule.CreateBuildingType(Models.BuildingTypeIDs.Stockpile, "Stockpile", 5, 10); ;
+			buildingTypeModule.CreateBuildingType(Models.BuildingTypeIDs.Sawmill, "Sawmill", 5, 10);
+			buildingTypeModule.CreateBuildingType(Models.BuildingTypeIDs.Stone, "Stone", 5, 10);
+			buildingTypeModule.CreateBuildingType(Models.BuildingTypeIDs.Water, "Water", 5, 10);
+
+			Log(LogLevels.Information, "Creating TaskType items");
+			taskTypeModule.CreateTaskType(Models.TaskTypeIDs.Idle, "Idle");
+			taskTypeModule.CreateTaskType(Models.TaskTypeIDs.Produce, "Produce");
+			taskTypeModule.CreateTaskType(Models.TaskTypeIDs.MoveTo, "Move to");
+			taskTypeModule.CreateTaskType(Models.TaskTypeIDs.CreateBuilding, "Create building");
+			taskTypeModule.CreateTaskType(Models.TaskTypeIDs.Build, "Build");
+			taskTypeModule.CreateTaskType(Models.TaskTypeIDs.Take, "Take");
+			taskTypeModule.CreateTaskType(Models.TaskTypeIDs.Store, "Store");
+
+			Log(LogLevels.Information, "Creating Material items");
+			materialModule.CreateMaterial(Models.BuildingTypeIDs.Forest, Models.ResourceTypeIDs.Wood, 1);
+			materialModule.CreateMaterial(Models.BuildingTypeIDs.Sawmill, Models.ResourceTypeIDs.Wood, 1);
+			materialModule.CreateMaterial(Models.BuildingTypeIDs.Sawmill, Models.ResourceTypeIDs.Stone, 1);
+			materialModule.CreateMaterial(Models.BuildingTypeIDs.Stone, Models.ResourceTypeIDs.Wood, 1);
+
+			Log(LogLevels.Information, "Creating Ingredient items");
+			ingredientModule.CreateIngredient(Models.BuildingTypeIDs.Forest, Models.ResourceTypeIDs.Tree, 1);
+			ingredientModule.CreateIngredient(Models.BuildingTypeIDs.Sawmill, Models.ResourceTypeIDs.Wood, 1);
+
+			Log(LogLevels.Information, "Creating Product items");
+			productModule.CreateProduct(Models.BuildingTypeIDs.Forest, Models.ResourceTypeIDs.Wood, 2, 30);
+			productModule.CreateProduct(Models.BuildingTypeIDs.Sawmill, Models.ResourceTypeIDs.Plank, 2, 30);
+
+			Log(LogLevels.Information, "Creating Planet items");
+			planet=planetModule.CreatePlanet("Default", 50, 50);
+
+
+			Log(LogLevels.Information, "Creating Cell items");
+			for (int x = 0; x < planet.Width; x++)
+			{
+				for (int y = 0; y < planet.Height; y++)
+				{
+					cellModule.CreateCell(planet.PlanetID, x, y);
+				}
+			}
+
+			Log(LogLevels.Information, "Creating Building items");
+			building = buildingModule.CreateBuilding(planet.PlanetID, 0, 0, BuildingTypeIDs.Forest, 0, 10);
+
+			building = buildingModule.CreateBuilding(planet.PlanetID, 2, 2, BuildingTypeIDs.Sawmill, 0, 10);
+
+			#region create startup Worker
+			worker = workerModule.CreateWorker(planet.PlanetID, 0, 3);
+			worker = workerModule.CreateWorker(planet.PlanetID, 2, 3);
+			#endregion
+
+
+
+		}
+	}
+}

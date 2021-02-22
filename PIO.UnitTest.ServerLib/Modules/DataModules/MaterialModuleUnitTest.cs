@@ -75,6 +75,36 @@ namespace PIO.UnitTest.ServerLib.Modules
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
 		}
 
+		[TestMethod]
+		public void ShouldCreateMaterial()
+		{
+			MockedDatabase<Material> database;
+			MaterialModule module;
+			Material result;
+
+			database = new MockedDatabase<Material>(false, 1, (t) => new Material() { MaterialID = t });
+			module = new MaterialModule(NullLogger.Instance, database);
+			result = module.CreateMaterial(BuildingTypeIDs.Forest,ResourceTypeIDs.Wood, 1);
+			Assert.IsNotNull(result);
+			Assert.AreEqual(ResourceTypeIDs.Wood, result.ResourceTypeID);
+			Assert.AreEqual(1, database.InsertedCount);
+		}
+		[TestMethod]
+		public void ShouldNotCreateMaterialAndLogError()
+		{
+			MockedDatabase<Material> database;
+			MaterialModule module;
+			MemoryLogger logger;
+
+
+			logger = new MemoryLogger();
+			database = new MockedDatabase<Material>(true, 1, (t) => new Material() { MaterialID = t });
+			module = new MaterialModule(logger, database);
+			Assert.ThrowsException<PIODataException>(() => module.CreateMaterial(BuildingTypeIDs.Forest, ResourceTypeIDs.Wood,1));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName == module.ModuleName)));
+			Assert.AreEqual(0, database.InsertedCount);
+		}
+
 
 	}
 }

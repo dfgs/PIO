@@ -13,5 +13,7 @@ namespace PIO.Models.Modules
 	{
 		BuildingType GetBuildingType(BuildingTypeIDs BuildingTypeID);
 		BuildingType[] GetBuildingTypes();
+
+		BuildingType CreateBuildingType(BuildingTypeIDs BuildingTypeID, string Name, int BuildSteps, int HealthPoints);
 	}
 }

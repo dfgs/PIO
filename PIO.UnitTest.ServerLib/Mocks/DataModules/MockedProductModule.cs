@@ -22,6 +22,11 @@ namespace PIO.UnitTest.ServerLib.Mocks
 			this.items = new List<Product>(Items);
 		}
 
+		public Product CreateProduct(BuildingTypeIDs BuildingTypeID, ResourceTypeIDs ResourceTypeID, int Quantity, int Duration)
+		{
+			throw new NotImplementedException();
+		}
+
 		public Product GetProduct(int ProductID)
 		{
 			if (throwException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");

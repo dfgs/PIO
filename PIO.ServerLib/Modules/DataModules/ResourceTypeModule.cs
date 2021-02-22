@@ -43,6 +43,25 @@ namespace PIO.ServerLib.Modules
 			query=new Select(ResourceTypeTable.ResourceTypeID, ResourceTypeTable.Name).From(PIODB.ResourceTypeTable);
 			return TrySelectMany<ResourceTypeTable,ResourceType>(query).OrThrow<PIODataException>("Failed to query");
 		}
+		public ResourceType CreateResourceType(ResourceTypeIDs ResourceTypeID, string Name)
+		{
+			IInsert query;
+			ResourceType item;
+			object result;
+
+			LogEnter();
+
+			item = new ResourceType() { ResourceTypeID = ResourceTypeID, Name= Name, };
+
+			Log(LogLevels.Information, $"Inserting into ResourceType table (ResourceTypeID={ResourceTypeID}, Name={Name})");
+			query = new Insert().Into(PIODB.ResourceTypeTable).Set(ResourceTypeTable.ResourceTypeID, item.ResourceTypeID).Set(ResourceTypeTable.Name, item.Name);
+			result = Try(query).OrThrow<PIODataException>("Failed to insert");
+			//item.ResourceTypeID = Convert.ToInt32(result);
+
+			return item;
+		}
+
+
 
 	}
 }

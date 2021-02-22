@@ -13,5 +13,7 @@ namespace PIO.Models.Modules
 	{
 		Material GetMaterial(int MaterialID);
 		Material[] GetMaterials(BuildingTypeIDs BuildingTypeID);
+		Material CreateMaterial(BuildingTypeIDs BuildingTypeID, ResourceTypeIDs ResourceTypeID, int Quantity);
+
 	}
 }

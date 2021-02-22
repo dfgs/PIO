@@ -29,8 +29,9 @@ namespace PIO.UnitTest.ServerLib.Mocks
 			return items.FirstOrDefault(item => item.PlanetID == PlanetID);
 		}
 
-		
-
-
+		public Planet CreatePlanet(string Name, int Width, int Height)
+		{
+			throw new NotImplementedException();
+		}
 	}
 }

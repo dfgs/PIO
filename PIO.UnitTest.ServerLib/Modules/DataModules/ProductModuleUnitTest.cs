@@ -74,6 +74,35 @@ namespace PIO.UnitTest.ServerLib.Modules
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
 		}
 
+		[TestMethod]
+		public void ShouldCreateProduct()
+		{
+			MockedDatabase<Product> database;
+			ProductModule module;
+			Product result;
+
+			database = new MockedDatabase<Product>(false, 1, (t) => new Product() { ProductID = t });
+			module = new ProductModule(NullLogger.Instance, database);
+			result = module.CreateProduct(BuildingTypeIDs.Forest, ResourceTypeIDs.Wood, 1,10);
+			Assert.IsNotNull(result);
+			Assert.AreEqual(ResourceTypeIDs.Wood, result.ResourceTypeID);
+			Assert.AreEqual(1, database.InsertedCount);
+		}
+		[TestMethod]
+		public void ShouldNotCreateProductAndLogError()
+		{
+			MockedDatabase<Product> database;
+			ProductModule module;
+			MemoryLogger logger;
+
+
+			logger = new MemoryLogger();
+			database = new MockedDatabase<Product>(true, 1, (t) => new Product() { ProductID = t });
+			module = new ProductModule(logger, database);
+			Assert.ThrowsException<PIODataException>(() => module.CreateProduct(BuildingTypeIDs.Forest, ResourceTypeIDs.Wood, 1,10));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName == module.ModuleName)));
+			Assert.AreEqual(0, database.InsertedCount);
+		}
 
 	}
 }

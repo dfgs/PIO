@@ -13,5 +13,7 @@ namespace PIO.Models.Modules
 	{
 		Ingredient GetIngredient(int IngredientID);
 		Ingredient[] GetIngredients(BuildingTypeIDs BuildingTypeID);
+		Ingredient CreateIngredient(BuildingTypeIDs BuildingTypeID, ResourceTypeIDs ResourceTypeID, int Quantity);
+
 	}
 }

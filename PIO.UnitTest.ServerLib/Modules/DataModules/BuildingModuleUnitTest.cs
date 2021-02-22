@@ -138,7 +138,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			Assert.ThrowsException<PIODataException>(() => module.UpdateBuilding(0, 1));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName == module.ModuleName)));
 		}
-		/*[TestMethod]
+		[TestMethod]
 		public void ShouldCreateBuilding()
 		{
 			MockedDatabase<Building> database;
@@ -147,13 +147,13 @@ namespace PIO.UnitTest.ServerLib.Modules
 
 			database = new MockedDatabase<Building>(false, 1, (t) => new Building() { BuildingID = t });
 			module = new BuildingModule(NullLogger.Instance, database);
-			result = module.CreateBuilding(1,7,9,5);
+			result = module.CreateBuilding(1,7,9,BuildingTypeIDs.Sawmill,1,10);
 			Assert.IsNotNull(result);
 			Assert.AreEqual(1, result.PlanetID);
-			Assert.AreEqual(5, result.RemainingBuildSteps);
+			Assert.AreEqual(1, result.RemainingBuildSteps);
 			Assert.AreEqual(7, result.X);
 			Assert.AreEqual(9, result.Y);
-			Assert.AreEqual(0, result.HealthPoints);
+			Assert.AreEqual(10, result.HealthPoints);
 
 			Assert.AreEqual(1, database.InsertedCount);
 		}
@@ -169,8 +169,10 @@ namespace PIO.UnitTest.ServerLib.Modules
 			logger = new MemoryLogger();
 			database = new MockedDatabase<Building>(true, 1, (t) => new Building() { BuildingID = t });
 			module = new BuildingModule(logger, database);
-			Assert.ThrowsException<PIODataException>(() => module.CreateBuilding(1,7,9,  5));
+			Assert.ThrowsException<PIODataException>(() => module.CreateBuilding(1,7,9,BuildingTypeIDs.Sawmill,1,10));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
+
+			Assert.AreEqual(0, database.InsertedCount);
 		}
 
 		/*[TestMethod]

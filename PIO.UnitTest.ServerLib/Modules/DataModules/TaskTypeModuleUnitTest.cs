@@ -75,5 +75,36 @@ namespace PIO.UnitTest.ServerLib.Modules
 		}
 
 
+		[TestMethod]
+		public void ShouldCreateTaskType()
+		{
+			MockedDatabase<TaskType> database;
+			TaskTypeModule module;
+			TaskType result;
+
+			database = new MockedDatabase<TaskType>(false, 1, (t) => new TaskType() { TaskTypeID = (TaskTypeIDs)t });
+			module = new TaskTypeModule(NullLogger.Instance, database);
+			result = module.CreateTaskType(TaskTypeIDs.Build, "New");
+			Assert.IsNotNull(result);
+			Assert.AreEqual(TaskTypeIDs.Build, result.TaskTypeID);
+			Assert.AreEqual(1, database.InsertedCount);
+		}
+		[TestMethod]
+		public void ShouldNotCreateTaskTypeAndLogError()
+		{
+			MockedDatabase<TaskType> database;
+			TaskTypeModule module;
+			MemoryLogger logger;
+
+
+			logger = new MemoryLogger();
+			database = new MockedDatabase<TaskType>(true, 1, (t) => new TaskType() { TaskTypeID = (TaskTypeIDs)t });
+			module = new TaskTypeModule(logger, database);
+			Assert.ThrowsException<PIODataException>(() => module.CreateTaskType(TaskTypeIDs.Build, "New"));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName == module.ModuleName)));
+			Assert.AreEqual(0, database.InsertedCount);
+		}
+
+
 	}
 }

@@ -114,6 +114,38 @@ namespace PIO.UnitTest.ServerLib.Modules
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName==module.ModuleName)));
 		}
 
-		
+
+		[TestMethod]
+		public void ShouldCreateCell()
+		{
+			MockedDatabase<Cell> database;
+			CellModule module;
+			Cell result;
+
+			database = new MockedDatabase<Cell>(false, 1, (t) => new Cell() { CellID = t });
+			module = new CellModule(NullLogger.Instance, database);
+			result = module.CreateCell(1, 10, 10);
+			Assert.IsNotNull(result);
+			Assert.AreEqual(10, result.X);
+			Assert.AreEqual(1, database.InsertedCount);
+		}
+		[TestMethod]
+		public void ShouldNotCreateCellAndLogError()
+		{
+			MockedDatabase<Cell> database;
+			CellModule module;
+			MemoryLogger logger;
+
+
+			logger = new MemoryLogger();
+			database = new MockedDatabase<Cell>(true, 1, (t) => new Cell() { CellID = t });
+			module = new CellModule(logger, database);
+			Assert.ThrowsException<PIODataException>(() => module.CreateCell(1, 10, 10));
+			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName == module.ModuleName)));
+			Assert.AreEqual(0, database.InsertedCount);
+		}
+
+
+
 	}
 }
