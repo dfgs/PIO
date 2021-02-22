@@ -46,12 +46,14 @@
     <Compile Include="IBotsService.cs" />
     <Compile Include="Modules\DataModules\IBotModule.cs" />
     <Compile Include="Modules\DataModules\IBuildOrderModule.cs" />
+    <Compile Include="Modules\DataModules\IHarvestOrderModule.cs" />
     <Compile Include="Modules\DataModules\IProduceOrderModule.cs" />
     <Compile Include="Modules\DataModules\IOrderModule.cs" />
     <Compile Include="Modules\EngineModules\IBotSchedulerModule.cs" />
     <Compile Include="Modules\FunctionalModules\IOrderManagerModule.cs" />
     <Compile Include="Bot.cs" />
     <Compile Include="BuildOrder.cs" />
+    <Compile Include="HarvestOrder.cs" />
     <Compile Include="ProduceOrder.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

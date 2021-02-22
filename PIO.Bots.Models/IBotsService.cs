@@ -34,18 +34,27 @@ namespace PIO.Bots.Models
 		ProduceOrder[] GetProduceOrdersForBuilding(int BuildingID);
 
 		[OperationContract]
+		HarvestOrder GetHarvestOrder(int HarvestOrderID);
+		[OperationContract]
+		HarvestOrder[] GetHarvestOrders();
+		[OperationContract]
+		HarvestOrder[] GetHarvestOrdersForBuilding(int BuildingID);
+
+		[OperationContract]
 		BuildOrder GetBuildOrder(int BuildOrderID);
 		[OperationContract]
 		BuildOrder[] GetBuildOrders();
 		[OperationContract]
 		BuildOrder[] GetBuildOrdersAtPosition(int PlanetId, int X, int Y);
-		
-		
+
+
 		#endregion
 
 		#region functional
 		[OperationContract]
-		ProduceOrder CreateProduceOrder(int PlanetID, int BuildOrderID);
+		ProduceOrder CreateProduceOrder(int PlanetID, int BuildingID);
+		[OperationContract]
+		HarvestOrder CreateHarvestOrder(int PlanetID, int BuildingID);
 		[OperationContract]
 		BuildOrder CreateBuildOrder(int PlanetID, BuildingTypeIDs BuildingTypeID, int X, int Y);
 		

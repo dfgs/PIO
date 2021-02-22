@@ -35,6 +35,7 @@ namespace PIO.Bots.ServerLib
 					yield return new CreateTable(BotsDB.BotTable, BotTable.BotID, BotTable.WorkerID);
 					yield return new CreateTable(BotsDB.OrderTable, OrderTable.OrderID, OrderTable.BotID);
 					yield return new CreateTable(BotsDB.ProduceOrderTable, ProduceOrderTable.ProduceOrderID, ProduceOrderTable.OrderID, ProduceOrderTable.PlanetID, ProduceOrderTable.BuildingID);
+					yield return new CreateTable(BotsDB.HarvestOrderTable, HarvestOrderTable.HarvestOrderID, HarvestOrderTable.OrderID, HarvestOrderTable.PlanetID, HarvestOrderTable.BuildingID);
 					yield return new CreateTable(BotsDB.BuildOrderTable, BuildOrderTable.BuildOrderID, BuildOrderTable.OrderID, BuildOrderTable.BuildingTypeID, BuildOrderTable.PlanetID, BuildOrderTable.X, BuildOrderTable.Y);
 					break;
 				case 2:
@@ -45,6 +46,7 @@ namespace PIO.Bots.ServerLib
 
 
 					yield return new CreateConstraint(BotsDB.ProduceOrderTable, ColumnConstraints.Unique, ProduceOrderTable.PlanetID, ProduceOrderTable.BuildingID);
+					yield return new CreateConstraint(BotsDB.HarvestOrderTable, ColumnConstraints.Unique, HarvestOrderTable.PlanetID, HarvestOrderTable.BuildingID);
 					yield return new CreateConstraint(BotsDB.BuildOrderTable, ColumnConstraints.Unique, BuildOrderTable.PlanetID, BuildOrderTable.X, BuildOrderTable.Y);
 
 					break;

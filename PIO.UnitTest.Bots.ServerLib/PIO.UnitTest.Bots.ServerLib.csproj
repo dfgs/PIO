@@ -62,6 +62,7 @@
   <ItemGroup>
     <Compile Include="Modules\DataModules\BotModuleUnitTest.cs" />
     <Compile Include="Modules\DataModules\BuildFactoryOrderModuleUnitTest.cs" />
+    <Compile Include="Modules\DataModules\HarvestOrderModuleUnitTest.cs" />
     <Compile Include="Modules\DataModules\ProduceOrderModuleUnitTest.cs" />
     <Compile Include="Modules\DataModules\OrderModuleUnitTest.cs" />
     <Compile Include="Modules\EngineModules\BotSchedulerModuleUnitTest.cs" />

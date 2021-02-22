@@ -115,11 +115,7 @@ namespace PIO.Bots.ServerLib.Modules
 
 			LogEnter();
 
-			/*if (BotID==-1)
-			{
-				LoadBots();
-				return;
-			}*/
+			
 
 			#region clear bot assignment
 			Log(LogLevels.Information, $"Clearing bot assignment (BotID={BotID})");

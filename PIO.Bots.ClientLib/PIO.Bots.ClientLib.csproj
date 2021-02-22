@@ -82,6 +82,7 @@
     <None Include="Properties\DataSources\PIO.Bots.Models.BuildFactoryOrder.datasource" />
     <None Include="Properties\DataSources\PIO.Bots.Models.BuildFarmOrder.datasource" />
     <None Include="Properties\DataSources\PIO.Bots.Models.BuildOrder.datasource" />
+    <None Include="Properties\DataSources\PIO.Bots.Models.HarvestOrder.datasource" />
     <None Include="Properties\DataSources\PIO.Bots.Models.Order.datasource" />
     <None Include="Properties\DataSources\PIO.Bots.Models.ProduceOrder.datasource" />
   </ItemGroup>

@@ -108,6 +108,46 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="GetHarvestOrder">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="HarvestOrderID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetHarvestOrderResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/PIO.Bots.Models" minOccurs="0" name="GetHarvestOrderResult" nillable="true" type="q9:HarvestOrder" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetHarvestOrders">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetHarvestOrdersResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/PIO.Bots.Models" minOccurs="0" name="GetHarvestOrdersResult" nillable="true" type="q10:ArrayOfHarvestOrder" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetHarvestOrdersForBuilding">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="BuildingID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetHarvestOrdersForBuildingResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/PIO.Bots.Models" minOccurs="0" name="GetHarvestOrdersForBuildingResult" nillable="true" type="q11:ArrayOfHarvestOrder" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="GetBuildOrder">
     <xs:complexType>
       <xs:sequence>
@@ -118,7 +158,7 @@
   <xs:element name="GetBuildOrderResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/PIO.Bots.Models" minOccurs="0" name="GetBuildOrderResult" nillable="true" type="q9:BuildOrder" />
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/PIO.Bots.Models" minOccurs="0" name="GetBuildOrderResult" nillable="true" type="q12:BuildOrder" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -130,7 +170,7 @@
   <xs:element name="GetBuildOrdersResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/PIO.Bots.Models" minOccurs="0" name="GetBuildOrdersResult" nillable="true" type="q10:ArrayOfBuildOrder" />
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/PIO.Bots.Models" minOccurs="0" name="GetBuildOrdersResult" nillable="true" type="q13:ArrayOfBuildOrder" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -146,7 +186,7 @@
   <xs:element name="GetBuildOrdersAtPositionResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/PIO.Bots.Models" minOccurs="0" name="GetBuildOrdersAtPositionResult" nillable="true" type="q11:ArrayOfBuildOrder" />
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/PIO.Bots.Models" minOccurs="0" name="GetBuildOrdersAtPositionResult" nillable="true" type="q14:ArrayOfBuildOrder" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -154,14 +194,29 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="PlanetID" type="xs:int" />
-        <xs:element minOccurs="0" name="BuildOrderID" type="xs:int" />
+        <xs:element minOccurs="0" name="BuildingID" type="xs:int" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="CreateProduceOrderResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/PIO.Bots.Models" minOccurs="0" name="CreateProduceOrderResult" nillable="true" type="q12:ProduceOrder" />
+        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/PIO.Bots.Models" minOccurs="0" name="CreateProduceOrderResult" nillable="true" type="q15:ProduceOrder" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CreateHarvestOrder">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="PlanetID" type="xs:int" />
+        <xs:element minOccurs="0" name="BuildingID" type="xs:int" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CreateHarvestOrderResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/PIO.Bots.Models" minOccurs="0" name="CreateHarvestOrderResult" nillable="true" type="q16:HarvestOrder" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -169,7 +224,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="PlanetID" type="xs:int" />
-        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="BuildingTypeID" type="q13:BuildingTypeIDs" />
+        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="BuildingTypeID" type="q17:BuildingTypeIDs" />
         <xs:element minOccurs="0" name="X" type="xs:int" />
         <xs:element minOccurs="0" name="Y" type="xs:int" />
       </xs:sequence>
@@ -178,7 +233,7 @@
   <xs:element name="CreateBuildOrderResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/PIO.Bots.Models" minOccurs="0" name="CreateBuildOrderResult" nillable="true" type="q14:BuildOrder" />
+        <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/PIO.Bots.Models" minOccurs="0" name="CreateBuildOrderResult" nillable="true" type="q18:BuildOrder" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -192,7 +247,7 @@
   <xs:element name="CreateBotResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/PIO.Bots.Models" minOccurs="0" name="CreateBotResult" nillable="true" type="q15:Bot" />
+        <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/PIO.Bots.Models" minOccurs="0" name="CreateBotResult" nillable="true" type="q19:Bot" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

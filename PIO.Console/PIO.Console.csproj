@@ -68,6 +68,8 @@
     <Compile Include="ViewModels\ILocation\BuildingsViewModel.cs" />
     <Compile Include="ViewModels\BuildOrderViewModel.cs" />
     <Compile Include="ViewModels\BuildOrdersViewModel.cs" />
+    <Compile Include="ViewModels\HarvestOrdersViewModel.cs" />
+    <Compile Include="ViewModels\HarvestOrderViewModel.cs" />
     <Compile Include="ViewModels\ProduceOrderViewModel.cs" />
     <Compile Include="ViewModels\ProduceOrdersViewModel.cs" />
     <Compile Include="ViewModels\TasksViewModel.cs" />

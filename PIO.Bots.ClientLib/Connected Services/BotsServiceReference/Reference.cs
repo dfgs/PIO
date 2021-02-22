@@ -35,6 +35,7 @@ namespace PIO.Bots.ClientLib.BotsServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/GetOrder", ReplyAction="http://tempuri.org/IBotsService/GetOrderResponse")]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(PIO.Bots.Models.ProduceOrder))]
+        [System.ServiceModel.ServiceKnownTypeAttribute(typeof(PIO.Bots.Models.HarvestOrder))]
         [System.ServiceModel.ServiceKnownTypeAttribute(typeof(PIO.Bots.Models.BuildOrder))]
         PIO.Bots.Models.Order GetOrder(int OrderID);
         
@@ -65,6 +66,24 @@ namespace PIO.Bots.ClientLib.BotsServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/GetProduceOrdersForBuilding", ReplyAction="http://tempuri.org/IBotsService/GetProduceOrdersForBuildingResponse")]
         System.Threading.Tasks.Task<PIO.Bots.Models.ProduceOrder[]> GetProduceOrdersForBuildingAsync(int BuildingID);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/GetHarvestOrder", ReplyAction="http://tempuri.org/IBotsService/GetHarvestOrderResponse")]
+        PIO.Bots.Models.HarvestOrder GetHarvestOrder(int HarvestOrderID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/GetHarvestOrder", ReplyAction="http://tempuri.org/IBotsService/GetHarvestOrderResponse")]
+        System.Threading.Tasks.Task<PIO.Bots.Models.HarvestOrder> GetHarvestOrderAsync(int HarvestOrderID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/GetHarvestOrders", ReplyAction="http://tempuri.org/IBotsService/GetHarvestOrdersResponse")]
+        PIO.Bots.Models.HarvestOrder[] GetHarvestOrders();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/GetHarvestOrders", ReplyAction="http://tempuri.org/IBotsService/GetHarvestOrdersResponse")]
+        System.Threading.Tasks.Task<PIO.Bots.Models.HarvestOrder[]> GetHarvestOrdersAsync();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/GetHarvestOrdersForBuilding", ReplyAction="http://tempuri.org/IBotsService/GetHarvestOrdersForBuildingResponse")]
+        PIO.Bots.Models.HarvestOrder[] GetHarvestOrdersForBuilding(int BuildingID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/GetHarvestOrdersForBuilding", ReplyAction="http://tempuri.org/IBotsService/GetHarvestOrdersForBuildingResponse")]
+        System.Threading.Tasks.Task<PIO.Bots.Models.HarvestOrder[]> GetHarvestOrdersForBuildingAsync(int BuildingID);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/GetBuildOrder", ReplyAction="http://tempuri.org/IBotsService/GetBuildOrderResponse")]
         PIO.Bots.Models.BuildOrder GetBuildOrder(int BuildOrderID);
         
@@ -84,10 +103,16 @@ namespace PIO.Bots.ClientLib.BotsServiceReference {
         System.Threading.Tasks.Task<PIO.Bots.Models.BuildOrder[]> GetBuildOrdersAtPositionAsync(int PlanetId, int X, int Y);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/CreateProduceOrder", ReplyAction="http://tempuri.org/IBotsService/CreateProduceOrderResponse")]
-        PIO.Bots.Models.ProduceOrder CreateProduceOrder(int PlanetID, int BuildOrderID);
+        PIO.Bots.Models.ProduceOrder CreateProduceOrder(int PlanetID, int BuildingID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/CreateProduceOrder", ReplyAction="http://tempuri.org/IBotsService/CreateProduceOrderResponse")]
-        System.Threading.Tasks.Task<PIO.Bots.Models.ProduceOrder> CreateProduceOrderAsync(int PlanetID, int BuildOrderID);
+        System.Threading.Tasks.Task<PIO.Bots.Models.ProduceOrder> CreateProduceOrderAsync(int PlanetID, int BuildingID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/CreateHarvestOrder", ReplyAction="http://tempuri.org/IBotsService/CreateHarvestOrderResponse")]
+        PIO.Bots.Models.HarvestOrder CreateHarvestOrder(int PlanetID, int BuildingID);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/CreateHarvestOrder", ReplyAction="http://tempuri.org/IBotsService/CreateHarvestOrderResponse")]
+        System.Threading.Tasks.Task<PIO.Bots.Models.HarvestOrder> CreateHarvestOrderAsync(int PlanetID, int BuildingID);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IBotsService/CreateBuildOrder", ReplyAction="http://tempuri.org/IBotsService/CreateBuildOrderResponse")]
         PIO.Bots.Models.BuildOrder CreateBuildOrder(int PlanetID, PIO.Models.BuildingTypeIDs BuildingTypeID, int X, int Y);
@@ -199,6 +224,30 @@ namespace PIO.Bots.ClientLib.BotsServiceReference {
             return base.Channel.GetProduceOrdersForBuildingAsync(BuildingID);
         }
         
+        public PIO.Bots.Models.HarvestOrder GetHarvestOrder(int HarvestOrderID) {
+            return base.Channel.GetHarvestOrder(HarvestOrderID);
+        }
+        
+        public System.Threading.Tasks.Task<PIO.Bots.Models.HarvestOrder> GetHarvestOrderAsync(int HarvestOrderID) {
+            return base.Channel.GetHarvestOrderAsync(HarvestOrderID);
+        }
+        
+        public PIO.Bots.Models.HarvestOrder[] GetHarvestOrders() {
+            return base.Channel.GetHarvestOrders();
+        }
+        
+        public System.Threading.Tasks.Task<PIO.Bots.Models.HarvestOrder[]> GetHarvestOrdersAsync() {
+            return base.Channel.GetHarvestOrdersAsync();
+        }
+        
+        public PIO.Bots.Models.HarvestOrder[] GetHarvestOrdersForBuilding(int BuildingID) {
+            return base.Channel.GetHarvestOrdersForBuilding(BuildingID);
+        }
+        
+        public System.Threading.Tasks.Task<PIO.Bots.Models.HarvestOrder[]> GetHarvestOrdersForBuildingAsync(int BuildingID) {
+            return base.Channel.GetHarvestOrdersForBuildingAsync(BuildingID);
+        }
+        
         public PIO.Bots.Models.BuildOrder GetBuildOrder(int BuildOrderID) {
             return base.Channel.GetBuildOrder(BuildOrderID);
         }
@@ -223,12 +272,20 @@ namespace PIO.Bots.ClientLib.BotsServiceReference {
             return base.Channel.GetBuildOrdersAtPositionAsync(PlanetId, X, Y);
         }
         
-        public PIO.Bots.Models.ProduceOrder CreateProduceOrder(int PlanetID, int BuildOrderID) {
-            return base.Channel.CreateProduceOrder(PlanetID, BuildOrderID);
+        public PIO.Bots.Models.ProduceOrder CreateProduceOrder(int PlanetID, int BuildingID) {
+            return base.Channel.CreateProduceOrder(PlanetID, BuildingID);
         }
         
-        public System.Threading.Tasks.Task<PIO.Bots.Models.ProduceOrder> CreateProduceOrderAsync(int PlanetID, int BuildOrderID) {
-            return base.Channel.CreateProduceOrderAsync(PlanetID, BuildOrderID);
+        public System.Threading.Tasks.Task<PIO.Bots.Models.ProduceOrder> CreateProduceOrderAsync(int PlanetID, int BuildingID) {
+            return base.Channel.CreateProduceOrderAsync(PlanetID, BuildingID);
+        }
+        
+        public PIO.Bots.Models.HarvestOrder CreateHarvestOrder(int PlanetID, int BuildingID) {
+            return base.Channel.CreateHarvestOrder(PlanetID, BuildingID);
+        }
+        
+        public System.Threading.Tasks.Task<PIO.Bots.Models.HarvestOrder> CreateHarvestOrderAsync(int PlanetID, int BuildingID) {
+            return base.Channel.CreateHarvestOrderAsync(PlanetID, BuildingID);
         }
         
         public PIO.Bots.Models.BuildOrder CreateBuildOrder(int PlanetID, PIO.Models.BuildingTypeIDs BuildingTypeID, int X, int Y) {

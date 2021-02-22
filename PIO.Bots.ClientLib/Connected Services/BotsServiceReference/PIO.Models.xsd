@@ -3,10 +3,9 @@
   <xs:simpleType name="BuildingTypeIDs">
     <xs:restriction base="xs:string">
       <xs:enumeration value="Forest" />
-      <xs:enumeration value="Stockpile" />
       <xs:enumeration value="Sawmill" />
-      <xs:enumeration value="Stone" />
-      <xs:enumeration value="Water" />
+      <xs:enumeration value="Stockpile" />
+      <xs:enumeration value="StoneCutter" />
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="BuildingTypeIDs" nillable="true" type="tns:BuildingTypeIDs" />

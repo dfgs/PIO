@@ -26,16 +26,18 @@ namespace PIO.Bots.ServerLib.Modules
 		private PIO.ClientLib.PIOServiceReference.IPIOService client;
 		private IOrderModule orderModule;
 		private IProduceOrderModule produceOrderModule;
+		private IHarvestOrderModule harvestOrderModule;
 		private IBuildOrderModule buildOrderModule;
 
 
 
 
 
-		public OrderManagerModule(ILogger Logger, PIO.ClientLib.PIOServiceReference.IPIOService Client, IOrderModule OrderModule,IProduceOrderModule ProduceOrderModule, IBuildOrderModule BuildFactoryOrderModule,  int IdleDuration) : base(Logger)
+		public OrderManagerModule(ILogger Logger, PIO.ClientLib.PIOServiceReference.IPIOService Client, IOrderModule OrderModule, IProduceOrderModule ProduceOrderModule, IHarvestOrderModule HarvestOrderModule, IBuildOrderModule BuildFactoryOrderModule,  int IdleDuration) : base(Logger)
 		{
 			this.client = Client;this.idleDuration = IdleDuration;
-			this.orderModule = OrderModule;this.produceOrderModule = ProduceOrderModule;
+			this.orderModule = OrderModule;
+			this.produceOrderModule = ProduceOrderModule;this.harvestOrderModule = HarvestOrderModule;
 			this.buildOrderModule = BuildFactoryOrderModule;
 
 		}
@@ -88,7 +90,36 @@ namespace PIO.Bots.ServerLib.Modules
 
 			return produceOrder;
 		}
+		public HarvestOrder CreateHarvestOrder(int PlanetID, int BuildingID)
+		{
+			HarvestOrder[] existingOrders;
+			HarvestOrder harvestOrder;
+			Building building;
 
+			LogEnter();
+
+			Log(LogLevels.Information, $"Checking if building is on planet (PlanetID={PlanetID}, BuildingID={BuildingID})");
+			building = AssertExists(() => client.GetBuilding(BuildingID), $"BuildingID=({BuildingID})");
+			if (building.PlanetID != PlanetID)
+			{
+				Log(LogLevels.Warning, $"Building is not in the same planet (BuildingID={BuildingID})");
+				throw new PIOInvalidOperationException($"Building is not in the same planet (BuildingID={BuildingID})", null, ID, ModuleName, "CreateHarvestOrder");
+			}
+
+			Log(LogLevels.Information, $"Checking if order already exists (BuildingID={BuildingID})");
+			existingOrders = Try(() => harvestOrderModule.GetHarvestOrders(BuildingID)).OrThrow<PIOInternalErrorException>("Failed to get HarvestOrder");
+			if ((existingOrders != null) && (existingOrders.Length > 0))
+			{
+				Log(LogLevels.Warning, $"Harvest order already exists for building (BuildingID={BuildingID})");
+				throw new PIOInvalidOperationException($"Harvest order already exists for building (BuildingID={BuildingID})", null, ID, ModuleName, "CreateHarvestOrder");
+			}
+
+			Log(LogLevels.Information, $"Creating HarvestOrder");
+			harvestOrder = Try(() => harvestOrderModule.CreateHarvestOrder(PlanetID, BuildingID)).OrThrow<PIOInternalErrorException>("Failed to create HarvestOrder");
+
+
+			return harvestOrder;
+		}
 		public BuildOrder CreateBuildOrder(int PlanetID, BuildingTypeIDs BuildingTypeID, int X,int Y)
 		{
 			BuildOrder[] existingOrders;
@@ -138,6 +169,19 @@ namespace PIO.Bots.ServerLib.Modules
 
 			return produceOrders;
 		}
+
+		public HarvestOrder[] GetWaitingHarvestOrders(int PlanetID)
+		{
+			HarvestOrder[] produceOrders;
+
+			LogEnter();
+
+			Log(LogLevels.Information, $"Getting Orders");
+			produceOrders = Try(() => harvestOrderModule.GetWaitingHarvestOrders(PlanetID)).OrThrow<PIOInternalErrorException>("Failed to get Orders");
+
+			return produceOrders;
+		}
+
 		public BuildOrder[] GetWaitingBuildOrders(int PlanetID)
 		{
 			BuildOrder[] buildBuildingOrders;
@@ -234,6 +278,31 @@ namespace PIO.Bots.ServerLib.Modules
 
 			}
 
+
+		}
+
+		public Task CreateTaskFromHarvestOrder(Worker Worker, HarvestOrder HarvestOrder)
+		{
+			bool result;
+			Building building;
+			Task task;
+
+			building = AssertExists<Building>(() => client.GetBuilding(HarvestOrder.BuildingID), $"BuildingID={HarvestOrder.BuildingID}");
+
+			
+			Log(LogLevels.Information, $"Checking if worker is on site (WorkerID={Worker.WorkerID}, BuildingID={HarvestOrder.BuildingID})");
+			result = Try(() => client.WorkerIsInBuilding(Worker.WorkerID, building.BuildingID)).OrThrow<PIOInternalErrorException>("Failed to check worker location");
+			if (result)
+			{
+				Log(LogLevels.Information, $"Worker is on site, creating harvest task");
+				task = Try(() => client.Harvest(Worker.WorkerID)).OrThrow<PIOInternalErrorException>("Failed to create task");
+			}
+			else
+			{
+				Log(LogLevels.Information, $"Worker is not on site, creating moveto task");
+				task = Try(() => client.MoveToBuilding(Worker.WorkerID, building.BuildingID)).OrThrow<PIOInternalErrorException>("Failed to create task");
+			}
+			return task;
 
 		}
 
@@ -355,7 +424,7 @@ namespace PIO.Bots.ServerLib.Modules
 
 			worker = AssertExists<Worker>(() => client.GetWorker(WorkerID), $"WorkerID={WorkerID}");
 
-			orders = GetWaitingProduceOrders(worker.PlanetID).AsEnumerable<Order>().Union(GetWaitingBuildOrders(worker.PlanetID)).ToArray();
+			orders = GetWaitingProduceOrders(worker.PlanetID).AsEnumerable<Order>().Union(GetWaitingHarvestOrders(worker.PlanetID)).Union(GetWaitingBuildOrders(worker.PlanetID)).ToArray();
 
 			if ((orders==null) || (orders.Length==0))
 			{
@@ -367,6 +436,7 @@ namespace PIO.Bots.ServerLib.Modules
 			foreach (Order order in orders)
 			{
 				if (order is ProduceOrder produceOrder) task = CreateTaskFromProduceOrder(worker, produceOrder);
+				else if (order is HarvestOrder harvestOrder) task = CreateTaskFromHarvestOrder(worker, harvestOrder);
 				else if (order is BuildOrder buildBuildingOrder) task = CreateTaskFromBuildOrder(worker, buildBuildingOrder);
 				else
 				{

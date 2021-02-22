@@ -15,6 +15,7 @@
 		</Grid.ColumnDefinitions>
 		<StackPanel Grid.Column="0">
 			<TextBlock Text="Building:" FontWeight="Bold"/>
+			<TextBlock Text="{Binding BuildingTypeID}"/>
 			<TextBlock Text="{Binding RemainingBuildSteps,FallbackValue=0,StringFormat=Remaining build steps: {0}}"/>
 			<TextBlock Text="{Binding X,FallbackValue=0,StringFormat=X: {0}}"/>
 			<TextBlock Text="{Binding Y,FallbackValue=0,StringFormat=Y: {0}}"/>
@@ -35,7 +36,17 @@
 				<ItemsControl.ItemTemplate>
 					<DataTemplate>
 						<StackPanel Orientation="Horizontal">
-							<TextBlock Text="{Binding FactoryID}"/>
+							<TextBlock Text="{Binding BuildingID}"/>
+						</StackPanel>
+					</DataTemplate>
+				</ItemsControl.ItemTemplate>
+			</ItemsControl>
+			<TextBlock Text="Harvest orders:" FontWeight="Bold"/>
+			<ItemsControl ItemsSource="{Binding HarvestOrders}">
+				<ItemsControl.ItemTemplate>
+					<DataTemplate>
+						<StackPanel Orientation="Horizontal">
+							<TextBlock Text="{Binding BuildingID}"/>
 						</StackPanel>
 					</DataTemplate>
 				</ItemsControl.ItemTemplate>
@@ -44,7 +55,7 @@
 		<GridSplitter Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
 		<StackPanel Grid.Column="2">
 			<Button Content="New produce order" Command="{Binding CreateProduceOrderCommand}"/>
-			<Button Content="New xxx"/>
+			<Button Content="New harvest order" Command="{Binding CreateHarvestOrderCommand}"/>
 		</StackPanel>
 	</Grid>
 	

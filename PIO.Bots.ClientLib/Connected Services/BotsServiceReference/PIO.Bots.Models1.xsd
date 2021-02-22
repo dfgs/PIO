@@ -45,6 +45,23 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfProduceOrder" nillable="true" type="tns:ArrayOfProduceOrder" />
+  <xs:complexType name="HarvestOrder">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:Order">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="BuildingID" type="xs:int" />
+          <xs:element minOccurs="0" name="HarvestOrderID" type="xs:int" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="HarvestOrder" nillable="true" type="tns:HarvestOrder" />
+  <xs:complexType name="ArrayOfHarvestOrder">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="HarvestOrder" nillable="true" type="tns:HarvestOrder" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfHarvestOrder" nillable="true" type="tns:ArrayOfHarvestOrder" />
   <xs:complexType name="BuildOrder">
     <xs:complexContent mixed="false">
       <xs:extension base="tns:Order">

@@ -20,18 +20,21 @@ namespace PIO.Bots.WebServiceLib
 		private IOrderModule orderModule;
 		private IOrderManagerModule orderManagerModule;
 		private IProduceOrderModule produceOrderModule;
+		private IHarvestOrderModule harvestOrderModule;
 		private IBuildOrderModule buildFactoryOrderModule;
 
 		private IBotSchedulerModule botSchedulerModule;
 
 		public BotsService(ILogger Logger,
-			IBotModule BotModule, IOrderModule OrderModule, IProduceOrderModule ProduceOrderModule,
+			IBotModule BotModule, IOrderModule OrderModule, 
+			IProduceOrderModule ProduceOrderModule,IHarvestOrderModule HarvestOrderModule,
 			IBuildOrderModule BuildFactoryOrderModule,
 			IBotSchedulerModule BotSchedulerModule, IOrderManagerModule OrderManagerModule
 		) : base(Logger)
 		{
 			LogEnter();
-			this.botModule = BotModule; this.orderModule = OrderModule;this.produceOrderModule = ProduceOrderModule;
+			this.botModule = BotModule; this.orderModule = OrderModule;
+			this.produceOrderModule = ProduceOrderModule;this.harvestOrderModule = HarvestOrderModule;
 			this.buildFactoryOrderModule = BuildFactoryOrderModule;
 			this.botSchedulerModule = BotSchedulerModule;
 			this.orderManagerModule = OrderManagerModule;
@@ -84,6 +87,21 @@ namespace PIO.Bots.WebServiceLib
 			LogEnter();
 			return Try(() => produceOrderModule.GetProduceOrders(FactoryID)).OrThrow(GenerateFaultException);
 		}
+		public HarvestOrder GetHarvestOrder(int HarvestOrderID)
+		{
+			LogEnter();
+			return Try(() => harvestOrderModule.GetHarvestOrder(HarvestOrderID)).OrThrow(GenerateFaultException);
+		}
+		public HarvestOrder[] GetHarvestOrders()
+		{
+			LogEnter();
+			return Try(() => harvestOrderModule.GetHarvestOrders()).OrThrow(GenerateFaultException);
+		}
+		public HarvestOrder[] GetHarvestOrdersForBuilding(int FactoryID)
+		{
+			LogEnter();
+			return Try(() => harvestOrderModule.GetHarvestOrders(FactoryID)).OrThrow(GenerateFaultException);
+		}
 
 
 		public BuildOrder GetBuildOrder(int BuildFactoryOrderID)
@@ -102,15 +120,20 @@ namespace PIO.Bots.WebServiceLib
 			return Try(() => buildFactoryOrderModule.GetBuildOrders(PlanetID,X,Y)).OrThrow(GenerateFaultException);
 		}
 
-		
+
 
 		#endregion
 
 		#region functional
-		public ProduceOrder CreateProduceOrder(int PlanetID, int FactoryID)
+		public ProduceOrder CreateProduceOrder(int PlanetID, int BuildingID)
 		{
 			LogEnter();
-			return Try(() => orderManagerModule.CreateProduceOrder(PlanetID,FactoryID)).OrThrow(GenerateFaultException);
+			return Try(() => orderManagerModule.CreateProduceOrder(PlanetID, BuildingID)).OrThrow(GenerateFaultException);
+		}
+		public HarvestOrder CreateHarvestOrder(int PlanetID, int BuildingID)
+		{
+			LogEnter();
+			return Try(() => orderManagerModule.CreateHarvestOrder(PlanetID, BuildingID)).OrThrow(GenerateFaultException);
 		}
 		public BuildOrder CreateBuildOrder(int PlanetID, BuildingTypeIDs BuildingTypeID, int X, int Y)
 		{
