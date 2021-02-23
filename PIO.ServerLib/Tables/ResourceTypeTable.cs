@@ -12,6 +12,6 @@ namespace PIO.ServerLib.Tables
 	public class ResourceTypeTable : Table
 	{
 		public static readonly Column<ResourceTypeIDs> ResourceTypeID = new Column<ResourceTypeIDs>() { Constraint = NetORMLib.ColumnConstraints.PrimaryKey };
-		public new static readonly Column<string> Name = new Column<string>() ;
+		public static readonly Column<string> PhraseID = new Column<string>() ;
 	}
 }

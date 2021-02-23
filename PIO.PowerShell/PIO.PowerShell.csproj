@@ -66,6 +66,8 @@
     <Compile Include="PIO\DataCmdlet\GetBuildingsCmdlet.cs" />
     <Compile Include="PIO\DataCmdlet\GetBuildingTypeCmdlet.cs" />
     <Compile Include="PIO\DataCmdlet\GetBuildingTypesCmdlet.cs" />
+    <Compile Include="PIO\DataCmdlet\GetPhraseCmdlet.cs" />
+    <Compile Include="PIO\DataCmdlet\GetPhrasesCmdlet.cs" />
     <Compile Include="PIO\DataCmdlet\GetStackQuantityCmdlet.cs" />
     <Compile Include="PIO\DataCmdlet\GetLastTaskCmdlet.cs" />
     <Compile Include="PIO\DataCmdlet\GetTaskTypeCmdlet.cs" />

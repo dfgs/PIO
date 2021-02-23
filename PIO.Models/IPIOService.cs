@@ -17,6 +17,12 @@ namespace PIO.Models
 	{
 		#region data
 		[OperationContract]
+		Phrase GetPhrase(string Key, string CountryCode);
+		[OperationContract]
+		Phrase[] GetPhrases(string CountryCode);
+
+
+		[OperationContract]
 		Planet GetPlanet(int PlanetID);
 		[OperationContract]
 		Planet[] GetPlanets();

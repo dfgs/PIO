@@ -29,8 +29,10 @@ namespace PIO.ServerLib
 			switch (Version)
 			{
 				case 1:
+					yield return new CreateTable(PIODB.PhraseTable,PhraseTable.PhraseID, PhraseTable.Key, PhraseTable.CountryCode, PhraseTable.Value);
+
 					yield return new CreateTable(PIODB.PlanetTable, PlanetTable.PlanetID, PlanetTable.Name,PlanetTable.Width,PlanetTable.Height);
-					yield return new CreateTable(PIODB.ResourceTypeTable, ResourceTypeTable.ResourceTypeID, ResourceTypeTable.Name);
+					yield return new CreateTable(PIODB.ResourceTypeTable, ResourceTypeTable.ResourceTypeID, ResourceTypeTable.PhraseID);
 					yield return new CreateTable(PIODB.BuildingTypeTable, BuildingTypeTable.BuildingTypeID, BuildingTypeTable.Name, BuildingTypeTable.HealthPoints, BuildingTypeTable.BuildSteps,BuildingTypeTable.IsFactory,BuildingTypeTable.IsFarm );
 					yield return new CreateTable(PIODB.TaskTypeTable, TaskTypeTable.TaskTypeID, TaskTypeTable.Name);
 
@@ -73,9 +75,14 @@ namespace PIO.ServerLib
 					yield return new CreateRelation<BuildingTypeIDs>(PIODB.ProductTable, BuildingTypeTable.BuildingTypeID, ProductTable.BuildingTypeID);
 					yield return new CreateRelation<ResourceTypeIDs>(PIODB.ProductTable, ResourceTypeTable.ResourceTypeID, ProductTable.ResourceTypeID);
 
+
+					//yield return new CreateRelation<string>(PIODB.ResourceTypeTable, PhraseTable.PhraseID, ResourceTypeTable.PhraseID);
+
+
 					yield return new CreateConstraint(PIODB.CellTable, ColumnConstraints.Unique, CellTable.X, CellTable.Y);
 					yield return new CreateConstraint(PIODB.BuildingTable, ColumnConstraints.Unique, BuildingTable.X, BuildingTable.Y);
-					//yield return new CreateConstraint(PIODB.TaskTable, ColumnConstraints.Unique, TaskTable.WorkerID);
+
+
 
 					break;
 

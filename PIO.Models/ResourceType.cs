@@ -14,7 +14,7 @@ namespace PIO.Models
 		[DataMember]
 		public ResourceTypeIDs ResourceTypeID { get; set; }
 		[DataMember]
-		public string Name { get; set; }
+		public string PhraseID { get; set; }
 		
 	}
 }

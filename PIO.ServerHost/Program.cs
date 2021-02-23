@@ -44,6 +44,7 @@ namespace PIO.ServerHost
 
 			IPlanetGeneratorModule planetGeneratorModule;
 
+			IPhraseModule phraseModule;
 			IPlanetModule planetModule;
 			ICellModule cellModule;
 			IBuildingModule buildingModule;
@@ -81,9 +82,9 @@ namespace PIO.ServerHost
 
 			versionControlModule = new VersionControlModule(logger,databaseCreator,new PIOVersionControl(database));
 			if (!versionControlModule.InitializeDatabase(Properties.Settings.Default.DropDatabase)) return;
-			
 
 
+			phraseModule = new PhraseModule(logger, database);
 			planetModule = new PlanetModule(logger, database);
 			cellModule = new CellModule(logger, database);
 			buildingModule = new BuildingModule(logger, database);
@@ -108,7 +109,7 @@ namespace PIO.ServerHost
 			takerModule = new TakerModule(logger, taskModule, workerModule, buildingModule, stackModule);
 			storerModule = new StorerModule(logger, taskModule, workerModule, buildingModule, stackModule);
 
-			planetGeneratorModule = new PlanetGeneratorModule(logger,resourceTypeModule,buildingTypeModule,taskTypeModule,materialModule,ingredientModule,productModule,planetModule,cellModule,buildingModule,workerModule);
+			planetGeneratorModule = new PlanetGeneratorModule(logger,phraseModule, resourceTypeModule,buildingTypeModule,taskTypeModule,materialModule,ingredientModule,productModule,planetModule,cellModule,buildingModule,workerModule);
 			if (!planetGeneratorModule.Generate()) return; 
 
 			schedulerModule = new SchedulerModule(logger, taskModule, idlerModule, producerModule,harvesterModule, moverModule,takerModule,storerModule, factoryBuilderModule);
@@ -116,7 +117,7 @@ namespace PIO.ServerHost
 
 
 			pioService = new PIOService(
-				logger, planetModule, cellModule, buildingModule, workerModule,
+				logger,phraseModule, planetModule, cellModule, buildingModule, workerModule,
 				stackModule, resourceTypeModule,
 				 buildingTypeModule, taskTypeModule, materialModule, ingredientModule, productModule, taskModule,
 				schedulerModule,

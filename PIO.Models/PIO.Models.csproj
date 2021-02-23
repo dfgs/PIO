@@ -54,6 +54,7 @@
     <Compile Include="Modules\DataModules\ICellModule.cs" />
     <Compile Include="Modules\DataModules\IBuildingModule.cs" />
     <Compile Include="Modules\DataModules\IBuildingTypeModule.cs" />
+    <Compile Include="Modules\DataModules\IPhraseModule.cs" />
     <Compile Include="Modules\DataModules\ITaskTypeModule.cs" />
     <Compile Include="Modules\EngineModules\ISchedulerModule.cs" />
     <Compile Include="Modules\EngineModules\TaskEventArgs.cs" />
@@ -65,6 +66,7 @@
     <Compile Include="Modules\FunctionalModules\IMoverModule.cs" />
     <Compile Include="Modules\FunctionalModules\ILocationCheckerModule.cs" />
     <Compile Include="Modules\FunctionalModules\ITaskGeneratorModule.cs" />
+    <Compile Include="Phrase.cs" />
     <Compile Include="TaskType.cs" />
     <Compile Include="Modules\DataModules\IProductModule.cs" />
     <Compile Include="Modules\FunctionalModules\IProducerModule.cs" />

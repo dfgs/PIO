@@ -15,6 +15,18 @@ namespace PIO.ClientLib.PIOServiceReference {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="PIOServiceReference.IPIOService")]
     public interface IPIOService {
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetPhrase", ReplyAction="http://tempuri.org/IPIOService/GetPhraseResponse")]
+        PIO.Models.Phrase GetPhrase(string Key, string CountryCode);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetPhrase", ReplyAction="http://tempuri.org/IPIOService/GetPhraseResponse")]
+        System.Threading.Tasks.Task<PIO.Models.Phrase> GetPhraseAsync(string Key, string CountryCode);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetPhrases", ReplyAction="http://tempuri.org/IPIOService/GetPhrasesResponse")]
+        PIO.Models.Phrase[] GetPhrases(string CountryCode);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetPhrases", ReplyAction="http://tempuri.org/IPIOService/GetPhrasesResponse")]
+        System.Threading.Tasks.Task<PIO.Models.Phrase[]> GetPhrasesAsync(string CountryCode);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IPIOService/GetPlanet", ReplyAction="http://tempuri.org/IPIOService/GetPlanetResponse")]
         PIO.Models.Planet GetPlanet(int PlanetID);
         
@@ -305,6 +317,22 @@ namespace PIO.ClientLib.PIOServiceReference {
         
         public PIOServiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(binding, remoteAddress) {
+        }
+        
+        public PIO.Models.Phrase GetPhrase(string Key, string CountryCode) {
+            return base.Channel.GetPhrase(Key, CountryCode);
+        }
+        
+        public System.Threading.Tasks.Task<PIO.Models.Phrase> GetPhraseAsync(string Key, string CountryCode) {
+            return base.Channel.GetPhraseAsync(Key, CountryCode);
+        }
+        
+        public PIO.Models.Phrase[] GetPhrases(string CountryCode) {
+            return base.Channel.GetPhrases(CountryCode);
+        }
+        
+        public System.Threading.Tasks.Task<PIO.Models.Phrase[]> GetPhrasesAsync(string CountryCode) {
+            return base.Channel.GetPhrasesAsync(CountryCode);
         }
         
         public PIO.Models.Planet GetPlanet(int PlanetID) {

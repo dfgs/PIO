@@ -7,6 +7,18 @@
       <xsd:import namespace="http://schemas.datacontract.org/2004/07/PIO.Models" />
     </xsd:schema>
   </wsdl:types>
+  <wsdl:message name="IPIOService_GetPhrase_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetPhrase" />
+  </wsdl:message>
+  <wsdl:message name="IPIOService_GetPhrase_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetPhraseResponse" />
+  </wsdl:message>
+  <wsdl:message name="IPIOService_GetPhrases_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetPhrases" />
+  </wsdl:message>
+  <wsdl:message name="IPIOService_GetPhrases_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetPhrasesResponse" />
+  </wsdl:message>
   <wsdl:message name="IPIOService_GetPlanet_InputMessage">
     <wsdl:part name="parameters" element="tns:GetPlanet" />
   </wsdl:message>
@@ -272,6 +284,14 @@
     <wsdl:part name="parameters" element="tns:BuildResponse" />
   </wsdl:message>
   <wsdl:portType name="IPIOService">
+    <wsdl:operation name="GetPhrase">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetPhrase" message="tns:IPIOService_GetPhrase_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/GetPhraseResponse" message="tns:IPIOService_GetPhrase_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPhrases">
+      <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetPhrases" message="tns:IPIOService_GetPhrases_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/GetPhrasesResponse" message="tns:IPIOService_GetPhrases_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="GetPlanet">
       <wsdl:input wsaw:Action="http://tempuri.org/IPIOService/GetPlanet" message="tns:IPIOService_GetPlanet_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IPIOService/GetPlanetResponse" message="tns:IPIOService_GetPlanet_OutputMessage" />
@@ -451,6 +471,24 @@
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IPIOService" type="tns:IPIOService">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetPhrase">
+      <soap:operation soapAction="http://tempuri.org/IPIOService/GetPhrase" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPhrases">
+      <soap:operation soapAction="http://tempuri.org/IPIOService/GetPhrases" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="GetPlanet">
       <soap:operation soapAction="http://tempuri.org/IPIOService/GetPlanet" style="document" />
       <wsdl:input>

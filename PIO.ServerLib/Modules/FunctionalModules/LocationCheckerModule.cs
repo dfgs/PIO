@@ -21,7 +21,7 @@ namespace PIO.ServerLib.Modules
 	{
 		private IWorkerModule workerModule;
 		private IBuildingModule buildingModule;
-
+		
 		public LocationCheckerModule(ILogger Logger,IWorkerModule WorkerModule,IBuildingModule BuildingModule ) : base(Logger)
 		{
 			this.workerModule = WorkerModule;  this.buildingModule = BuildingModule;

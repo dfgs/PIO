@@ -46,6 +46,7 @@
     <Compile Include="Modules\DataModules\CellModule.cs" />
     <Compile Include="Modules\DataModules\BuildingModule.cs" />
     <Compile Include="Modules\DataModules\BuildingTypeModule.cs" />
+    <Compile Include="Modules\DataModules\PhraseModule.cs" />
     <Compile Include="Modules\DataModules\TaskTypeModule.cs" />
     <Compile Include="Modules\DataModules\ProductModule.cs" />
     <Compile Include="Modules\DataModules\IngredientModule.cs" />
@@ -72,6 +73,7 @@
     <Compile Include="Tables\CellTable.cs" />
     <Compile Include="Tables\BuildingTable.cs" />
     <Compile Include="Tables\BuildingTypeTable.cs" />
+    <Compile Include="Tables\PhraseTable.cs" />
     <Compile Include="Tables\TaskTypeTable.cs" />
     <Compile Include="Tables\ProductTable.cs" />
     <Compile Include="Tables\IngredientTable.cs" />

@@ -1,6 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/PIO.Models" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/PIO.Models" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:complexType name="Phrase">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="CountryCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Key" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PhraseID" type="xs:int" />
+      <xs:element minOccurs="0" name="Value" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Phrase" nillable="true" type="tns:Phrase" />
+  <xs:complexType name="ArrayOfPhrase">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Phrase" nillable="true" type="tns:Phrase" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfPhrase" nillable="true" type="tns:ArrayOfPhrase" />
   <xs:complexType name="Planet">
     <xs:sequence>
       <xs:element minOccurs="0" name="Height" type="xs:int" />
@@ -119,7 +134,7 @@
   <xs:element name="ArrayOfStack" nillable="true" type="tns:ArrayOfStack" />
   <xs:complexType name="ResourceType">
     <xs:sequence>
-      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="PhraseID" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ResourceTypeID" type="tns:ResourceTypeIDs" />
     </xs:sequence>
   </xs:complexType>

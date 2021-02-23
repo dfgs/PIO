@@ -11,6 +11,7 @@ namespace PIO.ServerLib
 {
 	public static class PIODB
 	{
+		public static PhraseTable PhraseTable = new PhraseTable();
 		public static PlanetTable PlanetTable = new PlanetTable();
 		public static CellTable CellTable = new CellTable();
 		public static BuildingTable BuildingTable = new BuildingTable();

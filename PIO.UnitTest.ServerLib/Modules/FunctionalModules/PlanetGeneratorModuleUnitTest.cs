@@ -25,7 +25,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 
 			logger = new MemoryLogger();
 
-			module = new PlanetGeneratorModule(logger,null,null,null,null,null,null,null,null,null,null );
+			module = new PlanetGeneratorModule(logger,null,null,null,null,null,null,null,null,null,null,null );
 
 			Assert.IsFalse(module.Generate());
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName == module.ModuleName)));

@@ -19,6 +19,7 @@ namespace PIO.WebServiceLib
 	[ServiceBehavior(InstanceContextMode = InstanceContextMode.Single, ConcurrencyMode = ConcurrencyMode.Single)]
 	public class PIOService : Module, IPIOService
 	{
+		private IPhraseModule phraseModule;
 		private IPlanetModule planetModule;
 		private ICellModule cellModule;
 		private IBuildingModule buildingModule;
@@ -46,7 +47,7 @@ namespace PIO.WebServiceLib
 
 
 		public PIOService(ILogger Logger,
-			IPlanetModule PlanetModule, ICellModule CellModule,
+			IPhraseModule PhraseModule,IPlanetModule PlanetModule, ICellModule CellModule,
 			IBuildingModule BuildingModule,
 			IWorkerModule WorkerModule,
 			IStackModule StackModule,IResourceTypeModule ResourceTypeModule,
@@ -65,6 +66,9 @@ namespace PIO.WebServiceLib
 		) :base(Logger)
 		{
 			LogEnter();
+
+			this.phraseModule = PhraseModule;
+
 			this.planetModule = PlanetModule;
 			this.cellModule = CellModule;
 			
@@ -102,6 +106,19 @@ namespace PIO.WebServiceLib
 		}
 
 		#region data
+		public Phrase GetPhrase(string Key, string CountryCode)
+		{
+			LogEnter();
+			return Try(() => phraseModule.GetPhrase(Key,CountryCode)).OrThrow(GenerateFaultException);
+		}
+		public Phrase[] GetPhrases(string CountryCode)
+		{
+			LogEnter();
+			return Try(() => phraseModule.GetPhrases(CountryCode)).OrThrow(GenerateFaultException);
+
+		}
+
+
 		public Planet GetPlanet(int PlanetID)
 		{
 			LogEnter();

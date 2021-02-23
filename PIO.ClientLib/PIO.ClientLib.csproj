@@ -92,6 +92,7 @@
     <None Include="Properties\DataSources\PIO.Models.FarmType.datasource" />
     <None Include="Properties\DataSources\PIO.Models.Ingredient.datasource" />
     <None Include="Properties\DataSources\PIO.Models.Material.datasource" />
+    <None Include="Properties\DataSources\PIO.Models.Phrase.datasource" />
     <None Include="Properties\DataSources\PIO.Models.Planet.datasource" />
     <None Include="Properties\DataSources\PIO.Models.Product.datasource" />
     <None Include="Properties\DataSources\PIO.Models.ResourceType.datasource" />

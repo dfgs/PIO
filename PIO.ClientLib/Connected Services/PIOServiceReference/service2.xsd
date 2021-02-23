@@ -1,6 +1,35 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import namespace="http://schemas.datacontract.org/2004/07/PIO.Models" />
+  <xs:element name="GetPhrase">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="Key" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="CountryCode" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetPhraseResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetPhraseResult" nillable="true" type="q1:Phrase" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetPhrases">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" name="CountryCode" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetPhrasesResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetPhrasesResult" nillable="true" type="q2:ArrayOfPhrase" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="GetPlanet">
     <xs:complexType>
       <xs:sequence>
@@ -11,7 +40,7 @@
   <xs:element name="GetPlanetResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetPlanetResult" nillable="true" type="q1:Planet" />
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetPlanetResult" nillable="true" type="q3:Planet" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -23,7 +52,7 @@
   <xs:element name="GetPlanetsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetPlanetsResult" nillable="true" type="q2:ArrayOfPlanet" />
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetPlanetsResult" nillable="true" type="q4:ArrayOfPlanet" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -37,7 +66,7 @@
   <xs:element name="GetCellResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetCellResult" nillable="true" type="q3:Cell" />
+        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetCellResult" nillable="true" type="q5:Cell" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -53,7 +82,7 @@
   <xs:element name="GetCellAtPosResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetCellAtPosResult" nillable="true" type="q4:Cell" />
+        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetCellAtPosResult" nillable="true" type="q6:Cell" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -71,7 +100,7 @@
   <xs:element name="GetCellsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q5="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetCellsResult" nillable="true" type="q5:ArrayOfCell" />
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetCellsResult" nillable="true" type="q7:ArrayOfCell" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -85,7 +114,7 @@
   <xs:element name="GetBuildingResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q6="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetBuildingResult" nillable="true" type="q6:Building" />
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetBuildingResult" nillable="true" type="q8:Building" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -101,7 +130,7 @@
   <xs:element name="GetBuildingAtPosResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetBuildingAtPosResult" nillable="true" type="q7:Building" />
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetBuildingAtPosResult" nillable="true" type="q9:Building" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -115,7 +144,7 @@
   <xs:element name="GetBuildingsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetBuildingsResult" nillable="true" type="q8:ArrayOfBuilding" />
+        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetBuildingsResult" nillable="true" type="q10:ArrayOfBuilding" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -129,7 +158,7 @@
   <xs:element name="GetWorkerResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetWorkerResult" nillable="true" type="q9:Worker" />
+        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetWorkerResult" nillable="true" type="q11:Worker" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -143,7 +172,7 @@
   <xs:element name="GetWorkersResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q10="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetWorkersResult" nillable="true" type="q10:ArrayOfWorker" />
+        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetWorkersResult" nillable="true" type="q12:ArrayOfWorker" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -155,7 +184,7 @@
   <xs:element name="GetAllWorkersResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q11="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetAllWorkersResult" nillable="true" type="q11:ArrayOfWorker" />
+        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetAllWorkersResult" nillable="true" type="q13:ArrayOfWorker" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -169,7 +198,7 @@
   <xs:element name="GetStackResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q12="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetStackResult" nillable="true" type="q12:Stack" />
+        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetStackResult" nillable="true" type="q14:Stack" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -177,14 +206,14 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="PlanetID" type="xs:int" />
-        <xs:element xmlns:q13="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="ResourceTypeID" type="q13:ResourceTypeIDs" />
+        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="ResourceTypeID" type="q15:ResourceTypeIDs" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="FindStackResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q14="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="FindStackResult" nillable="true" type="q14:Stack" />
+        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="FindStackResult" nillable="true" type="q16:Stack" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -198,7 +227,7 @@
   <xs:element name="GetStacksResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q15="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetStacksResult" nillable="true" type="q15:ArrayOfStack" />
+        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetStacksResult" nillable="true" type="q17:ArrayOfStack" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -206,7 +235,7 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="BuildingID" type="xs:int" />
-        <xs:element xmlns:q16="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="ResourceTypeID" type="q16:ResourceTypeIDs" />
+        <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="ResourceTypeID" type="q18:ResourceTypeIDs" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -220,14 +249,14 @@
   <xs:element name="GetResourceType">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q17="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="ResourceTypeID" type="q17:ResourceTypeIDs" />
+        <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="ResourceTypeID" type="q19:ResourceTypeIDs" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetResourceTypeResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetResourceTypeResult" nillable="true" type="q18:ResourceType" />
+        <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetResourceTypeResult" nillable="true" type="q20:ResourceType" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -239,21 +268,21 @@
   <xs:element name="GetResourceTypesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetResourceTypesResult" nillable="true" type="q19:ArrayOfResourceType" />
+        <xs:element xmlns:q21="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetResourceTypesResult" nillable="true" type="q21:ArrayOfResourceType" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetBuildingType">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q20="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="BuildingTypeID" type="q20:BuildingTypeIDs" />
+        <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="BuildingTypeID" type="q22:BuildingTypeIDs" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetBuildingTypeResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q21="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetBuildingTypeResult" nillable="true" type="q21:BuildingType" />
+        <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetBuildingTypeResult" nillable="true" type="q23:BuildingType" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -265,21 +294,21 @@
   <xs:element name="GetBuildingTypesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q22="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetBuildingTypesResult" nillable="true" type="q22:ArrayOfBuildingType" />
+        <xs:element xmlns:q24="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetBuildingTypesResult" nillable="true" type="q24:ArrayOfBuildingType" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetTaskType">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q23="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="TaskTypeID" type="q23:TaskTypeIDs" />
+        <xs:element xmlns:q25="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="TaskTypeID" type="q25:TaskTypeIDs" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetTaskTypeResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q24="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetTaskTypeResult" nillable="true" type="q24:TaskType" />
+        <xs:element xmlns:q26="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetTaskTypeResult" nillable="true" type="q26:TaskType" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -291,7 +320,7 @@
   <xs:element name="GetTaskTypesResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q25="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetTaskTypesResult" nillable="true" type="q25:ArrayOfTaskType" />
+        <xs:element xmlns:q27="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetTaskTypesResult" nillable="true" type="q27:ArrayOfTaskType" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -305,21 +334,21 @@
   <xs:element name="GetMaterialResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q26="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetMaterialResult" nillable="true" type="q26:Material" />
+        <xs:element xmlns:q28="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetMaterialResult" nillable="true" type="q28:Material" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetMaterials">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q27="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="BuildingTypeID" type="q27:BuildingTypeIDs" />
+        <xs:element xmlns:q29="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="BuildingTypeID" type="q29:BuildingTypeIDs" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetMaterialsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q28="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetMaterialsResult" nillable="true" type="q28:ArrayOfMaterial" />
+        <xs:element xmlns:q30="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetMaterialsResult" nillable="true" type="q30:ArrayOfMaterial" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -333,21 +362,21 @@
   <xs:element name="GetIngredientResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q29="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetIngredientResult" nillable="true" type="q29:Ingredient" />
+        <xs:element xmlns:q31="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetIngredientResult" nillable="true" type="q31:Ingredient" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetIngredients">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q30="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="BuildingTypeID" type="q30:BuildingTypeIDs" />
+        <xs:element xmlns:q32="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="BuildingTypeID" type="q32:BuildingTypeIDs" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetIngredientsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q31="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetIngredientsResult" nillable="true" type="q31:ArrayOfIngredient" />
+        <xs:element xmlns:q33="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetIngredientsResult" nillable="true" type="q33:ArrayOfIngredient" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -361,21 +390,21 @@
   <xs:element name="GetProductResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q32="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetProductResult" nillable="true" type="q32:Product" />
+        <xs:element xmlns:q34="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetProductResult" nillable="true" type="q34:Product" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetProducts">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q33="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="BuildingTypeID" type="q33:BuildingTypeIDs" />
+        <xs:element xmlns:q35="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="BuildingTypeID" type="q35:BuildingTypeIDs" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetProductsResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q34="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetProductsResult" nillable="true" type="q34:ArrayOfProduct" />
+        <xs:element xmlns:q36="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetProductsResult" nillable="true" type="q36:ArrayOfProduct" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -389,7 +418,7 @@
   <xs:element name="GetTaskResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q35="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetTaskResult" nillable="true" type="q35:Task" />
+        <xs:element xmlns:q37="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetTaskResult" nillable="true" type="q37:Task" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -403,7 +432,7 @@
   <xs:element name="GetTasksResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q36="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetTasksResult" nillable="true" type="q36:ArrayOfTask" />
+        <xs:element xmlns:q38="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetTasksResult" nillable="true" type="q38:ArrayOfTask" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -417,7 +446,7 @@
   <xs:element name="GetLastTaskResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q37="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetLastTaskResult" nillable="true" type="q37:Task" />
+        <xs:element xmlns:q39="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetLastTaskResult" nillable="true" type="q39:Task" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -445,7 +474,7 @@
   <xs:element name="GetMissingResourcesToProduceResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q38="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetMissingResourcesToProduceResult" nillable="true" type="q38:ArrayOfResourceTypeIDs" />
+        <xs:element xmlns:q40="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetMissingResourcesToProduceResult" nillable="true" type="q40:ArrayOfResourceTypeIDs" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -473,7 +502,7 @@
   <xs:element name="GetMissingResourcesToBuildResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q39="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetMissingResourcesToBuildResult" nillable="true" type="q39:ArrayOfResourceTypeIDs" />
+        <xs:element xmlns:q41="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="GetMissingResourcesToBuildResult" nillable="true" type="q41:ArrayOfResourceTypeIDs" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -503,7 +532,7 @@
   <xs:element name="IdleResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q40="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="IdleResult" nillable="true" type="q40:Task" />
+        <xs:element xmlns:q42="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="IdleResult" nillable="true" type="q42:Task" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -517,7 +546,7 @@
   <xs:element name="ProduceResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q41="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="ProduceResult" nillable="true" type="q41:Task" />
+        <xs:element xmlns:q43="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="ProduceResult" nillable="true" type="q43:Task" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -531,7 +560,7 @@
   <xs:element name="HarvestResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q42="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="HarvestResult" nillable="true" type="q42:Task" />
+        <xs:element xmlns:q44="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="HarvestResult" nillable="true" type="q44:Task" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -547,7 +576,7 @@
   <xs:element name="MoveToResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q43="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="MoveToResult" nillable="true" type="q43:Task" />
+        <xs:element xmlns:q45="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="MoveToResult" nillable="true" type="q45:Task" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -562,7 +591,7 @@
   <xs:element name="MoveToBuildingResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q44="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="MoveToBuildingResult" nillable="true" type="q44:Task" />
+        <xs:element xmlns:q46="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="MoveToBuildingResult" nillable="true" type="q46:Task" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -570,14 +599,14 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="WorkerID" type="xs:int" />
-        <xs:element xmlns:q45="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="ResourceTypeID" type="q45:ResourceTypeIDs" />
+        <xs:element xmlns:q47="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="ResourceTypeID" type="q47:ResourceTypeIDs" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="TakeResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q46="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="TakeResult" nillable="true" type="q46:Task" />
+        <xs:element xmlns:q48="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="TakeResult" nillable="true" type="q48:Task" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -591,7 +620,7 @@
   <xs:element name="StoreResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q47="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="StoreResult" nillable="true" type="q47:Task" />
+        <xs:element xmlns:q49="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="StoreResult" nillable="true" type="q49:Task" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -599,14 +628,14 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="WorkerID" type="xs:int" />
-        <xs:element xmlns:q48="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="BuildingTypeID" type="q48:BuildingTypeIDs" />
+        <xs:element xmlns:q50="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="BuildingTypeID" type="q50:BuildingTypeIDs" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="CreateBuildingResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q49="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="CreateBuildingResult" nillable="true" type="q49:Task" />
+        <xs:element xmlns:q51="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="CreateBuildingResult" nillable="true" type="q51:Task" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -620,7 +649,7 @@
   <xs:element name="BuildResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q50="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="BuildResult" nillable="true" type="q50:Task" />
+        <xs:element xmlns:q52="http://schemas.datacontract.org/2004/07/PIO.Models" minOccurs="0" name="BuildResult" nillable="true" type="q52:Task" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

@@ -12,6 +12,7 @@ namespace PIO.ServerLib.Modules
 {
 	public class PlanetGeneratorModule : FunctionalModule,IPlanetGeneratorModule
 	{
+		private IPhraseModule phraseModule;
 		private IResourceTypeModule resourceTypeModule;
 		private IBuildingTypeModule buildingTypeModule;
 		private ITaskTypeModule taskTypeModule;
@@ -23,10 +24,11 @@ namespace PIO.ServerLib.Modules
 		private IBuildingModule buildingModule;
 		private IWorkerModule workerModule;
 
-		public PlanetGeneratorModule(ILogger Logger,IResourceTypeModule ResourceTypeModule,IBuildingTypeModule BuildingTypeModule,ITaskTypeModule TaskTypeModule,IMaterialModule MaterialModule,IIngredientModule IngredientModule,IProductModule ProductModule,
+		public PlanetGeneratorModule(ILogger Logger,IPhraseModule PhraseModule, IResourceTypeModule ResourceTypeModule,IBuildingTypeModule BuildingTypeModule,ITaskTypeModule TaskTypeModule,IMaterialModule MaterialModule,IIngredientModule IngredientModule,IProductModule ProductModule,
 			IPlanetModule PlanetModule,ICellModule CellModule,IBuildingModule BuildingModule,IWorkerModule WorkerModule
 			) : base(Logger)
 		{
+			this.phraseModule = PhraseModule;
 			this.resourceTypeModule = ResourceTypeModule;this.buildingTypeModule = BuildingTypeModule;this.taskTypeModule = TaskTypeModule;this.materialModule = MaterialModule;this.ingredientModule = IngredientModule;this.productModule = ProductModule;
 			this.planetModule = PlanetModule;this.cellModule = CellModule;this.buildingModule = BuildingModule;this.workerModule = WorkerModule;
 		}
@@ -36,19 +38,24 @@ namespace PIO.ServerLib.Modules
 			Planet planet;
 			Building building;
 			Worker worker;
+			
+			Log(LogLevels.Information, "Creating Phrase items");
+			phraseModule.CreatePhrase("Wood", "EN", "Wood");
+			phraseModule.CreatePhrase("Wood", "FR", "Bois");
+
 
 			Log(LogLevels.Information, "Creating ResourceType items");
 			resourceTypeModule.CreateResourceType(Models.ResourceTypeIDs.Wood, "Wood");
 			resourceTypeModule.CreateResourceType(Models.ResourceTypeIDs.Stone, "Stone");
 			resourceTypeModule.CreateResourceType(Models.ResourceTypeIDs.Coal, "Coal");
 			resourceTypeModule.CreateResourceType(Models.ResourceTypeIDs.Plank, "Plank");
-			resourceTypeModule.CreateResourceType(Models.ResourceTypeIDs.CutStone, "Cut stone");
+			resourceTypeModule.CreateResourceType(Models.ResourceTypeIDs.CutStone, "CutStone");
 
 			Log(LogLevels.Information, "Creating BuildingType items");
 			buildingTypeModule.CreateBuildingType(Models.BuildingTypeIDs.Forest, "Forest", 1, 10, false, true);
 			buildingTypeModule.CreateBuildingType(Models.BuildingTypeIDs.Stockpile, "Stockpile", 2, 10, false, false); ;
 			buildingTypeModule.CreateBuildingType(Models.BuildingTypeIDs.Sawmill, "Sawmill", 2, 10, true, false);
-			buildingTypeModule.CreateBuildingType(Models.BuildingTypeIDs.StoneCutter, "Stone cutter", 5, 10, true, false);
+			buildingTypeModule.CreateBuildingType(Models.BuildingTypeIDs.StoneCutter, "StoneCutter", 5, 10, true, false);
 
 			Log(LogLevels.Information, "Creating TaskType items");
 			taskTypeModule.CreateTaskType(Models.TaskTypeIDs.Idle, "Idle");
