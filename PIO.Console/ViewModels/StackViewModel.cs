@@ -16,7 +16,7 @@ namespace PIO.Console.ViewModels
 
 		
 
-		public StackViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient) : base(PIOClient, BotsClient)
+		public StackViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient, PhrasesViewModel PhrasesViewModel) : base(PIOClient, BotsClient,PhrasesViewModel)
 		{
 
 		}

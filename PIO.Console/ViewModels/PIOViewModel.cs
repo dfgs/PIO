@@ -13,11 +13,11 @@ namespace PIO.Console.ViewModels
 	{
 		protected PIOServiceClient PIOClient;
 		protected BotsServiceClient BotsClient;
+		protected PhrasesViewModel PhrasesViewModel;
 
-
-		public PIOViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient)
+		public PIOViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient,PhrasesViewModel PhrasesViewModel)
 		{
-			this.PIOClient = PIOClient;this.BotsClient = BotsClient;
+			this.PIOClient = PIOClient;this.BotsClient = BotsClient;this.PhrasesViewModel = PhrasesViewModel;
 		}
 
 		protected virtual async Task OnRefreshAsync()

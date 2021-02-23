@@ -13,14 +13,14 @@ namespace PIO.Console.ViewModels
 	public class StacksViewModel : PIOViewModelCollection<StackViewModel,Stack>
 	{
 		private int buildingID;
-		public StacksViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient,int BuildingID) : base(PIOClient, BotsClient)
+		public StacksViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient, PhrasesViewModel PhrasesViewModel, int BuildingID) : base(PIOClient, BotsClient, PhrasesViewModel )
 		{
 			this.buildingID = BuildingID;
 		}
 
 		protected override StackViewModel OnCreateItem(Stack Model)
 		{
-			return new StackViewModel(PIOClient, BotsClient);
+			return new StackViewModel(PIOClient, BotsClient,PhrasesViewModel);
 		}
 
 		protected override async Task<IEnumerable<Stack>> OnLoadModelAsync()

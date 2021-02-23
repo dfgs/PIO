@@ -29,7 +29,7 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying TaskType table (TaskTypeID={TaskTypeID})");
-			query=new Select(TaskTypeTable.TaskTypeID, TaskTypeTable.Name).From(PIODB.TaskTypeTable).Where(TaskTypeTable.TaskTypeID.IsEqualTo(TaskTypeID));
+			query=new Select(TaskTypeTable.TaskTypeID, TaskTypeTable.PhraseKey).From(PIODB.TaskTypeTable).Where(TaskTypeTable.TaskTypeID.IsEqualTo(TaskTypeID));
 			return TrySelectFirst<TaskTypeTable,TaskType>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
@@ -39,11 +39,11 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying TaskType table");
-			query=new Select(TaskTypeTable.TaskTypeID, TaskTypeTable.Name).From(PIODB.TaskTypeTable);
+			query=new Select(TaskTypeTable.TaskTypeID, TaskTypeTable.PhraseKey).From(PIODB.TaskTypeTable);
 			return TrySelectMany<TaskTypeTable,TaskType>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
-		public TaskType CreateTaskType(TaskTypeIDs TaskTypeID, string Name)
+		public TaskType CreateTaskType(TaskTypeIDs TaskTypeID, string PhraseKey)
 		{
 			IInsert query;
 			TaskType item;
@@ -51,10 +51,10 @@ namespace PIO.ServerLib.Modules
 
 			LogEnter();
 
-			item = new TaskType() { TaskTypeID = TaskTypeID, Name = Name,  };
+			item = new TaskType() { TaskTypeID = TaskTypeID, PhraseKey = PhraseKey,  };
 
-			Log(LogLevels.Information, $"Inserting into TaskType table (TaskTypeID={TaskTypeID}, Name={Name})");
-			query = new Insert().Into(PIODB.TaskTypeTable).Set(TaskTypeTable.TaskTypeID, item.TaskTypeID).Set(TaskTypeTable.Name, item.Name);
+			Log(LogLevels.Information, $"Inserting into TaskType table (TaskTypeID={TaskTypeID}, PhraseKey={PhraseKey})");
+			query = new Insert().Into(PIODB.TaskTypeTable).Set(TaskTypeTable.TaskTypeID, item.TaskTypeID).Set(TaskTypeTable.PhraseKey, item.PhraseKey);
 			result = Try(query).OrThrow<PIODataException>("Failed to insert");
 			//item.TaskTypeID = Convert.ToInt32(result);
 

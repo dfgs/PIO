@@ -14,7 +14,7 @@ namespace PIO.Models.Modules
 		TaskType GetTaskType(TaskTypeIDs TaskTypeID);
 		TaskType[] GetTaskTypes();
 
-		TaskType CreateTaskType(TaskTypeIDs TaskTypeID, string Name);
+		TaskType CreateTaskType(TaskTypeIDs TaskTypeID, string PhraseKey);
 
 
 	}

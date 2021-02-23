@@ -30,7 +30,7 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying BuildingType table (BuildingTypeID={BuildingTypeID})");
-			query=new Select(BuildingTypeTable.BuildingTypeID,  BuildingTypeTable.Name,  BuildingTypeTable.HealthPoints,BuildingTypeTable.BuildSteps,BuildingTypeTable.IsFactory,BuildingTypeTable.IsFarm ).From(PIODB.BuildingTypeTable).Where(BuildingTypeTable.BuildingTypeID.IsEqualTo(BuildingTypeID));
+			query=new Select(BuildingTypeTable.BuildingTypeID,  BuildingTypeTable.PhraseKey,  BuildingTypeTable.HealthPoints,BuildingTypeTable.BuildSteps,BuildingTypeTable.IsFactory,BuildingTypeTable.IsFarm ).From(PIODB.BuildingTypeTable).Where(BuildingTypeTable.BuildingTypeID.IsEqualTo(BuildingTypeID));
 			return TrySelectFirst<BuildingTypeTable,BuildingType>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
@@ -40,11 +40,11 @@ namespace PIO.ServerLib.Modules
 			LogEnter();
 
 			Log(LogLevels.Information, $"Querying BuildingType table");
-			query=new Select(BuildingTypeTable.BuildingTypeID,  BuildingTypeTable.Name,  BuildingTypeTable.HealthPoints, BuildingTypeTable.BuildSteps, BuildingTypeTable.IsFactory, BuildingTypeTable.IsFarm).From(PIODB.BuildingTypeTable);
+			query=new Select(BuildingTypeTable.BuildingTypeID,  BuildingTypeTable.PhraseKey,  BuildingTypeTable.HealthPoints, BuildingTypeTable.BuildSteps, BuildingTypeTable.IsFactory, BuildingTypeTable.IsFarm).From(PIODB.BuildingTypeTable);
 			return TrySelectMany<BuildingTypeTable,BuildingType>(query).OrThrow<PIODataException>("Failed to query");
 		}
 
-		public BuildingType CreateBuildingType(BuildingTypeIDs BuildingTypeID, string Name,int BuildSteps,int HealthPoints, bool IsFactory, bool IsFarm)
+		public BuildingType CreateBuildingType(BuildingTypeIDs BuildingTypeID, string PhraseKey, int BuildSteps,int HealthPoints, bool IsFactory, bool IsFarm)
 		{
 			IInsert query;
 			BuildingType item;
@@ -52,11 +52,11 @@ namespace PIO.ServerLib.Modules
 
 			LogEnter();
 
-			item = new BuildingType() { BuildingTypeID = BuildingTypeID, Name = Name, BuildSteps=BuildSteps,HealthPoints=HealthPoints, IsFactory=IsFactory,IsFarm=IsFarm,};
+			item = new BuildingType() { BuildingTypeID = BuildingTypeID, PhraseKey = PhraseKey, BuildSteps=BuildSteps,HealthPoints=HealthPoints, IsFactory=IsFactory,IsFarm=IsFarm,};
 
-			Log(LogLevels.Information, $"Inserting into BuildingType table (BuildingTypeID={BuildingTypeID}, Name={Name})");
+			Log(LogLevels.Information, $"Inserting into BuildingType table (BuildingTypeID={BuildingTypeID}, PhraseKey={PhraseKey})");
 			query = new Insert().Into(PIODB.BuildingTypeTable).Set(BuildingTypeTable.BuildingTypeID, item.BuildingTypeID)
-				.Set(BuildingTypeTable.Name, item.Name).Set(BuildingTypeTable.BuildSteps,item.BuildSteps)
+				.Set(BuildingTypeTable.PhraseKey, item.PhraseKey).Set(BuildingTypeTable.BuildSteps,item.BuildSteps)
 				.Set(BuildingTypeTable.HealthPoints,item.HealthPoints)
 				.Set(BuildingTypeTable.IsFactory, item.IsFactory).Set(BuildingTypeTable.IsFarm, item.IsFarm)
 				;

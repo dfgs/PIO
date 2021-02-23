@@ -15,7 +15,7 @@ namespace PIO.Console.ViewModels
 	{
 		
 
-		public BotViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient) : base(PIOClient, BotsClient)
+		public BotViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient, PhrasesViewModel PhrasesViewModel) : base(PIOClient, BotsClient, PhrasesViewModel)
 		{
 		}
 

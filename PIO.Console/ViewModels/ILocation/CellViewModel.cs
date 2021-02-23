@@ -47,7 +47,7 @@ namespace PIO.Console.ViewModels
 
 		
 
-		public CellViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient) : base(PIOClient, BotsClient)
+		public CellViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient, PhrasesViewModel PhrasesViewModel) : base(PIOClient, BotsClient,PhrasesViewModel)
 		{
 			CreateBuildOrderCommand = new ViewModelCommand(CreateBuildOrderCommandCanExecute, CreateBuildOrderCommandExecute);
 		}
@@ -67,7 +67,7 @@ namespace PIO.Console.ViewModels
 
 			result = await TryAsync(BotsClient.CreateBuildOrderAsync(Model.PlanetID, BuildingTypeIDs.Sawmill,Model.X,Model.Y));
 			if (result == null) return;
-			vm = new BuildOrderViewModel(PIOClient, BotsClient);
+			vm = new BuildOrderViewModel(PIOClient, BotsClient, PhrasesViewModel);
 			await vm.LoadAsync(result);
 			BuildFactoryOrders.Add(vm);
 		}
@@ -85,7 +85,7 @@ namespace PIO.Console.ViewModels
 
 		protected override async System.Threading.Tasks.Task OnLoadAsync(Cell Model)
 		{
-			BuildFactoryOrders = new BuildOrdersViewModel(PIOClient, BotsClient, Model.PlanetID,Model.X,Model.Y);
+			BuildFactoryOrders = new BuildOrdersViewModel(PIOClient, BotsClient, PhrasesViewModel, Model.PlanetID,Model.X,Model.Y);
 			await BuildFactoryOrders.LoadAsync();
 		}
 

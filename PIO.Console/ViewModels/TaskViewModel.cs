@@ -13,12 +13,16 @@ namespace PIO.Console.ViewModels
 {
 	public class TaskViewModel : PIOViewModel<PIO.Models.Task>
 	{
-
 		
 
-		public TaskViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient) : base(PIOClient, BotsClient)
+		public string Name
 		{
+			get { return PhrasesViewModel.GetString(Model.TaskTypeID.ToString()); }
+		}
 
+		public TaskViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient,PhrasesViewModel PhrasesViewModel) : base(PIOClient, BotsClient, PhrasesViewModel)
+		{
+			
 		}
 
 		

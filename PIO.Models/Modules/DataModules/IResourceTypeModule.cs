@@ -14,6 +14,6 @@ namespace PIO.Models.Modules
 		ResourceType GetResourceType(ResourceTypeIDs ResourceTypeID);
 		ResourceType[] GetResourceTypes();
 
-		ResourceType CreateResourceType(ResourceTypeIDs ResourceTypeID, string PhraseID);
+		ResourceType CreateResourceType(ResourceTypeIDs ResourceTypeID, string PhraseKey);
 	}
 }

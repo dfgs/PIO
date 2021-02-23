@@ -17,7 +17,7 @@ namespace PIO.Console.ViewModels
 
 		
 
-		public ProduceOrderViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient) : base(PIOClient, BotsClient)
+		public ProduceOrderViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient, PhrasesViewModel PhrasesViewModel) : base(PIOClient, BotsClient,PhrasesViewModel)
 		{
 
 		}

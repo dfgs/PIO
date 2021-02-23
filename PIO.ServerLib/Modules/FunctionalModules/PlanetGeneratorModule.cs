@@ -40,8 +40,43 @@ namespace PIO.ServerLib.Modules
 			Worker worker;
 			
 			Log(LogLevels.Information, "Creating Phrase items");
-			phraseModule.CreatePhrase("Wood", "EN", "Wood");
-			phraseModule.CreatePhrase("Wood", "FR", "Bois");
+			// resource type
+			phraseModule.CreatePhrase(Models.ResourceTypeIDs.Wood.ToString(), "EN", "Wood");
+			phraseModule.CreatePhrase(Models.ResourceTypeIDs.Wood.ToString(), "FR", "Bois");
+			phraseModule.CreatePhrase(Models.ResourceTypeIDs.Stone.ToString(), "EN", "Stone");
+			phraseModule.CreatePhrase(Models.ResourceTypeIDs.Stone.ToString(), "FR", "Pierre");
+			phraseModule.CreatePhrase(Models.ResourceTypeIDs.Coal.ToString(), "EN", "Coal");
+			phraseModule.CreatePhrase(Models.ResourceTypeIDs.Coal.ToString(), "FR", "Charbon");
+			phraseModule.CreatePhrase(Models.ResourceTypeIDs.Plank.ToString(), "EN", "Plank");
+			phraseModule.CreatePhrase(Models.ResourceTypeIDs.Plank.ToString(), "FR", "Planche");
+			phraseModule.CreatePhrase(Models.ResourceTypeIDs.CutStone.ToString(), "EN", "Cut stone");
+			phraseModule.CreatePhrase(Models.ResourceTypeIDs.CutStone.ToString(), "FR", "Pierre taillée");
+			// building type
+			phraseModule.CreatePhrase(Models.BuildingTypeIDs.Forest.ToString(), "EN", "Forest");
+			phraseModule.CreatePhrase(Models.BuildingTypeIDs.Forest.ToString(), "FR", "Forêt");
+			phraseModule.CreatePhrase(Models.BuildingTypeIDs.Stockpile.ToString(), "EN", "Stockpile");
+			phraseModule.CreatePhrase(Models.BuildingTypeIDs.Stockpile.ToString(), "FR", "Entrepot");
+			phraseModule.CreatePhrase(Models.BuildingTypeIDs.Sawmill.ToString(), "EN", "Sawmill");
+			phraseModule.CreatePhrase(Models.BuildingTypeIDs.Sawmill.ToString(), "FR", "Scierie");
+			phraseModule.CreatePhrase(Models.BuildingTypeIDs.StoneCutter.ToString(), "EN", "Stone cutter");
+			phraseModule.CreatePhrase(Models.BuildingTypeIDs.StoneCutter.ToString(), "FR", "Tailleur de pierres");
+			// task type
+			phraseModule.CreatePhrase(Models.TaskTypeIDs.Idle.ToString(), "EN", "Idle");
+			phraseModule.CreatePhrase(Models.TaskTypeIDs.Idle.ToString(), "FR", "Attend");
+			phraseModule.CreatePhrase(Models.TaskTypeIDs.Produce.ToString(), "EN", "Produce");
+			phraseModule.CreatePhrase(Models.TaskTypeIDs.Produce.ToString(), "FR", "Produit");
+			phraseModule.CreatePhrase(Models.TaskTypeIDs.Harvest.ToString(), "EN", "Harvest");
+			phraseModule.CreatePhrase(Models.TaskTypeIDs.Harvest.ToString(), "FR", "Récolte");
+			phraseModule.CreatePhrase(Models.TaskTypeIDs.MoveTo.ToString(), "EN", "Move to");
+			phraseModule.CreatePhrase(Models.TaskTypeIDs.MoveTo.ToString(), "FR", "Se déplace");
+			phraseModule.CreatePhrase(Models.TaskTypeIDs.CreateBuilding.ToString(), "EN", "Create building");
+			phraseModule.CreatePhrase(Models.TaskTypeIDs.CreateBuilding.ToString(), "FR", "Crée un bâtiment");
+			phraseModule.CreatePhrase(Models.TaskTypeIDs.Build.ToString(), "EN", "Build");
+			phraseModule.CreatePhrase(Models.TaskTypeIDs.Build.ToString(), "FR", "Construit");
+			phraseModule.CreatePhrase(Models.TaskTypeIDs.Take.ToString(), "EN", "Take");
+			phraseModule.CreatePhrase(Models.TaskTypeIDs.Take.ToString(), "FR", "Prend");
+			phraseModule.CreatePhrase(Models.TaskTypeIDs.Store.ToString(), "EN", "Store");
+			phraseModule.CreatePhrase(Models.TaskTypeIDs.Store.ToString(), "FR", "Stocke");
 
 
 			Log(LogLevels.Information, "Creating ResourceType items");
@@ -49,13 +84,13 @@ namespace PIO.ServerLib.Modules
 			resourceTypeModule.CreateResourceType(Models.ResourceTypeIDs.Stone, "Stone");
 			resourceTypeModule.CreateResourceType(Models.ResourceTypeIDs.Coal, "Coal");
 			resourceTypeModule.CreateResourceType(Models.ResourceTypeIDs.Plank, "Plank");
-			resourceTypeModule.CreateResourceType(Models.ResourceTypeIDs.CutStone, "CutStone");
+			resourceTypeModule.CreateResourceType(Models.ResourceTypeIDs.CutStone, "Cut stone");
 
 			Log(LogLevels.Information, "Creating BuildingType items");
 			buildingTypeModule.CreateBuildingType(Models.BuildingTypeIDs.Forest, "Forest", 1, 10, false, true);
 			buildingTypeModule.CreateBuildingType(Models.BuildingTypeIDs.Stockpile, "Stockpile", 2, 10, false, false); ;
 			buildingTypeModule.CreateBuildingType(Models.BuildingTypeIDs.Sawmill, "Sawmill", 2, 10, true, false);
-			buildingTypeModule.CreateBuildingType(Models.BuildingTypeIDs.StoneCutter, "StoneCutter", 5, 10, true, false);
+			buildingTypeModule.CreateBuildingType(Models.BuildingTypeIDs.StoneCutter, "Stone cutter", 5, 10, true, false);
 
 			Log(LogLevels.Information, "Creating TaskType items");
 			taskTypeModule.CreateTaskType(Models.TaskTypeIDs.Idle, "Idle");

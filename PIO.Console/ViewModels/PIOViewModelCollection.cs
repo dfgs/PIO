@@ -14,11 +14,11 @@ namespace PIO.Console.ViewModels
 	{
 		protected PIOServiceClient PIOClient;
 		protected BotsServiceClient BotsClient;
+		protected PhrasesViewModel PhrasesViewModel;
 
-
-		public PIOViewModelCollection(PIOServiceClient PIOClient, BotsServiceClient BotsClient)
+		public PIOViewModelCollection(PIOServiceClient PIOClient, BotsServiceClient BotsClient, PhrasesViewModel PhrasesViewModel)
 		{
-			this.PIOClient = PIOClient;this.BotsClient = BotsClient;
+			this.PIOClient = PIOClient;this.BotsClient = BotsClient;this.PhrasesViewModel = PhrasesViewModel;
 		}
 
 		

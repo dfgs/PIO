@@ -14,14 +14,14 @@ namespace PIO.Console.ViewModels
 	public class ProduceOrdersViewModel : PIOViewModelCollection<ProduceOrderViewModel,ProduceOrder>
 	{
 		private int buildingID;
-		public ProduceOrdersViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient,int BuildingID) : base(PIOClient, BotsClient)
+		public ProduceOrdersViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient, PhrasesViewModel PhrasesViewModel, int BuildingID) : base(PIOClient, BotsClient,PhrasesViewModel)
 		{
 			this.buildingID = BuildingID;
 		}
 
 		protected override ProduceOrderViewModel OnCreateItem(ProduceOrder Model)
 		{
-			return new ProduceOrderViewModel(PIOClient, BotsClient);
+			return new ProduceOrderViewModel(PIOClient, BotsClient,PhrasesViewModel);
 		}
 
 		protected override async Task<IEnumerable<ProduceOrder>> OnLoadModelAsync()

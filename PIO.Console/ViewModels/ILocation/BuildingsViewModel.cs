@@ -14,14 +14,14 @@ namespace PIO.Console.ViewModels
 	{
 		private int planetID;
 
-		public BuildingsViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient,int PlanetID) : base(PIOClient, BotsClient)
+		public BuildingsViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient, PhrasesViewModel PhrasesViewModel, int PlanetID) : base(PIOClient, BotsClient,PhrasesViewModel)
 		{
 			this.planetID = PlanetID;
 		}
 
 		protected override BuildingViewModel OnCreateItem(Building Model)
 		{
-			return new BuildingViewModel(PIOClient, BotsClient);
+			return new BuildingViewModel(PIOClient, BotsClient, PhrasesViewModel);
 		}
 
 		protected override async Task<IEnumerable<Building>> OnLoadModelAsync()

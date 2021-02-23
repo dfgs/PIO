@@ -17,14 +17,14 @@ namespace PIO.Console.ViewModels
 		private static int maxQueryWidth = 5;
 		private static int maxQueryHeight = 5;
 
-		public CellsViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient,int PlanetID) : base(PIOClient, BotsClient)
+		public CellsViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient, PhrasesViewModel PhrasesViewModel, int PlanetID) : base(PIOClient, BotsClient,PhrasesViewModel)
 		{
 			this.planetID = PlanetID;
 		}
 
 		protected override CellViewModel OnCreateItem(Cell Model)
 		{
-			return new CellViewModel(PIOClient, BotsClient);
+			return new CellViewModel(PIOClient, BotsClient, PhrasesViewModel);
 		}
 
 		protected override async Task<IEnumerable<Cell>> OnLoadModelAsync()

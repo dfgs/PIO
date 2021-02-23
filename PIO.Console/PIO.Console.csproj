@@ -72,6 +72,7 @@
     <Compile Include="ViewModels\HarvestOrderViewModel.cs" />
     <Compile Include="ViewModels\ProduceOrderViewModel.cs" />
     <Compile Include="ViewModels\ProduceOrdersViewModel.cs" />
+    <Compile Include="ViewModels\PhrasesViewModel.cs" />
     <Compile Include="ViewModels\TasksViewModel.cs" />
     <Compile Include="ViewModels\StacksViewModel.cs" />
     <Compile Include="ViewModels\BotViewModel.cs" />

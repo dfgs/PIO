@@ -17,14 +17,14 @@ namespace PIO.Console.ViewModels
 		private int X;
 		private int Y;
 
-		public BuildOrdersViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient,int PlanetID,int X,int Y) : base(PIOClient, BotsClient)
+		public BuildOrdersViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient, PhrasesViewModel PhrasesViewModel, int PlanetID,int X,int Y) : base(PIOClient, BotsClient,PhrasesViewModel)
 		{
 			this.planetID = PlanetID;this.X = X;this.Y = Y;
 		}
 
 		protected override BuildOrderViewModel OnCreateItem(BuildOrder Model)
 		{
-			return new BuildOrderViewModel(PIOClient, BotsClient);
+			return new BuildOrderViewModel(PIOClient, BotsClient, PhrasesViewModel);
 		}
 
 		protected override async Task<IEnumerable<BuildOrder>> OnLoadModelAsync()

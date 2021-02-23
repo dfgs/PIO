@@ -14,7 +14,7 @@ namespace PIO.Models
 		[DataMember]
 		public TaskTypeIDs TaskTypeID { get; set; }
 		[DataMember]
-		public string Name { get; set; }
+		public string PhraseKey { get; set; }
 		
 
 	}

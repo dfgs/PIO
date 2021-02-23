@@ -76,7 +76,7 @@ namespace PIO.Console
 				ShowError(ex);
 			}
 
-			ApplicationViewModel = new ApplicationViewModel(pioClient, botsClient);
+			ApplicationViewModel = new ApplicationViewModel(pioClient, botsClient, null);
 			DataContext = ApplicationViewModel;
 
 			await ApplicationViewModel.LoadAsync();

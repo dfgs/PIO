@@ -13,14 +13,14 @@ namespace PIO.Console.ViewModels
 	public class TasksViewModel : PIOViewModelCollection<TaskViewModel,PIO.Models.Task>
 	{
 		private int workerID;
-		public TasksViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient,int WorkerID) : base(PIOClient, BotsClient)
+		public TasksViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient, PhrasesViewModel PhrasesViewModel, int WorkerID) : base(PIOClient, BotsClient,PhrasesViewModel)
 		{
 			this.workerID = WorkerID;
 		}
 
 		protected override TaskViewModel OnCreateItem(PIO.Models.Task Model)
 		{
-			return new TaskViewModel(PIOClient, BotsClient);
+			return new TaskViewModel(PIOClient, BotsClient,PhrasesViewModel);
 		}
 
 		protected override async Task<IEnumerable<PIO.Models.Task>> OnLoadModelAsync()

@@ -69,7 +69,7 @@ namespace PIO.Console.ViewModels
 		}
 
 
-		public BuildingViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient) : base(PIOClient, BotsClient)
+		public BuildingViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient, PhrasesViewModel PhrasesViewModel) : base(PIOClient, BotsClient,PhrasesViewModel)
 		{
 			CreateProduceOrderCommand = new ViewModelCommand(CreateProduceOrderCommandCanExecute, CreateProduceOrderCommandExecute);
 			CreateHarvestOrderCommand = new ViewModelCommand(CreateHarvestOrderCommandCanExecute, CreateHarvestOrderCommandExecute);
@@ -86,7 +86,7 @@ namespace PIO.Console.ViewModels
 
 			result=await TryAsync(BotsClient.CreateProduceOrderAsync(Model.PlanetID, Model.BuildingID));
 			if (result == null) return;
-			vm = new ProduceOrderViewModel(PIOClient, BotsClient);
+			vm = new ProduceOrderViewModel(PIOClient, BotsClient,PhrasesViewModel);
 			await vm.LoadAsync(result);
 			ProduceOrders.Add(vm);
 		}
@@ -102,7 +102,7 @@ namespace PIO.Console.ViewModels
 
 			result = await TryAsync(BotsClient.CreateHarvestOrderAsync(Model.PlanetID, Model.BuildingID));
 			if (result == null) return;
-			vm = new HarvestOrderViewModel(PIOClient, BotsClient);
+			vm = new HarvestOrderViewModel(PIOClient, BotsClient,PhrasesViewModel);
 			await vm.LoadAsync(result);
 			HarvestOrders.Add(vm);
 		}
@@ -122,11 +122,11 @@ namespace PIO.Console.ViewModels
 		}
 		protected override async Task OnLoadAsync(Building Model)
 		{
-			Stacks = new StacksViewModel(PIOClient, BotsClient, Model.BuildingID);
+			Stacks = new StacksViewModel(PIOClient, BotsClient, PhrasesViewModel, Model.BuildingID);
 			await Stacks.LoadAsync();
-			ProduceOrders = new ProduceOrdersViewModel(PIOClient, BotsClient, Model.BuildingID);
+			ProduceOrders = new ProduceOrdersViewModel(PIOClient, BotsClient,PhrasesViewModel, Model.BuildingID);
 			await ProduceOrders.LoadAsync();
-			HarvestOrders = new HarvestOrdersViewModel(PIOClient, BotsClient, Model.BuildingID);
+			HarvestOrders = new HarvestOrdersViewModel(PIOClient, BotsClient,PhrasesViewModel, Model.BuildingID);
 			await HarvestOrders.LoadAsync();
 		}
 

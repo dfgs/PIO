@@ -12,6 +12,6 @@ namespace PIO.ServerLib.Tables
 	public class TaskTypeTable : Table
 	{
 		public static readonly Column<TaskTypeIDs> TaskTypeID = new Column<TaskTypeIDs>() { Constraint = NetORMLib.ColumnConstraints.PrimaryKey};
-		public new static readonly Column<string> Name = new Column<string>();
+		public static readonly Column<string> PhraseKey = new Column<string>();
 	}
 }

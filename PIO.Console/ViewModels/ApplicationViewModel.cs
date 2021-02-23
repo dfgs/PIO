@@ -15,7 +15,7 @@ namespace PIO.Console.ViewModels
 {
 	public class ApplicationViewModel:PIOViewModel<int>
 	{
-
+		private PhrasesViewModel phrasesViewModel;
 
 		public static readonly DependencyProperty SelectedItemsProperty = DependencyProperty.Register("SelectedItems", typeof(MapItemsViewModel), typeof(ApplicationViewModel), new PropertyMetadata(null));
 		public MapItemsViewModel SelectedItems
@@ -57,11 +57,12 @@ namespace PIO.Console.ViewModels
 			set { SetValue(MapItemsProperty, value); }
 		}
 
-		public ApplicationViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient) : base(PIOClient, BotsClient)
+		public ApplicationViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient, PhrasesViewModel PhrasesViewModel) : base(PIOClient, BotsClient,PhrasesViewModel)
 		{
-			Cells = new CellsViewModel(PIOClient, BotsClient, 1);
-			Workers = new WorkersViewModel(PIOClient,BotsClient,1);
-			Buildings = new BuildingsViewModel(PIOClient, BotsClient, 1);
+			phrasesViewModel = new PhrasesViewModel(PIOClient,BotsClient);
+			Cells = new CellsViewModel(PIOClient, BotsClient, phrasesViewModel, 1);
+			Workers = new WorkersViewModel(PIOClient,BotsClient, phrasesViewModel, 1);
+			Buildings = new BuildingsViewModel(PIOClient, BotsClient, phrasesViewModel, 1);
 			MapItems = new MapItemsViewModel() ;
 			SelectedItems = new MapItemsViewModel();
 
@@ -75,6 +76,7 @@ namespace PIO.Console.ViewModels
 
 		protected override async System.Threading.Tasks.Task OnLoadAsync(int Model)
 		{
+			await phrasesViewModel.LoadAsync("FR");
 			await Cells.LoadAsync();
 			await Workers.LoadAsync();
 			await Buildings.LoadAsync();
@@ -131,7 +133,7 @@ namespace PIO.Console.ViewModels
 						building = PIOClient.GetBuildingAtPos(1, Task.X, Task.Y);
 						if (building!=null)
 						{
-							factoryViewModel = new BuildingViewModel(PIOClient, BotsClient);
+							factoryViewModel = new BuildingViewModel(PIOClient, BotsClient, PhrasesViewModel);
 							await factoryViewModel.LoadAsync(building);
 							Buildings.Add(factoryViewModel);
 							MapItems.Insert(Cells.Count, factoryViewModel);

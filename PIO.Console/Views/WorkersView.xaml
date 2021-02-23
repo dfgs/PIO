@@ -33,7 +33,7 @@
 						<StackPanel VerticalAlignment="Center">
 							<Image Stretch="None" Source="/PIO.Console;component/Images/user.png" HorizontalAlignment="Center"/>
 							<TextBlock Text="{Binding WorkerID}" HorizontalAlignment="Center"/>
-							<TextBlock Text="{Binding Task.TaskTypeID,FallbackValue=None}" HorizontalAlignment="Center"/>
+							<TextBlock Text="{Binding Task.Name,FallbackValue=None}" HorizontalAlignment="Center"/>
 						</StackPanel>
 					</Border>
 				</DataTemplate>

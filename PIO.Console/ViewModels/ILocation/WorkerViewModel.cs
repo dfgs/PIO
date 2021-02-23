@@ -81,7 +81,7 @@ namespace PIO.Console.ViewModels
 
 
 
-		public WorkerViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient) : base(PIOClient, BotsClient)
+		public WorkerViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient, PhrasesViewModel PhrasesViewModel) : base(PIOClient, BotsClient,PhrasesViewModel)
 		{
 			CreateBotCommand = new ViewModelCommand(CreateBotCommandCanExecute, CreateBotCommandExecute);
 			DeleteBotCommand = new ViewModelCommand(DeleteBotCommandCanExecute, DeleteBotCommandExecute);
@@ -101,7 +101,7 @@ namespace PIO.Console.ViewModels
 
 			result = await TryAsync(BotsClient.CreateBotAsync(Model.WorkerID));
 			if (result == null) return;
-			Bot = new BotViewModel(PIOClient, BotsClient);
+			Bot = new BotViewModel(PIOClient, BotsClient, PhrasesViewModel);
 			await Bot.LoadAsync(result);
 		}
 		private bool DeleteBotCommandCanExecute(object arg)
@@ -163,7 +163,7 @@ namespace PIO.Console.ViewModels
 			}
 			else
 			{
-				Bot = new BotViewModel(PIOClient, BotsClient);
+				Bot = new BotViewModel(PIOClient, BotsClient, PhrasesViewModel);
 				await Bot.LoadAsync(bot);
 			}
 		}
@@ -176,7 +176,7 @@ namespace PIO.Console.ViewModels
 		{
 			Bot bot;
 
-			Tasks = new TasksViewModel(PIOClient, BotsClient,Model.WorkerID);
+			Tasks = new TasksViewModel(PIOClient, BotsClient,PhrasesViewModel, Model.WorkerID);
 			await Tasks.LoadAsync();
 			Task = Tasks.FirstOrDefault();
 
@@ -187,7 +187,7 @@ namespace PIO.Console.ViewModels
 			}
 			else
 			{
-				Bot = new BotViewModel(PIOClient, BotsClient);
+				Bot = new BotViewModel(PIOClient, BotsClient, PhrasesViewModel);
 				await Bot.LoadAsync(bot);
 			}
 		}
