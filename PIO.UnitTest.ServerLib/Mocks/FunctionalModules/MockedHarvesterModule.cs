@@ -14,7 +14,7 @@ namespace PIO.UnitTest.ServerLib.Mocks
 		public Models.Task BeginHarvest(int WorkerID)
 		{
 			Task task=new Models.Task() { WorkerID = WorkerID };
-			TaskCreated(this, task);
+			TaskCreated(this, new Task[] { task });
 			return task;
 		}
 

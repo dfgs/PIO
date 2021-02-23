@@ -26,11 +26,16 @@ namespace PIO.ServerLib.Modules
 			this.buildingModule = BuildingModule;
 		}
 
-		public Task BeginMoveTo(int WorkerID, int BuildingID)
+		public Task[] BeginMoveTo(int WorkerID, int BuildingID)
 		{
 			Worker worker;
 			Building building;
+			List<Task> tasks;
 			Task task;
+			int dx, dy;
+			int stepsX, stepsY;
+			int step;
+			DateTime now;
 
 			LogEnter();
 
@@ -40,41 +45,84 @@ namespace PIO.ServerLib.Modules
 			if (worker.PlanetID!=building.PlanetID) Throw< PIOInvalidOperationException>(LogLevels.Warning, $"Worker is not in the same planet as building (WorkerID={WorkerID})");
 
 			Log(LogLevels.Information, $"Creating task (WorkerID={WorkerID})");
-			task=Try(() => taskModule.CreateTask(TaskTypeIDs.MoveTo, WorkerID, building.X, building.Y, null, null,  null, DateTime.Now.AddSeconds(10))).OrThrow<PIOInternalErrorException>("Failed to create task");
+			if (worker.X < building.X) dx = 1; else dx = -1;
+			if (worker.Y < building.Y) dy = 1; else dy = -1;
+			stepsX = Math.Abs(worker.X - building.X);
+			stepsY = Math.Abs(worker.Y - building.Y);
 
-			OnTaskCreated(task);
+			tasks = new List<Task>();
+			step = 0;now = DateTime.Now;
+			for (int x = 0; x < stepsX; x++)
+			{
+				task = Try(() => taskModule.CreateTask(TaskTypeIDs.MoveTo, WorkerID, dx, 0, null, null, null, now.AddSeconds(step * 2))).OrThrow<PIOInternalErrorException>("Failed to create task");
+				tasks.Add(task);
+				step++;
 
-			return task;
+			}
+			for (int y = 0; y < stepsY; y++)
+			{
+				task = Try(() => taskModule.CreateTask(TaskTypeIDs.MoveTo, WorkerID, 0, dy, null, null, null, now.AddSeconds(step * 2))).OrThrow<PIOInternalErrorException>("Failed to create task");
+				tasks.Add(task);
+				step++;
+			}
+			OnTasksCreated(tasks.ToArray());
+
+			return tasks.ToArray();
 		}
 
-		public Task BeginMoveTo(int WorkerID, int X, int Y)
+		public Task[] BeginMoveTo(int WorkerID, int X, int Y)
 		{
 			Worker worker;
+			List<Task> tasks;
 			Task task;
+			int dx, dy;
+			int stepsX, stepsY;
+			int step;
+			DateTime now;
 
 			LogEnter();
 
 			worker = AssertWorkerIsIdle(WorkerID);
 
 
-			Log(LogLevels.Information, $"Creating task (WorkerID={WorkerID})");
-			task=Try(() => taskModule.CreateTask(TaskTypeIDs.MoveTo, WorkerID, X, Y, null, null, null,DateTime.Now.AddSeconds(10))).OrThrow<PIOInternalErrorException>("Failed to create task");
+			Log(LogLevels.Information, $"Creating tasks (WorkerID={WorkerID})");
 
-			OnTaskCreated(task);
+			if (worker.X < X) dx = 1; else dx = -1;
+			if (worker.Y < Y) dy = 1; else dy = -1;
+			stepsX = Math.Abs(worker.X - X);
+			stepsY = Math.Abs(worker.Y - Y);
 
-			return task;
+			tasks = new List<Task>();
+			step = 0; now = DateTime.Now;
+			for (int x = 0; x < stepsX; x++)
+			{
+				task = Try(() => taskModule.CreateTask(TaskTypeIDs.MoveTo, WorkerID, dx, 0, null, null, null, now.AddSeconds(step * 2))).OrThrow<PIOInternalErrorException>("Failed to create task");
+				tasks.Add(task);
+				step++;
+
+			}
+			for (int y = 0; y < stepsY; y++)
+			{
+				task = Try(() => taskModule.CreateTask(TaskTypeIDs.MoveTo, WorkerID, 0, dy, null, null, null, now.AddSeconds(step * 2))).OrThrow<PIOInternalErrorException>("Failed to create task");
+				tasks.Add(task);
+				step++;
+			}
+			OnTasksCreated(tasks.ToArray());
+
+			return tasks.ToArray();
 		}
 
 		public void EndMoveTo(int WorkerID, int X, int Y)
 		{
 			Worker worker;
+			int newX, newY;
 
 			LogEnter();
 
 			worker = AssertExists(() => workerModule.GetWorker(WorkerID), $"WorkerID={WorkerID}");
-
-			Log(LogLevels.Information, $"Updating worker (WorkerID={WorkerID}, X={X}, Y={Y})");
-			Try(() => workerModule.UpdateWorker(WorkerID,X,Y)).OrThrow<PIOInternalErrorException>("Failed to update worker");
+			newX = worker.X + X;newY = worker.Y + Y;
+			Log(LogLevels.Information, $"Updating worker (WorkerID={WorkerID}, X={newX}, Y={newY})");
+			Try(() => workerModule.UpdateWorker(WorkerID,newX,newY)).OrThrow<PIOInternalErrorException>("Failed to update worker");
 		}
 
 

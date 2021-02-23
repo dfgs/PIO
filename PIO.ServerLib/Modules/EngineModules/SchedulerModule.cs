@@ -58,21 +58,22 @@ namespace PIO.ServerLib.Modules
 		}
 
 		
-		private void TaskGeneratorModule_TaskCreated(ITaskGeneratorModule Module, Task Task)
+		private void TaskGeneratorModule_TaskCreated(ITaskGeneratorModule Module, Task[] Tasks)
 		{
-			Add(Task);
+			Add(Tasks);
 		}
 
-		private void Add(Task Task)
+		private void Add(Task[] Tasks)
 		{
 			LogEnter();
 
-			Log(LogLevels.Information, $"Adding new task (TaskID={Task.TaskID}, WorkerID={Task.WorkerID}, ETA={Task.ETA})");
-			Try(() => this.Add(Task.ETA, Task)).OrAlert("Failed to enqueue task");
+			Log(LogLevels.Information, $"Adding new tasks");
+			Try(() => this.Add(Tasks,(item)=>item.ETA)).OrAlert("Failed to enqueue tasks");
 
 			Log(LogLevels.Information, $"Triggering callbacks");
-			if (TaskStarted!=null) TaskStarted(this, new TaskEventArgs(Task));
+			if (TaskStarted!=null) TaskStarted(this, new TaskEventArgs(Tasks.FirstOrDefault()));
 		}
+
 
 		protected override void OnStarting()
 		{

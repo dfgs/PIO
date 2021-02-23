@@ -14,7 +14,7 @@ namespace PIO.UnitTest.ServerLib.Mocks
 		public Task BeginTake(int WorkerID, ResourceTypeIDs ResourceTypeID)
 		{
 			Task task = new Models.Task() { WorkerID = WorkerID,ResourceTypeID=ResourceTypeID };
-			TaskCreated(this, task);
+			TaskCreated(this, new Task[] { task });
 			return task;
 		}
 

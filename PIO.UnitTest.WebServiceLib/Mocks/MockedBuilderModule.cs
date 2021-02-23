@@ -24,7 +24,7 @@ namespace PIO.UnitTest.WebServiceLib.Mocks
 		{
 			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
 			Task task = new Task() { WorkerID = WorkerID, ETA = DateTime.Now, BuildingTypeID = BuildingTypeID};
-			TaskCreated?.Invoke(this, task);
+			TaskCreated?.Invoke(this, new Task[] { task });
 			return task;
 		}
 
@@ -37,7 +37,7 @@ namespace PIO.UnitTest.WebServiceLib.Mocks
 		{
 			if (ThrowException) throw new PIODataException("UnitTestException", null, 1, "UnitTest", "UnitTest");
 			Task task = new Task() { WorkerID = WorkerID, ETA = DateTime.Now };
-			TaskCreated?.Invoke(this, task);
+			TaskCreated?.Invoke(this, new Task[] { task });
 			return task;
 		}
 

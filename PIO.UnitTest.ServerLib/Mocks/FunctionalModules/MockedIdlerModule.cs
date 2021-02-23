@@ -14,7 +14,7 @@ namespace PIO.UnitTest.ServerLib.Mocks
 		public Models.Task BeginIdle(int WorkerID,int Duration)
 		{
 			Task task=new Models.Task() { WorkerID = WorkerID };
-			TaskCreated(this, task);
+			TaskCreated(this, new Task[] { task });
 			return task;
 		}
 

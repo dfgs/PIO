@@ -332,13 +332,13 @@ namespace PIO.WebServiceLib
 		{
 			LogEnter();
 
-			return Try(() => moverModule.BeginMoveTo(WorkerID, X, Y)).OrThrow(GenerateFaultException);
+			return Try(() => moverModule.BeginMoveTo(WorkerID, X, Y).FirstOrDefault()).OrThrow(GenerateFaultException);
 		}
 		public Task MoveToBuilding(int WorkerID, int BuildingID)
 		{
 			LogEnter();
 
-			return Try(() => moverModule.BeginMoveTo(WorkerID, BuildingID)).OrThrow(GenerateFaultException);
+			return Try(() => moverModule.BeginMoveTo(WorkerID, BuildingID).FirstOrDefault()).OrThrow(GenerateFaultException);
 		}
 
 		

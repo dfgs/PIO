@@ -37,12 +37,12 @@ namespace PIO.ServerLib.Modules
 			return worker;
 		}
 
-		protected virtual void OnTaskCreated(Task Task)
+		protected virtual void OnTasksCreated(params Task[] Tasks)
 		{
 			LogEnter();
 			if (TaskCreated == null) return;
-			Log(LogLevels.Information, $"Scheduling task (TaskID={Task.TaskID})");
-			Try(() => TaskCreated(this, Task)).OrThrow<PIOInternalErrorException>("Failed to schedule task");
+			Log(LogLevels.Information, $"Scheduling tasks");
+			Try(() => TaskCreated(this, Tasks)).OrThrow<PIOInternalErrorException>("Failed to schedule task");
 		}
 
 	}

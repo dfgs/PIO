@@ -34,7 +34,7 @@ namespace PIO.UnitTest.ServerLib.Mocks.EngineModules
 		}
 
 
-		private void ProducerModule_TaskCreated(ITaskGeneratorModule Module, Models.Task Task)
+		private void ProducerModule_TaskCreated(ITaskGeneratorModule Module, Models.Task[] Tasks)
 		{
 			Count++;
 		}

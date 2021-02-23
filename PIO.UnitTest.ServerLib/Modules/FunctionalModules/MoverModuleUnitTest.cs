@@ -25,7 +25,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			IWorkerModule workerModule;
 			ITaskModule taskModule;
 			MockedSchedulerModule schedulerModule;
-			Task result;
+			Task[] result;
 
 			buildingModule = new MockedBuildingModule(false, new Building() { BuildingID = 3, X = 1, Y = 1 });
 			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, PlanetID = 1 });
@@ -36,8 +36,8 @@ namespace PIO.UnitTest.ServerLib.Modules
 			result = module.BeginMoveTo(1, 2,2);
 
 			Assert.IsNotNull(result);
-			Assert.AreEqual(TaskTypeIDs.MoveTo, result.TaskTypeID);
-			Assert.AreEqual(1, result.WorkerID);
+			Assert.AreEqual(TaskTypeIDs.MoveTo, result.First().TaskTypeID);
+			Assert.AreEqual(1, result.First().WorkerID);
 			Assert.AreEqual(1, schedulerModule.Count);
 		}
 		[TestMethod]
@@ -122,7 +122,7 @@ namespace PIO.UnitTest.ServerLib.Modules
 			IWorkerModule workerModule;
 			ITaskModule taskModule;
 			MockedSchedulerModule schedulerModule;
-			Task result;
+			Task[] result;
 
 			buildingModule = new MockedBuildingModule(false, new Building() { BuildingID = 3, PlanetID = 1, X = 1, Y = 1 });
 			workerModule = new MockedWorkerModule(false, new Worker() { WorkerID = 1, PlanetID = 1 });
@@ -133,8 +133,8 @@ namespace PIO.UnitTest.ServerLib.Modules
 			result = module.BeginMoveTo(1, 3);
 
 			Assert.IsNotNull(result);
-			Assert.AreEqual(TaskTypeIDs.MoveTo, result.TaskTypeID);
-			Assert.AreEqual(1, result.WorkerID);
+			Assert.AreEqual(TaskTypeIDs.MoveTo, result.First().TaskTypeID);
+			Assert.AreEqual(1, result.First().WorkerID);
 			Assert.AreEqual(1, schedulerModule.Count);
 		}
 		[TestMethod]

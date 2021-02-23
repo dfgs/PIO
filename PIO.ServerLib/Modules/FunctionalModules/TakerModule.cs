@@ -56,7 +56,7 @@ namespace PIO.ServerLib.Modules
 			Log(LogLevels.Information, $"Creating task (WorkerID={WorkerID})");
 			task = Try(() => taskModule.CreateTask(TaskTypeIDs.Take, WorkerID, worker.X, worker.Y, null, ResourceTypeID, null, DateTime.Now.AddSeconds(5))).OrThrow<PIOInternalErrorException>("Failed to create task");
 
-			OnTaskCreated(task);
+			OnTasksCreated(task);
 
 			return task;
 		}

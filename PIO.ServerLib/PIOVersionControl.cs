@@ -75,7 +75,7 @@ namespace PIO.ServerLib
 
 					yield return new CreateConstraint(PIODB.CellTable, ColumnConstraints.Unique, CellTable.X, CellTable.Y);
 					yield return new CreateConstraint(PIODB.BuildingTable, ColumnConstraints.Unique, BuildingTable.X, BuildingTable.Y);
-					yield return new CreateConstraint(PIODB.TaskTable, ColumnConstraints.Unique, TaskTable.WorkerID);
+					//yield return new CreateConstraint(PIODB.TaskTable, ColumnConstraints.Unique, TaskTable.WorkerID);
 
 					break;
 

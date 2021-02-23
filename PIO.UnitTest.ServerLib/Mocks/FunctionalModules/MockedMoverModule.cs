@@ -11,17 +11,17 @@ namespace PIO.UnitTest.ServerLib.Mocks
 	{
 		public event TaskCreatedHandler TaskCreated;
 
-		public Models.Task BeginMoveTo(int WorkerID, int X, int Y)
+		public Models.Task[] BeginMoveTo(int WorkerID, int X, int Y)
 		{
 			Task task = new Models.Task() { WorkerID = WorkerID };
-			TaskCreated(this, task);
-			return task;
+			TaskCreated(this, new Task[] { task });
+			return new Task[] { task };
 		}
-		public Models.Task BeginMoveTo(int WorkerID, int FactoryID)
+		public Models.Task[] BeginMoveTo(int WorkerID, int FactoryID)
 		{
 			Task task = new Models.Task() { WorkerID = WorkerID };
-			TaskCreated(this, task);
-			return task;
+			TaskCreated(this, new Task[] { task });
+			return new Task[] { task };
 		}
 
 		public void EndMoveTo(int WorkerID,int X,int Y)

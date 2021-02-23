@@ -14,7 +14,7 @@ namespace PIO.UnitTest.ServerLib.Mocks
 		public Task BeginStore(int WorkerID)
 		{
 			Task task = new Models.Task() { WorkerID = WorkerID,ResourceTypeID=ResourceTypeIDs.Stone };
-			TaskCreated(this, task);
+			TaskCreated(this, new Task[] { task });
 			return task;
 		}
 

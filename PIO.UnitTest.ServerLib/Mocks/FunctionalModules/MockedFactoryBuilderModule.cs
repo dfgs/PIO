@@ -14,7 +14,7 @@ namespace PIO.UnitTest.ServerLib.Mocks
 		public Task BeginCreateBuilding(int WorkerID, BuildingTypeIDs BuildingTypeID)
 		{
 			Task task = new Models.Task() { WorkerID = WorkerID , BuildingTypeID = BuildingTypeID };
-			TaskCreated(this, task);
+			TaskCreated(this, new Task[] { task });
 			return task;
 		}
 
@@ -28,7 +28,7 @@ namespace PIO.UnitTest.ServerLib.Mocks
 		public Task BeginBuild(int WorkerID)
 		{
 			Task task = new Models.Task() { WorkerID = WorkerID};
-			TaskCreated(this, task);
+			TaskCreated(this, new Task[] { task });
 			return task;
 		}
 
