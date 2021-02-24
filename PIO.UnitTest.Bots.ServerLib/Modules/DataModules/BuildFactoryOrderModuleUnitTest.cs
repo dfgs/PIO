@@ -32,7 +32,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 		}
 
 		[TestMethod]
-		public void ShouldGetAllBuildFactoryOrders()
+		public void ShouldGetBuildFactoryOrders()
 		{
 			BuildOrderModule module;
 			BuildOrder[] results;
@@ -42,7 +42,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			database.Execute<BuildOrder>(Arg.Any<ISelect>()).Returns(new BuildOrder[] { new BuildOrder() { BuildOrderID = 1 }, new BuildOrder() { BuildOrderID = 2 }, new BuildOrder() { BuildOrderID = 3 } });
 
 			module = new BuildOrderModule(NullLogger.Instance, database);
-			results = module.GetBuildOrders();
+			results = module.GetBuildOrders(1);
 			Assert.IsNotNull(results);
 			Assert.AreEqual(3, results.Length);
 			for (int t = 0; t < 3; t++)
@@ -110,7 +110,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 		}
 
 		[TestMethod]
-		public void ShouldNotGetAllBuildFactoryOrdersAndLogError()
+		public void ShouldNotGetBuildFactoryOrdersAndLogError()
 		{
 			BuildOrderModule module;
 			MemoryLogger logger;
@@ -122,7 +122,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			database.Execute<BuildOrder>(Arg.Any<ISelect>()).Returns((x) => { throw new Exception(); });
 
 			module = new BuildOrderModule(logger, database);
-			Assert.ThrowsException<PIODataException>(() => module.GetBuildOrders());
+			Assert.ThrowsException<PIODataException>(() => module.GetBuildOrders(1));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName == module.ModuleName)));
 		}
 

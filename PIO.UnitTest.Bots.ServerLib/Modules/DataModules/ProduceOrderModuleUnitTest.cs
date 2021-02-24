@@ -32,7 +32,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 		}
 
 		[TestMethod]
-		public void ShouldGetAllProduceOrders()
+		public void ShouldGetProduceOrders()
 		{
 			ProduceOrderModule module;
 			ProduceOrder[] results;
@@ -42,7 +42,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			database.Execute<ProduceOrder>(Arg.Any<ISelect>()).Returns(new ProduceOrder[] { new ProduceOrder() { ProduceOrderID = 1 }, new ProduceOrder() { ProduceOrderID = 2 }, new ProduceOrder() { ProduceOrderID = 3 } });
 
 			module = new ProduceOrderModule(NullLogger.Instance, database);
-			results = module.GetProduceOrders();
+			results = module.GetProduceOrders(1);
 			Assert.IsNotNull(results);
 			Assert.AreEqual(3, results.Length);
 			for (int t = 0; t < 3; t++)
@@ -110,7 +110,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 		}
 
 		[TestMethod]
-		public void ShouldNotGetAllProduceOrdersAndLogError()
+		public void ShouldNotGetProduceOrdersAndLogError()
 		{
 			ProduceOrderModule module;
 			MemoryLogger logger;
@@ -122,7 +122,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			database.Execute<ProduceOrder>(Arg.Any<ISelect>()).Returns((x) => { throw new Exception(); });
 
 			module = new ProduceOrderModule(logger, database);
-			Assert.ThrowsException<PIODataException>(() => module.GetProduceOrders());
+			Assert.ThrowsException<PIODataException>(() => module.GetProduceOrders(1));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName == module.ModuleName)));
 		}
 

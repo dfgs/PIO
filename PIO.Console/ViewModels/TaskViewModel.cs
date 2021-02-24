@@ -1,5 +1,6 @@
 ﻿using PIO.Bots.ClientLib.BotsServiceReference;
 using PIO.ClientLib.PIOServiceReference;
+using PIO.Console.Modules;
 using PIO.Models;
 using System;
 using System.Collections.Generic;
@@ -13,14 +14,15 @@ namespace PIO.Console.ViewModels
 {
 	public class TaskViewModel : PIOViewModel<PIO.Models.Task>
 	{
-		
+		public override string Header => TranslationModule.Translate("Task");
+
 
 		public string Name
 		{
-			get { return PhrasesViewModel.GetString(Model.TaskTypeID.ToString()); }
+			get { return TranslationModule.Translate(Model.TaskTypeID.ToString()); }
 		}
 
-		public TaskViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient,PhrasesViewModel PhrasesViewModel) : base(PIOClient, BotsClient, PhrasesViewModel)
+		public TaskViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient, ITranslationModule TranslationModule) : base(PIOClient, BotsClient,TranslationModule)
 		{
 			
 		}

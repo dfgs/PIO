@@ -19,6 +19,8 @@ using System.ServiceModel;
 using PIO.ClientLib.TaskCallbackServiceReference;
 using PIO.Models;
 using PIO.Console.Views;
+using PIO.Console.Modules;
+using LogLib;
 
 namespace PIO.Console
 {
@@ -30,6 +32,8 @@ namespace PIO.Console
 		private PIOServiceClient pioClient;
 		private BotsServiceClient botsClient;
 		private TaskCallbackServiceClient taskCallbackClient;
+
+		private TranslationModule translationModule;
 
 		private bool isConnected;
 
@@ -76,9 +80,13 @@ namespace PIO.Console
 				ShowError(ex);
 			}
 
-			ApplicationViewModel = new ApplicationViewModel(pioClient, botsClient, null);
+			translationModule = new TranslationModule(NullLogger.Instance, pioClient);
+
+
+			ApplicationViewModel = new ApplicationViewModel(pioClient, botsClient, translationModule);
 			DataContext = ApplicationViewModel;
 
+			await translationModule.LoadAsync("FR");
 			await ApplicationViewModel.LoadAsync();
 		}
 		private void CloseCommandBinding_CanExecute(object sender, CanExecuteRoutedEventArgs e)
@@ -108,6 +116,7 @@ namespace PIO.Console
 
 			DataContext = null;
 			ApplicationViewModel = null;
+			translationModule = null;
 			pioClient = null;botsClient = null;
 	
 			isConnected = false;

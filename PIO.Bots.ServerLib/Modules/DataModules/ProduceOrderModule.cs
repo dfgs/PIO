@@ -39,25 +39,16 @@ namespace PIO.Bots.ServerLib.Modules
 		}
 
 
-		public ProduceOrder[] GetProduceOrders()
+		
+		public ProduceOrder[] GetProduceOrders(int PlanetID)
 		{
 			ISelect query;
 			LogEnter();
 
-			Log(LogLevels.Information, $"Querying ProduceOrder table");
-			query = new Select(OrderTable.OrderID, OrderTable.BotID, ProduceOrderTable.ProduceOrderID, ProduceOrderTable.OrderID, ProduceOrderTable.PlanetID, ProduceOrderTable.BuildingID)
-								.From(BotsDB.ProduceOrderTable.Join(BotsDB.OrderTable.On(ProduceOrderTable.OrderID, OrderTable.OrderID)));
-			return TrySelectMany<ProduceOrderTable, ProduceOrder>(query).OrThrow<PIODataException>("Failed to query");
-		}
-		public ProduceOrder[] GetProduceOrders(int BuildingID)
-		{
-			ISelect query;
-			LogEnter();
-
-			Log(LogLevels.Information, $"Querying ProduceOrder table");
+			Log(LogLevels.Information, $"Querying ProduceOrder table (PlanetID={PlanetID})");
 			query = new Select(OrderTable.OrderID, OrderTable.BotID, ProduceOrderTable.ProduceOrderID, ProduceOrderTable.OrderID, ProduceOrderTable.PlanetID, ProduceOrderTable.BuildingID)
 				.From(BotsDB.ProduceOrderTable.Join(BotsDB.OrderTable.On(ProduceOrderTable.OrderID, OrderTable.OrderID)))
-				.Where(ProduceOrderTable.BuildingID.IsEqualTo(BuildingID));
+				.Where(ProduceOrderTable.PlanetID.IsEqualTo(PlanetID));
 			return TrySelectMany<ProduceOrderTable, ProduceOrder>(query).OrThrow<PIODataException>("Failed to query");
 		}
 		
@@ -67,7 +58,7 @@ namespace PIO.Bots.ServerLib.Modules
 			ISelect query;
 			LogEnter();
 
-			Log(LogLevels.Information, $"Querying ProduceOrder table");
+			Log(LogLevels.Information, $"Querying ProduceOrder table (PlanetID={PlanetID})");
 			query = new Select(OrderTable.OrderID, OrderTable.BotID, ProduceOrderTable.ProduceOrderID, ProduceOrderTable.OrderID, ProduceOrderTable.PlanetID, ProduceOrderTable.BuildingID)
 				.From(BotsDB.ProduceOrderTable.Join(BotsDB.OrderTable.On(ProduceOrderTable.OrderID, OrderTable.OrderID)))
 				.Where(ProduceOrderTable.PlanetID.IsEqualTo(PlanetID).And( OrderTable.BotID.IsNull()));

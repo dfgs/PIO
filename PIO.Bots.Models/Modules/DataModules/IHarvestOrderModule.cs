@@ -9,8 +9,7 @@ namespace PIO.Bots.Models.Modules
 	public interface IHarvestOrderModule:IDatabaseModule
 	{
 		HarvestOrder GetHarvestOrder(int HarvestOrderID);
-		HarvestOrder[] GetHarvestOrders();
-		HarvestOrder[] GetHarvestOrders(int BuildingID);
+		HarvestOrder[] GetHarvestOrders(int PlanetID);
 		HarvestOrder[] GetWaitingHarvestOrders(int PlanetID);
 		HarvestOrder CreateHarvestOrder(int PlanetID,int BuildingID);
 

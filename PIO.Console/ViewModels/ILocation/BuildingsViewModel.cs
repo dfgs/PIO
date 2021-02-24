@@ -1,5 +1,6 @@
 ﻿using PIO.Bots.ClientLib.BotsServiceReference;
 using PIO.ClientLib.PIOServiceReference;
+using PIO.Console.Modules;
 using PIO.Models;
 using System;
 using System.Collections.Generic;
@@ -12,16 +13,22 @@ namespace PIO.Console.ViewModels
 {
 	public class BuildingsViewModel : PIOViewModelCollection<BuildingViewModel,Building>, ILocationViewModelCollection
 	{
-		private int planetID;
+		public override string Header => TranslationModule.Translate("Buildings");
 
-		public BuildingsViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient, PhrasesViewModel PhrasesViewModel, int PlanetID) : base(PIOClient, BotsClient,PhrasesViewModel)
+		private int planetID;
+		private ProduceOrdersViewModel produceOrdersViewModel;
+		private HarvestOrdersViewModel harvestOrderViewModels;
+
+		public BuildingsViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient, ITranslationModule TranslationModule, ProduceOrdersViewModel ProduceOrdersViewModel, HarvestOrdersViewModel HarvestOrderViewModels, int PlanetID) : base(PIOClient, BotsClient,TranslationModule)
 		{
 			this.planetID = PlanetID;
+			this.produceOrdersViewModel = ProduceOrdersViewModel;
+			this.harvestOrderViewModels = HarvestOrderViewModels;
 		}
 
 		protected override BuildingViewModel OnCreateItem(Building Model)
 		{
-			return new BuildingViewModel(PIOClient, BotsClient, PhrasesViewModel);
+			return new BuildingViewModel(PIOClient, BotsClient, TranslationModule,produceOrdersViewModel,harvestOrderViewModels);
 		}
 
 		protected override async Task<IEnumerable<Building>> OnLoadModelAsync()

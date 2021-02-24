@@ -13,7 +13,7 @@
 			<ColumnDefinition Width="150"/>
 		</Grid.ColumnDefinitions>
 		<StackPanel Grid.Column="0">
-			<TextBlock Text="Cell:" FontWeight="Bold"/>
+			<TextBlock Text="{Binding Header}" FontWeight="Bold"/>
 			<TextBlock Text="{Binding X,FallbackValue=0}"/>
 			<TextBlock Text="{Binding Y,FallbackValue=0}"/>
 			<TextBlock Text="Build orders:" FontWeight="Bold"/>

@@ -1,6 +1,7 @@
 ﻿using PIO.Bots.ClientLib.BotsServiceReference;
 using PIO.Bots.Models;
 using PIO.ClientLib.PIOServiceReference;
+using PIO.Console.Modules;
 using PIO.Models;
 using System;
 using System.Collections.Generic;
@@ -24,9 +25,9 @@ namespace PIO.Console.ViewModels
 			get { return Model.Y; }
 		}
 
-		public string Description
+		public override string Header
 		{
-			get { return $"Worker #{Model.WorkerID}"; }
+			get { return $"{TranslationModule.Translate("Worker")} #{Model.WorkerID}"; }
 		}
 
 		public static readonly DependencyProperty TasksProperty = DependencyProperty.Register("Tasks", typeof(TasksViewModel), typeof(WorkerViewModel));
@@ -81,7 +82,7 @@ namespace PIO.Console.ViewModels
 
 
 
-		public WorkerViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient, PhrasesViewModel PhrasesViewModel) : base(PIOClient, BotsClient,PhrasesViewModel)
+		public WorkerViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient, ITranslationModule TranslationModule) : base(PIOClient, BotsClient,TranslationModule)
 		{
 			CreateBotCommand = new ViewModelCommand(CreateBotCommandCanExecute, CreateBotCommandExecute);
 			DeleteBotCommand = new ViewModelCommand(DeleteBotCommandCanExecute, DeleteBotCommandExecute);
@@ -101,7 +102,7 @@ namespace PIO.Console.ViewModels
 
 			result = await TryAsync(BotsClient.CreateBotAsync(Model.WorkerID));
 			if (result == null) return;
-			Bot = new BotViewModel(PIOClient, BotsClient, PhrasesViewModel);
+			Bot = new BotViewModel(PIOClient, BotsClient, TranslationModule);
 			await Bot.LoadAsync(result);
 		}
 		private bool DeleteBotCommandCanExecute(object arg)
@@ -163,7 +164,7 @@ namespace PIO.Console.ViewModels
 			}
 			else
 			{
-				Bot = new BotViewModel(PIOClient, BotsClient, PhrasesViewModel);
+				Bot = new BotViewModel(PIOClient, BotsClient, TranslationModule);
 				await Bot.LoadAsync(bot);
 			}
 		}
@@ -176,7 +177,7 @@ namespace PIO.Console.ViewModels
 		{
 			Bot bot;
 
-			Tasks = new TasksViewModel(PIOClient, BotsClient,PhrasesViewModel, Model.WorkerID);
+			Tasks = new TasksViewModel(PIOClient, BotsClient,TranslationModule, Model.WorkerID);
 			await Tasks.LoadAsync();
 			Task = Tasks.FirstOrDefault();
 
@@ -187,7 +188,7 @@ namespace PIO.Console.ViewModels
 			}
 			else
 			{
-				Bot = new BotViewModel(PIOClient, BotsClient, PhrasesViewModel);
+				Bot = new BotViewModel(PIOClient, BotsClient, TranslationModule);
 				await Bot.LoadAsync(bot);
 			}
 		}

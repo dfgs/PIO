@@ -56,6 +56,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Modules\ITranslationModule.cs" />
+    <Compile Include="Modules\TranslationModule.cs" />
     <Compile Include="ViewModels\ApplicationViewModel.cs" />
     <Compile Include="ViewModels\ILocation\CellViewModel.cs" />
     <Compile Include="ViewModels\ILocation\CellsViewModel.cs" />
@@ -72,7 +74,6 @@
     <Compile Include="ViewModels\HarvestOrderViewModel.cs" />
     <Compile Include="ViewModels\ProduceOrderViewModel.cs" />
     <Compile Include="ViewModels\ProduceOrdersViewModel.cs" />
-    <Compile Include="ViewModels\PhrasesViewModel.cs" />
     <Compile Include="ViewModels\TasksViewModel.cs" />
     <Compile Include="ViewModels\StacksViewModel.cs" />
     <Compile Include="ViewModels\BotViewModel.cs" />
@@ -203,6 +204,14 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\LogLib\LogLib\LogLib.csproj">
+      <Project>{ef4b0001-2859-4a09-8f95-3e5bef4a5272}</Project>
+      <Name>LogLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\ModuleLib\ModuleLib\ModuleLib.csproj">
+      <Project>{f89b06c7-43cc-4589-9859-3a4656aaa4a6}</Project>
+      <Name>ModuleLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\ViewModelLib\ViewModelLib\ViewModelLib.csproj">
       <Project>{9cd722c0-3abe-48c7-a2fe-b18fbc6b5daa}</Project>
       <Name>ViewModelLib</Name>

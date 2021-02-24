@@ -1,6 +1,7 @@
 ﻿using PIO.Bots.ClientLib.BotsServiceReference;
 using PIO.Bots.Models;
 using PIO.ClientLib.PIOServiceReference;
+using PIO.Console.Modules;
 using PIO.Models;
 using System;
 using System.Collections.Generic;
@@ -33,6 +34,10 @@ namespace PIO.Console.ViewModels
 
 
 
+		public string BuildingType
+		{
+			get { return TranslationModule.Translate(Model.BuildingTypeID.ToString()); }
+		}
 
 		public int X
 		{
@@ -43,9 +48,9 @@ namespace PIO.Console.ViewModels
 			get { return Model.Y; }
 		}
 
-		public string Description
+		public override string Header
 		{
-			get { return $"Building #{Model.BuildingID}"; }
+			get { return $"{TranslationModule.Translate("Building")} #{Model.BuildingID}"; }
 		}
 
 		public static readonly DependencyProperty StacksProperty = DependencyProperty.Register("Stacks", typeof(StacksViewModel), typeof(BuildingViewModel));
@@ -55,29 +60,32 @@ namespace PIO.Console.ViewModels
 			set { SetValue(StacksProperty, value); }
 		}
 
-		public static readonly DependencyProperty ProduceOrdersProperty = DependencyProperty.Register("ProduceOrders", typeof(ProduceOrdersViewModel), typeof(BuildingViewModel));
-		public ProduceOrdersViewModel ProduceOrders
+		private ProduceOrdersViewModel produceOrdersViewModel;
+		public IEnumerable<ProduceOrderViewModel> ProduceOrders
 		{
-			get { return (ProduceOrdersViewModel)GetValue(ProduceOrdersProperty); }
-			set { SetValue(ProduceOrdersProperty, value); }
+			get { return produceOrdersViewModel.Where(item=>item.Model.BuildingID==Model.BuildingID); }
 		}
-		public static readonly DependencyProperty HarvestOrdersProperty = DependencyProperty.Register("HarvestOrders", typeof(HarvestOrdersViewModel), typeof(BuildingViewModel));
-		public HarvestOrdersViewModel HarvestOrders
+		private HarvestOrdersViewModel harvestOrderViewModels;
+		public IEnumerable<HarvestOrderViewModel> HarvestOrders
 		{
-			get { return (HarvestOrdersViewModel)GetValue(HarvestOrdersProperty); }
-			set { SetValue(HarvestOrdersProperty, value); }
+			get { return harvestOrderViewModels.Where(item => item.Model.BuildingID == Model.BuildingID); }
 		}
 
 
-		public BuildingViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient, PhrasesViewModel PhrasesViewModel) : base(PIOClient, BotsClient,PhrasesViewModel)
+		public BuildingViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient, ITranslationModule TranslationModule, ProduceOrdersViewModel ProduceOrdersViewModel,HarvestOrdersViewModel HarvestOrderViewModels) : base(PIOClient, BotsClient,TranslationModule)
 		{
+			this.produceOrdersViewModel = ProduceOrdersViewModel;
+			this.harvestOrderViewModels = HarvestOrderViewModels;
+
 			CreateProduceOrderCommand = new ViewModelCommand(CreateProduceOrderCommandCanExecute, CreateProduceOrderCommandExecute);
 			CreateHarvestOrderCommand = new ViewModelCommand(CreateHarvestOrderCommandCanExecute, CreateHarvestOrderCommandExecute);
+
+
 		}
 
 		private bool CreateProduceOrderCommandCanExecute(object arg)
 		{
-			return (Model != null) && (Model.RemainingBuildSteps==0) && (ProduceOrders.Count==0);
+			return (Model != null) && (Model.RemainingBuildSteps == 0);//&& (ProduceOrders.Count==0);
 		}
 		private async void CreateProduceOrderCommandExecute(object obj)
 		{
@@ -86,14 +94,15 @@ namespace PIO.Console.ViewModels
 
 			result=await TryAsync(BotsClient.CreateProduceOrderAsync(Model.PlanetID, Model.BuildingID));
 			if (result == null) return;
-			vm = new ProduceOrderViewModel(PIOClient, BotsClient,PhrasesViewModel);
+			vm = new ProduceOrderViewModel(PIOClient, BotsClient,TranslationModule);
 			await vm.LoadAsync(result);
-			ProduceOrders.Add(vm);
+			produceOrdersViewModel.Add(vm);
+			OnPropertyChanged("ProduceOrders");
 		}
 
 		private bool CreateHarvestOrderCommandCanExecute(object arg)
 		{
-			return (Model != null) && (Model.RemainingBuildSteps == 0) && (HarvestOrders.Count == 0);
+			return (Model != null) && (Model.RemainingBuildSteps == 0);// && (HarvestOrders.Count == 0);
 		}
 		private async void CreateHarvestOrderCommandExecute(object obj)
 		{
@@ -102,9 +111,10 @@ namespace PIO.Console.ViewModels
 
 			result = await TryAsync(BotsClient.CreateHarvestOrderAsync(Model.PlanetID, Model.BuildingID));
 			if (result == null) return;
-			vm = new HarvestOrderViewModel(PIOClient, BotsClient,PhrasesViewModel);
+			vm = new HarvestOrderViewModel(PIOClient, BotsClient,TranslationModule);
 			await vm.LoadAsync(result);
-			HarvestOrders.Add(vm);
+			harvestOrderViewModels.Add(vm);
+			OnPropertyChanged("HarvestOrders");
 		}
 
 
@@ -112,8 +122,6 @@ namespace PIO.Console.ViewModels
 		{
 			await base.OnRefreshAsync();
 			await Stacks.RefreshAsync();
-			await ProduceOrders.RefreshAsync();
-			await HarvestOrders.RefreshAsync();
 		}
 
 		protected override async Task<Building> OnLoadModelAsync()
@@ -122,12 +130,9 @@ namespace PIO.Console.ViewModels
 		}
 		protected override async Task OnLoadAsync(Building Model)
 		{
-			Stacks = new StacksViewModel(PIOClient, BotsClient, PhrasesViewModel, Model.BuildingID);
+			Stacks = new StacksViewModel(PIOClient, BotsClient, TranslationModule, Model.BuildingID);
 			await Stacks.LoadAsync();
-			ProduceOrders = new ProduceOrdersViewModel(PIOClient, BotsClient,PhrasesViewModel, Model.BuildingID);
-			await ProduceOrders.LoadAsync();
-			HarvestOrders = new HarvestOrdersViewModel(PIOClient, BotsClient,PhrasesViewModel, Model.BuildingID);
-			await HarvestOrders.LoadAsync();
+			
 		}
 
 

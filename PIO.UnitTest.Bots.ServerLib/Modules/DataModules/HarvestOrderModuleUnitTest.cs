@@ -32,7 +32,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 		}
 
 		[TestMethod]
-		public void ShouldGetAllHarvestOrders()
+		public void ShouldGetHarvestOrders()
 		{
 			HarvestOrderModule module;
 			HarvestOrder[] results;
@@ -42,7 +42,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			database.Execute<HarvestOrder>(Arg.Any<ISelect>()).Returns(new HarvestOrder[] { new HarvestOrder() { HarvestOrderID = 1 }, new HarvestOrder() { HarvestOrderID = 2 }, new HarvestOrder() { HarvestOrderID = 3 } });
 
 			module = new HarvestOrderModule(NullLogger.Instance, database);
-			results = module.GetHarvestOrders();
+			results = module.GetHarvestOrders(1);
 			Assert.IsNotNull(results);
 			Assert.AreEqual(3, results.Length);
 			for (int t = 0; t < 3; t++)
@@ -110,7 +110,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 		}
 
 		[TestMethod]
-		public void ShouldNotGetAllHarvestOrdersAndLogError()
+		public void ShouldNotGetHarvestOrdersAndLogError()
 		{
 			HarvestOrderModule module;
 			MemoryLogger logger;
@@ -122,7 +122,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			database.Execute<HarvestOrder>(Arg.Any<ISelect>()).Returns((x) => { throw new Exception(); });
 
 			module = new HarvestOrderModule(logger, database);
-			Assert.ThrowsException<PIODataException>(() => module.GetHarvestOrders());
+			Assert.ThrowsException<PIODataException>(() => module.GetHarvestOrders(1));
 			Assert.IsNotNull(logger.Logs.FirstOrDefault(item => (item.Level == LogLevels.Error) && (item.ComponentName == module.ModuleName)));
 		}
 

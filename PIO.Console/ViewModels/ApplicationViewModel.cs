@@ -1,6 +1,7 @@
 ﻿using PIO.Bots.ClientLib.BotsServiceReference;
 using PIO.ClientLib.PIOServiceReference;
 using PIO.ClientLib.TaskCallbackServiceReference;
+using PIO.Console.Modules;
 using PIO.Models;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,20 @@ namespace PIO.Console.ViewModels
 {
 	public class ApplicationViewModel:PIOViewModel<int>
 	{
-		private PhrasesViewModel phrasesViewModel;
+		public override string Header => "PIO.Console";
+
+		private static int planetID = 1;
+
+
+		public static readonly DependencyProperty LoadDurationProperty = DependencyProperty.Register("LoadDuration", typeof(TimeSpan), typeof(ApplicationViewModel));
+		public TimeSpan LoadDuration
+		{
+			get { return (TimeSpan)GetValue(LoadDurationProperty); }
+			set { SetValue(LoadDurationProperty, value); }
+		}
+
+
+
 
 		public static readonly DependencyProperty SelectedItemsProperty = DependencyProperty.Register("SelectedItems", typeof(MapItemsViewModel), typeof(ApplicationViewModel), new PropertyMetadata(null));
 		public MapItemsViewModel SelectedItems
@@ -24,6 +38,26 @@ namespace PIO.Console.ViewModels
 			set { SetValue(SelectedItemsProperty, value); }
 		}
 
+		public static readonly DependencyProperty ProduceOrdersProperty = DependencyProperty.Register("ProduceOrders", typeof(ProduceOrdersViewModel), typeof(ApplicationViewModel));
+		public ProduceOrdersViewModel ProduceOrders
+		{
+			get { return (ProduceOrdersViewModel)GetValue(ProduceOrdersProperty); }
+			set { SetValue(ProduceOrdersProperty, value); }
+		}
+
+		public static readonly DependencyProperty HarvestOrdersProperty = DependencyProperty.Register("HarvestOrders", typeof(HarvestOrdersViewModel), typeof(ApplicationViewModel));
+		public HarvestOrdersViewModel HarvestOrders
+		{
+			get { return (HarvestOrdersViewModel)GetValue(HarvestOrdersProperty); }
+			set { SetValue(HarvestOrdersProperty, value); }
+		}
+
+		public static readonly DependencyProperty BuildOrdersProperty = DependencyProperty.Register("BuildOrders", typeof(BuildOrdersViewModel), typeof(ApplicationViewModel));
+		public BuildOrdersViewModel BuildOrders
+		{
+			get { return (BuildOrdersViewModel)GetValue(BuildOrdersProperty); }
+			set { SetValue(BuildOrdersProperty, value); }
+		}
 
 
 		public static readonly DependencyProperty WorkersProperty = DependencyProperty.Register("Workers", typeof(WorkersViewModel), typeof(ApplicationViewModel));
@@ -57,12 +91,15 @@ namespace PIO.Console.ViewModels
 			set { SetValue(MapItemsProperty, value); }
 		}
 
-		public ApplicationViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient, PhrasesViewModel PhrasesViewModel) : base(PIOClient, BotsClient,PhrasesViewModel)
+		public ApplicationViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient, ITranslationModule TranslationModule) : base(PIOClient, BotsClient,TranslationModule)
 		{
-			phrasesViewModel = new PhrasesViewModel(PIOClient,BotsClient);
-			Cells = new CellsViewModel(PIOClient, BotsClient, phrasesViewModel, 1);
-			Workers = new WorkersViewModel(PIOClient,BotsClient, phrasesViewModel, 1);
-			Buildings = new BuildingsViewModel(PIOClient, BotsClient, phrasesViewModel, 1);
+			ProduceOrders = new ProduceOrdersViewModel(PIOClient, BotsClient, TranslationModule, planetID);
+			HarvestOrders = new HarvestOrdersViewModel(PIOClient, BotsClient, TranslationModule, planetID);
+			BuildOrders = new BuildOrdersViewModel(PIOClient, BotsClient, TranslationModule, planetID);
+
+			Cells = new CellsViewModel(PIOClient, BotsClient, TranslationModule, BuildOrders, planetID);
+			Workers = new WorkersViewModel(PIOClient,BotsClient, TranslationModule, planetID);
+			Buildings = new BuildingsViewModel(PIOClient, BotsClient, TranslationModule, ProduceOrders,HarvestOrders, planetID);
 			MapItems = new MapItemsViewModel() ;
 			SelectedItems = new MapItemsViewModel();
 
@@ -76,13 +113,21 @@ namespace PIO.Console.ViewModels
 
 		protected override async System.Threading.Tasks.Task OnLoadAsync(int Model)
 		{
-			await phrasesViewModel.LoadAsync("FR");
+			DateTime start, stop;
+
+			start = DateTime.Now;
+			await ProduceOrders.LoadAsync();
+			await HarvestOrders.LoadAsync();
+			await BuildOrders.LoadAsync();
+
 			await Cells.LoadAsync();
 			await Workers.LoadAsync();
 			await Buildings.LoadAsync();
 
 			await MapItems.LoadAsync(Cells.Union<ILocationViewModel>(Buildings).Union(Workers));
-			
+			stop = DateTime.Now;
+
+			LoadDuration = stop - start;
 
 		}
 
@@ -133,7 +178,7 @@ namespace PIO.Console.ViewModels
 						building = PIOClient.GetBuildingAtPos(1, Task.X, Task.Y);
 						if (building!=null)
 						{
-							factoryViewModel = new BuildingViewModel(PIOClient, BotsClient, PhrasesViewModel);
+							factoryViewModel = new BuildingViewModel(PIOClient, BotsClient, TranslationModule, ProduceOrders,HarvestOrders);
 							await factoryViewModel.LoadAsync(building);
 							Buildings.Add(factoryViewModel);
 							MapItems.Insert(Cells.Count, factoryViewModel);

@@ -21,32 +21,23 @@ namespace PIO.Bots.Models
 		Bot[] GetBots();
 
 
-		[OperationContract]
-		Order GetOrder(int OrderID);
-		[OperationContract]
-		Order[] GetOrders();
+		
 		
 		[OperationContract]
 		ProduceOrder GetProduceOrder(int ProduceOrderID);
 		[OperationContract]
-		ProduceOrder[] GetProduceOrders();
-		[OperationContract]
-		ProduceOrder[] GetProduceOrdersForBuilding(int BuildingID);
+		ProduceOrder[] GetProduceOrders(int PlanetID);
 
 		[OperationContract]
 		HarvestOrder GetHarvestOrder(int HarvestOrderID);
 		[OperationContract]
-		HarvestOrder[] GetHarvestOrders();
-		[OperationContract]
-		HarvestOrder[] GetHarvestOrdersForBuilding(int BuildingID);
-
+		HarvestOrder[] GetHarvestOrders(int PlanetID);
+	
 		[OperationContract]
 		BuildOrder GetBuildOrder(int BuildOrderID);
 		[OperationContract]
-		BuildOrder[] GetBuildOrders();
-		[OperationContract]
-		BuildOrder[] GetBuildOrdersAtPosition(int PlanetId, int X, int Y);
-
+		BuildOrder[] GetBuildOrders(int PlanetID);
+	
 
 		#endregion
 

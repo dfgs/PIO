@@ -36,7 +36,7 @@
 		</ToolBarTray>
 		
 		<StatusBar DockPanel.Dock="Bottom">
-			<TextBlock/>
+			<TextBlock Text="{Binding LoadDuration,FallbackValue=Not connected,StringFormat=Load duration: {0}}"/>
 		</StatusBar>
 
 		<views:WorkersView DockPanel.Dock="Top" DataContext="{Binding Workers}"/>

@@ -39,25 +39,27 @@ namespace PIO.Bots.ServerLib.Modules
 		}
 
 
-		public BuildOrder[] GetBuildOrders()
+
+		public BuildOrder[] GetBuildOrders(int PlanetID)
 		{
 			ISelect query;
 			LogEnter();
 
-			Log(LogLevels.Information, $"Querying BuildFactoryOrder table");
-			query = new Select(OrderTable.OrderID, OrderTable.BotID, BuildOrderTable.BuildOrderID, BuildOrderTable.OrderID, BuildOrderTable.BuildingTypeID, BuildOrderTable.PlanetID, BuildOrderTable.X, BuildOrderTable.Y)
-								.From(BotsDB.BuildOrderTable.Join(BotsDB.OrderTable.On(BuildOrderTable.OrderID, OrderTable.OrderID)));
-			return TrySelectMany<BuildOrderTable, BuildOrder>(query).OrThrow<PIODataException>("Failed to query");
-		}
-		public BuildOrder[] GetBuildOrders(int PlanetID, int X, int Y)
-		{
-			ISelect query;
-			LogEnter();
-
-			Log(LogLevels.Information, $"Querying BuildFactoryOrder table");
+			Log(LogLevels.Information, $"Querying BuildFactoryOrder table (PlanetID={PlanetID})");
 			query = new Select(OrderTable.OrderID, OrderTable.BotID, BuildOrderTable.BuildOrderID, BuildOrderTable.OrderID, BuildOrderTable.BuildingTypeID, BuildOrderTable.PlanetID, BuildOrderTable.X, BuildOrderTable.Y)
 								.From(BotsDB.BuildOrderTable.Join(BotsDB.OrderTable.On(BuildOrderTable.OrderID, OrderTable.OrderID)))
-								.Where(BuildOrderTable.PlanetID.IsEqualTo(PlanetID).And(BuildOrderTable.X.IsEqualTo(X)).And(BuildOrderTable.Y.IsEqualTo(Y)));
+								.Where(BuildOrderTable.PlanetID.IsEqualTo(PlanetID));
+			return TrySelectMany<BuildOrderTable, BuildOrder>(query).OrThrow<PIODataException>("Failed to query");
+		}
+		public BuildOrder[] GetBuildOrders(int PlanetID,int X,int Y)
+		{
+			ISelect query;
+			LogEnter();
+
+			Log(LogLevels.Information, $"Querying BuildFactoryOrder table (PlanetID={PlanetID}, X={X}, Y={Y})");
+			query = new Select(OrderTable.OrderID, OrderTable.BotID, BuildOrderTable.BuildOrderID, BuildOrderTable.OrderID, BuildOrderTable.BuildingTypeID, BuildOrderTable.PlanetID, BuildOrderTable.X, BuildOrderTable.Y)
+								.From(BotsDB.BuildOrderTable.Join(BotsDB.OrderTable.On(BuildOrderTable.OrderID, OrderTable.OrderID)))
+								.Where(BuildOrderTable.PlanetID.IsEqualTo(PlanetID).And(BuildOrderTable.X.IsEqualTo(X)).And(BuildOrderTable.Y.IsEqualTo(Y)) );
 			return TrySelectMany<BuildOrderTable, BuildOrder>(query).OrThrow<PIODataException>("Failed to query");
 		}
 

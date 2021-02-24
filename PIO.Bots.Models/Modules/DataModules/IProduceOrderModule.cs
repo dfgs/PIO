@@ -9,8 +9,7 @@ namespace PIO.Bots.Models.Modules
 	public interface IProduceOrderModule:IDatabaseModule
 	{
 		ProduceOrder GetProduceOrder(int ProduceOrderID);
-		ProduceOrder[] GetProduceOrders();
-		ProduceOrder[] GetProduceOrders(int BuildingID);
+		ProduceOrder[] GetProduceOrders(int PlanetID);
 		ProduceOrder[] GetWaitingProduceOrders(int PlanetID);
 		ProduceOrder CreateProduceOrder(int PlanetID,int BuildingID);
 

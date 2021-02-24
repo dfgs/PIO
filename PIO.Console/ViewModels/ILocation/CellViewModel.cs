@@ -1,6 +1,7 @@
 ﻿using PIO.Bots.ClientLib.BotsServiceReference;
 using PIO.Bots.Models;
 using PIO.ClientLib.PIOServiceReference;
+using PIO.Console.Modules;
 using PIO.Models;
 using System;
 using System.Collections.Generic;
@@ -32,23 +33,23 @@ namespace PIO.Console.ViewModels
 			get { return Model.Y; }
 		}
 		
-		public string Description
+		public override string Header
 		{
-			get { return $"Cell {X},{Y}"; }
+			get { return $"{TranslationModule.Translate("Cell")} {X},{Y}"; }
 		}
 
 
-		public static readonly DependencyProperty BuildFactoryOrdersProperty = DependencyProperty.Register("BuildFactoryOrders", typeof(BuildOrdersViewModel), typeof(CellViewModel));
-		public BuildOrdersViewModel BuildFactoryOrders
+		private BuildOrdersViewModel buildOrdersViewModel;
+		public IEnumerable<BuildOrderViewModel> BuildOrders
 		{
-			get { return (BuildOrdersViewModel)GetValue(BuildFactoryOrdersProperty); }
-			set { SetValue(BuildFactoryOrdersProperty, value); }
+			get { return buildOrdersViewModel.Where(item => (item.Model.X == Model.X)&& (item.Model.Y == Model.Y)); }
 		}
 
-		
 
-		public CellViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient, PhrasesViewModel PhrasesViewModel) : base(PIOClient, BotsClient,PhrasesViewModel)
+
+		public CellViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient, ITranslationModule TranslationModule, BuildOrdersViewModel BuildOrdersViewModel) : base(PIOClient, BotsClient,TranslationModule)
 		{
+			this.buildOrdersViewModel = BuildOrdersViewModel;
 			CreateBuildOrderCommand = new ViewModelCommand(CreateBuildOrderCommandCanExecute, CreateBuildOrderCommandExecute);
 		}
 		private async void MoveToCommandExecute(object obj)
@@ -58,7 +59,7 @@ namespace PIO.Console.ViewModels
 
 		private bool CreateBuildOrderCommandCanExecute(object arg)
 		{
-			return (Model != null)&& (BuildFactoryOrders.Count == 0);
+			return (Model != null);//&& (BuildFactoryOrders.Count == 0);
 		}
 		private async void CreateBuildOrderCommandExecute(object obj)
 		{
@@ -67,27 +68,20 @@ namespace PIO.Console.ViewModels
 
 			result = await TryAsync(BotsClient.CreateBuildOrderAsync(Model.PlanetID, BuildingTypeIDs.Sawmill,Model.X,Model.Y));
 			if (result == null) return;
-			vm = new BuildOrderViewModel(PIOClient, BotsClient, PhrasesViewModel);
+			vm = new BuildOrderViewModel(PIOClient, BotsClient, TranslationModule);
 			await vm.LoadAsync(result);
-			BuildFactoryOrders.Add(vm);
+			buildOrdersViewModel.Add(vm);
+			OnPropertyChanged("BuildOrders");
 		}
 		
-		protected override async System.Threading.Tasks.Task OnRefreshAsync()
-		{
-			await base.OnRefreshAsync();
-			await BuildFactoryOrders.RefreshAsync();
-		}
+		
 
 		protected override async Task<Cell> OnLoadModelAsync()
 		{
 			return await PIOClient.GetCellAsync(((Cell)Model).CellID);
 		}
 
-		protected override async System.Threading.Tasks.Task OnLoadAsync(Cell Model)
-		{
-			BuildFactoryOrders = new BuildOrdersViewModel(PIOClient, BotsClient, PhrasesViewModel, Model.PlanetID,Model.X,Model.Y);
-			await BuildFactoryOrders.LoadAsync();
-		}
+		
 
 
 	}

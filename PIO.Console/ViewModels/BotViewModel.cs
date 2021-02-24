@@ -1,6 +1,7 @@
 ﻿using PIO.Bots.ClientLib.BotsServiceReference;
 using PIO.Bots.Models;
 using PIO.ClientLib.PIOServiceReference;
+using PIO.Console.Modules;
 using PIO.Models;
 using System;
 using System.Collections.Generic;
@@ -13,9 +14,10 @@ namespace PIO.Console.ViewModels
 {
 	public class BotViewModel : PIOViewModel<Bot>
 	{
-		
 
-		public BotViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient, PhrasesViewModel PhrasesViewModel) : base(PIOClient, BotsClient, PhrasesViewModel)
+		public override string Header => TranslationModule.Translate("Bot");
+
+		public BotViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient, ITranslationModule TranslationModule) : base(PIOClient, BotsClient,TranslationModule)
 		{
 		}
 

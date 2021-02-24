@@ -393,12 +393,12 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			client.Idle(Arg.Any<int>(), Arg.Any<int>()).Returns(new Task() {TaskTypeID=TaskTypeIDs.Idle ,WorkerID=1});
 			orderModule = Substitute.For<IOrderModule>();
 			produceOrderModule = Substitute.For<IProduceOrderModule>();
-			produceOrderModule.GetProduceOrders().Returns(new ProduceOrder[] { });
+			produceOrderModule.GetWaitingProduceOrders(Arg.Any<int>()).Returns(new ProduceOrder[] { });
 			harvestOrderModule = Substitute.For<IHarvestOrderModule>();
-			harvestOrderModule.GetHarvestOrders().Returns(new HarvestOrder[] { });
+			harvestOrderModule.GetWaitingHarvestOrders(Arg.Any<int>()).Returns(new HarvestOrder[] { });
 
 			buildFactoryOrderModule = Substitute.For<IBuildOrderModule>();
-			buildFactoryOrderModule.GetBuildOrders().Returns(new BuildOrder[] { });
+			buildFactoryOrderModule.GetWaitingBuildOrders(Arg.Any<int>()).Returns(new BuildOrder[] { });
 
 			module = new OrderManagerModule(NullLogger.Instance,client, orderModule, produceOrderModule, harvestOrderModule,buildFactoryOrderModule,  10);
 			result = module.CreateTask(1,1);
@@ -424,7 +424,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 
 			orderModule = Substitute.For<IOrderModule>();
 			produceOrderModule = Substitute.For<IProduceOrderModule>();
-			produceOrderModule.GetProduceOrders().Returns(new ProduceOrder[] { });
+			//produceOrderModule.GetProduceOrders().Returns(new ProduceOrder[] { });
 
 			module = new OrderManagerModule(logger, client, orderModule, produceOrderModule, null, null, 10);
 			Assert.ThrowsException<PIOInternalErrorException>(() => module.CreateTask(1, 1));
@@ -455,12 +455,12 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			orderModule = Substitute.For<IOrderModule>();
 			//orderModule.CreateOrder(Arg.Any<int>()).Returns(new Order() { OrderID = 1 });
 			produceOrderModule = Substitute.For<IProduceOrderModule>();
-			produceOrderModule.GetProduceOrders().Returns(new ProduceOrder[] { new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, BuildingID = 1 } });
+			//produceOrderModule.GetProduceOrders().Returns(new ProduceOrder[] { new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, BuildingID = 1 } });
 			harvestOrderModule = Substitute.For<IHarvestOrderModule>();
-			harvestOrderModule.GetHarvestOrders().Returns(new HarvestOrder[] { new HarvestOrder() { OrderID = 1, HarvestOrderID = 1, BuildingID = 1 } });
+			//harvestOrderModule.GetHarvestOrders().Returns(new HarvestOrder[] { new HarvestOrder() { OrderID = 1, HarvestOrderID = 1, BuildingID = 1 } });
 
 			buildFactoryOrderModule = Substitute.For<IBuildOrderModule>();
-			buildFactoryOrderModule.GetBuildOrders().Returns(new BuildOrder[] { new BuildOrder() { OrderID = 2, BuildOrderID = 1 } });
+			//buildFactoryOrderModule.GetBuildOrders().Returns(new BuildOrder[] { new BuildOrder() { OrderID = 2, BuildOrderID = 1 } });
 
 			module = new OrderManagerModule(NullLogger.Instance, client, orderModule, produceOrderModule, harvestOrderModule, buildFactoryOrderModule,  10);
 			result = module.CreateTask(1, 1);
@@ -561,7 +561,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			orderModule = Substitute.For<IOrderModule>();
 			//orderModule.CreateOrder(Arg.Any<int>()).Returns(new Order() { OrderID = 1 });
 			produceOrderModule = Substitute.For<IProduceOrderModule>();
-			produceOrderModule.GetProduceOrders().Returns(new ProduceOrder[] { new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, BuildingID = 1 } });
+			//produceOrderModule.GetProduceOrders().Returns(new ProduceOrder[] { new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, BuildingID = 1 } });
 
 			module = new OrderManagerModule(NullLogger.Instance, client, orderModule, produceOrderModule, null,null, 10);
 			result = module.CreateTaskFromProduceOrder(new Worker() { PlanetID = 1 }, new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, BuildingID = 1 });
@@ -588,7 +588,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			orderModule = Substitute.For<IOrderModule>();
 			//orderModule.CreateOrder(Arg.Any<int>()).Returns(new Order() { OrderID = 1 });
 			produceOrderModule = Substitute.For<IProduceOrderModule>();
-			produceOrderModule.GetProduceOrders().Returns(new ProduceOrder[] { new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, BuildingID = 1 } });
+			//produceOrderModule.GetProduceOrders().Returns(new ProduceOrder[] { new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, BuildingID = 1 } });
 
 			module = new OrderManagerModule(NullLogger.Instance, client, orderModule, produceOrderModule, null,null, 10);
 			result = module.CreateTaskFromProduceOrder(new Worker() { PlanetID = 1 }, new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, BuildingID = 1 });
@@ -617,7 +617,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			orderModule = Substitute.For<IOrderModule>();
 			//orderModule.CreateOrder(Arg.Any<int>()).Returns(new Order() { OrderID = 1 });
 			produceOrderModule = Substitute.For<IProduceOrderModule>();
-			produceOrderModule.GetProduceOrders().Returns(new ProduceOrder[] { new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, BuildingID = 1 } });
+			//produceOrderModule.GetProduceOrders().Returns(new ProduceOrder[] { new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, BuildingID = 1 } });
 
 			module = new OrderManagerModule(NullLogger.Instance, client, orderModule, produceOrderModule, null,null, 10);
 			result = module.CreateTaskFromProduceOrder(new Worker() { PlanetID = 1 }, new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, BuildingID = 1 });
@@ -643,7 +643,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			orderModule = Substitute.For<IOrderModule>();
 			//orderModule.CreateOrder(Arg.Any<int>()).Returns(new Order() { OrderID = 1 });
 			produceOrderModule = Substitute.For<IProduceOrderModule>();
-			produceOrderModule.GetProduceOrders().Returns(new ProduceOrder[] { new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, BuildingID = 1 } });
+			//produceOrderModule.GetProduceOrders().Returns(new ProduceOrder[] { new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, BuildingID = 1 } });
 
 			module = new OrderManagerModule(NullLogger.Instance, client, orderModule, produceOrderModule, null,null, 10);
 			result = module.CreateTaskFromProduceOrder(new Worker() { PlanetID = 1,ResourceTypeID=ResourceTypeIDs.Wood }, new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, BuildingID = 1 });
@@ -670,7 +670,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			orderModule = Substitute.For<IOrderModule>();
 			//orderModule.CreateOrder(Arg.Any<int>()).Returns(new Order() { OrderID = 1 });
 			produceOrderModule = Substitute.For<IProduceOrderModule>();
-			produceOrderModule.GetProduceOrders().Returns(new ProduceOrder[] { new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, BuildingID = 1 } });
+			//produceOrderModule.GetProduceOrders().Returns(new ProduceOrder[] { new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, BuildingID = 1 } });
 
 			module = new OrderManagerModule(NullLogger.Instance, client, orderModule, produceOrderModule, null,null, 10);
 			result = module.CreateTaskFromProduceOrder(new Worker() { PlanetID = 1 }, new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, BuildingID = 1 });
@@ -697,7 +697,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			orderModule = Substitute.For<IOrderModule>();
 			//orderModule.CreateOrder(Arg.Any<int>()).Returns(new Order() { OrderID = 1 });
 			produceOrderModule = Substitute.For<IProduceOrderModule>();
-			produceOrderModule.GetProduceOrders().Returns(new ProduceOrder[] { new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, BuildingID = 1 } });
+			//produceOrderModule.GetProduceOrders().Returns(new ProduceOrder[] { new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, BuildingID = 1 } });
 
 			module = new OrderManagerModule(NullLogger.Instance, client, orderModule, produceOrderModule, null,null, 10);
 			result = module.CreateTaskFromProduceOrder(new Worker() { PlanetID = 1 }, new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, BuildingID = 1 });
@@ -724,7 +724,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			orderModule = Substitute.For<IOrderModule>();
 			//orderModule.CreateOrder(Arg.Any<int>()).Returns(new Order() { OrderID = 1 });
 			produceOrderModule = Substitute.For<IProduceOrderModule>();
-			produceOrderModule.GetProduceOrders().Returns(new ProduceOrder[] { new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, BuildingID = 1 } });
+			//produceOrderModule.GetProduceOrders().Returns(new ProduceOrder[] { new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, BuildingID = 1 } });
 
 			module = new OrderManagerModule(NullLogger.Instance, client, orderModule, produceOrderModule, null,null, 10);
 			result = module.CreateTaskFromProduceOrder(new Worker() { PlanetID = 1 ,ResourceTypeID=ResourceTypeIDs.Wood}, new ProduceOrder() { OrderID = 1, ProduceOrderID = 1, BuildingID = 1 });
@@ -752,7 +752,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			orderModule = Substitute.For<IOrderModule>();
 			//orderModule.CreateOrder(Arg.Any<int>()).Returns(new Order() { OrderID = 1 });
 			harvestOrderModule = Substitute.For<IHarvestOrderModule>();
-			harvestOrderModule.GetHarvestOrders().Returns(new HarvestOrder[] { new HarvestOrder() { OrderID = 1, HarvestOrderID = 1, BuildingID = 1 } });
+			//harvestOrderModule.GetHarvestOrders().Returns(new HarvestOrder[] { new HarvestOrder() { OrderID = 1, HarvestOrderID = 1, BuildingID = 1 } });
 
 			module = new OrderManagerModule(NullLogger.Instance, client, orderModule,null, harvestOrderModule, null, 10);
 			result = module.CreateTaskFromHarvestOrder(new Worker() { PlanetID = 1 }, new HarvestOrder() { OrderID = 1, HarvestOrderID = 1, BuildingID = 1 });
@@ -777,7 +777,7 @@ namespace PIO.UnitTest.Bots.ServerLib.Modules
 			orderModule = Substitute.For<IOrderModule>();
 			//orderModule.CreateOrder(Arg.Any<int>()).Returns(new Order() { OrderID = 1 });
 			harvestOrderModule = Substitute.For<IHarvestOrderModule>();
-			harvestOrderModule.GetHarvestOrders().Returns(new HarvestOrder[] { new HarvestOrder() { OrderID = 1, HarvestOrderID = 1, BuildingID = 1 } });
+			//harvestOrderModule.GetHarvestOrders().Returns(new HarvestOrder[] { new HarvestOrder() { OrderID = 1, HarvestOrderID = 1, BuildingID = 1 } });
 
 			module = new OrderManagerModule(NullLogger.Instance, client, orderModule, null, harvestOrderModule, null, 10);
 			result = module.CreateTaskFromHarvestOrder(new Worker() { PlanetID = 1 }, new HarvestOrder() { OrderID = 1, HarvestOrderID = 1, BuildingID = 1 });

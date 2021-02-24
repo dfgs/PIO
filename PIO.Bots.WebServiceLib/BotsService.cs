@@ -62,46 +62,29 @@ namespace PIO.Bots.WebServiceLib
 			return Try(() => botModule.GetBots()).OrThrow(GenerateFaultException);
 		}
 
-		public Order GetOrder(int OrderID)
-		{
-			LogEnter();
-			return Try(() => orderModule.GetOrder(OrderID)).OrThrow(GenerateFaultException);
-		}
-		public Order[] GetOrders()
-		{
-			LogEnter();
-			return Try(() => orderModule.GetOrders()).OrThrow(GenerateFaultException);
-		}
+		
 		public ProduceOrder GetProduceOrder(int ProduceOrderID)
 		{
 			LogEnter();
 			return Try(() => produceOrderModule.GetProduceOrder(ProduceOrderID)).OrThrow(GenerateFaultException);
 		}
-		public ProduceOrder[] GetProduceOrders()
+		public ProduceOrder[] GetProduceOrders(int PlanetID)
 		{
 			LogEnter();
-			return Try(() => produceOrderModule.GetProduceOrders()).OrThrow(GenerateFaultException);
+			return Try(() => produceOrderModule.GetProduceOrders(PlanetID)).OrThrow(GenerateFaultException);
 		}
-		public ProduceOrder[] GetProduceOrdersForBuilding(int FactoryID)
-		{
-			LogEnter();
-			return Try(() => produceOrderModule.GetProduceOrders(FactoryID)).OrThrow(GenerateFaultException);
-		}
+		
 		public HarvestOrder GetHarvestOrder(int HarvestOrderID)
 		{
 			LogEnter();
 			return Try(() => harvestOrderModule.GetHarvestOrder(HarvestOrderID)).OrThrow(GenerateFaultException);
 		}
-		public HarvestOrder[] GetHarvestOrders()
+		public HarvestOrder[] GetHarvestOrders(int PlanetID)
 		{
 			LogEnter();
-			return Try(() => harvestOrderModule.GetHarvestOrders()).OrThrow(GenerateFaultException);
+			return Try(() => harvestOrderModule.GetHarvestOrders(PlanetID)).OrThrow(GenerateFaultException);
 		}
-		public HarvestOrder[] GetHarvestOrdersForBuilding(int FactoryID)
-		{
-			LogEnter();
-			return Try(() => harvestOrderModule.GetHarvestOrders(FactoryID)).OrThrow(GenerateFaultException);
-		}
+		
 
 
 		public BuildOrder GetBuildOrder(int BuildFactoryOrderID)
@@ -109,10 +92,10 @@ namespace PIO.Bots.WebServiceLib
 			LogEnter();
 			return Try(() => buildFactoryOrderModule.GetBuildOrder(BuildFactoryOrderID)).OrThrow(GenerateFaultException);
 		}
-		public BuildOrder[] GetBuildOrders()
+		public BuildOrder[] GetBuildOrders(int PlanetID)
 		{
 			LogEnter();
-			return Try(() => buildFactoryOrderModule.GetBuildOrders()).OrThrow(GenerateFaultException);
+			return Try(() => buildFactoryOrderModule.GetBuildOrders(PlanetID)).OrThrow(GenerateFaultException);
 		}
 		public BuildOrder[] GetBuildOrdersAtPosition(int PlanetID,int X,int Y)
 		{

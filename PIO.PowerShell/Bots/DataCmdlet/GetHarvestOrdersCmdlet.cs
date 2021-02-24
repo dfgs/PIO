@@ -9,13 +9,14 @@ namespace PIO.PowerShell
 	public class GetHarvestOrdersCmdlet : BotsCmdLet
 	{
 
-		
+		[Parameter(Position = 0, ValueFromPipeline = true, Mandatory = true)]
+		public int PlanetID { get; set; }
 
 		protected override void ProcessRecord()
 		{
 			HarvestOrder[] result;
 
-			result = Try(() => client.GetHarvestOrders());
+			result = Try(() => client.GetHarvestOrders(PlanetID));
 
 			WriteObject(result);
 		}

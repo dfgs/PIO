@@ -14,20 +14,6 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfBot" nillable="true" type="tns:ArrayOfBot" />
-  <xs:complexType name="Order">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="BotID" nillable="true" type="xs:int" />
-      <xs:element minOccurs="0" name="OrderID" type="xs:int" />
-      <xs:element minOccurs="0" name="PlanetID" type="xs:int" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="Order" nillable="true" type="tns:Order" />
-  <xs:complexType name="ArrayOfOrder">
-    <xs:sequence>
-      <xs:element minOccurs="0" maxOccurs="unbounded" name="Order" nillable="true" type="tns:Order" />
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="ArrayOfOrder" nillable="true" type="tns:ArrayOfOrder" />
   <xs:complexType name="ProduceOrder">
     <xs:complexContent mixed="false">
       <xs:extension base="tns:Order">
@@ -39,6 +25,14 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="ProduceOrder" nillable="true" type="tns:ProduceOrder" />
+  <xs:complexType name="Order">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="BotID" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="OrderID" type="xs:int" />
+      <xs:element minOccurs="0" name="PlanetID" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Order" nillable="true" type="tns:Order" />
   <xs:complexType name="ArrayOfProduceOrder">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="ProduceOrder" nillable="true" type="tns:ProduceOrder" />

@@ -1,5 +1,6 @@
 ﻿using PIO.Bots.ClientLib.BotsServiceReference;
 using PIO.ClientLib.PIOServiceReference;
+using PIO.Console.Modules;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,11 +14,16 @@ namespace PIO.Console.ViewModels
 	{
 		protected PIOServiceClient PIOClient;
 		protected BotsServiceClient BotsClient;
-		protected PhrasesViewModel PhrasesViewModel;
+		protected ITranslationModule TranslationModule;
 
-		public PIOViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient,PhrasesViewModel PhrasesViewModel)
+		public abstract string Header
 		{
-			this.PIOClient = PIOClient;this.BotsClient = BotsClient;this.PhrasesViewModel = PhrasesViewModel;
+			get;
+		}
+
+		public PIOViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient, ITranslationModule TranslationModule)
+		{
+			this.PIOClient = PIOClient;this.BotsClient = BotsClient;this.TranslationModule = TranslationModule;
 		}
 
 		protected virtual async Task OnRefreshAsync()

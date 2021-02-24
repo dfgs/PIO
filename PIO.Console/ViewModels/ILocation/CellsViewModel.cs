@@ -1,5 +1,6 @@
 ﻿using PIO.Bots.ClientLib.BotsServiceReference;
 using PIO.ClientLib.PIOServiceReference;
+using PIO.Console.Modules;
 using PIO.Models;
 using System;
 using System.Collections.Generic;
@@ -12,19 +13,24 @@ namespace PIO.Console.ViewModels
 {
 	public class CellsViewModel : PIOViewModelCollection<CellViewModel,Cell>, ILocationViewModelCollection
 	{
+		public override string Header => TranslationModule.Translate("Cells");
+
 		private int planetID;
 
 		private static int maxQueryWidth = 5;
 		private static int maxQueryHeight = 5;
 
-		public CellsViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient, PhrasesViewModel PhrasesViewModel, int PlanetID) : base(PIOClient, BotsClient,PhrasesViewModel)
+		private BuildOrdersViewModel buildOrdersViewModel;
+
+		public CellsViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient, ITranslationModule TranslationModule, BuildOrdersViewModel BuildOrdersViewModel, int PlanetID) : base(PIOClient, BotsClient,TranslationModule)
 		{
 			this.planetID = PlanetID;
+			this.buildOrdersViewModel = BuildOrdersViewModel;
 		}
 
 		protected override CellViewModel OnCreateItem(Cell Model)
 		{
-			return new CellViewModel(PIOClient, BotsClient, PhrasesViewModel);
+			return new CellViewModel(PIOClient, BotsClient, TranslationModule, buildOrdersViewModel);
 		}
 
 		protected override async Task<IEnumerable<Cell>> OnLoadModelAsync()

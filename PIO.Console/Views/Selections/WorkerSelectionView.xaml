@@ -14,17 +14,17 @@
 			<ColumnDefinition Width="150"/>
 		</Grid.ColumnDefinitions>
 		<StackPanel Grid.Column="0">
-			<TextBlock Text="Worker:" FontWeight="Bold"/>
+			<TextBlock Text="{Binding Header}" FontWeight="Bold"/>
 			<TextBlock Text="{Binding X,FallbackValue=0}"/>
 			<TextBlock Text="{Binding Y,FallbackValue=0}"/>
 			<TextBlock Text="Bot:" FontWeight="Bold"/>
 			<TextBlock Text="{Binding Bot.BotID,FallbackValue=None}"/>
-			<TextBlock Text="Tasks:" FontWeight="Bold"/>
+			<TextBlock Text="{Binding Tasks.Header}" FontWeight="Bold"/>
 			<ItemsControl ItemsSource="{Binding Tasks}">
 				<ItemsControl.ItemTemplate>
 					<DataTemplate DataType="{x:Type viewModels:StackViewModel}">
 						<StackPanel Orientation="Horizontal">
-							<TextBlock Text="{Binding TaskTypeID}"/>
+							<TextBlock Text="{Binding Name}"/>
 							<TextBlock Text=": "/>
 							<TextBlock Text="{Binding ETA}"/>
 						</StackPanel>

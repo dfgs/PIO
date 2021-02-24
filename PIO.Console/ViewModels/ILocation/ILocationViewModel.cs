@@ -22,10 +22,7 @@ namespace PIO.Console.ViewModels
 		{
 			get;
 		}
-		string Description
-		{
-			get;
-		}
+		
 
 	}
 

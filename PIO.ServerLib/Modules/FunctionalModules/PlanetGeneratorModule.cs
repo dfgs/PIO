@@ -77,6 +77,35 @@ namespace PIO.ServerLib.Modules
 			phraseModule.CreatePhrase(Models.TaskTypeIDs.Take.ToString(), "FR", "Prend");
 			phraseModule.CreatePhrase(Models.TaskTypeIDs.Store.ToString(), "EN", "Store");
 			phraseModule.CreatePhrase(Models.TaskTypeIDs.Store.ToString(), "FR", "Stocke");
+			// misc
+			phraseModule.CreatePhrase("Worker", "EN", "Worker");
+			phraseModule.CreatePhrase("Worker", "FR", "Ouvrier");
+			phraseModule.CreatePhrase("Workers", "EN", "Workers");
+			phraseModule.CreatePhrase("Workers", "FR", "Ouvriers");
+			phraseModule.CreatePhrase("Building", "EN", "Building");
+			phraseModule.CreatePhrase("Building", "FR", "Bâtiment");
+			phraseModule.CreatePhrase("Cell", "EN", "Cell");
+			phraseModule.CreatePhrase("Cell", "FR", "Cellule");
+			phraseModule.CreatePhrase("Task", "EN", "Task");
+			phraseModule.CreatePhrase("Task", "FR", "Tâche");
+			phraseModule.CreatePhrase("Tasks", "EN", "Tasks");
+			phraseModule.CreatePhrase("Tasks", "FR", "Tâches");
+			phraseModule.CreatePhrase("Stack", "EN", "Stack");
+			phraseModule.CreatePhrase("Stack", "FR", "Piles");
+			phraseModule.CreatePhrase("Stacks", "EN", "Stacks");
+			phraseModule.CreatePhrase("Stacks", "FR", "Piles");
+			phraseModule.CreatePhrase("ProduceOrder", "EN", "Produce order");
+			phraseModule.CreatePhrase("ProduceOrder", "FR", "Ordre de production");
+			phraseModule.CreatePhrase("ProduceOrders", "EN", "Produce orders");
+			phraseModule.CreatePhrase("ProduceOrders", "FR", "Ordres de production");
+			phraseModule.CreatePhrase("HarvestOrder", "EN", "Harvest order");
+			phraseModule.CreatePhrase("HarvestOrder", "FR", "Ordre de récolte");
+			phraseModule.CreatePhrase("HarvestOrders", "EN", "Harvest orders");
+			phraseModule.CreatePhrase("HarvestOrders", "FR", "Ordres de récolte");
+			phraseModule.CreatePhrase("BuildOrder", "EN", "Build order");
+			phraseModule.CreatePhrase("BuildOrder", "FR", "Ordre de construction");
+			phraseModule.CreatePhrase("BuildOrders", "EN", "Build orders");
+			phraseModule.CreatePhrase("BuildOrders", "FR", "Ordres de construction");
 
 
 			Log(LogLevels.Information, "Creating ResourceType items");

@@ -8,14 +8,15 @@ namespace PIO.PowerShell
 	[OutputType(typeof(ProduceOrder[]))]
 	public class GetProduceOrdersCmdlet : BotsCmdLet
 	{
+		[Parameter(Position = 0, ValueFromPipeline = true, Mandatory = true)]
+		public int PlanetID { get; set; }
 
-		
 
 		protected override void ProcessRecord()
 		{
 			ProduceOrder[] result;
 
-			result = Try(() => client.GetProduceOrders());
+			result = Try(() => client.GetProduceOrders(PlanetID));
 
 			WriteObject(result);
 		}

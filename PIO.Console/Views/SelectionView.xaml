@@ -24,7 +24,7 @@
 	<TabControl ItemsSource="{Binding}" SelectedItem="{Binding SelectedItem}">
 		<TabControl.ItemTemplate>
 			<DataTemplate>
-				<TextBlock Text="{Binding Description}"/>
+				<TextBlock Text="{Binding Header}"/>
 			</DataTemplate>		
 		</TabControl.ItemTemplate>
 	</TabControl>

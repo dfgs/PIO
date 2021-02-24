@@ -14,17 +14,17 @@
 			<ColumnDefinition Width="150"/>
 		</Grid.ColumnDefinitions>
 		<StackPanel Grid.Column="0">
-			<TextBlock Text="Building:" FontWeight="Bold"/>
-			<TextBlock Text="{Binding BuildingTypeID}"/>
+			<TextBlock Text="{Binding Header}" FontWeight="Bold"/>
+			<TextBlock Text="{Binding BuildingType}"/>
 			<TextBlock Text="{Binding RemainingBuildSteps,FallbackValue=0,StringFormat=Remaining build steps: {0}}"/>
 			<TextBlock Text="{Binding X,FallbackValue=0,StringFormat=X: {0}}"/>
 			<TextBlock Text="{Binding Y,FallbackValue=0,StringFormat=Y: {0}}"/>
-			<TextBlock Text="Stacks:" FontWeight="Bold"/>
+			<TextBlock Text="{Binding Stacks.Header}" FontWeight="Bold"/>
 			<ItemsControl ItemsSource="{Binding Stacks}">
 				<ItemsControl.ItemTemplate>
 					<DataTemplate DataType="{x:Type viewModels:StackViewModel}">
 						<StackPanel Orientation="Horizontal">
-							<TextBlock Text="{Binding ResourceTypeID}"/>
+							<TextBlock Text="{Binding ResourceType}"/>
 							<TextBlock Text=": "/>
 							<TextBlock Text="{Binding Quantity}"/>
 						</StackPanel>

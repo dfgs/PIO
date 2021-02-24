@@ -9,13 +9,14 @@ namespace PIO.PowerShell
 	public class GetBuildOrdersCmdlet : BotsCmdLet
 	{
 
-		
+		[Parameter(Position = 0, ValueFromPipeline = true, Mandatory = true)]
+		public int PlanetID { get; set; }
 
 		protected override void ProcessRecord()
 		{
 			BuildOrder[] result;
 
-			result = Try(() => client.GetBuildOrders());
+			result = Try(() => client.GetBuildOrders(PlanetID));
 
 			WriteObject(result);
 		}
