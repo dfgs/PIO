@@ -80,6 +80,10 @@
       <Project>{C94B7BF1-BF85-4483-B032-1582F9EC6423}</Project>
       <Name>NetORMLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\RESTLib\RESTLib.Server\RESTLib.Server.csproj">
+      <Project>{62376e8f-1703-4025-940d-3e99f9ff1c5c}</Project>
+      <Name>RESTLib.Server</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PIO.BaseModulesLib\PIO.BaseModulesLib.csproj">
       <Project>{43E748AC-E4ED-4352-B091-5DFECFEEFA88}</Project>
       <Name>PIO.BaseModulesLib</Name>

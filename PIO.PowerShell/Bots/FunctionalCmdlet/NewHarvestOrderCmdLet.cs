@@ -29,7 +29,7 @@ namespace PIO.PowerShell
 		{
 			HarvestOrder result;
 
-			result = Try(()=>client.CreateHarvestOrder(PlanetID,FactoryID));
+			result = Try(()=>client.CreateHarvestOrderAsync(PlanetID,FactoryID).Result);
 			
 			WriteObject(result);
 		}

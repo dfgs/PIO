@@ -1,5 +1,4 @@
-﻿using PIO.Bots.ClientLib.BotsServiceReference;
-using PIO.ClientLib.PIOServiceReference;
+﻿using PIO.ClientLib.PIOServiceReference;
 using PIO.Models;
 using System;
 using System.Collections.Generic;

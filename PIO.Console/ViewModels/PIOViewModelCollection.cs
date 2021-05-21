@@ -1,4 +1,4 @@
-﻿using PIO.Bots.ClientLib.BotsServiceReference;
+﻿using PIO.Bots.ClientLib;
 using PIO.ClientLib.PIOServiceReference;
 using PIO.Console.Modules;
 using System;
@@ -14,7 +14,7 @@ namespace PIO.Console.ViewModels
 		where T:PIOViewModel<ModelT>
 	{
 		protected PIOServiceClient PIOClient;
-		protected BotsServiceClient BotsClient;
+		protected BotsRESTClient BotsClient;
 		protected ITranslationModule TranslationModule;
 
 		public abstract string Header
@@ -22,7 +22,7 @@ namespace PIO.Console.ViewModels
 			get;
 		}
 
-		public PIOViewModelCollection(PIOServiceClient PIOClient, BotsServiceClient BotsClient, ITranslationModule TranslationModule)
+		public PIOViewModelCollection(PIOServiceClient PIOClient, BotsRESTClient BotsClient, ITranslationModule TranslationModule)
 		{
 			this.PIOClient = PIOClient;this.BotsClient = BotsClient;this.TranslationModule = TranslationModule;
 		}

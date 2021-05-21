@@ -16,7 +16,7 @@ namespace PIO.PowerShell
 		{
 			BuildOrder[] result;
 
-			result = Try(() => client.GetBuildOrders(PlanetID));
+			result = Try(() => client.GetBuildOrdersAsync(PlanetID).Result);
 
 			WriteObject(result);
 		}

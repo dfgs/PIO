@@ -15,7 +15,7 @@ namespace PIO.PowerShell
 		{
 			Bot[] result;
 
-			result = Try(() => client.GetBots());
+			result = Try(() => client.GetBotsAsync().Result);
 
 			WriteObject(result);
 		}

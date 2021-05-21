@@ -16,7 +16,7 @@ namespace PIO.PowerShell
 		{
 			HarvestOrder[] result;
 
-			result = Try(() => client.GetHarvestOrders(PlanetID));
+			result = Try(() => client.GetHarvestOrdersAsync(PlanetID).Result);
 
 			WriteObject(result);
 		}

@@ -1,4 +1,4 @@
-﻿using PIO.Bots.ClientLib.BotsServiceReference;
+﻿using PIO.Bots.ClientLib;
 using PIO.ClientLib.PIOServiceReference;
 using PIO.Console.Modules;
 using PIO.Models;
@@ -21,7 +21,7 @@ namespace PIO.Console.ViewModels
 
 
 
-		public WorkersViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient, ITranslationModule TranslationModule, int PlanetID) : base(PIOClient, BotsClient,TranslationModule)
+		public WorkersViewModel(PIOServiceClient PIOClient, BotsRESTClient BotsClient, ITranslationModule TranslationModule, int PlanetID) : base(PIOClient, BotsClient,TranslationModule)
 		{
 			this.planetID = PlanetID;
 		}

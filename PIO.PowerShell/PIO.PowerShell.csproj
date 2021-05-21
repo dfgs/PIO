@@ -125,6 +125,10 @@
     <None Include="Properties\DataSources\PIO.Models.Worker.datasource" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\RESTLib\RESTLib.Client\RESTLib.Client.csproj">
+      <Project>{404BE10E-E326-4D3E-B32C-81849091B634}</Project>
+      <Name>RESTLib.Client</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PIO.Bots.ClientLib\PIO.Bots.ClientLib.csproj">
       <Project>{74510CE8-BBEB-4611-8DE2-BFA7D6C05F7C}</Project>
       <Name>PIO.Bots.ClientLib</Name>

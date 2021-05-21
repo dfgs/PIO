@@ -1,4 +1,5 @@
-﻿using PIO.Bots.ClientLib.BotsServiceReference;
+﻿
+using PIO.Bots.ClientLib;
 using PIO.ClientLib.PIOServiceReference;
 using PIO.Console.Modules;
 using PIO.Models;
@@ -22,7 +23,7 @@ namespace PIO.Console.ViewModels
 			get { return TranslationModule.Translate(Model.TaskTypeID.ToString()); }
 		}
 
-		public TaskViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient, ITranslationModule TranslationModule) : base(PIOClient, BotsClient,TranslationModule)
+		public TaskViewModel(PIOServiceClient PIOClient, BotsRESTClient BotsClient, ITranslationModule TranslationModule) : base(PIOClient, BotsClient,TranslationModule)
 		{
 			
 		}

@@ -13,6 +13,7 @@ using PIO.Bots.ServerLib.Modules;
 using PIO.Bots.WebServiceLib;
 using PIO.ClientLib;
 using PIO.ClientLib.PIOServiceReference;
+using RESTLib.Server;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,9 +34,10 @@ namespace PIO.Bots.ServerHost
 		{
 			ILogger logger;
 			VersionControlModule versionControlModule;
-			ServiceHostModule serviceHostModule;
-			IBotsService service;
-
+			//ServiceHostModule serviceHostModule;
+			//IBotsService service;
+			RESTServer server;
+			IRouteManager routeManager;
 
 			IDatabase database;
 			IConnectionFactory connectionFactory;
@@ -88,14 +90,20 @@ namespace PIO.Bots.ServerHost
 			botSchedulerModule = new BotSchedulerModule(logger, client, botModule, orderManagerModule, 5);
 			botSchedulerModule.Start();
 
-			service = new BotsService(logger, botModule, orderModule, produceOrderModule,harvestOrderModule, buildOrderModule, botSchedulerModule, orderManagerModule) ;
+			routeManager = new RouteManager(new RouteParser(), new ResponseSerializer());
+			routeManager.AddRouteHandler(new BotRouteHandler(botModule));
+			routeManager.AddRouteHandler(new ProduceOrderRouteHandler(produceOrderModule));
+			routeManager.AddRouteHandler(new HarvestOrderRouteHandler(harvestOrderModule));
+			routeManager.AddRouteHandler(new BuildOrderRouteHandler(buildOrderModule));
 
-			serviceHostModule = new ServiceHostModule(logger, service);
-			serviceHostModule.Start();
+			server = new RESTServer(logger, routeManager, "http://127.0.0.1:8734/");
+
+			server.Start();
 				
 			WaitHandle.WaitAny(new WaitHandle[] { quitEvent }, -1);
 
-			serviceHostModule.Stop();
+			server.Stop();
+			//serviceHostModule.Stop();
 			botSchedulerModule.Stop();
 
 			client.Close();

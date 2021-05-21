@@ -1,4 +1,4 @@
-﻿using PIO.Bots.ClientLib.BotsServiceReference;
+﻿using PIO.Bots.ClientLib;
 using PIO.ClientLib.PIOServiceReference;
 using PIO.Console.Modules;
 using PIO.Models;
@@ -22,7 +22,7 @@ namespace PIO.Console.ViewModels
 
 		private BuildOrdersViewModel buildOrdersViewModel;
 
-		public CellsViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient, ITranslationModule TranslationModule, BuildOrdersViewModel BuildOrdersViewModel, int PlanetID) : base(PIOClient, BotsClient,TranslationModule)
+		public CellsViewModel(PIOServiceClient PIOClient, BotsRESTClient BotsClient, ITranslationModule TranslationModule, BuildOrdersViewModel BuildOrdersViewModel, int PlanetID) : base(PIOClient, BotsClient,TranslationModule)
 		{
 			this.planetID = PlanetID;
 			this.buildOrdersViewModel = BuildOrdersViewModel;

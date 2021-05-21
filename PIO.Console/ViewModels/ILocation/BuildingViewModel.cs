@@ -1,4 +1,4 @@
-﻿using PIO.Bots.ClientLib.BotsServiceReference;
+﻿using PIO.Bots.ClientLib;
 using PIO.Bots.Models;
 using PIO.ClientLib.PIOServiceReference;
 using PIO.Console.Modules;
@@ -72,7 +72,7 @@ namespace PIO.Console.ViewModels
 		}
 
 
-		public BuildingViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient, ITranslationModule TranslationModule, ProduceOrdersViewModel ProduceOrdersViewModel,HarvestOrdersViewModel HarvestOrderViewModels) : base(PIOClient, BotsClient,TranslationModule)
+		public BuildingViewModel(PIOServiceClient PIOClient, BotsRESTClient BotsClient, ITranslationModule TranslationModule, ProduceOrdersViewModel ProduceOrdersViewModel,HarvestOrdersViewModel HarvestOrderViewModels) : base(PIOClient, BotsClient,TranslationModule)
 		{
 			this.produceOrdersViewModel = ProduceOrdersViewModel;
 			this.harvestOrderViewModels = HarvestOrderViewModels;

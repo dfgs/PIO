@@ -1,4 +1,5 @@
-﻿using PIO.Bots.ClientLib.BotsServiceReference;
+﻿
+using PIO.Bots.ClientLib;
 using PIO.ClientLib.PIOServiceReference;
 using PIO.Console.Modules;
 using PIO.Models;
@@ -16,7 +17,7 @@ namespace PIO.Console.ViewModels
 		public override string Header => TranslationModule.Translate("Stacks");
 
 		private int buildingID;
-		public StacksViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient, ITranslationModule TranslationModule, int BuildingID) : base(PIOClient, BotsClient, TranslationModule)
+		public StacksViewModel(PIOServiceClient PIOClient, BotsRESTClient BotsClient, ITranslationModule TranslationModule, int BuildingID) : base(PIOClient, BotsClient, TranslationModule)
 		{
 			this.buildingID = BuildingID;
 		}

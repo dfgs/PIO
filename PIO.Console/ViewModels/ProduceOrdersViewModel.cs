@@ -1,4 +1,5 @@
-﻿using PIO.Bots.ClientLib.BotsServiceReference;
+﻿
+using PIO.Bots.ClientLib;
 using PIO.Bots.Models;
 using PIO.ClientLib.PIOServiceReference;
 using PIO.Console.Modules;
@@ -17,7 +18,7 @@ namespace PIO.Console.ViewModels
 		public override string Header => TranslationModule.Translate("ProduceOrders");
 
 		private int planetID;
-		public ProduceOrdersViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient, ITranslationModule TranslationModule, int PlanetID) : base(PIOClient, BotsClient,TranslationModule)
+		public ProduceOrdersViewModel(PIOServiceClient PIOClient, BotsRESTClient BotsClient, ITranslationModule TranslationModule, int PlanetID) : base(PIOClient, BotsClient,TranslationModule)
 		{
 			this.planetID = PlanetID;
 		}

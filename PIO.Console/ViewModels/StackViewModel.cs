@@ -1,4 +1,5 @@
-﻿using PIO.Bots.ClientLib.BotsServiceReference;
+﻿
+using PIO.Bots.ClientLib;
 using PIO.ClientLib.PIOServiceReference;
 using PIO.Console.Modules;
 using PIO.Models;
@@ -21,7 +22,7 @@ namespace PIO.Console.ViewModels
 			get { return TranslationModule.Translate(Model.ResourceTypeID.ToString()); }
 		}
 
-		public StackViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient, ITranslationModule TranslationModule) : base(PIOClient, BotsClient,TranslationModule)
+		public StackViewModel(PIOServiceClient PIOClient, BotsRESTClient BotsClient, ITranslationModule TranslationModule) : base(PIOClient, BotsClient,TranslationModule)
 		{
 
 		}

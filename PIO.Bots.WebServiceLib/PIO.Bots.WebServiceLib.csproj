@@ -42,8 +42,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HarvestOrderRouteHandler.cs" />
+    <Compile Include="BuildOrderRouteHandler.cs" />
+    <Compile Include="ProduceOrderRouteHandler.cs" />
     <Compile Include="BotsService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="BotRouteHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\LogLib\LogLib\LogLib.csproj">
@@ -53,6 +57,10 @@
     <ProjectReference Include="..\..\ModuleLib\ModuleLib\ModuleLib.csproj">
       <Project>{F89B06C7-43CC-4589-9859-3A4656AAA4A6}</Project>
       <Name>ModuleLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\RESTLib\RESTLib.Server\RESTLib.Server.csproj">
+      <Project>{62376e8f-1703-4025-940d-3e99f9ff1c5c}</Project>
+      <Name>RESTLib.Server</Name>
     </ProjectReference>
     <ProjectReference Include="..\PIO.Bots.Models\PIO.Bots.Models.csproj">
       <Project>{FDF52966-F697-4E48-A055-3175A8E8BB6B}</Project>
@@ -71,5 +79,6 @@
       <Name>PIO.WebService.CommonLib</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

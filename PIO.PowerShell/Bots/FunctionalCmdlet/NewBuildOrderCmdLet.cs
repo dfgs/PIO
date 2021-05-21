@@ -34,7 +34,7 @@ namespace PIO.PowerShell
 		{
 			BuildOrder result;
 
-			result = Try(()=>client.CreateBuildOrder(PlanetID, BuildingTypeID, X,Y));
+			result = Try(()=>client.CreateBuildOrderAsync(PlanetID, BuildingTypeID, X,Y).Result);
 			
 			WriteObject(result);
 		}

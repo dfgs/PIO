@@ -17,7 +17,7 @@ namespace PIO.PowerShell
 		{
 			ProduceOrder result;
 
-			result = Try(() => client.GetProduceOrder(ProduceOrderID));
+			result = Try(() => client.GetProduceOrderAsync(ProduceOrderID).Result);
 
 			WriteObject(result);
 		}

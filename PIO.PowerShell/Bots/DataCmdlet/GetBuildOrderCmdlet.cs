@@ -17,7 +17,7 @@ namespace PIO.PowerShell
 		{
 			BuildOrder result;
 
-			result = Try(() => client.GetBuildOrder(BuildOrderID));
+			result = Try(() => client.GetBuildOrderAsync(BuildOrderID).Result);
 
 			WriteObject(result);
 		}

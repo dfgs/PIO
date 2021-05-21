@@ -1,4 +1,4 @@
-﻿using PIO.Bots.ClientLib.BotsServiceReference;
+﻿using PIO.Bots.ClientLib;
 using PIO.ClientLib.PIOServiceReference;
 using PIO.ClientLib.TaskCallbackServiceReference;
 using PIO.Console.Modules;
@@ -91,7 +91,7 @@ namespace PIO.Console.ViewModels
 			set { SetValue(MapItemsProperty, value); }
 		}
 
-		public ApplicationViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient, ITranslationModule TranslationModule) : base(PIOClient, BotsClient,TranslationModule)
+		public ApplicationViewModel(PIOServiceClient PIOClient, BotsRESTClient BotsClient, ITranslationModule TranslationModule) : base(PIOClient, BotsClient,TranslationModule)
 		{
 			ProduceOrders = new ProduceOrdersViewModel(PIOClient, BotsClient, TranslationModule, planetID);
 			HarvestOrders = new HarvestOrdersViewModel(PIOClient, BotsClient, TranslationModule, planetID);

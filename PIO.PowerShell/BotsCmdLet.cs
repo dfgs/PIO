@@ -1,5 +1,7 @@
-﻿using PIO.Bots.ClientLib.BotsServiceReference;
+﻿
+using PIO.Bots.ClientLib;
 using PIO.ClientLib.PIOServiceReference;
+using RESTLib.Client;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,25 +13,20 @@ using System.Threading.Tasks;
 
 namespace PIO.PowerShell
 {
-	public class BotsCmdLet: BaseCmdLet<BotsServiceClient>
+	public class BotsCmdLet: BaseCmdLet<BotsRESTClient>
 	{
-		protected override BotsServiceClient OnCreateClient()
+		protected override BotsRESTClient OnCreateClient()
 		{
-			Binding binding;
-			EndpointAddress remoteAddress;
-			BotsServiceClient client;
+			BotsRESTClient client;
 
-			binding = new BasicHttpBinding();
-			remoteAddress = new EndpointAddress($@"http://{Server}:8734/PIO/Bots/Service/");
-			client=new BotsServiceClient(binding, remoteAddress);
-			client.Open();
+			client=new BotsRESTClient($@"http://{Server}:8734",new HttpConnector(),new ResponseDeserializer());
 
 			return client;
 		}
 
 		protected override void OnCloseClient()
 		{
-			client?.Close();
+			//client?.Close();
 		}
 
 		

@@ -17,7 +17,7 @@ namespace PIO.PowerShell
 		{
 			HarvestOrder result;
 
-			result = Try(() => client.GetHarvestOrder(HarvestOrderID));
+			result = Try(() => client.GetHarvestOrderAsync(HarvestOrderID).Result);
 
 			WriteObject(result);
 		}

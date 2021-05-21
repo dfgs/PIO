@@ -13,7 +13,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using PIO.ClientLib.PIOServiceReference;
-using PIO.Bots.ClientLib.BotsServiceReference;
 using PIO.Console.ViewModels;
 using System.ServiceModel;
 using PIO.ClientLib.TaskCallbackServiceReference;
@@ -21,6 +20,8 @@ using PIO.Models;
 using PIO.Console.Views;
 using PIO.Console.Modules;
 using LogLib;
+using PIO.Bots.ClientLib;
+using RESTLib.Client;
 
 namespace PIO.Console
 {
@@ -30,7 +31,7 @@ namespace PIO.Console
 	public partial class MainWindow : Window,ITaskCallbackServiceCallback
 	{
 		private PIOServiceClient pioClient;
-		private BotsServiceClient botsClient;
+		private BotsRESTClient botsClient;
 		private TaskCallbackServiceClient taskCallbackClient;
 
 		private TranslationModule translationModule;
@@ -68,8 +69,7 @@ namespace PIO.Console
 			{
 				pioClient = new PIOServiceClient(new BasicHttpBinding(), new EndpointAddress($@"http://127.0.0.1:8733/PIO/Service/"));
 				pioClient.Open();
-				botsClient = new BotsServiceClient(new BasicHttpBinding(), new EndpointAddress($@"http://127.0.0.1:8734/PIO/Bots/Service"));
-				botsClient.Open();
+				botsClient = new BotsRESTClient($@"http://127.0.0.1:8734", new HttpConnector(), new ResponseDeserializer());
 				taskCallbackClient = new TaskCallbackServiceClient(new InstanceContext(this),  new WSDualHttpBinding(), new EndpointAddress($@"http://localhost:8735/PIO/TaskCallback/Service"));
 				taskCallbackClient.Open();
 				taskCallbackClient.Subscribe();
@@ -108,11 +108,11 @@ namespace PIO.Console
 			}
 			catch { }
 
-			try
+			/*try
 			{
 				botsClient?.Close();
 			}
-			catch { }
+			catch { }*/
 
 			DataContext = null;
 			ApplicationViewModel = null;

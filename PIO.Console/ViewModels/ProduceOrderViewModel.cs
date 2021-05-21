@@ -1,4 +1,5 @@
-﻿using PIO.Bots.ClientLib.BotsServiceReference;
+﻿
+using PIO.Bots.ClientLib;
 using PIO.Bots.Models;
 using PIO.ClientLib.PIOServiceReference;
 using PIO.Console.Modules;
@@ -19,7 +20,7 @@ namespace PIO.Console.ViewModels
 
 
 
-		public ProduceOrderViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient, ITranslationModule TranslationModule) : base(PIOClient, BotsClient,TranslationModule)
+		public ProduceOrderViewModel(PIOServiceClient PIOClient, BotsRESTClient BotsClient, ITranslationModule TranslationModule) : base(PIOClient, BotsClient,TranslationModule)
 		{
 
 		}

@@ -1,4 +1,4 @@
-﻿using PIO.Bots.ClientLib.BotsServiceReference;
+﻿using PIO.Bots.ClientLib;
 using PIO.Bots.Models;
 using PIO.ClientLib.PIOServiceReference;
 using PIO.Console.Modules;
@@ -82,7 +82,7 @@ namespace PIO.Console.ViewModels
 
 
 
-		public WorkerViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient, ITranslationModule TranslationModule) : base(PIOClient, BotsClient,TranslationModule)
+		public WorkerViewModel(PIOServiceClient PIOClient, BotsRESTClient BotsClient, ITranslationModule TranslationModule) : base(PIOClient, BotsClient,TranslationModule)
 		{
 			CreateBotCommand = new ViewModelCommand(CreateBotCommandCanExecute, CreateBotCommandExecute);
 			DeleteBotCommand = new ViewModelCommand(DeleteBotCommandCanExecute, DeleteBotCommandExecute);
@@ -157,7 +157,7 @@ namespace PIO.Console.ViewModels
 			await base.OnRefreshAsync();
 			await Tasks.RefreshAsync();
 			
-			bot = BotsClient.GetBotForWorker(Model.WorkerID);
+			bot = await BotsClient.GetBotForWorkerAsync(Model.WorkerID);
 			if (bot == null)
 			{
 				Bot = null;
@@ -181,7 +181,7 @@ namespace PIO.Console.ViewModels
 			await Tasks.LoadAsync();
 			Task = Tasks.FirstOrDefault();
 
-			bot = BotsClient.GetBotForWorker(Model.WorkerID);
+			bot = await BotsClient.GetBotForWorkerAsync(Model.WorkerID);
 			if (bot == null)
 			{
 				Bot = null;

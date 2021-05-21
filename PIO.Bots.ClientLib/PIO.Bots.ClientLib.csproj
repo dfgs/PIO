@@ -43,14 +43,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Connected Services\BotsServiceReference\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
+    <Compile Include="BotsRESTClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\RESTLib\RESTLib.Client\RESTLib.Client.csproj">
+      <Project>{404be10e-e326-4d3e-b32c-81849091b634}</Project>
+      <Name>RESTLib.Client</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PIO.Bots.Models\PIO.Bots.Models.csproj">
       <Project>{fdf52966-f697-4e48-a055-3175a8e8bb6b}</Project>
       <Name>PIO.Bots.Models</Name>
@@ -65,19 +65,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Connected Services\BotsServiceReference\PIO.Bots.Models1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\BotsServiceReference\PIO.Models.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\BotsServiceReference\service1.wsdl" />
-    <None Include="Connected Services\BotsServiceReference\service2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Connected Services\BotsServiceReference\service21.xsd">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="Properties\DataSources\PIO.Bots.Models.Bot.datasource" />
     <None Include="Properties\DataSources\PIO.Bots.Models.BuildFactoryOrder.datasource" />
     <None Include="Properties\DataSources\PIO.Bots.Models.BuildFarmOrder.datasource" />
@@ -85,21 +72,6 @@
     <None Include="Properties\DataSources\PIO.Bots.Models.HarvestOrder.datasource" />
     <None Include="Properties\DataSources\PIO.Bots.Models.Order.datasource" />
     <None Include="Properties\DataSources\PIO.Bots.Models.ProduceOrder.datasource" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadataStorage Include="Connected Services\BotsServiceReference\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\BotsServiceReference\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\BotsServiceReference\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Connected Services\BotsServiceReference\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

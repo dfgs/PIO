@@ -43,6 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IBuildOrderRouteHandler.cs" />
+    <Compile Include="IHarvestOrderRouteHandler.cs" />
+    <Compile Include="IProduceOrderRouteHandler.cs" />
+    <Compile Include="IBotRouteHandler.cs" />
     <Compile Include="IBotsService.cs" />
     <Compile Include="Modules\DataModules\IBotModule.cs" />
     <Compile Include="Modules\DataModules\IBuildOrderModule.cs" />

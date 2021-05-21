@@ -1,4 +1,4 @@
-﻿using PIO.Bots.ClientLib.BotsServiceReference;
+﻿using PIO.Bots.ClientLib;
 using PIO.Bots.Models;
 using PIO.ClientLib.PIOServiceReference;
 using PIO.Console.Modules;
@@ -47,7 +47,7 @@ namespace PIO.Console.ViewModels
 
 
 
-		public CellViewModel(PIOServiceClient PIOClient, BotsServiceClient BotsClient, ITranslationModule TranslationModule, BuildOrdersViewModel BuildOrdersViewModel) : base(PIOClient, BotsClient,TranslationModule)
+		public CellViewModel(PIOServiceClient PIOClient, BotsRESTClient BotsClient, ITranslationModule TranslationModule, BuildOrdersViewModel BuildOrdersViewModel) : base(PIOClient, BotsClient,TranslationModule)
 		{
 			this.buildOrdersViewModel = BuildOrdersViewModel;
 			CreateBuildOrderCommand = new ViewModelCommand(CreateBuildOrderCommandCanExecute, CreateBuildOrderCommandExecute);

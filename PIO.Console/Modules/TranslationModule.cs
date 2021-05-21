@@ -1,6 +1,5 @@
 ﻿using LogLib;
 using ModuleLib;
-using PIO.Bots.ClientLib.BotsServiceReference;
 using PIO.ClientLib.PIOServiceReference;
 using PIO.Models;
 using System;

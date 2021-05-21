@@ -29,7 +29,7 @@ namespace PIO.PowerShell
 		{
 			ProduceOrder result;
 
-			result = Try(()=>client.CreateProduceOrder(PlanetID,FactoryID));
+			result = Try(()=>client.CreateProduceOrderAsync(PlanetID,FactoryID).Result);
 			
 			WriteObject(result);
 		}

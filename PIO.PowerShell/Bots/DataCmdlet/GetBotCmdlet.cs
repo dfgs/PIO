@@ -23,10 +23,10 @@ namespace PIO.PowerShell
 			switch (this.ParameterSetName)
 			{
 				case "FromID":
-					result = Try(() => client.GetBot(BotID));
+					result = Try(() => client.GetBotAsync(BotID).Result);
 					break;
 				case "FromWorkerID":
-					result = Try(() => client.GetBotForWorker(WorkerID));
+					result = Try(() => client.GetBotForWorkerAsync(WorkerID).Result);
 					break;
 				default:
 					throw new ArgumentException("Invalid parameter set.");
