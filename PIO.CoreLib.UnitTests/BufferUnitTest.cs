@@ -156,6 +156,64 @@ namespace PIO.CoreLib.UnitTests
 
 		}
 
+		[TestMethod]
+		public void GetCapacityAtShoudThrownAnExceptionIsCycleIsNegative()
+		{
+			Buffer buffer;
+
+			// buffer is filling
+			buffer = new Buffer() { InRate = 1, OutRate = 0, Capacity = 100, Usage = 0 };
+			Assert.IsTrue(buffer.IsValid);
+			Assert.ThrowsException<PIOInvalidParameterException>(()=> buffer.GetCapacityAt(-1));
+		}
+
+		[TestMethod]
+		public void GetCapacityAtShoudThrownAnExceptionIsCycleIsGreaterThanETA()
+		{
+			Buffer buffer;
+
+			// buffer is filling
+			buffer = new Buffer() { InRate = 1, OutRate = 0, Capacity = 100, Usage = 0 };
+			Assert.IsTrue(buffer.IsValid);
+			Assert.ThrowsException<PIOInvalidParameterException>(() => buffer.GetCapacityAt(110));
+		}
+
+		[TestMethod]
+		public void GetCapacityAtShoudReturnValidValue()
+		{
+			Buffer buffer;
+
+			// buffer is filling
+			buffer = new Buffer() { InRate = 1, OutRate = 0, Capacity = 100, Usage = 0 };
+			Assert.IsTrue(buffer.IsValid);
+			Assert.AreEqual(10f, buffer.GetCapacityAt(10));
+
+			// buffer is filling
+			buffer = new Buffer() { InRate = 1, OutRate = 0, Capacity = 100, Usage = 50 };
+			Assert.IsTrue(buffer.IsValid);
+			Assert.AreEqual(60f, buffer.GetCapacityAt(10));
+
+			// buffer is filling
+			buffer = new Buffer() { InRate = 1, OutRate = 0, Capacity = 100, Usage = 50 };
+			Assert.IsTrue(buffer.IsValid);
+			Assert.AreEqual(100f, buffer.GetCapacityAt(50));
+
+			// buffer is emptying
+			buffer = new Buffer() { InRate = 0, OutRate = 1, Capacity = 100, Usage = 50 };
+			Assert.IsTrue(buffer.IsValid);
+			Assert.AreEqual(40f, buffer.GetCapacityAt(10));
+
+			// buffer is emptying
+			buffer = new Buffer() { InRate = 0, OutRate = 1, Capacity = 100, Usage = 100 };
+			Assert.IsTrue(buffer.IsValid);
+			Assert.AreEqual(90f, buffer.GetCapacityAt(10));
+
+			// buffer is emptying
+			buffer = new Buffer() { InRate = 0, OutRate = 1, Capacity = 100, Usage = 100 };
+			Assert.IsTrue(buffer.IsValid);
+			Assert.AreEqual(0f, buffer.GetCapacityAt(100));
+
+		}
 
 
 

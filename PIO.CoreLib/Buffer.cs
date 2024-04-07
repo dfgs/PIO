@@ -65,7 +65,15 @@ namespace PIO.CoreLib
 
 		}
 
+		public float GetCapacityAt(float Cycle)
+		{
+			if (!IsValid) throw new PIOInvalidBufferStateException();
+			if (Cycle<0) throw new PIOInvalidParameterException(nameof(Cycle));
+			if (Cycle > GetETA()) throw new PIOInvalidParameterException(nameof(Cycle));
 
+			return Usage +InternalRate*Cycle;
+
+		}
 
 
 

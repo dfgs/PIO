@@ -8,12 +8,10 @@ namespace PIO.CoreLib.Exceptions
 {
 	public abstract class PIOException : Exception
 	{
-		protected PIOException()
+		
+		public PIOException(string Message) : base(Message)
 		{
-		}
-
-		protected PIOException(string Message) : base(Message)
-		{
+			if (Message == null) throw new ArgumentNullException(nameof(Message));
 		}
 
 	}
