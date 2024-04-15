@@ -2,7 +2,7 @@
 
 namespace PIO.CoreLib
 {
-	public class Buffer
+	public class Buffer: IBuffer
 	{
 		public float InRate
 		{
