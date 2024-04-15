@@ -28,25 +28,25 @@ namespace PIO.CoreLib.UnitTests
 		public void IOsPropertyShoudReturnInputsAndOutputs()
 		{
 			Factory factory;
-			IConnector input1, input2, input3;
-			IConnector output1,output2,output3;
+			IInputConnector input1, input2, input3;
+			IOutputConnector output1,output2,output3;
 			IConnector[] results;
 
-			input1 = Mock.Of<IConnector>();
-			input2 = Mock.Of<IConnector>();
-			input3 = Mock.Of<IConnector>();
+			input1 = Mock.Of<IInputConnector>();
+			input2 = Mock.Of<IInputConnector>();
+			input3 = Mock.Of<IInputConnector>();
 
-			output1 = Mock.Of<IConnector>();
-			output2 = Mock.Of<IConnector>();
-			output3 = Mock.Of<IConnector>();
+			output1 = Mock.Of<IOutputConnector>();
+			output2 = Mock.Of<IOutputConnector>();
+			output3 = Mock.Of<IOutputConnector>();
 
 			factory = new Factory() { FactoryType = "Type1" };
 			factory.Inputs.Add(input1);
 			factory.Inputs.Add(input2);
 			factory.Inputs.Add(input3);
-			factory.Inputs.Add(output1);
-			factory.Inputs.Add(output2);
-			factory.Inputs.Add(output3);
+			factory.Outputs.Add(output1);
+			factory.Outputs.Add(output2);
+			factory.Outputs.Add(output3);
 
 			results=factory.IOs.ToArray();
 

@@ -16,33 +16,40 @@ namespace PIO.CoreLib
 			set;
 		}
 
-		IEnumerable<IConnector> IFactory.Inputs => Inputs;
-		public List<IConnector> Inputs
+		IEnumerable<IInputConnector> IFactory.Inputs => Inputs;
+		public List<IInputConnector> Inputs
 		{
 			get;
 			set;
 		}
 
-		IEnumerable<IConnector> IFactory.Outputs => Outputs;
-		public List<IConnector> Outputs
+		IEnumerable<IOutputConnector> IFactory.Outputs => Outputs;
+		public List<IOutputConnector> Outputs
 		{
 			get;
 			set;
 		}
 
-		public IEnumerable<IConnector> IOs => Inputs.Concat(Outputs);
+		public IEnumerable<IConnector> IOs
+		{
+			get
+			{
+				foreach (IConnector connector in Inputs) yield return connector;
+				foreach (IConnector connector in Outputs) yield return connector;
+			}
+		}
 
 		public Factory() 
 		{
-			Inputs = new List<IConnector>();
-			Outputs = new List<IConnector>();
+			Inputs = new List<IInputConnector>();
+			Outputs = new List<IOutputConnector>();
 		}
 		[SetsRequiredMembers]
 		public Factory(string FactoryType)
 		{
 			this.FactoryType = FactoryType;
-			Inputs = new List<IConnector>();
-			Outputs = new List<IConnector>();
+			Inputs = new List<IInputConnector>();
+			Outputs = new List<IOutputConnector>();
 		}
 
 
