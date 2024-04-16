@@ -16,7 +16,19 @@ namespace PIO.CoreLib.UnitTests
 			Assert.ThrowsException<PIOInvalidParameterException>(() => sorter.Sort(null));
 			#pragma warning restore CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
 		}
+		[TestMethod]
+		public void SortShouldReturnValidValues()
+		{
+			ITopologySorter sorter;
+			IDataSource dataSource;
+			IFactory[] results;
 
+			dataSource=Mock.Of<IDataSource>();
+
+			sorter = new TopologySorter();
+			results = sorter.Sort(dataSource).ToArray();
+			
+		}
 
 
 

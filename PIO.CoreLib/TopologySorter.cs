@@ -13,42 +13,52 @@ namespace PIO.CoreLib
 		{ 
 		}
 
-		public IEnumerable<IFactory> Sort(IEnumerable<IFactory> Factories)
+		public IEnumerable<IFactory> Sort(IDataSource DataSource)
 		{
 			List<IFactory> sortedFactories;
 			List<IFactory> factoriesToSort;
 			List<IFactory> tempMarks;
 
-			if (Factories == null) throw new PIOInvalidParameterException(nameof(Factories));
+			if (DataSource == null) throw new PIOInvalidParameterException(nameof(DataSource));
 
 			sortedFactories = new List<IFactory>();
 			factoriesToSort = new List<IFactory>();
 			tempMarks = new List<IFactory>();
 
-			factoriesToSort.AddRange(Factories);
+			factoriesToSort.AddRange(DataSource.GetFactories());
 			while(factoriesToSort.Count > 0)
 			{
-				Visit(factoriesToSort[0],tempMarks,factoriesToSort,sortedFactories);
+				Visit(DataSource, factoriesToSort[0],tempMarks,factoriesToSort,sortedFactories);
 			}
 
 			return sortedFactories;
 		}
 
-		private void Visit(IFactory Factory, List<IFactory> TempMarks, List<IFactory> FactoriesToSort, List<IFactory> SortedFactories)
+		private void Visit(IDataSource DataSource, IFactory Factory, List<IFactory> TempMarks, List<IFactory> FactoriesToSort, List<IFactory> SortedFactories)
 		{
+			IInputConnector? nextConnector;
+			IFactory? nextFactory;
+
 			if (!FactoriesToSort.Contains(Factory)) return;
 			if (TempMarks.Contains(Factory)) throw new InvalidOperationException("At least one cycle detected in factory's dependencies");
 			
 			TempMarks.Add(Factory);
 
-			//foreach()
-			//{
-			// visit next factory
-			//}
+			foreach(IOutputConnector outputConnector in DataSource.GetOutputConnectors(Factory.ID))
+			{
+				foreach(IConnection connection in DataSource.GetConnections(outputConnector.ID))
+				{
+					nextConnector = DataSource.GetInputConnector(connection.DestinationID);
+					if (nextConnector == null) continue;
+					nextFactory = DataSource.GetFactory(nextConnector.FactoryID);
+					if (nextFactory == null) continue;
+					Visit(DataSource,nextFactory,TempMarks,FactoriesToSort,SortedFactories);
+				}
+			}
 
 			TempMarks.Remove(Factory);
 			FactoriesToSort.Remove(Factory);
-			SortedFactories.Insert(0, Factory);
+			SortedFactories.Add(Factory);
 		}
 
 	}

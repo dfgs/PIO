@@ -21,14 +21,25 @@ namespace PIO.CoreLib.UnitTests
 		}
 
 		[TestMethod]
-		public void AddConnectorShouldThrowExceptionIfParameterIsNull()
+		public void AddInputConnectorShouldThrowExceptionIfParameterIsNull()
 		{
 			IDataSource dataSource;
 
 			dataSource = new DataSource();
 
 #pragma warning disable CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
-			Assert.ThrowsException<PIOInvalidParameterException>(() => dataSource.AddConnector(null));
+			Assert.ThrowsException<PIOInvalidParameterException>(() => dataSource.AddInputConnector(null));
+#pragma warning restore CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
+		}
+		[TestMethod]
+		public void AddOutputConnectorShouldThrowExceptionIfParameterIsNull()
+		{
+			IDataSource dataSource;
+
+			dataSource = new DataSource();
+
+#pragma warning disable CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
+			Assert.ThrowsException<PIOInvalidParameterException>(() => dataSource.AddOutputConnector(null));
 #pragma warning restore CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
 		}
 
@@ -48,7 +59,7 @@ namespace PIO.CoreLib.UnitTests
 		[TestMethod]
 		public void GetFactoryShouldReturnValidValue()
 		{
-			Factory factory;
+			IFactory factory;
 			IDataSource dataSource;
 
 			factory = new Factory() { ID = new FactoryID(1), FactoryType = "Type1" };
@@ -60,7 +71,7 @@ namespace PIO.CoreLib.UnitTests
 		[TestMethod]
 		public void GetFactoryShouldReturnNull()
 		{
-			Factory factory;
+			IFactory factory;
 			IDataSource dataSource;
 
 			factory = new Factory() { ID = new FactoryID(1), FactoryType = "Type1" };
@@ -69,79 +80,170 @@ namespace PIO.CoreLib.UnitTests
 
 			Assert.IsNull(dataSource.GetFactory(new FactoryID(0)));
 		}
-
-
 		[TestMethod]
-		public void GetConnectorShouldReturnValidValue()
+		public void GetFactoriesShouldReturnValidValues()
 		{
-			Connector connector;
+			IFactory factory1, factory2, factory3;
 			IDataSource dataSource;
+			IFactory[] results;
 
-			connector = new Connector() { ID = new ConnectorID(1), FactoryID = new FactoryID(1),ResourceType="Type1" };
+			factory1 = new Factory() { ID = new FactoryID(1), FactoryType = "Type1" };
+			factory2 = new Factory() { ID = new FactoryID(2), FactoryType = "Type1" };
+			factory3 = new Factory() { ID = new FactoryID(3), FactoryType = "Type1" };
+
 			dataSource = new DataSource();
-			dataSource.AddConnector(connector);
+			dataSource.AddFactory(factory1);
+			dataSource.AddFactory(factory2);
+			dataSource.AddFactory(factory3);
 
-			Assert.AreEqual(connector, dataSource.GetConnector(new ConnectorID(1)));
-		}
-		[TestMethod]
-		public void GetConnectorShouldReturnNull()
-		{
-			Connector connector;
-			IDataSource dataSource;
-
-			connector = new Connector() { ID = new ConnectorID(1), FactoryID = new FactoryID(1), ResourceType = "Type1" };
-			dataSource = new DataSource();
-			dataSource.AddConnector(connector);
-
-			Assert.IsNull(dataSource.GetConnector(new ConnectorID(0)));
+			results = dataSource.GetFactories().ToArray();
+			Assert.AreEqual(3,results.Length);
+			Assert.IsTrue(results.Contains(factory1));
+			Assert.IsTrue(results.Contains(factory2));
+			Assert.IsTrue(results.Contains(factory3));
 		}
 
 		[TestMethod]
-		public void GetConnectorsShouldReturnValidValues()
+		public void GetInputConnectorShouldReturnValidValue()
 		{
-			Connector connector1, connector2, connector3;
+			IInputConnector connector;
 			IDataSource dataSource;
-			Connector[] results;
 
-			connector1 = new Connector() { ID = new ConnectorID(1), FactoryID = new FactoryID(1), ResourceType = "Type1" };
-			connector2 = new Connector() { ID = new ConnectorID(2), FactoryID = new FactoryID(2), ResourceType = "Type1" };
-			connector3 = new Connector() { ID = new ConnectorID(3), FactoryID = new FactoryID(1), ResourceType = "Type1" };
+			connector = new InputConnector() { ID = new ConnectorID(1), FactoryID = new FactoryID(1),ResourceType="Type1" };
+			dataSource = new DataSource();
+			dataSource.AddInputConnector(connector);
+
+			Assert.AreEqual(connector, dataSource.GetInputConnector(new ConnectorID(1)));
+		}
+		[TestMethod]
+		public void GetInputConnectorShouldReturnNull()
+		{
+			IInputConnector connector;
+			IDataSource dataSource;
+
+			connector = new InputConnector() { ID = new ConnectorID(1), FactoryID = new FactoryID(1), ResourceType = "Type1" };
+			dataSource = new DataSource();
+			dataSource.AddInputConnector(connector);
+
+			Assert.IsNull(dataSource.GetInputConnector(new ConnectorID(0)));
+		}
+
+		[TestMethod]
+		public void GetInputConnectorsShouldReturnValidValues()
+		{
+			IInputConnector connector1, connector2, connector3;
+			IDataSource dataSource;
+			IInputConnector[] results;
+
+			connector1 = new InputConnector() { ID = new ConnectorID(1), FactoryID = new FactoryID(1), ResourceType = "Type1" };
+			connector2 = new InputConnector() { ID = new ConnectorID(2), FactoryID = new FactoryID(2), ResourceType = "Type1" };
+			connector3 = new InputConnector() { ID = new ConnectorID(3), FactoryID = new FactoryID(1), ResourceType = "Type1" };
 
 			dataSource = new DataSource();
-			dataSource.AddConnector(connector1);
-			dataSource.AddConnector(connector2);
-			dataSource.AddConnector(connector3);
+			dataSource.AddInputConnector(connector1);
+			dataSource.AddInputConnector(connector2);
+			dataSource.AddInputConnector(connector3);
 
-			results = dataSource.GetConnectors(new FactoryID(1)).ToArray();
+			results = dataSource.GetInputConnectors(new FactoryID(1)).ToArray();
 			Assert.AreEqual(2, results.Length);
 			Assert.IsTrue(results.Contains(connector1));
 			Assert.IsFalse(results.Contains(connector2));
 			Assert.IsTrue(results.Contains(connector3));
 		}
 		[TestMethod]
-		public void GetConnectorsShouldReturnNoValues()
+		public void GetInputConnectorsShouldReturnNoValues()
 		{
-			Connector connector1, connector2, connector3;
+			IInputConnector connector1, connector2, connector3;
 			IDataSource dataSource;
-			Connector[] results;
+			IInputConnector[] results;
 
-			connector1 = new Connector() { ID = new ConnectorID(1), FactoryID = new FactoryID(1), ResourceType = "Type1" };
-			connector2 = new Connector() { ID = new ConnectorID(2), FactoryID = new FactoryID(2), ResourceType = "Type1" };
-			connector3 = new Connector() { ID = new ConnectorID(3), FactoryID = new FactoryID(1), ResourceType = "Type1" };
+			connector1 = new InputConnector() { ID = new ConnectorID(1), FactoryID = new FactoryID(1), ResourceType = "Type1" };
+			connector2 = new InputConnector() { ID = new ConnectorID(2), FactoryID = new FactoryID(2), ResourceType = "Type1" };
+			connector3 = new InputConnector() { ID = new ConnectorID(3), FactoryID = new FactoryID(1), ResourceType = "Type1" };
 
 			dataSource = new DataSource();
-			dataSource.AddConnector(connector1);
-			dataSource.AddConnector(connector2);
-			dataSource.AddConnector(connector3);
+			dataSource.AddInputConnector(connector1);
+			dataSource.AddInputConnector(connector2);
+			dataSource.AddInputConnector(connector3);
 
-			results = dataSource.GetConnectors(new FactoryID(3)).ToArray();
+			results = dataSource.GetInputConnectors(new FactoryID(3)).ToArray();
 			Assert.AreEqual(0, results.Length);
 		}
 
 		[TestMethod]
+		public void GetOutputConnectorShouldReturnValidValue()
+		{
+			IOutputConnector connector;
+			IDataSource dataSource;
+
+			connector = new OutputConnector() { ID = new ConnectorID(1), FactoryID = new FactoryID(1), ResourceType = "Type1" };
+			dataSource = new DataSource();
+			dataSource.AddOutputConnector(connector);
+
+			Assert.AreEqual(connector, dataSource.GetOutputConnector(new ConnectorID(1)));
+		}
+		[TestMethod]
+		public void GetOutputConnectorShouldReturnNull()
+		{
+			IOutputConnector connector;
+			IDataSource dataSource;
+
+			connector = new OutputConnector() { ID = new ConnectorID(1), FactoryID = new FactoryID(1), ResourceType = "Type1" };
+			dataSource = new DataSource();
+			dataSource.AddOutputConnector(connector);
+
+			Assert.IsNull(dataSource.GetOutputConnector(new ConnectorID(0)));
+		}
+
+		[TestMethod]
+		public void GetOutputConnectorsShouldReturnValidValues()
+		{
+			IOutputConnector connector1, connector2, connector3;
+			IDataSource dataSource;
+			IOutputConnector[] results;
+
+			connector1 = new OutputConnector() { ID = new ConnectorID(1), FactoryID = new FactoryID(1), ResourceType = "Type1" };
+			connector2 = new OutputConnector() { ID = new ConnectorID(2), FactoryID = new FactoryID(2), ResourceType = "Type1" };
+			connector3 = new OutputConnector() { ID = new ConnectorID(3), FactoryID = new FactoryID(1), ResourceType = "Type1" };
+
+			dataSource = new DataSource();
+			dataSource.AddOutputConnector(connector1);
+			dataSource.AddOutputConnector(connector2);
+			dataSource.AddOutputConnector(connector3);
+
+			results = dataSource.GetOutputConnectors(new FactoryID(1)).ToArray();
+			Assert.AreEqual(2, results.Length);
+			Assert.IsTrue(results.Contains(connector1));
+			Assert.IsFalse(results.Contains(connector2));
+			Assert.IsTrue(results.Contains(connector3));
+		}
+		[TestMethod]
+		public void GetOutputConnectorsShouldReturnNoValues()
+		{
+			IOutputConnector connector1, connector2, connector3;
+			IDataSource dataSource;
+			IOutputConnector[] results;
+
+			connector1 = new OutputConnector() { ID = new ConnectorID(1), FactoryID = new FactoryID(1), ResourceType = "Type1" };
+			connector2 = new OutputConnector() { ID = new ConnectorID(2), FactoryID = new FactoryID(2), ResourceType = "Type1" };
+			connector3 = new OutputConnector() { ID = new ConnectorID(3), FactoryID = new FactoryID(1), ResourceType = "Type1" };
+
+			dataSource = new DataSource();
+			dataSource.AddOutputConnector(connector1);
+			dataSource.AddOutputConnector(connector2);
+			dataSource.AddOutputConnector(connector3);
+
+			results = dataSource.GetOutputConnectors(new FactoryID(3)).ToArray();
+			Assert.AreEqual(0, results.Length);
+		}
+
+
+
+
+		[TestMethod]
 		public void GetConnectionShouldReturnValidValue()
 		{
-			Connection connection;
+			IConnection connection;
 			IDataSource dataSource;
 
 			connection = new Connection() { ID = new ConnectionID(1), SourceID=new ConnectorID(1), DestinationID=new ConnectorID(2) };
@@ -153,7 +255,7 @@ namespace PIO.CoreLib.UnitTests
 		[TestMethod]
 		public void GetConnectionShouldReturnNull()
 		{
-			Connection connection;
+			IConnection connection;
 			IDataSource dataSource;
 
 			connection = new Connection() { ID = new ConnectionID(1), SourceID = new ConnectorID(1), DestinationID = new ConnectorID(2) };
@@ -165,9 +267,9 @@ namespace PIO.CoreLib.UnitTests
 		[TestMethod]
 		public void GetConnectionsShouldReturnValidValues()
 		{
-			Connection connection1, connection2, connection3;
+			IConnection connection1, connection2, connection3;
 			IDataSource dataSource;
-			Connection[] results;
+			IConnection[] results;
 
 			connection1 = new Connection() { ID = new ConnectionID(1), SourceID = new ConnectorID(1), DestinationID = new ConnectorID(3) };
 			connection2 = new Connection() { ID = new ConnectionID(2), SourceID = new ConnectorID(2), DestinationID = new ConnectorID(4) };
@@ -187,9 +289,9 @@ namespace PIO.CoreLib.UnitTests
 		[TestMethod]
 		public void GetConnectionsShouldReturnNoValues()
 		{
-			Connection connection1, connection2, connection3;
+			IConnection connection1, connection2, connection3;
 			IDataSource dataSource;
-			Connection[] results;
+			IConnection[] results;
 
 			connection1 = new Connection() { ID = new ConnectionID(1), SourceID = new ConnectorID(1), DestinationID = new ConnectorID(3) };
 			connection2 = new Connection() { ID = new ConnectionID(2), SourceID = new ConnectorID(2), DestinationID = new ConnectorID(4) };

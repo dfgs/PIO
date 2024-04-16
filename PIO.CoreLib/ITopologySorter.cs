@@ -8,6 +8,6 @@ namespace PIO.CoreLib
 {
 	public interface ITopologySorter
 	{
-		IEnumerable<IFactory> Sort(IEnumerable<IFactory> Factories);
+		IEnumerable<IFactory> Sort(IDataSource DataSource);
 	}
 }

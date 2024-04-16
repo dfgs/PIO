@@ -9,57 +9,78 @@ namespace PIO.CoreLib
 {
 	public class DataSource : IDataSource
 	{
-		private List<Factory> factories;
-		private List<Connector> connectors;
-		private List<Connection> connections;
+		private List<IFactory> factories;
+		private List<IInputConnector> inputConnectors;
+		private List<IOutputConnector> outputConnectors;
+		private List<IConnection> connections;
 
 		public DataSource() 
 		{ 
-			this.factories = new List<Factory>();
-			this.connectors = new List<Connector>();
-			this.connections = new List<Connection>();
+			this.factories = new List<IFactory>();
+			this.inputConnectors = new List<IInputConnector>();
+			this.outputConnectors = new List<IOutputConnector>();
+			this.connections = new List<IConnection>();
 		}
 
-		public void AddFactory(Factory Factory)
+		public void AddFactory(IFactory Factory)
 		{ 
 			if (Factory==null) throw new PIOInvalidParameterException(nameof(Factory));
 			this.factories.Add(Factory); 
 		}
 
-		public void AddConnector(Connector Connector)
+		public void AddInputConnector(IInputConnector InputConnector)
 		{
-			if (Connector == null) throw new PIOInvalidParameterException(nameof(Connector));
-			this.connectors.Add(Connector); 
+			if (InputConnector == null) throw new PIOInvalidParameterException(nameof(InputConnector));
+			this.inputConnectors.Add(InputConnector);
 		}
-		public void AddConnection(Connection Connection)
+		public void AddOutputConnector(IOutputConnector OutputConnector)
+		{
+			if (OutputConnector == null) throw new PIOInvalidParameterException(nameof(OutputConnector));
+			this.outputConnectors.Add(OutputConnector);
+		}
+		public void AddConnection(IConnection Connection)
 		{
 			if (Connection == null) throw new PIOInvalidParameterException(nameof(Connection));
 			this.connections.Add(Connection); 
 		}
 
 
-		public Factory? GetFactory(FactoryID FactoryID)
+		public IFactory? GetFactory(FactoryID FactoryID)
 		{
-			return factories.FirstOrDefault(item=>item.ID == FactoryID);
+			return factories.FirstOrDefault(item => item.ID == FactoryID);
+		}
+		public IEnumerable<IFactory> GetFactories()
+		{
+			return factories;
 		}
 
-		public Connector? GetConnector(ConnectorID ConnectorID)
+		public IInputConnector? GetInputConnector(ConnectorID ConnectorID)
 		{
-			return connectors.FirstOrDefault(item=>item.ID == ConnectorID);
+			return inputConnectors.FirstOrDefault(item => item.ID == ConnectorID);
 		}
 
-		public IEnumerable<Connector> GetConnectors(FactoryID FactoryID)
+		public IEnumerable<IInputConnector> GetInputConnectors(FactoryID FactoryID)
 		{
-			return connectors.Where(item=>item.FactoryID == FactoryID);
+			return inputConnectors.Where(item => item.FactoryID == FactoryID);
+		}
+
+		public IOutputConnector? GetOutputConnector(ConnectorID ConnectorID)
+		{
+			return outputConnectors.FirstOrDefault(item => item.ID == ConnectorID);
+		}
+
+		public IEnumerable<IOutputConnector> GetOutputConnectors(FactoryID FactoryID)
+		{
+			return outputConnectors.Where(item => item.FactoryID == FactoryID);
 		}
 
 
-		public Connection? GetConnection(ConnectionID ConnectionID)
+		public IConnection? GetConnection(ConnectionID ConnectionID)
 		{
 			return connections.FirstOrDefault(item=>item.ID == ConnectionID);
 		}
 
-		public IEnumerable<Connection> GetConnections(ConnectorID SourceID)
+		public IEnumerable<IConnection> GetConnections(ConnectorID SourceID)
 		{
 			return connections.Where(item => item.SourceID == SourceID);
 		}

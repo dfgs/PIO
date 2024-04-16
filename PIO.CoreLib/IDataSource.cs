@@ -8,15 +8,24 @@ namespace PIO.CoreLib
 {
 	public interface IDataSource
 	{
-		void AddFactory(Factory Factory);
-		void AddConnector(Connector Connector);
-		void AddConnection(Connection Connection);
+		void AddFactory(IFactory Factory);
+		void AddInputConnector(IInputConnector Connector);
+		void AddOutputConnector(IOutputConnector Connector);
+		void AddConnection(IConnection Connection);
 
-		Factory? GetFactory(FactoryID FactoryID);
-		Connector? GetConnector(ConnectorID ConnectorID);
-		IEnumerable<Connector> GetConnectors(FactoryID FactoryID);
-		Connection? GetConnection(ConnectionID ConnectionID);
-		IEnumerable<Connection> GetConnections(ConnectorID SourceID);
+		IFactory? GetFactory(FactoryID FactoryID);
+		IEnumerable<IFactory> GetFactories();
+		
+		IInputConnector? GetInputConnector(ConnectorID ConnectorID);
+		IEnumerable<IInputConnector> GetInputConnectors(FactoryID FactoryID);
+
+		IOutputConnector? GetOutputConnector(ConnectorID ConnectorID);
+		IEnumerable<IOutputConnector> GetOutputConnectors(FactoryID FactoryID);
+
+
+
+		IConnection? GetConnection(ConnectionID ConnectionID);
+		IEnumerable<IConnection> GetConnections(ConnectorID SourceID);
 
 
 	}

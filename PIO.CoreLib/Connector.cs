@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace PIO.CoreLib
 {
-	public class Connector:PIOData<ConnectorID>, IConnector
+	public abstract class Connector:PIOData<ConnectorID>, IConnector
 	{
 		public required FactoryID FactoryID
 		{
