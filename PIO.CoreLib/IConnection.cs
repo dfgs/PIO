@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PIO.CoreLib
 {
-	public interface IConnection
+	public interface IConnection : IPIOData<ConnectionID>
 	{
 		IOutputConnector Source
 		{

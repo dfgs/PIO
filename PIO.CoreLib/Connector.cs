@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace PIO.CoreLib
 {
-	public class Connector:IConnector
+	public class Connector:PIOData<ConnectorID>, IConnector
 	{
 		public required string ResourceType
 		{
@@ -29,9 +29,10 @@ namespace PIO.CoreLib
 		}
 
 		[SetsRequiredMembers]
-		public Connector(string ResourceType)
+		public Connector(ConnectorID ID,string ResourceType)
 		{
 			if (ResourceType == null) throw new PIOInvalidParameterException(nameof(ResourceType));
+			this.ID = ID;
 			this.ResourceType = ResourceType;
 			Buffer = new Buffer();
 		}

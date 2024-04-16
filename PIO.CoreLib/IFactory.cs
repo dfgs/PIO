@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PIO.CoreLib
 {
-	public interface IFactory
+	public interface IFactory:IPIOData<FactoryID>
 	{
 		string FactoryType
 		{

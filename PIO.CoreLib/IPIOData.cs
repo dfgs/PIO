@@ -6,17 +6,11 @@ using System.Threading.Tasks;
 
 namespace PIO.CoreLib
 {
-	public interface IConnector : IPIOData<ConnectorID>
+	public interface IPIOData<TId>
 	{
-		string ResourceType
+		TId ID
 		{
 			get;
 		}
-
-		IBuffer Buffer
-		{
-			get;
-		}
-
 	}
 }

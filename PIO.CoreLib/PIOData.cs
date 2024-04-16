@@ -6,16 +6,18 @@ using System.Threading.Tasks;
 
 namespace PIO.CoreLib
 {
-	public interface IConnector : IPIOData<ConnectorID>
+	public abstract class PIOData<TId>:IPIOData<TId>
+		where TId : struct
 	{
-		string ResourceType
+		public required TId ID
 		{
 			get;
+			set;
 		}
 
-		IBuffer Buffer
+		public PIOData()
 		{
-			get;
+			
 		}
 
 	}

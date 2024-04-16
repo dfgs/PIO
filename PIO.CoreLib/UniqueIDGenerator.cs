@@ -6,16 +6,13 @@ using System.Threading.Tasks;
 
 namespace PIO.CoreLib
 {
-	public interface IConnector : IPIOData<ConnectorID>
+	public static class UniqueIDGenerator<T>
 	{
-		string ResourceType
-		{
-			get;
-		}
+		private static int id=0;
 
-		IBuffer Buffer
+		public static int GenerateID()
 		{
-			get;
+			return id++;
 		}
 
 	}

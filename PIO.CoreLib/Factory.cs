@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PIO.CoreLib.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
@@ -8,8 +9,9 @@ using System.Threading.Tasks;
 
 namespace PIO.CoreLib
 {
-	public class Factory:IFactory
+	public class Factory:PIOData<FactoryID>, IFactory
 	{
+		
 		public required string FactoryType
 		{
 			get;
@@ -45,8 +47,10 @@ namespace PIO.CoreLib
 			Outputs = new List<IOutputConnector>();
 		}
 		[SetsRequiredMembers]
-		public Factory(string FactoryType)
+		public Factory(FactoryID ID, string FactoryType)
 		{
+			if (FactoryType == null) throw new PIOInvalidParameterException(nameof(FactoryType));
+			this.ID= ID;
 			this.FactoryType = FactoryType;
 			Inputs = new List<IInputConnector>();
 			Outputs = new List<IOutputConnector>();
