@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PIO.CoreLib.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -30,6 +31,7 @@ namespace PIO.CoreLib
 		[SetsRequiredMembers]
 		public Connector(string ResourceType)
 		{
+			if (ResourceType == null) throw new PIOInvalidParameterException(nameof(ResourceType));
 			this.ResourceType = ResourceType;
 			Buffer = new Buffer();
 		}

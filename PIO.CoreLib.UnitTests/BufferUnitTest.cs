@@ -6,7 +6,7 @@ namespace PIO.CoreLib.UnitTests
 	public class BufferUnitTest
 	{
 		[TestMethod]
-		public void IsValidShoudReturnTrue()
+		public void IsValidShouldReturnTrue()
 		{
 			Buffer buffer;
 
@@ -24,7 +24,7 @@ namespace PIO.CoreLib.UnitTests
 		}
 
 		[TestMethod]
-		public void IsValidShoudReturnFalse()
+		public void IsValidShouldReturnFalse()
 		{
 			Buffer buffer;
 
@@ -51,7 +51,7 @@ namespace PIO.CoreLib.UnitTests
 
 		}
 		[TestMethod]
-		public void InternalRateShoudReturnCorrectValue()
+		public void InternalRateShouldReturnCorrectValue()
 		{
 			Buffer buffer;
 
@@ -73,7 +73,7 @@ namespace PIO.CoreLib.UnitTests
 		}
 
 		[TestMethod]
-		public void SpaceLeftShoudReturnCorrectValue()
+		public void SpaceLeftShouldReturnCorrectValue()
 		{
 			Buffer buffer;
 
@@ -89,7 +89,7 @@ namespace PIO.CoreLib.UnitTests
 
 		}
 		[TestMethod]
-		public void GetETAShoudThrowExceptionIfBufferIsInvalid()
+		public void GetETAShouldThrowExceptionIfBufferIsInvalid()
 		{
 			Buffer buffer;
 
@@ -101,7 +101,7 @@ namespace PIO.CoreLib.UnitTests
 		}
 
 		[TestMethod]
-		public void GetETAShoudReturnInfinity()
+		public void GetETAShouldReturnInfinity()
 		{
 			Buffer buffer;
 
@@ -112,7 +112,7 @@ namespace PIO.CoreLib.UnitTests
 		}
 
 		[TestMethod]
-		public void GetETAShoudReturnZero()
+		public void GetETAShouldReturnZero()
 		{
 			Buffer buffer;
 
@@ -130,7 +130,7 @@ namespace PIO.CoreLib.UnitTests
 		}
 
 		[TestMethod]
-		public void GetETAShoudReturnValidValue()
+		public void GetETAShouldReturnValidValue()
 		{
 			Buffer buffer;
 
@@ -157,7 +157,7 @@ namespace PIO.CoreLib.UnitTests
 		}
 
 		[TestMethod]
-		public void GetCapacityAtShoudThrownAnExceptionIsCycleIsNegative()
+		public void GetCapacityAtShouldThrownAnExceptionIsCycleIsNegative()
 		{
 			Buffer buffer;
 
@@ -168,7 +168,7 @@ namespace PIO.CoreLib.UnitTests
 		}
 
 		[TestMethod]
-		public void GetCapacityAtShoudThrownAnExceptionIsCycleIsGreaterThanETA()
+		public void GetCapacityAtShouldThrownAnExceptionIsCycleIsGreaterThanETA()
 		{
 			Buffer buffer;
 
@@ -179,7 +179,7 @@ namespace PIO.CoreLib.UnitTests
 		}
 
 		[TestMethod]
-		public void GetCapacityAtShoudReturnValidValue()
+		public void GetCapacityAtShouldReturnValidValue()
 		{
 			Buffer buffer;
 

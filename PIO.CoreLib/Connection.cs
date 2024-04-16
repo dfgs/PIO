@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PIO.CoreLib.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -29,6 +30,8 @@ namespace PIO.CoreLib
 		[SetsRequiredMembers]
 		public Connection(IOutputConnector Source, IInputConnector Destination)
 		{
+			if (Source == null) throw new PIOInvalidParameterException(nameof(Source));
+			if (Destination == null) throw new PIOInvalidParameterException(nameof(Destination));
 			this.Source = Source;
 			this.Destination = Destination;
 		}	

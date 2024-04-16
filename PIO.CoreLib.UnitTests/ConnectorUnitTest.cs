@@ -1,3 +1,4 @@
+using Moq;
 using PIO.CoreLib.Exceptions;
 
 namespace PIO.CoreLib.UnitTests
@@ -6,7 +7,7 @@ namespace PIO.CoreLib.UnitTests
 	public class ConnectorUnitTest
 	{
 		[TestMethod]
-		public void ConstructorShoudSetInternalProperties()
+		public void ConstructorShouldSetInternalProperties()
 		{
 			Connector Connector;
 
@@ -19,7 +20,14 @@ namespace PIO.CoreLib.UnitTests
 			Assert.IsNotNull(Connector.Buffer);
 		}
 
-
+		[TestMethod]
+		public void ConstructorShouldThrowExceptionIfParameterIsNull()
+		{
+			#pragma warning disable CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
+			//Assert.ThrowsException<PIOInvalidParameterException>(() => new Connector() { ResourceType=null });
+			Assert.ThrowsException<PIOInvalidParameterException>(() => new Connector(null));
+			#pragma warning restore CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
+		}
 
 
 

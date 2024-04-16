@@ -22,8 +22,18 @@ namespace PIO.CoreLib.UnitTests
 			Assert.ThrowsException<ArgumentNullException>(() => throw new PIOInvalidParameterException(null));
 			#pragma warning restore CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
 		}
-
-
+		[TestMethod]
+		public void PIOInvalidOperationExceptionShouldThrow()
+		{
+			Assert.ThrowsException<PIOInvalidOperationException>(() => throw new PIOInvalidOperationException("Invalid operation"));
+		}
+		[TestMethod]
+		public void PIOInvalidOperationExceptionShouldHaveValidOperationName()
+		{
+			#pragma warning disable CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
+			Assert.ThrowsException<ArgumentNullException>(() => throw new PIOInvalidOperationException(null));
+			#pragma warning restore CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
+		}
 
 
 

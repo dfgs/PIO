@@ -7,7 +7,7 @@ namespace PIO.CoreLib.UnitTests
 	public class FactoryUnitTest
 	{
 		[TestMethod]
-		public void ConstructorShoudSetInternalProperties()
+		public void ConstructorShouldSetInternalProperties()
 		{
 			Factory factory;
 
@@ -25,7 +25,7 @@ namespace PIO.CoreLib.UnitTests
 		}
 
 		[TestMethod]
-		public void IOsPropertyShoudReturnInputsAndOutputs()
+		public void IOsPropertyShouldReturnInputsAndOutputs()
 		{
 			Factory factory;
 			IInputConnector input1, input2, input3;
