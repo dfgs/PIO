@@ -40,7 +40,7 @@ namespace PIO.CoreLib
 			IFactory? nextFactory;
 
 			if (!FactoriesToSort.Contains(Factory)) return;
-			if (TempMarks.Contains(Factory)) throw new InvalidOperationException("At least one cycle detected in factory's dependencies");
+			if (TempMarks.Contains(Factory)) throw new PIOInvalidOperationException("At least one cycle detected in factory's dependencies");
 			
 			TempMarks.Add(Factory);
 
@@ -58,7 +58,7 @@ namespace PIO.CoreLib
 
 			TempMarks.Remove(Factory);
 			FactoriesToSort.Remove(Factory);
-			SortedFactories.Add(Factory);
+			SortedFactories.Insert(0,Factory);
 		}
 
 	}
