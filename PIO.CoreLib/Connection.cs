@@ -11,13 +11,13 @@ namespace PIO.CoreLib
 {
 	public class Connection : PIOData<ConnectionID>, IConnection
 	{
-		public required IOutputConnector Source
+		public required ConnectorID SourceID
 		{
 			get;
 			set;
 		}
 
-		public required IInputConnector Destination
+		public required ConnectorID DestinationID
 		{
 			get;
 			set;
@@ -28,13 +28,11 @@ namespace PIO.CoreLib
 		}
 
 		[SetsRequiredMembers]
-		public Connection(ConnectionID ID, IOutputConnector Source, IInputConnector Destination)
+		public Connection(ConnectionID ID, ConnectorID SourceID, ConnectorID DestinationID)
 		{
-			if (Source == null) throw new PIOInvalidParameterException(nameof(Source));
-			if (Destination == null) throw new PIOInvalidParameterException(nameof(Destination));
 			this.ID= ID;
-			this.Source = Source;
-			this.Destination = Destination;
+			this.SourceID = SourceID;
+			this.DestinationID = DestinationID;
 		}	
 
 	}

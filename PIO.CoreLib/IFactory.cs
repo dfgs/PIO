@@ -13,19 +13,7 @@ namespace PIO.CoreLib
 			get;
 		}
 
-		IEnumerable<IInputConnector> Inputs
-		{
-			get;
-		}
-		IEnumerable<IOutputConnector> Outputs
-		{
-			get;
-		}
-
-		IEnumerable<IConnector> IOs
-		{
-			get;
-		}
+		
 
 
 	}

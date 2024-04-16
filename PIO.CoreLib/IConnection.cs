@@ -8,12 +8,12 @@ namespace PIO.CoreLib
 {
 	public interface IConnection : IPIOData<ConnectionID>
 	{
-		IOutputConnector Source
+		ConnectorID SourceID
 		{
 			get;
 		}
 
-		IInputConnector Destination
+		ConnectorID DestinationID
 		{
 			get;
 		}

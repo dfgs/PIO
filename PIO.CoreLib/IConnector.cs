@@ -8,10 +8,15 @@ namespace PIO.CoreLib
 {
 	public interface IConnector : IPIOData<ConnectorID>
 	{
+		FactoryID FactoryID
+		{
+			get;
+		}
 		string ResourceType
 		{
 			get;
 		}
+
 
 		IBuffer Buffer
 		{

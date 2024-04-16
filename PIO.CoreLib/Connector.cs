@@ -11,11 +11,17 @@ namespace PIO.CoreLib
 {
 	public class Connector:PIOData<ConnectorID>, IConnector
 	{
+		public required FactoryID FactoryID
+		{
+			get;
+			set;
+		}
 		public required string ResourceType
 		{
 			get;
 			set;
 		}
+		
 
 		public IBuffer Buffer
 		{
@@ -29,12 +35,14 @@ namespace PIO.CoreLib
 		}
 
 		[SetsRequiredMembers]
-		public Connector(ConnectorID ID,string ResourceType)
+		public Connector(ConnectorID ID,FactoryID FactoryID, string ResourceType)
 		{
 			if (ResourceType == null) throw new PIOInvalidParameterException(nameof(ResourceType));
-			this.ID = ID;
-			this.ResourceType = ResourceType;
 			Buffer = new Buffer();
+
+			this.ID = ID;
+			this.FactoryID = FactoryID;
+			this.ResourceType = ResourceType;
 		}
 	}
 }

@@ -11,15 +11,17 @@ namespace PIO.CoreLib.UnitTests
 		{
 			Connector Connector;
 
-			Connector = new Connector() { ID = ConnectorID.New(), ResourceType = "Type1" };
+			Connector = new Connector() { ID = new ConnectorID(0),FactoryID= new FactoryID(12),  ResourceType = "Type1" };
 			Assert.AreEqual("Type1", Connector.ResourceType);
 			Assert.IsNotNull(Connector.Buffer);
 			Assert.AreEqual(new ConnectorID(0), Connector.ID);
+			Assert.AreEqual(new FactoryID(12), Connector.FactoryID);
 
-			Connector = new Connector(ConnectorID.New(), "Type2") ;
+			Connector = new Connector(new ConnectorID(1), new FactoryID(13), "Type2") ;
 			Assert.AreEqual("Type2", Connector.ResourceType);
 			Assert.IsNotNull(Connector.Buffer);
 			Assert.AreEqual(new ConnectorID(1), Connector.ID);
+			Assert.AreEqual(new FactoryID(13), Connector.FactoryID);
 		}
 
 		[TestMethod]
@@ -27,7 +29,7 @@ namespace PIO.CoreLib.UnitTests
 		{
 			#pragma warning disable CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
 			//Assert.ThrowsException<PIOInvalidParameterException>(() => new Connector() { ResourceType=null });
-			Assert.ThrowsException<PIOInvalidParameterException>(() => new Connector(ConnectorID.New(), null));
+			Assert.ThrowsException<PIOInvalidParameterException>(() => new Connector(ConnectorID.Empty, FactoryID.Empty,null));
 			#pragma warning restore CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
 		}
 
