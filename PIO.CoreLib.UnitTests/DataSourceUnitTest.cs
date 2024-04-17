@@ -343,6 +343,30 @@ namespace PIO.CoreLib.UnitTests
 			Assert.IsNull(dataSource.GetBuffer(new ConnectorID(0)));
 		}
 
+		[TestMethod]
+		public void GetBuffersShouldReturnValidValues()
+		{
+			IBuffer buffer1, buffer2, buffer3;
+			IDataSource dataSource;
+			IBuffer[] results;
+
+			buffer1 = new Buffer() { ID = new BufferID(1), ConnectorID=new ConnectorID(1) };
+			buffer2 = new Buffer() { ID = new BufferID(2), ConnectorID = new ConnectorID(2) };
+			buffer3 = new Buffer() { ID = new BufferID(3), ConnectorID = new ConnectorID(3) };
+
+			dataSource = new DataSource();
+			dataSource.AddBuffer(buffer1);
+			dataSource.AddBuffer(buffer2);
+			dataSource.AddBuffer(buffer3);
+
+			results = dataSource.GetBuffers().ToArray();
+			Assert.AreEqual(3, results.Length);
+			Assert.IsTrue(results.Contains(buffer1));
+			Assert.IsTrue(results.Contains(buffer2));
+			Assert.IsTrue(results.Contains(buffer3));
+		}
+
+
 
 	}
 

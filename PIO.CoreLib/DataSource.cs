@@ -100,7 +100,10 @@ namespace PIO.CoreLib
 		{
 			return buffers.FirstOrDefault(item=>item.ConnectorID==ConnectorID);
 		}
+		public IEnumerable<IBuffer> GetBuffers()
+		{
+			return buffers;
+		}
 
-
-}
+	}
 }
