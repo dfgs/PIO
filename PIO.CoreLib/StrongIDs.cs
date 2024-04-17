@@ -26,5 +26,11 @@ namespace PIO.CoreLib
 		public static ConnectionID New() { return new ConnectionID(UniqueIDGenerator<ConnectionID>.GenerateID()); }
 	}
 
+	[StronglyTypedId(Template.Int)]
+	public partial struct BufferID
+	{
+		public static BufferID New() { return new BufferID(UniqueIDGenerator<BufferID>.GenerateID()); }
+	}
+
 
 }

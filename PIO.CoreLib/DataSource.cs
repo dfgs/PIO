@@ -13,6 +13,7 @@ namespace PIO.CoreLib
 		private List<IInputConnector> inputConnectors;
 		private List<IOutputConnector> outputConnectors;
 		private List<IConnection> connections;
+		private List<IBuffer> buffers;
 
 		public DataSource() 
 		{ 
@@ -20,6 +21,7 @@ namespace PIO.CoreLib
 			this.inputConnectors = new List<IInputConnector>();
 			this.outputConnectors = new List<IOutputConnector>();
 			this.connections = new List<IConnection>();
+			buffers = new List<IBuffer>();
 		}
 
 		public void AddFactory(IFactory Factory)
@@ -44,6 +46,11 @@ namespace PIO.CoreLib
 			this.connections.Add(Connection); 
 		}
 
+		public void AddBuffer(IBuffer Buffer)
+		{
+			if (Buffer == null) throw new PIOInvalidParameterException(nameof(Buffer));
+			this.buffers.Add(Buffer); 
+		}
 
 		public IFactory? GetFactory(FactoryID FactoryID)
 		{
@@ -85,8 +92,15 @@ namespace PIO.CoreLib
 			return connections.Where(item => item.SourceID == SourceID);
 		}
 
-		
+		public IBuffer? GetBuffer(BufferID BufferID)
+		{
+			return buffers.FirstOrDefault(item=>item.ID==BufferID);
+		}
+		public IBuffer? GetBuffer(ConnectorID ConnectorID)
+		{
+			return buffers.FirstOrDefault(item=>item.ConnectorID==ConnectorID);
+		}
 
 
-	}
+}
 }

@@ -3,11 +3,19 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34525.116
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PIO.CoreLib", "PIO.CoreLib\PIO.CoreLib.csproj", "{7666130F-1B94-4124-BC25-FD4F248E50A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PIO.CoreLib", "PIO.CoreLib\PIO.CoreLib.csproj", "{7666130F-1B94-4124-BC25-FD4F248E50A8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "UnitTests", "UnitTests", "{2CA97C77-EE69-470E-92CE-7E7933E8A210}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PIO.CoreLib.UnitTests", "PIO.CoreLib.UnitTests\PIO.CoreLib.UnitTests.csproj", "{E2004470-17E6-4E9E-BE22-4CBB74D567AE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PIO.CoreLib.UnitTests", "PIO.CoreLib.UnitTests\PIO.CoreLib.UnitTests.csproj", "{E2004470-17E6-4E9E-BE22-4CBB74D567AE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dependencies", "Dependencies", "{9F55D1F9-9060-4D43-AE24-FF21E32E6DA7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModuleLib", "..\ModuleLib\ModuleLib\ModuleLib.csproj", "{F89B06C7-43CC-4589-9859-3A4656AAA4A6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogLib", "..\LogLib\LogLib\LogLib.csproj", "{EF4B0001-2859-4A09-8F95-3E5BEF4A5272}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PIO.ModulesLib", "PIO.ModulesLib\PIO.ModulesLib.csproj", "{89CFB243-629A-4529-8EAE-60DF90D743E8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,12 +31,26 @@ Global
 		{E2004470-17E6-4E9E-BE22-4CBB74D567AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E2004470-17E6-4E9E-BE22-4CBB74D567AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E2004470-17E6-4E9E-BE22-4CBB74D567AE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F89B06C7-43CC-4589-9859-3A4656AAA4A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F89B06C7-43CC-4589-9859-3A4656AAA4A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F89B06C7-43CC-4589-9859-3A4656AAA4A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F89B06C7-43CC-4589-9859-3A4656AAA4A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF4B0001-2859-4A09-8F95-3E5BEF4A5272}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF4B0001-2859-4A09-8F95-3E5BEF4A5272}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF4B0001-2859-4A09-8F95-3E5BEF4A5272}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF4B0001-2859-4A09-8F95-3E5BEF4A5272}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89CFB243-629A-4529-8EAE-60DF90D743E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89CFB243-629A-4529-8EAE-60DF90D743E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89CFB243-629A-4529-8EAE-60DF90D743E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89CFB243-629A-4529-8EAE-60DF90D743E8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{E2004470-17E6-4E9E-BE22-4CBB74D567AE} = {2CA97C77-EE69-470E-92CE-7E7933E8A210}
+		{F89B06C7-43CC-4589-9859-3A4656AAA4A6} = {9F55D1F9-9060-4D43-AE24-FF21E32E6DA7}
+		{EF4B0001-2859-4A09-8F95-3E5BEF4A5272} = {9F55D1F9-9060-4D43-AE24-FF21E32E6DA7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {782601F6-0BE1-49F1-9B15-C92E3D5018B0}

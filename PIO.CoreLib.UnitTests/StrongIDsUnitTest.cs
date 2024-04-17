@@ -20,6 +20,10 @@ namespace PIO.CoreLib.UnitTests
 			Assert.AreEqual(new ConnectionID(0), ConnectionID.New());
 			Assert.AreEqual(new ConnectionID(1), ConnectionID.New());
 			Assert.AreEqual(new ConnectionID(2), ConnectionID.New());
+
+			Assert.AreEqual(new BufferID(0), BufferID.New());
+			Assert.AreEqual(new BufferID(1), BufferID.New());
+			Assert.AreEqual(new BufferID(2), BufferID.New());
 		}
 
 

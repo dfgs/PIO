@@ -18,10 +18,6 @@ namespace PIO.CoreLib
 		}
 
 
-		IBuffer Buffer
-		{
-			get;
-		}
-
+	
 	}
 }

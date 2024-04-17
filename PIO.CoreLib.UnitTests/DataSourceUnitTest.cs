@@ -54,7 +54,17 @@ namespace PIO.CoreLib.UnitTests
 			Assert.ThrowsException<PIOInvalidParameterException>(() => dataSource.AddConnection(null));
 #pragma warning restore CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
 		}
+		[TestMethod]
+		public void AddBufferShouldThrowExceptionIfParameterIsNull()
+		{
+			IDataSource dataSource;
 
+			dataSource = new DataSource();
+
+#pragma warning disable CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
+			Assert.ThrowsException<PIOInvalidParameterException>(() => dataSource.AddBuffer(null));
+#pragma warning restore CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
+		}
 
 		[TestMethod]
 		public void GetFactoryShouldReturnValidValue()
@@ -304,6 +314,33 @@ namespace PIO.CoreLib.UnitTests
 
 			results = dataSource.GetConnections(new ConnectorID(3)).ToArray();
 			Assert.AreEqual(0, results.Length);
+		}
+
+		[TestMethod]
+		public void GetBufferShouldReturnValidValue()
+		{
+			IBuffer buffer;
+			IDataSource dataSource;
+
+			buffer = new Buffer() { ID = new BufferID(1), ConnectorID=new ConnectorID(2) };
+			dataSource = new DataSource();
+			dataSource.AddBuffer(buffer);
+
+			Assert.AreEqual(buffer, dataSource.GetBuffer(new BufferID(1)));
+			Assert.AreEqual(buffer, dataSource.GetBuffer(new ConnectorID(2)));
+		}
+		[TestMethod]
+		public void GetBufferShouldReturnNull()
+		{
+			IBuffer buffer;
+			IDataSource dataSource;
+
+			buffer = new Buffer() { ID = new BufferID(1), ConnectorID = new ConnectorID(2) };
+			dataSource = new DataSource();
+			dataSource.AddBuffer(buffer);
+
+			Assert.IsNull(dataSource.GetBuffer(new BufferID(0)));
+			Assert.IsNull(dataSource.GetBuffer(new ConnectorID(0)));
 		}
 
 

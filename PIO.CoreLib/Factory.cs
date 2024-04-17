@@ -22,6 +22,7 @@ namespace PIO.CoreLib
 		public Factory() 
 		{
 		}
+
 		[SetsRequiredMembers]
 		public Factory(FactoryID ID, string FactoryType)
 		{

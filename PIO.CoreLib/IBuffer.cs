@@ -7,8 +7,13 @@ using System.Threading.Tasks;
 
 namespace PIO.CoreLib
 {
-	public interface IBuffer:IETAProvider
+	public interface IBuffer:IETAProvider,IPIOData<BufferID>
 	{
+		ConnectorID ConnectorID
+		{
+			get; 
+		}
+
 		float InRate
 		{
 			get;

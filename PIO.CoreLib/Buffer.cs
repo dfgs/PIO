@@ -1,9 +1,17 @@
 ﻿using PIO.CoreLib.Exceptions;
+using System.Diagnostics.CodeAnalysis;
 
 namespace PIO.CoreLib
 {
-	public class Buffer: IBuffer
+	public class Buffer:PIOData<BufferID>, IBuffer
 	{
+		
+		public required ConnectorID ConnectorID
+		{
+			get;
+			set;
+		}
+
 		public float InRate
 		{
 			get;
@@ -44,6 +52,13 @@ namespace PIO.CoreLib
 		public Buffer()
 		{
 
+		}
+
+		[SetsRequiredMembers]
+		public Buffer(BufferID ID, ConnectorID ConnectorID)
+		{
+			this.ID = ID;
+			this.ConnectorID = ConnectorID;
 		}
 
 		public float GetETA()

@@ -23,22 +23,16 @@ namespace PIO.CoreLib
 		}
 		
 
-		public IBuffer Buffer
-		{
-			get;
-			set;
-		}
+		
 
 		public Connector()
 		{
-			Buffer = new Buffer();
 		}
 
 		[SetsRequiredMembers]
 		public Connector(ConnectorID ID,FactoryID FactoryID, string ResourceType)
 		{
 			if (ResourceType == null) throw new PIOInvalidParameterException(nameof(ResourceType));
-			Buffer = new Buffer();
 
 			this.ID = ID;
 			this.FactoryID = FactoryID;
