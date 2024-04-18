@@ -25,15 +25,17 @@ namespace PIO.ModulesLib
 			Log(LogLevels.Information, "Updating all buffers");
 			foreach(IBuffer buffer in buffers)
 			{
+				Log(LogLevels.Debug, $"[Buffer ID {buffer.ID}] Processing buffer");
 				if (!buffer.IsValid)
 				{
-					Log(LogLevels.Error, $"Buffer with ID {buffer.ID} has invalid state");
+					Log(LogLevels.Error, $"[Buffer ID {buffer.ID}] Buffer has invalid state");
 					continue;
 				}
 				// update buffer
-				if (!Try(()=>buffer.Update(Cycle)).OrAlert($"Failed to update buffer with ID {buffer.ID}")) continue;
+				if (!Try(()=>buffer.Update(Cycle)).OrAlert($"[Buffer ID {buffer.ID}] Failed to update buffer")) continue;
 
 				// clear rates
+				Log(LogLevels.Debug, $"[Buffer ID {buffer.ID}] Clearing rates of buffer");
 				buffer.InRate = 0;buffer.OutRate = 0;
 
 			}

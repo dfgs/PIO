@@ -2,6 +2,7 @@
 using ModuleLib;
 using PIO.CoreLib;
 using PIO.CoreLib.Exceptions;
+using System;
 
 namespace PIO.ModulesLib
 {
@@ -19,6 +20,8 @@ namespace PIO.ModulesLib
 		{
 			IFactory[] sortedFactories = [];
 			IRecipe? recipe=null;
+			IIngredient[] ingredients = [];
+			IProduct[] products= [];
 
 			LogEnter();
 
@@ -28,12 +31,18 @@ namespace PIO.ModulesLib
 			Log(LogLevels.Information, "Updating all factories");
 			foreach(IFactory factory in sortedFactories)
 			{
-				if (!Try(() => DataSource.GetRecipe(factory.FactoryType)).Then(result => recipe = result).OrAlert($"Failed to get recipe for factory with ID {factory.ID}")) continue;
+				Log(LogLevels.Debug, $"[Factory ID {factory.ID}] Processing factory");
+				if (!Try(() => DataSource.GetRecipe(factory.FactoryType)).Then(result => recipe = result).OrAlert($"[Factory ID {factory.ID}] Failed to get recipe")) continue;
 				if (recipe == null)
 				{
-					Log(LogLevels.Warning, $"No recipe found for factory with ID {factory.ID}");
+					Log(LogLevels.Warning, $"[Factory ID {factory.ID}] No recipe found");
 					continue;
 				}
+
+				Log(LogLevels.Debug, $"[Recipe ID {recipe.ID}] Get ingredients and products");
+				if (!Try(() => DataSource.GetIngredients(recipe.ID)).Then(result => ingredients = result.ToArray()).OrAlert($"[Recipe ID {recipe.ID}] Failed to get ingredients")) continue;
+				if (!Try(() => DataSource.GetProducts(recipe.ID)).Then(result => products = result.ToArray()).OrAlert($"[Recipe ID {recipe.ID}] Failed to get products")) continue;
+
 
 			}
 

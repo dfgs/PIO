@@ -62,7 +62,7 @@ namespace PIO.ModulesLib.UnitTests
 			result = bufferManager.Update(dataSource, 0);
 			Assert.IsTrue(result);
 			Assert.AreEqual(1, logger.ErrorCount);
-			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Error, "invalid state", "ID 12"));
+			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Error, "invalid state", "[Buffer ID 12]"));
 		}
 
 		[TestMethod]
@@ -89,7 +89,7 @@ namespace PIO.ModulesLib.UnitTests
 			result = bufferManager.Update(dataSource, 0);
 			Assert.IsTrue(result);
 			Assert.AreEqual(1, logger.ErrorCount);
-			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Error, "update", "ID 12"));
+			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Error, "update", "[Buffer ID 12]"));
 		}
 
 		[TestMethod]

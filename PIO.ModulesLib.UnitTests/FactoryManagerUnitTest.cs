@@ -75,7 +75,7 @@ namespace PIO.ModulesLib.UnitTests
 			result = factoryManager.Update(dataSource, 0);
 			Assert.IsTrue(result);
 			Assert.AreEqual(1, logger.ErrorCount);
-			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Error, "get", "recipe", "ID 2"));
+			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Error, "get", "recipe", "[Factory ID 2]"));
 		}
 		[TestMethod]
 		public void UpdateShouldLogErrorIfRecipeIsNotFound()
@@ -110,8 +110,119 @@ namespace PIO.ModulesLib.UnitTests
 			result = factoryManager.Update(dataSource, 0);
 			Assert.IsTrue(result);
 			Assert.AreEqual(1, logger.WarningCount);
-			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Warning, "found", "recipe", "ID 2"));
+			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Warning, "found", "recipe", "[Factory ID 2]"));
 		}
+
+		[TestMethod]
+		public void UpdateShouldLogErrorIfCannotGetIngredients()
+		{
+			IFactoryManager factoryManager;
+			IDataSource dataSource;
+			DebugLogger logger;
+			ITopologySorter topologySorter;
+			IFactory factory1, factory2, factory3;
+			IRecipe recipe1, recipe2, recipe3;
+			IIngredient ingredient1, ingredient2, ingredient3;
+			IProduct product1, product2, product3;
+			bool result;
+
+			logger = new DebugLogger();
+
+			factory1 = new Factory() { ID = new FactoryID(1), FactoryType = "Type1" };
+			factory2 = new Factory() { ID = new FactoryID(2), FactoryType = "Type2" };
+			factory3 = new Factory() { ID = new FactoryID(3), FactoryType = "Type3" };
+
+			recipe1 = new Recipe() { ID = new RecipeID(1), FactoryType = "Type1" };
+			recipe2 = new Recipe() { ID = new RecipeID(2), FactoryType = "Type2" };
+			recipe3 = new Recipe() { ID = new RecipeID(3), FactoryType = "Type3" };
+
+			ingredient1 = new Ingredient() { ID = new IngredientID(1), RecipeID = new RecipeID(1), ResourceType = "Type1", Rate = 1 };
+			ingredient2 = new Ingredient() { ID = new IngredientID(2), RecipeID = new RecipeID(2), ResourceType = "Type2", Rate = 1 };
+			ingredient3 = new Ingredient() { ID = new IngredientID(3), RecipeID = new RecipeID(3), ResourceType = "Type3", Rate = 1 };
+
+			product1 = new Product() { ID = new ProductID(1), RecipeID = new RecipeID(1), ResourceType = "Type1", Rate = 1 };
+			product2 = new Product() { ID = new ProductID(2), RecipeID = new RecipeID(2), ResourceType = "Type2", Rate = 1 };
+			product3 = new Product() { ID = new ProductID(3), RecipeID = new RecipeID(3), ResourceType = "Type3", Rate = 1 };
+
+			dataSource = Mock.Of<IDataSource>();
+			Mock.Get(dataSource).Setup(m => m.GetRecipe("Type1")).Returns(recipe1);
+			Mock.Get(dataSource).Setup(m => m.GetRecipe("Type2")).Returns(recipe2);
+			Mock.Get(dataSource).Setup(m => m.GetRecipe("Type3")).Returns(recipe3);
+
+			Mock.Get(dataSource).Setup(m => m.GetIngredients(new RecipeID(1))).Returns([ingredient1]);
+			Mock.Get(dataSource).Setup(m => m.GetIngredients(new RecipeID(2))).Throws<InvalidOperationException>();
+			Mock.Get(dataSource).Setup(m => m.GetIngredients(new RecipeID(3))).Returns([ingredient3]);
+
+			Mock.Get(dataSource).Setup(m => m.GetProducts(new RecipeID(1))).Returns([product1]);
+			Mock.Get(dataSource).Setup(m => m.GetProducts(new RecipeID(2))).Returns([product2]);
+			Mock.Get(dataSource).Setup(m => m.GetProducts(new RecipeID(3))).Returns([product3]);
+
+
+			topologySorter = Mock.Of<ITopologySorter>();
+			Mock.Get(topologySorter).Setup(m => m.Sort(It.IsAny<IDataSource>())).Returns([factory1, factory2, factory3]);
+
+			factoryManager = new FactoryManager(logger, topologySorter);
+			result = factoryManager.Update(dataSource, 0);
+			Assert.IsTrue(result);
+			Assert.AreEqual(1, logger.ErrorCount);
+			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Error, "get", "ingredient", "[Recipe ID 2]"));
+		}
+
+		[TestMethod]
+		public void UpdateShouldLogErrorIfCannotGetProducts()
+		{
+			IFactoryManager factoryManager;
+			IDataSource dataSource;
+			DebugLogger logger;
+			ITopologySorter topologySorter;
+			IFactory factory1, factory2, factory3;
+			IRecipe recipe1, recipe2, recipe3;
+			IIngredient ingredient1, ingredient2, ingredient3;
+			IProduct product1, product2, product3;
+			bool result;
+
+			logger = new DebugLogger();
+
+			factory1 = new Factory() { ID = new FactoryID(1), FactoryType = "Type1" };
+			factory2 = new Factory() { ID = new FactoryID(2), FactoryType = "Type2" };
+			factory3 = new Factory() { ID = new FactoryID(3), FactoryType = "Type3" };
+
+			recipe1 = new Recipe() { ID = new RecipeID(1), FactoryType = "Type1" };
+			recipe2 = new Recipe() { ID = new RecipeID(2), FactoryType = "Type2" };
+			recipe3 = new Recipe() { ID = new RecipeID(3), FactoryType = "Type3" };
+
+			ingredient1 = new Ingredient() { ID = new IngredientID(1), RecipeID = new RecipeID(1), ResourceType = "Type1", Rate = 1 };
+			ingredient2 = new Ingredient() { ID = new IngredientID(2), RecipeID = new RecipeID(2), ResourceType = "Type2", Rate = 1 };
+			ingredient3 = new Ingredient() { ID = new IngredientID(3), RecipeID = new RecipeID(3), ResourceType = "Type3", Rate = 1 };
+
+			product1 = new Product() { ID = new ProductID(1), RecipeID = new RecipeID(1), ResourceType = "Type1", Rate = 1 };
+			product2 = new Product() { ID = new ProductID(2), RecipeID = new RecipeID(2), ResourceType = "Type2", Rate = 1 };
+			product3 = new Product() { ID = new ProductID(3), RecipeID = new RecipeID(3), ResourceType = "Type3", Rate = 1 };
+
+			dataSource = Mock.Of<IDataSource>();
+			Mock.Get(dataSource).Setup(m => m.GetRecipe("Type1")).Returns(recipe1);
+			Mock.Get(dataSource).Setup(m => m.GetRecipe("Type2")).Returns(recipe2);
+			Mock.Get(dataSource).Setup(m => m.GetRecipe("Type3")).Returns(recipe3);
+
+			Mock.Get(dataSource).Setup(m => m.GetIngredients(new RecipeID(1))).Returns([ingredient1]);
+			Mock.Get(dataSource).Setup(m => m.GetIngredients(new RecipeID(2))).Returns([ingredient2]);
+			Mock.Get(dataSource).Setup(m => m.GetIngredients(new RecipeID(3))).Returns([ingredient3]);
+
+			Mock.Get(dataSource).Setup(m => m.GetProducts(new RecipeID(1))).Returns([product1]);
+			Mock.Get(dataSource).Setup(m => m.GetProducts(new RecipeID(2))).Throws<InvalidOperationException>();
+			Mock.Get(dataSource).Setup(m => m.GetProducts(new RecipeID(3))).Returns([product3]);
+
+
+			topologySorter = Mock.Of<ITopologySorter>();
+			Mock.Get(topologySorter).Setup(m => m.Sort(It.IsAny<IDataSource>())).Returns([factory1, factory2, factory3]);
+
+			factoryManager = new FactoryManager(logger, topologySorter);
+			result = factoryManager.Update(dataSource, 0);
+			Assert.IsTrue(result);
+			Assert.AreEqual(1, logger.ErrorCount);
+			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Error, "get", "product", "[Recipe ID 2]"));
+		}
+
 	}
 
 }
