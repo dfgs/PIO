@@ -77,6 +77,25 @@ namespace PIO.CoreLib.UnitTests
 			Assert.ThrowsException<PIOInvalidParameterException>(() => dataSource.AddRecipe(null));
 #pragma warning restore CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
 		}
+		[TestMethod]
+		public void AddIngredientShouldThrowExceptionIfParameterIsNull()
+		{
+			IDataSource dataSource;
+
+			dataSource = new DataSource();
+
+#pragma warning disable CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
+			Assert.ThrowsException<PIOInvalidParameterException>(() => dataSource.AddIngredient(null));
+#pragma warning restore CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
+		}
+
+
+
+
+
+
+
+
 
 		[TestMethod]
 		public void GetFactoryShouldReturnValidValue()
@@ -404,6 +423,143 @@ namespace PIO.CoreLib.UnitTests
 			Assert.IsNull(dataSource.GetRecipe(new RecipeID(0)));
 			Assert.IsNull(dataSource.GetRecipe("Undefined"));
 		}
+
+
+
+		[TestMethod]
+		public void GetIngredientShouldReturnValidValue()
+		{
+			IIngredient ingredient;
+			IDataSource dataSource;
+
+			ingredient = new Ingredient() { ID = new IngredientID(1), RecipeID = new RecipeID(1), ResourceType="Type1",Rate=1 };
+			dataSource = new DataSource();
+			dataSource.AddIngredient(ingredient);
+
+			Assert.AreEqual(ingredient, dataSource.GetIngredient(new IngredientID(1)));
+		}
+		[TestMethod]
+		public void GetIngredientShouldReturnNull()
+		{
+			IIngredient ingredient;
+			IDataSource dataSource;
+
+			ingredient = new Ingredient() { ID = new IngredientID(1), RecipeID = new RecipeID(1), ResourceType = "Type1", Rate = 1 };
+			dataSource = new DataSource();
+			dataSource.AddIngredient(ingredient);
+
+			Assert.IsNull(dataSource.GetIngredient(new IngredientID(0)));
+		}
+		[TestMethod]
+		public void GetIngredientsShouldReturnValidValues()
+		{
+			IIngredient ingredient1, ingredient2, ingredient3;
+			IDataSource dataSource;
+			IIngredient[] results;
+
+			ingredient1 = new Ingredient() { ID = new IngredientID(1), RecipeID = new RecipeID(1), ResourceType = "Type1", Rate = 1 };
+			ingredient2 = new Ingredient() { ID = new IngredientID(2), RecipeID = new RecipeID(2), ResourceType = "Type2", Rate = 1 };
+			ingredient3 = new Ingredient() { ID = new IngredientID(3), RecipeID = new RecipeID(1), ResourceType = "Type3", Rate = 1 };
+
+			dataSource = new DataSource();
+			dataSource.AddIngredient(ingredient1);
+			dataSource.AddIngredient(ingredient2);
+			dataSource.AddIngredient(ingredient3);
+
+			results = dataSource.GetIngredients(new RecipeID(1)).ToArray();
+			Assert.AreEqual(2, results.Length);
+			Assert.IsTrue(results.Contains(ingredient1));
+			Assert.IsFalse(results.Contains(ingredient2));
+			Assert.IsTrue(results.Contains(ingredient3));
+		}
+		[TestMethod]
+		public void GetIngredientsShouldReturnNoValues()
+		{
+			IIngredient ingredient1, ingredient2, ingredient3;
+			IDataSource dataSource;
+			IIngredient[] results;
+
+			ingredient1 = new Ingredient() { ID = new IngredientID(1), RecipeID = new RecipeID(1), ResourceType = "Type1", Rate = 1 };
+			ingredient2 = new Ingredient() { ID = new IngredientID(2), RecipeID = new RecipeID(2), ResourceType = "Type2", Rate = 1 };
+			ingredient3 = new Ingredient() { ID = new IngredientID(3), RecipeID = new RecipeID(1), ResourceType = "Type3", Rate = 1 };
+
+			dataSource = new DataSource();
+			dataSource.AddIngredient(ingredient1);
+			dataSource.AddIngredient(ingredient2);
+			dataSource.AddIngredient(ingredient3);
+
+			results = dataSource.GetIngredients(new RecipeID(3)).ToArray();
+			Assert.AreEqual(0, results.Length);
+		}
+
+
+
+		[TestMethod]
+		public void GetProductShouldReturnValidValue()
+		{
+			IProduct product;
+			IDataSource dataSource;
+
+			product = new Product() { ID = new ProductID(1), RecipeID = new RecipeID(1), ResourceType = "Type1", Rate = 1 };
+			dataSource = new DataSource();
+			dataSource.AddProduct(product);
+
+			Assert.AreEqual(product, dataSource.GetProduct(new ProductID(1)));
+		}
+		[TestMethod]
+		public void GetProductShouldReturnNull()
+		{
+			IProduct product;
+			IDataSource dataSource;
+
+			product = new Product() { ID = new ProductID(1), RecipeID = new RecipeID(1), ResourceType = "Type1", Rate = 1 };
+			dataSource = new DataSource();
+			dataSource.AddProduct(product);
+
+			Assert.IsNull(dataSource.GetProduct(new ProductID(0)));
+		}
+		[TestMethod]
+		public void GetProductsShouldReturnValidValues()
+		{
+			IProduct product1, product2, product3;
+			IDataSource dataSource;
+			IProduct[] results;
+
+			product1 = new Product() { ID = new ProductID(1), RecipeID = new RecipeID(1), ResourceType = "Type1", Rate = 1 };
+			product2 = new Product() { ID = new ProductID(2), RecipeID = new RecipeID(2), ResourceType = "Type2", Rate = 1 };
+			product3 = new Product() { ID = new ProductID(3), RecipeID = new RecipeID(1), ResourceType = "Type3", Rate = 1 };
+
+			dataSource = new DataSource();
+			dataSource.AddProduct(product1);
+			dataSource.AddProduct(product2);
+			dataSource.AddProduct(product3);
+
+			results = dataSource.GetProducts(new RecipeID(1)).ToArray();
+			Assert.AreEqual(2, results.Length);
+			Assert.IsTrue(results.Contains(product1));
+			Assert.IsFalse(results.Contains(product2));
+			Assert.IsTrue(results.Contains(product3));
+		}
+		[TestMethod]
+		public void GetProductsShouldReturnNoValues()
+		{
+			IProduct product1, product2, product3;
+			IDataSource dataSource;
+			IProduct[] results;
+
+			product1 = new Product() { ID = new ProductID(1), RecipeID = new RecipeID(1), ResourceType = "Type1", Rate = 1 };
+			product2 = new Product() { ID = new ProductID(2), RecipeID = new RecipeID(2), ResourceType = "Type2", Rate = 1 };
+			product3 = new Product() { ID = new ProductID(3), RecipeID = new RecipeID(1), ResourceType = "Type3", Rate = 1 };
+
+			dataSource = new DataSource();
+			dataSource.AddProduct(product1);
+			dataSource.AddProduct(product2);
+			dataSource.AddProduct(product3);
+
+			results = dataSource.GetProducts(new RecipeID(3)).ToArray();
+			Assert.AreEqual(0, results.Length);
+		}
+
 
 	}
 

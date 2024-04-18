@@ -15,6 +15,8 @@ namespace PIO.CoreLib
 		private List<IConnection> connections;
 		private List<IBuffer> buffers;
 		private List<IRecipe> recipes;
+		private List<IIngredient> ingredients;
+		private List<IProduct> products;
 
 		public DataSource() 
 		{ 
@@ -24,6 +26,8 @@ namespace PIO.CoreLib
 			this.connections = new List<IConnection>();
 			this.buffers = new List<IBuffer>();
 			this.recipes = new List<IRecipe>();
+			this.ingredients= new List<IIngredient>();
+			this.products= new List<IProduct>();
 		}
 
 		public void AddFactory(IFactory Factory)
@@ -57,6 +61,19 @@ namespace PIO.CoreLib
 			if (Recipe == null) throw new PIOInvalidParameterException(nameof(Recipe));
 			this.recipes.Add(Recipe);
 		}
+		public void AddIngredient(IIngredient Ingredient)
+		{
+			if (Ingredient == null) throw new PIOInvalidParameterException(nameof(Ingredient));
+			this.ingredients.Add(Ingredient);
+		}
+		public void AddProduct(IProduct Product)
+		{
+			if (Product == null) throw new PIOInvalidParameterException(nameof(Product));
+			this.products.Add(Product);
+		}
+
+
+
 
 		public IFactory? GetFactory(FactoryID FactoryID)
 		{
@@ -120,5 +137,22 @@ namespace PIO.CoreLib
 			return recipes.FirstOrDefault(item => item.FactoryType == FactoryType);
 		}
 
+		public IIngredient? GetIngredient(IngredientID IngredientID)
+		{
+			return ingredients.FirstOrDefault(item => item.ID == IngredientID);
+		}
+		public IEnumerable<IIngredient> GetIngredients(RecipeID RecipeID)
+		{
+			return ingredients.Where(item => item.RecipeID == RecipeID);
+		}
+
+		public IProduct? GetProduct(ProductID ProductID)
+		{
+			return products.FirstOrDefault(item => item.ID == ProductID);
+		}
+		public IEnumerable<IProduct> GetProducts(RecipeID RecipeID)
+		{
+			return products.Where(item => item.RecipeID == RecipeID);
+		}
 	}
 }

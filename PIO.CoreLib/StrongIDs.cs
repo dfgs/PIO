@@ -36,5 +36,14 @@ namespace PIO.CoreLib
 	{
 		public static RecipeID New() { return new RecipeID(UniqueIDGenerator<RecipeID>.GenerateID()); }
 	}
-
+	[StronglyTypedId(Template.Int)]
+	public partial struct IngredientID
+	{
+		public static IngredientID New() { return new IngredientID(UniqueIDGenerator<IngredientID>.GenerateID()); }
+	}
+	[StronglyTypedId(Template.Int)]
+	public partial struct ProductID
+	{
+		public static ProductID New() { return new ProductID(UniqueIDGenerator<ProductID>.GenerateID()); }
+	}
 }

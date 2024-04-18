@@ -14,6 +14,8 @@ namespace PIO.CoreLib
 		void AddConnection(IConnection Connection);
 		void AddBuffer(IBuffer Buffer);
 		void AddRecipe(IRecipe Recipe);
+		void AddIngredient(IIngredient Ingredient);
+		void AddProduct(IProduct Product);
 
 		IFactory? GetFactory(FactoryID FactoryID);
 		IEnumerable<IFactory> GetFactories();
@@ -35,6 +37,12 @@ namespace PIO.CoreLib
 
 		IRecipe? GetRecipe(RecipeID RecipeID);
 		IRecipe? GetRecipe(string FactoryType);
+
+		IIngredient? GetIngredient(IngredientID IngredientID);
+		IEnumerable<IIngredient> GetIngredients(RecipeID RecipeID);
+
+		IProduct? GetProduct(ProductID ProductID);
+		IEnumerable<IProduct> GetProducts(RecipeID RecipeID);
 
 	}
 }

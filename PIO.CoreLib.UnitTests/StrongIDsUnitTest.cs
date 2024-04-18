@@ -28,6 +28,14 @@ namespace PIO.CoreLib.UnitTests
 			Assert.AreEqual(new RecipeID(0), RecipeID.New());
 			Assert.AreEqual(new RecipeID(1), RecipeID.New());
 			Assert.AreEqual(new RecipeID(2), RecipeID.New());
+
+			Assert.AreEqual(new IngredientID(0), IngredientID.New());
+			Assert.AreEqual(new IngredientID(1), IngredientID.New());
+			Assert.AreEqual(new IngredientID(2), IngredientID.New());
+
+			Assert.AreEqual(new ProductID(0), ProductID.New());
+			Assert.AreEqual(new ProductID(1), ProductID.New());
+			Assert.AreEqual(new ProductID(2), ProductID.New());
 		}
 
 
