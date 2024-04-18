@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace PIO.ModulesLib
 {
-	public interface IBufferManager : IPIOUpdateModule
+	public interface IFactoryManager:IPIOUpdateModule
 	{
+		
 	}
 }

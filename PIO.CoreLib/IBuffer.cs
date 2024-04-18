@@ -17,10 +17,12 @@ namespace PIO.CoreLib
 		float InRate
 		{
 			get;
+			set;
 		}
 		float OutRate
 		{
 			get;
+			set;
 		}
 
 		float InternalRate

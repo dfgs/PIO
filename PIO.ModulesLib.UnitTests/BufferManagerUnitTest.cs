@@ -24,6 +24,7 @@ namespace PIO.ModulesLib.UnitTests
 			IBufferManager bufferManager;
 			IDataSource dataSource;
 			DebugLogger logger;
+			bool result;
 
 			logger = new DebugLogger();
 
@@ -32,7 +33,8 @@ namespace PIO.ModulesLib.UnitTests
 			Mock.Get(dataSource).Setup(m => m.GetBuffers()).Throws<InvalidOperationException>();
 
 			bufferManager = new BufferManager(logger);
-			bufferManager.Update(dataSource, 0);
+			result=bufferManager.Update(dataSource, 0);
+			Assert.IsFalse(result);
 			Assert.AreEqual(1, logger.ErrorCount);
 			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Error, "buffers"));
 		}
@@ -44,6 +46,7 @@ namespace PIO.ModulesLib.UnitTests
 			IDataSource dataSource;
 			IBuffer buffer1;
 			DebugLogger logger;
+			bool result;
 
 			logger = new DebugLogger();
 
@@ -54,8 +57,10 @@ namespace PIO.ModulesLib.UnitTests
 			dataSource = Mock.Of<IDataSource>();
 			Mock.Get(dataSource).Setup(m => m.GetBuffers()).Returns([buffer1]);
 
+
 			bufferManager = new BufferManager(logger);
-			bufferManager.Update(dataSource, 0);
+			result = bufferManager.Update(dataSource, 0);
+			Assert.IsTrue(result);
 			Assert.AreEqual(1, logger.ErrorCount);
 			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Error, "invalid state", "ID 12"));
 		}
@@ -67,6 +72,7 @@ namespace PIO.ModulesLib.UnitTests
 			IDataSource dataSource;
 			IBuffer buffer1;
 			DebugLogger logger;
+			bool result;
 
 			logger = new DebugLogger();
 
@@ -80,7 +86,8 @@ namespace PIO.ModulesLib.UnitTests
 			Mock.Get(dataSource).Setup(m => m.GetBuffers()).Returns([buffer1]);
 
 			bufferManager = new BufferManager(logger);
-			bufferManager.Update(dataSource, 0);
+			result = bufferManager.Update(dataSource, 0);
+			Assert.IsTrue(result);
 			Assert.AreEqual(1, logger.ErrorCount);
 			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Error, "update", "ID 12"));
 		}
@@ -92,6 +99,7 @@ namespace PIO.ModulesLib.UnitTests
 			IDataSource dataSource;
 			IBuffer buffer1,buffer2,buffer3;
 			DebugLogger logger;
+			bool result;
 
 			logger = new DebugLogger();
 
@@ -112,7 +120,8 @@ namespace PIO.ModulesLib.UnitTests
 			Mock.Get(dataSource).Setup(m => m.GetBuffers()).Returns([buffer1,buffer2,buffer3]);
 
 			bufferManager = new BufferManager(logger);
-			bufferManager.Update(dataSource, 0);
+			result = bufferManager.Update(dataSource, 0);
+			Assert.IsTrue(result);
 			Assert.AreEqual(0, logger.ErrorCount);
 			Mock.Get(buffer1).Verify(m => m.Update(0), Times.Once);
 			Mock.Get(buffer2).Verify(m => m.Update(0), Times.Once);
