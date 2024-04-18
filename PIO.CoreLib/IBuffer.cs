@@ -32,12 +32,12 @@ namespace PIO.CoreLib
 			get;
 		}
 
-		float Usage
+		float InitialUsage
 		{
 			get;
 		}
 
-		float SpaceLeft
+		float InitialSpaceLeft
 		{
 			get;
 		}
@@ -47,8 +47,8 @@ namespace PIO.CoreLib
 			get;
 		}
 
-		float GetCapacityAt(float Cycle);
+		float GetUsageAt(float Cycle);
 		
-
+		void Update(float Cycle);
 	}
 }

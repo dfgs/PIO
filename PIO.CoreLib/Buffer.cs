@@ -33,20 +33,20 @@ namespace PIO.CoreLib
 			set;
 		}
 
-		public float Usage
+		public float InitialUsage
 		{
 			get;
 			set;
 		}
 
-		public float SpaceLeft
+		public float InitialSpaceLeft
 		{
-			get => Capacity - Usage;
+			get => Capacity - InitialUsage;
 		}
 
 		public bool IsValid
 		{
-			get => (InRate >= 0) && (OutRate >= 0)  && (Capacity >= 0) && (Usage >= 0) && (Usage <= Capacity);
+			get => (InRate >= 0) && (OutRate >= 0)  && (Capacity >= 0) && (InitialUsage >= 0) && (InitialUsage <= Capacity);
 		}
 
 		public Buffer()
@@ -69,25 +69,33 @@ namespace PIO.CoreLib
 			
 			if (InternalRate<0)
 			{
-				if (Usage == 0) return 0;
-				return Usage / -InternalRate;
+				if (InitialUsage == 0) return 0;
+				return InitialUsage / -InternalRate;
 			}
 			else
 			{
-				if (Usage == Capacity) return 0;
-				return SpaceLeft / InternalRate;
+				if (InitialUsage == Capacity) return 0;
+				return InitialSpaceLeft / InternalRate;
 			}
 
 		}
 
-		public float GetCapacityAt(float Cycle)
+		public float GetUsageAt(float Cycle)
 		{
 			if (!IsValid) throw new PIOInvalidBufferStateException();
 			if (Cycle<0) throw new PIOInvalidParameterException(nameof(Cycle));
 			if (Cycle > GetETA()) throw new PIOInvalidParameterException(nameof(Cycle));
 
-			return Usage +InternalRate*Cycle;
+			return InitialUsage +InternalRate*Cycle;
 
+		}
+		public void Update(float Cycle)
+		{
+			if (!IsValid) throw new PIOInvalidBufferStateException();
+			if (Cycle < 0) throw new PIOInvalidParameterException(nameof(Cycle));
+			if (Cycle > GetETA()) throw new PIOInvalidParameterException(nameof(Cycle));
+
+			InitialUsage += InternalRate * Cycle;
 		}
 
 

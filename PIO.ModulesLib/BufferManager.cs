@@ -25,11 +25,11 @@ namespace PIO.ModulesLib
 			{
 				if (!buffer.IsValid)
 				{
-					Log(LogLevels.Information, $"Buffer with ID {buffer.ID} has invalid state");
+					Log(LogLevels.Error, $"Buffer with ID {buffer.ID} has invalid state");
 					continue;
 				}
 
-				buffer.GetCapacityAt(Cycle);
+				if (!Try(()=>buffer.Update(Cycle)).OrAlert($"Failed to update buffer with ID {buffer.ID}")) return;
 
 			}
 

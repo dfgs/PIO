@@ -15,7 +15,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModuleLib", "..\ModuleLib\M
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogLib", "..\LogLib\LogLib\LogLib.csproj", "{EF4B0001-2859-4A09-8F95-3E5BEF4A5272}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PIO.ModulesLib", "PIO.ModulesLib\PIO.ModulesLib.csproj", "{89CFB243-629A-4529-8EAE-60DF90D743E8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PIO.ModulesLib", "PIO.ModulesLib\PIO.ModulesLib.csproj", "{89CFB243-629A-4529-8EAE-60DF90D743E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PIO.ModulesLib.UnitTests", "PIO.ModulesLib.UnitTests\PIO.ModulesLib.UnitTests.csproj", "{B02D7E03-1408-4D18-BA52-8EEC75FD86C7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,6 +45,10 @@ Global
 		{89CFB243-629A-4529-8EAE-60DF90D743E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{89CFB243-629A-4529-8EAE-60DF90D743E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{89CFB243-629A-4529-8EAE-60DF90D743E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B02D7E03-1408-4D18-BA52-8EEC75FD86C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B02D7E03-1408-4D18-BA52-8EEC75FD86C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B02D7E03-1408-4D18-BA52-8EEC75FD86C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B02D7E03-1408-4D18-BA52-8EEC75FD86C7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -51,6 +57,7 @@ Global
 		{E2004470-17E6-4E9E-BE22-4CBB74D567AE} = {2CA97C77-EE69-470E-92CE-7E7933E8A210}
 		{F89B06C7-43CC-4589-9859-3A4656AAA4A6} = {9F55D1F9-9060-4D43-AE24-FF21E32E6DA7}
 		{EF4B0001-2859-4A09-8F95-3E5BEF4A5272} = {9F55D1F9-9060-4D43-AE24-FF21E32E6DA7}
+		{B02D7E03-1408-4D18-BA52-8EEC75FD86C7} = {2CA97C77-EE69-470E-92CE-7E7933E8A210}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {782601F6-0BE1-49F1-9B15-C92E3D5018B0}
