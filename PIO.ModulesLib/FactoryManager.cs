@@ -22,6 +22,8 @@ namespace PIO.ModulesLib
 			IRecipe? recipe=null;
 			IIngredient[] ingredients = [];
 			IProduct[] products= [];
+			IInputConnector[] inputConnectors = [];
+			IOutputConnector[] outputConnectors = [];
 
 			LogEnter();
 
@@ -42,6 +44,10 @@ namespace PIO.ModulesLib
 				Log(LogLevels.Debug, $"[Recipe ID {recipe.ID}] Get ingredients and products");
 				if (!Try(() => DataSource.GetIngredients(recipe.ID)).Then(result => ingredients = result.ToArray()).OrAlert($"[Recipe ID {recipe.ID}] Failed to get ingredients")) continue;
 				if (!Try(() => DataSource.GetProducts(recipe.ID)).Then(result => products = result.ToArray()).OrAlert($"[Recipe ID {recipe.ID}] Failed to get products")) continue;
+
+				Log(LogLevels.Debug, $"[Factory ID {factory.ID}] Get input and output connectors");
+				if (!Try(() => DataSource.GetInputConnectors(factory.ID)).Then(result => inputConnectors = result.ToArray()).OrAlert($"[Factory ID {factory.ID}] Failed to get input connectors")) continue;
+				if (!Try(() => DataSource.GetOutputConnectors(factory.ID)).Then(result => outputConnectors = result.ToArray()).OrAlert($"[Factory ID {factory.ID}] Failed to get output connectors")) continue;
 
 
 			}
