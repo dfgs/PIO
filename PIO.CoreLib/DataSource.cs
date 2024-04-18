@@ -14,6 +14,7 @@ namespace PIO.CoreLib
 		private List<IOutputConnector> outputConnectors;
 		private List<IConnection> connections;
 		private List<IBuffer> buffers;
+		private List<IRecipe> recipes;
 
 		public DataSource() 
 		{ 
@@ -21,7 +22,8 @@ namespace PIO.CoreLib
 			this.inputConnectors = new List<IInputConnector>();
 			this.outputConnectors = new List<IOutputConnector>();
 			this.connections = new List<IConnection>();
-			buffers = new List<IBuffer>();
+			this.buffers = new List<IBuffer>();
+			this.recipes = new List<IRecipe>();
 		}
 
 		public void AddFactory(IFactory Factory)
@@ -45,11 +47,15 @@ namespace PIO.CoreLib
 			if (Connection == null) throw new PIOInvalidParameterException(nameof(Connection));
 			this.connections.Add(Connection); 
 		}
-
 		public void AddBuffer(IBuffer Buffer)
 		{
 			if (Buffer == null) throw new PIOInvalidParameterException(nameof(Buffer));
 			this.buffers.Add(Buffer); 
+		}
+		public void AddRecipe(IRecipe Recipe)
+		{
+			if (Recipe == null) throw new PIOInvalidParameterException(nameof(Recipe));
+			this.recipes.Add(Recipe);
 		}
 
 		public IFactory? GetFactory(FactoryID FactoryID)
@@ -103,6 +109,15 @@ namespace PIO.CoreLib
 		public IEnumerable<IBuffer> GetBuffers()
 		{
 			return buffers;
+		}
+
+		public IRecipe? GetRecipe(RecipeID RecipeID)
+		{
+			return recipes.FirstOrDefault(item => item.ID == RecipeID);
+		}
+		public IRecipe? GetRecipe(string FactoryType)
+		{
+			return recipes.FirstOrDefault(item => item.FactoryType == FactoryType);
 		}
 
 	}

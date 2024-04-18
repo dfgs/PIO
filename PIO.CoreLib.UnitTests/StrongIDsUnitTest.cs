@@ -24,6 +24,10 @@ namespace PIO.CoreLib.UnitTests
 			Assert.AreEqual(new BufferID(0), BufferID.New());
 			Assert.AreEqual(new BufferID(1), BufferID.New());
 			Assert.AreEqual(new BufferID(2), BufferID.New());
+
+			Assert.AreEqual(new RecipeID(0), RecipeID.New());
+			Assert.AreEqual(new RecipeID(1), RecipeID.New());
+			Assert.AreEqual(new RecipeID(2), RecipeID.New());
 		}
 
 

@@ -18,6 +18,7 @@ namespace PIO.ModulesLib
 		public bool Update(IDataSource DataSource, float Cycle)
 		{
 			IFactory[] sortedFactories = [];
+			IRecipe? recipe=null;
 
 			LogEnter();
 
@@ -27,7 +28,12 @@ namespace PIO.ModulesLib
 			Log(LogLevels.Information, "Updating all factories");
 			foreach(IFactory factory in sortedFactories)
 			{
-				
+				if (!Try(() => DataSource.GetRecipe(factory.FactoryType)).Then(result => recipe = result).OrAlert($"Failed to get recipe for factory with ID {factory.ID}")) continue;
+				if (recipe == null)
+				{
+					Log(LogLevels.Warning, $"No recipe found for factory with ID {factory.ID}");
+					continue;
+				}
 
 			}
 

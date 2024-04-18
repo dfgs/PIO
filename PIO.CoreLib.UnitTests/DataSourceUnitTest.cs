@@ -65,6 +65,18 @@ namespace PIO.CoreLib.UnitTests
 			Assert.ThrowsException<PIOInvalidParameterException>(() => dataSource.AddBuffer(null));
 #pragma warning restore CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
 		}
+	
+		[TestMethod]
+		public void AddRecipeShouldThrowExceptionIfParameterIsNull()
+		{
+			IDataSource dataSource;
+
+			dataSource = new DataSource();
+
+#pragma warning disable CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
+			Assert.ThrowsException<PIOInvalidParameterException>(() => dataSource.AddRecipe(null));
+#pragma warning restore CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
+		}
 
 		[TestMethod]
 		public void GetFactoryShouldReturnValidValue()
@@ -366,7 +378,32 @@ namespace PIO.CoreLib.UnitTests
 			Assert.IsTrue(results.Contains(buffer3));
 		}
 
+		[TestMethod]
+		public void GetRecipeShouldReturnValidValue()
+		{
+			IRecipe recipe;
+			IDataSource dataSource;
 
+			recipe = new Recipe() { ID = new RecipeID(1), FactoryType = "Type1" };
+			dataSource = new DataSource();
+			dataSource.AddRecipe(recipe);
+
+			Assert.AreEqual(recipe, dataSource.GetRecipe(new RecipeID(1)));
+			Assert.AreEqual(recipe, dataSource.GetRecipe("Type1"));
+		}
+		[TestMethod]
+		public void GetRecipeShouldReturnNull()
+		{
+			IRecipe recipe;
+			IDataSource dataSource;
+
+			recipe = new Recipe() { ID = new RecipeID(1), FactoryType = "Type1" };
+			dataSource = new DataSource();
+			dataSource.AddRecipe(recipe);
+
+			Assert.IsNull(dataSource.GetRecipe(new RecipeID(0)));
+			Assert.IsNull(dataSource.GetRecipe("Undefined"));
+		}
 
 	}
 

@@ -13,6 +13,7 @@ namespace PIO.CoreLib
 		void AddOutputConnector(IOutputConnector Connector);
 		void AddConnection(IConnection Connection);
 		void AddBuffer(IBuffer Buffer);
+		void AddRecipe(IRecipe Recipe);
 
 		IFactory? GetFactory(FactoryID FactoryID);
 		IEnumerable<IFactory> GetFactories();
@@ -31,6 +32,9 @@ namespace PIO.CoreLib
 		IEnumerable<IBuffer> GetBuffers();
 		IBuffer? GetBuffer(BufferID BufferID);
 		IBuffer? GetBuffer(ConnectorID ConnectorID);
+
+		IRecipe? GetRecipe(RecipeID RecipeID);
+		IRecipe? GetRecipe(string FactoryType);
 
 	}
 }
