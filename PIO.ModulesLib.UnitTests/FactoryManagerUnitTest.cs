@@ -31,12 +31,12 @@ namespace PIO.ModulesLib.UnitTests
 			recipe3 = new Recipe() { ID = new RecipeID(3), FactoryType = "Type3" };
 
 			ingredient1 = new Ingredient() { ID = new IngredientID(1), RecipeID = new RecipeID(1), ResourceType = "Type1", Rate = 1 };
-			ingredient2 = new Ingredient() { ID = new IngredientID(2), RecipeID = new RecipeID(2), ResourceType = "Type2", Rate = 1 };
-			ingredient3 = new Ingredient() { ID = new IngredientID(3), RecipeID = new RecipeID(3), ResourceType = "Type3", Rate = 1 };
+			ingredient2 = new Ingredient() { ID = new IngredientID(2), RecipeID = new RecipeID(2), ResourceType = "Type2", Rate = 2 };
+			ingredient3 = new Ingredient() { ID = new IngredientID(3), RecipeID = new RecipeID(3), ResourceType = "Type3", Rate = 2 };
 
-			product1 = new Product() { ID = new ProductID(1), RecipeID = new RecipeID(1), ResourceType = "Type2", Rate = 1 };
-			product2 = new Product() { ID = new ProductID(2), RecipeID = new RecipeID(2), ResourceType = "Type3", Rate = 1 };
-			product3 = new Product() { ID = new ProductID(3), RecipeID = new RecipeID(3), ResourceType = "Type4", Rate = 1 };
+			product1 = new Product() { ID = new ProductID(1), RecipeID = new RecipeID(1), ResourceType = "Type2", Rate = 2 };
+			product2 = new Product() { ID = new ProductID(2), RecipeID = new RecipeID(2), ResourceType = "Type3", Rate = 2 };
+			product3 = new Product() { ID = new ProductID(3), RecipeID = new RecipeID(3), ResourceType = "Type4", Rate = 2 };
 
 			inputConnector1 = new InputConnector() { ID = new ConnectorID(1), FactoryID = new FactoryID(1), ResourceType = "Type1" };
 			inputConnector2 = new InputConnector() { ID = new ConnectorID(2), FactoryID = new FactoryID(2), ResourceType = "Type2" };
@@ -212,6 +212,33 @@ namespace PIO.ModulesLib.UnitTests
 			result = factoryManager.GetEfficiency(new FactoryID(2), [ingredient1, ingredient2], [connector1, connector2]);
 			Assert.AreEqual(0.5f, result);
 		}
+		[TestMethod]
+		public void GetEfficiencyShouldReturn1WhenIngredientRateIs0()
+		{
+			IFactoryManager factoryManager;
+			IDataSource dataSource;
+			DebugLogger logger;
+			ITopologySorter topologySorter;
+			IIngredient ingredient1, ingredient2;
+			IConnector connector1, connector2;
+			float result;
+
+			logger = new DebugLogger();
+
+			ingredient1 = new Ingredient() { ID = new IngredientID(1), RecipeID = new RecipeID(1), ResourceType = "Type1", Rate = 0 };
+			ingredient2 = new Ingredient() { ID = new IngredientID(2), RecipeID = new RecipeID(2), ResourceType = "Type2", Rate = 0 };
+
+			connector1 = new InputConnector() { ID = new ConnectorID(1), FactoryID = new FactoryID(1), ResourceType = "Type1", Rate = 0 };
+			connector2 = new InputConnector() { ID = new ConnectorID(2), FactoryID = new FactoryID(2), ResourceType = "Type2", Rate = 0 };
+
+			dataSource = Mock.Of<IDataSource>();
+			topologySorter = Mock.Of<ITopologySorter>();
+
+			factoryManager = new FactoryManager(logger, topologySorter);
+			result = factoryManager.GetEfficiency(new FactoryID(2), [ingredient1, ingredient2], [connector1, connector2]);
+			Assert.AreEqual(1f, result);
+		}
+
 
 		[TestMethod]
 		public void UpdateShouldLogErrorIfCannotSortFactories()
