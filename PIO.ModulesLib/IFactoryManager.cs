@@ -9,6 +9,7 @@ namespace PIO.ModulesLib
 {
 	public interface IFactoryManager:IPIOUpdateModule
 	{
-		
+		float GetEfficiency(FactoryID FactoryID, IEnumerable<IIngredient> Ingredients, IEnumerable<IConnector> Connectors);
+
 	}
 }

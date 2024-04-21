@@ -16,6 +16,46 @@ namespace PIO.ModulesLib
 			this.topologySorter = TopologySorter;
 		}
 
+		public float GetEfficiency(FactoryID FactoryID,IEnumerable<IIngredient> Ingredients,IEnumerable<IConnector> Connectors)
+		{
+			float efficiency;
+			IConnector? connector;
+			float connectorEfficiency;
+
+			LogEnter();
+			if (Ingredients == null)
+			{
+				Log(LogLevels.Fatal, $"Parameter {nameof(Ingredients)} cannot be null");
+				return 0;
+			}
+			if (Connectors == null)
+			{
+				Log(LogLevels.Fatal, $"Parameter {nameof(Connectors)} cannot be null");
+				return 0;
+			}
+
+			efficiency = 1;
+			foreach(IIngredient ingredient in Ingredients)
+			{
+				// we don't need this ingredient
+				if (ingredient.Rate == 0) continue;
+				
+				// if we don't have input for this ingredient, so efficiency is 0
+				connector=Connectors.FirstOrDefault(item=>item.ResourceType== ingredient.ResourceType);
+				if (connector==null)
+				{
+					Log(LogLevels.Warning, $"[Factory ID {FactoryID}] No connector found for ingredient ID {ingredient.ID}");
+					efficiency = 0;
+					break;
+				}
+
+				connectorEfficiency = connector.Rate / ingredient.Rate;
+				if (connectorEfficiency < efficiency) efficiency = connectorEfficiency;
+
+			}
+
+			return efficiency;
+		}
 		public bool Update(IDataSource DataSource, float Cycle)
 		{
 			IFactory[] sortedFactories = [];
@@ -24,6 +64,7 @@ namespace PIO.ModulesLib
 			IProduct[] products= [];
 			IInputConnector[] inputConnectors = [];
 			IOutputConnector[] outputConnectors = [];
+			IOutputConnector? outputConnector;
 
 			LogEnter();
 
@@ -48,6 +89,22 @@ namespace PIO.ModulesLib
 				Log(LogLevels.Debug, $"[Factory ID {factory.ID}] Get input and output connectors");
 				if (!Try(() => DataSource.GetInputConnectors(factory.ID)).Then(result => inputConnectors = result.ToArray()).OrAlert($"[Factory ID {factory.ID}] Failed to get input connectors")) continue;
 				if (!Try(() => DataSource.GetOutputConnectors(factory.ID)).Then(result => outputConnectors = result.ToArray()).OrAlert($"[Factory ID {factory.ID}] Failed to get output connectors")) continue;
+
+
+				Log(LogLevels.Debug, $"[Factory ID {factory.ID}] Compute efficiency");
+				factory.Efficiency = GetEfficiency(factory.ID, ingredients, inputConnectors);
+				
+				Log(LogLevels.Debug, $"[Factory ID {factory.ID}] Updating output connectors");
+				foreach (IProduct product in products)
+				{
+					outputConnector=outputConnectors.FirstOrDefault(item=>item.ResourceType== product.ResourceType);
+					if (outputConnector==null)
+					{
+						Log(LogLevels.Warning, $"[Factory ID {factory.ID}] No ouput connector found for product ID {product.ID}");
+						continue;
+					}
+					outputConnector.Rate = factory.Efficiency*product.Rate;
+				}
 
 
 			}

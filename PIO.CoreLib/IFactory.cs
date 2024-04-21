@@ -13,7 +13,11 @@ namespace PIO.CoreLib
 			get;
 		}
 
-		
+		float Efficiency
+		{
+			get;
+			set;
+		}
 
 
 	}

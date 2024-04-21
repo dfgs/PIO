@@ -22,7 +22,11 @@ namespace PIO.CoreLib
 			set;
 		}
 		
-
+		public float Rate
+		{
+			get;
+			set;
+		}
 		
 
 		public Connector()

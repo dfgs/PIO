@@ -17,6 +17,11 @@ namespace PIO.CoreLib
 			get;
 		}
 
+		float Rate
+		{
+			get;
+			set;
+		}
 
 	
 	}

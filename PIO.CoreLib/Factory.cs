@@ -18,6 +18,11 @@ namespace PIO.CoreLib
 			set;
 		}
 
+		public float Efficiency
+		{
+			get;
+			set;
+		}
 
 		public Factory() 
 		{
