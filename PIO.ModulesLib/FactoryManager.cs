@@ -25,12 +25,12 @@ namespace PIO.ModulesLib
 			LogEnter();
 			if (Ingredients == null)
 			{
-				Log(LogLevels.Fatal, $"Parameter {nameof(Ingredients)} cannot be null");
+				Log(LogLevels.Fatal, $"[Factory ID {FactoryID}] Parameter {nameof(Ingredients)} cannot be null");
 				return 0;
 			}
 			if (Connectors == null)
 			{
-				Log(LogLevels.Fatal, $"Parameter {nameof(Connectors)} cannot be null");
+				Log(LogLevels.Fatal, $"[Factory ID {FactoryID}] Parameter {nameof(Connectors)} cannot be null");
 				return 0;
 			}
 
@@ -56,6 +56,41 @@ namespace PIO.ModulesLib
 
 			return efficiency;
 		}
+		public bool UpdateConnectors(FactoryID FactoryID, float Efficiency, IEnumerable<IProduct> Products, IEnumerable<IConnector> Connectors)
+		{
+			IConnector? connector;
+
+			LogEnter();
+			if (Products == null)
+			{
+				Log(LogLevels.Fatal, $"[Factory ID {FactoryID}] Parameter {nameof(Products)} cannot be null");
+				return false;
+			}
+			if (Connectors == null)
+			{
+				Log(LogLevels.Fatal, $"[Factory ID {FactoryID}] Parameter {nameof(Connectors)} cannot be null");
+				return false;
+			}
+			if ((Efficiency < 0)|| (Efficiency>1))
+			{
+				Log(LogLevels.Error, $"[Factory ID {FactoryID}] Parameter {nameof(Efficiency)} has invalid value {Efficiency}");
+				return false;
+			}
+			foreach (IProduct product in Products)
+			{
+				connector = Connectors.FirstOrDefault(item => item.ResourceType == product.ResourceType);
+				if (connector == null)
+				{
+					Log(LogLevels.Warning, $"[Factory ID {FactoryID}] No ouput connector found for product ID {product.ID}");
+					continue;
+				}
+				connector.Rate = Efficiency * product.Rate;
+			}
+
+			return true;
+		}
+
+
 		public bool Update(IDataSource DataSource, float Cycle)
 		{
 			IFactory[] sortedFactories = [];
@@ -64,14 +99,13 @@ namespace PIO.ModulesLib
 			IProduct[] products= [];
 			IInputConnector[] inputConnectors = [];
 			IOutputConnector[] outputConnectors = [];
-			IOutputConnector? outputConnector;
 
 			LogEnter();
 
-			Log(LogLevels.Information, "Sorting factories by dependency");
+			Log(LogLevels.Information, "[Factory ID {factory.ID}] Sorting factories by dependency");
 			if (!Try(() => topologySorter.Sort(DataSource)).Then(items => sortedFactories = items.ToArray()).OrAlert("Failed to sort factories")) return false;
 
-			Log(LogLevels.Information, "Updating all factories");
+			Log(LogLevels.Information, "[Factory ID {factory.ID}] Updating all factories");
 			foreach(IFactory factory in sortedFactories)
 			{
 				Log(LogLevels.Debug, $"[Factory ID {factory.ID}] Processing factory");
@@ -95,16 +129,7 @@ namespace PIO.ModulesLib
 				factory.Efficiency = GetEfficiency(factory.ID, ingredients, inputConnectors);
 				
 				Log(LogLevels.Debug, $"[Factory ID {factory.ID}] Updating output connectors");
-				foreach (IProduct product in products)
-				{
-					outputConnector=outputConnectors.FirstOrDefault(item=>item.ResourceType== product.ResourceType);
-					if (outputConnector==null)
-					{
-						Log(LogLevels.Warning, $"[Factory ID {factory.ID}] No ouput connector found for product ID {product.ID}");
-						continue;
-					}
-					outputConnector.Rate = factory.Efficiency*product.Rate;
-				}
+				UpdateConnectors(factory.ID, factory.Efficiency, products, outputConnectors);
 
 
 			}

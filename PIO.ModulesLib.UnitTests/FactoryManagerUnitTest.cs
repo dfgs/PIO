@@ -34,11 +34,11 @@ namespace PIO.ModulesLib.UnitTests
 			ingredient2 = new Ingredient() { ID = new IngredientID(2), RecipeID = new RecipeID(2), ResourceType = "Type2", Rate = 2 };
 			ingredient3 = new Ingredient() { ID = new IngredientID(3), RecipeID = new RecipeID(3), ResourceType = "Type3", Rate = 2 };
 
-			product1 = new Product() { ID = new ProductID(1), RecipeID = new RecipeID(1), ResourceType = "Type2", Rate = 2 };
-			product2 = new Product() { ID = new ProductID(2), RecipeID = new RecipeID(2), ResourceType = "Type3", Rate = 2 };
-			product3 = new Product() { ID = new ProductID(3), RecipeID = new RecipeID(3), ResourceType = "Type4", Rate = 2 };
+			product1 = new Product() { ID = new ProductID(1), RecipeID = new RecipeID(1), ResourceType = "Type2", Rate = 1 };
+			product2 = new Product() { ID = new ProductID(2), RecipeID = new RecipeID(2), ResourceType = "Type3", Rate = 1 };
+			product3 = new Product() { ID = new ProductID(3), RecipeID = new RecipeID(3), ResourceType = "Type4", Rate = 1 };
 
-			inputConnector1 = new InputConnector() { ID = new ConnectorID(1), FactoryID = new FactoryID(1), ResourceType = "Type1" };
+			inputConnector1 = new InputConnector() { ID = new ConnectorID(1), FactoryID = new FactoryID(1), ResourceType = "Type1",Rate=1 };
 			inputConnector2 = new InputConnector() { ID = new ConnectorID(2), FactoryID = new FactoryID(2), ResourceType = "Type2" };
 			inputConnector3 = new InputConnector() { ID = new ConnectorID(3), FactoryID = new FactoryID(3), ResourceType = "Type3" };
 
@@ -102,14 +102,14 @@ namespace PIO.ModulesLib.UnitTests
 #pragma warning disable CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
 			result=factoryManager.GetEfficiency(new FactoryID(2), null, Enumerable.Empty<IConnector>());
 			Assert.AreEqual(0f,result);
-			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Fatal, "Parameter", "null", "Ingredients"));
+			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Fatal, "[Factory ID 2]", "Parameter", "null", "Ingredients"));
 #pragma warning restore CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
 
 			factoryManager = new FactoryManager(logger, topologySorter);
 #pragma warning disable CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
 			result = factoryManager.GetEfficiency(new FactoryID(2), Enumerable.Empty<IIngredient>(), null);
 			Assert.AreEqual(0f, result);
-			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Fatal, "Parameter", "null", "Connectors"));
+			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Fatal, "[Factory ID 2]", "Parameter", "null", "Connectors"));
 #pragma warning restore CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
 
 		}
@@ -132,7 +132,7 @@ namespace PIO.ModulesLib.UnitTests
 			Assert.AreEqual(1f, result);
 		}
 		[TestMethod]
-		public void GetEfficiencyShouldReturn0WhenConnectorIsMissing()
+		public void GetEfficiencyShouldReturn0AndLogWarningWhenConnectorIsMissing()
 		{
 			IFactoryManager factoryManager;
 			IDataSource dataSource;
@@ -157,7 +157,7 @@ namespace PIO.ModulesLib.UnitTests
 			result = factoryManager.GetEfficiency(new FactoryID(2), [ingredient1,ingredient2], [connector1,connector2]);
 			Assert.AreEqual(0f, result);
 			Assert.AreEqual(1, logger.WarningCount);
-			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Warning, "connector", "ingredient", "[Factory ID 2]"));
+			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Warning, "[Factory ID 2]", "connector", "ingredient"));
 
 		}
 		[TestMethod]
@@ -239,6 +239,189 @@ namespace PIO.ModulesLib.UnitTests
 			Assert.AreEqual(1f, result);
 		}
 
+
+		[TestMethod]
+		public void UpdateConnectorsShouldLogErrorIfParameterIsNull()
+		{
+			IFactoryManager factoryManager;
+			IDataSource dataSource;
+			DebugLogger logger;
+			ITopologySorter topologySorter;
+			bool result;
+
+			logger = new DebugLogger();
+
+			dataSource = Mock.Of<IDataSource>();
+			topologySorter = Mock.Of<ITopologySorter>();
+
+			factoryManager = new FactoryManager(logger, topologySorter);
+#pragma warning disable CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
+			result = factoryManager.UpdateConnectors(new FactoryID(2), 1f,null, Enumerable.Empty<IConnector>());
+			Assert.IsFalse(result);
+			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Fatal, "[Factory ID 2]", "Parameter", "null", "Products"));
+#pragma warning restore CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
+
+			factoryManager = new FactoryManager(logger, topologySorter);
+#pragma warning disable CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
+			result = factoryManager.UpdateConnectors(new FactoryID(2), 1f, Enumerable.Empty<IProduct>(), null);
+			Assert.IsFalse(result);
+			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Fatal, "[Factory ID 2]", "Parameter", "null", "Connectors"));
+#pragma warning restore CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
+
+		}
+
+		[TestMethod]
+		public void UpdateConnectorsShouldLogWarningIfConnectorIsMissing()
+		{
+			IFactoryManager factoryManager;
+			IDataSource dataSource;
+			DebugLogger logger;
+			ITopologySorter topologySorter;
+			IProduct product1, product2;
+			IConnector connector1, connector2;
+			bool result;
+
+			logger = new DebugLogger();
+
+			product1 = new Product() { ID = new ProductID(1), RecipeID = new RecipeID(1), ResourceType = "Type2", Rate = 1 };
+			product2 = new Product() { ID = new ProductID(2), RecipeID = new RecipeID(2), ResourceType = "Type3", Rate = 1 };
+
+			connector1 = new OutputConnector() { ID = new ConnectorID(1), FactoryID = new FactoryID(1), ResourceType = "Type2" };
+			connector2 = new OutputConnector() { ID = new ConnectorID(2), FactoryID = new FactoryID(2), ResourceType = "Type4" };
+
+			dataSource = Mock.Of<IDataSource>();
+			topologySorter = Mock.Of<ITopologySorter>();
+
+			factoryManager = new FactoryManager(logger, topologySorter);
+			result = factoryManager.UpdateConnectors(new FactoryID(2), 1, [product1, product2], [connector1, connector2]);
+			Assert.IsTrue(result);
+			Assert.AreEqual(1, logger.WarningCount);
+			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Warning, "[Factory ID 2]", "connector", "product"));
+
+		}
+
+		[TestMethod]
+		public void UpdateConnectorsShouldLogErrorIfEfficencyIsInvalid()
+		{
+			IFactoryManager factoryManager;
+			IDataSource dataSource;
+			DebugLogger logger;
+			ITopologySorter topologySorter;
+			IProduct product1, product2;
+			IConnector connector1, connector2;
+			bool result;
+
+
+			product1 = new Product() { ID = new ProductID(1), RecipeID = new RecipeID(1), ResourceType = "Type2", Rate = 1 };
+			product2 = new Product() { ID = new ProductID(2), RecipeID = new RecipeID(2), ResourceType = "Type3", Rate = 1 };
+
+			connector1 = new OutputConnector() { ID = new ConnectorID(1), FactoryID = new FactoryID(1), ResourceType = "Type2" };
+			connector2 = new OutputConnector() { ID = new ConnectorID(2), FactoryID = new FactoryID(2), ResourceType = "Type3" };
+
+			dataSource = Mock.Of<IDataSource>();
+			topologySorter = Mock.Of<ITopologySorter>();
+
+			logger = new DebugLogger();
+			factoryManager = new FactoryManager(logger, topologySorter);
+			result = factoryManager.UpdateConnectors(new FactoryID(2), 2, [product1, product2], [connector1, connector2]);
+			Assert.IsFalse(result);
+			Assert.AreEqual(1, logger.ErrorCount);
+			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Error, "[Factory ID 2]", "Efficiency"));
+
+
+			logger = new DebugLogger();
+			factoryManager = new FactoryManager(logger, topologySorter);
+			result = factoryManager.UpdateConnectors(new FactoryID(2), -1, [product1, product2], [connector1, connector2]);
+			Assert.IsFalse(result);
+			Assert.AreEqual(1, logger.ErrorCount);
+			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Error, "[Factory ID 2]", "Efficiency","-1"));
+		}
+
+		[TestMethod]
+		public void UpdateConnectorsShouldApplyCorrectRatesWhenEfficiencyIs1()
+		{
+			IFactoryManager factoryManager;
+			IDataSource dataSource;
+			DebugLogger logger;
+			ITopologySorter topologySorter;
+			IProduct product1, product2;
+			IConnector connector1, connector2;
+			bool result;
+
+			logger = new DebugLogger();
+
+			product1 = new Product() { ID = new ProductID(1), RecipeID = new RecipeID(1), ResourceType = "Type2", Rate = 2 };
+			product2 = new Product() { ID = new ProductID(2), RecipeID = new RecipeID(2), ResourceType = "Type3", Rate = 4 };
+
+			connector1 = new OutputConnector() { ID = new ConnectorID(1), FactoryID = new FactoryID(1), ResourceType = "Type2" };
+			connector2 = new OutputConnector() { ID = new ConnectorID(2), FactoryID = new FactoryID(2), ResourceType = "Type3" };
+
+			dataSource = Mock.Of<IDataSource>();
+			topologySorter = Mock.Of<ITopologySorter>();
+
+			factoryManager = new FactoryManager(logger, topologySorter);
+			result = factoryManager.UpdateConnectors(new FactoryID(2), 1, [product1, product2], [connector1, connector2]);
+			Assert.IsTrue(result);
+			Assert.AreEqual(2, connector1.Rate);
+			Assert.AreEqual(4, connector2.Rate);
+		}
+
+		[TestMethod]
+		public void UpdateConnectorsShouldApplyCorrectRatesWhenEfficiencyIs0()
+		{
+			IFactoryManager factoryManager;
+			IDataSource dataSource;
+			DebugLogger logger;
+			ITopologySorter topologySorter;
+			IProduct product1, product2;
+			IConnector connector1, connector2;
+			bool result;
+
+			logger = new DebugLogger();
+
+			product1 = new Product() { ID = new ProductID(1), RecipeID = new RecipeID(1), ResourceType = "Type2", Rate = 2 };
+			product2 = new Product() { ID = new ProductID(2), RecipeID = new RecipeID(2), ResourceType = "Type3", Rate = 4 };
+
+			connector1 = new OutputConnector() { ID = new ConnectorID(1), FactoryID = new FactoryID(1), ResourceType = "Type2" };
+			connector2 = new OutputConnector() { ID = new ConnectorID(2), FactoryID = new FactoryID(2), ResourceType = "Type3" };
+
+			dataSource = Mock.Of<IDataSource>();
+			topologySorter = Mock.Of<ITopologySorter>();
+
+			factoryManager = new FactoryManager(logger, topologySorter);
+			result = factoryManager.UpdateConnectors(new FactoryID(2), 0, [product1, product2], [connector1, connector2]);
+			Assert.IsTrue(result);
+			Assert.AreEqual(0, connector1.Rate);
+			Assert.AreEqual(0, connector2.Rate);
+		}
+		[TestMethod]
+		public void UpdateConnectorsShouldApplyCorrectRatesWhenEfficiencyIsOneHalf()
+		{
+			IFactoryManager factoryManager;
+			IDataSource dataSource;
+			DebugLogger logger;
+			ITopologySorter topologySorter;
+			IProduct product1, product2;
+			IConnector connector1, connector2;
+			bool result;
+
+			logger = new DebugLogger();
+
+			product1 = new Product() { ID = new ProductID(1), RecipeID = new RecipeID(1), ResourceType = "Type2", Rate = 2 };
+			product2 = new Product() { ID = new ProductID(2), RecipeID = new RecipeID(2), ResourceType = "Type3", Rate = 4 };
+
+			connector1 = new OutputConnector() { ID = new ConnectorID(1), FactoryID = new FactoryID(1), ResourceType = "Type2" };
+			connector2 = new OutputConnector() { ID = new ConnectorID(2), FactoryID = new FactoryID(2), ResourceType = "Type3" };
+
+			dataSource = Mock.Of<IDataSource>();
+			topologySorter = Mock.Of<ITopologySorter>();
+
+			factoryManager = new FactoryManager(logger, topologySorter);
+			result = factoryManager.UpdateConnectors(new FactoryID(2), 0.5f, [product1, product2], [connector1, connector2]);
+			Assert.IsTrue(result);
+			Assert.AreEqual(1, connector1.Rate);
+			Assert.AreEqual(2, connector2.Rate);
+		}
 
 		[TestMethod]
 		public void UpdateShouldLogErrorIfCannotSortFactories()
