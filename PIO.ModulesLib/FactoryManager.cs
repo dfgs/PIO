@@ -9,11 +9,14 @@ namespace PIO.ModulesLib
 	public class FactoryManager : PIOModule,IFactoryManager
 	{
 		private ITopologySorter topologySorter;
+		private IRecipeManager recipeManager;
 
-		public FactoryManager(ILogger Logger,IDataSource DataSource, ITopologySorter TopologySorter) : base(Logger,DataSource)
+		public FactoryManager(ILogger Logger,IDataSource DataSource, ITopologySorter TopologySorter,IRecipeManager RecipeManager) : base(Logger,DataSource)
 		{
-			if (TopologySorter==null) throw new PIOInvalidParameterException(nameof(TopologySorter));
+			if (TopologySorter == null) throw new PIOInvalidParameterException(nameof(TopologySorter));
+			if (RecipeManager == null) throw new PIOInvalidParameterException(nameof(RecipeManager));
 			this.topologySorter = TopologySorter;
+			this.recipeManager = RecipeManager;
 		}
 
 		public float GetEfficiency(FactoryID FactoryID,IEnumerable<IIngredient> Ingredients,IEnumerable<IConnector> Connectors)
@@ -126,8 +129,8 @@ namespace PIO.ModulesLib
 		{
 			IFactory[] sortedFactories = [];
 			IRecipe? recipe=null;
-			IIngredient[] ingredients = [];
-			IProduct[] products= [];
+			IIngredient[]? ingredients;
+			IProduct[]? products;
 			IInputConnector[]? inputConnectors = null;
 			IOutputConnector[]? outputConnectors = null;
 			IConnection[] connections = [];
@@ -151,21 +154,32 @@ namespace PIO.ModulesLib
 				}
 				
 
-				Log(LogLevels.Debug, $"[Recipe ID {recipe.ID}] Get ingredients and products");
-				if (!Try(() => DataSource.GetIngredients(recipe.ID)).Then(result => ingredients = result.ToArray()).OrAlert($"[Recipe ID {recipe.ID}] Failed to get ingredients")) continue;
-				if (!Try(() => DataSource.GetProducts(recipe.ID)).Then(result => products = result.ToArray()).OrAlert($"[Recipe ID {recipe.ID}] Failed to get products")) continue;
+				Log(LogLevels.Debug, $"[Factory ID {factory.ID}] Get ingredients and products");
+				ingredients = recipeManager.GetIngredients(recipe.ID);
+				if (ingredients == null)
+				{
+					Log(LogLevels.Warning, $"[Factory ID {factory.ID}] Failed to get ingredients");
+					continue;
+				}
+				products = recipeManager.GetProducts(recipe.ID);
+				if (products == null)
+				{
+					Log(LogLevels.Warning, $"[Factory ID {factory.ID}] Failed to get products");
+					continue;
+				}
+
 
 				Log(LogLevels.Debug, $"[Factory ID {factory.ID}] Get input and output connectors");
 				inputConnectors = GetInputConnectors(factory.ID);
 				if (inputConnectors == null)
 				{
-					Log(LogLevels.Warning, $"[Factory ID {factory.ID}] No input connectors found");
+					Log(LogLevels.Warning, $"[Factory ID {factory.ID}] Failed to get input connectors");
 					continue;
 				}
 				outputConnectors = GetOutputConnectors(factory.ID);
 				if (outputConnectors == null)
 				{
-					Log(LogLevels.Warning, $"[Factory ID {factory.ID}] No output connectors found");
+					Log(LogLevels.Warning, $"[Factory ID {factory.ID}] Failed to get output connectors");
 					continue;
 				}
 

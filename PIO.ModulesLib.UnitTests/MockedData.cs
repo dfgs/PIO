@@ -2,6 +2,7 @@
 using PIO.CoreLib;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -94,6 +95,33 @@ namespace PIO.ModulesLib.UnitTests
 
 			return dataSource;
 		}
+		public static IRecipeManager GetMockedRecipeManager()
+		{
+			IRecipeManager recipeManager;
+			IIngredient ingredient1, ingredient2, ingredient3;
+			IProduct product1, product2, product3;
+
+			ingredient1 = new Ingredient() { ID = new IngredientID(1), RecipeID = new RecipeID(1), ResourceType = "Type1", Rate = 1 };
+			ingredient2 = new Ingredient() { ID = new IngredientID(2), RecipeID = new RecipeID(2), ResourceType = "Type2", Rate = 2 };
+			ingredient3 = new Ingredient() { ID = new IngredientID(3), RecipeID = new RecipeID(3), ResourceType = "Type3", Rate = 2 };
+
+			product1 = new Product() { ID = new ProductID(1), RecipeID = new RecipeID(1), ResourceType = "Type2", Rate = 1 };
+			product2 = new Product() { ID = new ProductID(2), RecipeID = new RecipeID(2), ResourceType = "Type3", Rate = 1 };
+			product3 = new Product() { ID = new ProductID(3), RecipeID = new RecipeID(3), ResourceType = "Type4", Rate = 1 };
+
+
+			recipeManager = Mock.Of<IRecipeManager>();
+			Mock.Get(recipeManager).Setup(m => m.GetIngredients(new RecipeID(1))).Returns([ingredient1]);
+			Mock.Get(recipeManager).Setup(m => m.GetIngredients(new RecipeID(2))).Returns([ingredient2]);
+			Mock.Get(recipeManager).Setup(m => m.GetIngredients(new RecipeID(3))).Returns([ingredient3]);
+
+			Mock.Get(recipeManager).Setup(m => m.GetProducts(new RecipeID(1))).Returns([product1]);
+			Mock.Get(recipeManager).Setup(m => m.GetProducts(new RecipeID(2))).Returns([product2]);
+			Mock.Get(recipeManager).Setup(m => m.GetProducts(new RecipeID(3))).Returns([product3]);
+
+			return recipeManager;
+		}
+
 
 	}
 }
