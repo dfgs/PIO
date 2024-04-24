@@ -99,6 +99,8 @@ namespace PIO.ModulesLib
 			IProduct[] products= [];
 			IInputConnector[] inputConnectors = [];
 			IOutputConnector[] outputConnectors = [];
+			IConnection[] connections = [];
+			IInputConnector? destinationConnector=null;
 
 			LogEnter();
 
@@ -129,9 +131,30 @@ namespace PIO.ModulesLib
 				factory.Efficiency = GetEfficiency(factory.ID, ingredients, inputConnectors);
 				
 				Log(LogLevels.Debug, $"[Factory ID {factory.ID}] Updating output connectors");
-				UpdateConnectors(factory.ID, factory.Efficiency, products, outputConnectors);
+				if (!UpdateConnectors(factory.ID, factory.Efficiency, products, outputConnectors))
+				{
+					Log(LogLevels.Warning, $"[Factory ID {factory.ID}] Failed to update output connectors");
+					return false;
+				}
 
+				Log(LogLevels.Debug, $"[Factory ID {factory.ID}] Updating connections");
+				foreach (IOutputConnector outputConnector in outputConnectors)
+				{
+					Log(LogLevels.Debug, $"[Connector ID {outputConnector.ID}] Processing connector, trying to get connections");
+					if (!Try(() => DataSource.GetConnections(outputConnector.ID)).Then(result => connections = result.ToArray()).OrAlert($"[Connector ID {outputConnector.ID}] Failed to get connections")) continue;
+					foreach(IConnection connection in connections)
+					{
+						Log(LogLevels.Debug, $"[Connection ID {connection.ID}] Processing connection, trying to get destination connector");
 
+						if (!Try(() => DataSource.GetInputConnector(connection.DestinationID)).Then(result => destinationConnector = result).OrAlert($"[Connection ID {connection.ID}] Failed to get destination connector")) continue;
+						if (destinationConnector==null)
+						{
+							Log(LogLevels.Warning, $"[Connection ID {connection.ID}] No destination connector found");
+							continue;
+						}
+						destinationConnector.Rate = outputConnector.Rate;
+					}
+				}
 			}
 
 			return true;
