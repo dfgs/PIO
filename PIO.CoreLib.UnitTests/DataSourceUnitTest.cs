@@ -103,7 +103,7 @@ namespace PIO.CoreLib.UnitTests
 			IFactory factory;
 			IDataSource dataSource;
 
-			factory = new Factory() { ID = new FactoryID(1), FactoryType = "Type1" };
+			factory = new Factory() { ID = new FactoryID(1), FactoryTypeID = new FactoryTypeID("Type1") };
 			dataSource = new DataSource();
 			dataSource.AddFactory(factory);
 
@@ -115,7 +115,7 @@ namespace PIO.CoreLib.UnitTests
 			IFactory factory;
 			IDataSource dataSource;
 
-			factory = new Factory() { ID = new FactoryID(1), FactoryType = "Type1" };
+			factory = new Factory() { ID = new FactoryID(1), FactoryTypeID = new FactoryTypeID("Type1") };
 			dataSource = new DataSource();
 			dataSource.AddFactory(factory);
 
@@ -128,9 +128,9 @@ namespace PIO.CoreLib.UnitTests
 			IDataSource dataSource;
 			IFactory[] results;
 
-			factory1 = new Factory() { ID = new FactoryID(1), FactoryType = "Type1" };
-			factory2 = new Factory() { ID = new FactoryID(2), FactoryType = "Type1" };
-			factory3 = new Factory() { ID = new FactoryID(3), FactoryType = "Type1" };
+			factory1 = new Factory() { ID = new FactoryID(1), FactoryTypeID = new FactoryTypeID("Type1") };
+			factory2 = new Factory() { ID = new FactoryID(2), FactoryTypeID = new FactoryTypeID("Type1") };
+			factory3 = new Factory() { ID = new FactoryID(3), FactoryTypeID = new FactoryTypeID("Type1") };
 
 			dataSource = new DataSource();
 			dataSource.AddFactory(factory1);
@@ -403,12 +403,12 @@ namespace PIO.CoreLib.UnitTests
 			IRecipe recipe;
 			IDataSource dataSource;
 
-			recipe = new Recipe() { ID = new RecipeID(1), FactoryType = "Type1" };
+			recipe = new Recipe() { ID = new RecipeID(1), FactoryTypeID = new FactoryTypeID("Type1") };
 			dataSource = new DataSource();
 			dataSource.AddRecipe(recipe);
 
 			Assert.AreEqual(recipe, dataSource.GetRecipe(new RecipeID(1)));
-			Assert.AreEqual(recipe, dataSource.GetRecipe("Type1"));
+			Assert.AreEqual(recipe, dataSource.GetRecipe(new FactoryTypeID("Type1")));
 		}
 		[TestMethod]
 		public void GetRecipeShouldReturnNull()
@@ -416,12 +416,12 @@ namespace PIO.CoreLib.UnitTests
 			IRecipe recipe;
 			IDataSource dataSource;
 
-			recipe = new Recipe() { ID = new RecipeID(1), FactoryType = "Type1" };
+			recipe = new Recipe() { ID = new RecipeID(1), FactoryTypeID = new FactoryTypeID("Type1") };
 			dataSource = new DataSource();
 			dataSource.AddRecipe(recipe);
 
 			Assert.IsNull(dataSource.GetRecipe(new RecipeID(0)));
-			Assert.IsNull(dataSource.GetRecipe("Undefined"));
+			Assert.IsNull(dataSource.GetRecipe(new FactoryTypeID("Undefined")));
 		}
 
 

@@ -132,9 +132,9 @@ namespace PIO.CoreLib
 		{
 			return recipes.FirstOrDefault(item => item.ID == RecipeID);
 		}
-		public IRecipe? GetRecipe(string FactoryType)
+		public IRecipe? GetRecipe(FactoryTypeID FactoryTypeID)
 		{
-			return recipes.FirstOrDefault(item => item.FactoryType == FactoryType);
+			return recipes.FirstOrDefault(item => item.FactoryTypeID == FactoryTypeID);
 		}
 
 		public IIngredient? GetIngredient(IngredientID IngredientID)

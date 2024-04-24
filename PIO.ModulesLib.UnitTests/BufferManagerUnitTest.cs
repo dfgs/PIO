@@ -13,7 +13,8 @@ namespace PIO.ModulesLib.UnitTests
 		public void ConstructorShouldThrowExceptionIfParameterIsNull()
 		{
 #pragma warning disable CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
-			Assert.ThrowsException<ArgumentNullException>(() => new BufferManager(null));
+			Assert.ThrowsException<ArgumentNullException>(() => new BufferManager(null, Mock.Of<IDataSource>()));
+			Assert.ThrowsException<PIOInvalidParameterException>(() => new BufferManager(NullLogger.Instance, null));
 #pragma warning restore CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
 
 		}
@@ -32,8 +33,8 @@ namespace PIO.ModulesLib.UnitTests
 			dataSource = Mock.Of<IDataSource>();
 			Mock.Get(dataSource).Setup(m => m.GetBuffers()).Throws<InvalidOperationException>();
 
-			bufferManager = new BufferManager(logger);
-			result=bufferManager.Update(dataSource, 0);
+			bufferManager = new BufferManager(logger,dataSource);
+			result=bufferManager.Update(0);
 			Assert.IsFalse(result);
 			Assert.AreEqual(1, logger.ErrorCount);
 			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Error, "buffers"));
@@ -58,8 +59,8 @@ namespace PIO.ModulesLib.UnitTests
 			Mock.Get(dataSource).Setup(m => m.GetBuffers()).Returns([buffer1]);
 
 
-			bufferManager = new BufferManager(logger);
-			result = bufferManager.Update(dataSource, 0);
+			bufferManager = new BufferManager(logger, dataSource);
+			result = bufferManager.Update(0);
 			Assert.IsTrue(result);
 			Assert.AreEqual(1, logger.ErrorCount);
 			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Error, "invalid state", "[Buffer ID 12]"));
@@ -85,8 +86,8 @@ namespace PIO.ModulesLib.UnitTests
 			dataSource = Mock.Of<IDataSource>();
 			Mock.Get(dataSource).Setup(m => m.GetBuffers()).Returns([buffer1]);
 
-			bufferManager = new BufferManager(logger);
-			result = bufferManager.Update(dataSource, 0);
+			bufferManager = new BufferManager(logger, dataSource);
+			result = bufferManager.Update(0);
 			Assert.IsTrue(result);
 			Assert.AreEqual(1, logger.ErrorCount);
 			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Error, "update", "[Buffer ID 12]"));
@@ -119,8 +120,8 @@ namespace PIO.ModulesLib.UnitTests
 			dataSource = Mock.Of<IDataSource>();
 			Mock.Get(dataSource).Setup(m => m.GetBuffers()).Returns([buffer1,buffer2,buffer3]);
 
-			bufferManager = new BufferManager(logger);
-			result = bufferManager.Update(dataSource, 0);
+			bufferManager = new BufferManager(logger, dataSource);
+			result = bufferManager.Update( 0);
 			Assert.IsTrue(result);
 			Assert.AreEqual(0, logger.ErrorCount);
 			Mock.Get(buffer1).Verify(m => m.Update(0), Times.Once);

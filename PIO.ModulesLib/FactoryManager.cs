@@ -6,11 +6,11 @@ using System;
 
 namespace PIO.ModulesLib
 {
-	public class FactoryManager : Module,IFactoryManager
+	public class FactoryManager : PIOModule,IFactoryManager
 	{
 		private ITopologySorter topologySorter;
 
-		public FactoryManager(ILogger Logger,ITopologySorter TopologySorter) : base(Logger)
+		public FactoryManager(ILogger Logger,IDataSource DataSource, ITopologySorter TopologySorter) : base(Logger,DataSource)
 		{
 			if (TopologySorter==null) throw new PIOInvalidParameterException(nameof(TopologySorter));
 			this.topologySorter = TopologySorter;
@@ -90,8 +90,17 @@ namespace PIO.ModulesLib
 			return true;
 		}
 
+		public IRecipe? GetRecipe(FactoryTypeID FactoryTypeID)
+		{
+			IRecipe? recipe = null;
 
-		public bool Update(IDataSource DataSource, float Cycle)
+			LogEnter();
+			Log(LogLevels.Debug, $"[FactoryType ID {FactoryTypeID}] Trying to get recipe");
+			if (!Try(() => DataSource.GetRecipe(FactoryTypeID)).Then(result => recipe = result).OrAlert($"[FactoryType ID {FactoryTypeID}] Failed to get recipe")) return null;
+			return recipe;
+		}
+
+		public bool Update(float Cycle)
 		{
 			IFactory[] sortedFactories = [];
 			IRecipe? recipe=null;
@@ -111,12 +120,14 @@ namespace PIO.ModulesLib
 			foreach(IFactory factory in sortedFactories)
 			{
 				Log(LogLevels.Debug, $"[Factory ID {factory.ID}] Processing factory");
-				if (!Try(() => DataSource.GetRecipe(factory.FactoryType)).Then(result => recipe = result).OrAlert($"[Factory ID {factory.ID}] Failed to get recipe")) continue;
+				recipe = GetRecipe(factory.FactoryTypeID);
 				if (recipe == null)
 				{
 					Log(LogLevels.Warning, $"[Factory ID {factory.ID}] No recipe found");
 					continue;
 				}
+				
+
 
 				Log(LogLevels.Debug, $"[Recipe ID {recipe.ID}] Get ingredients and products");
 				if (!Try(() => DataSource.GetIngredients(recipe.ID)).Then(result => ingredients = result.ToArray()).OrAlert($"[Recipe ID {recipe.ID}] Failed to get ingredients")) continue;

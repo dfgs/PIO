@@ -5,14 +5,14 @@ using PIO.CoreLib.Exceptions;
 
 namespace PIO.ModulesLib
 {
-	public class BufferManager : Module,IBufferManager
+	public class BufferManager : PIOModule,IBufferManager
 	{
 
-		public BufferManager(ILogger Logger) : base(Logger)
+		public BufferManager(ILogger Logger,IDataSource DataSource) : base(Logger,DataSource)
 		{
 		}
 
-		public bool Update(IDataSource DataSource, float Cycle)
+		public bool Update( float Cycle)
 		{
 			IBuffer[] buffers=[];
 

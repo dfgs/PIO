@@ -11,22 +11,16 @@ namespace PIO.CoreLib.UnitTests
 		{
 			Factory factory;
 
-			factory = new Factory() { ID = new FactoryID(0), FactoryType = "Type1" };
-			Assert.AreEqual("Type1", factory.FactoryType);
+			factory = new Factory() { ID = new FactoryID(0), FactoryTypeID = new FactoryTypeID("Type1") };
+			Assert.AreEqual(new FactoryTypeID("Type1"), factory.FactoryTypeID);
 			Assert.AreEqual(new FactoryID(0), factory.ID);
 
-			factory = new Factory(new FactoryID(1), "Type2") ;
-			Assert.AreEqual("Type2", factory.FactoryType);
+			factory = new Factory(new FactoryID(1), new FactoryTypeID("Type2")) ;
+			Assert.AreEqual(new FactoryTypeID("Type2"), factory.FactoryTypeID);
 			Assert.AreEqual(new FactoryID(1), factory.ID);
 		}
 
-		[TestMethod]
-		public void ConstructorShouldThrowExceptionIfParameterIsNull()
-		{
-#pragma warning disable CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
-			Assert.ThrowsException<PIOInvalidParameterException>(() => new Factory(FactoryID.Empty, null));
-#pragma warning restore CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
-		}
+		
 
 		
 

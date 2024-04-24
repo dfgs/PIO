@@ -36,7 +36,7 @@ namespace PIO.CoreLib
 		IBuffer? GetBuffer(ConnectorID ConnectorID);
 
 		IRecipe? GetRecipe(RecipeID RecipeID);
-		IRecipe? GetRecipe(string FactoryType);
+		IRecipe? GetRecipe(FactoryTypeID FactoryTypeID);
 
 		IIngredient? GetIngredient(IngredientID IngredientID);
 		IEnumerable<IIngredient> GetIngredients(RecipeID RecipeID);

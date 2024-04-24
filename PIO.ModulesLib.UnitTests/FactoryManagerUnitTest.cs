@@ -21,15 +21,15 @@ namespace PIO.ModulesLib.UnitTests
 			IOutputConnector outputConnector1, outputConnector2, outputConnector3;
 			IConnection connection1, connection2;
 
-			factory1 = new Factory() { ID = new FactoryID(1), FactoryType = "Type1" };
+			factory1 = new Factory() { ID = new FactoryID(1), FactoryTypeID = new FactoryTypeID( "Type1") };
 			factory2 = Mock.Of<IFactory>();
 			Mock.Get(factory2).Setup(m => m.ID).Returns(new FactoryID(2));
-			Mock.Get(factory2).Setup(m => m.FactoryType).Returns("Type2");
-			factory3 = new Factory() { ID = new FactoryID(3), FactoryType = "Type3" };
+			Mock.Get(factory2).Setup(m => m.FactoryTypeID).Returns(new FactoryTypeID("Type2"));
+			factory3 = new Factory() { ID = new FactoryID(3), FactoryTypeID = new FactoryTypeID("Type3") };
 
-			recipe1 = new Recipe() { ID = new RecipeID(1), FactoryType = "Type1" };
-			recipe2 = new Recipe() { ID = new RecipeID(2), FactoryType = "Type2" };
-			recipe3 = new Recipe() { ID = new RecipeID(3), FactoryType = "Type3" };
+			recipe1 = new Recipe() { ID = new RecipeID(1), FactoryTypeID = new FactoryTypeID("Type1") };
+			recipe2 = new Recipe() { ID = new RecipeID(2), FactoryTypeID = new FactoryTypeID("Type2") };
+			recipe3 = new Recipe() { ID = new RecipeID(3), FactoryTypeID = new FactoryTypeID("Type3") };
 
 			ingredient1 = new Ingredient() { ID = new IngredientID(1), RecipeID = new RecipeID(1), ResourceType = "Type1", Rate = 1 };
 			ingredient2 = new Ingredient() { ID = new IngredientID(2), RecipeID = new RecipeID(2), ResourceType = "Type2", Rate = 2 };
@@ -55,9 +55,9 @@ namespace PIO.ModulesLib.UnitTests
 			Mock.Get(dataSource).Setup(m => m.GetFactory(new FactoryID(2))).Returns(factory2);
 			Mock.Get(dataSource).Setup(m => m.GetFactory(new FactoryID(3))).Returns(factory3);
 
-			Mock.Get(dataSource).Setup(m => m.GetRecipe("Type1")).Returns(recipe1);
-			Mock.Get(dataSource).Setup(m => m.GetRecipe("Type2")).Returns(recipe2);
-			Mock.Get(dataSource).Setup(m => m.GetRecipe("Type3")).Returns(recipe3);
+			Mock.Get(dataSource).Setup(m => m.GetRecipe(new FactoryTypeID("Type1"))).Returns(recipe1);
+			Mock.Get(dataSource).Setup(m => m.GetRecipe(new FactoryTypeID("Type2"))).Returns(recipe2);
+			Mock.Get(dataSource).Setup(m => m.GetRecipe(new FactoryTypeID("Type3"))).Returns(recipe3);
 
 			Mock.Get(dataSource).Setup(m => m.GetIngredients(new RecipeID(1))).Returns([ingredient1]);
 			Mock.Get(dataSource).Setup(m => m.GetIngredients(new RecipeID(2))).Returns([ingredient2]);
@@ -98,8 +98,9 @@ namespace PIO.ModulesLib.UnitTests
 		public void ConstructorShouldThrowExceptionIfParameterIsNull()
 		{
 #pragma warning disable CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
-			Assert.ThrowsException<ArgumentNullException>(() => new FactoryManager(null, Mock.Of<TopologySorter>()));
-			Assert.ThrowsException<PIOInvalidParameterException>(() => new FactoryManager(NullLogger.Instance, null ));
+			Assert.ThrowsException<ArgumentNullException>(() => new FactoryManager(null, Mock.Of<IDataSource>(), Mock.Of<TopologySorter>()));
+			Assert.ThrowsException<PIOInvalidParameterException>(() => new FactoryManager(NullLogger.Instance, null, Mock.Of<TopologySorter>())); ;
+			Assert.ThrowsException<PIOInvalidParameterException>(() => new FactoryManager(NullLogger.Instance, Mock.Of<IDataSource>(), null));
 #pragma warning restore CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
 
 		}
@@ -118,14 +119,14 @@ namespace PIO.ModulesLib.UnitTests
 			dataSource = Mock.Of<IDataSource>();
 			topologySorter = Mock.Of<ITopologySorter>();
 
-			factoryManager = new FactoryManager(logger, topologySorter);
+			factoryManager = new FactoryManager(logger,dataSource, topologySorter);
 #pragma warning disable CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
 			result=factoryManager.GetEfficiency(new FactoryID(2), null, Enumerable.Empty<IConnector>());
 			Assert.AreEqual(0f,result);
 			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Fatal, "[Factory ID 2]", "Parameter", "null", "Ingredients"));
 #pragma warning restore CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
 
-			factoryManager = new FactoryManager(logger, topologySorter);
+			factoryManager = new FactoryManager(logger, dataSource, topologySorter);
 #pragma warning disable CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
 			result = factoryManager.GetEfficiency(new FactoryID(2), Enumerable.Empty<IIngredient>(), null);
 			Assert.AreEqual(0f, result);
@@ -147,7 +148,7 @@ namespace PIO.ModulesLib.UnitTests
 			dataSource = Mock.Of<IDataSource>();
 			topologySorter = Mock.Of<ITopologySorter>();
 
-			factoryManager = new FactoryManager(logger, topologySorter);
+			factoryManager = new FactoryManager(logger, dataSource, topologySorter);
 			result = factoryManager.GetEfficiency(new FactoryID(2),[], []);
 			Assert.AreEqual(1f, result);
 		}
@@ -173,7 +174,7 @@ namespace PIO.ModulesLib.UnitTests
 			dataSource = Mock.Of<IDataSource>();
 			topologySorter = Mock.Of<ITopologySorter>();
 
-			factoryManager = new FactoryManager(logger, topologySorter);
+			factoryManager = new FactoryManager(logger, dataSource, topologySorter);
 			result = factoryManager.GetEfficiency(new FactoryID(2), [ingredient1,ingredient2], [connector1,connector2]);
 			Assert.AreEqual(0f, result);
 			Assert.AreEqual(1, logger.WarningCount);
@@ -202,7 +203,7 @@ namespace PIO.ModulesLib.UnitTests
 			dataSource = Mock.Of<IDataSource>();
 			topologySorter = Mock.Of<ITopologySorter>();
 
-			factoryManager = new FactoryManager(logger, topologySorter);
+			factoryManager = new FactoryManager(logger, dataSource, topologySorter);
 			result = factoryManager.GetEfficiency(new FactoryID(2), [ingredient1, ingredient2], [connector1, connector2]);
 			Assert.AreEqual(1f, result);
 		}
@@ -228,7 +229,7 @@ namespace PIO.ModulesLib.UnitTests
 			dataSource = Mock.Of<IDataSource>();
 			topologySorter = Mock.Of<ITopologySorter>();
 
-			factoryManager = new FactoryManager(logger, topologySorter);
+			factoryManager = new FactoryManager(logger, dataSource, topologySorter);
 			result = factoryManager.GetEfficiency(new FactoryID(2), [ingredient1, ingredient2], [connector1, connector2]);
 			Assert.AreEqual(0.5f, result);
 		}
@@ -254,9 +255,34 @@ namespace PIO.ModulesLib.UnitTests
 			dataSource = Mock.Of<IDataSource>();
 			topologySorter = Mock.Of<ITopologySorter>();
 
-			factoryManager = new FactoryManager(logger, topologySorter);
+			factoryManager = new FactoryManager(logger, dataSource, topologySorter);
 			result = factoryManager.GetEfficiency(new FactoryID(2), [ingredient1, ingredient2], [connector1, connector2]);
 			Assert.AreEqual(1f, result);
+		}
+		
+		
+		
+		[TestMethod]
+		public void GetRecipeShouldLogErrorIfDataSourceThrowsException()
+		{
+			IFactoryManager factoryManager;
+			IDataSource dataSource;
+			DebugLogger logger;
+			ITopologySorter topologySorter;
+			IRecipe? result;
+
+			logger = new DebugLogger();
+
+			dataSource = Mock.Of<IDataSource>();
+			Mock.Get(dataSource).Setup(m => m.GetRecipe(It.IsAny<FactoryTypeID>())).Throws(new InvalidOperationException());
+			topologySorter = Mock.Of<ITopologySorter>();
+
+			factoryManager = new FactoryManager(logger, dataSource, topologySorter);
+			result=factoryManager.GetRecipe(new FactoryTypeID("Type1"));
+			Assert.IsNull(result);
+			Assert.AreEqual(1, logger.ErrorCount);
+			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Error, "[FactoryType ID Type1]", "Failed", "recipe"));
+
 		}
 
 
@@ -274,14 +300,14 @@ namespace PIO.ModulesLib.UnitTests
 			dataSource = Mock.Of<IDataSource>();
 			topologySorter = Mock.Of<ITopologySorter>();
 
-			factoryManager = new FactoryManager(logger, topologySorter);
+			factoryManager = new FactoryManager(logger, dataSource, topologySorter);
 #pragma warning disable CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
 			result = factoryManager.UpdateConnectors(new FactoryID(2), 1f,null, Enumerable.Empty<IConnector>());
 			Assert.IsFalse(result);
 			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Fatal, "[Factory ID 2]", "Parameter", "null", "Products"));
 #pragma warning restore CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
 
-			factoryManager = new FactoryManager(logger, topologySorter);
+			factoryManager = new FactoryManager(logger, dataSource, topologySorter);
 #pragma warning disable CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
 			result = factoryManager.UpdateConnectors(new FactoryID(2), 1f, Enumerable.Empty<IProduct>(), null);
 			Assert.IsFalse(result);
@@ -312,7 +338,7 @@ namespace PIO.ModulesLib.UnitTests
 			dataSource = Mock.Of<IDataSource>();
 			topologySorter = Mock.Of<ITopologySorter>();
 
-			factoryManager = new FactoryManager(logger, topologySorter);
+			factoryManager = new FactoryManager(logger, dataSource, topologySorter);
 			result = factoryManager.UpdateConnectors(new FactoryID(2), 1, [product1, product2], [connector1, connector2]);
 			Assert.IsTrue(result);
 			Assert.AreEqual(1, logger.WarningCount);
@@ -342,7 +368,7 @@ namespace PIO.ModulesLib.UnitTests
 			topologySorter = Mock.Of<ITopologySorter>();
 
 			logger = new DebugLogger();
-			factoryManager = new FactoryManager(logger, topologySorter);
+			factoryManager = new FactoryManager(logger, dataSource, topologySorter);
 			result = factoryManager.UpdateConnectors(new FactoryID(2), 2, [product1, product2], [connector1, connector2]);
 			Assert.IsFalse(result);
 			Assert.AreEqual(1, logger.ErrorCount);
@@ -350,7 +376,7 @@ namespace PIO.ModulesLib.UnitTests
 
 
 			logger = new DebugLogger();
-			factoryManager = new FactoryManager(logger, topologySorter);
+			factoryManager = new FactoryManager(logger, dataSource, topologySorter);
 			result = factoryManager.UpdateConnectors(new FactoryID(2), -1, [product1, product2], [connector1, connector2]);
 			Assert.IsFalse(result);
 			Assert.AreEqual(1, logger.ErrorCount);
@@ -379,7 +405,7 @@ namespace PIO.ModulesLib.UnitTests
 			dataSource = Mock.Of<IDataSource>();
 			topologySorter = Mock.Of<ITopologySorter>();
 
-			factoryManager = new FactoryManager(logger, topologySorter);
+			factoryManager = new FactoryManager(logger, dataSource, topologySorter);
 			result = factoryManager.UpdateConnectors(new FactoryID(2), 1, [product1, product2], [connector1, connector2]);
 			Assert.IsTrue(result);
 			Assert.AreEqual(2, connector1.Rate);
@@ -408,7 +434,7 @@ namespace PIO.ModulesLib.UnitTests
 			dataSource = Mock.Of<IDataSource>();
 			topologySorter = Mock.Of<ITopologySorter>();
 
-			factoryManager = new FactoryManager(logger, topologySorter);
+			factoryManager = new FactoryManager(logger, dataSource, topologySorter);
 			result = factoryManager.UpdateConnectors(new FactoryID(2), 0, [product1, product2], [connector1, connector2]);
 			Assert.IsTrue(result);
 			Assert.AreEqual(0, connector1.Rate);
@@ -436,7 +462,7 @@ namespace PIO.ModulesLib.UnitTests
 			dataSource = Mock.Of<IDataSource>();
 			topologySorter = Mock.Of<ITopologySorter>();
 
-			factoryManager = new FactoryManager(logger, topologySorter);
+			factoryManager = new FactoryManager(logger, dataSource, topologySorter);
 			result = factoryManager.UpdateConnectors(new FactoryID(2), 0.5f, [product1, product2], [connector1, connector2]);
 			Assert.IsTrue(result);
 			Assert.AreEqual(1, connector1.Rate);
@@ -460,14 +486,15 @@ namespace PIO.ModulesLib.UnitTests
 			topologySorter=Mock.Of<ITopologySorter>();
 			Mock.Get(topologySorter).Setup(m=>m.Sort(It.IsAny<IDataSource>())).Throws<InvalidOperationException>();
 
-			factoryManager = new FactoryManager(logger,topologySorter);
-			result=factoryManager.Update(dataSource, 0);
+			factoryManager = new FactoryManager(logger, dataSource, topologySorter);
+			result=factoryManager.Update(0);
 			Assert.IsFalse(result);
 			Assert.AreEqual(1, logger.ErrorCount);
 			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Error, "sort","factories"));
 		}
+		
 		[TestMethod]
-		public void UpdateShouldLogErrorIfCannotGetRecipe()
+		public void UpdateShouldLogWarningIfRecipeIsNotFound()
 		{
 			IFactoryManager factoryManager;
 			IDataSource dataSource;
@@ -478,38 +505,13 @@ namespace PIO.ModulesLib.UnitTests
 			logger = new DebugLogger();
 
 			dataSource = GetMockedDataSource();
-			Mock.Get(dataSource).Setup(m => m.GetRecipe("Type2")).Throws<InvalidOperationException>();
+			Mock.Get(dataSource).Setup(m => m.GetRecipe(new FactoryTypeID("Type2"))).Throws(new InvalidOperationException());
 
 			topologySorter = Mock.Of<ITopologySorter>();
 			Mock.Get(topologySorter).Setup(m => m.Sort(It.IsAny<IDataSource>())).Returns([dataSource.GetFactory(new FactoryID(1)), dataSource.GetFactory(new FactoryID(2)), dataSource.GetFactory(new FactoryID(3))]);
 
-			factoryManager = new FactoryManager(logger, topologySorter);
-			result = factoryManager.Update(dataSource, 0);
-			Assert.IsTrue(result);
-			Assert.AreEqual(1, logger.ErrorCount);
-			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Error, "get", "recipe", "[Factory ID 2]"));
-		}
-		[TestMethod]
-		public void UpdateShouldLogErrorIfRecipeIsNotFound()
-		{
-			IFactoryManager factoryManager;
-			IDataSource dataSource;
-			DebugLogger logger;
-			ITopologySorter topologySorter;
-			IFactory factory;
-			bool result;
-
-			logger = new DebugLogger();
-
-			dataSource = GetMockedDataSource();
-			factory = dataSource.GetFactory(new FactoryID(2))!;
-			Mock.Get(factory).Setup(m => m.FactoryType).Returns("TypeError");
-
-			topologySorter = Mock.Of<ITopologySorter>();
-			Mock.Get(topologySorter).Setup(m => m.Sort(It.IsAny<IDataSource>())).Returns([dataSource.GetFactory(new FactoryID(1)), dataSource.GetFactory(new FactoryID(2)), dataSource.GetFactory(new FactoryID(3))]);
-
-			factoryManager = new FactoryManager(logger, topologySorter);
-			result = factoryManager.Update(dataSource, 0);
+			factoryManager = new FactoryManager(logger, dataSource, topologySorter);
+			result = factoryManager.Update(0);
 			Assert.IsTrue(result);
 			Assert.AreEqual(1, logger.WarningCount);
 			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Warning, "found", "recipe", "[Factory ID 2]"));
@@ -533,8 +535,8 @@ namespace PIO.ModulesLib.UnitTests
 			topologySorter = Mock.Of<ITopologySorter>();
 			Mock.Get(topologySorter).Setup(m => m.Sort(It.IsAny<IDataSource>())).Returns([dataSource.GetFactory(new FactoryID(1)), dataSource.GetFactory(new FactoryID(2)), dataSource.GetFactory(new FactoryID(3))]);
 
-			factoryManager = new FactoryManager(logger, topologySorter);
-			result = factoryManager.Update(dataSource, 0);
+			factoryManager = new FactoryManager(logger, dataSource, topologySorter);
+			result = factoryManager.Update(0);
 			Assert.IsTrue(result);
 			Assert.AreEqual(1, logger.ErrorCount);
 			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Error, "get", "ingredient", "[Recipe ID 2]"));
@@ -557,8 +559,8 @@ namespace PIO.ModulesLib.UnitTests
 			topologySorter = Mock.Of<ITopologySorter>();
 			Mock.Get(topologySorter).Setup(m => m.Sort(It.IsAny<IDataSource>())).Returns([dataSource.GetFactory(new FactoryID(1)), dataSource.GetFactory(new FactoryID(2)), dataSource.GetFactory(new FactoryID(3))]);
 
-			factoryManager = new FactoryManager(logger, topologySorter);
-			result = factoryManager.Update(dataSource, 0);
+			factoryManager = new FactoryManager(logger, dataSource, topologySorter);
+			result = factoryManager.Update(0);
 			Assert.IsTrue(result);
 			Assert.AreEqual(1, logger.ErrorCount);
 			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Error, "get", "product", "[Recipe ID 2]"));
@@ -581,8 +583,8 @@ namespace PIO.ModulesLib.UnitTests
 			topologySorter = Mock.Of<ITopologySorter>();
 			Mock.Get(topologySorter).Setup(m => m.Sort(It.IsAny<IDataSource>())).Returns([dataSource.GetFactory(new FactoryID(1)), dataSource.GetFactory(new FactoryID(2)), dataSource.GetFactory(new FactoryID(3))]);
 
-			factoryManager = new FactoryManager(logger, topologySorter);
-			result = factoryManager.Update(dataSource, 0);
+			factoryManager = new FactoryManager(logger, dataSource, topologySorter);
+			result = factoryManager.Update(0);
 			Assert.IsTrue(result);
 			Assert.AreEqual(1, logger.ErrorCount);
 			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Error, "get", "input","connectors", "[Factory ID 2]"));
@@ -605,8 +607,8 @@ namespace PIO.ModulesLib.UnitTests
 			topologySorter = Mock.Of<ITopologySorter>();
 			Mock.Get(topologySorter).Setup(m => m.Sort(It.IsAny<IDataSource>())).Returns([dataSource.GetFactory(new FactoryID(1)), dataSource.GetFactory(new FactoryID(2)), dataSource.GetFactory(new FactoryID(3))]);
 
-			factoryManager = new FactoryManager(logger, topologySorter);
-			result = factoryManager.Update(dataSource, 0);
+			factoryManager = new FactoryManager(logger, dataSource, topologySorter);
+			result = factoryManager.Update(0);
 			Assert.IsTrue(result);
 			Assert.AreEqual(1, logger.ErrorCount);
 			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Error, "get", "output", "connectors", "[Factory ID 2]"));
@@ -629,8 +631,8 @@ namespace PIO.ModulesLib.UnitTests
 			topologySorter = Mock.Of<ITopologySorter>();
 			Mock.Get(topologySorter).Setup(m => m.Sort(It.IsAny<IDataSource>())).Returns([dataSource.GetFactory(new FactoryID(1)), dataSource.GetFactory(new FactoryID(2)), dataSource.GetFactory(new FactoryID(3))]);
 
-			factoryManager = new FactoryManager(logger, topologySorter);
-			result = factoryManager.Update(dataSource, 0);
+			factoryManager = new FactoryManager(logger, dataSource, topologySorter);
+			result = factoryManager.Update(0);
 			Assert.IsTrue(result);
 			Assert.AreEqual(1, logger.ErrorCount);
 			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Error, "get", "connections",  "[Connector ID 5]"));
@@ -653,8 +655,8 @@ namespace PIO.ModulesLib.UnitTests
 			topologySorter = Mock.Of<ITopologySorter>();
 			Mock.Get(topologySorter).Setup(m => m.Sort(It.IsAny<IDataSource>())).Returns([dataSource.GetFactory(new FactoryID(1)), dataSource.GetFactory(new FactoryID(2)), dataSource.GetFactory(new FactoryID(3))]);
 
-			factoryManager = new FactoryManager(logger, topologySorter);
-			result = factoryManager.Update(dataSource, 0);
+			factoryManager = new FactoryManager(logger, dataSource, topologySorter);
+			result = factoryManager.Update(0);
 			Assert.IsTrue(result);
 			Assert.AreEqual(1, logger.ErrorCount);
 			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Error, "destination", "connector", "[Connection ID 1]"));
@@ -677,8 +679,8 @@ namespace PIO.ModulesLib.UnitTests
 			topologySorter = Mock.Of<ITopologySorter>();
 			Mock.Get(topologySorter).Setup(m => m.Sort(It.IsAny<IDataSource>())).Returns([dataSource.GetFactory(new FactoryID(1)), dataSource.GetFactory(new FactoryID(2)), dataSource.GetFactory(new FactoryID(3))]);
 
-			factoryManager = new FactoryManager(logger, topologySorter);
-			result = factoryManager.Update(dataSource, 0);
+			factoryManager = new FactoryManager(logger, dataSource, topologySorter);
+			result = factoryManager.Update(0);
 			Assert.IsTrue(result);
 			Assert.AreEqual(1, logger.WarningCount);
 			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Warning, "destination", "connector", "[Connection ID 1]"));
