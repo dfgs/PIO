@@ -13,5 +13,9 @@ namespace PIO.ModulesLib
 		bool UpdateConnectors(FactoryID FactoryID, float Efficiency, IEnumerable<IProduct> Products, IEnumerable<IConnector> Connectors);
 
 		IRecipe? GetRecipe(FactoryTypeID FactoryTypeID);
+
+		IInputConnector[]? GetInputConnectors(FactoryID FactoryID);
+		IOutputConnector[]? GetOutputConnectors(FactoryID FactoryID);
+
 	}
 }

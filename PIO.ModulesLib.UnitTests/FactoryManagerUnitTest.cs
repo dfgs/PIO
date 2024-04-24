@@ -284,6 +284,126 @@ namespace PIO.ModulesLib.UnitTests
 			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Error, "[FactoryType ID Type1]", "Failed", "recipe"));
 
 		}
+		[TestMethod]
+		public void GetRecipeShouldReturnValidValid()
+		{
+			IFactoryManager factoryManager;
+			IDataSource dataSource;
+			DebugLogger logger;
+			ITopologySorter topologySorter;
+			IRecipe? result;
+
+			logger = new DebugLogger();
+
+			dataSource = GetMockedDataSource();
+			topologySorter = Mock.Of<ITopologySorter>();
+
+			factoryManager = new FactoryManager(logger, dataSource, topologySorter);
+			result = factoryManager.GetRecipe(new FactoryTypeID("Type1"));
+			Assert.IsNotNull(result);
+			Assert.AreEqual(new RecipeID(1), result.ID);
+			
+			result = factoryManager.GetRecipe(new FactoryTypeID("Type2"));
+			Assert.IsNotNull(result);
+			Assert.AreEqual(new RecipeID(2), result.ID);
+		}
+
+
+
+
+		[TestMethod]
+		public void GetInputConnectorsShouldLogErrorIfDataSourceThrowsException()
+		{
+			IFactoryManager factoryManager;
+			IDataSource dataSource;
+			DebugLogger logger;
+			ITopologySorter topologySorter;
+			IInputConnector[]? result;
+
+			logger = new DebugLogger();
+
+			dataSource = Mock.Of<IDataSource>();
+			Mock.Get(dataSource).Setup(m => m.GetInputConnectors(It.IsAny<FactoryID>())).Throws(new InvalidOperationException());
+			topologySorter = Mock.Of<ITopologySorter>();
+
+			factoryManager = new FactoryManager(logger, dataSource, topologySorter);
+			result = factoryManager.GetInputConnectors(new FactoryID(1));
+			Assert.IsNull(result);
+			Assert.AreEqual(1, logger.ErrorCount);
+			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Error, "[Factory ID 1]", "Failed", "input", "connectors"));
+		}
+		[TestMethod]
+		public void GetInputConnectorShouldReturnValidValid()
+		{
+			IFactoryManager factoryManager;
+			IDataSource dataSource;
+			DebugLogger logger;
+			ITopologySorter topologySorter;
+			IInputConnector[]? result;
+
+			logger = new DebugLogger();
+
+			dataSource = GetMockedDataSource();
+			topologySorter = Mock.Of<ITopologySorter>();
+
+			factoryManager = new FactoryManager(logger, dataSource, topologySorter);
+			result = factoryManager.GetInputConnectors(new FactoryID(1));
+			Assert.IsNotNull(result);
+			Assert.AreEqual(1, result.Length);
+			Assert.AreEqual(new ConnectorID(1), result[0].ID);
+
+			result = factoryManager.GetInputConnectors(new FactoryID(2));
+			Assert.IsNotNull(result);
+			Assert.AreEqual(1, result.Length);
+			Assert.AreEqual(new ConnectorID(2), result[0].ID);
+		}
+
+		[TestMethod]
+		public void GetOutputConnectorsShouldLogErrorIfDataSourceThrowsException()
+		{
+			IFactoryManager factoryManager;
+			IDataSource dataSource;
+			DebugLogger logger;
+			ITopologySorter topologySorter;
+			IOutputConnector[]? result;
+
+			logger = new DebugLogger();
+
+			dataSource = Mock.Of<IDataSource>();
+			Mock.Get(dataSource).Setup(m => m.GetOutputConnectors(It.IsAny<FactoryID>())).Throws(new InvalidOperationException());
+			topologySorter = Mock.Of<ITopologySorter>();
+
+			factoryManager = new FactoryManager(logger, dataSource, topologySorter);
+			result = factoryManager.GetOutputConnectors(new FactoryID(1));
+			Assert.IsNull(result);
+			Assert.AreEqual(1, logger.ErrorCount);
+			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Error, "[Factory ID 1]", "Failed", "output", "connectors"));
+		}
+		[TestMethod]
+		public void GetOutputConnectorShouldReturnValidValid()
+		{
+			IFactoryManager factoryManager;
+			IDataSource dataSource;
+			DebugLogger logger;
+			ITopologySorter topologySorter;
+			IOutputConnector[]? result;
+
+			logger = new DebugLogger();
+
+			dataSource = GetMockedDataSource();
+			topologySorter = Mock.Of<ITopologySorter>();
+
+			factoryManager = new FactoryManager(logger, dataSource, topologySorter);
+			result = factoryManager.GetOutputConnectors(new FactoryID(1));
+			Assert.IsNotNull(result);
+			Assert.AreEqual(1, result.Length);
+			Assert.AreEqual(new ConnectorID(4), result[0].ID);
+
+			result = factoryManager.GetOutputConnectors(new FactoryID(2));
+			Assert.IsNotNull(result);
+			Assert.AreEqual(1, result.Length);
+			Assert.AreEqual(new ConnectorID(5), result[0].ID);
+		}
 
 
 		[TestMethod]
@@ -567,7 +687,7 @@ namespace PIO.ModulesLib.UnitTests
 		}
 
 		[TestMethod]
-		public void UpdateShouldLogErrorIfCannotGetInputConnectors()
+		public void UpdateShouldLogWarningIfInputConnectorsAreNotFound()
 		{
 			IFactoryManager factoryManager;
 			IDataSource dataSource;
@@ -586,12 +706,11 @@ namespace PIO.ModulesLib.UnitTests
 			factoryManager = new FactoryManager(logger, dataSource, topologySorter);
 			result = factoryManager.Update(0);
 			Assert.IsTrue(result);
-			Assert.AreEqual(1, logger.ErrorCount);
-			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Error, "get", "input","connectors", "[Factory ID 2]"));
+			Assert.AreEqual(1, logger.WarningCount);
+			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Warning, "found", "input","connectors", "[Factory ID 2]"));
 		}
-
 		[TestMethod]
-		public void UpdateShouldLogErrorIfCannotGetOutputConnectors()
+		public void UpdateShouldLogWarningIfOutputConnectorsAreNotFound()
 		{
 			IFactoryManager factoryManager;
 			IDataSource dataSource;
@@ -610,9 +729,10 @@ namespace PIO.ModulesLib.UnitTests
 			factoryManager = new FactoryManager(logger, dataSource, topologySorter);
 			result = factoryManager.Update(0);
 			Assert.IsTrue(result);
-			Assert.AreEqual(1, logger.ErrorCount);
-			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Error, "get", "output", "connectors", "[Factory ID 2]"));
+			Assert.AreEqual(1, logger.WarningCount);
+			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Warning, "found", "output", "connectors", "[Factory ID 2]"));
 		}
+
 
 		[TestMethod]
 		public void UpdateShouldLogErrorIfCannotGetConnections()

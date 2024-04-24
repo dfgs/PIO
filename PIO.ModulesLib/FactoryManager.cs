@@ -96,9 +96,31 @@ namespace PIO.ModulesLib
 
 			LogEnter();
 			Log(LogLevels.Debug, $"[FactoryType ID {FactoryTypeID}] Trying to get recipe");
-			if (!Try(() => DataSource.GetRecipe(FactoryTypeID)).Then(result => recipe = result).OrAlert($"[FactoryType ID {FactoryTypeID}] Failed to get recipe")) return null;
+			if (!Try(() => recipe=DataSource.GetRecipe(FactoryTypeID)).OrAlert($"[FactoryType ID {FactoryTypeID}] Failed to get recipe")) return null;
 			return recipe;
 		}
+
+		public IInputConnector[]? GetInputConnectors(FactoryID FactoryID)
+		{
+			IInputConnector[]? connectors = null;
+
+			LogEnter();
+			Log(LogLevels.Debug, $"[Factory ID {FactoryID}] Trying to get input connectors");
+			if (!Try(() => DataSource.GetInputConnectors(FactoryID)).Then(result=>connectors=result.ToArray()).OrAlert($"[Factory ID {FactoryID}] Failed to get input connectors")) return null;
+			return connectors;
+		}
+		public IOutputConnector[]? GetOutputConnectors(FactoryID FactoryID)
+		{
+			IOutputConnector[]? connectors = null;
+
+			LogEnter();
+			Log(LogLevels.Debug, $"[Factory ID {FactoryID}] Trying to get output connectors");
+			if (!Try(() => DataSource.GetOutputConnectors(FactoryID)).Then(result => connectors = result.ToArray()).OrAlert($"[Factory ID {FactoryID}] Failed to get output connectors")) return null;
+			return connectors;
+
+		}
+
+
 
 		public bool Update(float Cycle)
 		{
@@ -106,8 +128,8 @@ namespace PIO.ModulesLib
 			IRecipe? recipe=null;
 			IIngredient[] ingredients = [];
 			IProduct[] products= [];
-			IInputConnector[] inputConnectors = [];
-			IOutputConnector[] outputConnectors = [];
+			IInputConnector[]? inputConnectors = null;
+			IOutputConnector[]? outputConnectors = null;
 			IConnection[] connections = [];
 			IInputConnector? destinationConnector=null;
 
@@ -120,6 +142,7 @@ namespace PIO.ModulesLib
 			foreach(IFactory factory in sortedFactories)
 			{
 				Log(LogLevels.Debug, $"[Factory ID {factory.ID}] Processing factory");
+
 				recipe = GetRecipe(factory.FactoryTypeID);
 				if (recipe == null)
 				{
@@ -128,14 +151,23 @@ namespace PIO.ModulesLib
 				}
 				
 
-
 				Log(LogLevels.Debug, $"[Recipe ID {recipe.ID}] Get ingredients and products");
 				if (!Try(() => DataSource.GetIngredients(recipe.ID)).Then(result => ingredients = result.ToArray()).OrAlert($"[Recipe ID {recipe.ID}] Failed to get ingredients")) continue;
 				if (!Try(() => DataSource.GetProducts(recipe.ID)).Then(result => products = result.ToArray()).OrAlert($"[Recipe ID {recipe.ID}] Failed to get products")) continue;
 
 				Log(LogLevels.Debug, $"[Factory ID {factory.ID}] Get input and output connectors");
-				if (!Try(() => DataSource.GetInputConnectors(factory.ID)).Then(result => inputConnectors = result.ToArray()).OrAlert($"[Factory ID {factory.ID}] Failed to get input connectors")) continue;
-				if (!Try(() => DataSource.GetOutputConnectors(factory.ID)).Then(result => outputConnectors = result.ToArray()).OrAlert($"[Factory ID {factory.ID}] Failed to get output connectors")) continue;
+				inputConnectors = GetInputConnectors(factory.ID);
+				if (inputConnectors == null)
+				{
+					Log(LogLevels.Warning, $"[Factory ID {factory.ID}] No input connectors found");
+					continue;
+				}
+				outputConnectors = GetOutputConnectors(factory.ID);
+				if (outputConnectors == null)
+				{
+					Log(LogLevels.Warning, $"[Factory ID {factory.ID}] No output connectors found");
+					continue;
+				}
 
 
 				Log(LogLevels.Debug, $"[Factory ID {factory.ID}] Compute efficiency");
