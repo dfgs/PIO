@@ -465,7 +465,7 @@ namespace PIO.ModulesLib.UnitTests
 			topologySorter = MockedData.GetMockedTopologySorter();
 			
 			recipeManager = MockedData.GetMockedRecipeManager(MockedData.DataSource1);
-			Mock.Get(recipeManager).Setup(m => m.GetRecipe(new FactoryTypeID("Type2"))).Returns<IRecipe?>(null);
+			Mock.Get(recipeManager).Setup(m => m.GetRecipe(new FactoryTypeID("Type2"))).Returns((IRecipe?)null);
 			connectionManager = MockedData.GetMockedConnectionManager(MockedData.DataSource1);
 
 			updateManager = new UpdateManager(logger, dataSource, topologySorter, recipeManager,connectionManager);
@@ -494,7 +494,7 @@ namespace PIO.ModulesLib.UnitTests
 			topologySorter = MockedData.GetMockedTopologySorter();
 			
 			recipeManager = MockedData.GetMockedRecipeManager(MockedData.DataSource1);
-			Mock.Get(recipeManager).Setup(m => m.GetIngredients(new RecipeID(2))).Returns<IIngredient[]?>(null);
+			Mock.Get(recipeManager).Setup(m => m.GetIngredients(new RecipeID(2))).Returns((IIngredient[]?)null);
 			connectionManager = MockedData.GetMockedConnectionManager(MockedData.DataSource1);
 
 			updateManager = new UpdateManager(logger, dataSource, topologySorter, recipeManager,connectionManager);
@@ -522,7 +522,7 @@ namespace PIO.ModulesLib.UnitTests
 			topologySorter = MockedData.GetMockedTopologySorter();
 			
 			recipeManager = MockedData.GetMockedRecipeManager(MockedData.DataSource1);
-			Mock.Get(recipeManager).Setup(m => m.GetProducts(new RecipeID(2))).Returns<IIngredient[]?>(null);
+			Mock.Get(recipeManager).Setup(m => m.GetProducts(new RecipeID(2))).Returns((IProduct[]?)null);
 			connectionManager = MockedData.GetMockedConnectionManager(MockedData.DataSource1);
 
 			updateManager = new UpdateManager(logger, dataSource, topologySorter, recipeManager,connectionManager);
@@ -551,7 +551,7 @@ namespace PIO.ModulesLib.UnitTests
 			
 			recipeManager = MockedData.GetMockedRecipeManager(MockedData.DataSource1);
 			connectionManager = MockedData.GetMockedConnectionManager(MockedData.DataSource1);
-			Mock.Get(connectionManager).Setup(m => m.GetInputConnectors(new FactoryID(2))).Returns<IInputConnector[]?>(null);
+			Mock.Get(connectionManager).Setup(m => m.GetInputConnectors(new FactoryID(2))).Returns((IInputConnector[]?)null);
 
 			updateManager = new UpdateManager(logger, dataSource, topologySorter, recipeManager,connectionManager);
 			result = updateManager.Update(0);
@@ -578,7 +578,7 @@ namespace PIO.ModulesLib.UnitTests
 			
 			recipeManager = MockedData.GetMockedRecipeManager(MockedData.DataSource1);
 			connectionManager = MockedData.GetMockedConnectionManager(MockedData.DataSource1);
-			Mock.Get(connectionManager).Setup(m => m.GetOutputConnectors(new FactoryID(2))).Returns<IOutputConnector[]?>(null);
+			Mock.Get(connectionManager).Setup(m => m.GetOutputConnectors(new FactoryID(2))).Returns((IOutputConnector[]?)null);
 
 			updateManager = new UpdateManager(logger, dataSource, topologySorter, recipeManager,connectionManager);
 			result = updateManager.Update(0);
@@ -607,7 +607,7 @@ namespace PIO.ModulesLib.UnitTests
 			
 			recipeManager = MockedData.GetMockedRecipeManager(MockedData.DataSource1);
 			connectionManager = MockedData.GetMockedConnectionManager(MockedData.DataSource1);
-			Mock.Get(connectionManager).Setup(m => m.GetConnections(new ConnectorID(5))).Returns<IConnection[]?>(null);
+			Mock.Get(connectionManager).Setup(m => m.GetConnections(new ConnectorID(5))).Returns((IConnection[]?)null);
 
 			updateManager = new UpdateManager(logger, dataSource, topologySorter, recipeManager,connectionManager);
 			result = updateManager.Update(0);
@@ -635,7 +635,7 @@ namespace PIO.ModulesLib.UnitTests
 			
 			recipeManager = MockedData.GetMockedRecipeManager(MockedData.DataSource1);
 			connectionManager = MockedData.GetMockedConnectionManager(MockedData.DataSource1);
-			Mock.Get(connectionManager).Setup(m => m.GetInputConnector(new ConnectorID(2))).Returns<IInputConnector?>(null);
+			Mock.Get(connectionManager).Setup(m => m.GetInputConnector(new ConnectorID(2))).Returns((IInputConnector?)null);
 
 			updateManager = new UpdateManager(logger, dataSource, topologySorter, recipeManager,connectionManager);
 			result = updateManager.Update(0);
