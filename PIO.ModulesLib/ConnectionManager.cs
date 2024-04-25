@@ -44,7 +44,16 @@ namespace PIO.ModulesLib
 
 		}
 
+		public IConnection[]? GetConnections(ConnectorID SourceConnectorID)
+		{
+			IConnection[]? connections = null;
 
+			LogEnter();
+			Log(LogLevels.Debug, $"[Connector ID {SourceConnectorID}] Trying to get connections");
+			if (!Try(() => DataSource.GetConnections(SourceConnectorID)).Then(result => connections = result.ToArray()).OrAlert($"[Connector ID {SourceConnectorID}] Failed to get connections")) return null;
+			return connections;
+
+		}
 
 
 	}

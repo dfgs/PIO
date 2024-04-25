@@ -589,7 +589,7 @@ namespace PIO.ModulesLib.UnitTests
 
 
 		[TestMethod]
-		public void UpdateShouldLogErrorIfCannotGetConnections()
+		public void UpdateShouldLogWarningIfCannotGetConnections()
 		{
 			IUpdateManager updateManager;
 			IDataSource dataSource;
@@ -602,18 +602,18 @@ namespace PIO.ModulesLib.UnitTests
 			logger = new DebugLogger();
 
 			dataSource = MockedData.GetMockedDataSource();
-			Mock.Get(dataSource).Setup(m => m.GetConnections(new ConnectorID(5))).Throws<InvalidOperationException>();
 
 			topologySorter = Mock.Of<ITopologySorter>();
 			Mock.Get(topologySorter).Setup(m => m.Sort(It.IsAny<IDataSource>())).Returns([dataSource.GetFactory(new FactoryID(1)), dataSource.GetFactory(new FactoryID(2)), dataSource.GetFactory(new FactoryID(3))]);
 			recipeManager = MockedData.GetMockedRecipeManager();
 			connectionManager = MockedData.GetConnectionManager();
+			Mock.Get(connectionManager).Setup(m => m.GetConnections(new ConnectorID(5))).Returns<IConnection[]?>(null);
 
 			updateManager = new UpdateManager(logger, dataSource, topologySorter, recipeManager,connectionManager);
 			result = updateManager.Update(0);
 			Assert.IsTrue(result);
-			Assert.AreEqual(1, logger.ErrorCount);
-			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Error, "get", "connections",  "[Connector ID 5]"));
+			Assert.AreEqual(1, logger.WarningCount);
+			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Warning, "Failed", "get",  "connections", "[Connector ID 5]"));
 		}
 
 		[TestMethod]

@@ -29,7 +29,7 @@ namespace PIO.CoreLib
 
 
 		IConnection? GetConnection(ConnectionID ConnectionID);
-		IEnumerable<IConnection> GetConnections(ConnectorID SourceID);
+		IEnumerable<IConnection> GetConnections(ConnectorID SourceConnectorID);
 
 		IEnumerable<IBuffer> GetBuffers();
 		IBuffer? GetBuffer(BufferID BufferID);

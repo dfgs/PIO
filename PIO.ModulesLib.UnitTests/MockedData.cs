@@ -136,6 +136,7 @@ namespace PIO.ModulesLib.UnitTests
 			IConnectionManager connectionManager;
 			IInputConnector inputConnector1, inputConnector2, inputConnector3;
 			IOutputConnector outputConnector1, outputConnector2, outputConnector3;
+			IConnection connection1, connection2;
 
 			inputConnector1 = new InputConnector() { ID = new ConnectorID(1), FactoryID = new FactoryID(1), ResourceType = "Type1", Rate = 1 };
 			inputConnector2 = new InputConnector() { ID = new ConnectorID(2), FactoryID = new FactoryID(2), ResourceType = "Type2" };
@@ -145,6 +146,8 @@ namespace PIO.ModulesLib.UnitTests
 			outputConnector2 = new OutputConnector() { ID = new ConnectorID(5), FactoryID = new FactoryID(2), ResourceType = "Type3" };
 			outputConnector3 = new OutputConnector() { ID = new ConnectorID(6), FactoryID = new FactoryID(3), ResourceType = "Type4" };
 
+			connection1 = new Connection() { ID = new ConnectionID(1), SourceID = new ConnectorID(4), DestinationID = new ConnectorID(2) };
+			connection2 = new Connection() { ID = new ConnectionID(2), SourceID = new ConnectorID(5), DestinationID = new ConnectorID(3) };
 
 
 			connectionManager = Mock.Of<IConnectionManager>();
@@ -159,6 +162,9 @@ namespace PIO.ModulesLib.UnitTests
 			Mock.Get(connectionManager).Setup(m => m.GetInputConnector(new ConnectorID(1))).Returns(inputConnector1);
 			Mock.Get(connectionManager).Setup(m => m.GetInputConnector(new ConnectorID(2))).Returns(inputConnector2);
 			Mock.Get(connectionManager).Setup(m => m.GetInputConnector(new ConnectorID(3))).Returns(inputConnector3);
+
+			Mock.Get(connectionManager).Setup(m => m.GetConnections(new ConnectorID(4))).Returns([connection1]);
+			Mock.Get(connectionManager).Setup(m => m.GetConnections(new ConnectorID(5))).Returns([connection2]);
 
 			return connectionManager;
 		}

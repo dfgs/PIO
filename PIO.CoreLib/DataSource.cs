@@ -110,9 +110,9 @@ namespace PIO.CoreLib
 			return connections.FirstOrDefault(item=>item.ID == ConnectionID);
 		}
 
-		public IEnumerable<IConnection> GetConnections(ConnectorID SourceID)
+		public IEnumerable<IConnection> GetConnections(ConnectorID SourceConnectorID)
 		{
-			return connections.Where(item => item.SourceID == SourceID);
+			return connections.Where(item => item.SourceID == SourceConnectorID);
 		}
 
 		public IBuffer? GetBuffer(BufferID BufferID)

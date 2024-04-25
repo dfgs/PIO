@@ -109,7 +109,7 @@ namespace PIO.ModulesLib
 			IProduct[]? products;
 			IInputConnector[]? inputConnectors = null;
 			IOutputConnector[]? outputConnectors = null;
-			IConnection[] connections = [];
+			IConnection[]? connections = null;
 			IInputConnector? destinationConnector=null;
 
 			LogEnter();
@@ -171,8 +171,14 @@ namespace PIO.ModulesLib
 				foreach (IOutputConnector outputConnector in outputConnectors)
 				{
 					Log(LogLevels.Debug, $"[Connector ID {outputConnector.ID}] Processing connector, trying to get connections");
-					if (!Try(() => DataSource.GetConnections(outputConnector.ID)).Then(result => connections = result.ToArray()).OrAlert($"[Connector ID {outputConnector.ID}] Failed to get connections")) continue;
-					foreach(IConnection connection in connections)
+					connections = connectionManager.GetConnections(outputConnector.ID);
+					if (connections == null)
+					{
+						Log(LogLevels.Warning, $"[Connector ID {outputConnector.ID}] Failed to get connections");
+						continue;
+					}
+
+					foreach (IConnection connection in connections)
 					{
 						Log(LogLevels.Debug, $"[Connection ID {connection.ID}] Processing connection, trying to get destination connector");
 						destinationConnector=connectionManager.GetInputConnector(connection.DestinationID);

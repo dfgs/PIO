@@ -155,7 +155,48 @@ namespace PIO.ModulesLib.UnitTests
 
 
 
+		[TestMethod]
+		public void GetConnectionsShouldLogErrorIfDataSourceThrowsException()
+		{
+			IConnectionManager connectionManager;
+			IDataSource dataSource;
+			DebugLogger logger;
+			IConnection[]? result;
 
+			logger = new DebugLogger();
+
+			dataSource = Mock.Of<IDataSource>();
+			Mock.Get(dataSource).Setup(m => m.GetConnections(It.IsAny<ConnectorID>())).Throws(new InvalidOperationException());
+
+			connectionManager = new ConnectionManager(logger, dataSource);
+			result = connectionManager.GetConnections(new ConnectorID(1));
+			Assert.IsNull(result);
+			Assert.AreEqual(1, logger.ErrorCount);
+			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Error, "[Connector ID 1]", "Failed", "connections"));
+		}
+		[TestMethod]
+		public void GetConnectionShouldReturnValidValid()
+		{
+			IConnectionManager connectionManager;
+			IDataSource dataSource;
+			DebugLogger logger;
+			IConnection[]? result;
+
+			logger = new DebugLogger();
+
+			dataSource = MockedData.GetMockedDataSource();
+
+			connectionManager = new ConnectionManager(logger, dataSource);
+			result = connectionManager.GetConnections(new ConnectorID(4));
+			Assert.IsNotNull(result);
+			Assert.AreEqual(1, result.Length);
+			Assert.AreEqual(new ConnectionID(1), result[0].ID);
+
+			result = connectionManager.GetConnections(new ConnectorID(5));
+			Assert.IsNotNull(result);
+			Assert.AreEqual(1, result.Length);
+			Assert.AreEqual(new ConnectionID(2), result[0].ID);
+		}
 
 
 
