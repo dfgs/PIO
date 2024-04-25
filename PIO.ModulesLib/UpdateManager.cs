@@ -11,15 +11,18 @@ namespace PIO.ModulesLib
 		private ITopologySorter topologySorter;
 		private IRecipeManager recipeManager;
 		private IConnectionManager connectionManager;
+		private IBufferManager bufferManager;
 
-		public UpdateManager(ILogger Logger,IDataSource DataSource, ITopologySorter TopologySorter,IRecipeManager RecipeManager,IConnectionManager ConnectionManager) : base(Logger,DataSource)
+		public UpdateManager(ILogger Logger,IDataSource DataSource, ITopologySorter TopologySorter,IRecipeManager RecipeManager,IConnectionManager ConnectionManager,IBufferManager BufferManager) : base(Logger,DataSource)
 		{
 			if (TopologySorter == null) throw new PIOInvalidParameterException(nameof(TopologySorter));
 			if (RecipeManager == null) throw new PIOInvalidParameterException(nameof(RecipeManager));
 			if (ConnectionManager == null) throw new PIOInvalidParameterException(nameof(ConnectionManager));
+			if (BufferManager == null) throw new PIOInvalidParameterException(nameof(BufferManager));
 			this.topologySorter = TopologySorter;
 			this.recipeManager = RecipeManager;
 			this.connectionManager = ConnectionManager;
+			this.bufferManager = BufferManager;
 		}
 
 		public float GetEfficiency(FactoryID FactoryID,IEnumerable<IIngredient> Ingredients,IEnumerable<IConnector> Connectors)
@@ -111,8 +114,40 @@ namespace PIO.ModulesLib
 			IOutputConnector[]? outputConnectors = null;
 			IConnection[]? connections = null;
 			IInputConnector? destinationConnector=null;
+			IBuffer[]? buffers;
 
 			LogEnter();
+
+			Log(LogLevels.Information, "Reseting all buffers");
+			buffers = bufferManager.GetBuffers();
+			if (buffers == null)
+			{
+				Log(LogLevels.Error, $"Failed to get buffers");
+				return false;
+			}
+
+			Log(LogLevels.Debug, "Updating all buffers");
+			foreach (IBuffer buffer in buffers)
+			{
+				Log(LogLevels.Debug, $"[Buffer ID {buffer.ID}] Processing buffer");
+				if (!bufferManager.IsBufferValid(buffer))
+				{
+					Log(LogLevels.Error, $"[Buffer ID {buffer.ID}] Buffer has invalid state");
+					continue;
+				}
+
+				Log(LogLevels.Debug, $"[Buffer ID {buffer.ID}] Update buffer");
+				if (!bufferManager.UpdateBuffer(buffer, Cycle))
+				{
+					Log(LogLevels.Error, $"[Buffer ID {buffer.ID}] Failed to update buffer");
+					continue;
+				}
+
+				// clear rates
+				Log(LogLevels.Debug, $"[Buffer ID {buffer.ID}] Clearing rates of buffer");
+				buffer.InRate = 0; buffer.OutRate = 0;
+			}
+
 
 			Log(LogLevels.Information, "[Factory ID {factory.ID}] Sorting factories by dependency");
 			if (!Try(() => topologySorter.Sort(DataSource)).Then(items => sortedFactories = items.ToArray()).OrAlert("Failed to sort factories")) return false;

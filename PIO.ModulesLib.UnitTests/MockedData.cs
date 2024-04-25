@@ -1,4 +1,5 @@
-﻿using Moq;
+﻿using Microsoft.VisualBasic.FileIO;
+using Moq;
 using PIO.CoreLib;
 using System.Collections.Generic;
 using System.Data.Common;
@@ -249,6 +250,21 @@ namespace PIO.ModulesLib.UnitTests
 
 			return connectionManager;
 		}
+
+		public static IBufferManager GetMockedBufferManager(IDataSource Model)
+		{
+			IBufferManager bufferManager;
+
+			bufferManager = Mock.Of<IBufferManager>();
+			Mock.Get(bufferManager).Setup(m => m.GetBuffers()).Returns(Model.GetBuffers().ToArray());
+			Mock.Get(bufferManager).Setup(m => m.GetBuffer(It.IsAny<BufferID>())).Returns<BufferID>(id => Model.GetBuffer(id));
+			Mock.Get(bufferManager).Setup(m => m.GetBuffer(It.IsAny<ConnectorID>())).Returns<ConnectorID>(id => Model.GetBuffer(id));
+			Mock.Get(bufferManager).Setup(m => m.IsBufferValid(It.IsAny<IBuffer>())).Returns<IBuffer>(buffer => buffer.IsValid);
+			Mock.Get(bufferManager).Setup(m => m.UpdateBuffer(It.IsAny<IBuffer>(), It.IsAny<float>())).Returns<IBuffer,float>((buffer ,cycle)=> { buffer.Update(cycle);return true; });
+
+			return bufferManager;
+		}
+
 
 		public static ITopologySorter GetMockedTopologySorter()
 		{

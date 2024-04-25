@@ -2,6 +2,7 @@ using LogLib;
 using Moq;
 using PIO.CoreLib;
 using PIO.CoreLib.Exceptions;
+using System;
 using System.Globalization;
 
 namespace PIO.ModulesLib.UnitTests
@@ -14,11 +15,12 @@ namespace PIO.ModulesLib.UnitTests
 		public void ConstructorShouldThrowExceptionIfParameterIsNull()
 		{
 #pragma warning disable CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
-			Assert.ThrowsException<ArgumentNullException>(() => new UpdateManager(null, Mock.Of<IDataSource>(), Mock.Of<ITopologySorter>(), Mock.Of<IRecipeManager>(), Mock.Of<IConnectionManager>() ));
-			Assert.ThrowsException<PIOInvalidParameterException>(() => new UpdateManager(NullLogger.Instance, null, Mock.Of<ITopologySorter>(), Mock.Of<IRecipeManager>(), Mock.Of<IConnectionManager>())); ;
-			Assert.ThrowsException<PIOInvalidParameterException>(() => new UpdateManager(NullLogger.Instance, Mock.Of<IDataSource>(), null, Mock.Of<IRecipeManager>(), Mock.Of<IConnectionManager>()));
-			Assert.ThrowsException<PIOInvalidParameterException>(() => new UpdateManager(NullLogger.Instance, Mock.Of<IDataSource>(), Mock.Of<ITopologySorter>(), null, Mock.Of<IConnectionManager>()));
-			Assert.ThrowsException<PIOInvalidParameterException>(() => new UpdateManager(NullLogger.Instance, Mock.Of<IDataSource>(), Mock.Of<ITopologySorter>(),  Mock.Of<IRecipeManager>(),null));
+			Assert.ThrowsException<ArgumentNullException>(() => new UpdateManager(null, Mock.Of<IDataSource>(), Mock.Of<ITopologySorter>(), Mock.Of<IRecipeManager>(), Mock.Of<IConnectionManager>(),Mock.Of<IBufferManager>() ));
+			Assert.ThrowsException<PIOInvalidParameterException>(() => new UpdateManager(NullLogger.Instance, null, Mock.Of<ITopologySorter>(), Mock.Of<IRecipeManager>(), Mock.Of<IConnectionManager>(), Mock.Of<IBufferManager>())); ;
+			Assert.ThrowsException<PIOInvalidParameterException>(() => new UpdateManager(NullLogger.Instance, Mock.Of<IDataSource>(), null, Mock.Of<IRecipeManager>(), Mock.Of<IConnectionManager>(), Mock.Of<IBufferManager>()));
+			Assert.ThrowsException<PIOInvalidParameterException>(() => new UpdateManager(NullLogger.Instance, Mock.Of<IDataSource>(), Mock.Of<ITopologySorter>(), null, Mock.Of<IConnectionManager>(), Mock.Of<IBufferManager>()));
+			Assert.ThrowsException<PIOInvalidParameterException>(() => new UpdateManager(NullLogger.Instance, Mock.Of<IDataSource>(), Mock.Of<ITopologySorter>(), Mock.Of<IRecipeManager>(), null, Mock.Of<IBufferManager>()));
+			Assert.ThrowsException<PIOInvalidParameterException>(() => new UpdateManager(NullLogger.Instance, Mock.Of<IDataSource>(), Mock.Of<ITopologySorter>(), Mock.Of<IRecipeManager>(), Mock.Of<IConnectionManager>(), null));
 #pragma warning restore CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
 
 		}
@@ -32,6 +34,7 @@ namespace PIO.ModulesLib.UnitTests
 			ITopologySorter topologySorter;
 			IRecipeManager recipeManager;
 			IConnectionManager connectionManager;
+			IBufferManager bufferManager;
 			float result;
 
 			logger = new DebugLogger();
@@ -40,15 +43,16 @@ namespace PIO.ModulesLib.UnitTests
 			topologySorter = MockedData.GetMockedTopologySorter();
 			recipeManager = MockedData.GetMockedRecipeManager(MockedData.DataSource1);
 			connectionManager = Mock.Of<IConnectionManager>();
-			
-			updateManager = new UpdateManager(logger,dataSource, topologySorter, recipeManager,connectionManager);
+			bufferManager = Mock.Of<IBufferManager>();
+
+			updateManager = new UpdateManager(logger,dataSource, topologySorter, recipeManager,connectionManager, bufferManager);
 #pragma warning disable CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
 			result=updateManager.GetEfficiency(new FactoryID(2), null, Enumerable.Empty<IConnector>());
 			Assert.AreEqual(0f,result);
 			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Fatal, "[Factory ID 2]", "Parameter", "null", "Ingredients"));
 #pragma warning restore CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
 
-			updateManager = new UpdateManager(logger, dataSource, topologySorter, recipeManager, connectionManager);
+			updateManager = new UpdateManager(logger, dataSource, topologySorter, recipeManager, connectionManager, bufferManager);
 #pragma warning disable CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
 			result = updateManager.GetEfficiency(new FactoryID(2), Enumerable.Empty<IIngredient>(), null);
 			Assert.AreEqual(0f, result);
@@ -65,6 +69,7 @@ namespace PIO.ModulesLib.UnitTests
 			ITopologySorter topologySorter;
 			IRecipeManager recipeManager;
 			IConnectionManager connectionManager;
+			IBufferManager bufferManager;
 			float result;
 
 			logger = new DebugLogger();
@@ -73,8 +78,9 @@ namespace PIO.ModulesLib.UnitTests
 			topologySorter = MockedData.GetMockedTopologySorter();
 			recipeManager = MockedData.GetMockedRecipeManager(MockedData.DataSource1);
 			connectionManager = Mock.Of<IConnectionManager>();
+			bufferManager = Mock.Of<IBufferManager>();
 
-			updateManager = new UpdateManager(logger, dataSource, topologySorter, recipeManager,connectionManager);
+			updateManager = new UpdateManager(logger, dataSource, topologySorter, recipeManager,connectionManager, bufferManager);
 			result = updateManager.GetEfficiency(new FactoryID(2),[], []);
 			Assert.AreEqual(1f, result);
 		}
@@ -89,6 +95,7 @@ namespace PIO.ModulesLib.UnitTests
 			IConnectionManager connectionManager;
 			IIngredient ingredient1, ingredient2;
 			IConnector connector1, connector2;
+			IBufferManager bufferManager;
 			float result;
 
 			logger = new DebugLogger();
@@ -103,8 +110,9 @@ namespace PIO.ModulesLib.UnitTests
 			topologySorter = MockedData.GetMockedTopologySorter();
 			recipeManager = MockedData.GetMockedRecipeManager(MockedData.DataSource1);
 			connectionManager = Mock.Of<IConnectionManager>();
+			bufferManager = Mock.Of<IBufferManager>();
 
-			updateManager = new UpdateManager(logger, dataSource, topologySorter, recipeManager,connectionManager);
+			updateManager = new UpdateManager(logger, dataSource, topologySorter, recipeManager,connectionManager, bufferManager);
 			result = updateManager.GetEfficiency(new FactoryID(2), [ingredient1,ingredient2], [connector1,connector2]);
 			Assert.AreEqual(0f, result);
 			Assert.AreEqual(1, logger.WarningCount);
@@ -122,6 +130,7 @@ namespace PIO.ModulesLib.UnitTests
 			IConnectionManager connectionManager;
 			IIngredient ingredient1, ingredient2;
 			IConnector connector1, connector2;
+			IBufferManager bufferManager;
 			float result;
 
 			logger = new DebugLogger();
@@ -136,8 +145,9 @@ namespace PIO.ModulesLib.UnitTests
 			topologySorter = MockedData.GetMockedTopologySorter();
 			recipeManager = MockedData.GetMockedRecipeManager(MockedData.DataSource1);
 			connectionManager = Mock.Of<IConnectionManager>();
+			bufferManager = Mock.Of<IBufferManager>();
 
-			updateManager = new UpdateManager(logger, dataSource, topologySorter, recipeManager,connectionManager);
+			updateManager = new UpdateManager(logger, dataSource, topologySorter, recipeManager,connectionManager, bufferManager);
 			result = updateManager.GetEfficiency(new FactoryID(2), [ingredient1, ingredient2], [connector1, connector2]);
 			Assert.AreEqual(1f, result);
 		}
@@ -152,6 +162,7 @@ namespace PIO.ModulesLib.UnitTests
 			IConnectionManager connectionManager;
 			IIngredient ingredient1, ingredient2;
 			IConnector connector1, connector2;
+			IBufferManager bufferManager;
 			float result;
 
 			logger = new DebugLogger();
@@ -166,8 +177,9 @@ namespace PIO.ModulesLib.UnitTests
 			topologySorter = MockedData.GetMockedTopologySorter();
 			recipeManager = MockedData.GetMockedRecipeManager(MockedData.DataSource1);
 			connectionManager = Mock.Of<IConnectionManager>();
+			bufferManager = Mock.Of<IBufferManager>();
 
-			updateManager = new UpdateManager(logger, dataSource, topologySorter, recipeManager,connectionManager);
+			updateManager = new UpdateManager(logger, dataSource, topologySorter, recipeManager,connectionManager, bufferManager);
 			result = updateManager.GetEfficiency(new FactoryID(2), [ingredient1, ingredient2], [connector1, connector2]);
 			Assert.AreEqual(0.5f, result);
 		}
@@ -182,6 +194,7 @@ namespace PIO.ModulesLib.UnitTests
 			IConnectionManager connectionManager;
 			IIngredient ingredient1, ingredient2;
 			IConnector connector1, connector2;
+			IBufferManager bufferManager;
 			float result;
 
 			logger = new DebugLogger();
@@ -196,8 +209,9 @@ namespace PIO.ModulesLib.UnitTests
 			topologySorter = MockedData.GetMockedTopologySorter();
 			recipeManager = MockedData.GetMockedRecipeManager(MockedData.DataSource1);
 			connectionManager = MockedData.GetMockedConnectionManager(MockedData.DataSource1);
+			bufferManager = MockedData.GetMockedBufferManager(MockedData.DataSource1);
 
-			updateManager = new UpdateManager(logger, dataSource, topologySorter, recipeManager,connectionManager);
+			updateManager = new UpdateManager(logger, dataSource, topologySorter, recipeManager,connectionManager, bufferManager);
 			result = updateManager.GetEfficiency(new FactoryID(2), [ingredient1, ingredient2], [connector1, connector2]);
 			Assert.AreEqual(1f, result);
 		}
@@ -221,6 +235,7 @@ namespace PIO.ModulesLib.UnitTests
 			ITopologySorter topologySorter;
 			IRecipeManager recipeManager;
 			IConnectionManager connectionManager;
+			IBufferManager bufferManager;
 			bool result;
 
 			logger = new DebugLogger();
@@ -229,15 +244,16 @@ namespace PIO.ModulesLib.UnitTests
 			topologySorter = MockedData.GetMockedTopologySorter();
 			recipeManager = MockedData.GetMockedRecipeManager(MockedData.DataSource1);
 			connectionManager = MockedData.GetMockedConnectionManager(MockedData.DataSource1);
+			bufferManager = MockedData.GetMockedBufferManager(MockedData.DataSource1);
 
-			updateManager = new UpdateManager(logger, dataSource, topologySorter, recipeManager,connectionManager);
+			updateManager = new UpdateManager(logger, dataSource, topologySorter, recipeManager,connectionManager, bufferManager);
 #pragma warning disable CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
 			result = updateManager.UpdateConnectors(new FactoryID(2), 1f,null, Enumerable.Empty<IConnector>());
 			Assert.IsFalse(result);
 			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Fatal, "[Factory ID 2]", "Parameter", "null", "Products"));
 #pragma warning restore CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
 
-			updateManager = new UpdateManager(logger, dataSource, topologySorter, recipeManager,connectionManager);
+			updateManager = new UpdateManager(logger, dataSource, topologySorter, recipeManager,connectionManager, bufferManager);
 #pragma warning disable CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
 			result = updateManager.UpdateConnectors(new FactoryID(2), 1f, Enumerable.Empty<IProduct>(), null);
 			Assert.IsFalse(result);
@@ -257,6 +273,7 @@ namespace PIO.ModulesLib.UnitTests
 			IConnectionManager connectionManager;
 			IProduct product1, product2;
 			IConnector connector1, connector2;
+			IBufferManager bufferManager;
 			bool result;
 
 			logger = new DebugLogger();
@@ -271,8 +288,9 @@ namespace PIO.ModulesLib.UnitTests
 			topologySorter = MockedData.GetMockedTopologySorter();
 			recipeManager = MockedData.GetMockedRecipeManager(MockedData.DataSource1);
 			connectionManager = MockedData.GetMockedConnectionManager(MockedData.DataSource1);
+			bufferManager = MockedData.GetMockedBufferManager(MockedData.DataSource1);
 
-			updateManager = new UpdateManager(logger, dataSource, topologySorter, recipeManager,connectionManager);
+			updateManager = new UpdateManager(logger, dataSource, topologySorter, recipeManager,connectionManager, bufferManager);
 			result = updateManager.UpdateConnectors(new FactoryID(2), 1, [product1, product2], [connector1, connector2]);
 			Assert.IsTrue(result);
 			Assert.AreEqual(1, logger.WarningCount);
@@ -291,6 +309,7 @@ namespace PIO.ModulesLib.UnitTests
 			IConnectionManager connectionManager;
 			IProduct product1, product2;
 			IConnector connector1, connector2;
+			IBufferManager bufferManager;
 			bool result;
 
 
@@ -304,9 +323,10 @@ namespace PIO.ModulesLib.UnitTests
 			topologySorter = MockedData.GetMockedTopologySorter();
 			recipeManager = MockedData.GetMockedRecipeManager(MockedData.DataSource1);
 			connectionManager = MockedData.GetMockedConnectionManager(MockedData.DataSource1);
+			bufferManager = MockedData.GetMockedBufferManager(MockedData.DataSource1);
 
 			logger = new DebugLogger();
-			updateManager = new UpdateManager(logger, dataSource, topologySorter, recipeManager,connectionManager);
+			updateManager = new UpdateManager(logger, dataSource, topologySorter, recipeManager,connectionManager, bufferManager);
 			result = updateManager.UpdateConnectors(new FactoryID(2), 2, [product1, product2], [connector1, connector2]);
 			Assert.IsFalse(result);
 			Assert.AreEqual(1, logger.ErrorCount);
@@ -314,7 +334,7 @@ namespace PIO.ModulesLib.UnitTests
 
 
 			logger = new DebugLogger();
-			updateManager = new UpdateManager(logger, dataSource, topologySorter, recipeManager,connectionManager);
+			updateManager = new UpdateManager(logger, dataSource, topologySorter, recipeManager,connectionManager, bufferManager);
 			result = updateManager.UpdateConnectors(new FactoryID(2), -1, [product1, product2], [connector1, connector2]);
 			Assert.IsFalse(result);
 			Assert.AreEqual(1, logger.ErrorCount);
@@ -332,6 +352,7 @@ namespace PIO.ModulesLib.UnitTests
 			IConnectionManager connectionManager;
 			IProduct product1, product2;
 			IConnector connector1, connector2;
+			IBufferManager bufferManager;
 			bool result;
 
 			logger = new DebugLogger();
@@ -346,8 +367,9 @@ namespace PIO.ModulesLib.UnitTests
 			topologySorter = MockedData.GetMockedTopologySorter();
 			recipeManager = MockedData.GetMockedRecipeManager(MockedData.DataSource1);
 			connectionManager = MockedData.GetMockedConnectionManager(MockedData.DataSource1);
+			bufferManager = MockedData.GetMockedBufferManager(MockedData.DataSource1);
 
-			updateManager = new UpdateManager(logger, dataSource, topologySorter, recipeManager,connectionManager);
+			updateManager = new UpdateManager(logger, dataSource, topologySorter, recipeManager,connectionManager, bufferManager);
 			result = updateManager.UpdateConnectors(new FactoryID(2), 1, [product1, product2], [connector1, connector2]);
 			Assert.IsTrue(result);
 			Assert.AreEqual(2, connector1.Rate);
@@ -365,6 +387,7 @@ namespace PIO.ModulesLib.UnitTests
 			IConnectionManager connectionManager;
 			IProduct product1, product2;
 			IConnector connector1, connector2;
+			IBufferManager bufferManager;
 			bool result;
 
 			logger = new DebugLogger();
@@ -379,8 +402,9 @@ namespace PIO.ModulesLib.UnitTests
 			topologySorter = MockedData.GetMockedTopologySorter();
 			recipeManager = MockedData.GetMockedRecipeManager(MockedData.DataSource1);
 			connectionManager = MockedData.GetMockedConnectionManager(MockedData.DataSource1);
+			bufferManager = MockedData.GetMockedBufferManager(MockedData.DataSource1);
 
-			updateManager = new UpdateManager(logger, dataSource, topologySorter, recipeManager,connectionManager);
+			updateManager = new UpdateManager(logger, dataSource, topologySorter, recipeManager,connectionManager, bufferManager);
 			result = updateManager.UpdateConnectors(new FactoryID(2), 0, [product1, product2], [connector1, connector2]);
 			Assert.IsTrue(result);
 			Assert.AreEqual(0, connector1.Rate);
@@ -397,6 +421,7 @@ namespace PIO.ModulesLib.UnitTests
 			IConnectionManager connectionManager;
 			IProduct product1, product2;
 			IConnector connector1, connector2;
+			IBufferManager bufferManager;
 			bool result;
 
 			logger = new DebugLogger();
@@ -411,8 +436,9 @@ namespace PIO.ModulesLib.UnitTests
 			topologySorter = MockedData.GetMockedTopologySorter();
 			recipeManager = MockedData.GetMockedRecipeManager(MockedData.DataSource1);
 			connectionManager = MockedData.GetMockedConnectionManager(MockedData.DataSource1);
+			bufferManager = MockedData.GetMockedBufferManager(MockedData.DataSource1);
 
-			updateManager = new UpdateManager(logger, dataSource, topologySorter, recipeManager,connectionManager);
+			updateManager = new UpdateManager(logger, dataSource, topologySorter, recipeManager,connectionManager, bufferManager);
 			result = updateManager.UpdateConnectors(new FactoryID(2), 0.5f, [product1, product2], [connector1, connector2]);
 			Assert.IsTrue(result);
 			Assert.AreEqual(1, connector1.Rate);
@@ -428,6 +454,7 @@ namespace PIO.ModulesLib.UnitTests
 			ITopologySorter topologySorter;
 			IRecipeManager recipeManager;
 			IConnectionManager connectionManager;
+			IBufferManager bufferManager;
 			bool result;
 
 			logger = new DebugLogger();
@@ -439,14 +466,99 @@ namespace PIO.ModulesLib.UnitTests
 			Mock.Get(topologySorter).Setup(m=>m.Sort(It.IsAny<IDataSource>())).Throws<InvalidOperationException>();
 			recipeManager = MockedData.GetMockedRecipeManager(MockedData.DataSource1);
 			connectionManager = MockedData.GetMockedConnectionManager(MockedData.DataSource1);
+			bufferManager = MockedData.GetMockedBufferManager(MockedData.DataSource1);
 
-			updateManager = new UpdateManager(logger, dataSource, topologySorter, recipeManager,connectionManager);
+			updateManager = new UpdateManager(logger, dataSource, topologySorter, recipeManager,connectionManager, bufferManager);
 			result=updateManager.Update(0);
 			Assert.IsFalse(result);
 			Assert.AreEqual(1, logger.ErrorCount);
 			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Error, "sort","factories"));
 		}
-		
+		[TestMethod]
+		public void UpdateShouldLogErrorIfCannotGetBuffers()
+		{
+			IUpdateManager updateManager;
+			IDataSource dataSource;
+			DebugLogger logger;
+			ITopologySorter topologySorter;
+			IRecipeManager recipeManager;
+			IConnectionManager connectionManager;
+			IBufferManager bufferManager;
+			bool result;
+
+			logger = new DebugLogger();
+
+			dataSource = Mock.Of<IDataSource>();
+
+			topologySorter = Mock.Of<ITopologySorter>();
+			recipeManager = MockedData.GetMockedRecipeManager(MockedData.DataSource1);
+			connectionManager = MockedData.GetMockedConnectionManager(MockedData.DataSource1);
+			bufferManager = MockedData.GetMockedBufferManager(MockedData.DataSource1);
+			Mock.Get(bufferManager).Setup(m => m.GetBuffers()).Returns((IBuffer[]?)null);
+
+			updateManager = new UpdateManager(logger, dataSource, topologySorter, recipeManager, connectionManager, bufferManager);
+			result = updateManager.Update(0);
+			Assert.IsFalse(result);
+			Assert.AreEqual(1, logger.ErrorCount);
+			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Error,"Failed", "get", "buffers"));
+		}
+		[TestMethod]
+		public void UpdateShouldLogErrorIfBufferIsInInvalidState()
+		{
+			IUpdateManager updateManager;
+			IDataSource dataSource;
+			DebugLogger logger;
+			ITopologySorter topologySorter;
+			IRecipeManager recipeManager;
+			IConnectionManager connectionManager;
+			IBufferManager bufferManager;
+			bool result;
+
+			logger = new DebugLogger();
+
+			dataSource = Mock.Of<IDataSource>();
+
+			topologySorter = Mock.Of<ITopologySorter>();
+			recipeManager = MockedData.GetMockedRecipeManager(MockedData.DataSource1);
+			connectionManager = MockedData.GetMockedConnectionManager(MockedData.DataSource1);
+			bufferManager = MockedData.GetMockedBufferManager(MockedData.DataSource1);
+			Mock.Get(bufferManager).Setup(m => m.IsBufferValid(bufferManager.GetBuffer(new BufferID(2))!)).Returns(false);
+			
+			updateManager = new UpdateManager(logger, dataSource, topologySorter, recipeManager, connectionManager, bufferManager);
+			result = updateManager.Update(0);
+			Assert.IsTrue(result);
+			Assert.AreEqual(1, logger.ErrorCount);
+			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Error, "[Buffer ID 2]","Buffer", "invalid", "state"));
+		}
+		[TestMethod]
+		public void UpdateShouldLogErrorIfBufferCannotBeUpdated()
+		{
+			IUpdateManager updateManager;
+			IDataSource dataSource;
+			DebugLogger logger;
+			ITopologySorter topologySorter;
+			IRecipeManager recipeManager;
+			IConnectionManager connectionManager;
+			IBufferManager bufferManager;
+			bool result;
+
+			logger = new DebugLogger();
+
+			dataSource = Mock.Of<IDataSource>();
+
+			topologySorter = Mock.Of<ITopologySorter>();
+			recipeManager = MockedData.GetMockedRecipeManager(MockedData.DataSource1);
+			connectionManager = MockedData.GetMockedConnectionManager(MockedData.DataSource1);
+			bufferManager = MockedData.GetMockedBufferManager(MockedData.DataSource1);
+			Mock.Get(bufferManager).Setup(m => m.UpdateBuffer(bufferManager.GetBuffer(new BufferID(2))!,0f)).Returns(false);
+
+			updateManager = new UpdateManager(logger, dataSource, topologySorter, recipeManager, connectionManager, bufferManager);
+			result = updateManager.Update(0f);
+			Assert.IsTrue(result);
+			Assert.AreEqual(1, logger.ErrorCount);
+			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Error, "[Buffer ID 2]", "Failed", "update"));
+		}
+
 		[TestMethod]
 		public void UpdateShouldLogWarningIfRecipeIsNotFound()
 		{
@@ -456,6 +568,7 @@ namespace PIO.ModulesLib.UnitTests
 			ITopologySorter topologySorter;
 			IRecipeManager recipeManager;
 			IConnectionManager connectionManager;
+			IBufferManager bufferManager;
 			bool result;
 
 			logger = new DebugLogger();
@@ -467,8 +580,9 @@ namespace PIO.ModulesLib.UnitTests
 			recipeManager = MockedData.GetMockedRecipeManager(MockedData.DataSource1);
 			Mock.Get(recipeManager).Setup(m => m.GetRecipe(new FactoryTypeID("Type2"))).Returns((IRecipe?)null);
 			connectionManager = MockedData.GetMockedConnectionManager(MockedData.DataSource1);
+			bufferManager = MockedData.GetMockedBufferManager(MockedData.DataSource1);
 
-			updateManager = new UpdateManager(logger, dataSource, topologySorter, recipeManager,connectionManager);
+			updateManager = new UpdateManager(logger, dataSource, topologySorter, recipeManager,connectionManager, bufferManager);
 			result = updateManager.Update(0);
 			Assert.IsTrue(result);
 			Assert.AreEqual(1, logger.WarningCount);
@@ -484,6 +598,7 @@ namespace PIO.ModulesLib.UnitTests
 			ITopologySorter topologySorter;
 			IRecipeManager recipeManager;
 			IConnectionManager connectionManager;
+			IBufferManager bufferManager;
 			bool result;
 
 			logger = new DebugLogger();
@@ -496,8 +611,9 @@ namespace PIO.ModulesLib.UnitTests
 			recipeManager = MockedData.GetMockedRecipeManager(MockedData.DataSource1);
 			Mock.Get(recipeManager).Setup(m => m.GetIngredients(new RecipeID(2))).Returns((IIngredient[]?)null);
 			connectionManager = MockedData.GetMockedConnectionManager(MockedData.DataSource1);
+			bufferManager = MockedData.GetMockedBufferManager(MockedData.DataSource1);
 
-			updateManager = new UpdateManager(logger, dataSource, topologySorter, recipeManager,connectionManager);
+			updateManager = new UpdateManager(logger, dataSource, topologySorter, recipeManager,connectionManager, bufferManager);
 			result = updateManager.Update(0);
 			Assert.IsTrue(result);
 			Assert.AreEqual(1, logger.WarningCount);
@@ -513,6 +629,7 @@ namespace PIO.ModulesLib.UnitTests
 			ITopologySorter topologySorter;
 			IRecipeManager recipeManager;
 			IConnectionManager connectionManager;
+			IBufferManager bufferManager;
 			bool result;
 
 			logger = new DebugLogger();
@@ -524,8 +641,9 @@ namespace PIO.ModulesLib.UnitTests
 			recipeManager = MockedData.GetMockedRecipeManager(MockedData.DataSource1);
 			Mock.Get(recipeManager).Setup(m => m.GetProducts(new RecipeID(2))).Returns((IProduct[]?)null);
 			connectionManager = MockedData.GetMockedConnectionManager(MockedData.DataSource1);
+			bufferManager = MockedData.GetMockedBufferManager(MockedData.DataSource1);
 
-			updateManager = new UpdateManager(logger, dataSource, topologySorter, recipeManager,connectionManager);
+			updateManager = new UpdateManager(logger, dataSource, topologySorter, recipeManager,connectionManager, bufferManager);
 			result = updateManager.Update(0);
 			Assert.IsTrue(result);
 			Assert.AreEqual(1, logger.WarningCount);
@@ -541,6 +659,7 @@ namespace PIO.ModulesLib.UnitTests
 			ITopologySorter topologySorter;
 			IRecipeManager recipeManager;
 			IConnectionManager connectionManager;
+			IBufferManager bufferManager;
 			bool result;
 
 			logger = new DebugLogger();
@@ -552,8 +671,9 @@ namespace PIO.ModulesLib.UnitTests
 			recipeManager = MockedData.GetMockedRecipeManager(MockedData.DataSource1);
 			connectionManager = MockedData.GetMockedConnectionManager(MockedData.DataSource1);
 			Mock.Get(connectionManager).Setup(m => m.GetInputConnectors(new FactoryID(2))).Returns((IInputConnector[]?)null);
+			bufferManager = MockedData.GetMockedBufferManager(MockedData.DataSource1);
 
-			updateManager = new UpdateManager(logger, dataSource, topologySorter, recipeManager,connectionManager);
+			updateManager = new UpdateManager(logger, dataSource, topologySorter, recipeManager,connectionManager, bufferManager);
 			result = updateManager.Update(0);
 			Assert.IsTrue(result);
 			Assert.AreEqual(1, logger.WarningCount);
@@ -568,6 +688,7 @@ namespace PIO.ModulesLib.UnitTests
 			ITopologySorter topologySorter;
 			IRecipeManager recipeManager;
 			IConnectionManager connectionManager;
+			IBufferManager bufferManager;
 			bool result;
 
 			logger = new DebugLogger();
@@ -579,8 +700,9 @@ namespace PIO.ModulesLib.UnitTests
 			recipeManager = MockedData.GetMockedRecipeManager(MockedData.DataSource1);
 			connectionManager = MockedData.GetMockedConnectionManager(MockedData.DataSource1);
 			Mock.Get(connectionManager).Setup(m => m.GetOutputConnectors(new FactoryID(2))).Returns((IOutputConnector[]?)null);
+			bufferManager = MockedData.GetMockedBufferManager(MockedData.DataSource1);
 
-			updateManager = new UpdateManager(logger, dataSource, topologySorter, recipeManager,connectionManager);
+			updateManager = new UpdateManager(logger, dataSource, topologySorter, recipeManager,connectionManager, bufferManager);
 			result = updateManager.Update(0);
 			Assert.IsTrue(result);
 			Assert.AreEqual(1, logger.WarningCount);
@@ -597,6 +719,7 @@ namespace PIO.ModulesLib.UnitTests
 			ITopologySorter topologySorter;
 			IRecipeManager recipeManager;
 			IConnectionManager connectionManager;
+			IBufferManager bufferManager;
 			bool result;
 
 			logger = new DebugLogger();
@@ -608,8 +731,9 @@ namespace PIO.ModulesLib.UnitTests
 			recipeManager = MockedData.GetMockedRecipeManager(MockedData.DataSource1);
 			connectionManager = MockedData.GetMockedConnectionManager(MockedData.DataSource1);
 			Mock.Get(connectionManager).Setup(m => m.GetConnections(new ConnectorID(5))).Returns((IConnection[]?)null);
+			bufferManager = MockedData.GetMockedBufferManager(MockedData.DataSource1);
 
-			updateManager = new UpdateManager(logger, dataSource, topologySorter, recipeManager,connectionManager);
+			updateManager = new UpdateManager(logger, dataSource, topologySorter, recipeManager,connectionManager, bufferManager);
 			result = updateManager.Update(0);
 			Assert.IsTrue(result);
 			Assert.AreEqual(1, logger.WarningCount);
@@ -625,6 +749,7 @@ namespace PIO.ModulesLib.UnitTests
 			ITopologySorter topologySorter;
 			IRecipeManager recipeManager;
 			IConnectionManager connectionManager;
+			IBufferManager bufferManager;
 			bool result;
 
 			logger = new DebugLogger();
@@ -636,8 +761,9 @@ namespace PIO.ModulesLib.UnitTests
 			recipeManager = MockedData.GetMockedRecipeManager(MockedData.DataSource1);
 			connectionManager = MockedData.GetMockedConnectionManager(MockedData.DataSource1);
 			Mock.Get(connectionManager).Setup(m => m.GetInputConnector(new ConnectorID(2))).Returns((IInputConnector?)null);
+			bufferManager = MockedData.GetMockedBufferManager(MockedData.DataSource1);
 
-			updateManager = new UpdateManager(logger, dataSource, topologySorter, recipeManager,connectionManager);
+			updateManager = new UpdateManager(logger, dataSource, topologySorter, recipeManager,connectionManager, bufferManager);
 			result = updateManager.Update(0);
 			Assert.IsTrue(result);
 			Assert.AreEqual(1, logger.WarningCount);
@@ -654,6 +780,7 @@ namespace PIO.ModulesLib.UnitTests
 			ITopologySorter topologySorter;
 			IRecipeManager recipeManager;
 			IConnectionManager connectionManager;
+			IBufferManager bufferManager;
 			bool result;
 
 			logger = new DebugLogger();
@@ -664,9 +791,9 @@ namespace PIO.ModulesLib.UnitTests
 			
 			recipeManager = MockedData.GetMockedRecipeManager(MockedData.DataSource1);
 			connectionManager = MockedData.GetMockedConnectionManager(MockedData.DataSource1);
-			
+			bufferManager = MockedData.GetMockedBufferManager(MockedData.DataSource1);
 
-			updateManager = new UpdateManager(logger, dataSource, topologySorter, recipeManager, connectionManager);
+			updateManager = new UpdateManager(logger, dataSource, topologySorter, recipeManager, connectionManager, bufferManager);
 			result = updateManager.Update(0);
 			Assert.IsTrue(result);
 			Assert.AreEqual(0, logger.WarningCount);
@@ -687,6 +814,7 @@ namespace PIO.ModulesLib.UnitTests
 			ITopologySorter topologySorter;
 			IRecipeManager recipeManager;
 			IConnectionManager connectionManager;
+			IBufferManager bufferManager;
 			bool result;
 
 			logger = new DebugLogger();
@@ -697,9 +825,9 @@ namespace PIO.ModulesLib.UnitTests
 
 			recipeManager = MockedData.GetMockedRecipeManager(MockedData.DataSource2);
 			connectionManager = MockedData.GetMockedConnectionManager(MockedData.DataSource2);
+			bufferManager = MockedData.GetMockedBufferManager(MockedData.DataSource1);
 
-
-			updateManager = new UpdateManager(logger, dataSource, topologySorter, recipeManager, connectionManager);
+			updateManager = new UpdateManager(logger, dataSource, topologySorter, recipeManager, connectionManager, bufferManager);
 			result = updateManager.Update(0);
 			Assert.IsTrue(result);
 			Assert.AreEqual(0, logger.WarningCount);

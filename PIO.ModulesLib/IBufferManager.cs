@@ -13,5 +13,7 @@ namespace PIO.ModulesLib
 		IBuffer? GetBuffer(BufferID BufferID);
 		IBuffer? GetBuffer(ConnectorID ConnectorID);
 
+		bool IsBufferValid(IBuffer Buffer);
+		bool UpdateBuffer(IBuffer Buffer, float Cycle);
 	}
 }

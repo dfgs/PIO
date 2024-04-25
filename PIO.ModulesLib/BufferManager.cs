@@ -5,44 +5,14 @@ using PIO.CoreLib.Exceptions;
 
 namespace PIO.ModulesLib
 {
-	public class BufferManager : PIOModule,IBufferManager
+	public class BufferManager : PIOModule, IBufferManager
 	{
 
-		public BufferManager(ILogger Logger,IDataSource DataSource) : base(Logger,DataSource)
+		public BufferManager(ILogger Logger, IDataSource DataSource) : base(Logger, DataSource)
 		{
 		}
 
-		public bool Update( float Cycle)
-		{
-			IBuffer[] buffers=[];
 
-			LogEnter();
-
-			Log(LogLevels.Information, "Retrieving all buffers");
-			if (!Try(() => DataSource.GetBuffers()).Then(items => buffers = items.ToArray()).OrAlert("Failed to retrieve buffers")) return false;
-			
-
-			Log(LogLevels.Information, "Updating all buffers");
-			foreach(IBuffer buffer in buffers)
-			{
-				Log(LogLevels.Debug, $"[Buffer ID {buffer.ID}] Processing buffer");
-				if (!buffer.IsValid)
-				{
-					Log(LogLevels.Error, $"[Buffer ID {buffer.ID}] Buffer has invalid state");
-					continue;
-				}
-				// update buffer
-				if (!Try(()=>buffer.Update(Cycle)).OrAlert($"[Buffer ID {buffer.ID}] Failed to update buffer")) continue;
-
-				// clear rates
-				Log(LogLevels.Debug, $"[Buffer ID {buffer.ID}] Clearing rates of buffer");
-				buffer.InRate = 0;buffer.OutRate = 0;
-
-			}
-
-			return true;
-
-		}
 		public IBuffer[]? GetBuffers()
 		{
 			IBuffer[]? buffers = null;
@@ -71,6 +41,49 @@ namespace PIO.ModulesLib
 			if (!Try(() => DataSource.GetBuffer(ConnectorID)).Then(result => buffer = result).OrAlert($"[Connector ID {ConnectorID}] Failed to get buffer")) return null;
 			return buffer;
 
+		}
+
+		public bool IsBufferValid(IBuffer Buffer)
+		{
+			LogEnter();
+			if (Buffer == null)
+			{
+				Log(LogLevels.Fatal, $"Parameter {nameof(Buffer)} cannot be null");
+				return false;
+			}
+
+			return Buffer.IsValid;
+		}
+		public bool UpdateBuffer(IBuffer Buffer,float Cycle)
+		{
+			LogEnter();
+
+			if (Buffer == null)
+			{
+				Log(LogLevels.Fatal, $"Parameter {nameof(Buffer)} cannot be null");
+				return false;
+			}
+
+			if (!IsBufferValid(Buffer))
+			{
+				Log(LogLevels.Error, $"[Buffer ID {Buffer.ID}] Buffer has invalid state");
+				return false;
+			}
+
+			if (Cycle < 0)
+			{
+				Log(LogLevels.Error, $"[Buffer ID {Buffer.ID}] Cycle value is invalid");
+				return false;
+			}
+
+			if (Cycle > Buffer.GetETA())
+			{
+				Log(LogLevels.Error, $"[Buffer ID {Buffer.ID}] Cycle value is invalid");
+				return false;
+			}
+
+			Log(LogLevels.Debug, $"[Buffer ID {Buffer.ID}] Trying to update buffer");
+			return Try(() => Buffer.Update(Cycle)).OrAlert($"[Buffer ID {Buffer.ID}] Failed to update buffer");
 		}
 
 

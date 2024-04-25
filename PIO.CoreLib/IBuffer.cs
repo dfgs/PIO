@@ -44,6 +44,8 @@ namespace PIO.CoreLib
 			get;
 		}
 
+		bool IsValid
+		{ 
 			get;
 		}
 
