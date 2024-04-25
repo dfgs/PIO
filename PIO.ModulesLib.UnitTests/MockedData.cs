@@ -11,11 +11,19 @@ namespace PIO.ModulesLib.UnitTests
 {
 	internal static class MockedData
 	{
-		private static DataSource mainDataSource;
+		public static IDataSource DataSource1;
 		private static ITopologySorter mainSorter;
 
 		static MockedData()
 		{
+			mainSorter = new TopologySorter();
+
+			DataSource1=InitDataSource1();	
+		}
+
+		private static IDataSource InitDataSource1()
+		{
+			DataSource dataSource;
 			IFactory factory1, factory2, factory3;
 			IRecipe recipe1, recipe2, recipe3;
 			IIngredient ingredient1, ingredient2, ingredient3;
@@ -24,8 +32,9 @@ namespace PIO.ModulesLib.UnitTests
 			IOutputConnector outputConnector1, outputConnector2, outputConnector3;
 			IConnection connection1, connection2;
 
-			mainSorter = new TopologySorter();
 
+			// F1 -out1-in2-> F2 -out0.5-in2-> F3 -out0.25->
+	
 			factory1 = new Factory() { ID = new FactoryID(1), FactoryTypeID = new FactoryTypeID("Type1") };
 			factory2 = new Factory() { ID = new FactoryID(2), FactoryTypeID = new FactoryTypeID("Type2") };
 			factory3 = new Factory() { ID = new FactoryID(3), FactoryTypeID = new FactoryTypeID("Type3") };
@@ -53,78 +62,79 @@ namespace PIO.ModulesLib.UnitTests
 			connection1 = new Connection() { ID = new ConnectionID(1), SourceID = new ConnectorID(4), DestinationID = new ConnectorID(2) };
 			connection2 = new Connection() { ID = new ConnectionID(2), SourceID = new ConnectorID(5), DestinationID = new ConnectorID(3) };
 
-			mainDataSource = new DataSource();
+			dataSource = new DataSource();
 
-			mainDataSource.AddFactory(factory1);
-			mainDataSource.AddFactory(factory2);
-			mainDataSource.AddFactory(factory3);
+			dataSource.AddFactory(factory1);
+			dataSource.AddFactory(factory2);
+			dataSource.AddFactory(factory3);
 
-			mainDataSource.AddRecipe(recipe1);
-			mainDataSource.AddRecipe(recipe2);
-			mainDataSource.AddRecipe(recipe3);
+			dataSource.AddRecipe(recipe1);
+			dataSource.AddRecipe(recipe2);
+			dataSource.AddRecipe(recipe3);
 
-			mainDataSource.AddIngredient(ingredient1);
-			mainDataSource.AddIngredient(ingredient2);
-			mainDataSource.AddIngredient(ingredient3);
+			dataSource.AddIngredient(ingredient1);
+			dataSource.AddIngredient(ingredient2);
+			dataSource.AddIngredient(ingredient3);
 
-			mainDataSource.AddProduct(product1);
-			mainDataSource.AddProduct(product2);
-			mainDataSource.AddProduct(product3);
+			dataSource.AddProduct(product1);
+			dataSource.AddProduct(product2);
+			dataSource.AddProduct(product3);
 
-			mainDataSource.AddInputConnector(inputConnector1);
-			mainDataSource.AddInputConnector(inputConnector2);
-			mainDataSource.AddInputConnector(inputConnector3);
+			dataSource.AddInputConnector(inputConnector1);
+			dataSource.AddInputConnector(inputConnector2);
+			dataSource.AddInputConnector(inputConnector3);
 
-			mainDataSource.AddOutputConnector(outputConnector1);
-			mainDataSource.AddOutputConnector(outputConnector2);
-			mainDataSource.AddOutputConnector(outputConnector3);
+			dataSource.AddOutputConnector(outputConnector1);
+			dataSource.AddOutputConnector(outputConnector2);
+			dataSource.AddOutputConnector(outputConnector3);
 
-			mainDataSource.AddConnection(connection1);
-			mainDataSource.AddConnection(connection2);
+			dataSource.AddConnection(connection1);
+			dataSource.AddConnection(connection2);
+
+			return dataSource;
 		}
 
-		// create Mocked DataSource for test purpose
-		public static IDataSource GetMockedDataSource()
+		public static IDataSource GetMockedDataSource(IDataSource Model)
 		{
 			IDataSource dataSource;
 
 			dataSource = Mock.Of<IDataSource>();
 
-			Mock.Get(dataSource).Setup(m => m.GetFactories()).Returns(mainDataSource.GetFactories());
-			Mock.Get(dataSource).Setup(m => m.GetFactory(It.IsAny<FactoryID>())).Returns<FactoryID>(id => mainDataSource.GetFactory(id));
-			Mock.Get(dataSource).Setup(m => m.GetRecipe(It.IsAny<FactoryTypeID>())).Returns<FactoryTypeID>(id => mainDataSource.GetRecipe(id));
-			Mock.Get(dataSource).Setup(m => m.GetIngredients(It.IsAny<RecipeID>())).Returns<RecipeID>(id => mainDataSource.GetIngredients(id));
-			Mock.Get(dataSource).Setup(m => m.GetProducts(It.IsAny<RecipeID>())).Returns<RecipeID>(id => mainDataSource.GetProducts(id));
-			Mock.Get(dataSource).Setup(m => m.GetInputConnectors(It.IsAny<FactoryID>())).Returns<FactoryID>(id => mainDataSource.GetInputConnectors(id));
-			Mock.Get(dataSource).Setup(m => m.GetOutputConnectors(It.IsAny<FactoryID>())).Returns<FactoryID>(id => mainDataSource.GetOutputConnectors(id));
-			Mock.Get(dataSource).Setup(m => m.GetConnection(It.IsAny<ConnectionID>())).Returns<ConnectionID>(id => mainDataSource.GetConnection(id));
-			Mock.Get(dataSource).Setup(m => m.GetConnections(It.IsAny<ConnectorID>())).Returns<ConnectorID>(id => mainDataSource.GetConnections(id));
-			Mock.Get(dataSource).Setup(m => m.GetInputConnector(It.IsAny<ConnectorID>())).Returns<ConnectorID>(id => mainDataSource.GetInputConnector(id));
-			Mock.Get(dataSource).Setup(m => m.GetOutputConnector(It.IsAny<ConnectorID>())).Returns<ConnectorID>(id => mainDataSource.GetOutputConnector(id));
+			Mock.Get(dataSource).Setup(m => m.GetFactories()).Returns(Model.GetFactories());
+			Mock.Get(dataSource).Setup(m => m.GetFactory(It.IsAny<FactoryID>())).Returns<FactoryID>(id => Model.GetFactory(id));
+			Mock.Get(dataSource).Setup(m => m.GetRecipe(It.IsAny<FactoryTypeID>())).Returns<FactoryTypeID>(id => Model.GetRecipe(id));
+			Mock.Get(dataSource).Setup(m => m.GetIngredients(It.IsAny<RecipeID>())).Returns<RecipeID>(id => Model.GetIngredients(id));
+			Mock.Get(dataSource).Setup(m => m.GetProducts(It.IsAny<RecipeID>())).Returns<RecipeID>(id => Model.GetProducts(id));
+			Mock.Get(dataSource).Setup(m => m.GetInputConnectors(It.IsAny<FactoryID>())).Returns<FactoryID>(id => Model.GetInputConnectors(id));
+			Mock.Get(dataSource).Setup(m => m.GetOutputConnectors(It.IsAny<FactoryID>())).Returns<FactoryID>(id => Model.GetOutputConnectors(id));
+			Mock.Get(dataSource).Setup(m => m.GetConnection(It.IsAny<ConnectionID>())).Returns<ConnectionID>(id => Model.GetConnection(id));
+			Mock.Get(dataSource).Setup(m => m.GetConnections(It.IsAny<ConnectorID>())).Returns<ConnectorID>(id => Model.GetConnections(id));
+			Mock.Get(dataSource).Setup(m => m.GetInputConnector(It.IsAny<ConnectorID>())).Returns<ConnectorID>(id => Model.GetInputConnector(id));
+			Mock.Get(dataSource).Setup(m => m.GetOutputConnector(It.IsAny<ConnectorID>())).Returns<ConnectorID>(id => Model.GetOutputConnector(id));
 
 			return dataSource;
 		}
-		public static IRecipeManager GetMockedRecipeManager()
+		public static IRecipeManager GetMockedRecipeManager(IDataSource Model)
 		{
 			IRecipeManager recipeManager;
 
 			recipeManager = Mock.Of<IRecipeManager>();
-			Mock.Get(recipeManager).Setup(m => m.GetIngredients(It.IsAny<RecipeID>())).Returns<RecipeID>(id => mainDataSource.GetIngredients(id).ToArray());
-			Mock.Get(recipeManager).Setup(m => m.GetProducts(It.IsAny<RecipeID>())).Returns<RecipeID>(id => mainDataSource.GetProducts(id).ToArray());
-			Mock.Get(recipeManager).Setup(m => m.GetRecipe(It.IsAny<FactoryTypeID>())).Returns<FactoryTypeID>(id => mainDataSource.GetRecipe(id));
+			Mock.Get(recipeManager).Setup(m => m.GetIngredients(It.IsAny<RecipeID>())).Returns<RecipeID>(id => Model.GetIngredients(id).ToArray());
+			Mock.Get(recipeManager).Setup(m => m.GetProducts(It.IsAny<RecipeID>())).Returns<RecipeID>(id => Model.GetProducts(id).ToArray());
+			Mock.Get(recipeManager).Setup(m => m.GetRecipe(It.IsAny<FactoryTypeID>())).Returns<FactoryTypeID>(id => Model.GetRecipe(id));
 
 			return recipeManager;
 		}
 
-		public static IConnectionManager GetMockedConnectionManager()
+		public static IConnectionManager GetMockedConnectionManager(IDataSource Model)
 		{
 			IConnectionManager connectionManager;
 
 			connectionManager = Mock.Of<IConnectionManager>();
-			Mock.Get(connectionManager).Setup(m => m.GetInputConnector(It.IsAny<ConnectorID>())).Returns<ConnectorID>(id => mainDataSource.GetInputConnector(id));
-			Mock.Get(connectionManager).Setup(m => m.GetInputConnectors(It.IsAny<FactoryID>())).Returns<FactoryID>(id => mainDataSource.GetInputConnectors(id).ToArray());
-			Mock.Get(connectionManager).Setup(m => m.GetOutputConnectors(It.IsAny<FactoryID>())).Returns<FactoryID>(id => mainDataSource.GetOutputConnectors(id).ToArray());
-			Mock.Get(connectionManager).Setup(m => m.GetConnections(It.IsAny<ConnectorID>())).Returns<ConnectorID>(id => mainDataSource.GetConnections(id).ToArray());
+			Mock.Get(connectionManager).Setup(m => m.GetInputConnector(It.IsAny<ConnectorID>())).Returns<ConnectorID>(id => Model.GetInputConnector(id));
+			Mock.Get(connectionManager).Setup(m => m.GetInputConnectors(It.IsAny<FactoryID>())).Returns<FactoryID>(id => Model.GetInputConnectors(id).ToArray());
+			Mock.Get(connectionManager).Setup(m => m.GetOutputConnectors(It.IsAny<FactoryID>())).Returns<FactoryID>(id => Model.GetOutputConnectors(id).ToArray());
+			Mock.Get(connectionManager).Setup(m => m.GetConnections(It.IsAny<ConnectorID>())).Returns<ConnectorID>(id => Model.GetConnections(id).ToArray());
 
 			return connectionManager;
 		}

@@ -53,7 +53,7 @@ namespace PIO.ModulesLib.UnitTests
 
 			logger = new DebugLogger();
 
-			dataSource = MockedData.GetMockedDataSource();
+			dataSource = MockedData.GetMockedDataSource(MockedData.DataSource1);
 
 			connectionManager = new ConnectionManager(logger, dataSource);
 			result = connectionManager.GetInputConnectors(new FactoryID(1));
@@ -96,7 +96,7 @@ namespace PIO.ModulesLib.UnitTests
 
 			logger = new DebugLogger();
 
-			dataSource = MockedData.GetMockedDataSource();
+			dataSource = MockedData.GetMockedDataSource(MockedData.DataSource1);
 
 			connectionManager = new ConnectionManager(logger, dataSource);
 			result = connectionManager.GetOutputConnectors(new FactoryID(1));
@@ -141,7 +141,7 @@ namespace PIO.ModulesLib.UnitTests
 
 			logger = new DebugLogger();
 
-			dataSource = MockedData.GetMockedDataSource();
+			dataSource = MockedData.GetMockedDataSource(MockedData.DataSource1);
 
 			connectionManager = new ConnectionManager(logger, dataSource);
 			result = connectionManager.GetInputConnector(new ConnectorID(1));
@@ -184,7 +184,7 @@ namespace PIO.ModulesLib.UnitTests
 
 			logger = new DebugLogger();
 
-			dataSource = MockedData.GetMockedDataSource();
+			dataSource = MockedData.GetMockedDataSource(MockedData.DataSource1);
 
 			connectionManager = new ConnectionManager(logger, dataSource);
 			result = connectionManager.GetConnections(new ConnectorID(4));

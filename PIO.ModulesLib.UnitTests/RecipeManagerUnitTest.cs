@@ -50,7 +50,7 @@ namespace PIO.ModulesLib.UnitTests
 
 			logger = new DebugLogger();
 
-			dataSource = MockedData.GetMockedDataSource();
+			dataSource = MockedData.GetMockedDataSource(MockedData.DataSource1);
 
 			recipeManager = new RecipeManager(logger, dataSource);
 			
@@ -93,7 +93,7 @@ namespace PIO.ModulesLib.UnitTests
 
 			logger = new DebugLogger();
 
-			dataSource = MockedData.GetMockedDataSource();
+			dataSource = MockedData.GetMockedDataSource(MockedData.DataSource1);
 
 			recipeManager = new RecipeManager(logger, dataSource);
 			result = recipeManager.GetIngredients(new RecipeID(1));
@@ -136,7 +136,7 @@ namespace PIO.ModulesLib.UnitTests
 
 			logger = new DebugLogger();
 
-			dataSource = MockedData.GetMockedDataSource();
+			dataSource = MockedData.GetMockedDataSource(MockedData.DataSource1);
 
 			recipeManager = new RecipeManager(logger, dataSource);
 			result = recipeManager.GetProducts(new RecipeID(1));
