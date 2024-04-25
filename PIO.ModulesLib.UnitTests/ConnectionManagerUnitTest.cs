@@ -44,7 +44,7 @@ namespace PIO.ModulesLib.UnitTests
 			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Error, "[Factory ID 1]", "Failed", "input", "connectors"));
 		}
 		[TestMethod]
-		public void GetInputConnectorShouldReturnValidValid()
+		public void GetInputConnectorsShouldReturnValidValue()
 		{
 			IConnectionManager connectionManager;
 			IDataSource dataSource;
@@ -87,7 +87,7 @@ namespace PIO.ModulesLib.UnitTests
 			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Error, "[Factory ID 1]", "Failed", "output", "connectors"));
 		}
 		[TestMethod]
-		public void GetOutputConnectorShouldReturnValidValid()
+		public void GetOutputConnectorShouldReturnValidValue()
 		{
 			IConnectionManager connectionManager;
 			IDataSource dataSource;
@@ -132,7 +132,7 @@ namespace PIO.ModulesLib.UnitTests
 			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Error, "[Connector ID 1]", "Failed", "input", "connector"));
 		}
 		[TestMethod]
-		public void GetInputConnectoShouldReturnValidValid()
+		public void GetInputConnectorShouldReturnValidValue()
 		{
 			IConnectionManager connectionManager;
 			IDataSource dataSource;
