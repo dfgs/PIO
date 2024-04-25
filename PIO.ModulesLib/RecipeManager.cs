@@ -14,7 +14,15 @@ namespace PIO.ModulesLib
 		}
 
 
-	
+		public IRecipe? GetRecipe(FactoryTypeID FactoryTypeID)
+		{
+			IRecipe? recipe = null;
+
+			LogEnter();
+			Log(LogLevels.Debug, $"[FactoryType ID {FactoryTypeID}] Trying to get recipe");
+			if (!Try(() => recipe = DataSource.GetRecipe(FactoryTypeID)).OrAlert($"[FactoryType ID {FactoryTypeID}] Failed to get recipe")) return null;
+			return recipe;
+		}
 
 		public IIngredient[]? GetIngredients(RecipeID RecipeID)
 		{

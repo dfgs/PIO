@@ -10,7 +10,7 @@ namespace PIO.ModulesLib
 	public interface IRecipeManager:IPIOModule
 	{
 
-
+		IRecipe? GetRecipe(FactoryTypeID FactoryTypeID);
 		IIngredient[]? GetIngredients(RecipeID RecipeID);
 		IProduct[]? GetProducts(RecipeID RecipeID);
 

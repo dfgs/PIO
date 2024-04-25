@@ -20,13 +20,54 @@ namespace PIO.ModulesLib.UnitTests
 
 		}
 
+		[TestMethod]
+		public void GetRecipeShouldLogErrorIfDataSourceThrowsException()
+		{
+			IRecipeManager recipeManager;
+			IDataSource dataSource;
+			DebugLogger logger;
+			IRecipe? result;
 
+			logger = new DebugLogger();
+
+			dataSource = Mock.Of<IDataSource>();
+			Mock.Get(dataSource).Setup(m => m.GetRecipe(It.IsAny<FactoryTypeID>())).Throws(new InvalidOperationException());
+
+			recipeManager = new RecipeManager(logger, dataSource);
+			result = recipeManager.GetRecipe(new FactoryTypeID("Type1"));
+			Assert.IsNull(result);
+			Assert.AreEqual(1, logger.ErrorCount);
+			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Error, "[FactoryType ID Type1]", "Failed", "recipe"));
+
+		}
+		[TestMethod]
+		public void GetRecipeShouldReturnValidValue()
+		{
+			IRecipeManager recipeManager;
+			IDataSource dataSource;
+			DebugLogger logger;
+			IRecipe? result;
+
+			logger = new DebugLogger();
+
+			dataSource = MockedData.GetMockedDataSource();
+
+			recipeManager = new RecipeManager(logger, dataSource);
+			
+			result = recipeManager.GetRecipe(new FactoryTypeID("Type1"));
+			Assert.IsNotNull(result);
+			Assert.AreEqual(new RecipeID(1), result.ID);
+
+			result = recipeManager.GetRecipe(new FactoryTypeID("Type2"));
+			Assert.IsNotNull(result);
+			Assert.AreEqual(new RecipeID(2), result.ID);
+		}
 
 
 		[TestMethod]
 		public void GetIngredientsShouldLogErrorIfDataSourceThrowsException()
 		{
-			IRecipeManager factoryManager;
+			IRecipeManager recipeManager;
 			IDataSource dataSource;
 			DebugLogger logger;
 			IIngredient[]? result;
@@ -36,16 +77,16 @@ namespace PIO.ModulesLib.UnitTests
 			dataSource = Mock.Of<IDataSource>();
 			Mock.Get(dataSource).Setup(m => m.GetIngredients(It.IsAny<RecipeID>())).Throws(new InvalidOperationException());
 
-			factoryManager = new RecipeManager(logger, dataSource);
-			result = factoryManager.GetIngredients(new RecipeID(1));
+			recipeManager = new RecipeManager(logger, dataSource);
+			result = recipeManager.GetIngredients(new RecipeID(1));
 			Assert.IsNull(result);
 			Assert.AreEqual(1, logger.ErrorCount);
 			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Error, "[Recipe ID 1]", "Failed", "ingredients"));
 		}
 		[TestMethod]
-		public void GetIngredientShouldReturnValidValid()
+		public void GetIngredientShouldReturnValidValues()
 		{
-			IRecipeManager factoryManager;
+			IRecipeManager recipeManager;
 			IDataSource dataSource;
 			DebugLogger logger;
 			IIngredient[]? result;
@@ -54,13 +95,13 @@ namespace PIO.ModulesLib.UnitTests
 
 			dataSource = MockedData.GetMockedDataSource();
 
-			factoryManager = new RecipeManager(logger, dataSource);
-			result = factoryManager.GetIngredients(new RecipeID(1));
+			recipeManager = new RecipeManager(logger, dataSource);
+			result = recipeManager.GetIngredients(new RecipeID(1));
 			Assert.IsNotNull(result);
 			Assert.AreEqual(1, result.Length);
 			Assert.AreEqual(new IngredientID(1), result[0].ID);
 
-			result = factoryManager.GetIngredients(new RecipeID(2));
+			result = recipeManager.GetIngredients(new RecipeID(2));
 			Assert.IsNotNull(result);
 			Assert.AreEqual(1, result.Length);
 			Assert.AreEqual(new IngredientID(2), result[0].ID);
@@ -69,7 +110,7 @@ namespace PIO.ModulesLib.UnitTests
 		[TestMethod]
 		public void GetProductsShouldLogErrorIfDataSourceThrowsException()
 		{
-			IRecipeManager factoryManager;
+			IRecipeManager recipeManager;
 			IDataSource dataSource;
 			DebugLogger logger;
 			IProduct[]? result;
@@ -79,16 +120,16 @@ namespace PIO.ModulesLib.UnitTests
 			dataSource = Mock.Of<IDataSource>();
 			Mock.Get(dataSource).Setup(m => m.GetProducts(It.IsAny<RecipeID>())).Throws(new InvalidOperationException());
 
-			factoryManager = new RecipeManager(logger, dataSource);
-			result = factoryManager.GetProducts(new RecipeID(1));
+			recipeManager = new RecipeManager(logger, dataSource);
+			result = recipeManager.GetProducts(new RecipeID(1));
 			Assert.IsNull(result);
 			Assert.AreEqual(1, logger.ErrorCount);
 			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Error, "[Recipe ID 1]", "Failed", "products"));
 		}
 		[TestMethod]
-		public void GetProductShouldReturnValidValid()
+		public void GetProductShouldReturnValidValues()
 		{
-			IRecipeManager factoryManager;
+			IRecipeManager recipeManager;
 			IDataSource dataSource;
 			DebugLogger logger;
 			IProduct[]? result;
@@ -97,13 +138,13 @@ namespace PIO.ModulesLib.UnitTests
 
 			dataSource = MockedData.GetMockedDataSource();
 
-			factoryManager = new RecipeManager(logger, dataSource);
-			result = factoryManager.GetProducts(new RecipeID(1));
+			recipeManager = new RecipeManager(logger, dataSource);
+			result = recipeManager.GetProducts(new RecipeID(1));
 			Assert.IsNotNull(result);
 			Assert.AreEqual(1, result.Length);
 			Assert.AreEqual(new ProductID(1), result[0].ID);
 
-			result = factoryManager.GetProducts(new RecipeID(2));
+			result = recipeManager.GetProducts(new RecipeID(2));
 			Assert.IsNotNull(result);
 			Assert.AreEqual(1, result.Length);
 			Assert.AreEqual(new ProductID(2), result[0].ID);

@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 
 namespace PIO.ModulesLib
 {
-	public interface IFactoryManager:IPIOModule
+	public interface IConnectionManager:IPIOModule
 	{
-
+		IInputConnector[]? GetInputConnectors(FactoryID FactoryID);
+		IOutputConnector[]? GetOutputConnectors(FactoryID FactoryID);
 
 	}
 }

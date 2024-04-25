@@ -98,8 +98,13 @@ namespace PIO.ModulesLib.UnitTests
 		public static IRecipeManager GetMockedRecipeManager()
 		{
 			IRecipeManager recipeManager;
+			IRecipe recipe1, recipe2, recipe3;
 			IIngredient ingredient1, ingredient2, ingredient3;
 			IProduct product1, product2, product3;
+
+			recipe1 = new Recipe() { ID = new RecipeID(1), FactoryTypeID = new FactoryTypeID("Type1") };
+			recipe2 = new Recipe() { ID = new RecipeID(2), FactoryTypeID = new FactoryTypeID("Type2") };
+			recipe3 = new Recipe() { ID = new RecipeID(3), FactoryTypeID = new FactoryTypeID("Type3") };
 
 			ingredient1 = new Ingredient() { ID = new IngredientID(1), RecipeID = new RecipeID(1), ResourceType = "Type1", Rate = 1 };
 			ingredient2 = new Ingredient() { ID = new IngredientID(2), RecipeID = new RecipeID(2), ResourceType = "Type2", Rate = 2 };
@@ -119,8 +124,41 @@ namespace PIO.ModulesLib.UnitTests
 			Mock.Get(recipeManager).Setup(m => m.GetProducts(new RecipeID(2))).Returns([product2]);
 			Mock.Get(recipeManager).Setup(m => m.GetProducts(new RecipeID(3))).Returns([product3]);
 
+			Mock.Get(recipeManager).Setup(m => m.GetRecipe(new FactoryTypeID("Type1"))).Returns(recipe1);
+			Mock.Get(recipeManager).Setup(m => m.GetRecipe(new FactoryTypeID("Type2"))).Returns(recipe2);
+			Mock.Get(recipeManager).Setup(m => m.GetRecipe(new FactoryTypeID("Type3"))).Returns(recipe3);
+
 			return recipeManager;
 		}
+
+		public static IConnectionManager GetConnectionManager()
+		{
+			IConnectionManager connectionManager;
+			IInputConnector inputConnector1, inputConnector2, inputConnector3;
+			IOutputConnector outputConnector1, outputConnector2, outputConnector3;
+
+			inputConnector1 = new InputConnector() { ID = new ConnectorID(1), FactoryID = new FactoryID(1), ResourceType = "Type1", Rate = 1 };
+			inputConnector2 = new InputConnector() { ID = new ConnectorID(2), FactoryID = new FactoryID(2), ResourceType = "Type2" };
+			inputConnector3 = new InputConnector() { ID = new ConnectorID(3), FactoryID = new FactoryID(3), ResourceType = "Type3" };
+
+			outputConnector1 = new OutputConnector() { ID = new ConnectorID(4), FactoryID = new FactoryID(1), ResourceType = "Type2" };
+			outputConnector2 = new OutputConnector() { ID = new ConnectorID(5), FactoryID = new FactoryID(2), ResourceType = "Type3" };
+			outputConnector3 = new OutputConnector() { ID = new ConnectorID(6), FactoryID = new FactoryID(3), ResourceType = "Type4" };
+
+
+
+			connectionManager = Mock.Of<IConnectionManager>();
+			Mock.Get(connectionManager).Setup(m => m.GetInputConnectors(new FactoryID(1))).Returns([inputConnector1]);
+			Mock.Get(connectionManager).Setup(m => m.GetInputConnectors(new FactoryID(2))).Returns([inputConnector2]);
+			Mock.Get(connectionManager).Setup(m => m.GetInputConnectors(new FactoryID(3))).Returns([inputConnector3]);
+
+			Mock.Get(connectionManager).Setup(m => m.GetOutputConnectors(new FactoryID(1))).Returns([outputConnector1]);
+			Mock.Get(connectionManager).Setup(m => m.GetOutputConnectors(new FactoryID(2))).Returns([outputConnector2]);
+			Mock.Get(connectionManager).Setup(m => m.GetOutputConnectors(new FactoryID(3))).Returns([outputConnector3]);
+
+			return connectionManager;
+		}
+
 
 
 	}
