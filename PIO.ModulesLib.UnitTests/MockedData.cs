@@ -12,6 +12,7 @@ namespace PIO.ModulesLib.UnitTests
 	internal static class MockedData
 	{
 		private static DataSource mainDataSource;
+		private static ITopologySorter mainSorter;
 
 		static MockedData()
 		{
@@ -22,6 +23,8 @@ namespace PIO.ModulesLib.UnitTests
 			IInputConnector inputConnector1, inputConnector2, inputConnector3;
 			IOutputConnector outputConnector1, outputConnector2, outputConnector3;
 			IConnection connection1, connection2;
+
+			mainSorter = new TopologySorter();
 
 			factory1 = new Factory() { ID = new FactoryID(1), FactoryTypeID = new FactoryTypeID("Type1") };
 			factory2 = new Factory() { ID = new FactoryID(2), FactoryTypeID = new FactoryTypeID("Type2") };
@@ -84,8 +87,10 @@ namespace PIO.ModulesLib.UnitTests
 		public static IDataSource GetMockedDataSource()
 		{
 			IDataSource dataSource;
-					
+
 			dataSource = Mock.Of<IDataSource>();
+
+			Mock.Get(dataSource).Setup(m => m.GetFactories()).Returns(mainDataSource.GetFactories());
 			Mock.Get(dataSource).Setup(m => m.GetFactory(It.IsAny<FactoryID>())).Returns<FactoryID>(id => mainDataSource.GetFactory(id));
 			Mock.Get(dataSource).Setup(m => m.GetRecipe(It.IsAny<FactoryTypeID>())).Returns<FactoryTypeID>(id => mainDataSource.GetRecipe(id));
 			Mock.Get(dataSource).Setup(m => m.GetIngredients(It.IsAny<RecipeID>())).Returns<RecipeID>(id => mainDataSource.GetIngredients(id));
@@ -111,7 +116,7 @@ namespace PIO.ModulesLib.UnitTests
 			return recipeManager;
 		}
 
-		public static IConnectionManager GetConnectionManager()
+		public static IConnectionManager GetMockedConnectionManager()
 		{
 			IConnectionManager connectionManager;
 
@@ -124,7 +129,15 @@ namespace PIO.ModulesLib.UnitTests
 			return connectionManager;
 		}
 
+		public static ITopologySorter GetMockedTopologySorter()
+		{
+			ITopologySorter mock;
 
+			mock = Mock.Of<ITopologySorter>();
+			Mock.Get(mock).Setup(m => m.Sort(It.IsAny<IDataSource>())).Returns<IDataSource>(dataSource=>mainSorter.Sort(dataSource));
 
+			return mock;
+		}
 	}
+
 }
