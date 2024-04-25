@@ -646,7 +646,7 @@ namespace PIO.ModulesLib.UnitTests
 
 
 		[TestMethod]
-		public void UpdateShouldSetValidRatesInConnectors()
+		public void UpdateShouldSetValidRatesInConnectors1()
 		{
 			IUpdateManager updateManager;
 			IDataSource dataSource;
@@ -677,6 +677,40 @@ namespace PIO.ModulesLib.UnitTests
 			Assert.AreEqual(0.25f, dataSource.GetOutputConnector(new ConnectorID(6))!.Rate);
 
 		}
+
+		[TestMethod]
+		public void UpdateShouldSetValidRatesInConnectors2()
+		{
+			IUpdateManager updateManager;
+			IDataSource dataSource;
+			DebugLogger logger;
+			ITopologySorter topologySorter;
+			IRecipeManager recipeManager;
+			IConnectionManager connectionManager;
+			bool result;
+
+			logger = new DebugLogger();
+
+			dataSource = MockedData.GetMockedDataSource(MockedData.DataSource2);
+
+			topologySorter = MockedData.GetMockedTopologySorter();
+
+			recipeManager = MockedData.GetMockedRecipeManager(MockedData.DataSource2);
+			connectionManager = MockedData.GetMockedConnectionManager(MockedData.DataSource2);
+
+
+			updateManager = new UpdateManager(logger, dataSource, topologySorter, recipeManager, connectionManager);
+			result = updateManager.Update(0);
+			Assert.IsTrue(result);
+			Assert.AreEqual(0, logger.WarningCount);
+			Assert.AreEqual(0, logger.ErrorCount);
+			Assert.AreEqual(0, logger.FatalCount);
+			Assert.AreEqual(1f, dataSource.GetOutputConnector(new ConnectorID(5))!.Rate);
+			Assert.AreEqual(2f, dataSource.GetOutputConnector(new ConnectorID(6))!.Rate);
+			Assert.AreEqual(0.5f, dataSource.GetOutputConnector(new ConnectorID(7))!.Rate);
+
+		}
+
 
 
 	}
