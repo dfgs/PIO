@@ -156,6 +156,10 @@ namespace PIO.ModulesLib.UnitTests
 			Mock.Get(connectionManager).Setup(m => m.GetOutputConnectors(new FactoryID(2))).Returns([outputConnector2]);
 			Mock.Get(connectionManager).Setup(m => m.GetOutputConnectors(new FactoryID(3))).Returns([outputConnector3]);
 
+			Mock.Get(connectionManager).Setup(m => m.GetInputConnector(new ConnectorID(1))).Returns(inputConnector1);
+			Mock.Get(connectionManager).Setup(m => m.GetInputConnector(new ConnectorID(2))).Returns(inputConnector2);
+			Mock.Get(connectionManager).Setup(m => m.GetInputConnector(new ConnectorID(3))).Returns(inputConnector3);
+
 			return connectionManager;
 		}
 

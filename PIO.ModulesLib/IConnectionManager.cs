@@ -11,6 +11,7 @@ namespace PIO.ModulesLib
 	{
 		IInputConnector[]? GetInputConnectors(FactoryID FactoryID);
 		IOutputConnector[]? GetOutputConnectors(FactoryID FactoryID);
+		IInputConnector? GetInputConnector(ConnectorID ConnectorID);
 
 	}
 }

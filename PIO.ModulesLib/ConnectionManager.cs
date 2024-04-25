@@ -33,7 +33,16 @@ namespace PIO.ModulesLib
 
 		}
 
+		public IInputConnector? GetInputConnector(ConnectorID ConnectorID)
+		{
+			IInputConnector? connector = null;
 
+			LogEnter();
+			Log(LogLevels.Debug, $"[Connector ID {ConnectorID}] Trying to get input connector");
+			if (!Try(() => DataSource.GetInputConnector(ConnectorID)).Then(result => connector = result).OrAlert($"[Connector ID {ConnectorID}] Failed to get input connector")) return null;
+			return connector;
+
+		}
 
 
 

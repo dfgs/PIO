@@ -617,7 +617,7 @@ namespace PIO.ModulesLib.UnitTests
 		}
 
 		[TestMethod]
-		public void UpdateShouldLogErrorIfCannotGetDestinationConnector()
+		public void UpdateShouldLogWarningIfCannotGetDestinationConnector()
 		{
 			IUpdateManager updateManager;
 			IDataSource dataSource;
@@ -630,47 +630,21 @@ namespace PIO.ModulesLib.UnitTests
 			logger = new DebugLogger();
 
 			dataSource = MockedData.GetMockedDataSource();
-			Mock.Get(dataSource).Setup(m => m.GetInputConnector(new ConnectorID(2))).Throws<InvalidOperationException>();
 
 			topologySorter = Mock.Of<ITopologySorter>();
 			Mock.Get(topologySorter).Setup(m => m.Sort(It.IsAny<IDataSource>())).Returns([dataSource.GetFactory(new FactoryID(1)), dataSource.GetFactory(new FactoryID(2)), dataSource.GetFactory(new FactoryID(3))]);
 			recipeManager = MockedData.GetMockedRecipeManager();
 			connectionManager = MockedData.GetConnectionManager();
-
-			updateManager = new UpdateManager(logger, dataSource, topologySorter, recipeManager,connectionManager);
-			result = updateManager.Update(0);
-			Assert.IsTrue(result);
-			Assert.AreEqual(1, logger.ErrorCount);
-			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Error, "destination", "connector", "[Connection ID 1]"));
-		}
-
-		[TestMethod]
-		public void UpdateShouldLogWarningIfDestinationConnectorIsNotFound()
-		{
-			IUpdateManager updateManager;
-			IDataSource dataSource;
-			DebugLogger logger;
-			ITopologySorter topologySorter;
-			IRecipeManager recipeManager;
-			IConnectionManager connectionManager;
-			bool result;
-
-			logger = new DebugLogger();
-
-			dataSource = MockedData.GetMockedDataSource();
-			Mock.Get(dataSource).Setup(m => m.GetInputConnector(new ConnectorID(2))).Returns<IInputConnector?>(null);
-
-			topologySorter = Mock.Of<ITopologySorter>();
-			Mock.Get(topologySorter).Setup(m => m.Sort(It.IsAny<IDataSource>())).Returns([dataSource.GetFactory(new FactoryID(1)), dataSource.GetFactory(new FactoryID(2)), dataSource.GetFactory(new FactoryID(3))]);
-			recipeManager = MockedData.GetMockedRecipeManager();
-			connectionManager = MockedData.GetConnectionManager();
+			Mock.Get(connectionManager).Setup(m => m.GetInputConnector(new ConnectorID(2))).Returns<IInputConnector?>(null);
 
 			updateManager = new UpdateManager(logger, dataSource, topologySorter, recipeManager,connectionManager);
 			result = updateManager.Update(0);
 			Assert.IsTrue(result);
 			Assert.AreEqual(1, logger.WarningCount);
-			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Warning, "destination", "connector", "[Connection ID 1]"));
+			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Warning, "Failed","get", "destination", "connector", "[Connection ID 1]"));
 		}
+
+		
 
 
 	}

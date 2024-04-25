@@ -111,12 +111,51 @@ namespace PIO.ModulesLib.UnitTests
 		}
 
 
-	
 
-	
-		
+		[TestMethod]
+		public void GetInputConnectorShouldLogErrorIfDataSourceThrowsException()
+		{
+			IConnectionManager connectionManager;
+			IDataSource dataSource;
+			DebugLogger logger;
+			IInputConnector? result;
 
-		
+			logger = new DebugLogger();
+
+			dataSource = Mock.Of<IDataSource>();
+			Mock.Get(dataSource).Setup(m => m.GetInputConnector(It.IsAny<ConnectorID>())).Throws(new InvalidOperationException());
+
+			connectionManager = new ConnectionManager(logger, dataSource);
+			result = connectionManager.GetInputConnector(new ConnectorID(1));
+			Assert.IsNull(result);
+			Assert.AreEqual(1, logger.ErrorCount);
+			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Error, "[Connector ID 1]", "Failed", "input", "connector"));
+		}
+		[TestMethod]
+		public void GetInputConnectoShouldReturnValidValid()
+		{
+			IConnectionManager connectionManager;
+			IDataSource dataSource;
+			DebugLogger logger;
+			IInputConnector? result;
+
+			logger = new DebugLogger();
+
+			dataSource = MockedData.GetMockedDataSource();
+
+			connectionManager = new ConnectionManager(logger, dataSource);
+			result = connectionManager.GetInputConnector(new ConnectorID(1));
+			Assert.IsNotNull(result);
+			Assert.AreEqual(new ConnectorID(1), result.ID);
+
+			result = connectionManager.GetInputConnector(new ConnectorID(2));
+			Assert.IsNotNull(result);
+			Assert.AreEqual(new ConnectorID(2), result.ID);
+		}
+
+
+
+
 
 
 
