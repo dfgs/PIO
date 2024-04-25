@@ -7,7 +7,11 @@ using System.Threading.Tasks;
 
 namespace PIO.ModulesLib
 {
-	public interface IBufferManager : IPIOUpdateModule
+	public interface IBufferManager : IPIOModule
 	{
+		IBuffer[]? GetBuffers();
+		IBuffer? GetBuffer(BufferID BufferID);
+		IBuffer? GetBuffer(ConnectorID ConnectorID);
+
 	}
 }

@@ -1,6 +1,5 @@
 ﻿using Moq;
 using PIO.CoreLib;
-using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
@@ -33,10 +32,10 @@ namespace PIO.ModulesLib.UnitTests
 			IInputConnector inputConnector1, inputConnector2, inputConnector3;
 			IOutputConnector outputConnector1, outputConnector2, outputConnector3;
 			IConnection connection1, connection2;
-
+			IBuffer buffer1, buffer2, buffer3, buffer4, buffer5, buffer6;
 
 			// F1 -out1-in2-> F2 -out0.5-in2-> F3 -out0.25->
-	
+
 			factory1 = new Factory() { ID = new FactoryID(1), FactoryTypeID = new FactoryTypeID("Type1") };
 			factory2 = new Factory() { ID = new FactoryID(2), FactoryTypeID = new FactoryTypeID("Type2") };
 			factory3 = new Factory() { ID = new FactoryID(3), FactoryTypeID = new FactoryTypeID("Type3") };
@@ -63,6 +62,13 @@ namespace PIO.ModulesLib.UnitTests
 
 			connection1 = new Connection() { ID = new ConnectionID(1), SourceID = new ConnectorID(4), DestinationID = new ConnectorID(2) };
 			connection2 = new Connection() { ID = new ConnectionID(2), SourceID = new ConnectorID(5), DestinationID = new ConnectorID(3) };
+
+			buffer1 = new PIO.CoreLib.Buffer() { ID = new BufferID(1), ConnectorID = new ConnectorID(1), Capacity = 100, InitialUsage = 0 };
+			buffer2 = new PIO.CoreLib.Buffer() { ID = new BufferID(2), ConnectorID = new ConnectorID(2), Capacity = 100, InitialUsage = 0 };
+			buffer3 = new PIO.CoreLib.Buffer() { ID = new BufferID(3), ConnectorID = new ConnectorID(3), Capacity = 100, InitialUsage = 0 };
+			buffer4 = new PIO.CoreLib.Buffer() { ID = new BufferID(4), ConnectorID = new ConnectorID(4), Capacity = 100, InitialUsage = 0 };
+			buffer5 = new PIO.CoreLib.Buffer() { ID = new BufferID(5), ConnectorID = new ConnectorID(5), Capacity = 100, InitialUsage = 0 };
+			buffer6 = new PIO.CoreLib.Buffer() { ID = new BufferID(6), ConnectorID = new ConnectorID(6), Capacity = 100, InitialUsage = 0 };
 
 			dataSource = new DataSource();
 
@@ -93,6 +99,13 @@ namespace PIO.ModulesLib.UnitTests
 			dataSource.AddConnection(connection1);
 			dataSource.AddConnection(connection2);
 
+			dataSource.AddBuffer(buffer1);
+			dataSource.AddBuffer(buffer2);
+			dataSource.AddBuffer(buffer3);
+			dataSource.AddBuffer(buffer4);
+			dataSource.AddBuffer(buffer5);
+			dataSource.AddBuffer(buffer6);
+
 			return dataSource;
 		}
 
@@ -106,6 +119,7 @@ namespace PIO.ModulesLib.UnitTests
 			IInputConnector inputConnector1, inputConnector2, inputConnector3, inputConnector4;
 			IOutputConnector outputConnector1, outputConnector2, outputConnector3;
 			IConnection connection1, connection2;
+			IBuffer buffer1, buffer2, buffer3, buffer4, buffer5, buffer6, buffer7;
 
 
 			// F1 -out1-in2-> F3 -out0.5->
@@ -138,6 +152,16 @@ namespace PIO.ModulesLib.UnitTests
 			connection1 = new Connection() { ID = new ConnectionID(1), SourceID = new ConnectorID(5), DestinationID = new ConnectorID(3) };
 			connection2 = new Connection() { ID = new ConnectionID(2), SourceID = new ConnectorID(6), DestinationID = new ConnectorID(4) };
 
+
+			buffer1 = new PIO.CoreLib.Buffer() { ID = new BufferID(1), ConnectorID = new ConnectorID(1), Capacity = 100, InitialUsage = 0 };
+			buffer2 = new PIO.CoreLib.Buffer() { ID = new BufferID(2), ConnectorID = new ConnectorID(2), Capacity = 100, InitialUsage = 0 };
+			buffer3 = new PIO.CoreLib.Buffer() { ID = new BufferID(3), ConnectorID = new ConnectorID(3), Capacity = 100, InitialUsage = 0 };
+			buffer4 = new PIO.CoreLib.Buffer() { ID = new BufferID(4), ConnectorID = new ConnectorID(4), Capacity = 100, InitialUsage = 0 };
+			buffer5 = new PIO.CoreLib.Buffer() { ID = new BufferID(5), ConnectorID = new ConnectorID(5), Capacity = 100, InitialUsage = 0 };
+			buffer6 = new PIO.CoreLib.Buffer() { ID = new BufferID(6), ConnectorID = new ConnectorID(6), Capacity = 100, InitialUsage = 0 };
+			buffer7 = new PIO.CoreLib.Buffer() { ID = new BufferID(7), ConnectorID = new ConnectorID(7), Capacity = 100, InitialUsage = 0 };
+
+
 			dataSource = new DataSource();
 
 			dataSource.AddFactory(factory1);
@@ -167,6 +191,13 @@ namespace PIO.ModulesLib.UnitTests
 			dataSource.AddConnection(connection1);
 			dataSource.AddConnection(connection2);
 
+			dataSource.AddBuffer(buffer1);
+			dataSource.AddBuffer(buffer2);
+			dataSource.AddBuffer(buffer3);
+			dataSource.AddBuffer(buffer4);
+			dataSource.AddBuffer(buffer5);
+			dataSource.AddBuffer(buffer7);
+
 			return dataSource;
 		}
 
@@ -188,6 +219,9 @@ namespace PIO.ModulesLib.UnitTests
 			Mock.Get(dataSource).Setup(m => m.GetConnections(It.IsAny<ConnectorID>())).Returns<ConnectorID>(id => Model.GetConnections(id));
 			Mock.Get(dataSource).Setup(m => m.GetInputConnector(It.IsAny<ConnectorID>())).Returns<ConnectorID>(id => Model.GetInputConnector(id));
 			Mock.Get(dataSource).Setup(m => m.GetOutputConnector(It.IsAny<ConnectorID>())).Returns<ConnectorID>(id => Model.GetOutputConnector(id));
+			Mock.Get(dataSource).Setup(m => m.GetBuffers()).Returns(Model.GetBuffers());
+			Mock.Get(dataSource).Setup(m => m.GetBuffer(It.IsAny<BufferID>())).Returns<BufferID>(id => Model.GetBuffer(id));
+			Mock.Get(dataSource).Setup(m => m.GetBuffer(It.IsAny<ConnectorID>())).Returns<ConnectorID>(id => Model.GetBuffer(id));
 
 			return dataSource;
 		}

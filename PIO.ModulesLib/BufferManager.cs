@@ -43,6 +43,35 @@ namespace PIO.ModulesLib
 			return true;
 
 		}
+		public IBuffer[]? GetBuffers()
+		{
+			IBuffer[]? buffers = null;
+
+			LogEnter();
+			Log(LogLevels.Debug, $"Trying to get buffers");
+			if (!Try(() => DataSource.GetBuffers()).Then(result => buffers = result.ToArray()).OrAlert($"Failed to get buffers")) return null;
+			return buffers;
+		}
+		public IBuffer? GetBuffer(BufferID BufferID)
+		{
+			IBuffer? buffer = null;
+
+			LogEnter();
+			Log(LogLevels.Debug, $"[Buffer ID {BufferID}] Trying to get buffer");
+			if (!Try(() => DataSource.GetBuffer(BufferID)).Then(result => buffer = result).OrAlert($"[Buffer ID {BufferID}] Failed to get buffer")) return null;
+			return buffer;
+
+		}
+		public IBuffer? GetBuffer(ConnectorID ConnectorID)
+		{
+			IBuffer? buffer = null;
+
+			LogEnter();
+			Log(LogLevels.Debug, $"[Connector ID {ConnectorID}] Trying to get buffer");
+			if (!Try(() => DataSource.GetBuffer(ConnectorID)).Then(result => buffer = result).OrAlert($"[Connector ID {ConnectorID}] Failed to get buffer")) return null;
+			return buffer;
+
+		}
 
 
 	}

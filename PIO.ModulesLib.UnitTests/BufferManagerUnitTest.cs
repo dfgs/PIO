@@ -22,7 +22,7 @@ namespace PIO.ModulesLib.UnitTests
 		[TestMethod]
 		public void UpdateShouldLogErrorIfCannotGetBuffers()
 		{
-			IBufferManager bufferManager;
+			BufferManager bufferManager;
 			IDataSource dataSource;
 			DebugLogger logger;
 			bool result;
@@ -43,7 +43,7 @@ namespace PIO.ModulesLib.UnitTests
 		[TestMethod]
 		public void UpdateShouldLogErrorIfInvalidBufferIsDetected()
 		{
-			IBufferManager bufferManager;
+			BufferManager bufferManager;
 			IDataSource dataSource;
 			IBuffer buffer1;
 			DebugLogger logger;
@@ -69,7 +69,7 @@ namespace PIO.ModulesLib.UnitTests
 		[TestMethod]
 		public void UpdateShouldLogErrorIfCannotUpdateBuffer()
 		{
-			IBufferManager bufferManager;
+			BufferManager bufferManager;
 			IDataSource dataSource;
 			IBuffer buffer1;
 			DebugLogger logger;
@@ -96,7 +96,7 @@ namespace PIO.ModulesLib.UnitTests
 		[TestMethod]
 		public void UpdateShouldUpdateBuffers()
 		{
-			IBufferManager bufferManager;
+			BufferManager bufferManager;
 			IDataSource dataSource;
 			IBuffer buffer1,buffer2,buffer3;
 			DebugLogger logger;
@@ -127,6 +127,120 @@ namespace PIO.ModulesLib.UnitTests
 			Mock.Get(buffer1).Verify(m => m.Update(0), Times.Once);
 			Mock.Get(buffer2).Verify(m => m.Update(0), Times.Once);
 			Mock.Get(buffer3).Verify(m => m.Update(0), Times.Once);
+		}
+
+		[TestMethod]
+		public void GetBuffersShouldLogErrorIfDataSourceThrowsException()
+		{
+			IBufferManager bufferManager;
+			IDataSource dataSource;
+			DebugLogger logger;
+			IBuffer[]? result;
+
+			logger = new DebugLogger();
+
+			dataSource = Mock.Of<IDataSource>();
+			Mock.Get(dataSource).Setup(m => m.GetBuffers()).Throws(new InvalidOperationException());
+
+			bufferManager = new BufferManager(logger, dataSource);
+			result = bufferManager.GetBuffers();
+			Assert.IsNull(result);
+			Assert.AreEqual(1, logger.ErrorCount);
+			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Error,  "Failed", "get", "buffers"));
+		}
+		[TestMethod]
+		public void GetBuffersShouldReturnValidValue()
+		{
+			IBufferManager bufferManager;
+			IDataSource dataSource;
+			DebugLogger logger;
+			IBuffer[]? result;
+
+			logger = new DebugLogger();
+
+			dataSource = MockedData.GetMockedDataSource(MockedData.DataSource1);
+
+			bufferManager = new BufferManager(logger, dataSource);
+			result = bufferManager.GetBuffers();
+			Assert.IsNotNull(result);
+			Assert.AreEqual(6, result.Length);
+			Assert.AreEqual(new BufferID(1), result[0].ID);
+			Assert.AreEqual(new BufferID(2), result[1].ID);
+		}
+
+
+		[TestMethod]
+		public void GetBufferFromIDShouldLogErrorIfDataSourceThrowsException()
+		{
+			IBufferManager bufferManager;
+			IDataSource dataSource;
+			DebugLogger logger;
+			IBuffer? result;
+
+			logger = new DebugLogger();
+
+			dataSource = Mock.Of<IDataSource>();
+			Mock.Get(dataSource).Setup(m => m.GetBuffer(It.IsAny<BufferID>())).Throws(new InvalidOperationException());
+
+			bufferManager = new BufferManager(logger, dataSource);
+			result = bufferManager.GetBuffer(new BufferID(1));
+			Assert.IsNull(result);
+			Assert.AreEqual(1, logger.ErrorCount);
+			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Error, "[Buffer ID 1]", "Failed", "get", "buffer"));
+		}
+		[TestMethod]
+		public void GetBufferFromIDShouldReturnValidValue()
+		{
+			IBufferManager bufferManager;
+			IDataSource dataSource;
+			DebugLogger logger;
+			IBuffer? result;
+
+			logger = new DebugLogger();
+
+			dataSource = MockedData.GetMockedDataSource(MockedData.DataSource1);
+
+			bufferManager = new BufferManager(logger, dataSource);
+			result = bufferManager.GetBuffer(new BufferID(4));
+			Assert.IsNotNull(result);
+			Assert.AreEqual(new BufferID(4), result.ID);
+		}
+
+		[TestMethod]
+		public void GetBufferFromConnectorIDShouldLogErrorIfDataSourceThrowsException()
+		{
+			IBufferManager bufferManager;
+			IDataSource dataSource;
+			DebugLogger logger;
+			IBuffer? result;
+
+			logger = new DebugLogger();
+
+			dataSource = Mock.Of<IDataSource>();
+			Mock.Get(dataSource).Setup(m => m.GetBuffer(It.IsAny<ConnectorID>())).Throws(new InvalidOperationException());
+
+			bufferManager = new BufferManager(logger, dataSource);
+			result = bufferManager.GetBuffer(new ConnectorID(1));
+			Assert.IsNull(result);
+			Assert.AreEqual(1, logger.ErrorCount);
+			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Error, "[Connector ID 1]", "Failed", "get", "buffer"));
+		}
+		[TestMethod]
+		public void GetBufferFromConnectorIDShouldReturnValidValue()
+		{
+			IBufferManager bufferManager;
+			IDataSource dataSource;
+			DebugLogger logger;
+			IBuffer? result;
+
+			logger = new DebugLogger();
+
+			dataSource = MockedData.GetMockedDataSource(MockedData.DataSource1);
+
+			bufferManager = new BufferManager(logger, dataSource);
+			result = bufferManager.GetBuffer(new ConnectorID(4));
+			Assert.IsNotNull(result);
+			Assert.AreEqual(new BufferID(4), result.ID);
 		}
 
 
