@@ -27,6 +27,7 @@ namespace PIO.ModulesLib.UnitTests
 		{
 			DataSource dataSource;
 			IFactory factory1, factory2, factory3;
+			IJob job1,job2,job3;	
 			IRecipe recipe1, recipe2, recipe3;
 			IIngredient ingredient1, ingredient2, ingredient3;
 			IProduct product1, product2, product3;
@@ -40,6 +41,10 @@ namespace PIO.ModulesLib.UnitTests
 			factory1 = new Factory() { ID = new FactoryID(1), FactoryTypeID = new FactoryTypeID("Type1") };
 			factory2 = new Factory() { ID = new FactoryID(2), FactoryTypeID = new FactoryTypeID("Type2") };
 			factory3 = new Factory() { ID = new FactoryID(3), FactoryTypeID = new FactoryTypeID("Type3") };
+
+			job1 = new Job() { ID = new JobID(1), FactoryID = new FactoryID(1) };
+			job2 = new Job() { ID = new JobID(2), FactoryID = new FactoryID(2) };
+			job3 = new Job() { ID = new JobID(3), FactoryID = new FactoryID(3) };
 
 			recipe1 = new Recipe() { ID = new RecipeID(1), FactoryTypeID = new FactoryTypeID("Type1") };
 			recipe2 = new Recipe() { ID = new RecipeID(2), FactoryTypeID = new FactoryTypeID("Type2") };
@@ -76,6 +81,10 @@ namespace PIO.ModulesLib.UnitTests
 			dataSource.AddFactory(factory1);
 			dataSource.AddFactory(factory2);
 			dataSource.AddFactory(factory3);
+
+			dataSource.AddJob(job1);
+			dataSource.AddJob(job2);
+			dataSource.AddJob(job3);
 
 			dataSource.AddRecipe(recipe1);
 			dataSource.AddRecipe(recipe2);
@@ -114,6 +123,7 @@ namespace PIO.ModulesLib.UnitTests
 		{
 			DataSource dataSource;
 			IFactory factory1, factory2, factory3;
+			IJob job1, job2, job3;
 			IRecipe recipe1, recipe2, recipe3;
 			IIngredient ingredient1, ingredient2;
 			IProduct product1, product2, product3;
@@ -129,6 +139,10 @@ namespace PIO.ModulesLib.UnitTests
 			factory1 = new Factory() { ID = new FactoryID(1), FactoryTypeID = new FactoryTypeID("Type1") };
 			factory2 = new Factory() { ID = new FactoryID(2), FactoryTypeID = new FactoryTypeID("Type2") };
 			factory3 = new Factory() { ID = new FactoryID(3), FactoryTypeID = new FactoryTypeID("Type3") };
+
+			job1 = new Job() { ID = new JobID(1), FactoryID = new FactoryID(1) };
+			job2 = new Job() { ID = new JobID(2), FactoryID = new FactoryID(2) };
+			job3 = new Job() { ID = new JobID(3), FactoryID = new FactoryID(3) };
 
 			recipe1 = new Recipe() { ID = new RecipeID(1), FactoryTypeID = new FactoryTypeID("Type1") };
 			recipe2 = new Recipe() { ID = new RecipeID(2), FactoryTypeID = new FactoryTypeID("Type2") };
@@ -168,6 +182,10 @@ namespace PIO.ModulesLib.UnitTests
 			dataSource.AddFactory(factory1);
 			dataSource.AddFactory(factory2);
 			dataSource.AddFactory(factory3);
+
+			dataSource.AddJob(job1);
+			dataSource.AddJob(job2);
+			dataSource.AddJob(job3);
 
 			dataSource.AddRecipe(recipe1);
 			dataSource.AddRecipe(recipe2);
@@ -211,6 +229,8 @@ namespace PIO.ModulesLib.UnitTests
 
 			Mock.Get(dataSource).Setup(m => m.GetFactories()).Returns(Model.GetFactories());
 			Mock.Get(dataSource).Setup(m => m.GetFactory(It.IsAny<FactoryID>())).Returns<FactoryID>(id => Model.GetFactory(id));
+			Mock.Get(dataSource).Setup(m => m.GetJobs(It.IsAny<FactoryID>())).Returns<FactoryID>(id => Model.GetJobs(id));
+			Mock.Get(dataSource).Setup(m => m.GetJob(It.IsAny<JobID>())).Returns<JobID>(id => Model.GetJob(id));
 			Mock.Get(dataSource).Setup(m => m.GetRecipe(It.IsAny<FactoryTypeID>())).Returns<FactoryTypeID>(id => Model.GetRecipe(id));
 			Mock.Get(dataSource).Setup(m => m.GetIngredients(It.IsAny<RecipeID>())).Returns<RecipeID>(id => Model.GetIngredients(id));
 			Mock.Get(dataSource).Setup(m => m.GetProducts(It.IsAny<RecipeID>())).Returns<RecipeID>(id => Model.GetProducts(id));

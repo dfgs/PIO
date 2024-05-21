@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace PIO.ModulesLib
 {
-	public interface IFactoryManager:IPIOModule
+	public interface IJobManager:IPIOModule
 	{
+		IJob[]? GetJobs(FactoryID FactoryID);
+		IJob? GetJob(JobID JobID);
 
-		IFactory? GetFactory(FactoryID FactoryID);
-		IFactory[]? GetFactories();
 
 	}
 }
