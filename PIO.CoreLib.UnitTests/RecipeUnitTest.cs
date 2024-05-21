@@ -18,6 +18,7 @@ namespace PIO.CoreLib.UnitTests
 			recipe = new Recipe(new RecipeID(1), new FactoryTypeID("Type2")) ;
 			Assert.AreEqual(new FactoryTypeID("Type2"), recipe.FactoryTypeID);
 			Assert.AreEqual(new RecipeID(1), recipe.ID);
+
 		}
 
 	

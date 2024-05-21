@@ -17,8 +17,12 @@ namespace PIO.CoreLib
 		public Worker() 
 		{
 		}
+		[SetsRequiredMembers]
+		public Worker(WorkerID ID)
+		{
+			this.ID = ID;
+		}
 
-		
 
 
 	}
