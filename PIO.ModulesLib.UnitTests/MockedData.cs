@@ -267,6 +267,28 @@ namespace PIO.ModulesLib.UnitTests
 
 			return dataSource;
 		}
+		public static IFactoryManager GetMockedFactoryManager(IDataSource Model)
+		{
+			IFactoryManager factoryManager;
+
+			factoryManager = Mock.Of<IFactoryManager>();
+			Mock.Get(factoryManager).Setup(m => m.GetFactories()).Returns(Model.GetFactories().ToArray());
+			Mock.Get(factoryManager).Setup(m => m.GetFactory(It.IsAny<FactoryID>())).Returns<FactoryID>(id => Model.GetFactory(id));
+
+			return factoryManager;
+		}
+		public static ISubTaskManager GetMockedSubTaskManager(IDataSource Model)
+		{
+			ISubTaskManager subTaskManager;
+
+			subTaskManager = Mock.Of<ISubTaskManager>();
+			Mock.Get(subTaskManager).Setup(m => m.GetSubTasks(It.IsAny<JobID>())).Returns<JobID>(id => Model.GetSubTasks(id).ToArray());
+			Mock.Get(subTaskManager).Setup(m => m.GetSubTasks()).Returns(Model.GetSubTasks().ToArray());
+			Mock.Get(subTaskManager).Setup(m => m.GetSubTask(It.IsAny<SubTaskID>())).Returns<SubTaskID>(id => Model.GetSubTask(id));
+
+			return subTaskManager;
+		}
+
 		public static IRecipeManager GetMockedRecipeManager(IDataSource Model)
 		{
 			IRecipeManager recipeManager;
