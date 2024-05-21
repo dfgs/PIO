@@ -19,7 +19,11 @@ namespace PIO.CoreLib
 
 		IFactory? GetFactory(FactoryID FactoryID);
 		IEnumerable<IFactory> GetFactories();
-		
+
+		IEnumerable<IWorker> GetWorkers();
+		IWorker? GetWorker(WorkerID WorkerID);
+
+
 		IInputConnector? GetInputConnector(ConnectorID ConnectorID);
 		IEnumerable<IInputConnector> GetInputConnectors(FactoryID FactoryID);
 

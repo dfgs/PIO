@@ -10,6 +10,7 @@ namespace PIO.CoreLib
 	public class DataSource : IDataSource
 	{
 		private List<IFactory> factories;
+		private List<IWorker> workers;
 		private List<IInputConnector> inputConnectors;
 		private List<IOutputConnector> outputConnectors;
 		private List<IConnection> connections;
@@ -21,6 +22,7 @@ namespace PIO.CoreLib
 		public DataSource() 
 		{ 
 			this.factories = new List<IFactory>();
+			this.workers = new List<IWorker>();
 			this.inputConnectors = new List<IInputConnector>();
 			this.outputConnectors = new List<IOutputConnector>();
 			this.connections = new List<IConnection>();
@@ -82,6 +84,15 @@ namespace PIO.CoreLib
 		public IEnumerable<IFactory> GetFactories()
 		{
 			return factories;
+		}
+
+		public IWorker? GetWorker(WorkerID WorkerID)
+		{
+			return workers.FirstOrDefault(item => item.ID == WorkerID);
+		}
+		public IEnumerable<IWorker> GetWorkers()
+		{
+			return workers;
 		}
 
 		public IInputConnector? GetInputConnector(ConnectorID ConnectorID)

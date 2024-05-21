@@ -7,8 +7,13 @@ using System.Threading.Tasks;
 
 namespace PIO.ModulesLib
 {
-	public interface IWorkerManager:IPIOModule
+	public interface IWorkerManager : IPIOModule
 	{
+
+		IWorker[]? GetWorkers();
+		IWorker? GetWorker(WorkerID WorkerID);
+
+
 
 	}
 }
