@@ -40,7 +40,7 @@ namespace PIO.ModulesLib.UnitTests
 			result = factoryManager.GetFactories();
 			Assert.IsNull(result);
 			Assert.AreEqual(1, logger.ErrorCount);
-			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Error, "Failed", "get", "factories"));
+			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Error, "[Factory ID NA]", "Failed", "get", "factories"));
 		}
 		[TestMethod]
 		public void GetFactoriesShouldReturnValidValue()
