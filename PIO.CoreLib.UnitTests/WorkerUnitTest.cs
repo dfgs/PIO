@@ -11,6 +11,9 @@ namespace PIO.CoreLib.UnitTests
 		{
 			Worker worker;
 
+			worker = new Worker() { ID = new WorkerID(0) };
+			Assert.AreEqual(new WorkerID(0), worker.ID);
+
 			worker = new Worker(new WorkerID(1));
 			Assert.AreEqual(new WorkerID(1), worker.ID);
 

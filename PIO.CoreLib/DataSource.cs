@@ -11,6 +11,7 @@ namespace PIO.CoreLib
 	{
 		private List<IFactory> factories;
 		private List<IWorker> workers;
+		private List<IJob> jobs;
 		private List<IInputConnector> inputConnectors;
 		private List<IOutputConnector> outputConnectors;
 		private List<IConnection> connections;
@@ -23,6 +24,7 @@ namespace PIO.CoreLib
 		{ 
 			this.factories = new List<IFactory>();
 			this.workers = new List<IWorker>();
+			this.jobs = new List<IJob>();
 			this.inputConnectors = new List<IInputConnector>();
 			this.outputConnectors = new List<IOutputConnector>();
 			this.connections = new List<IConnection>();
@@ -33,9 +35,19 @@ namespace PIO.CoreLib
 		}
 
 		public void AddFactory(IFactory Factory)
-		{ 
-			if (Factory==null) throw new PIOInvalidParameterException(nameof(Factory));
-			this.factories.Add(Factory); 
+		{
+			if (Factory == null) throw new PIOInvalidParameterException(nameof(Factory));
+			this.factories.Add(Factory);
+		}
+		public void AddWorker(IWorker Worker)
+		{
+			if (Worker == null) throw new PIOInvalidParameterException(nameof(Worker));
+			this.workers.Add(Worker);
+		}
+		public void AddJob(IJob Job)
+		{
+			if (Job == null) throw new PIOInvalidParameterException(nameof(Job));
+			this.jobs.Add(Job);
 		}
 
 		public void AddInputConnector(IInputConnector InputConnector)
@@ -94,6 +106,16 @@ namespace PIO.CoreLib
 		{
 			return workers;
 		}
+		public IJob? GetJob(JobID JobID)
+		{
+			return jobs.FirstOrDefault(item => item.ID == JobID);
+		}
+
+		public IEnumerable<IJob> GetJobs(FactoryID FactoryID)
+		{
+			return jobs.Where(item => item.FactoryID == FactoryID);
+		}
+
 
 		public IInputConnector? GetInputConnector(ConnectorID ConnectorID)
 		{

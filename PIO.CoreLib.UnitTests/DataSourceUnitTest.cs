@@ -6,17 +6,39 @@ namespace PIO.CoreLib.UnitTests
 	[TestClass]
 	public class DataSourceUnitTest
 	{
-		
+
 
 		[TestMethod]
 		public void AddFactoryShouldThrowExceptionIfParameterIsNull()
 		{
 			IDataSource dataSource;
 
-			dataSource=new DataSource();
+			dataSource = new DataSource();
 
 #pragma warning disable CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
-			Assert.ThrowsException<PIOInvalidParameterException>(() => dataSource.AddFactory(null) );
+			Assert.ThrowsException<PIOInvalidParameterException>(() => dataSource.AddFactory(null));
+#pragma warning restore CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
+		}
+		[TestMethod]
+		public void AddWorkerShouldThrowExceptionIfParameterIsNull()
+		{
+			IDataSource dataSource;
+
+			dataSource = new DataSource();
+
+#pragma warning disable CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
+			Assert.ThrowsException<PIOInvalidParameterException>(() => dataSource.AddWorker(null));
+#pragma warning restore CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
+		}
+		[TestMethod]
+		public void AddJobShouldThrowExceptionIfParameterIsNull()
+		{
+			IDataSource dataSource;
+
+			dataSource = new DataSource();
+
+#pragma warning disable CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
+			Assert.ThrowsException<PIOInvalidParameterException>(() => dataSource.AddJob(null));
 #pragma warning restore CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
 		}
 
@@ -143,6 +165,103 @@ namespace PIO.CoreLib.UnitTests
 			Assert.IsTrue(results.Contains(factory2));
 			Assert.IsTrue(results.Contains(factory3));
 		}
+
+
+		[TestMethod]
+		public void GetWorkerShouldReturnValidValue()
+		{
+			IWorker worker;
+			IDataSource dataSource;
+
+			worker = new Worker() { ID = new WorkerID(1)};
+			dataSource = new DataSource();
+			dataSource.AddWorker(worker);
+
+			Assert.AreEqual(worker, dataSource.GetWorker(new WorkerID(1)));
+		}
+		[TestMethod]
+		public void GetWorkerShouldReturnNull()
+		{
+			IWorker worker;
+			IDataSource dataSource;
+
+			worker = new Worker() { ID = new WorkerID(1) };
+			dataSource = new DataSource();
+			dataSource.AddWorker(worker);
+
+			Assert.IsNull(dataSource.GetWorker(new WorkerID(0)));
+		}
+		[TestMethod]
+		public void GetWorkersShouldReturnValidValues()
+		{
+			IWorker worker1, worker2, worker3;
+			IDataSource dataSource;
+			IWorker[] results;
+
+			worker1 = new Worker() { ID = new WorkerID(1) };
+			worker2 = new Worker() { ID = new WorkerID(2) };
+			worker3 = new Worker() { ID = new WorkerID(3) };
+
+			dataSource = new DataSource();
+			dataSource.AddWorker(worker1);
+			dataSource.AddWorker(worker2);
+			dataSource.AddWorker(worker3);
+
+			results = dataSource.GetWorkers().ToArray();
+			Assert.AreEqual(3, results.Length);
+			Assert.IsTrue(results.Contains(worker1));
+			Assert.IsTrue(results.Contains(worker2));
+			Assert.IsTrue(results.Contains(worker3));
+		}
+
+		[TestMethod]
+		public void GetJobShouldReturnValidValue()
+		{
+			IJob job;
+			IDataSource dataSource;
+
+			job = new Job() { ID = new JobID(1), FactoryID = new FactoryID(1) };
+			dataSource = new DataSource();
+			dataSource.AddJob(job);
+
+			Assert.AreEqual(job, dataSource.GetJob(new JobID(1)));
+		}
+		[TestMethod]
+		public void GetJobShouldReturnNull()
+		{
+			IJob job;
+			IDataSource dataSource;
+
+			job = new Job() { ID = new JobID(1), FactoryID = new FactoryID(1) };
+			dataSource = new DataSource();
+			dataSource.AddJob(job);
+
+			Assert.IsNull(dataSource.GetJob(new JobID(0)));
+		}
+
+		[TestMethod]
+		public void GetJobsShouldReturnValidValues()
+		{
+			IJob job1, job2, job3;
+			IDataSource dataSource;
+			IJob[] results;
+
+			job1 = new Job() { ID = new JobID(1), FactoryID = new FactoryID(1)};
+			job2 = new Job() { ID = new JobID(2), FactoryID = new FactoryID(2) };
+			job3 = new Job() { ID = new JobID(3), FactoryID = new FactoryID(1) };
+
+			dataSource = new DataSource();
+			dataSource.AddJob(job1);
+			dataSource.AddJob(job2);
+			dataSource.AddJob(job3);
+
+			results = dataSource.GetJobs(new FactoryID(1)).ToArray();
+			Assert.AreEqual(2, results.Length);
+			Assert.IsTrue(results.Contains(job1));
+			Assert.IsFalse(results.Contains(job2));
+			Assert.IsTrue(results.Contains(job3));
+		}
+
 
 		[TestMethod]
 		public void GetInputConnectorShouldReturnValidValue()

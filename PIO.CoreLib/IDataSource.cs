@@ -9,6 +9,8 @@ namespace PIO.CoreLib
 	public interface IDataSource
 	{
 		void AddFactory(IFactory Factory);
+		void AddWorker(IWorker Worker);
+		void AddJob(IJob Job);
 		void AddInputConnector(IInputConnector Connector);
 		void AddOutputConnector(IOutputConnector Connector);
 		void AddConnection(IConnection Connection);
@@ -22,6 +24,9 @@ namespace PIO.CoreLib
 
 		IEnumerable<IWorker> GetWorkers();
 		IWorker? GetWorker(WorkerID WorkerID);
+
+		IJob? GetJob(JobID JobID);
+		IEnumerable<IJob> GetJobs(FactoryID FactoryID);
 
 
 		IInputConnector? GetInputConnector(ConnectorID ConnectorID);
