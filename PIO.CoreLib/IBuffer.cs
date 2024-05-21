@@ -45,7 +45,7 @@ namespace PIO.CoreLib
 		}
 
 		bool IsValid
-		{
+		{ 
 			get;
 		}
 

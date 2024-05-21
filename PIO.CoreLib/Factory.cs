@@ -12,7 +12,7 @@ namespace PIO.CoreLib
 	public class Factory:PIOData<FactoryID>, IFactory
 	{
 		
-		public required string FactoryType
+		public required FactoryTypeID FactoryTypeID
 		{
 			get;
 			set;
@@ -29,11 +29,10 @@ namespace PIO.CoreLib
 		}
 
 		[SetsRequiredMembers]
-		public Factory(FactoryID ID, string FactoryType)
+		public Factory(FactoryID ID, FactoryTypeID FactoryTypeID)
 		{
-			if (FactoryType == null) throw new PIOInvalidParameterException(nameof(FactoryType));
 			this.ID= ID;
-			this.FactoryType = FactoryType;
+			this.FactoryTypeID = FactoryTypeID;
 		}
 
 

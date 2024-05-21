@@ -110,9 +110,9 @@ namespace PIO.CoreLib
 			return connections.FirstOrDefault(item=>item.ID == ConnectionID);
 		}
 
-		public IEnumerable<IConnection> GetConnections(ConnectorID SourceID)
+		public IEnumerable<IConnection> GetConnections(ConnectorID SourceConnectorID)
 		{
-			return connections.Where(item => item.SourceID == SourceID);
+			return connections.Where(item => item.SourceID == SourceConnectorID);
 		}
 
 		public IBuffer? GetBuffer(BufferID BufferID)
@@ -132,9 +132,9 @@ namespace PIO.CoreLib
 		{
 			return recipes.FirstOrDefault(item => item.ID == RecipeID);
 		}
-		public IRecipe? GetRecipe(string FactoryType)
+		public IRecipe? GetRecipe(FactoryTypeID FactoryTypeID)
 		{
-			return recipes.FirstOrDefault(item => item.FactoryType == FactoryType);
+			return recipes.FirstOrDefault(item => item.FactoryTypeID == FactoryTypeID);
 		}
 
 		public IIngredient? GetIngredient(IngredientID IngredientID)

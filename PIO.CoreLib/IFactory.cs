@@ -8,7 +8,7 @@ namespace PIO.CoreLib
 {
 	public interface IFactory:IPIOData<FactoryID>
 	{
-		string FactoryType
+		FactoryTypeID FactoryTypeID
 		{
 			get;
 		}

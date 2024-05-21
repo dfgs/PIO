@@ -8,7 +8,7 @@ namespace PIO.CoreLib
 {
 	public interface IRecipe:IPIOData<RecipeID>
 	{
-		string FactoryType
+		FactoryTypeID FactoryTypeID
 		{
 			get;
 		}

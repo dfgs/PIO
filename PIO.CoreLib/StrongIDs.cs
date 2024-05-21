@@ -7,6 +7,12 @@ using System.Threading.Tasks;
 
 namespace PIO.CoreLib
 {
+	[StronglyTypedId(Template.String)]
+	public partial struct FactoryTypeID
+	{
+	}
+
+
 	[StronglyTypedId(Template.Int)]
 	public partial struct FactoryID	
 	{

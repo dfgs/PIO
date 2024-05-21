@@ -29,14 +29,14 @@ namespace PIO.CoreLib
 
 
 		IConnection? GetConnection(ConnectionID ConnectionID);
-		IEnumerable<IConnection> GetConnections(ConnectorID SourceID);
+		IEnumerable<IConnection> GetConnections(ConnectorID SourceConnectorID);
 
 		IEnumerable<IBuffer> GetBuffers();
 		IBuffer? GetBuffer(BufferID BufferID);
 		IBuffer? GetBuffer(ConnectorID ConnectorID);
 
 		IRecipe? GetRecipe(RecipeID RecipeID);
-		IRecipe? GetRecipe(string FactoryType);
+		IRecipe? GetRecipe(FactoryTypeID FactoryTypeID);
 
 		IIngredient? GetIngredient(IngredientID IngredientID);
 		IEnumerable<IIngredient> GetIngredients(RecipeID RecipeID);

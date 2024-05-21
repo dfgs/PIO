@@ -30,9 +30,9 @@ namespace PIO.CoreLib.UnitTests
 			IConnection connection1, connection2, connection3;
 
 
-			factory1 = new Factory() { ID = new FactoryID(1), FactoryType = "Type1" };
-			factory2 = new Factory() { ID = new FactoryID(2), FactoryType = "Type1" };
-			factory3 = new Factory() { ID = new FactoryID(3), FactoryType = "Type1" };
+			factory1 = new Factory() { ID = new FactoryID(1), FactoryTypeID = new FactoryTypeID("Type1") };
+			factory2 = new Factory() { ID = new FactoryID(2), FactoryTypeID = new FactoryTypeID("Type1") };
+			factory3 = new Factory() { ID = new FactoryID(3), FactoryTypeID = new FactoryTypeID("Type1") };
 
 			inputConnector1 = new InputConnector() { ID = new ConnectorID(1), FactoryID = new FactoryID(1), ResourceType = "Type1" };
 			inputConnector2 = new InputConnector() { ID = new ConnectorID(2), FactoryID = new FactoryID(2), ResourceType = "Type1" };
@@ -83,9 +83,9 @@ namespace PIO.CoreLib.UnitTests
 			IConnection connection1, connection2, connection3;
 
 
-			factory1 = new Factory() { ID = new FactoryID(1), FactoryType = "Type1" };
-			factory2 = new Factory() { ID = new FactoryID(2), FactoryType = "Type1" };
-			factory3 = new Factory() { ID = new FactoryID(3), FactoryType = "Type1" };
+			factory1 = new Factory() { ID = new FactoryID(1), FactoryTypeID = new FactoryTypeID("Type1") };
+			factory2 = new Factory() { ID = new FactoryID(2), FactoryTypeID = new FactoryTypeID("Type1") };
+			factory3 = new Factory() { ID = new FactoryID(3), FactoryTypeID = new FactoryTypeID("Type1") };
 
 			inputConnector1 = new InputConnector() { ID = new ConnectorID(1), FactoryID = new FactoryID(1), ResourceType = "Type1" };
 			inputConnector2 = new InputConnector() { ID = new ConnectorID(2), FactoryID = new FactoryID(2), ResourceType = "Type1" };
@@ -141,9 +141,9 @@ namespace PIO.CoreLib.UnitTests
 			IConnection connection1, connection2, connection3;
 
 
-			factory1 = new Factory() { ID = new FactoryID(1), FactoryType = "Type1" };
-			factory2 = new Factory() { ID = new FactoryID(2), FactoryType = "Type1" };
-			factory3 = new Factory() { ID = new FactoryID(3), FactoryType = "Type1" };
+			factory1 = new Factory() { ID = new FactoryID(1), FactoryTypeID = new FactoryTypeID("Type1") };
+			factory2 = new Factory() { ID = new FactoryID(2), FactoryTypeID = new FactoryTypeID("Type1") };
+			factory3 = new Factory() { ID = new FactoryID(3), FactoryTypeID = new FactoryTypeID("Type1") };
 
 			inputConnector1 = new InputConnector() { ID = new ConnectorID(1), FactoryID = new FactoryID(1), ResourceType = "Type1" };
 			inputConnector2 = new InputConnector() { ID = new ConnectorID(2), FactoryID = new FactoryID(2), ResourceType = "Type1" };
@@ -200,9 +200,9 @@ namespace PIO.CoreLib.UnitTests
 			IConnection connection1, connection2, connection3;
 
 
-			factory1 = new Factory() { ID = new FactoryID(1), FactoryType = "Type1" };
-			factory2 = new Factory() { ID = new FactoryID(2), FactoryType = "Type1" };
-			factory3 = new Factory() { ID = new FactoryID(3), FactoryType = "Type1" };
+			factory1 = new Factory() { ID = new FactoryID(1), FactoryTypeID = new FactoryTypeID("Type1") };
+			factory2 = new Factory() { ID = new FactoryID(2), FactoryTypeID = new FactoryTypeID("Type1") };
+			factory3 = new Factory() { ID = new FactoryID(3), FactoryTypeID = new FactoryTypeID("Type1") };
 
 			inputConnector1 = new InputConnector() { ID = new ConnectorID(1), FactoryID = new FactoryID(1), ResourceType = "Type1" };
 			inputConnector2 = new InputConnector() { ID = new ConnectorID(2), FactoryID = new FactoryID(2), ResourceType = "Type1" };
@@ -259,10 +259,10 @@ namespace PIO.CoreLib.UnitTests
 			IConnection connection1, connection2, connection3;
 
 
-			factory1 = new Factory() { ID = new FactoryID(1), FactoryType = "Type1" };
-			factory2 = new Factory() { ID = new FactoryID(2), FactoryType = "Type1" };
-			factory3 = new Factory() { ID = new FactoryID(3), FactoryType = "Type1" };
-			factory4 = new Factory() { ID = new FactoryID(4), FactoryType = "Type1" };
+			factory1 = new Factory() { ID = new FactoryID(1), FactoryTypeID = new FactoryTypeID("Type1") };
+			factory2 = new Factory() { ID = new FactoryID(2), FactoryTypeID = new FactoryTypeID("Type1") };
+			factory3 = new Factory() { ID = new FactoryID(3), FactoryTypeID = new FactoryTypeID("Type1") };
+			factory4 = new Factory() { ID = new FactoryID(4), FactoryTypeID = new FactoryTypeID("Type1") };
 
 			inputConnector1 = new InputConnector() { ID = new ConnectorID(1), FactoryID = new FactoryID(1), ResourceType = "Type1" };
 			inputConnector2 = new InputConnector() { ID = new ConnectorID(2), FactoryID = new FactoryID(2), ResourceType = "Type1" };

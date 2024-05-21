@@ -10,6 +10,6 @@ namespace PIO.ModulesLib
 {
 	public interface IPIOUpdateModule: IPIOModule
 	{
-		bool Update(IDataSource DataSource, float Cycle);
+		bool Update(float Cycle);
 	}
 }
