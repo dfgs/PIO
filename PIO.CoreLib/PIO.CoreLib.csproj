@@ -10,4 +10,8 @@
     <PackageReference Include="StronglyTypedId" Version="1.0.0-beta07" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\GaleShapleyLib\GaleShapleyLib\GaleShapleyLib.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -14,6 +14,7 @@ namespace PIO.ModulesLib
 		{
 			if (TopologySorter==null) throw new PIOInvalidParameterException(nameof(TopologySorter));
 			this.topologySorter = TopologySorter;
+			
 		}
 
 		public float GetEfficiency(FactoryID FactoryID,IEnumerable<IIngredient> Ingredients,IEnumerable<IConnector> Connectors)
@@ -105,10 +106,10 @@ namespace PIO.ModulesLib
 			Log(LogLevels.Information, "[Factory ID {factory.ID}] Sorting factories by dependency");
 			if (!Try(() => topologySorter.Sort(DataSource)).Then(items => sortedFactories = items.ToArray()).OrAlert("Failed to sort factories")) return false;
 
-			Log(LogLevels.Information, "[Factory ID {factory.ID}] Updating all factories");
+			Log(LogLevels.Information, "[Factory ID {factory.ID}] Updating all factories (pass 1)");
 			foreach(IFactory factory in sortedFactories)
 			{
-				Log(LogLevels.Debug, $"[Factory ID {factory.ID}] Processing factory");
+				Log(LogLevels.Debug, $"[Factory ID {factory.ID}] Processing factory (pass 1)");
 				if (!Try(() => DataSource.GetRecipe(factory.FactoryType)).Then(result => recipe = result).OrAlert($"[Factory ID {factory.ID}] Failed to get recipe")) continue;
 				if (recipe == null)
 				{
@@ -130,9 +131,14 @@ namespace PIO.ModulesLib
 				
 				Log(LogLevels.Debug, $"[Factory ID {factory.ID}] Updating output connectors");
 				UpdateConnectors(factory.ID, factory.Efficiency, products, outputConnectors);
-
-
 			}
+			
+			Log(LogLevels.Information, "[Factory ID {factory.ID}] Updating all factories (pass 2)");
+			foreach (IFactory factory in sortedFactories.Reverse())
+			{
+				Log(LogLevels.Debug, $"[Factory ID {factory.ID}] Processing factory (pass 2)");
+			}
+
 
 			return true;
 		}

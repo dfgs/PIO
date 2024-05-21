@@ -14,6 +14,12 @@ namespace PIO.CoreLib
 	}
 
 	[StronglyTypedId(Template.Int)]
+	public partial struct WorkerID
+	{
+		public static WorkerID New() { return new WorkerID(UniqueIDGenerator<WorkerID>.GenerateID()); }
+	}
+
+	[StronglyTypedId(Template.Int)]
 	public partial struct ConnectorID
 	{
 		public static ConnectorID New() { return new ConnectorID(UniqueIDGenerator<ConnectorID>.GenerateID()); }
