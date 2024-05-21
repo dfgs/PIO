@@ -11,6 +11,7 @@ namespace PIO.CoreLib
 		void AddFactory(IFactory Factory);
 		void AddWorker(IWorker Worker);
 		void AddJob(IJob Job);
+		void AddSubTask(ISubTask SubTask);
 		void AddInputConnector(IInputConnector Connector);
 		void AddOutputConnector(IOutputConnector Connector);
 		void AddConnection(IConnection Connection);
@@ -27,6 +28,10 @@ namespace PIO.CoreLib
 
 		IJob? GetJob(JobID JobID);
 		IEnumerable<IJob> GetJobs(FactoryID FactoryID);
+
+		ISubTask? GetSubTask(SubTaskID SubTaskID);
+		IEnumerable<ISubTask> GetSubTasks();
+		IEnumerable<ISubTask> GetSubTasks(JobID JobID);
 
 
 		IInputConnector? GetInputConnector(ConnectorID ConnectorID);

@@ -41,7 +41,17 @@ namespace PIO.CoreLib.UnitTests
 			Assert.ThrowsException<PIOInvalidParameterException>(() => dataSource.AddJob(null));
 #pragma warning restore CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
 		}
+		[TestMethod]
+		public void AddSubTaskShouldThrowExceptionIfParameterIsNull()
+		{
+			IDataSource dataSource;
 
+			dataSource = new DataSource();
+
+#pragma warning disable CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
+			Assert.ThrowsException<PIOInvalidParameterException>(() => dataSource.AddSubTask(null));
+#pragma warning restore CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
+		}
 		[TestMethod]
 		public void AddInputConnectorShouldThrowExceptionIfParameterIsNull()
 		{
@@ -262,6 +272,76 @@ namespace PIO.CoreLib.UnitTests
 			Assert.IsTrue(results.Contains(job3));
 		}
 
+
+		[TestMethod]
+		public void GetSubTaskShouldReturnValidValue()
+		{
+			ISubTask subTask;
+			IDataSource dataSource;
+
+			subTask = new SubTask() { ID = new SubTaskID(1), JobID = new JobID(1) };
+			dataSource = new DataSource();
+			dataSource.AddSubTask(subTask);
+
+			Assert.AreEqual(subTask, dataSource.GetSubTask(new SubTaskID(1)));
+		}
+		[TestMethod]
+		public void GetSubTaskShouldReturnNull()
+		{
+			ISubTask subTask;
+			IDataSource dataSource;
+
+			subTask = new SubTask() { ID = new SubTaskID(1), JobID = new JobID(1) };
+			dataSource = new DataSource();
+			dataSource.AddSubTask(subTask);
+
+			Assert.IsNull(dataSource.GetSubTask(new SubTaskID(0)));
+		}
+
+		[TestMethod]
+		public void GetSubTasksUsingJobIDShouldReturnValidValues()
+		{
+			ISubTask subTask1, subTask2, subTask3;
+			IDataSource dataSource;
+			ISubTask[] results;
+
+			subTask1 = new SubTask() { ID = new SubTaskID(1), JobID = new JobID(1) };
+			subTask2 = new SubTask() { ID = new SubTaskID(2), JobID = new JobID(2) };
+			subTask3 = new SubTask() { ID = new SubTaskID(3), JobID = new JobID(1) };
+
+			dataSource = new DataSource();
+			dataSource.AddSubTask(subTask1);
+			dataSource.AddSubTask(subTask2);
+			dataSource.AddSubTask(subTask3);
+
+			results = dataSource.GetSubTasks(new JobID(1)).ToArray();
+			Assert.AreEqual(2, results.Length);
+			Assert.IsTrue(results.Contains(subTask1));
+			Assert.IsFalse(results.Contains(subTask2));
+			Assert.IsTrue(results.Contains(subTask3));
+		}
+		[TestMethod]
+		public void GetSubTasksShouldReturnValidValues()
+		{
+			ISubTask subTask1, subTask2, subTask3;
+			IDataSource dataSource;
+			ISubTask[] results;
+
+			subTask1 = new SubTask() { ID = new SubTaskID(1), JobID = new JobID(1) };
+			subTask2 = new SubTask() { ID = new SubTaskID(2), JobID = new JobID(2) };
+			subTask3 = new SubTask() { ID = new SubTaskID(3), JobID = new JobID(1) };
+
+			dataSource = new DataSource();
+			dataSource.AddSubTask(subTask1);
+			dataSource.AddSubTask(subTask2);
+			dataSource.AddSubTask(subTask3);
+
+			results = dataSource.GetSubTasks().ToArray();
+			Assert.AreEqual(3, results.Length);
+			Assert.IsTrue(results.Contains(subTask1));
+			Assert.IsTrue(results.Contains(subTask2));
+			Assert.IsTrue(results.Contains(subTask3));
+		}
 
 		[TestMethod]
 		public void GetInputConnectorShouldReturnValidValue()

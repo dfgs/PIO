@@ -32,6 +32,12 @@ namespace PIO.CoreLib
 	}
 
 	[StronglyTypedId(Template.Int)]
+	public partial struct SubTaskID
+	{
+		public static SubTaskID New() { return new SubTaskID(UniqueIDGenerator<SubTaskID>.GenerateID()); }
+	}
+
+	[StronglyTypedId(Template.Int)]
 	public partial struct ConnectorID
 	{
 		public static ConnectorID New() { return new ConnectorID(UniqueIDGenerator<ConnectorID>.GenerateID()); }

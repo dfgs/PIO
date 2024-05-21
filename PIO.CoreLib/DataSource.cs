@@ -12,6 +12,7 @@ namespace PIO.CoreLib
 		private List<IFactory> factories;
 		private List<IWorker> workers;
 		private List<IJob> jobs;
+		private List<ISubTask> subTasks;
 		private List<IInputConnector> inputConnectors;
 		private List<IOutputConnector> outputConnectors;
 		private List<IConnection> connections;
@@ -25,6 +26,7 @@ namespace PIO.CoreLib
 			this.factories = new List<IFactory>();
 			this.workers = new List<IWorker>();
 			this.jobs = new List<IJob>();
+			this.subTasks = new List<ISubTask>();
 			this.inputConnectors = new List<IInputConnector>();
 			this.outputConnectors = new List<IOutputConnector>();
 			this.connections = new List<IConnection>();
@@ -48,6 +50,11 @@ namespace PIO.CoreLib
 		{
 			if (Job == null) throw new PIOInvalidParameterException(nameof(Job));
 			this.jobs.Add(Job);
+		}
+		public void AddSubTask(ISubTask SubTask)
+		{
+			if (SubTask == null) throw new PIOInvalidParameterException(nameof(SubTask));
+			this.subTasks.Add(SubTask);
 		}
 
 		public void AddInputConnector(IInputConnector InputConnector)
@@ -114,6 +121,21 @@ namespace PIO.CoreLib
 		public IEnumerable<IJob> GetJobs(FactoryID FactoryID)
 		{
 			return jobs.Where(item => item.FactoryID == FactoryID);
+		}
+
+		public ISubTask? GetSubTask(SubTaskID SubTaskID)
+		{
+			return subTasks.FirstOrDefault(item => item.ID == SubTaskID);
+		}
+
+		public IEnumerable<ISubTask> GetSubTasks(JobID JobID)
+		{
+			return subTasks.Where(item => item.JobID == JobID);
+		}
+
+		public IEnumerable<ISubTask> GetSubTasks()
+		{
+			return subTasks;
 		}
 
 

@@ -21,6 +21,10 @@ namespace PIO.CoreLib.UnitTests
 			Assert.AreEqual(new JobID(1), JobID.New());
 			Assert.AreEqual(new JobID(2), JobID.New());
 
+			Assert.AreEqual(new SubTaskID(0), SubTaskID.New());
+			Assert.AreEqual(new SubTaskID(1), SubTaskID.New());
+			Assert.AreEqual(new SubTaskID(2), SubTaskID.New());
+
 			Assert.AreEqual(new ConnectorID(0), ConnectorID.New());
 			Assert.AreEqual(new ConnectorID(1), ConnectorID.New());
 			Assert.AreEqual(new ConnectorID(2), ConnectorID.New());

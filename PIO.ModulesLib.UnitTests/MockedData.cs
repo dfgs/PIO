@@ -28,6 +28,7 @@ namespace PIO.ModulesLib.UnitTests
 			DataSource dataSource;
 			IFactory factory1, factory2, factory3;
 			IJob job1,job2,job3;	
+			ISubTask subTask1,subTask2,subTask3;
 			IRecipe recipe1, recipe2, recipe3;
 			IIngredient ingredient1, ingredient2, ingredient3;
 			IProduct product1, product2, product3;
@@ -45,6 +46,10 @@ namespace PIO.ModulesLib.UnitTests
 			job1 = new Job() { ID = new JobID(1), FactoryID = new FactoryID(1) };
 			job2 = new Job() { ID = new JobID(2), FactoryID = new FactoryID(2) };
 			job3 = new Job() { ID = new JobID(3), FactoryID = new FactoryID(3) };
+
+			subTask1 = new SubTask() { ID = new SubTaskID(1), JobID = new JobID(1) };
+			subTask2 = new SubTask() { ID = new SubTaskID(2), JobID = new JobID(2) };
+			subTask3 = new SubTask() { ID = new SubTaskID(3), JobID = new JobID(3) };
 
 			recipe1 = new Recipe() { ID = new RecipeID(1), FactoryTypeID = new FactoryTypeID("Type1") };
 			recipe2 = new Recipe() { ID = new RecipeID(2), FactoryTypeID = new FactoryTypeID("Type2") };
@@ -86,6 +91,10 @@ namespace PIO.ModulesLib.UnitTests
 			dataSource.AddJob(job2);
 			dataSource.AddJob(job3);
 
+			dataSource.AddSubTask(subTask1);
+			dataSource.AddSubTask(subTask2);
+			dataSource.AddSubTask(subTask3);
+
 			dataSource.AddRecipe(recipe1);
 			dataSource.AddRecipe(recipe2);
 			dataSource.AddRecipe(recipe3);
@@ -124,6 +133,7 @@ namespace PIO.ModulesLib.UnitTests
 			DataSource dataSource;
 			IFactory factory1, factory2, factory3;
 			IJob job1, job2, job3;
+			ISubTask subTask1, subTask2, subTask3;
 			IRecipe recipe1, recipe2, recipe3;
 			IIngredient ingredient1, ingredient2;
 			IProduct product1, product2, product3;
@@ -143,6 +153,10 @@ namespace PIO.ModulesLib.UnitTests
 			job1 = new Job() { ID = new JobID(1), FactoryID = new FactoryID(1) };
 			job2 = new Job() { ID = new JobID(2), FactoryID = new FactoryID(2) };
 			job3 = new Job() { ID = new JobID(3), FactoryID = new FactoryID(3) };
+
+			subTask1 = new SubTask() { ID = new SubTaskID(1), JobID = new JobID(1) };
+			subTask2 = new SubTask() { ID = new SubTaskID(2), JobID = new JobID(2) };
+			subTask3 = new SubTask() { ID = new SubTaskID(3), JobID = new JobID(3) };
 
 			recipe1 = new Recipe() { ID = new RecipeID(1), FactoryTypeID = new FactoryTypeID("Type1") };
 			recipe2 = new Recipe() { ID = new RecipeID(2), FactoryTypeID = new FactoryTypeID("Type2") };
@@ -186,6 +200,10 @@ namespace PIO.ModulesLib.UnitTests
 			dataSource.AddJob(job1);
 			dataSource.AddJob(job2);
 			dataSource.AddJob(job3);
+
+			dataSource.AddSubTask(subTask1);
+			dataSource.AddSubTask(subTask2);
+			dataSource.AddSubTask(subTask3);
 
 			dataSource.AddRecipe(recipe1);
 			dataSource.AddRecipe(recipe2);
@@ -231,6 +249,9 @@ namespace PIO.ModulesLib.UnitTests
 			Mock.Get(dataSource).Setup(m => m.GetFactory(It.IsAny<FactoryID>())).Returns<FactoryID>(id => Model.GetFactory(id));
 			Mock.Get(dataSource).Setup(m => m.GetJobs(It.IsAny<FactoryID>())).Returns<FactoryID>(id => Model.GetJobs(id));
 			Mock.Get(dataSource).Setup(m => m.GetJob(It.IsAny<JobID>())).Returns<JobID>(id => Model.GetJob(id));
+			Mock.Get(dataSource).Setup(m => m.GetSubTasks(It.IsAny<JobID>())).Returns<JobID>(id => Model.GetSubTasks(id));
+			Mock.Get(dataSource).Setup(m => m.GetSubTasks()).Returns(Model.GetSubTasks());
+			Mock.Get(dataSource).Setup(m => m.GetSubTask(It.IsAny<SubTaskID>())).Returns<SubTaskID>(id => Model.GetSubTask(id));
 			Mock.Get(dataSource).Setup(m => m.GetRecipe(It.IsAny<FactoryTypeID>())).Returns<FactoryTypeID>(id => Model.GetRecipe(id));
 			Mock.Get(dataSource).Setup(m => m.GetIngredients(It.IsAny<RecipeID>())).Returns<RecipeID>(id => Model.GetIngredients(id));
 			Mock.Get(dataSource).Setup(m => m.GetProducts(It.IsAny<RecipeID>())).Returns<RecipeID>(id => Model.GetProducts(id));
