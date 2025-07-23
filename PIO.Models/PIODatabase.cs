@@ -3,7 +3,7 @@ using DataModelLib;
 
 namespace PIO.Models
 {
-	[Database,Blueprint("Database"), Blueprint("DatabaseModel")]
+	[Database,Blueprint("Database")]
 	public partial class PIODatabase
 	{
 	}

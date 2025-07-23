@@ -2,7 +2,7 @@
 
 namespace PIO.Models
 {
-	[DTO("Personn"), Blueprint("DTO"), Blueprint("TableModel")]
+	[DTO("Personn"), Blueprint("DTO")]
 	public partial class Personn
 	{
 

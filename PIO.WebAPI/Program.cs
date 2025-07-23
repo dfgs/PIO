@@ -1,4 +1,5 @@
 using LogLib;
+using PIO.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +11,11 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddSingleton<LogLib.ILogger, ConsoleLogger>( (serviceProvider) => new ConsoleLogger(new DefaultLogFormatter()) );
+
+PIODatabase database = new PIODatabase();
+database.PersonnTable.Add(new Personn() { PersonnID = 1, FirstName = "John", LastName = "Doe" });
+builder.Services.AddSingleton(typeof(PIODatabase),database);
+
 
 var app = builder.Build();
 

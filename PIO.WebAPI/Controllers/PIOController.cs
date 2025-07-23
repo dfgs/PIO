@@ -1,6 +1,7 @@
 ﻿using LogLib;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using PIO.Models;
 using System.Runtime.CompilerServices;
 
 namespace PIO.WebAPI.Controllers
@@ -8,6 +9,12 @@ namespace PIO.WebAPI.Controllers
 	public abstract class PIOController: ControllerBase
 	{
 		private readonly LogLib.ILogger logger;
+
+		private PIODatabase database;
+		protected PIODatabase Database
+		{
+			get => database;
+		}
 
 		private static int idCounter = 0;
 		public int ID
@@ -21,13 +28,14 @@ namespace PIO.WebAPI.Controllers
 			get { return GetType().Name; }
 		}
 
-		public PIOController(LogLib.ILogger Logger)
+		public PIOController(LogLib.ILogger Logger, PIODatabase Database)
 		{
 			idCounter++;
 			this.ID = idCounter;
 			this.logger = Logger;
+			this.database = Database;
 		}
-
+		/*
 		protected ResultTypeLib.IResult<T> Try<T>(Func<T> Function, [CallerMemberName] string? MethodName = null)
 		{
 			try
@@ -86,6 +94,8 @@ namespace PIO.WebAPI.Controllers
 			}
 
 		}
+		*/
+
 		protected void LogEnter([CallerMemberName] string? MethodName = null)
 		{
 			logger.LogEnter(ID, ModuleName, MethodName);
