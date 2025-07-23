@@ -1,0 +1,6 @@
+@PIO.WebAPI_HostAddress = http://localhost:5256
+
+GET {{PIO.WebAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

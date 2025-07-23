@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36202.13 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PIO.WebAPI", "PIO.WebAPI\PIO.WebAPI.csproj", "{E821B55D-7F1B-4209-94B3-1C1005A2F7F1}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "PIO.DTO", "PIO.DTO\PIO.DTO.shproj", "{1829F866-F980-4031-8A9E-0164A47C9ECE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dependencies", "Dependencies", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PIO.Models", "PIO.Models\PIO.Models.csproj", "{6A4F28C4-8772-4CCA-8A4C-4D6CD023DA48}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E821B55D-7F1B-4209-94B3-1C1005A2F7F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E821B55D-7F1B-4209-94B3-1C1005A2F7F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E821B55D-7F1B-4209-94B3-1C1005A2F7F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E821B55D-7F1B-4209-94B3-1C1005A2F7F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A4F28C4-8772-4CCA-8A4C-4D6CD023DA48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A4F28C4-8772-4CCA-8A4C-4D6CD023DA48}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A4F28C4-8772-4CCA-8A4C-4D6CD023DA48}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A4F28C4-8772-4CCA-8A4C-4D6CD023DA48}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {64BD1697-E912-4B77-BB12-64AE0E3E5C0F}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		PIO.DTO\PIO.DTO.projitems*{1829f866-f980-4031-8a9e-0164a47c9ece}*SharedItemsImports = 13
+		PIO.DTO\PIO.DTO.projitems*{6a4f28c4-8772-4cca-8a4c-4d6cd023da48}*SharedItemsImports = 5
+		PIO.DTO\PIO.DTO.projitems*{e821b55d-7f1b-4209-94b3-1c1005a2f7f1}*SharedItemsImports = 5
+	EndGlobalSection
+EndGlobal

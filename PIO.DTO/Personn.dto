@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<DTO xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<Attributes>
+		<AttributeDefinition Name="TableAttribute"/>
+	</Attributes>
+
+	<Properties>
+    
+    <PropertyDefinition Name="PersonnID" TypeName="byte">
+			<Attributes>
+				<AttributeDefinition Name="Column"/>
+				<AttributeDefinition Name="PrimaryKey"/>
+			</Attributes>    
+    </PropertyDefinition>
+    
+    <PropertyDefinition Name="FirstName" TypeName="string">
+			<Attributes>
+				<AttributeDefinition Name="Column"/>
+			</Attributes>
+		</PropertyDefinition>    
+    
+    <PropertyDefinition Name="LastName" TypeName="string">
+			<Attributes>
+				<AttributeDefinition Name="Column"/>
+			</Attributes>
+    </PropertyDefinition>
+    
+    <PropertyDefinition Name="Age" TypeName="byte">
+			<Attributes>
+				<AttributeDefinition Name="Column"/>
+			</Attributes>
+		</PropertyDefinition>
+    
+    
+
+	</Properties>
+</DTO>
