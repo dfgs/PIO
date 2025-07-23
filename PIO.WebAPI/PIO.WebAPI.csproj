@@ -11,6 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
+		<ProjectReference Include="..\..\LogLib\LogLib\LogLib.csproj" />
+		<ProjectReference Include="..\..\ResultTypeLib\ResultTypeLib\ResultTypeLib.csproj" />
 		<ProjectReference Include="..\PIO.Models\PIO.Models.csproj" />
 	</ItemGroup>
 

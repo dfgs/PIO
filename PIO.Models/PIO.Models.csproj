@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 	<Import Project="..\PIO.DTO\PIO.DTO.projitems" Label="Shared" />
+	<Import Project="..\..\DataModelLib\DataModelLib.Shared\DataModelLib.Shared.projitems" Label="Shared" />
+	<ItemGroup>
+		<ProjectReference Include="..\..\BlueprintLib\BlueprintLib\BlueprintLib.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+		<ProjectReference Include="..\..\DataModelLib\DataModelLib\DataModelLib.csproj" />
+	</ItemGroup>
 </Project>

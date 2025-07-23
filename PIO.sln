@@ -11,6 +11,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dependencies", "Dependencie
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PIO.Models", "PIO.Models\PIO.Models.csproj", "{6A4F28C4-8772-4CCA-8A4C-4D6CD023DA48}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LogLib", "..\LogLib\LogLib\LogLib.csproj", "{B7A6A42F-87CE-35E2-5463-202EF52C74DD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResultTypeLib", "..\ResultTypeLib\ResultTypeLib\ResultTypeLib.csproj", "{BEA4E766-978F-DDD8-C26B-73D31C5A983D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataModelLib", "..\DataModelLib\DataModelLib\DataModelLib.csproj", "{6EFFC2C5-B498-E4A9-55AF-CCA4812CAE1E}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "DataModelLib.Shared", "..\DataModelLib\DataModelLib.Shared\DataModelLib.Shared.shproj", "{97CCAC7F-660E-42F0-AF29-16332FC30F7A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlueprintLib", "..\BlueprintLib\BlueprintLib\BlueprintLib.csproj", "{B31A9FAA-D715-8F14-A7C4-56F92ACBEA90}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,16 +35,42 @@ Global
 		{6A4F28C4-8772-4CCA-8A4C-4D6CD023DA48}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6A4F28C4-8772-4CCA-8A4C-4D6CD023DA48}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6A4F28C4-8772-4CCA-8A4C-4D6CD023DA48}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7A6A42F-87CE-35E2-5463-202EF52C74DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7A6A42F-87CE-35E2-5463-202EF52C74DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7A6A42F-87CE-35E2-5463-202EF52C74DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7A6A42F-87CE-35E2-5463-202EF52C74DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BEA4E766-978F-DDD8-C26B-73D31C5A983D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BEA4E766-978F-DDD8-C26B-73D31C5A983D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BEA4E766-978F-DDD8-C26B-73D31C5A983D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BEA4E766-978F-DDD8-C26B-73D31C5A983D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6EFFC2C5-B498-E4A9-55AF-CCA4812CAE1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6EFFC2C5-B498-E4A9-55AF-CCA4812CAE1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6EFFC2C5-B498-E4A9-55AF-CCA4812CAE1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6EFFC2C5-B498-E4A9-55AF-CCA4812CAE1E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B31A9FAA-D715-8F14-A7C4-56F92ACBEA90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B31A9FAA-D715-8F14-A7C4-56F92ACBEA90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B31A9FAA-D715-8F14-A7C4-56F92ACBEA90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B31A9FAA-D715-8F14-A7C4-56F92ACBEA90}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B7A6A42F-87CE-35E2-5463-202EF52C74DD} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{BEA4E766-978F-DDD8-C26B-73D31C5A983D} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{6EFFC2C5-B498-E4A9-55AF-CCA4812CAE1E} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{97CCAC7F-660E-42F0-AF29-16332FC30F7A} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{B31A9FAA-D715-8F14-A7C4-56F92ACBEA90} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {64BD1697-E912-4B77-BB12-64AE0E3E5C0F}
 	EndGlobalSection
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		PIO.DTO\PIO.DTO.projitems*{1829f866-f980-4031-8a9e-0164a47c9ece}*SharedItemsImports = 13
+		..\DataModelLib\DataModelLib.Shared\DataModelLib.Shared.projitems*{6a4f28c4-8772-4cca-8a4c-4d6cd023da48}*SharedItemsImports = 5
 		PIO.DTO\PIO.DTO.projitems*{6a4f28c4-8772-4cca-8a4c-4d6cd023da48}*SharedItemsImports = 5
+		..\DataModelLib\DataModelLib.Shared\DataModelLib.Shared.projitems*{6effc2c5-b498-e4a9-55af-cca4812cae1e}*SharedItemsImports = 5
+		..\DataModelLib\DataModelLib.Shared\DataModelLib.Shared.projitems*{97ccac7f-660e-42f0-af29-16332fc30f7a}*SharedItemsImports = 13
 		PIO.DTO\PIO.DTO.projitems*{e821b55d-7f1b-4209-94b3-1c1005a2f7f1}*SharedItemsImports = 5
 	EndGlobalSection
 EndGlobal
