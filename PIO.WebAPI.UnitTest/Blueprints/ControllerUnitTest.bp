@@ -69,7 +69,7 @@ namespace PIO.WebAPI.UnitTest
 			Assert.AreEqual(0, logger.FatalCount);
 		}
 
-		 [TestMethod]
+		[TestMethod]
 		public void ShouldNotGet{{tableName}}WhenDataProviderThrowException()
 		{
 			DebugLogger logger;
@@ -198,6 +198,73 @@ namespace PIO.WebAPI.UnitTest
 			// Assert controller logs a warning
 			Assert.AreNotEqual(0, logger.WarningCount);
 			Assert.AreEqual(0, logger.ErrorCount);
+			Assert.AreEqual(0, logger.FatalCount);
+		}
+
+		[TestMethod]
+		public void ShouldPost{{tableName}}()
+		{
+			DebugLogger logger;
+			IDataProvider dataProvider;
+			{{tableName}}Controller controller;
+			#nullable enable
+			OkObjectResult? result;
+			{{tableName}}? content;
+			#nullable disable
+
+			// Arrange
+			logger = new DebugLogger();
+			
+			dataProvider = Mock.Of<IDataProvider>();
+			Mock.Get(dataProvider).Setup(mock => mock.Post{{tableName}}(It.IsAny<{{tableName}}>())).Returns(
+				new {{tableName}} { {{primaryKey.name}} = 1 }
+			);		
+			
+			controller = new {{tableName}}Controller(logger,dataProvider);
+			
+			// Act
+			result = controller.Post(new {{tableName}}()) as OkObjectResult;
+			content=result?.Value as {{tableName}};
+
+			// Assert
+			Assert.IsNotNull(result);
+			Assert.IsNotNull(content);
+			Assert.AreEqual(1, content.{{primaryKey.name}});
+
+			// Assert controller doesn't log errors
+			Assert.AreEqual(0, logger.WarningCount);
+			Assert.AreEqual(0, logger.ErrorCount);
+			Assert.AreEqual(0, logger.FatalCount);
+		}
+
+		[TestMethod]
+		public void ShouldNotPost{{tableName}}WhenDataProviderThrowException()
+		{
+			DebugLogger logger;
+			IDataProvider dataProvider;
+			{{tableName}}Controller controller;
+			#nullable enable
+			IStatusCodeActionResult? result;
+			#nullable disable
+
+			// Arrange
+			logger = new DebugLogger();
+			
+			dataProvider = Mock.Of<IDataProvider>();
+			Mock.Get(dataProvider).Setup(mock => mock.Post{{tableName}}(It.IsAny<{{tableName}}>())).Throws<InvalidOperationException>();
+			
+			controller = new {{tableName}}Controller(logger,dataProvider);
+			
+			// Act
+			result = controller.Post(new {{tableName}}()) as IStatusCodeActionResult;
+
+			// Assert
+			Assert.IsNotNull(result);
+			Assert.AreEqual(500, result.StatusCode);
+			
+			// Assert controller logs an error
+			Assert.AreEqual(0, logger.WarningCount);
+			Assert.AreNotEqual(0, logger.ErrorCount);
 			Assert.AreEqual(0, logger.FatalCount);
 		}
 
