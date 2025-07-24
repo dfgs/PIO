@@ -21,6 +21,7 @@ using PIO.WebAPI.Controllers;
 using Moq;
 using PIO.DataProvider;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 namespace PIO.WebAPI.UnitTest
 {
@@ -62,7 +63,140 @@ namespace PIO.WebAPI.UnitTest
 			Assert.AreEqual(1, content[0].{{primaryKey.name}});
 			Assert.AreEqual(2, content[1].{{primaryKey.name}});
 
+			// Assert controller doesn't log errors
 			Assert.AreEqual(0, logger.WarningCount);
+			Assert.AreEqual(0, logger.ErrorCount);
+			Assert.AreEqual(0, logger.FatalCount);
+		}
+
+		 [TestMethod]
+		public void ShouldNotGet{{tableName}}WhenDataProviderThrowException()
+		{
+			DebugLogger logger;
+			IDataProvider dataProvider;
+			{{tableName}}Controller controller;
+			#nullable enable
+			IStatusCodeActionResult? result;
+			#nullable disable
+
+			// Arrange
+			logger = new DebugLogger();
+			
+			dataProvider = Mock.Of<IDataProvider>();
+			Mock.Get(dataProvider).Setup(mock => mock.Get{{tableName}}()).Throws<InvalidOperationException>();	
+			
+			controller = new {{tableName}}Controller(logger,dataProvider);
+			
+			// Act
+			result = controller.Get() as IStatusCodeActionResult;
+
+			// Assert
+			Assert.IsNotNull(result);
+			Assert.AreEqual(500, result.StatusCode);
+			
+			// Assert controller logs an error
+			Assert.AreEqual(0, logger.WarningCount);
+			Assert.AreNotEqual(0, logger.ErrorCount);
+			Assert.AreEqual(0, logger.FatalCount);
+		}
+
+		[TestMethod]
+		public void ShouldGet{{tableName}}WithValidID()
+		{
+			DebugLogger logger;
+			IDataProvider dataProvider;
+			{{tableName}}Controller controller;
+			#nullable enable
+			OkObjectResult? result;
+			{{tableName}}? content;
+			#nullable disable
+
+			// Arrange
+			logger = new DebugLogger();
+			
+			dataProvider = Mock.Of<IDataProvider>();
+			Mock.Get(dataProvider).Setup(mock => mock.Get{{tableName}}(1)).Returns(
+				new {{tableName}} { {{primaryKey.name}} = 1 }
+			);		
+			
+			controller = new {{tableName}}Controller(logger,dataProvider);
+			
+			// Act
+			result = controller.Get(1) as OkObjectResult;
+			content=result?.Value as {{tableName}};
+
+			// Assert
+			Assert.IsNotNull(result);
+			Assert.IsNotNull(content);
+			Assert.AreEqual(1, content.{{primaryKey.name}});
+
+			// Assert controller doesn't log errors
+			Assert.AreEqual(0, logger.WarningCount);
+			Assert.AreEqual(0, logger.ErrorCount);
+			Assert.AreEqual(0, logger.FatalCount);
+		}
+
+		[TestMethod]
+		public void ShouldNotGet{{tableName}}WithSpecifiedIDWhenDataProviderThrowException()
+		{
+			DebugLogger logger;
+			IDataProvider dataProvider;
+			{{tableName}}Controller controller;
+			#nullable enable
+			IStatusCodeActionResult? result;
+			#nullable disable
+
+			// Arrange
+			logger = new DebugLogger();
+			
+			dataProvider = Mock.Of<IDataProvider>();
+			Mock.Get(dataProvider).Setup(mock => mock.Get{{tableName}}(It.IsAny<{{primaryKey.type_name}}>())).Throws<InvalidOperationException>();	
+			
+			controller = new {{tableName}}Controller(logger,dataProvider);
+			
+			// Act
+			result = controller.Get(1) as IStatusCodeActionResult;
+
+			// Assert
+			Assert.IsNotNull(result);
+			Assert.AreEqual(500, result.StatusCode);
+			
+			// Assert controller logs an error
+			Assert.AreEqual(0, logger.WarningCount);
+			Assert.AreNotEqual(0, logger.ErrorCount);
+			Assert.AreEqual(0, logger.FatalCount);
+		}
+
+		[TestMethod]
+		public void ShouldNotGet{{tableName}}WithInvalidID()
+		{
+			DebugLogger logger;
+			IDataProvider dataProvider;
+			{{tableName}}Controller controller;
+			#nullable enable
+			NotFoundResult? result;
+			#nullable disable
+
+			// Arrange
+			logger = new DebugLogger();
+			
+			dataProvider = Mock.Of<IDataProvider>();
+			#nullable enable
+			#pragma warning disable CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
+			Mock.Get(dataProvider).Setup(mock => mock.Get{{tableName}}(It.IsAny<{{primaryKey.type_name}}>())).Returns<{{tableName}}?>(null);	
+			#pragma warning restore CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
+			#nullable disable
+			
+			controller = new {{tableName}}Controller(logger,dataProvider);
+			
+			// Act
+			result = controller.Get(1) as NotFoundResult;
+
+			// Assert
+			Assert.IsNotNull(result);
+			
+			// Assert controller logs a warning
+			Assert.AreNotEqual(0, logger.WarningCount);
 			Assert.AreEqual(0, logger.ErrorCount);
 			Assert.AreEqual(0, logger.FatalCount);
 		}
