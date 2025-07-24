@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36202.13 d17.14
+VisualStudioVersion = 17.14.36202.13
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PIO.WebAPI", "PIO.WebAPI\PIO.WebAPI.csproj", "{E821B55D-7F1B-4209-94B3-1C1005A2F7F1}"
 EndProject
@@ -20,6 +20,8 @@ EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "DataModelLib.Shared", "..\DataModelLib\DataModelLib.Shared\DataModelLib.Shared.shproj", "{97CCAC7F-660E-42F0-AF29-16332FC30F7A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlueprintLib", "..\BlueprintLib\BlueprintLib\BlueprintLib.csproj", "{B31A9FAA-D715-8F14-A7C4-56F92ACBEA90}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PIO.DataProvider", "PIO.DataProvider\PIO.DataProvider.csproj", "{79C44A92-B846-4089-BD8D-2DB4886FCC75}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{B31A9FAA-D715-8F14-A7C4-56F92ACBEA90}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B31A9FAA-D715-8F14-A7C4-56F92ACBEA90}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B31A9FAA-D715-8F14-A7C4-56F92ACBEA90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79C44A92-B846-4089-BD8D-2DB4886FCC75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79C44A92-B846-4089-BD8D-2DB4886FCC75}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79C44A92-B846-4089-BD8D-2DB4886FCC75}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79C44A92-B846-4089-BD8D-2DB4886FCC75}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -70,6 +76,7 @@ Global
 		..\DataModelLib\DataModelLib.Shared\DataModelLib.Shared.projitems*{6a4f28c4-8772-4cca-8a4c-4d6cd023da48}*SharedItemsImports = 5
 		PIO.DTO\PIO.DTO.projitems*{6a4f28c4-8772-4cca-8a4c-4d6cd023da48}*SharedItemsImports = 5
 		..\DataModelLib\DataModelLib.Shared\DataModelLib.Shared.projitems*{6effc2c5-b498-e4a9-55af-cca4812cae1e}*SharedItemsImports = 5
+		PIO.DTO\PIO.DTO.projitems*{79c44a92-b846-4089-bd8d-2db4886fcc75}*SharedItemsImports = 5
 		..\DataModelLib\DataModelLib.Shared\DataModelLib.Shared.projitems*{97ccac7f-660e-42f0-af29-16332fc30f7a}*SharedItemsImports = 13
 		PIO.DTO\PIO.DTO.projitems*{e821b55d-7f1b-4209-94b3-1c1005a2f7f1}*SharedItemsImports = 5
 	EndGlobalSection

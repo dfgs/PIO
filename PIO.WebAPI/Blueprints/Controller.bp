@@ -17,6 +17,7 @@
 using Microsoft.AspNetCore.Mvc;
 using PIO.Models;
 using BlueprintLib.Attributes;
+using PIO.DataProvider;
 
 namespace PIO.WebAPI.Controllers
 {
@@ -25,7 +26,7 @@ namespace PIO.WebAPI.Controllers
     public partial class {{class.name}} : PIOController
     {
 
-        public {{class.name}}(LogLib.ILogger Logger, PIODatabase Database) : base(Logger,Database) 
+        public {{class.name}}(LogLib.ILogger Logger, IDataProvider DataProvider) : base(Logger, DataProvider) 
         {
         }
 
@@ -34,10 +35,10 @@ namespace PIO.WebAPI.Controllers
         {
             LogEnter();
 
-            Log(LogLib.Message.Information($"Get {{tableName}} table from database"));
+            Log(LogLib.Message.Information($"Get {{tableName}} table from data provider"));
             try
             {
-                {{tableName}}[] items = Database.{{tableName}}Table.ToArray();
+                {{tableName}}[] items = DataProvider.Get{{tableName}}().ToArray();
 				Log(LogLib.Message.Information($"Query returned {items.Length} result(s)"));
 				return Results.Ok(items);
             }
@@ -53,10 +54,10 @@ namespace PIO.WebAPI.Controllers
         {
             LogEnter();
 
-            Log(LogLib.Message.Information($"Get {{tableName}} with {{primaryKey.name}}={%{{}%}{{primaryKey.name}}{%{}}%} table from database"));
+            Log(LogLib.Message.Information($"Get {{tableName}} with {{primaryKey.name}}={%{{}%}{{primaryKey.name}}{%{}}%} table from data provider"));
             try
             {
-                {{tableName}}? item = Database.{{tableName}}Table.FirstOrDefault(item => item.PersonnID == {{primaryKey.name}});
+                {{tableName}}? item = DataProvider.Get{{tableName}}({{primaryKey.name}});
 				if (item == null)
                 {
                     Log(LogLib.Message.Warning($"Item was not found"));
