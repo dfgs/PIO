@@ -4,11 +4,11 @@ using BlueprintLib.Attributes;
 
 namespace PIO.WebAPI.Controllers
 {
-    
-    [DTO("Personn"), Blueprint("Controller")]
-    public partial class PersonnController
-    {
+	[DTO("Personn"), Blueprint("Controller")]
+	public partial class PersonnController
+	{
 
 
-    }
+	}
+
 }

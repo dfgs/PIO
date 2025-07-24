@@ -31,7 +31,7 @@ namespace PIO.WebAPI.Controllers
         }
 
         [HttpGet()]
-        public IResult Get()
+        public IActionResult Get()
         {
             LogEnter();
 
@@ -40,36 +40,38 @@ namespace PIO.WebAPI.Controllers
             {
                 {{tableName}}[] items = DataProvider.Get{{tableName}}().ToArray();
 				Log(LogLib.Message.Information($"Query returned {items.Length} result(s)"));
-				return Results.Ok(items);
+				return Ok(items);
             }
             catch (Exception ex)
             {
                 Log(ex);
-                return Results.StatusCode(StatusCodes.Status500InternalServerError);
+                return StatusCode(StatusCodes.Status500InternalServerError);
 			}
         }
 
         [HttpGet("{{primaryKey.name}}")]
-        public IResult Get(byte {{primaryKey.name}})
+        public IActionResult Get(byte {{primaryKey.name}})
         {
             LogEnter();
 
             Log(LogLib.Message.Information($"Get {{tableName}} with {{primaryKey.name}}={%{{}%}{{primaryKey.name}}{%{}}%} table from data provider"));
             try
             {
+                #nullable enable
                 {{tableName}}? item = DataProvider.Get{{tableName}}({{primaryKey.name}});
+                #nullable disable
 				if (item == null)
                 {
                     Log(LogLib.Message.Warning($"Item was not found"));
-                    return Results.NotFound();
+                    return NotFound();
                 }
                 Log(LogLib.Message.Information($"Query returned 1 result"));
-				return Results.Ok(item);
+				return Ok(item);
             }
             catch (Exception ex)
             {
                 Log(ex);
-                return Results.StatusCode(StatusCodes.Status500InternalServerError);
+                return StatusCode(StatusCodes.Status500InternalServerError);
 			}
         }
 

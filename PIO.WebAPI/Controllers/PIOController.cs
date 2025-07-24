@@ -33,8 +33,8 @@ namespace PIO.WebAPI.Controllers
 		{
 			idCounter++;
 			this.ID = idCounter;
-			this.logger = Logger;
-			this.dataProvider = DataProvider;
+			this.logger = Logger ?? throw new ArgumentNullException(nameof(Logger));
+			this.dataProvider = DataProvider ?? throw new ArgumentNullException(nameof(DataProvider)); ;
 		}
 		
 		protected void LogEnter([CallerMemberName] string? MethodName = null)
