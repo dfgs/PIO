@@ -33,6 +33,13 @@ namespace {{class.namespace}}
 			return database.{{dataSourceName}}Table.FirstOrDefault(item => item.{{primaryKey.name}} == {{primaryKey.name}});
 		}
 		#nullable disable
+		public {{dataSourceName}} Post{{dataSourceName}}({{dataSourceName}} {{dataSourceName}})
+		{
+			{{dataSourceName}}.{{primaryKey.name}} = database.{{dataSourceName}}Table.Max(item => item.{{primaryKey.name}})+1;
+			database.{{dataSourceName}}Table.Add({{dataSourceName}});
+			return {{dataSourceName}};
+		}
+
 		{{- end }}
 		
 

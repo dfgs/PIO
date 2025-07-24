@@ -27,6 +27,7 @@ namespace {{class.namespace}}
 		#nullable enable
 		{{dataSourceName}}? Get{{dataSourceName}}({{primaryKey.type_name}} {{primaryKey.name}});
 		#nullable disable
+		{{dataSourceName}} Post{{dataSourceName}}({{dataSourceName}} {{dataSourceName}});
 
 		{{- end }}
 			

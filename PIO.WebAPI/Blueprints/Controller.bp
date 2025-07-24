@@ -30,6 +30,7 @@ namespace PIO.WebAPI.Controllers
         {
         }
 
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpGet()]
         public IActionResult Get()
         {
@@ -49,12 +50,14 @@ namespace PIO.WebAPI.Controllers
 			}
         }
 
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]       
         [HttpGet("{{primaryKey.name}}")]
         public IActionResult Get(byte {{primaryKey.name}})
         {
             LogEnter();
 
-            Log(LogLib.Message.Information($"Get {{tableName}} with {{primaryKey.name}}={%{{}%}{{primaryKey.name}}{%{}}%} table from data provider"));
+            Log(LogLib.Message.Information($"Get {{tableName}} with {{primaryKey.name}}={%{{}%}{{primaryKey.name}}{%{}}%} from data provider"));
             try
             {
                 #nullable enable
@@ -74,6 +77,27 @@ namespace PIO.WebAPI.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError);
 			}
         }
+
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [HttpPost()]
+        public IActionResult Post({{tableName}} {{tableName}})
+        {
+            LogEnter();
+
+            Log(LogLib.Message.Information($"Post {{tableName}} to data provider"));
+            try
+            {
+                {{tableName}} item = DataProvider.Post{{tableName}}({{tableName}});
+                Log(LogLib.Message.Information($"Query returned 1 result"));
+				return Ok(item);
+            }
+            catch (Exception ex)
+            {
+                Log(ex);
+                return StatusCode(StatusCodes.Status500InternalServerError);
+			}
+        }
+
 
     }
 }

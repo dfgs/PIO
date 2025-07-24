@@ -6,7 +6,7 @@
 
 	<Properties>
     
-    <PropertyDefinition Name="PersonnID" TypeName="byte">
+    <PropertyDefinition Name="PersonnID" TypeName="int">
 			<Attributes>
 				<AttributeDefinition Name="Column"/>
 				<AttributeDefinition Name="PrimaryKey"/>
