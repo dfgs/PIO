@@ -39,7 +39,16 @@ namespace {{class.namespace}}
 			database.{{dataSourceName}}Table.Add({{dataSourceName}});
 			return {{dataSourceName}};
 		}
-
+		#nullable enable
+		public {{dataSourceName}}? Put{{dataSourceName}}({{dataSourceName}} {{dataSourceName}})
+		{
+			int index;
+			index = database.{{dataSourceName}}Table.FirstIndex(item => item.{{primaryKey.name}} == {{dataSourceName}}.{{primaryKey.name}});
+			if (index==-1) return null;
+			database.{{dataSourceName}}Table[index] = {{dataSourceName}};
+			return {{dataSourceName}};
+		}
+		#nullable disable
 		{{- end }}
 		
 

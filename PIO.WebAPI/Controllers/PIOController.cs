@@ -29,6 +29,7 @@ namespace PIO.WebAPI.Controllers
 			get { return GetType().Name; }
 		}
 
+
 		public PIOController(LogLib.ILogger Logger, IDataProvider DataProvider)
 		{
 			idCounter++;
